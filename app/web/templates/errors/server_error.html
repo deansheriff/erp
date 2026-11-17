@@ -1,0 +1,24 @@
+{% extends "layout/standalone.html" %}
+{% import "components/ui.html" as ui with context %}
+{% set page_title = "Something went wrong" %}
+{% block card %}
+<div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-danger-bg text-danger-text">{{ ui.icon("triangle-alert", "lg") }}</div>
+<h1 class="mb-3 font-h1 text-h1">Something went wrong on our side</h1>
+<p class="mx-auto mb-5 max-w-[340px] text-ink-2">{{ message }}{% if request_id %} If it keeps happening, contact support and quote this reference.{% endif %}</p>
+{% if request_id %}
+<div class="mb-6 flex items-center justify-between gap-2 rounded-lg border border-line bg-surface-sunken p-2.5 px-3 text-left" x-data="copyText" data-copy="{{ request_id }}">
+  <div class="min-w-0 flex-1">
+    <span class="kx-overline mb-0.5 block">Reference</span>
+    <span class="block truncate font-mono text-xs font-medium text-ink">{{ request_id }}</span>
+  </div>
+  <button type="button" class="kx-btn-icon" x-on:click="copy" aria-label="Copy reference">
+    <span x-show="copied" x-cloak class="text-success-text">{{ ui.icon("check", "sm") }}</span>
+    <span x-show="notCopied">{{ ui.icon("copy", "sm") }}</span>
+  </button>
+</div>
+{% endif %}
+<div class="space-y-2.5">
+  <a href="" class="kx-btn-primary w-full">{{ ui.icon("refresh-cw", "sm") }} Try again</a>
+  <a href="/" class="kx-btn-ghost w-full">{{ ui.icon("house", "sm") }} Back to home</a>
+</div>
+{% endblock %}

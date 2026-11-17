@@ -1,0 +1,114 @@
+[project]
+name = "kxmeleon-erp"
+version = "0.1.0"
+description = "Kxmeleon ERP: HR, payroll, finance and operations for Nigerian businesses."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "alembic>=1.14",
+    "celery[redis]>=5.4",
+    "fastapi>=0.115",
+    "jinja2>=3.1",
+    "psycopg[binary]>=3.2",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "python-multipart>=0.0.17",
+    "pyyaml>=6.0",
+    "redis>=5.2",
+    "sqlalchemy>=2.0.36",
+    "uvicorn[standard]>=0.32",
+]
+
+[project.scripts]
+kx = "app.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.uv]
+package = true
+
+# ---------------------------------------------------------------- ruff
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["app", "tests", "migrations", "scripts"]
+
+[tool.ruff.lint]
+select = [
+  "E", "W", "F", "I", "B", "UP", "N", "S", "C4", "SIM", "RET", "PTH", "TID", "ASYNC",
+  "BLE", "DTZ", "T20", "RUF", "PL",
+]
+ignore = [
+  "PLR0913",  # many-argument service functions are explicit, not a smell here
+  "PLR2004",  # magic numbers in tests and HTTP status codes
+  "N818",     # domain errors read as nouns: NotFound, PermissionDenied, Conflict
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "PLR2004", "S311", "PLC0415", "PLR0912"]
+"migrations/**" = ["E501"]
+"scripts/**" = ["T201"]
+"app/cli.py" = ["T201", "PLC0415"]  # commands import what they need lazily
+
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"sqlalchemy.orm.Query".msg = "Use select() with Session.execute/scalars; session.query() is banned."
+"boto3".msg = "Only app/files may talk to object storage."
+"botocore".msg = "Only app/files may talk to object storage."
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+# ---------------------------------------------------------------- mypy
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["app"]
+plugins = ["pydantic.mypy"]
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["celery.*", "kombu.*"]
+ignore_missing_imports = true
+
+# ---------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+testpaths = ["tests", "app"]
+addopts = "-ra --strict-markers"
+markers = [
+  "db: needs a real PostgreSQL 16 database (KX_TEST_DATABASE_URL)",
+]
+filterwarnings = ["error::DeprecationWarning:app.*"]
+
+# ---------------------------------------------------------------- import-linter
+[tool.importlinter]
+root_packages = ["app"]
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Core, audit and modules never import the web layer"
+# A module's routes_api.py / routes_web.py will need an ignore entry here when it lands.
+type = "forbidden"
+source_modules = ["app.core", "app.audit", "app.modules"]
+forbidden_modules = ["fastapi", "starlette", "jinja2", "app.web"]
+
+[[tool.importlinter.contracts]]
+name = "Only app.files talks to object storage"
+type = "forbidden"
+source_modules = ["app.core", "app.audit", "app.web", "app.modules", "app.authz"]
+forbidden_modules = ["boto3", "botocore"]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28",
+    "import-linter>=2.1",
+    "mypy>=1.13",
+    "pre-commit>=4.0",
+    "pytest>=8.3",
+    "ruff>=0.8",
+    "types-pyyaml>=6.0.12.20261113",
+]

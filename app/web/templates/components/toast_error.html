@@ -1,0 +1,5 @@
+{# Returned to HTMX requests that fail: swapped into #toasts out of band. #}
+{% import "components/ui.html" as ui with context %}
+<div id="toasts" hx-swap-oob="beforeend">
+  {{ ui.toast(message ~ (" Reference: " ~ request_id if status >= 500 and request_id else ""), status="danger") }}
+</div>

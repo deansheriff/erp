@@ -1,0 +1,37 @@
+# Install once with: uv run pre-commit install
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=600"]
+      - id: detect-private-key
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+        exclude: ^design/stitch/exports/
+      - id: trailing-whitespace
+        exclude: ^design/stitch/exports/
+  - repo: local
+    hooks:
+      - id: forbid-secrets-and-data
+        name: forbid .env files, data dumps and screenshots
+        language: fail
+        entry: "Never commit secrets, data exports or screenshots"
+        files: '(^|/)\.env($|\.(?!example$))|\.(csv|tsv|xlsx|xls|ofx|dump|sqlite3?|db|png|jpe?g)$'
+        exclude: ^app/web/static/img/
+      - id: ruff-check
+        name: ruff check
+        language: system
+        entry: uv run ruff check --fix
+        types: [python]
+      - id: ruff-format
+        name: ruff format
+        language: system
+        entry: uv run ruff format
+        types: [python]
+      - id: mypy
+        name: mypy (strict, app/)
+        language: system
+        entry: uv run mypy
+        pass_filenames: false
+        types: [python]

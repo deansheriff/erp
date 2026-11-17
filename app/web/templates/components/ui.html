@@ -1,0 +1,138 @@
+{# Shared components, converted from design/stitch/exports/core.components.gallery.html.
+   Import with: {% import "components/ui.html" as ui with context %} #}
+
+{% macro icon(name, size="", cls="") -%}
+<svg class="kx-icon {{ 'kx-icon-' ~ size if size }} {{ cls }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="{{ url_for('static', path='dist/icons.svg') }}?v={{ asset_version('dist/icons.svg') }}#{{ name }}"></use></svg>
+{%- endmacro %}
+
+{# status: success | warning | danger | info | neutral | new #}
+{% macro badge(status, label, pulse=false) -%}
+<span class="kx-badge-{{ status }}{{ ' kx-badge-pulse' if pulse }}">{{ label }}</span>
+{%- endmacro %}
+
+{% macro page_header(title, description=None, badge_status=None, badge_label=None, view_only=false) -%}
+<div class="relative">
+  <div class="kx-hue-glow" aria-hidden="true"></div>
+  <div class="relative flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+    <div class="space-y-1.5">
+      <div class="flex flex-wrap items-center gap-3">
+        <h1 class="font-h1 text-h1">{{ title }}</h1>
+        {% if badge_status %}{{ badge(badge_status, badge_label) }}{% endif %}
+        {% if view_only %}{{ badge("neutral", "View only") }}{% endif %}
+      </div>
+      {% if description %}<p class="text-body-sm text-ink-3">{{ description }}</p>{% endif %}
+    </div>
+    {% if caller %}<div class="flex flex-wrap items-center gap-3">{{ caller() }}</div>{% endif %}
+  </div>
+</div>
+{%- endmacro %}
+
+{% macro empty_state(icon_name, title, text) -%}
+<div class="flex flex-col items-center px-6 py-12 text-center">
+  <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-hue/15 bg-hue/10 text-hue">{{ icon(icon_name, "lg") }}</div>
+  <h3 class="font-h3 text-h3">{{ title }}</h3>
+  <p class="mt-1 max-w-sm text-body-sm text-ink-3">{{ text }}</p>
+  {% if caller %}<div class="mt-6">{{ caller() }}</div>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro kpi_tile(label, value, count_to=None, decimals=0, prefix="", trend=None, trend_up=true) -%}
+<div class="kx-card flex flex-col justify-between p-4 md:p-5">
+  <span class="kx-overline">{{ label }}</span>
+  <span class="mt-1 font-stat text-stat tnum"{% if count_to is not none %} data-count-to="{{ count_to }}" data-decimals="{{ decimals }}" data-prefix="{{ prefix }}"{% endif %}>{{ value }}</span>
+  {% if trend %}
+  <span class="mt-2 flex items-center gap-1 text-body-sm {{ 'text-success-text' if trend_up else 'text-danger-text' }}">
+    <span aria-hidden="true">{{ "▲" if trend_up else "▼" }}</span> {{ trend }}
+  </span>
+  {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro skeleton_rows(n=3) -%}
+<div class="space-y-4" aria-busy="true" aria-label="Loading">
+  {% for _ in range(n) %}
+  <div class="flex items-center justify-between gap-4 rounded-xl border border-line/60 bg-surface-sunken/30 p-4">
+    <div class="flex flex-1 items-center gap-4">
+      <div class="kx-skeleton h-10 w-10 shrink-0 rounded-lg"></div>
+      <div class="max-w-sm flex-1 space-y-2">
+        <div class="kx-skeleton h-4 w-3/4"></div>
+        <div class="kx-skeleton h-3 w-1/2"></div>
+      </div>
+    </div>
+    <div class="kx-skeleton hidden h-4 w-28 md:block"></div>
+    <div class="kx-skeleton h-6 w-20 rounded-full"></div>
+    <div class="kx-skeleton h-8 w-8 rounded-lg"></div>
+  </div>
+  {% endfor %}
+</div>
+{%- endmacro %}
+
+{# steps: list of dicts {label, meta, state: done|current|todo|rejected} #}
+{% macro stepper(steps) -%}
+<ol class="flex flex-col gap-6 md:flex-row md:gap-0">
+  {% for step in steps %}
+  <li class="relative flex gap-3 md:flex-1 md:flex-col md:gap-3">
+    <div class="flex items-center md:w-full">
+      {% if step.state == "done" %}
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-iris text-on-iris">{{ icon("check", "sm") }}<span class="sr-only">Completed:</span></span>
+      {% elif step.state == "current" %}
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-lime font-label font-semibold text-[#16162A] ring-4 ring-lime/30">{{ loop.index }}</span>
+      {% elif step.state == "rejected" %}
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-danger-bg text-danger-text">{{ icon("x", "sm") }}<span class="sr-only">Rejected:</span></span>
+      {% else %}
+      <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line-strong font-label text-ink-3">{{ loop.index }}</span>
+      {% endif %}
+      {% if not loop.last %}<span class="mx-2 hidden h-0.5 flex-1 rounded {{ 'bg-iris' if step.state == 'done' else 'bg-line' }} md:block" aria-hidden="true"></span>{% endif %}
+    </div>
+    <div>
+      <p class="flex flex-wrap items-center gap-2 font-h3 text-h3 {{ 'text-ink-3' if step.state == 'todo' else '' }}">
+        {{ step.label }}{% if step.state == "current" %} {{ badge("new", "Current") }}{% endif %}
+      </p>
+      {% if step.meta %}<p class="text-body-sm text-ink-3">{{ step.meta }}</p>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ol>
+{%- endmacro %}
+
+{# state: uploading | scanning | ready | infected | rejected #}
+{% macro file_row(name, size, state, progress=0, href=None, reason=None) -%}
+{% set danger = state in ("infected", "rejected") %}
+<div class="flex items-center gap-3 rounded-xl border p-3 {{ 'border-danger-text/20 bg-danger-bg/40' if danger else 'border-line bg-surface' }}">
+  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg {{ 'bg-danger-bg text-danger-text' if danger else 'bg-surface-sunken text-ink-2' }}">
+    {{ icon("triangle-alert" if danger else ("image" if name.lower().endswith((".jpg", ".jpeg", ".png")) else "file-text")) }}
+  </span>
+  <div class="min-w-0 flex-1">
+    {% if state == "ready" and href %}
+    <a href="{{ href }}" class="block truncate font-mono text-body-sm font-medium text-iris hover:underline">{{ name }}</a>
+    {% else %}
+    <p class="truncate font-mono text-body-sm font-medium {{ 'text-danger-text' if danger else 'text-ink' }}">{{ name }}</p>
+    {% endif %}
+    <p class="text-[12px] {{ 'text-danger-text' if state == 'infected' else 'text-ink-3' }}">{{ "This file was removed for your safety." if state == "infected" else size }}</p>
+  </div>
+  {% if state == "uploading" %}
+  <div class="hidden h-1.5 w-40 overflow-hidden rounded-full bg-surface-sunken sm:block" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" aria-label="Upload progress">
+    {# Width is set by app.js from data-progress: inline styles are blocked by the CSP. #}
+    <div class="h-full w-0 rounded-full bg-iris transition-[width] duration-base" data-progress="{{ progress }}"></div>
+  </div>
+  {{ badge("info", "Uploading " ~ progress ~ "%") }}
+  {% elif state == "scanning" %}{{ badge("warning", "Scanning for viruses", pulse=true) }}
+  {% elif state == "ready" %}{{ badge("success", "Ready") }}
+  {% elif state == "infected" %}{{ badge("danger", "Blocked: virus found") }}
+  {% else %}{{ badge("danger", "Rejected: " ~ (reason or "not allowed")) }}
+  {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro toast(message, status="success", action_label=None, action_href=None, persistent=false) -%}
+<div x-data="toast" x-show="visible" x-transition.opacity.duration.200ms data-persistent="{{ 'true' if persistent or status == 'danger' else 'false' }}"
+     class="kx-enter pointer-events-auto w-full max-w-sm overflow-hidden rounded-2xl border border-line bg-surface-raised shadow-raised {{ 'kx-nudge' if status == 'danger' }}"
+     role="{{ 'alert' if status == 'danger' else 'status' }}">
+  <div class="flex items-start gap-3 p-4">
+    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-{{ status }}-bg text-{{ status }}-text">{{ icon("circle-check" if status == "success" else "circle-alert", "sm") }}</span>
+    <p class="flex-1 text-body-sm text-ink">{{ message }}</p>
+    {% if action_label %}<a href="{{ action_href }}" class="font-label text-label text-iris hover:underline">{{ action_label }}</a>{% endif %}
+    <button type="button" class="-m-2 flex h-11 w-11 items-center justify-center rounded-control text-ink-3 hover:text-ink" x-on:click="dismiss" aria-label="Dismiss">{{ icon("x", "sm") }}</button>
+  </div>
+</div>
+{%- endmacro %}

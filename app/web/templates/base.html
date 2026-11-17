@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  {# Error responses are swapped too: the server answers HTMX errors with HX-Reswap: none
+     and an out-of-band toast, so the page stays put and the message appears. #}
+  <meta name="htmx-config" content='{"allowEval": false, "includeIndicatorStyles": false, "globalViewTransitions": true, "scrollIntoViewOnBoost": false, "responseHandling": [{"code": "204", "swap": false}, {"code": "[23]..", "swap": true}, {"code": "[45]..", "swap": true, "error": true}]}'>
+  <title>{% block title %}{{ page_title | default("Kxmeleon ERP") }}{% endblock %} · Kxmeleon</title>
+  <script src="{{ url_for('static', path='dist/theme-init.js') }}?v={{ asset_version('dist/theme-init.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', path='dist/app.css') }}?v={{ asset_version('dist/app.css') }}">
+  <link rel="icon" href="{{ url_for('static', path='img/mark.svg') }}" type="image/svg+xml">
+  <script defer src="{{ url_for('static', path='dist/vendor/htmx.min.js') }}?v={{ asset_version('dist/vendor/htmx.min.js') }}"></script>
+  <script defer src="{{ url_for('static', path='dist/app.js') }}?v={{ asset_version('dist/app.js') }}"></script>
+  <script defer src="{{ url_for('static', path='dist/vendor/alpine-csp.min.js') }}?v={{ asset_version('dist/vendor/alpine-csp.min.js') }}"></script>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] kx-btn-primary">Skip to content</a>
+  {% block body %}{% endblock %}
+  <div id="toasts" class="pointer-events-none fixed inset-x-4 top-4 z-[90] flex flex-col items-end gap-2 md:inset-x-auto md:bottom-6 md:right-6 md:top-auto" aria-live="polite"></div>
+</body>
+</html>

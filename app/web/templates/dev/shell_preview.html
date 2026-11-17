@@ -1,0 +1,106 @@
+{# Preview of the app shell with an Expenses "All claims" list.
+   Design source: design/stitch/exports/core.shell.desktop.html and core.shell.mobile.html. #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("All claims", "Every expense claim in the organisation, newest first.") %}
+  <a href="#" class="kx-btn-secondary">{{ ui.icon("download", "sm") }} Export</a>
+  <a href="#" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New claim</a>
+{% endcall %}
+
+<div class="kx-scroll-x relative mt-6 flex items-center gap-8 border-b border-line" role="tablist" aria-label="Claim status">
+  {% for label, count, on in [("All", 142, true), ("Submitted", 19, false), ("Approved", 48, false), ("Reimbursed", 75, false)] %}
+  <a href="#" role="tab" aria-selected="{{ 'true' if on else 'false' }}" class="-mb-px flex min-h-[44px] items-center gap-2 whitespace-nowrap border-b-2 pb-2 text-body-sm transition-colors duration-fast {{ 'border-iris font-semibold text-iris' if on else 'border-transparent font-medium text-ink-2 hover:text-ink' }}">
+    {{ label }}
+    <span class="rounded-full px-2 py-0.5 text-[11px] {{ 'bg-iris-tint font-bold text-iris-hover' if on else 'bg-surface-sunken font-medium text-ink-3' }}">{{ count }}</span>
+  </a>
+  {% endfor %}
+</div>
+
+<div class="kx-stagger mt-6 grid grid-cols-2 gap-3 md:gap-4 xl:grid-cols-4">
+  {{ ui.kpi_tile("Submitted this month", "19", count_to=19) }}
+  {{ ui.kpi_tile("Awaiting approval", "₦86,500.00", count_to=86500, decimals=2, prefix="₦", trend="12% vs last month", trend_up=false) }}
+  {{ ui.kpi_tile("Approved", "48", count_to=48, trend="4 more than October") }}
+  {{ ui.kpi_tile("Reimbursed", "₦1,204,310.00", count_to=1204310, decimals=2, prefix="₦") }}
+</div>
+
+<section class="kx-card kx-enter mt-6 overflow-hidden">
+  <div class="flex flex-col gap-3 border-b border-line p-4 md:flex-row md:items-center md:justify-between md:p-5">
+    <label class="relative block w-full md:max-w-xs">
+      <span class="sr-only">Search claims</span>
+      {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+      <input type="search" class="kx-input pl-10" placeholder="Search claims…">
+    </label>
+    <div class="flex flex-wrap items-center gap-2">
+      <button type="button" class="kx-btn h-11 border border-iris/30 bg-iris-tint text-iris-hover">Status: Submitted {{ ui.icon("x", "sm") }}</button>
+      <button type="button" class="kx-btn-secondary">Department {{ ui.icon("chevron-down", "sm") }}</button>
+      <button type="button" class="kx-btn-secondary">Date range {{ ui.icon("chevron-down", "sm") }}</button>
+      <a href="#" class="px-2 text-label text-iris hover:underline">Clear all</a>
+    </div>
+  </div>
+
+  {# Desktop and tablet: table. Mobile: stacked cards. #}
+  <div class="hidden overflow-x-auto md:block">
+    <table class="kx-table">
+      <thead>
+        <tr>
+          <th scope="col">Claim no.</th>
+          <th scope="col">Employee</th>
+          <th scope="col">Department</th>
+          <th scope="col" aria-sort="descending">Submitted</th>
+          <th scope="col" class="num">Amount</th>
+          <th scope="col">Status</th>
+          <th scope="col"><span class="sr-only">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in claims %}
+        <tr>
+          <td class="font-mono">{{ c.number }}</td>
+          <td>
+            <span class="flex items-center gap-2.5">
+              <span class="flex h-8 w-8 items-center justify-center rounded-full border border-line bg-surface-sunken text-[11px] font-semibold text-ink-2">{{ c.employee.split()[0][0] }}{{ c.employee.split()[-1][0] }}</span>
+              {{ c.employee }}
+            </span>
+          </td>
+          <td class="text-ink-2">{{ c.department }}</td>
+          <td class="text-ink-2">{{ c.submitted | date }}</td>
+          <td class="num font-medium {{ 'text-danger-text' if c.amount < 0 }}">{{ c.amount | money }}</td>
+          <td>{{ ui.badge(c.status, c.status_label) }}</td>
+          <td class="text-right"><button type="button" class="kx-btn-icon" aria-label="Actions for {{ c.number }}">{{ ui.icon("ellipsis-vertical", "sm") }}</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <ul class="divide-y divide-line md:hidden">
+    {% for c in claims %}
+    <li>
+      <a href="#" class="flex items-center gap-3 p-4">
+        <div class="min-w-0 flex-1">
+          <p class="font-mono text-xs text-ink-3">{{ c.number }}</p>
+          <p class="truncate font-semibold">{{ c.employee }}</p>
+          <p class="tnum font-h3 text-h3 {{ 'text-danger-text' if c.amount < 0 }}">{{ c.amount | money }}</p>
+        </div>
+        {{ ui.badge(c.status, c.status_label) }}
+        {{ ui.icon("chevron-right", "sm", "text-ink-3") }}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <div class="flex items-center justify-between border-t border-line px-4 py-3 text-body-sm text-ink-2 md:px-5">
+    <span>Showing <strong class="text-ink">1–5</strong> of <strong class="text-ink">142</strong></span>
+    <span class="flex items-center gap-1">
+      <button type="button" class="kx-btn-icon" aria-label="Previous page" disabled>{{ ui.icon("chevron-left", "sm") }}</button>
+      <button type="button" class="kx-btn-icon" aria-label="Next page">{{ ui.icon("chevron-right", "sm") }}</button>
+    </span>
+  </div>
+</section>
+
+<section class="kx-card kx-enter mt-6 p-4 md:p-6">
+  <h2 class="font-h2 text-h2">Loading state</h2>
+  <p class="mb-5 text-body-sm text-ink-3">What a list shows while its rows load.</p>
+  {{ ui.skeleton_rows(3) }}
+</section>
+{% endblock %}

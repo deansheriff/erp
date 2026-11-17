@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP - All claims</title>
+<!-- Stitch export: project 2736752339961073788, screen 01b75fe38d10435aa293cfa2e290bad3.
+     Refinements from edit_screens (2026-11-17) applied: no "Active module" badge, no org
+     subtitle, single-line Ctrl K keycap, no loading pill or footer in the content card,
+     Expenses module row at 12% tangerine tint without the dot. -->
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-raised": "#FFFFFF",
+            "danger-text": "#B4232F",
+            "primary": "#412ec2",
+            "background": "#f9f9fd",
+            "on-secondary-fixed": "#161f00",
+            "surface-container-high": "#e8e8ec",
+            "iris-tint": "#EEECFD",
+            "on-secondary": "#ffffff",
+            "warning-text": "#8A4B00",
+            "success-bg": "#DDF7E8",
+            "iris": "#5A4BDB",
+            "on-error-container": "#93000a",
+            "inverse-on-surface": "#f0f0f4",
+            "error-container": "#ffdad6",
+            "line": "#E4E4EE",
+            "destructive": "#C42836",
+            "tertiary-fixed-dim": "#ffb68b",
+            "primary-fixed-dim": "#c5c0ff",
+            "tertiary-container": "#9f4a00",
+            "on-iris": "#FFFFFF",
+            "error": "#ba1a1a",
+            "danger-bg": "#FFE4E6",
+            "secondary-fixed": "#c7f24c",
+            "secondary-container": "#c4ef49",
+            "info-bg": "#DFEBFF",
+            "secondary-fixed-dim": "#acd530",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#c5c0ff",
+            "on-background": "#1a1c1f",
+            "warning-bg": "#FFF1D6",
+            "on-surface-variant": "#474554",
+            "on-tertiary": "#ffffff",
+            "iris-hover": "#4A3CC4",
+            "tertiary-fixed": "#ffdbc8",
+            "secondary": "#4f6600",
+            "surface-tint": "#5646d7",
+            "surface-bright": "#f9f9fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#140067",
+            "surface-container-low": "#f3f3f7",
+            "ink-2": "#4B4B66",
+            "on-tertiary-fixed": "#321300",
+            "ink-3": "#626280",
+            "info-text": "#1D55B8",
+            "surface-container-highest": "#e2e2e6",
+            "surface-dim": "#d9dade",
+            "on-surface": "#1a1c1f",
+            "outline": "#787586",
+            "tertiary": "#7a3700",
+            "lime": "#C5F04A",
+            "on-tertiary-fixed-variant": "#743400",
+            "surface-variant": "#e2e2e6",
+            "on-tertiary-container": "#ffd7c1",
+            "lime-ink": "#4D7A0A",
+            "surface-container": "#ededf1",
+            "line-strong": "#8B8BA6",
+            "primary-container": "#5a4bdb",
+            "success-text": "#0F6B3E",
+            "surface-sunken": "#EFEFF6",
+            "ink": "#16162A",
+            "surface": "#FFFFFF",
+            "on-error": "#ffffff",
+            "on-secondary-container": "#536b00",
+            "on-primary-container": "#e0dbff",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "outline-variant": "#c8c4d7",
+            "canvas": "#F6F6FA",
+            "inverse-surface": "#2e3034",
+            "primary-fixed": "#e4dfff",
+            "on-primary-fixed-variant": "#3d28be",
+            "tangerine": "#C2410C",
+            "tangerine-tint": "#FFF7ED"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "body": ["Inter"],
+            "h2": ["Plus Jakarta Sans"],
+            "label": ["Inter"],
+            "h1": ["Plus Jakarta Sans"],
+            "overline": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "h3": ["Plus Jakarta Sans"],
+            "stat": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          },
+          "boxShadow": {
+            "card": "0 1px 2px rgba(22, 22, 42, 0.04)",
+            "raised": "0 8px 24px -6px rgba(22, 22, 42, 0.12)"
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-1 {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .animate-shimmer {
+      background: linear-gradient(90deg, #EFEFF6 25%, #F6F6FA 50%, #EFEFF6 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite ease-in-out;
+    }
+
+    /* Custom scrollbar styling for sidebar */
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: #E4E4EE;
+      border-radius: 9999px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+      background: #8B8BA6;
+    }
+  </style>
+</head>
+<body class="bg-canvas text-ink antialiased min-h-screen overflow-x-hidden selection:bg-iris selection:text-white">
+<!-- 1. LEFT SIDEBAR COMPONENT (Fixed 272px) -->
+<aside class="fixed top-0 left-0 h-screen w-[272px] z-30 flex flex-col justify-between p-4 bg-surface border-r border-line shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Top Block: Brand Header & Combobox -->
+<div class="flex-shrink-0">
+<!-- Organization Brand Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div aria-label="Adeyemi Holdings Ltd Corporate Crest" class="w-9 h-9 rounded-xl bg-ink text-white font-h2 text-label font-bold flex items-center justify-center shadow-sm tracking-tight">
+            AH
+          </div>
+<div class="flex flex-col">
+<span class="font-h2 text-label font-bold text-ink leading-tight">Adeyemi Holdings Ltd</span>
+</div>
+</div>
+<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+</div>
+<!-- Quick Nav Combobox -->
+<button aria-label="Quick Navigation" class="w-full bg-surface-sunken hover:bg-surface-container-low text-ink-3 hover:text-ink rounded-lg px-3 py-2 text-label font-label flex items-center justify-between border border-line mt-3 mb-4 transition-all duration-150 active:scale-[0.99] group" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-ink-3 group-hover:text-ink">search</span>
+<span class="font-body-sm text-body-sm">Go to…</span>
+</div>
+<kbd class="font-label text-[11px] bg-surface text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-sm font-semibold">Ctrl K</kbd>
+</button>
+</div>
+<!-- Navigation Modules Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto sidebar-scroll pr-1 -mr-1">
+<div class="font-overline text-[11px] font-semibold text-ink-3 tracking-wider uppercase mb-2 px-2">
+        MODULES
+      </div>
+<nav aria-label="Enterprise Modules" class="space-y-0.5">
+<!-- Home -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#3F3F5A]/[0.12] text-[#3F3F5A] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">home</span>
+</div>
+<span class="truncate">Home</span>
+</a>
+<!-- HR -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#7C3AED]/[0.12] text-[#7C3AED] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<span class="truncate">HR</span>
+</a>
+<!-- Leave -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0369A1]/[0.12] text-[#0369A1] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</div>
+<span class="truncate">Leave</span>
+</a>
+<!-- Attendance -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0E7490]/[0.12] text-[#0E7490] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+<span class="truncate">Attendance</span>
+</a>
+<!-- ACTIVE MODULE: Expenses -->
+<div class="pt-0.5 pb-1">
+<div class="h-11 flex items-center justify-between px-2 rounded-lg bg-tangerine/[0.12] text-tangerine font-semibold"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-lg flex items-center justify-center bg-tangerine/[0.16] text-tangerine flex-shrink-0"><span class="material-symbols-outlined text-[20px] fill-1">payments</span></div><span class="font-h3 text-label text-ink font-semibold">Expenses</span></div></div>
+<!-- Indented Sub-sections under Expenses -->
+<div class="ml-6 pl-4 border-l border-line mt-1 space-y-0.5">
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              My claims
+            </a>
+<a class="flex items-center justify-between py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+<span>Approvals</span>
+<span class="bg-surface-sunken border border-line text-ink-2 text-[11px] font-semibold px-2 py-0.5 rounded-full">4</span>
+</a>
+<!-- ACTIVE SUB-ITEM: All claims -->
+<a class="relative flex items-center py-1.5 pl-3 pr-2.5 text-label font-medium bg-iris-tint text-iris-hover rounded-md transition-colors duration-150 shadow-sm" href="#">
+<span class="absolute left-0 top-1 bottom-1 w-[3px] bg-tangerine rounded-full"></span>
+<span class="font-semibold text-iris-hover">All claims</span>
+</a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              Cash advances
+            </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              Categories
+            </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              Reports
+            </a>
+</div>
+</div>
+<!-- Payroll -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#047857]/[0.12] text-[#047857] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+<span class="truncate">Payroll</span>
+</a>
+<!-- Finance -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#1D4ED8]/[0.12] text-[#1D4ED8] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">query_stats</span>
+</div>
+<span class="truncate">Finance</span>
+</a>
+<!-- Inventory -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#92400E]/[0.12] text-[#92400E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<span class="truncate">Inventory</span>
+</a>
+<!-- Projects -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0F766E]/[0.12] text-[#0F766E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">work</span>
+</div>
+<span class="truncate">Projects</span>
+</a>
+<!-- Support -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#BE185D]/[0.12] text-[#BE185D] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+</div>
+<span class="truncate">Support</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Bottom: Secondary Navigation & User Mini-Card -->
+<div class="flex-shrink-0 pt-3 border-t border-line mt-2 space-y-1">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span>Help &amp; documentation</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Settings</span>
+</a>
+<!-- User Mini-Card -->
+<div class="rounded-xl p-2.5 bg-surface-sunken/60 hover:bg-surface-sunken border border-line flex items-center justify-between mt-2 cursor-pointer transition-colors duration-150 group">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center flex-shrink-0 shadow-sm">
+            FB
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink truncate leading-snug">Fatima Bello</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-snug">Finance Manager</span>
+</div>
+</div>
+<button aria-label="Account options" class="w-7 h-7 rounded-md flex items-center justify-center text-ink-3 group-hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- 2. TOP BAR COMPONENT (Sticky 64px, ML 272px) -->
+<header class="sticky top-0 ml-[272px] h-16 bg-surface/80 backdrop-blur-md border-b border-line flex items-center justify-between px-8 z-20 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Left: Breadcrumb Trail -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2">
+<span class="font-label text-body-sm text-ink-2">Expenses</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">All claims</span>
+</nav>
+<!-- Centre: Global Search Field -->
+<div class="max-w-md w-full mx-6">
+<div class="relative flex items-center bg-surface-sunken rounded-[10px] px-3.5 py-2 border border-transparent focus-within:border-iris focus-within:bg-white transition-all shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-ink-3 mr-2.5">search</span>
+<input class="w-full bg-transparent border-0 p-0 text-body-sm text-ink placeholder:text-ink-3 focus:ring-0 focus:outline-none" placeholder="Search people, claims, invoices…" type="text"/>
+<kbd class="font-label text-[11px] bg-white text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-xs font-semibold ml-2 select-none flex-shrink-0">Ctrl K</kbd>
+</div>
+</div>
+<!-- Right: 44x44 Touch Target Action Cluster -->
+<div class="flex items-center gap-2">
+<!-- Approvals Inbox Button -->
+<button aria-label="Approvals inbox" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">inbox</span>
+<span class="absolute top-2 right-2 bg-iris text-white font-label text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center leading-none ring-2 ring-surface">
+          7
+        </span>
+</button>
+<!-- Notifications Bell Button -->
+<button aria-label="Notifications" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span>
+</button>
+<!-- Theme Toggle Button -->
+<button aria-label="Toggle theme" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">light_mode</span>
+</button>
+<!-- User Profile Avatar Mini-Pill -->
+<button aria-label="User profile menu" class="h-11 pl-1.5 pr-2.5 rounded-[10px] hover:bg-surface-sunken flex items-center gap-2 border border-transparent hover:border-line transition-all duration-150 ml-1" type="button">
+<div class="w-8 h-8 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center shadow-xs">
+          FB
+        </div>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Bottom Loading Bar: Simulating HTMX 60% loading state in Tangerine -->
+<div class="absolute bottom-0 left-0 w-3/5 h-[2px] bg-tangerine transition-all duration-300"></div>
+</header>
+<!-- 3. MAIN CONTENT AREA (ML 272px, Min H calc(100vh - 64px)) -->
+<main class="ml-[272px] min-h-[calc(100vh-64px)] bg-canvas p-8 relative overflow-hidden">
+<!-- Soft radial ambient glow in top-left behind page header -->
+<div class="absolute -top-16 -left-16 w-[480px] h-[480px] rounded-full pointer-events-none opacity-10 bg-[radial-gradient(ellipse_at_center,_#C2410C_0%,_transparent_70%)]"></div>
+<div class="max-w-[1440px] mx-auto relative z-10">
+<!-- Page Header -->
+<div class="flex flex-col gap-6">
+<div class="flex items-start justify-between">
+<div class="space-y-1.5">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink tracking-tight font-bold">All claims</h1>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+              Every expense claim in the organisation, newest first.
+            </p>
+</div>
+<!-- Header Right Actions -->
+<div class="flex items-center gap-3">
+<button class="h-11 px-4 rounded-[10px] bg-surface border border-line-strong text-ink hover:bg-surface-sunken text-label font-label font-medium flex items-center gap-2 transition-colors duration-150 shadow-sm active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export</span>
+</button>
+<button class="h-11 px-4 rounded-[10px] bg-iris text-white hover:bg-iris-hover text-label font-label font-medium flex items-center gap-2 transition-colors duration-150 shadow-sm active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>New claim</span>
+</button>
+</div>
+</div>
+<!-- Segmented Underline Tabs -->
+<div class="border-b border-line flex items-center gap-8 -mb-px">
+<button class="pb-3 text-body-sm font-semibold text-iris border-b-2 border-iris transition-colors relative flex items-center gap-2" type="button">
+<span>All</span>
+<span class="bg-iris-tint text-iris text-[11px] font-bold px-2 py-0.5 rounded-full">142</span>
+</button>
+<button class="pb-3 text-body-sm font-medium text-ink-2 hover:text-ink border-b-2 border-transparent transition-colors flex items-center gap-2" type="button">
+<span>Submitted</span>
+<span class="bg-surface-sunken text-ink-3 text-[11px] font-medium px-2 py-0.5 rounded-full">19</span>
+</button>
+<button class="pb-3 text-body-sm font-medium text-ink-2 hover:text-ink border-b-2 border-transparent transition-colors flex items-center gap-2" type="button">
+<span>Approved</span>
+<span class="bg-surface-sunken text-ink-3 text-[11px] font-medium px-2 py-0.5 rounded-full">48</span>
+</button>
+<button class="pb-3 text-body-sm font-medium text-ink-2 hover:text-ink border-b-2 border-transparent transition-colors flex items-center gap-2" type="button">
+<span>Reimbursed</span>
+<span class="bg-surface-sunken text-ink-3 text-[11px] font-medium px-2 py-0.5 rounded-full">75</span>
+</button>
+</div>
+</div>
+<!-- Content Container Placeholder Card -->
+<div class="bg-surface rounded-2xl p-6 border border-line shadow-card mt-6">
+<div class="flex items-center justify-between pb-5 border-b border-line mb-6">
+<div>
+<h2 class="font-h2 text-h2 text-ink font-semibold">Page content</h2>
+<p class="font-body-sm text-body-sm text-ink-3">Module views and data tables render within this container</p>
+</div>
+</div>
+<!-- 3 Skeleton Data Rows with Animated Shimmer Sweep -->
+<div class="space-y-4">
+<!-- Skeleton Row 1 -->
+<div class="p-4 rounded-xl border border-line/60 bg-surface-sunken/30 flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-10 h-10 rounded-lg animate-shimmer flex-shrink-0"></div>
+<div class="space-y-2 flex-1 max-w-sm">
+<div class="h-4 w-3/4 rounded animate-shimmer"></div>
+<div class="h-3 w-1/2 rounded animate-shimmer"></div>
+</div>
+</div>
+<div class="h-4 w-28 rounded animate-shimmer hidden md:block"></div>
+<div class="h-6 w-20 rounded-full animate-shimmer"></div>
+<div class="h-4 w-24 rounded animate-shimmer"></div>
+<div class="w-8 h-8 rounded-lg animate-shimmer"></div>
+</div>
+<!-- Skeleton Row 2 -->
+<div class="p-4 rounded-xl border border-line/60 bg-surface-sunken/30 flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-10 h-10 rounded-lg animate-shimmer flex-shrink-0"></div>
+<div class="space-y-2 flex-1 max-w-sm">
+<div class="h-4 w-2/3 rounded animate-shimmer"></div>
+<div class="h-3 w-1/3 rounded animate-shimmer"></div>
+</div>
+</div>
+<div class="h-4 w-28 rounded animate-shimmer hidden md:block"></div>
+<div class="h-6 w-20 rounded-full animate-shimmer"></div>
+<div class="h-4 w-24 rounded animate-shimmer"></div>
+<div class="w-8 h-8 rounded-lg animate-shimmer"></div>
+</div>
+<!-- Skeleton Row 3 -->
+<div class="p-4 rounded-xl border border-line/60 bg-surface-sunken/30 flex items-center justify-between gap-4">
+<div class="flex items-center gap-4 flex-1">
+<div class="w-10 h-10 rounded-lg animate-shimmer flex-shrink-0"></div>
+<div class="space-y-2 flex-1 max-w-sm">
+<div class="h-4 w-4/5 rounded animate-shimmer"></div>
+<div class="h-3 w-2/5 rounded animate-shimmer"></div>
+</div>
+</div>
+<div class="h-4 w-28 rounded animate-shimmer hidden md:block"></div>
+<div class="h-6 w-20 rounded-full animate-shimmer"></div>
+<div class="h-4 w-24 rounded animate-shimmer"></div>
+<div class="w-8 h-8 rounded-lg animate-shimmer"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

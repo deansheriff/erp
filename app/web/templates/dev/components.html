@@ -1,0 +1,161 @@
+{# Shared components gallery. Design source: design/stitch/exports/core.components.gallery.html. #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{{ ui.page_header("Components", "Every shared building block, in all its states. Switch the theme to check dark mode.") }}
+
+<div class="kx-stagger mt-8 space-y-8">
+
+  <section aria-labelledby="c-buttons">
+    <p class="kx-overline mb-3 text-iris" id="c-buttons">Buttons</p>
+    <div class="kx-card kx-card-body flex flex-wrap items-center gap-3">
+      <button type="button" class="kx-btn-primary">Submit claim</button>
+      <button type="button" class="kx-btn-secondary">Save draft</button>
+      <button type="button" class="kx-btn-ghost">Cancel</button>
+      <button type="button" class="kx-btn-danger">Delete</button>
+      <button type="button" class="kx-btn-icon border border-line" aria-label="More actions">{{ ui.icon("ellipsis-vertical", "sm") }}</button>
+      <button type="button" class="kx-btn-primary" aria-busy="true">{{ ui.icon("loader-circle", "sm", "animate-spin") }} Saving…</button>
+      <button type="button" class="kx-btn-primary" disabled>Disabled</button>
+    </div>
+  </section>
+
+  <section aria-labelledby="c-badges">
+    <p class="kx-overline mb-3 text-iris" id="c-badges">Status badges</p>
+    <div class="kx-card kx-card-body flex flex-wrap items-center gap-3">
+      {{ ui.badge("success", "Approved") }} {{ ui.badge("warning", "Pending") }} {{ ui.badge("danger", "Rejected") }}
+      {{ ui.badge("info", "Submitted") }} {{ ui.badge("neutral", "Draft") }} {{ ui.badge("new", "New") }}
+      {{ ui.badge("warning", "Scanning for viruses", pulse=true) }}
+    </div>
+  </section>
+
+  <section aria-labelledby="c-table">
+    <p class="kx-overline mb-3 text-iris" id="c-table">Data table with bulk actions</p>
+    <div class="kx-card overflow-hidden">
+      <div class="m-4 flex flex-wrap items-center gap-3 rounded-xl border border-iris/20 bg-iris-tint px-4 py-2.5 text-label text-iris-hover md:m-5">
+        <strong>3 claims selected</strong>
+        <a href="#" class="flex min-h-[44px] items-center gap-1.5 hover:underline">{{ ui.icon("check", "sm") }} Approve</a>
+        <a href="#" class="flex min-h-[44px] items-center gap-1.5 hover:underline">{{ ui.icon("download", "sm") }} Export</a>
+        <a href="#" class="ml-auto text-body-sm hover:underline">Clear selection</a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="kx-table">
+          <thead><tr>
+            <th scope="col" class="w-12"><input type="checkbox" class="kx-check" checked aria-label="Select all"></th>
+            <th scope="col">Claim no.</th><th scope="col">Employee</th><th scope="col">Submitted</th>
+            <th scope="col" class="num">Amount</th><th scope="col">Status</th>
+          </tr></thead>
+          <tbody>
+            {% for c in claims %}
+            <tr aria-selected="{{ 'true' if not loop.last else 'false' }}">
+              <td><input type="checkbox" class="kx-check" {% if not loop.last %}checked{% endif %} aria-label="Select {{ c.number }}"></td>
+              <td class="font-mono">{{ c.number }}</td>
+              <td>{{ c.employee }}</td>
+              <td class="text-ink-2">{{ c.submitted | date }}</td>
+              <td class="num font-medium {{ 'text-danger-text' if c.amount < 0 }}">{{ c.amount | money }}</td>
+              <td>{{ ui.badge(c.status, c.status_label) }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="c-form">
+    <p class="kx-overline mb-3 text-iris" id="c-form">Form layout</p>
+    <form class="kx-card kx-card-body" novalidate>
+      <h2 class="font-h2 text-h2">Claim details</h2>
+      <p class="mb-6 text-body-sm text-ink-3">Labels above fields, help under the label, errors under the field.</p>
+      <div class="grid gap-5 md:grid-cols-2">
+        <div>
+          <label class="kx-label" for="f-title">Title <span class="font-normal text-ink-3">(required)</span></label>
+          <input id="f-title" class="kx-input" value="Lagos client onboarding dinner">
+        </div>
+        <div>
+          <label class="kx-label" for="f-date">Date</label>
+          <input id="f-date" class="kx-input" value="17/11/2026" inputmode="numeric" placeholder="DD/MM/YYYY">
+        </div>
+        <div>
+          <label class="kx-label" for="f-cc">Cost centre</label>
+          <select id="f-cc" class="kx-input"><option>NG-LOS-OPS-04 (Lagos Operations)</option><option>NG-ABJ-FIN-01 (Abuja Finance)</option></select>
+        </div>
+        <div>
+          <label class="kx-label" for="f-amount">Amount <span class="font-normal text-ink-3">(required)</span></label>
+          <span class="kx-hint" id="f-amount-hint">In naira, including VAT.</span>
+          <div class="relative">
+            <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3">₦</span>
+            <input id="f-amount" class="kx-input pl-8 text-right tnum" value="0.00" aria-invalid="true" aria-describedby="f-amount-hint f-amount-error">
+          </div>
+          <p class="kx-field-error" id="f-amount-error">{{ ui.icon("circle-alert", "sm") }} Enter an amount greater than ₦0.00</p>
+        </div>
+        <div class="md:col-span-2">
+          <label class="kx-label" for="f-notes">Notes</label>
+          <textarea id="f-notes" class="kx-input" maxlength="500" placeholder="What was this for?"></textarea>
+        </div>
+      </div>
+      <div class="mt-6 flex flex-col-reverse gap-3 border-t border-line pt-5 sm:flex-row sm:justify-end">
+        <button type="button" class="kx-btn-ghost">Cancel</button>
+        <button type="button" class="kx-btn-secondary">Save draft</button>
+        <button type="button" class="kx-btn-primary">Submit claim</button>
+      </div>
+    </form>
+  </section>
+
+  <section aria-labelledby="c-files">
+    <p class="kx-overline mb-3 text-iris" id="c-files">File uploader with scan state</p>
+    <div class="kx-card kx-card-body space-y-3">
+      <label class="flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-line-strong/60 px-6 py-10 text-center transition-colors duration-fast hover:border-iris hover:bg-iris-tint/40">
+        <span class="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-iris-tint text-iris">{{ ui.icon("cloud-upload") }}</span>
+        <span class="font-h3 text-h3">Drag a receipt here or <span class="text-iris underline-offset-2 hover:underline">choose file</span></span>
+        <span class="mt-1 text-body-sm text-ink-3">PDF, JPG or PNG up to 10 MB</span>
+        <input type="file" class="sr-only" accept=".pdf,.jpg,.jpeg,.png">
+      </label>
+      {{ ui.file_row("receipt-uber.pdf", "182 KB", "uploading", progress=45) }}
+      {{ ui.file_row("hotel-invoice.pdf", "1.2 MB", "scanning") }}
+      {{ ui.file_row("fuel-receipt.jpg", "640 KB", "ready", href="#") }}
+      {{ ui.file_row("invoice.exe", "2.1 MB", "rejected", reason="file type not allowed") }}
+      {{ ui.file_row("scan-0021.pdf", "320 KB", "infected") }}
+    </div>
+  </section>
+
+  <section aria-labelledby="c-feedback">
+    <p class="kx-overline mb-3 text-iris" id="c-feedback">Empty state, toast and confirmation</p>
+    <div class="grid gap-4 lg:grid-cols-3">
+      <div class="kx-card module-expenses">
+        {% call ui.empty_state("receipt", "No claims yet", "Claims you submit appear here with their approval progress.") %}
+          <a href="#" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New claim</a>
+        {% endcall %}
+      </div>
+      <div class="kx-card flex items-center justify-center p-6">
+        {{ ui.toast("Claim EXP-2026-000142 sent to Adaeze Okafor for approval.", action_label="View", action_href="#", persistent=true) }}
+      </div>
+      <div class="kx-card p-6" x-data="modal">
+        <p class="mb-4 text-body-sm text-ink-3">Irreversible actions always confirm, naming the action and its consequence.</p>
+        <button type="button" class="kx-btn-primary" x-on:click="show">Post payroll…</button>
+        <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex items-end justify-center bg-[rgb(11_11_18/0.45)] p-0 backdrop-blur-[4px] sm:items-center sm:p-4" x-on:keydown.escape.window="hide" x-transition.opacity.duration.200ms>
+          <div x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="m-title" class="w-full max-w-md rounded-t-sheet bg-surface-raised p-6 shadow-overlay sm:rounded-sheet" x-on:click.outside="hide"
+               x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="opacity-0 scale-[0.96]" x-transition:enter-end="opacity-100 scale-100">
+            <div class="flex gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-warning-bg text-warning-text">{{ ui.icon("circle-alert") }}</span>
+              <div>
+                <h2 id="m-title" class="font-h2 text-h2">Post payroll for October 2026?</h2>
+                <p class="mt-2 text-body-sm text-ink-2">This creates journal entries. Posted payroll can't be edited, only reversed.</p>
+              </div>
+            </div>
+            <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <button type="button" class="kx-btn-secondary" x-on:click="hide">Cancel</button>
+              <button type="button" class="kx-btn-primary" x-on:click="hide">Post payroll</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="c-stepper">
+    <p class="kx-overline mb-3 text-iris" id="c-stepper">Approval stepper</p>
+    <div class="kx-card kx-card-body">{{ ui.stepper(steps) }}</div>
+  </section>
+</div>
+{% endblock %}

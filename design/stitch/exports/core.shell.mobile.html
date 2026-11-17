@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP - Employee Self-Service</title>
+<!-- Stitch export: project 2736752339961073788, screen 3a8453ff8d5d410d88f5c77fb1998131. -->
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface": "#1a1c1f",
+            "on-error-container": "#93000a",
+            "secondary-fixed-dim": "#acd530",
+            "primary-fixed": "#e4dfff",
+            "surface-tint": "#5646d7",
+            "iris-hover": "#4A3CC4",
+            "info-bg": "#DFEBFF",
+            "on-primary": "#ffffff",
+            "primary": "#412ec2",
+            "destructive": "#C42836",
+            "surface-dim": "#d9dade",
+            "ink": "#16162A",
+            "line": "#E4E4EE",
+            "warning-text": "#8A4B00",
+            "tertiary-fixed": "#ffdbc8",
+            "success-text": "#0F6B3E",
+            "danger-text": "#B4232F",
+            "surface-container": "#ededf1",
+            "lime-ink": "#4D7A0A",
+            "on-tertiary-fixed": "#321300",
+            "iris-tint": "#EEECFD",
+            "background": "#f9f9fd",
+            "surface-variant": "#e2e2e6",
+            "surface-container-low": "#f3f3f7",
+            "outline": "#787586",
+            "primary-container": "#5a4bdb",
+            "on-secondary-fixed": "#161f00",
+            "secondary": "#4f6600",
+            "danger-bg": "#FFE4E6",
+            "on-tertiary-fixed-variant": "#743400",
+            "tertiary-fixed-dim": "#ffb68b",
+            "on-tertiary-container": "#ffd7c1",
+            "on-error": "#ffffff",
+            "inverse-surface": "#2e3034",
+            "on-surface-variant": "#474554",
+            "success-bg": "#DDF7E8",
+            "on-primary-container": "#e0dbff",
+            "iris": "#5A4BDB",
+            "info-text": "#1D55B8",
+            "ink-3": "#626280",
+            "primary-fixed-dim": "#c5c0ff",
+            "on-iris": "#FFFFFF",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "tertiary-container": "#9f4a00",
+            "ink-2": "#4B4B66",
+            "surface-container-lowest": "#ffffff",
+            "warning-bg": "#FFF1D6",
+            "canvas": "#F6F6FA",
+            "secondary-container": "#c4ef49",
+            "surface": "#FFFFFF",
+            "on-primary-fixed-variant": "#3d28be",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#140067",
+            "outline-variant": "#c8c4d7",
+            "surface-container-highest": "#e2e2e6",
+            "surface-container-high": "#e8e8ec",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#7a3700",
+            "surface-raised": "#FFFFFF",
+            "on-background": "#1a1c1f",
+            "inverse-primary": "#c5c0ff",
+            "line-strong": "#8B8BA6",
+            "surface-bright": "#f9f9fd",
+            "inverse-on-surface": "#f0f0f4",
+            "error-container": "#ffdad6",
+            "on-secondary": "#ffffff",
+            "secondary-fixed": "#c7f24c",
+            "surface-sunken": "#EFEFF6",
+            "on-secondary-container": "#536b00",
+            "lime": "#C5F04A"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "space-2xl": "3rem",
+            "space-3xl": "4rem",
+            "gutter": "1rem",
+            "margin": "2rem"
+          },
+          "fontFamily": {
+            "h1": ["Plus Jakarta Sans", "sans-serif"],
+            "h2": ["Plus Jakarta Sans", "sans-serif"],
+            "h3": ["Plus Jakarta Sans", "sans-serif"],
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "stat": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"],
+            "overline": ["Inter", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    .tnum {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas text-ink antialiased min-h-screen flex justify-center selection:bg-iris-tint selection:text-iris">
+<!-- Mobile Frame Container (390px target screen) -->
+<div class="w-full max-w-[390px] min-h-screen bg-canvas flex flex-col relative pb-24 shadow-2xl">
+<!-- TopAppBar (Shared Component Implementation) -->
+<header class="sticky top-0 z-40 flex items-center justify-between w-full h-14 px-gutter bg-surface/80 backdrop-blur-md border-b border-line shadow-sm">
+<div class="flex items-center gap-3">
+<!-- Organisation initials square tile -->
+<div class="w-8 h-8 rounded-lg bg-ink text-surface flex items-center justify-center font-h3 text-xs font-bold tracking-tight">
+          AH
+        </div>
+<!-- Title -->
+<h1 class="font-h2 text-h2 text-ink font-semibold tracking-tight">Home</h1>
+</div>
+<!-- Trailing actions: Notifications & User Avatar -->
+<div class="flex items-center gap-2">
+<button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors duration-150 active:scale-95 text-ink" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<!-- Unread indicator dot -->
+<span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-lime border-2 border-surface ring-1 ring-black/5"></span>
+</button>
+<button aria-label="Profile Chinedu Eze" class="w-9 h-9 rounded-full bg-iris-tint text-iris border border-line flex items-center justify-center font-label text-xs font-semibold hover:ring-2 hover:ring-iris/20 transition-all active:scale-95" type="button">
+          CE
+        </button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-4 py-5 space-y-5 relative">
+<!-- Ambient Iris Glow behind greeting -->
+<div aria-hidden="true" class="absolute top-0 left-1/2 -translate-x-1/2 w-80 h-44 bg-iris/10 blur-3xl pointer-events-none rounded-full"></div>
+<!-- Hero Greeting Section -->
+<section class="relative z-10 pt-1">
+<h2 class="font-h1 text-h1 text-ink tracking-tight font-bold">Good morning, Chinedu</h2>
+<p class="font-label text-body-sm text-ink-3 mt-0.5">Tuesday, 17 Nov 2026</p>
+</section>
+<!-- Row of two KPI tiles -->
+<section class="grid grid-cols-2 gap-3 relative z-10">
+<!-- Tile 1: Leave balance -->
+<div class="bg-surface rounded-2xl p-4 shadow-[0_1px_2px_rgba(22,22,42,0.04)] border border-line flex flex-col justify-between">
+<div>
+<span class="font-overline text-[11px] text-ink-3 uppercase tracking-wider block">Leave balance</span>
+<div class="mt-1 flex items-baseline">
+<span class="font-h1 text-[22px] font-bold text-ink leading-tight">14</span>
+<span class="font-label text-xs text-ink-2 ml-1">days</span>
+</div>
+</div>
+<!-- Sparkline Ocean Blue (#0369A1) -->
+<div class="py-2.5">
+<svg class="w-full h-8 overflow-visible" fill="none" preserveaspectratio="none" viewbox="0 0 120 32">
+<path d="M0 24C20 22 35 14 55 18C75 22 95 6 120 4" stroke="#0369A1" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0 24C20 22 35 14 55 18C75 22 95 6 120 4V32H0V24Z" fill="url(#blue-gradient)" opacity="0.15"></path>
+<circle cx="120" cy="4" fill="#0369A1" r="3"></circle>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="blue-gradient" x1="60" x2="60" y1="4" y2="32">
+<stop stop-color="#0369A1"></stop>
+<stop offset="1" stop-color="#0369A1" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex items-center gap-1 font-overline text-[11px] text-success-text">
+<span class="text-[10px]">▲</span>
+<span>2 days accrued</span>
+</div>
+</div>
+<!-- Tile 2: Pending claims -->
+<div class="bg-surface rounded-2xl p-4 shadow-[0_1px_2px_rgba(22,22,42,0.04)] border border-line flex flex-col justify-between">
+<div>
+<span class="font-overline text-[11px] text-ink-3 uppercase tracking-wider block">Pending claims</span>
+<div class="mt-1">
+<span class="font-h1 text-[19px] font-bold text-ink leading-tight tnum tracking-tight block">₦86,500.00</span>
+</div>
+</div>
+<!-- Sparkline Tangerine (#C2410C) -->
+<div class="py-2.5">
+<svg class="w-full h-8 overflow-visible" fill="none" preserveaspectratio="none" viewbox="0 0 120 32">
+<path d="M0 26C25 28 45 19 65 19C85 19 98 10 120 8" stroke="#C2410C" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0 26C25 28 45 19 65 19C85 19 98 10 120 8V32H0V26Z" fill="url(#tangerine-gradient)" opacity="0.15"></path>
+<circle cx="120" cy="8" fill="#C2410C" r="3"></circle>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="tangerine-gradient" x1="60" x2="60" y1="8" y2="32">
+<stop stop-color="#C2410C"></stop>
+<stop offset="1" stop-color="#C2410C" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex items-center gap-1 font-overline text-[11px] text-ink-3">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3"></span>
+<span>1 claim in review</span>
+</div>
+</div>
+</section>
+<!-- Section: Needs your attention -->
+<section class="space-y-3 relative z-10">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h3 class="font-h3 text-h3 text-ink font-semibold">Needs your attention</h3>
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-danger-bg text-danger-text font-label text-xs font-bold">2</span>
+</div>
+<span class="font-label text-xs text-iris font-semibold tracking-tight">View queue</span>
+</div>
+<!-- Card 1: Leave approval request -->
+<article class="bg-surface rounded-2xl p-4 border border-line shadow-sm space-y-3">
+<!-- Header row -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-full bg-surface-sunken border border-line flex items-center justify-center font-label text-xs font-semibold text-ink-2">
+                FB
+              </div>
+<div>
+<h4 class="font-h3 text-body-sm font-semibold text-ink">Fatima Bello</h4>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#E0F2FE] text-[#0369A1]">Leave</span>
+<span class="text-xs text-ink-3">Finance</span>
+</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-[11px] font-label font-medium bg-warning-bg text-warning-text border border-warning-text/10">
+              Waiting 2 days
+            </span>
+</div>
+<!-- Leave details line -->
+<div class="bg-surface-sunken/60 rounded-xl px-3 py-2 border border-line/60 flex items-center justify-between text-xs">
+<div class="flex items-center gap-1.5 text-ink-2">
+<span class="material-symbols-outlined text-[16px] text-ink-3">calendar_today</span>
+<span class="font-label font-medium">24–28 Nov 2026</span>
+</div>
+<span class="font-label text-ink-3">(5 days)</span>
+</div>
+<!-- Action buttons with minimum 44px hit targets -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="h-11 px-4 border border-line-strong text-ink rounded-xl text-sm font-label font-medium flex items-center justify-center hover:bg-surface-sunken active:scale-95 transition-all" type="button">
+              Open
+            </button>
+<button class="h-11 px-4 bg-iris text-on-iris rounded-xl text-sm font-label font-medium flex items-center justify-center hover:bg-iris-hover shadow-sm active:scale-95 transition-all" type="button">
+              Approve
+            </button>
+</div>
+</article>
+<!-- Card 2: Returned Expense Claim -->
+<article class="bg-surface rounded-2xl p-4 border border-line shadow-sm space-y-2.5">
+<div class="flex items-center justify-between">
+<div class="space-y-0.5">
+<span class="font-mono text-xs font-medium text-ink-3 tracking-wide">EXP-2026-000142</span>
+<div class="font-h3 text-h3 font-bold text-ink tnum">₦45,000.00</div>
+</div>
+<!-- Returned Badge -->
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-label font-semibold bg-danger-bg text-danger-text border border-danger-text/20">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span>
+              Returned
+            </span>
+</div>
+<!-- Helper note box -->
+<div class="p-2.5 rounded-xl bg-danger-bg/40 border border-danger-text/15 text-xs text-ink-2 flex items-start gap-2">
+<span class="material-symbols-outlined text-danger-text text-[18px] shrink-0 mt-0.5">error</span>
+<p class="font-body-sm leading-relaxed">
+              Missing official receipt for hotel accommodation. Tap to update.
+            </p>
+</div>
+</article>
+</section>
+<!-- Section: Latest payslip -->
+<section class="space-y-3 relative z-10">
+<h3 class="font-h3 text-h3 text-ink font-semibold">Payroll overview</h3>
+<div class="bg-surface rounded-2xl p-4 border border-line shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<!-- Emerald/payroll accent icon tile -->
+<div class="w-11 h-11 rounded-xl bg-success-bg text-success-text flex items-center justify-center shrink-0 border border-success-text/20">
+<span class="material-symbols-outlined text-[24px]">receipt_long</span>
+</div>
+<div>
+<h4 class="font-h3 text-body-sm font-semibold text-ink">October 2026 Payslip</h4>
+<div class="font-h3 text-body font-bold text-ink tnum mt-0.5">₦412,350.00</div>
+<span class="font-label text-[11px] text-ink-3 block">Disbursed 25 Oct</span>
+</div>
+</div>
+<!-- View payslip action -->
+<button aria-label="View payslip for October 2026" class="min-w-[44px] min-h-[44px] flex items-center justify-end gap-1 text-iris font-label font-semibold text-sm hover:underline active:scale-95 transition-transform" type="button">
+<span>View</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Shared Component Implementation) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-space-sm h-16 pb-safe bg-surface/90 backdrop-blur-md shadow-[0_-4px_16px_rgba(22,22,42,0.06)] max-w-[390px] mx-auto right-0">
+<!-- 1. Home (Active Navigation) -->
+<button class="flex flex-col items-center justify-center bg-iris-tint text-iris rounded-full px-space-md py-1 min-w-[44px] min-h-[44px]" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-overline text-[10px] font-semibold mt-0.5 leading-none">Home</span>
+</button>
+<!-- 2. Approvals -->
+<button class="flex flex-col items-center justify-center text-ink-3 py-1 min-w-[44px] min-h-[44px] relative active:scale-95 transition-transform" type="button">
+<span class="relative">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+<span class="absolute -top-1 -right-2 px-1 min-w-[14px] h-[14px] text-[9px] font-bold bg-destructive text-white rounded-full flex items-center justify-center leading-none">3</span>
+</span>
+<span class="font-overline text-[10px] font-semibold mt-0.5 leading-none">Approvals</span>
+</button>
+<!-- 3. New Request (Raised Center Action) -->
+<button aria-label="New request" class="flex flex-col items-center justify-center -mt-6 group min-w-[44px]" type="button">
+<div class="w-13 h-13 p-3.5 bg-iris text-on-iris rounded-full shadow-lg shadow-iris/30 ring-4 ring-canvas flex items-center justify-center group-active:scale-95 transition-transform duration-100">
+<span class="material-symbols-outlined text-[24px]">add</span>
+</div>
+<span class="font-overline text-[10px] font-semibold text-ink-3 mt-1 leading-none">New request</span>
+</button>
+<!-- 4. Payslips -->
+<button class="flex flex-col items-center justify-center text-ink-3 py-1 min-w-[44px] min-h-[44px] active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[22px]">receipt_long</span>
+<span class="font-overline text-[10px] font-semibold mt-0.5 leading-none">Payslips</span>
+</button>
+<!-- 5. More -->
+<button class="flex flex-col items-center justify-center text-ink-3 py-1 min-w-[44px] min-h-[44px] active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[22px]">more_horiz</span>
+<span class="font-overline text-[10px] font-semibold mt-0.5 leading-none">More</span>
+</button>
+</nav>
+</div>
+</body></html>

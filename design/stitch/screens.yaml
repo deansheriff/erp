@@ -1,0 +1,57 @@
+# Screen registry (brief section 6.2). Every HTML route links to an entry here through
+# @screen("<id>"). CI checks that each entry's template and Stitch export exist.
+# docs/SCREENS.md is generated from this file: uv run python scripts/gen_screens_doc.py
+
+stitch_project: "2736752339961073788"
+design_system: "assets/5eab0debd3b04eb5ac88fc259fd666ca"
+
+screens:
+  - id: core.shell
+    phase: 1
+    module: core
+    title: App shell (sidebar, top bar, mobile bottom navigation)
+    route: GET /_dev/shell
+    template: app/web/templates/layout/app.html
+    preview_template: app/web/templates/dev/shell_preview.html
+    stitch_screens:
+      desktop: 01b75fe38d10435aa293cfa2e290bad3
+      mobile: 3a8453ff8d5d410d88f5c77fb1998131
+    exports:
+      - design/stitch/exports/core.shell.desktop.html
+      - design/stitch/exports/core.shell.mobile.html
+    permission: public (development preview only)
+    actions: {}
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-17)
+
+  - id: core.components
+    phase: 1
+    module: core
+    title: Shared components gallery
+    route: GET /_dev/components
+    template: app/web/templates/components/ui.html
+    preview_template: app/web/templates/dev/components.html
+    stitch_screens:
+      desktop: 57f4f84a746444aca2ba89349108b6c9
+    exports:
+      - design/stitch/exports/core.components.gallery.html
+    permission: public (development preview only)
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-17)
+
+  - id: core.system_pages
+    phase: 1
+    module: core
+    title: No access (403), not found (404) and server error (500) pages
+    route: GET /_dev/errors/{kind}
+    template: app/web/templates/layout/standalone.html
+    preview_template: app/web/templates/errors/no_access.html
+    stitch_screens:
+      desktop: 43df27ea20a54f2aa7031fafffde4f6d
+    exports:
+      - design/stitch/exports/core.system_pages.html
+    permission: public
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-17)

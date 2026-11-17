@@ -1,0 +1,93 @@
+# Local development: `cp .env.example .env && docker compose up --build`
+# Secrets are read from .env (git-ignored). See docs/INSTALLATION.md.
+
+x-app-env: &app-env
+  KX_ENV: ${KX_ENV:-development}
+  KX_SECRET_KEY: ${KX_SECRET_KEY}
+  KX_DATABASE_URL: postgresql+psycopg://kx_app:${KX_APP_DB_PASSWORD}@db:5432/kxerp
+  KX_REDIS_URL: redis://redis:6379/0
+  KX_BASE_URL: ${KX_BASE_URL:-http://localhost:8000}
+  KX_TIMEZONE: ${KX_TIMEZONE:-Africa/Lagos}
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      KX_APP_DB_PASSWORD: ${KX_APP_DB_PASSWORD}
+      KX_MIGRATOR_DB_PASSWORD: ${KX_MIGRATOR_DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init/01-init.sh:/docker-entrypoint-initdb.d/01-init.sh:ro
+      - ./docker/postgres/roles.sql:/docker-entrypoint-initdb.d/sql/roles.sql:ro
+      - ./docker/postgres/database.sql:/docker-entrypoint-initdb.d/sql/database.sql:ro
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 20
+
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes: ["minio:/data"]
+    ports: ["9000:9000", "9001:9001"]
+
+  minio-init:
+    image: minio/mc
+    depends_on: [minio]
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD}; do sleep 1; done;
+      mc mb --ignore-existing local/kx-quarantine local/kx-clean;
+      mc anonymous set none local/kx-quarantine local/kx-clean"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+
+  clamav:
+    image: clamav/clamav:1.4
+    ports: ["3310:3310"]
+
+  mailpit:
+    image: axllent/mailpit
+    ports: ["1025:1025", "8025:8025"]
+
+  migrate:
+    build: .
+    command: ["alembic", "upgrade", "head"]
+    environment:
+      KX_MIGRATOR_DATABASE_URL: postgresql+psycopg://kx_migrator:${KX_MIGRATOR_DB_PASSWORD}@db:5432/kxerp
+    depends_on:
+      db: { condition: service_healthy }
+
+  app:
+    build: .
+    environment: *app-env
+    ports: ["8000:8000"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+
+  worker:
+    build: .
+    command: ["celery", "-A", "app.core.worker", "worker", "--loglevel=INFO", "--concurrency=2"]
+    environment: *app-env
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  minio:

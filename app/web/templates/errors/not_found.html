@@ -1,0 +1,12 @@
+{% extends "layout/standalone.html" %}
+{% import "components/ui.html" as ui with context %}
+{% set page_title = "Not found" %}
+{% block card %}
+<div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-line bg-surface-sunken text-ink-2">{{ ui.icon("compass", "lg") }}</div>
+<h1 class="mb-3 font-h1 text-h1">We couldn't find that page</h1>
+<p class="mx-auto mb-8 max-w-[340px] text-ink-2">It may have been moved or removed, or you may not have access.</p>
+<div class="space-y-2.5">
+  <a href="/" class="kx-btn-primary w-full">{{ ui.icon("house", "sm") }} Back to home</a>
+  <button type="button" class="kx-btn-ghost w-full" data-history-back>{{ ui.icon("arrow-left", "sm") }} Go back</button>
+</div>
+{% endblock %}

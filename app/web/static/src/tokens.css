@@ -1,0 +1,157 @@
+/* Chroma design tokens (design/stitch/DESIGN.md). Generated values: RGB channels so
+   Tailwind can apply opacity, e.g. bg-iris/10. Light is the default; dark applies when the
+   user picks it ([data-theme="dark"]) or when the OS prefers it and the user has not chosen. */
+
+:root {
+  --kx-canvas: 246 246 250; /* #F6F6FA */
+  --kx-surface: 255 255 255; /* #FFFFFF */
+  --kx-surface-sunken: 239 239 246; /* #EFEFF6 */
+  --kx-surface-raised: 255 255 255; /* #FFFFFF */
+  --kx-line: 228 228 238; /* #E4E4EE */
+  --kx-line-strong: 139 139 166; /* #8B8BA6 */
+  --kx-ink: 22 22 42; /* #16162A */
+  --kx-ink-2: 75 75 102; /* #4B4B66 */
+  --kx-ink-3: 98 98 128; /* #626280 */
+  --kx-iris: 90 75 219; /* #5A4BDB */
+  --kx-iris-hover: 74 60 196; /* #4A3CC4 */
+  --kx-iris-tint: 238 236 253; /* #EEECFD */
+  --kx-on-iris: 255 255 255; /* #FFFFFF */
+  --kx-lime: 197 240 74; /* #C5F04A */
+  --kx-lime-ink: 77 122 10; /* #4D7A0A */
+  --kx-focus: 90 75 219; /* #5A4BDB */
+  --kx-destructive: 196 40 54; /* #C42836 */
+  --kx-success-text: 15 107 62; /* #0F6B3E */
+  --kx-success-bg: 221 247 232; /* #DDF7E8 */
+  --kx-warning-text: 138 75 0; /* #8A4B00 */
+  --kx-warning-bg: 255 241 214; /* #FFF1D6 */
+  --kx-danger-text: 180 35 47; /* #B4232F */
+  --kx-danger-bg: 255 228 230; /* #FFE4E6 */
+  --kx-info-text: 29 85 184; /* #1D55B8 */
+  --kx-info-bg: 223 235 255; /* #DFEBFF */
+  --kx-neutral-text: 75 75 102; /* #4B4B66 */
+  --kx-neutral-bg: 239 239 246; /* #EFEFF6 */
+  --kx-mod-home: 63 63 90; /* #3F3F5A */
+  --kx-mod-hr: 124 58 237; /* #7C3AED */
+  --kx-mod-payroll: 4 120 87; /* #047857 */
+  --kx-mod-leave: 3 105 161; /* #0369A1 */
+  --kx-mod-attendance: 14 116 144; /* #0E7490 */
+  --kx-mod-expenses: 194 65 12; /* #C2410C */
+  --kx-mod-finance: 29 78 216; /* #1D4ED8 */
+  --kx-mod-inventory: 146 64 14; /* #92400E */
+  --kx-mod-procurement: 77 124 15; /* #4D7C0F */
+  --kx-mod-projects: 15 118 110; /* #0F766E */
+  --kx-mod-support: 190 24 93; /* #BE185D */
+  --kx-mod-fleet: 68 64 60; /* #44403C */
+  --kx-mod-collaboration: 162 28 175; /* #A21CAF */
+  --kx-mod-ai: 109 40 217; /* #6D28D9 */
+  --kx-hue: var(--kx-mod-home);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --kx-canvas: 11 11 18; /* #0B0B12 */
+  --kx-surface: 20 20 31; /* #14141F */
+  --kx-surface-sunken: 28 28 43; /* #1C1C2B */
+  --kx-surface-raised: 28 28 43; /* #1C1C2B */
+  --kx-line: 38 38 56; /* #262638 */
+  --kx-line-strong: 108 108 136; /* #6C6C88 */
+  --kx-ink: 236 236 244; /* #ECECF4 */
+  --kx-ink-2: 184 184 206; /* #B8B8CE */
+  --kx-ink-3: 154 154 180; /* #9A9AB4 */
+  --kx-iris: 168 158 255; /* #A89EFF */
+  --kx-iris-hover: 189 181 255; /* #BDB5FF */
+  --kx-iris-tint: 34 31 68; /* #221F44 */
+  --kx-on-iris: 21 18 46; /* #15122E */
+  --kx-lime: 210 245 122; /* #D2F57A */
+  --kx-lime-ink: 210 245 122; /* #D2F57A */
+  --kx-focus: 180 171 255; /* #B4ABFF */
+  --kx-destructive: 196 40 54; /* #C42836 */
+  --kx-success-text: 111 227 166; /* #6FE3A6 */
+  --kx-success-bg: 17 40 29; /* #11281D */
+  --kx-warning-text: 255 201 112; /* #FFC970 */
+  --kx-warning-bg: 45 33 16; /* #2D2110 */
+  --kx-danger-text: 255 154 166; /* #FF9AA6 */
+  --kx-danger-bg: 51 21 27; /* #33151B */
+  --kx-info-text: 148 187 255; /* #94BBFF */
+  --kx-info-bg: 20 34 64; /* #142240 */
+  --kx-neutral-text: 196 196 216; /* #C4C4D8 */
+  --kx-neutral-bg: 34 34 47; /* #22222F */
+  --kx-mod-home: 180 180 204; /* #B4B4CC */
+  --kx-mod-hr: 196 181 253; /* #C4B5FD */
+  --kx-mod-payroll: 110 231 183; /* #6EE7B7 */
+  --kx-mod-leave: 125 211 252; /* #7DD3FC */
+  --kx-mod-attendance: 103 232 249; /* #67E8F9 */
+  --kx-mod-expenses: 253 186 116; /* #FDBA74 */
+  --kx-mod-finance: 147 197 253; /* #93C5FD */
+  --kx-mod-inventory: 252 211 77; /* #FCD34D */
+  --kx-mod-procurement: 190 242 100; /* #BEF264 */
+  --kx-mod-projects: 94 234 212; /* #5EEAD4 */
+  --kx-mod-support: 249 168 212; /* #F9A8D4 */
+  --kx-mod-fleet: 214 211 209; /* #D6D3D1 */
+  --kx-mod-collaboration: 240 171 252; /* #F0ABFC */
+  --kx-mod-ai: 221 214 254; /* #DDD6FE */
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --kx-canvas: 11 11 18; /* #0B0B12 */
+    --kx-surface: 20 20 31; /* #14141F */
+    --kx-surface-sunken: 28 28 43; /* #1C1C2B */
+    --kx-surface-raised: 28 28 43; /* #1C1C2B */
+    --kx-line: 38 38 56; /* #262638 */
+    --kx-line-strong: 108 108 136; /* #6C6C88 */
+    --kx-ink: 236 236 244; /* #ECECF4 */
+    --kx-ink-2: 184 184 206; /* #B8B8CE */
+    --kx-ink-3: 154 154 180; /* #9A9AB4 */
+    --kx-iris: 168 158 255; /* #A89EFF */
+    --kx-iris-hover: 189 181 255; /* #BDB5FF */
+    --kx-iris-tint: 34 31 68; /* #221F44 */
+    --kx-on-iris: 21 18 46; /* #15122E */
+    --kx-lime: 210 245 122; /* #D2F57A */
+    --kx-lime-ink: 210 245 122; /* #D2F57A */
+    --kx-focus: 180 171 255; /* #B4ABFF */
+    --kx-destructive: 196 40 54; /* #C42836 */
+    --kx-success-text: 111 227 166; /* #6FE3A6 */
+    --kx-success-bg: 17 40 29; /* #11281D */
+    --kx-warning-text: 255 201 112; /* #FFC970 */
+    --kx-warning-bg: 45 33 16; /* #2D2110 */
+    --kx-danger-text: 255 154 166; /* #FF9AA6 */
+    --kx-danger-bg: 51 21 27; /* #33151B */
+    --kx-info-text: 148 187 255; /* #94BBFF */
+    --kx-info-bg: 20 34 64; /* #142240 */
+    --kx-neutral-text: 196 196 216; /* #C4C4D8 */
+    --kx-neutral-bg: 34 34 47; /* #22222F */
+    --kx-mod-home: 180 180 204; /* #B4B4CC */
+    --kx-mod-hr: 196 181 253; /* #C4B5FD */
+    --kx-mod-payroll: 110 231 183; /* #6EE7B7 */
+    --kx-mod-leave: 125 211 252; /* #7DD3FC */
+    --kx-mod-attendance: 103 232 249; /* #67E8F9 */
+    --kx-mod-expenses: 253 186 116; /* #FDBA74 */
+    --kx-mod-finance: 147 197 253; /* #93C5FD */
+    --kx-mod-inventory: 252 211 77; /* #FCD34D */
+    --kx-mod-procurement: 190 242 100; /* #BEF264 */
+    --kx-mod-projects: 94 234 212; /* #5EEAD4 */
+    --kx-mod-support: 249 168 212; /* #F9A8D4 */
+    --kx-mod-fleet: 214 211 209; /* #D6D3D1 */
+    --kx-mod-collaboration: 240 171 252; /* #F0ABFC */
+    --kx-mod-ai: 221 214 254; /* #DDD6FE */
+    color-scheme: dark;
+  }
+}
+
+/* The chameleon layer: each module page sets its hue on <body class="module-…">. */
+.module-home { --kx-hue: var(--kx-mod-home); }
+.module-hr { --kx-hue: var(--kx-mod-hr); }
+.module-payroll { --kx-hue: var(--kx-mod-payroll); }
+.module-leave { --kx-hue: var(--kx-mod-leave); }
+.module-attendance { --kx-hue: var(--kx-mod-attendance); }
+.module-expenses { --kx-hue: var(--kx-mod-expenses); }
+.module-finance { --kx-hue: var(--kx-mod-finance); }
+.module-inventory { --kx-hue: var(--kx-mod-inventory); }
+.module-procurement { --kx-hue: var(--kx-mod-procurement); }
+.module-projects { --kx-hue: var(--kx-mod-projects); }
+.module-support { --kx-hue: var(--kx-mod-support); }
+.module-fleet { --kx-hue: var(--kx-mod-fleet); }
+.module-collaboration { --kx-hue: var(--kx-mod-collaboration); }
+.module-ai { --kx-hue: var(--kx-mod-ai); }

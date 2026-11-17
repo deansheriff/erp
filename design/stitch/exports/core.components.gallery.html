@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon Chroma — Components Gallery</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed-dim": "#ffb68b",
+            "on-surface-variant": "#474554",
+            "primary-fixed-dim": "#c5c0ff",
+            "surface-variant": "#e2e2e6",
+            "on-secondary-container": "#536b00",
+            "on-iris": "#FFFFFF",
+            "surface-sunken": "#EFEFF6",
+            "secondary": "#4f6600",
+            "warning-text": "#8A4B00",
+            "surface-tint": "#5646d7",
+            "secondary-fixed-dim": "#acd530",
+            "on-tertiary-fixed-variant": "#743400",
+            "on-secondary-fixed": "#161f00",
+            "on-secondary": "#ffffff",
+            "destructive": "#C42836",
+            "on-primary-container": "#e0dbff",
+            "outline-variant": "#c8c4d7",
+            "primary-fixed": "#e4dfff",
+            "on-primary-fixed": "#140067",
+            "error": "#ba1a1a",
+            "surface-container-highest": "#e2e2e6",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "tertiary-container": "#9f4a00",
+            "lime-ink": "#4D7A0A",
+            "surface-container-high": "#e8e8ec",
+            "on-primary": "#ffffff",
+            "ink-2": "#4B4B66",
+            "surface-container-low": "#f3f3f7",
+            "on-surface": "#1a1c1f",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#7a3700",
+            "danger-bg": "#FFE4E6",
+            "success-bg": "#DDF7E8",
+            "lime": "#C5F04A",
+            "outline": "#787586",
+            "inverse-primary": "#c5c0ff",
+            "surface-dim": "#d9dade",
+            "secondary-fixed": "#c7f24c",
+            "on-primary-fixed-variant": "#3d28be",
+            "canvas": "#F6F6FA",
+            "error-container": "#ffdad6",
+            "iris": "#5A4BDB",
+            "on-tertiary-fixed": "#321300",
+            "on-error": "#ffffff",
+            "line": "#E4E4EE",
+            "inverse-on-surface": "#f0f0f4",
+            "background": "#f9f9fd",
+            "info-text": "#1D55B8",
+            "on-background": "#1a1c1f",
+            "info-bg": "#DFEBFF",
+            "ink": "#16162A",
+            "iris-hover": "#4A3CC4",
+            "surface-container": "#ededf1",
+            "surface-bright": "#f9f9fd",
+            "inverse-surface": "#2e3034",
+            "on-error-container": "#93000a",
+            "on-tertiary-container": "#ffd7c1",
+            "warning-bg": "#FFF1D6",
+            "secondary-container": "#c4ef49",
+            "line-strong": "#8B8BA6",
+            "danger-text": "#B4232F",
+            "surface-raised": "#FFFFFF",
+            "primary": "#412ec2",
+            "ink-3": "#626280",
+            "tertiary-fixed": "#ffdbc8",
+            "success-text": "#0F6B3E",
+            "surface": "#FFFFFF",
+            "surface-container-lowest": "#ffffff",
+            "iris-tint": "#EEECFD",
+            "primary-container": "#5a4bdb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "10px": "10px",
+            "16px": "16px",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "label": ["Inter", "sans-serif"],
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "h2": ["Plus Jakarta Sans", "sans-serif"],
+            "h1": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "overline": ["Inter", "sans-serif"],
+            "h3": ["Plus Jakarta Sans", "sans-serif"],
+            "stat": ["Plus Jakarta Sans", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }]
+          },
+          "boxShadow": {
+            "card": "0 1px 2px rgb(22 22 42 / 0.04), 0 1px 1px rgb(22 22 42 / 0.03)",
+            "raised": "0 8px 24px -6px rgb(22 22 42 / 0.12)"
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .focus-ring-demo {
+      border: 2px solid #5A4BDB !important;
+      box-shadow: 0 0 0 4px rgba(90, 75, 219, 0.2) !important;
+    }
+  </style>
+</head>
+<body class="bg-canvas text-ink antialiased min-h-screen font-body selection:bg-iris selection:text-white">
+<!-- TOP APP BAR / BRAND HEADER -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-8 py-3 w-full bg-surface/80 backdrop-blur-md border-b border-line shadow-sm">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-iris flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="token">token</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-h2 text-h2 font-bold text-ink tracking-tight">Kxmeleon Chroma</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-iris-tint text-iris border border-iris/20">Design System v2.4.0</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6 ml-6 text-sm">
+<a class="text-iris font-semibold border-b-2 border-iris pb-1" href="#components">Components</a>
+<a class="text-ink-2 font-medium hover:text-ink transition-colors" href="#tokens">Tokens</a>
+<a class="text-ink-2 font-medium hover:text-ink transition-colors" href="#patterns">Patterns</a>
+<a class="text-ink-2 font-medium hover:text-ink transition-colors" href="#guidelines">Guidelines</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative hidden sm:block w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-ink-3 text-lg" data-icon="search">search</span>
+<input class="w-full h-9 pl-9 pr-3 text-body-sm bg-surface-sunken border border-line rounded-lg focus:outline-none focus:border-iris text-ink placeholder:text-ink-3" placeholder="Search spec..." type="text"/>
+</div>
+<button class="h-9 px-3 rounded-lg border border-line hover:bg-surface-sunken text-ink flex items-center gap-1.5 text-body-sm transition-colors" title="Settings">
+<span class="material-symbols-outlined text-lg text-ink-2" data-icon="contrast">contrast</span>
+</button>
+<button class="h-9 px-3.5 rounded-lg bg-iris hover:bg-iris-hover text-white text-body-sm font-medium flex items-center gap-1.5 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+<span>Export Spec</span>
+</button>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="max-w-[1280px] mx-auto py-12 px-8 flex flex-col gap-10">
+<!-- PAGE TITLE INTRO -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-line">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">Adeyemi Holdings Ltd Enterprise Spec</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-line-strong"></span>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Core UI v2.4</span>
+</div>
+<h1 class="font-display text-display text-ink tracking-tight font-bold">Components</h1>
+<p class="font-body text-body text-ink-2 mt-1 max-w-2xl">
+          Standard UI component library and interactive states for enterprise workflows. High contrast, WCAG 2.2 AA compliant, optimized for high-density operations.
+        </p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-lime/30 text-lime-ink border border-lime">
+<span class="w-2 h-2 rounded-full bg-lime-ink animate-pulse"></span>
+          All Tokens Synced
+        </span>
+<div class="text-right">
+<span class="text-xs text-ink-3 block">Last updated</span>
+<span class="text-xs font-mono font-medium text-ink">17 Nov 2026, 14:30 WAT</span>
+</div>
+</div>
+</div>
+<!-- 1. BUTTONS SECTION -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">FOUNDATIONS / BUTTONS</span>
+</div>
+<div class="bg-surface rounded-16px border border-line shadow-card p-6 md:p-8">
+<div class="mb-6">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Buttons &amp; Interactive States</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Fixed 44px ergonomics, 10px boundary radius, Inter 500 label. Built with accessible state transitions.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4 items-start">
+<!-- Primary Iris -->
+<div class="flex flex-col gap-2">
+<button class="h-[44px] px-5 rounded-[10px] bg-iris hover:bg-iris-hover active:scale-95 text-white font-label text-label transition-all flex items-center justify-center shadow-sm">
+              Submit claim
+            </button>
+<div class="text-center">
+<span class="font-mono text-xs text-ink font-medium block">Primary Iris</span>
+<span class="text-[11px] text-ink-3">bg #5A4BDB</span>
+</div>
+</div>
+<!-- Secondary Outlined -->
+<div class="flex flex-col gap-2">
+<button class="h-[44px] px-5 rounded-[10px] bg-white border border-line-strong hover:bg-surface-sunken active:scale-95 text-ink font-label text-label transition-all flex items-center justify-center">
+              Save draft
+            </button>
+<div class="text-center">
+<span class="font-mono text-xs text-ink font-medium block">Outlined</span>
+<span class="text-[11px] text-ink-3">border #8B8BA6</span>
+</div>
+</div>
+<!-- Ghost -->
+<div class="flex flex-col gap-2">
+<button class="h-[44px] px-5 rounded-[10px] bg-transparent hover:bg-surface-sunken active:scale-95 text-ink-2 hover:text-ink font-label text-label transition-all flex items-center justify-center">
+              Cancel
+            </button>
+<div class="text-center">
+<span class="font-mono text-xs text-ink font-medium block">Ghost</span>
+<span class="text-[11px] text-ink-3">hover:bg-sunken</span>
+</div>
+</div>
+<!-- Destructive Red -->
+<div class="flex flex-col gap-2">
+<button class="h-[44px] px-5 rounded-[10px] bg-destructive hover:opacity-90 active:scale-95 text-white font-label text-label transition-all flex items-center justify-center shadow-sm">
+              Delete
+            </button>
+<div class="text-center">
+<span class="font-mono text-xs text-ink font-medium block">Destructive</span>
+<span class="text-[11px] text-ink-3">bg #C42836</span>
+</div>
+</div>
+<!-- Icon Only -->
+<div class="flex flex-col gap-2 items-center">
+<button aria-label="More options" class="w-[44px] h-[44px] rounded-[10px] bg-white border border-line hover:bg-surface-sunken active:scale-95 text-ink-2 hover:text-ink flex items-center justify-center transition-all shadow-sm">
+<span class="material-symbols-outlined text-xl" data-icon="more_vert">more_vert</span>
+</button>
+<div class="text-center">
+<span class="font-mono text-xs text-ink font-medium block">Icon-Only</span>
+<span class="text-[11px] text-ink-3">44×44px hit-box</span>
+</div>
+</div>
+<!-- Loading State -->
+<div class="flex flex-col gap-2">
+<button class="h-[44px] px-4 rounded-[10px] bg-iris text-white font-label text-label flex items-center justify-center gap-2 cursor-wait opacity-95" disabled="">
+<span class="material-symbols-outlined text-lg animate-spin" data-icon="progress_activity">progress_activity</span>
+<span>Saving…</span>
+</button>
+<div class="text-center">
+<span class="font-mono text-xs text-ink font-medium block">Loading</span>
+<span class="text-[11px] text-ink-3">iris + spinner</span>
+</div>
+</div>
+<!-- Disabled State -->
+<div class="flex flex-col gap-2">
+<button class="h-[44px] px-5 rounded-[10px] bg-surface-sunken text-line-strong font-label text-label cursor-not-allowed flex items-center justify-center border border-line/60" disabled="">
+              Disabled
+            </button>
+<div class="text-center">
+<span class="font-mono text-xs text-ink font-medium block">Disabled</span>
+<span class="text-[11px] text-ink-3">sunken + #8B8BA6</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. STATUS BADGES SECTION -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">COMMUNICATION / STATUS BADGES</span>
+</div>
+<div class="bg-surface rounded-16px border border-line shadow-card p-6 md:p-8">
+<div class="mb-6">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Badges &amp; Indicators</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">High-contrast semantic indicators with 6px status anchors. Conforms to WCAG 2.2 AA non-text contrast.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+<!-- Approved -->
+<div class="p-3 rounded-xl bg-surface-sunken/50 border border-line flex flex-col gap-2.5 items-start">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+              Approved
+            </span>
+<span class="text-xs text-ink-3">Claim validated &amp; cleared</span>
+</div>
+<!-- Pending -->
+<div class="p-3 rounded-xl bg-surface-sunken/50 border border-line flex flex-col gap-2.5 items-start">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-warning-bg text-warning-text">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+              Pending
+            </span>
+<span class="text-xs text-ink-3">Awaiting finance lead</span>
+</div>
+<!-- Rejected -->
+<div class="p-3 rounded-xl bg-surface-sunken/50 border border-line flex flex-col gap-2.5 items-start">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-danger-bg text-danger-text">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span>
+              Rejected
+            </span>
+<span class="text-xs text-ink-3">Policy mismatch</span>
+</div>
+<!-- Submitted -->
+<div class="p-3 rounded-xl bg-surface-sunken/50 border border-line flex flex-col gap-2.5 items-start">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-info-bg text-info-text">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+              Submitted
+            </span>
+<span class="text-xs text-ink-3">In queue for triage</span>
+</div>
+<!-- Draft -->
+<div class="p-3 rounded-xl bg-surface-sunken/50 border border-line flex flex-col gap-2.5 items-start">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-surface-sunken text-ink-2 border border-line">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-2"></span>
+              Draft
+            </span>
+<span class="text-xs text-ink-3">Unsubmitted record</span>
+</div>
+<!-- Lime Highlight -->
+<div class="p-3 rounded-xl bg-surface-sunken/50 border border-line flex flex-col gap-2.5 items-start">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-lime text-ink">
+<span class="w-1.5 h-1.5 rounded-full bg-ink"></span>
+              New
+            </span>
+<span class="text-xs text-ink-3">Chameleon accent</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. FILTER BAR + DATA TABLE SECTION -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">COMPLEX PATTERNS / DATA DISPLAY</span>
+</div>
+<div class="bg-surface rounded-16px border border-line shadow-card overflow-hidden">
+<!-- Section Header -->
+<div class="p-6 md:p-8 pb-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="font-h2 text-h2 text-ink font-semibold">Data Table &amp; Filter Toolbar</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">High-density ERP claim ledger. Tabular monetary alignment in Nigerian Naira (₦).</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-9 px-3 rounded-lg border border-line hover:bg-surface-sunken text-ink-2 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-base" data-icon="tune">tune</span>
+                Density: Compact
+              </button>
+</div>
+</div>
+<!-- Filter Bar Toolbar -->
+<div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<!-- Search Input -->
+<div class="relative w-64 md:w-72">
+<span class="material-symbols-outlined absolute left-3.5 top-3 text-ink-3 text-lg" data-icon="search">search</span>
+<input class="w-full h-[44px] pl-10 pr-4 text-body-sm bg-white border border-line-strong/60 rounded-[10px] focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 text-ink" placeholder="Search claims…" type="text" value="EXP-2026"/>
+</div>
+<!-- Active Filter Chip -->
+<div class="inline-flex items-center gap-1.5 h-[44px] px-3.5 rounded-[10px] bg-iris-tint border border-iris/30 text-iris text-body-sm font-medium">
+<span>Status: Submitted</span>
+<button class="hover:text-iris-hover ml-1 flex items-center" title="Remove filter">
+<span class="material-symbols-outlined text-sm" data-icon="close">close</span>
+</button>
+</div>
+<!-- Filter Dropdowns -->
+<button class="h-[44px] px-4 rounded-[10px] bg-white border border-line hover:border-line-strong text-ink text-body-sm flex items-center gap-2">
+<span>Department</span>
+<span class="material-symbols-outlined text-base text-ink-3" data-icon="expand_more">expand_more</span>
+</button>
+<button class="h-[44px] px-4 rounded-[10px] bg-white border border-line hover:border-line-strong text-ink text-body-sm flex items-center gap-2">
+<span>Date range</span>
+<span class="material-symbols-outlined text-base text-ink-3" data-icon="expand_more">expand_more</span>
+</button>
+<button class="text-sm font-medium text-iris hover:underline px-2 py-1">
+                Clear all
+              </button>
+</div>
+<!-- Trailing Action -->
+<button class="h-[44px] px-4 rounded-[10px] bg-white border border-line-strong hover:bg-surface-sunken text-ink text-body-sm font-medium flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-lg" data-icon="download">download</span>
+<span>Export</span>
+</button>
+</div>
+<!-- Bulk-Action Banner -->
+<div class="mt-4 p-3 rounded-xl bg-iris-tint border border-iris/25 flex items-center justify-between text-iris text-body-sm font-medium transition-all">
+<div class="flex items-center gap-3">
+<div class="w-5 h-5 rounded bg-iris flex items-center justify-center text-white text-xs">
+<span class="material-symbols-outlined text-sm" data-icon="check">check</span>
+</div>
+<span><strong>3</strong> claims selected</span>
+<span class="text-iris/40">•</span>
+<button class="hover:underline font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-base" data-icon="done_all">done_all</span> Approve
+              </button>
+<span class="text-iris/40">•</span>
+<button class="hover:underline font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-base" data-icon="file_download">file_download</span> Export
+              </button>
+</div>
+<button class="text-xs font-semibold hover:underline text-iris">Clear selection</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto border-t border-line">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken border-b border-line text-ink-2 font-overline text-overline uppercase tracking-wider">
+<th class="py-3.5 px-4 w-12 text-center">
+<input checked="" class="rounded border-line-strong text-iris focus:ring-iris focus:ring-offset-0 w-4 h-4 cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3.5 px-4">CLAIM NO.</th>
+<th class="py-3.5 px-4">EMPLOYEE</th>
+<th class="py-3.5 px-4">DEPARTMENT</th>
+<th class="py-3.5 px-4">SUBMITTED</th>
+<th class="py-3.5 px-4 text-right">AMOUNT</th>
+<th class="py-3.5 px-4 text-center">STATUS</th>
+<th class="py-3.5 px-4 text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line text-body-sm text-ink">
+<!-- Row 1 (Checked) -->
+<tr class="bg-iris-tint/20 hover:bg-iris-tint/40 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input checked="" class="rounded border-line-strong text-iris focus:ring-iris focus:ring-offset-0 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-mono font-medium text-ink">EXP-2026-000142</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-iris-tint text-iris border border-iris/20 font-bold text-xs flex items-center justify-center">AO</div>
+<span class="font-medium text-ink">Adaeze Okafor</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-ink-2">Executive</td>
+<td class="py-3.5 px-4 text-ink-2">17 Nov 2026</td>
+<td class="py-3.5 px-4 text-right font-medium tabular-nums text-ink">₦45,000.00</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-info-bg text-info-text">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+                    Submitted
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 (Checked) -->
+<tr class="bg-iris-tint/20 hover:bg-iris-tint/40 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input checked="" class="rounded border-line-strong text-iris focus:ring-iris focus:ring-offset-0 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-mono font-medium text-ink">EXP-2026-000139</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-lime/40 text-lime-ink border border-lime font-bold text-xs flex items-center justify-center">BA</div>
+<span class="font-medium text-ink">Babatunde Adeyemi</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-ink-2">Operations</td>
+<td class="py-3.5 px-4 text-ink-2">16 Nov 2026</td>
+<td class="py-3.5 px-4 text-right font-medium tabular-nums text-ink">₦128,750.50</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                    Approved
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 (Checked) -->
+<tr class="bg-iris-tint/20 hover:bg-iris-tint/40 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input checked="" class="rounded border-line-strong text-iris focus:ring-iris focus:ring-offset-0 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-mono font-medium text-ink">EXP-2026-000135</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-warning-bg text-warning-text border border-warning-text/20 font-bold text-xs flex items-center justify-center">FB</div>
+<span class="font-medium text-ink">Fatima Bello</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-ink-2">Finance</td>
+<td class="py-3.5 px-4 text-ink-2">15 Nov 2026</td>
+<td class="py-3.5 px-4 text-right font-medium tabular-nums text-ink">₦9,200.00</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-warning-bg text-warning-text">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+                    Pending
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 (Unchecked, Correction) -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded border-line-strong text-iris focus:ring-iris focus:ring-offset-0 w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4 font-mono font-medium text-ink">EXP-2026-000128</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 border border-line font-bold text-xs flex items-center justify-center">CE</div>
+<span class="font-medium text-ink">Chinedu Eze</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-ink-2">Engineering</td>
+<td class="py-3.5 px-4 text-ink-2">14 Nov 2026</td>
+<td class="py-3.5 px-4 text-right font-medium tabular-nums text-destructive">(₦3,500.00)</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-danger-bg text-danger-text">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span>
+                    Rejected
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-4 px-6 bg-white border-t border-line flex flex-col sm:flex-row items-center justify-between gap-4 text-body-sm text-ink-2">
+<div class="flex items-center gap-3">
+<span>Showing <strong class="text-ink font-semibold">1–10</strong> of <strong class="text-ink font-semibold">142</strong> records</span>
+<div class="flex items-center gap-1.5 ml-4">
+<span>Rows per page:</span>
+<select class="h-8 py-0 pl-2 pr-7 text-xs bg-surface-sunken border border-line rounded-md text-ink focus:outline-none focus:border-iris">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-lg border border-line hover:bg-surface-sunken flex items-center justify-center text-ink-3 disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-iris text-white font-semibold text-xs flex items-center justify-center shadow-sm">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink text-xs font-medium flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink text-xs font-medium flex items-center justify-center">3</button>
+<span class="px-1 text-ink-3 text-xs">…</span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink text-xs font-medium flex items-center justify-center">15</button>
+<button class="w-8 h-8 rounded-lg border border-line hover:bg-surface-sunken flex items-center justify-center text-ink">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. FORM SECTION -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">DATA ENTRY / FORM CONTROLS</span>
+</div>
+<div class="bg-surface rounded-16px border border-line shadow-card p-6 md:p-8">
+<div class="mb-6">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Claim details (Form Layout)</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Ergonomic two-column form container. Demonstrating standard inputs, prefix adornments, validation error, and active focus ring states.</p>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-6" onsubmit="event.preventDefault()">
+<!-- Column 1 -->
+<div class="flex flex-col gap-5">
+<!-- Title Field (Interactive Focus Demo) -->
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<label class="font-label text-label text-ink">
+                  Title <span class="text-ink-3 font-normal">(required)</span>
+</label>
+<span class="text-[11px] font-mono text-iris font-medium">State: Focused 2px + 20% ring</span>
+</div>
+<input class="w-full h-[44px] px-3.5 text-body-sm bg-white rounded-[10px] text-ink focus-ring-demo" type="text" value="Lagos Client Onboarding Dinner"/>
+</div>
+<!-- Cost Centre Select -->
+<div>
+<label class="block font-label text-label text-ink mb-1.5">
+                Cost centre
+              </label>
+<div class="relative">
+<select class="w-full h-[44px] pl-3.5 pr-10 text-body-sm bg-white border border-line-strong/60 rounded-[10px] text-ink focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 appearance-none">
+<option selected="">NG-LOS-OPS-04 (Lagos Operations)</option>
+<option>NG-ABJ-EXEC-01 (Abuja Headquarters)</option>
+<option>NG-LOS-ENG-02 (Victoria Island Tech)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-ink-3 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Amount Input (Tabular + Currency Prefix) -->
+<div>
+<label class="block font-label text-label text-ink mb-1.5">
+                Amount
+              </label>
+<div class="relative">
+<span class="absolute left-3.5 top-2.5 font-semibold text-ink-2 text-base select-none">₦</span>
+<input class="w-full h-[44px] pl-8 pr-3.5 text-right font-mono tabular-nums text-body-sm bg-white border border-line-strong/60 rounded-[10px] text-ink focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20" type="text" value="45,000.00"/>
+</div>
+<span class="text-xs text-ink-3 mt-1 block">Value parsed in Nigerian Naira (NGN)</span>
+</div>
+</div>
+<!-- Column 2 -->
+<div class="flex flex-col gap-5">
+<!-- Date Input -->
+<div>
+<label class="block font-label text-label text-ink mb-1.5">
+                Date
+              </label>
+<div class="relative">
+<input class="w-full h-[44px] pl-3.5 pr-10 text-body-sm bg-white border border-line-strong/60 rounded-[10px] text-ink focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20" type="text" value="17/11/2026"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-ink-3 pointer-events-none" data-icon="calendar_today">calendar_today</span>
+</div>
+</div>
+<!-- Error State Input -->
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<label class="font-label text-label text-ink">
+                  Threshold limit
+                </label>
+<span class="text-[11px] font-mono text-danger-text font-medium">State: Validation Error</span>
+</div>
+<div class="relative">
+<input class="w-full h-[44px] px-3.5 text-body-sm bg-white border-2 border-danger-text rounded-[10px] text-ink focus:outline-none pr-10" type="text" value="0.00"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-danger-text" data-icon="error">error</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1.5 text-xs text-danger-text font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="alert">search_music_note</span>
+<span>Enter an amount greater than ₦0.00</span>
+</div>
+</div>
+<!-- Notes Textarea -->
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<label class="font-label text-label text-ink">
+                  Notes
+                </label>
+<span class="text-xs text-ink-3 font-mono">0/500</span>
+</div>
+<textarea class="w-full p-3 text-body-sm bg-white border border-line-strong/60 rounded-[10px] text-ink focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 resize-none" placeholder="Provide business justification for expense..." rows="2"></textarea>
+</div>
+</div>
+<!-- Bottom Form Actions -->
+<div class="col-span-1 md:col-span-2 pt-4 border-t border-line flex items-center justify-between">
+<span class="text-xs text-ink-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-success-text" data-icon="lock">lock</span>
+              Encrypted end-to-end audit trail
+            </span>
+<div class="flex items-center gap-3">
+<button class="h-[44px] px-5 rounded-[10px] bg-white border border-line hover:bg-surface-sunken text-ink-2 font-label text-label" type="button">
+                Discard
+              </button>
+<button class="h-[44px] px-6 rounded-[10px] bg-iris hover:bg-iris-hover text-white font-label text-label shadow-sm" type="submit">
+                Save &amp; Continue
+              </button>
+</div>
+</div>
+</form>
+</div>
+</section>
+<!-- 5. FILE UPLOADER SECTION -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">ASSETS / FILE UPLOADER WITH SCAN STATE</span>
+</div>
+<div class="bg-surface rounded-16px border border-line shadow-card p-6 md:p-8">
+<div class="mb-6">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Document &amp; Receipt Upload</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Asynchronous file ingestion pipeline with malware heuristic analysis &amp; rejection states.</p>
+</div>
+<!-- Dashed Drop Zone -->
+<div class="border-2 border-dashed border-[#8B8BA6]/40 hover:border-iris bg-[#F6F6FA] hover:bg-[#EEECFD]/30 p-8 rounded-16px text-center transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-iris-tint text-iris group-hover:scale-110 flex items-center justify-center mx-auto mb-3 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<p class="font-h3 text-h3 text-ink font-semibold">
+            Drag a receipt here or <span class="text-iris hover:underline">Choose file</span>
+</p>
+<p class="text-body-sm text-ink-3 mt-1">PDF, JPG or PNG up to 10 MB</p>
+</div>
+<!-- File List -->
+<div class="mt-6 flex flex-col gap-3">
+<!-- File 1: Uploading -->
+<div class="p-3.5 px-4 rounded-xl border border-line bg-surface flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-sunken flex items-center justify-center text-ink-2 shrink-0">
+<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div>
+<span class="font-mono text-sm font-semibold text-ink block">receipt-uber.pdf</span>
+<span class="text-xs text-ink-3">182 KB</span>
+</div>
+</div>
+<div class="flex items-center gap-4 sm:w-1/2">
+<div class="w-full bg-surface-sunken rounded-full h-2 overflow-hidden">
+<div class="bg-iris h-2 rounded-full transition-all duration-300" style="width: 45%"></div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-info-bg text-info-text shrink-0">
+                Uploading 45%
+              </span>
+</div>
+</div>
+<!-- File 2: Scanning -->
+<div class="p-3.5 px-4 rounded-xl border border-line bg-surface flex items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-sunken flex items-center justify-center text-ink-2 shrink-0">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div>
+<span class="font-mono text-sm font-semibold text-ink block">hotel-invoice.pdf</span>
+<span class="text-xs text-ink-3">1.2 MB</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-warning-bg text-warning-text border border-warning-text/20">
+<span class="w-2 h-2 rounded-full bg-warning-text animate-ping"></span>
+                Scanning for viruses
+              </span>
+</div>
+</div>
+<!-- File 3: Ready -->
+<div class="p-3.5 px-4 rounded-xl border border-line bg-surface flex items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-success-bg/40 flex items-center justify-center text-success-text shrink-0">
+<span class="material-symbols-outlined" data-icon="image">image</span>
+</div>
+<div>
+<a class="font-mono text-sm font-semibold text-iris hover:underline block" href="#">fuel-receipt.jpg</a>
+<span class="text-xs text-ink-3">640 KB</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Ready
+              </span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink-2 flex items-center justify-center" title="View / Download">
+<span class="material-symbols-outlined text-base" data-icon="download">download</span>
+</button>
+</div>
+</div>
+<!-- File 4: Rejected -->
+<div class="p-3.5 px-4 rounded-xl border border-danger-text/20 bg-danger-bg/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-danger-bg flex items-center justify-center text-danger-text shrink-0">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<div>
+<span class="font-mono text-sm font-semibold text-danger-text block">invoice.exe</span>
+<span class="text-xs text-danger-text/80">This file was removed for your safety.</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-danger-bg text-danger-text border border-danger-text/30">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span>
+                Rejected: file type not allowed
+              </span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. FEEDBACK PATTERNS SECTION -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">SYSTEM FEEDBACK / MODALS &amp; ALERTS</span>
+</div>
+<div class="bg-surface rounded-16px border border-line shadow-card p-6 md:p-8">
+<div class="mb-6">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Empty States, Toasts &amp; Confirmation</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Transactional UX components designed to maintain system awareness and reduce cognitive anxiety.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- a) Empty state card -->
+<div class="p-6 rounded-16px border border-line bg-canvas/40 flex flex-col items-center text-center justify-between min-h-[300px]">
+<div class="my-auto flex flex-col items-center">
+<div class="w-16 h-16 rounded-2xl bg-[#FFF7ED] border border-[#FDBA74]/50 text-[#C2410C] flex items-center justify-center mb-4 shadow-sm">
+<span class="material-symbols-outlined text-3xl" data-icon="receipt_long">receipt_long</span>
+</div>
+<h3 class="font-h2 text-h2 text-ink font-semibold mb-1">No claims yet</h3>
+<p class="font-body-sm text-body-sm text-ink-3 max-w-[240px]">
+                Claims you submit appear here with their approval progress.
+              </p>
+</div>
+<button class="w-full h-[44px] rounded-[10px] bg-iris hover:bg-iris-hover text-white font-label text-label transition-all shadow-sm">
+              New claim
+            </button>
+</div>
+<!-- b) Toast notification preview -->
+<div class="p-6 rounded-16px border border-line bg-canvas/40 flex flex-col justify-center">
+<span class="text-xs font-mono text-ink-3 mb-2 uppercase tracking-wide block">Raised Floating Toast (Preview)</span>
+<div class="bg-white rounded-16px border border-line shadow-raised p-4 relative overflow-hidden">
+<div class="flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-success-bg text-success-text flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-lg" data-icon="check_circle">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-body-sm text-ink font-medium leading-snug">
+                    Claim <span class="font-mono font-semibold">EXP-2026-000142</span> sent to Adaeze Okafor for approval.
+                  </p>
+</div>
+<a class="text-iris font-semibold text-body-sm hover:underline ml-1" href="#">View</a>
+</div>
+<!-- 6s Auto Dismiss Timer Bar -->
+<div class="absolute bottom-0 left-0 right-0 h-[2.5px] bg-iris-tint">
+<div class="bg-iris h-full w-2/3"></div>
+</div>
+</div>
+<p class="text-xs text-ink-3 mt-3 text-center">Auto-dismiss in 6s with action reversal</p>
+</div>
+<!-- c) Confirmation modal preview -->
+<div class="p-6 rounded-16px border border-line bg-canvas/40 flex flex-col justify-center">
+<span class="text-xs font-mono text-ink-3 mb-2 uppercase tracking-wide block">Confirmation Dialog (Preview)</span>
+<div class="bg-white rounded-16px border border-line shadow-card p-5">
+<div class="flex items-start gap-3 mb-3">
+<div class="w-8 h-8 rounded-full bg-warning-bg text-warning-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-xl" data-icon="help">help</span>
+</div>
+<div>
+<h3 class="font-h2 text-h2 text-ink font-semibold">Post payroll for October 2026?</h3>
+<p class="text-body-sm text-ink-2 mt-1">
+                    This creates journal entries. Posted payroll can't be edited, only reversed.
+                  </p>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 pt-3 border-t border-line mt-2">
+<button class="h-9 px-3.5 rounded-[10px] bg-white border border-line text-ink-2 hover:bg-surface-sunken text-xs font-medium">
+                  Cancel
+                </button>
+<button class="h-9 px-4 rounded-[10px] bg-iris hover:bg-iris-hover text-white text-xs font-semibold shadow-sm">
+                  Post payroll
+                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. STATUS STEPPER SECTION -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-iris font-bold">PROCESS / WORKFLOW STEPPER</span>
+</div>
+<div class="bg-surface rounded-16px border border-line shadow-card p-6 md:p-8">
+<div class="mb-8">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Horizontal Approval Stepper</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Multi-tier signoff process featuring Chameleon lime active state and sequential milestones.</p>
+</div>
+<!-- 5-Stage Stepper -->
+<div class="relative">
+<div class="grid grid-cols-1 sm:grid-cols-5 gap-4 relative">
+<!-- Step 1: Draft (Completed) -->
+<div class="flex flex-col items-center sm:items-start text-center sm:text-left relative">
+<div class="flex items-center w-full mb-3">
+<div class="w-10 h-10 rounded-full bg-iris text-white flex items-center justify-center shadow-sm shrink-0 z-10">
+<span class="material-symbols-outlined text-lg" data-icon="check">check</span>
+</div>
+<div class="hidden sm:block flex-1 h-[2px] bg-iris ml-2"></div>
+</div>
+<span class="font-h3 text-h3 text-ink font-semibold">Draft</span>
+<span class="text-xs text-ink-3 mt-0.5">Chinedu Eze, 14 Nov</span>
+</div>
+<!-- Step 2: Submitted (Completed) -->
+<div class="flex flex-col items-center sm:items-start text-center sm:text-left relative">
+<div class="flex items-center w-full mb-3">
+<div class="w-10 h-10 rounded-full bg-iris text-white flex items-center justify-center shadow-sm shrink-0 z-10">
+<span class="material-symbols-outlined text-lg" data-icon="check">check</span>
+</div>
+<div class="hidden sm:block flex-1 h-[2px] bg-iris ml-2"></div>
+</div>
+<span class="font-h3 text-h3 text-ink font-semibold">Submitted</span>
+<span class="text-xs text-ink-3 mt-0.5">15 Nov</span>
+</div>
+<!-- Step 3: Manager approval (Current - Highlighted) -->
+<div class="flex flex-col items-center sm:items-start text-center sm:text-left relative">
+<div class="flex items-center w-full mb-3">
+<div class="w-10 h-10 rounded-full bg-lime text-ink flex items-center justify-center font-bold text-sm shadow-sm ring-4 ring-lime/30 shrink-0 z-10">
+                  3
+                </div>
+<div class="hidden sm:block flex-1 h-[2px] bg-line ml-2"></div>
+</div>
+<div class="flex items-center gap-1.5 flex-wrap justify-center sm:justify-start">
+<span class="font-h3 text-h3 text-ink font-bold">Manager approval</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-lime text-ink">Current</span>
+</div>
+<span class="text-xs font-medium text-ink-2 mt-0.5">Adaeze Okafor</span>
+</div>
+<!-- Step 4: Finance approval (Upcoming) -->
+<div class="flex flex-col items-center sm:items-start text-center sm:text-left relative">
+<div class="flex items-center w-full mb-3">
+<div class="w-10 h-10 rounded-full bg-white border-2 border-line text-ink-3 flex items-center justify-center text-sm font-semibold shrink-0 z-10">
+                  4
+                </div>
+<div class="hidden sm:block flex-1 h-[2px] bg-line ml-2"></div>
+</div>
+<span class="font-h3 text-h3 text-ink-3 font-semibold">Finance approval</span>
+<span class="text-xs text-ink-3 mt-0.5">Pending</span>
+</div>
+<!-- Step 5: Reimbursed (Final Stage) -->
+<div class="flex flex-col items-center sm:items-start text-center sm:text-left relative">
+<div class="flex items-center w-full mb-3">
+<div class="w-10 h-10 rounded-full bg-white border-2 border-line text-ink-3 flex items-center justify-center text-sm font-semibold shrink-0 z-10">
+                  5
+                </div>
+</div>
+<span class="font-h3 text-h3 text-ink-3 font-semibold">Reimbursed</span>
+<span class="text-xs text-ink-3 mt-0.5">Final stage</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FOOTER SPEC ATTRIBUTION -->
+<footer class="pt-8 pb-12 border-t border-line text-center text-body-sm text-ink-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-iris"></span>
+<span class="font-semibold text-ink">Kxmeleon Chroma Specification</span>
+<span>• v2.4.0</span>
+</div>
+<div class="text-xs font-mono text-ink-3">
+        Compliance: WCAG 2.2 AA • Canvas Grid: 4px strict • Platform: Web Desktop 1440
+      </div>
+</footer>
+</main>
+</body></html>
