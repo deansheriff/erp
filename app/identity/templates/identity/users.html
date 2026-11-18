@@ -5,7 +5,7 @@
 {% block content %}
 <div x-data="modal" data-open="{{ 'true' if invite_open else 'false' }}">
   {% call ui.page_header("Users", "Everyone who can sign in to Kxmeleon. Invite people by email; they set their own password.") %}
-    <button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("user-plus", "sm") }} Invite user</button>
+    {% if can_invite %}<button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("user-plus", "sm") }} Invite user</button>{% endif %}
   {% endcall %}
 
   <div class="mt-5 space-y-3">
@@ -41,7 +41,7 @@
               <div class="flex items-center gap-3">
                 <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface-sunken text-xs font-semibold text-ink-2">{{ u.full_name.split()[0][0] }}{{ u.full_name.split()[-1][0] }}</span>
                 <div class="min-w-0">
-                  <p class="flex flex-wrap items-center gap-2 font-semibold">{{ u.full_name }}{% if u.is_super_admin %} {{ ui.badge("new", "Super admin") }}{% endif %}</p>
+                  <p class="flex flex-wrap items-center gap-2 font-semibold"><a href="/admin/users/{{ u.id }}/access" class="hover:text-iris">{{ u.full_name }}</a>{% for r in u.roles[:2] %} {{ ui.badge("new" if loop.first else "neutral", r) }}{% endfor %}</p>
                   <p class="truncate text-xs text-ink-3">{{ u.email }}</p>
                 </div>
               </div>
@@ -56,18 +56,17 @@
               <div class="relative inline-block text-left" x-data="menu" x-on:keydown.escape="close" x-on:click.outside="close">
                 <button type="button" class="kx-btn-icon" x-on:click="toggle" aria-haspopup="menu" x-bind:aria-expanded="open" aria-label="Actions for {{ u.full_name }}">{{ ui.icon("ellipsis-vertical", "sm") }}</button>
                 <div x-show="open" x-cloak x-transition.opacity.duration.150ms role="menu" class="absolute right-0 z-10 mt-1 w-52 rounded-2xl border border-line bg-surface-raised p-1.5 shadow-raised">
+                  <a role="menuitem" href="/admin/users/{{ u.id }}/access" class="flex h-11 w-full items-center gap-2.5 rounded-lg px-3 text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink">{{ ui.icon("key-round", "sm") }} Roles and access</a>
                   {% set actions = [] %}
                   {% if u.status == "invited" %}{% set actions = actions + [("resend", "Resend invite", "send")] %}{% endif %}
                   {% if u.locked %}{% set actions = actions + [("unlock", "Unlock", "lock-open")] %}{% endif %}
                   {% if u.status == "active" %}{% set actions = actions + [("suspend", "Suspend", "user-x")] %}{% endif %}
                   {% if u.status == "suspended" %}{% set actions = actions + [("reactivate", "Reactivate", "user-check")] %}{% endif %}
-                  {% for action, label, icon_name in actions %}
+                  {% if can_manage_users %}{% for action, label, icon_name in actions %}
                   <form method="post" hx-push-url="false" action="/admin/users/{{ u.id }}/{{ action }}">{{ ui.csrf_field() }}
                     <button type="submit" role="menuitem" class="flex h-11 w-full items-center gap-2.5 rounded-lg px-3 text-left text-body-sm {{ 'text-danger-text hover:bg-danger-bg/50' if action == 'suspend' else 'text-ink-2 hover:bg-surface-sunken hover:text-ink' }}">{{ ui.icon(icon_name, "sm") }} {{ label }}</button>
                   </form>
-                  {% else %}
-                  <p class="px-3 py-2 text-body-sm text-ink-3">No actions available.</p>
-                  {% endfor %}
+                  {% endfor %}{% endif %}
                 </div>
               </div>
             </td>

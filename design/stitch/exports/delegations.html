@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#ffdad6", "outline": "#787586", "inverse-primary": "#c5c0ff", "inverse-surface": "#2e3034", "canvas": "#F6F6FA", "surface-container-high": "#e8e8ec", "success-bg": "#DDF7E8", "destructive": "#C42836", "on-secondary-fixed-variant": "#3b4d00", "secondary-fixed-dim": "#acd530", "on-primary-fixed": "#140067", "surface-dim": "#d9dade", "iris-tint": "#EEECFD", "surface": "#FFFFFF", "tertiary-fixed": "#ffdbc8", "danger-bg": "#FFE4E6", "warning-bg": "#FFF1D6", "warning-text": "#8A4B00", "secondary-fixed": "#c7f24c", "secondary": "#4f6600", "surface-container-lowest": "#ffffff", "on-secondary": "#ffffff", "ink-3": "#626280", "line-strong": "#8B8BA6", "background": "#f9f9fd", "ink-2": "#4B4B66", "lime": "#C5F04A", "secondary-container": "#c4ef49", "surface-container-highest": "#e2e2e6", "on-surface": "#1a1c1f", "on-error-container": "#93000a", "primary-container": "#5a4bdb", "ink": "#16162A", "danger-text": "#B4232F", "on-tertiary-fixed": "#321300", "info-text": "#1D55B8", "surface-variant": "#e2e2e6", "on-iris": "#FFFFFF", "primary": "#412ec2", "on-tertiary-fixed-variant": "#743400", "tertiary-container": "#9f4a00", "surface-bright": "#f9f9fd", "primary-fixed": "#e4dfff", "primary-fixed-dim": "#c5c0ff", "success-text": "#0F6B3E", "on-primary": "#ffffff", "tertiary": "#7a3700", "error": "#ba1a1a", "surface-tint": "#5646d7", "outline-variant": "#c8c4d7", "surface-sunken": "#EFEFF6", "on-primary-container": "#e0dbff", "on-surface-variant": "#474554", "inverse-on-surface": "#f0f0f4", "on-secondary-container": "#536b00", "line": "#E4E4EE", "on-tertiary-container": "#ffd7c1", "on-error": "#ffffff", "on-background": "#1a1c1f", "iris": "#5A4BDB", "on-secondary-fixed": "#161f00", "surface-raised": "#FFFFFF", "tertiary-fixed-dim": "#ffb68b", "iris-hover": "#4A3CC4", "on-tertiary": "#ffffff", "on-primary-fixed-variant": "#3d28be", "surface-container-low": "#f3f3f7", "info-bg": "#DFEBFF", "surface-container": "#ededf1", "lime-ink": "#4D7A0A" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "space-xs": "0.25rem", "space-3xl": "4rem", "space-2xl": "3rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "margin": "2rem", "gutter": "1.5rem", "space-xl": "2rem" }, "fontFamily": { "display": ["Plus Jakarta Sans"], "label": ["Inter"], "stat": ["Plus Jakarta Sans"], "h2": ["Plus Jakarta Sans"], "h1": ["Plus Jakarta Sans"], "overline": ["Inter"], "body-sm": ["Inter"], "body": ["Inter"], "h3": ["Plus Jakarta Sans"] }, "fontSize": { "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }], "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }] } } } };</script></head><body class="bg-canvas font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col h-full overflow-hidden"><div class="h-16 px-space-lg flex items-center justify-between bg-surface"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-iris flex items-center justify-center text-on-iris font-display font-h2 shadow-sm">K</div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink leading-tight tracking-tight">Kxmeleon</span><span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Adeyemi Holdings</span></div></div><button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span></button></div><div class="px-space-md py-space-sm"><button class="w-full flex items-center justify-between px-space-md py-space-sm rounded-lg bg-surface-sunken text-ink-3 hover:text-ink transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-label text-label">Quick search</span></div><kbd class="px-1.5 py-0.5 rounded bg-surface text-ink-3 font-label text-[11px] shadow-sm">⌘K</kbd></button></div><div class="flex-1 overflow-y-auto px-space-md py-space-xs"><div class="px-space-sm py-space-xs font-overline text-overline text-ink-3 uppercase">Core Modules</div><nav class="flex flex-col gap-1" data-active-classes="bg-iris text-on-iris font-label rounded-lg shadow-sm"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-2.5 transition-all bg-iris text-on-iris font-label rounded-lg shadow-sm" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label text-label">Home</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="hr" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label text-label">HR</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">calendar_clock</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="font-label text-label">Attendance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payroll</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-label text-label">Finance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label text-label">Inventory</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">domain</span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">headset_mic</span><span class="font-label text-label">Support</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span class="font-label text-label">Administration</span></a></nav></div><div class="p-space-md flex flex-col gap-1 bg-surface"><nav class="flex flex-col gap-1" data-active-classes="bg-surface-container-high text-on-surface font-label rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-ink-3 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="help" href="#"><span class="material-symbols-outlined text-[18px]">help_outline</span><span class="font-label text-label">Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-ink-3 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-label text-label">Settings</span></a></nav><div class="mt-space-xs p-space-sm rounded-xl bg-surface-sunken flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-full bg-primary flex-shrink-0 flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col min-w-0"><span class="font-label text-label text-ink truncate">Fatima Bello</span><span class="font-overline text-overline text-ink-3 truncate">Finance Manager</span></div></div><button aria-label="Account switcher" class="text-ink-3 hover:text-ink p-1 rounded-md transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">unfold_more</span></button></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-sm"><nav aria-label="Breadcrumb" class="flex items-center gap-space-xs text-body-sm"><span class="font-label text-ink-3">My account</span><span class="material-symbols-outlined text-ink-3 text-[16px]">chevron_right</span><span class="font-label text-ink font-semibold">Delegations</span></nav></div><div class="flex items-center gap-space-lg"><div class="relative w-80 hidden md:block"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-9 pr-12 rounded-xl bg-surface-sunken font-body-sm text-body-sm text-on-surface placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/20" placeholder="Search people, claims, invoices..." type="text"/><kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-surface text-ink-3 font-label text-[11px] shadow-sm">Ctrl K</kbd></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-warning-bg text-warning-text hover:opacity-90 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">fact_check</span><span class="font-label text-label font-bold">3</span><span class="font-body-sm text-body-sm hidden lg:inline">Approvals</span></button><button aria-label="Notifications" class="w-10 h-10 rounded-xl flex items-center justify-center text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive"></span></button><button aria-label="Toggle theme" class="w-10 h-10 rounded-xl flex items-center justify-center text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 w-full max-w-[1440px] mx-auto p-space-xl"><div class="flex flex-col w-full">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-xl">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Delegations</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-overline uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-iris animate-pulse"></span>
+          2 Active Records
+        </span>
+</div>
+<p class="font-body text-body text-ink-3 max-w-2xl">
+        Lend some of your permissions to a colleague while you're away. Delegations end automatically at 23:59 on the expiry date.
+      </p>
+</div>
+<!-- Right Header Action -->
+<div class="flex items-center gap-space-sm">
+<button class="h-11 px-space-lg rounded-xl bg-iris text-on-iris font-label text-label hover:bg-iris-hover transition-all shadow-sm flex items-center justify-center gap-2 group active:scale-[0.98]" id="openDrawerBtn" type="button">
+<span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-90">add</span>
+<span>New delegation</span>
+</button>
+</div>
+</div>
+<!-- Navigation Segment Tabs -->
+<div class="flex items-center gap-space-lg mb-space-lg">
+<div class="flex items-center gap-space-md bg-surface p-1 rounded-xl shadow-sm">
+<button class="relative px-space-md py-2 rounded-lg bg-surface-sunken text-ink font-label text-label flex items-center gap-2 transition-all" type="button">
+<span>Active and upcoming</span>
+<span class="px-2 py-0.5 rounded-full bg-iris text-on-iris font-overline text-overline">2</span>
+</button>
+<button class="px-space-md py-2 rounded-lg text-ink-3 hover:text-ink font-label text-label flex items-center gap-2 transition-all" type="button">
+<span>Past history</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">5</span>
+</button>
+</div>
+<div class="hidden xl:flex items-center gap-2 ml-auto text-ink-3 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px] text-iris">verified_user</span>
+<span>All delegations are logged in Adeyemi Holdings ERP Security Audit log</span>
+</div>
+</div>
+<!-- Dual Layout Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Primary Cards -->
+<div class="xl:col-span-8 flex flex-col gap-space-lg">
+<!-- Card 1: You're Lending -->
+<section class="bg-surface rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-lg relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-iris-tint text-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">swap_horiz</span>
+</div>
+<div>
+<h2 class="font-h2 text-h2 text-ink">You're lending</h2>
+<p class="font-body-sm text-body-sm text-ink-3">Colleagues acting on your behalf with specific permissions</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-success-bg text-success-text font-label text-label font-semibold inline-flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-success-text"></span>
+            2 active
+          </span>
+</div>
+<!-- Delegation Rows List -->
+<div class="flex flex-col gap-space-md">
+<!-- Row 1: Chinedu Eze -->
+<div class="bg-surface-sunken rounded-xl p-space-md flex flex-col gap-space-md hover:shadow-sm transition-all">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm">
+<!-- Colleague Identity -->
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-on-primary font-display font-h3 flex-shrink-0 shadow-sm">
+                  CE
+                </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-h3 text-h3 text-ink truncate">Chinedu Eze</span>
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-overline">Team scope</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">Accountant · Finance Unit</span>
+</div>
+</div>
+<!-- Status & Action Pill -->
+<div class="flex items-center gap-space-sm self-start lg:self-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-bg text-success-text font-label text-label font-medium">
+<span class="w-2 h-2 rounded-full bg-success-text"></span>
+                  Active
+                </span>
+<button class="h-9 px-3 rounded-lg text-ink-3 hover:text-danger-text hover:bg-danger-bg transition-colors font-label text-label flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_reset</span>
+<span>Revoke</span>
+</button>
+</div>
+</div>
+<!-- Permission & Period Metadata -->
+<div class="bg-surface rounded-lg p-space-sm grid grid-cols-1 md:grid-cols-3 gap-space-sm items-center">
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block mb-1">Permission Lent</span>
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label text-label text-ink font-semibold">Approve expense claims</span>
+<code class="px-2 py-0.5 rounded bg-surface-sunken font-mono text-[11px] text-iris">expenses.claim.approve</code>
+</div>
+</div>
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block mb-1">Timeframe</span>
+<span class="font-label text-label text-ink block">20 Nov 2026 – 4 Dec 2026</span>
+<span class="font-body-sm text-body-sm text-ink-3">6 days remaining</span>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-overline text-overline text-ink-3 uppercase">Duration Elapsed</span>
+<span class="font-label text-label text-iris font-medium">50%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-sunken rounded-full overflow-hidden">
+<div class="h-full bg-iris rounded-full w-1/2 transition-all"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-ink-2 font-body-sm text-body-sm px-1">
+<span class="material-symbols-outlined text-[16px] text-ink-3">chat_bubble_outline</span>
+<span>Reason: <em class="not-italic text-ink font-medium">Annual leave handover and team project sign-off</em></span>
+</div>
+</div>
+<!-- Row 2: Adaeze Okafor -->
+<div class="bg-surface-sunken rounded-xl p-space-md flex flex-col gap-space-md hover:shadow-sm transition-all">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm">
+<!-- Colleague Identity -->
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-11 h-11 rounded-xl bg-secondary-fixed-dim flex items-center justify-center text-on-secondary-fixed-variant font-display font-h3 flex-shrink-0 shadow-sm">
+                  AO
+                </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-h3 text-h3 text-ink truncate">Adaeze Okafor</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-ink-2 font-overline text-overline">Department scope</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">Operations Lead · Logistics</span>
+</div>
+</div>
+<!-- Status & Action Pill -->
+<div class="flex items-center gap-space-sm self-start lg:self-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-info-bg text-info-text font-label text-label font-medium">
+<span class="w-2 h-2 rounded-full bg-info-text"></span>
+                  Upcoming
+                </span>
+<button class="h-9 px-3 rounded-lg text-ink-3 hover:text-danger-text hover:bg-danger-bg transition-colors font-label text-label flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Revoke</span>
+</button>
+</div>
+</div>
+<!-- Permission & Period Metadata -->
+<div class="bg-surface rounded-lg p-space-sm grid grid-cols-1 md:grid-cols-3 gap-space-sm items-center">
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block mb-1">Permission Lent</span>
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label text-label text-ink font-semibold">Approve leave requests</span>
+<code class="px-2 py-0.5 rounded bg-surface-sunken font-mono text-[11px] text-iris">leave.request.approve</code>
+</div>
+</div>
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block mb-1">Timeframe</span>
+<span class="font-label text-label text-ink block">1 Dec 2026 – 15 Dec 2026</span>
+<span class="font-body-sm text-body-sm text-ink-3">Starts in 11 days</span>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-overline text-overline text-ink-3 uppercase">Duration Elapsed</span>
+<span class="font-label text-label text-ink-3 font-medium">0%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-sunken rounded-full overflow-hidden">
+<div class="h-full bg-iris rounded-full w-0"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-ink-2 font-body-sm text-body-sm px-1">
+<span class="material-symbols-outlined text-[16px] text-ink-3">chat_bubble_outline</span>
+<span>Reason: <em class="not-italic text-ink font-medium">Coverage during off-site strategic planning retreat</em></span>
+</div>
+</div>
+</div>
+</section>
+<!-- Card 2: Lent To You -->
+<section class="bg-surface rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken text-ink-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">inbox</span>
+</div>
+<div>
+<h2 class="font-h2 text-h2 text-ink">Lent to you</h2>
+<p class="font-body-sm text-body-sm text-ink-3">Delegated authorizations you hold from other managers</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-surface-sunken text-ink-3 font-label text-label">
+            0 active
+          </span>
+</div>
+<!-- Clean Minimalist Empty State -->
+<div class="py-space-2xl px-space-md flex flex-col items-center justify-center text-center bg-surface-sunken rounded-xl">
+<div class="w-16 h-16 rounded-2xl bg-iris-tint text-iris flex items-center justify-center mb-space-md shadow-sm">
+<span class="material-symbols-outlined text-[32px]">shield_person</span>
+</div>
+<h3 class="font-h3 text-h3 text-ink mb-1">Nobody is lending you permissions right now</h3>
+<p class="font-body-sm text-body-sm text-ink-3 max-w-md">
+            When a colleague temporarily assigns permissions to you while they're away, they will appear here with instant authorization tools.
+          </p>
+</div>
+</section>
+</div>
+<!-- Right Column: Security Guidance / Context Widget -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- Delegation Safeguards Card -->
+<div class="bg-surface rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+</div>
+<h3 class="font-h3 text-h3 text-ink">Adeyemi ERP Rules</h3>
+</div>
+<ul class="flex flex-col gap-space-sm font-body-sm text-body-sm text-ink-2">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-iris text-[18px] flex-shrink-0 mt-0.5">check_circle</span>
+<span>Delegations are limited to an absolute cap of <strong>90 calendar days</strong>.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-iris text-[18px] flex-shrink-0 mt-0.5">check_circle</span>
+<span>All signed transactions carry dual telemetry showing your identity and the delegate.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-iris text-[18px] flex-shrink-0 mt-0.5">check_circle</span>
+<span>You may revoke any permission early with instantaneous effect across all pods.</span>
+</li>
+</ul>
+<div class="pt-space-sm mt-space-xs bg-surface-sunken p-space-md rounded-xl">
+<div class="flex items-center gap-2 text-ink font-label text-label mb-1">
+<span class="material-symbols-outlined text-[18px] text-iris">info</span>
+<span>Non-delegable Scope</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+            Banking portal master signatories, payroll run approvals exceeding ₦50M, and superuser configurations cannot be delegated.
+          </p>
+</div>
+</div>
+<!-- Quick Metrics Summary -->
+<div class="bg-surface rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<span class="font-overline text-overline text-ink-3 uppercase">Current Quarter Telemetry</span>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-md rounded-xl bg-surface-sunken">
+<span class="font-display text-display text-ink block leading-none mb-1">14</span>
+<span class="font-overline text-overline text-ink-3">Approvals Executed</span>
+</div>
+<div class="p-space-md rounded-xl bg-surface-sunken">
+<span class="font-display text-display text-iris block leading-none mb-1">100%</span>
+<span class="font-overline text-overline text-ink-3">SLA Compliance</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm text-ink-3 pt-1">
+<span>Active Delegates</span>
+<div class="flex -space-x-2">
+<div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-[10px] font-bold ring-2 ring-surface">CE</div>
+<div class="w-7 h-7 rounded-full bg-secondary-fixed-dim text-on-secondary-fixed-variant flex items-center justify-center text-[10px] font-bold ring-2 ring-surface">AO</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT-SIDE DRAWER OVERLAY (NEW DELEGATION) -->
+<div class="fixed inset-0 z-50 flex justify-end transition-opacity duration-300" id="drawerOverlay">
+<!-- Scrim Backdrop -->
+<div class="fixed inset-0 bg-ink/30 backdrop-blur-sm transition-opacity" id="drawerBackdrop"></div>
+<!-- Slide-over Drawer Container -->
+<div class="relative w-full max-w-[540px] h-full bg-surface shadow-2xl flex flex-col justify-between z-10 overflow-hidden transform transition-transform duration-300">
+<!-- Drawer Header -->
+<div class="px-space-xl py-space-lg flex items-center justify-between bg-surface">
+<div class="flex flex-col">
+<h2 class="font-h1 text-h1 text-ink">New delegation</h2>
+<p class="font-body-sm text-body-sm text-ink-3">Lend specific capabilities you hold to another team member.</p>
+</div>
+<button aria-label="Close drawer" class="w-11 h-11 rounded-xl flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" id="closeDrawerBtn" type="button">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+</div>
+<!-- Drawer Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto px-space-xl py-space-md flex flex-col gap-space-lg">
+<!-- Field 1: Colleague search select -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-medium">Colleague <span class="text-danger-text">*</span></label>
+<!-- Selected Pill Combobox -->
+<div class="p-2.5 rounded-xl bg-surface-sunken flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-lg bg-primary text-on-primary flex items-center justify-center font-display font-h3 text-sm flex-shrink-0">
+                CE
+              </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label text-label text-ink font-semibold truncate">Chinedu Eze</span>
+<span class="font-body-sm text-body-sm text-ink-3">· Accountant</span>
+</div>
+<span class="font-overline text-overline text-ink-3 truncate">chinedu.eze@adeyemiholdings.ng</span>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface transition-colors" title="Change colleague" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3">Only team members within Adeyemi Holdings with active single sign-on can be selected.</span>
+</div>
+<!-- Field 2: Permissions Checkbox List Grouped -->
+<div class="flex flex-col gap-space-sm">
+<label class="font-label text-label text-ink font-medium">Select permissions to delegate <span class="text-danger-text">*</span></label>
+<!-- Module Group: Expenses -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex flex-col gap-space-sm">
+<div class="flex items-center gap-1.5 text-iris font-overline text-overline uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span>Expenses Module</span>
+</div>
+<!-- Item 1 (Checked) -->
+<label class="flex items-start gap-3 p-space-sm rounded-lg bg-surface cursor-pointer shadow-sm hover:shadow-md transition-all">
+<input checked="" class="mt-1 w-4 h-4 rounded text-iris focus:ring-iris accent-iris" type="checkbox"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label text-label text-ink font-semibold">Approve expense claims</span>
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-[10px]">Team Scope</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Authorize submitted petty cash &amp; travel reimbursement claims up to ₦5,000,000</p>
+<code class="mt-1 font-mono text-[11px] text-ink-3">expenses.claim.approve</code>
+</div>
+</label>
+<!-- Item 2 (Unchecked) -->
+<label class="flex items-start gap-3 p-space-sm rounded-lg bg-surface/70 hover:bg-surface cursor-pointer transition-all">
+<input class="mt-1 w-4 h-4 rounded text-iris focus:ring-iris accent-iris" type="checkbox"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label text-label text-ink font-medium">Authorise cash advances</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-ink-2 font-overline text-[10px]">Team Scope</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Issue temporary operating float requests for field operations</p>
+<code class="mt-1 font-mono text-[11px] text-ink-3">expenses.advance.authorise</code>
+</div>
+</label>
+</div>
+<!-- Module Group: Leave Management -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex flex-col gap-space-sm">
+<div class="flex items-center gap-1.5 text-iris font-overline text-overline uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+<span>Leave Module</span>
+</div>
+<!-- Item 3 (Checked) -->
+<label class="flex items-start gap-3 p-space-sm rounded-lg bg-surface cursor-pointer shadow-sm hover:shadow-md transition-all">
+<input checked="" class="mt-1 w-4 h-4 rounded text-iris focus:ring-iris accent-iris" type="checkbox"/>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label text-label text-ink font-semibold">Approve leave requests</span>
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-[10px]">Dept Scope</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Review, endorse, and reject department annual and compassionate leaves</p>
+<code class="mt-1 font-mono text-[11px] text-ink-3">leave.request.approve</code>
+</div>
+</label>
+</div>
+</div>
+<!-- Field 3: Scope Selection -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-medium">Scope <span class="text-danger-text">*</span></label>
+<div class="grid grid-cols-3 gap-2 p-1 bg-surface-sunken rounded-xl">
+<button class="py-2.5 px-3 rounded-lg bg-surface text-ink font-label text-label font-semibold shadow-sm flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px] text-iris">groups</span>
+<span>Team</span>
+</button>
+<button class="py-2.5 px-3 rounded-lg text-ink-3 hover:text-ink font-label text-label flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">domain</span>
+<span>Department</span>
+</button>
+<button class="py-2.5 px-3 rounded-lg text-outline/50 font-label text-label flex items-center justify-center gap-1 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">corporate_fare</span>
+<span>Holding</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-[16px] text-warning-text">lock</span>
+<span>Department and Holding levels require Executive Director elevation clearance.</span>
+</p>
+</div>
+<!-- Field 4: Duration Date Inputs -->
+<div class="flex flex-col gap-2">
+<label class="font-label text-label text-ink font-medium">Delegation Period <span class="text-danger-text">*</span></label>
+<div class="grid grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1">
+<span class="font-overline text-overline text-ink-3">From</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">calendar_today</span>
+<input class="w-full h-11 pl-9 pr-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20 font-medium" type="text" value="20/11/2026"/>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-overline text-overline text-ink-3">Until</span>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">event</span>
+<input class="w-full h-11 pl-9 pr-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20 font-medium" type="text" value="04/12/2026"/>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mt-1">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-iris-tint text-iris font-label text-[12px] font-semibold">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+              14 calendar days
+            </span>
+<span class="font-overline text-overline text-ink-3">Cap: 90 days allowed</span>
+</div>
+</div>
+<!-- Field 5: Reason Textarea -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<label class="font-label text-label text-ink font-medium">Business Reason <span class="text-danger-text">*</span></label>
+<span class="font-overline text-overline text-ink-3">44 / 200</span>
+</div>
+<textarea class="w-full p-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20 resize-none" placeholder="Explain why this delegation is required..." rows="3">Annual leave handover and team project sign-off</textarea>
+</div>
+<!-- Field 6: Information Callout Banner -->
+<div class="bg-info-bg text-info-text p-space-md rounded-xl flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] flex-shrink-0 mt-0.5">shield</span>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold">Security Boundary Notice</span>
+<span class="font-body-sm text-body-sm">Master administrative access, security settings, and MFA overrides cannot be delegated under any corporate tier.</span>
+</div>
+</div>
+</div>
+<!-- Sticky Drawer Footer -->
+<div class="p-space-lg bg-surface flex items-center justify-end gap-space-sm shadow-[0_-4px_16px_rgba(22,22,42,0.04)]">
+<button class="h-11 px-space-lg rounded-xl text-ink hover:bg-surface-sunken transition-colors font-label text-label" id="cancelDrawerBtn" type="button">
+          Cancel
+        </button>
+<button class="h-11 px-space-xl rounded-xl bg-iris text-on-iris font-label text-label hover:bg-iris-hover transition-all shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Create delegation</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    // Simple micro-interaction for drawer toggle
+    const drawer = document.getElementById('drawerOverlay');
+    const openBtn = document.getElementById('openDrawerBtn');
+    const closeBtn = document.getElementById('closeDrawerBtn');
+    const cancelBtn = document.getElementById('cancelDrawerBtn');
+    const backdrop = document.getElementById('drawerBackdrop');
+
+    function toggleDrawer(show) {
+      if (show) {
+        drawer.classList.remove('hidden');
+        drawer.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.add('hidden');
+        drawer.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (openBtn) openBtn.addEventListener('click', () => toggleDrawer(true));
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleDrawer(false));
+    if (cancelBtn) cancelBtn.addEventListener('click', () => toggleDrawer(false));
+    if (backdrop) backdrop.addEventListener('click', () => toggleDrawer(false));
+  </script>
+</div></main></div></body></html>

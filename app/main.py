@@ -8,6 +8,9 @@ import anyio.to_thread
 from fastapi import APIRouter, Depends, FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from app.audit import routes_web as audit_web
+from app.authz import routes_web as authz_web
+from app.authz import service as authz
 from app.core.config import Settings, get_settings
 from app.core.db import get_engine, session_scope, verify_database_role
 from app.core.logging import configure_logging
@@ -33,11 +36,21 @@ def _announce_setup_code() -> None:
     )
 
 
+def _verify_permission_catalogue() -> None:
+    """Refuse to start if a policies.py declares permissions no migration has added
+    (or the reverse): grants would silently refer to nothing (ADR 0013)."""
+    with session_scope() as db:
+        problems = authz.catalogue_problems(db)
+    if problems:
+        raise RuntimeError("Permission catalogue out of sync: " + "; ".join(problems))
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     anyio.to_thread.current_default_thread_limiter().total_tokens = settings.web_threads
     await anyio.to_thread.run_sync(verify_database_role, get_engine())
+    await anyio.to_thread.run_sync(_verify_permission_catalogue)
     await anyio.to_thread.run_sync(_announce_setup_code)
     yield
     get_engine().dispose()
@@ -45,7 +58,16 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
 
 def routers(settings: Settings) -> list[APIRouter]:
     """Every router the app serves. CI walks these to check each route's declarations."""
-    included = [routes_health.router, routes_home.router, identity_web.router, identity_api.router]
+    included = [
+        routes_health.router,
+        routes_home.router,
+        # Before identity: its POST /admin/users/{id}/{action} would otherwise catch
+        # /admin/users/{id}/access.
+        authz_web.router,
+        identity_web.router,
+        identity_api.router,
+        audit_web.router,
+    ]
     if settings.dev_routes_enabled:
         included.append(routes_dev.router)
     return included

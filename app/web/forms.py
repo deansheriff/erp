@@ -4,9 +4,14 @@ Library wording ("value is not a valid email address: The part after the @-signâ
 never reaches the page; our own validators already raise friendly messages.
 """
 
+from datetime import UTC, date, datetime, time, timedelta
 from typing import Any
+from zoneinfo import ZoneInfo
 
+from fastapi import Request
 from pydantic import ValidationError
+
+from app.core.config import get_settings
 
 
 def _message(err: dict[str, Any]) -> str:  # noqa: PLR0911  (one plain answer per error kind)
@@ -39,3 +44,29 @@ def field_errors(exc: ValidationError) -> dict[str, str]:
         loc = err.get("loc") or ("form",)
         errors.setdefault(str(loc[-1]), _message(dict(err)))
     return errors
+
+
+async def all_fields(request: Request) -> dict[str, str]:
+    """Every text field of a form, for forms whose field names are data (a permission
+    matrix). Used as a dependency so routes stay synchronous; Starlette caches the body."""
+    form = await request.form()
+    return {k: v for k, v in form.multi_items() if isinstance(v, str)}
+
+
+def parse_day(value: str | None) -> date | None:
+    """An `<input type="date">` value, or None when blank or malformed."""
+    try:
+        return date.fromisoformat(value) if value else None
+    except ValueError:
+        return None
+
+
+def start_of_day(day: date) -> datetime:
+    """Midnight at the start of `day` in the organisation's timezone, as UTC."""
+    local = datetime.combine(day, time.min, tzinfo=ZoneInfo(get_settings().timezone))
+    return local.astimezone(UTC)
+
+
+def end_of_day(day: date) -> datetime:
+    """The end of `day` (exclusive), so a period ending on the 30th includes the 30th."""
+    return start_of_day(day + timedelta(days=1))

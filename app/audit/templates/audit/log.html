@@ -1,0 +1,142 @@
+{# Administration → Audit log (read-only). Design: design/stitch/exports/admin.audit.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% set outcome_badge = {"success": ("success", "Success"), "denied": ("danger", "Denied"), "failure": ("warning", "Failure")} %}
+
+{% block content %}
+{% call ui.page_header("Audit log", "Every sign-in, change and denied action. Entries can't be edited or deleted.", view_only=true) %}{% endcall %}
+
+<form method="get" action="/admin/audit" class="kx-card mt-6 flex flex-col gap-3 p-4 lg:flex-row lg:flex-wrap lg:items-end">
+  <label class="relative block flex-1 lg:min-w-[260px]">
+    <span class="sr-only">Search</span>
+    {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+    <input type="search" name="q" value="{{ filters.q }}" class="kx-input pl-10" placeholder="Search action, person, record or reason…">
+  </label>
+  <label class="block lg:w-48"><span class="kx-label">Person</span>
+    <select name="person" class="kx-input">
+      <option value="">Everyone</option>
+      {% for pid, label in people %}<option value="{{ pid }}" {% if filters.person == pid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select>
+  </label>
+  <label class="block lg:w-40"><span class="kx-label">Area</span>
+    <select name="action" class="kx-input">
+      <option value="">All</option>
+      {% for m in modules %}<option value="{{ m }}" {% if filters.action == m %}selected{% endif %}>{{ m }}</option>{% endfor %}
+    </select>
+  </label>
+  <fieldset class="lg:w-auto"><legend class="kx-label">Outcome</legend>
+    <div class="kx-segment">
+      {% for value, label in [("", "All"), ("success", "Success"), ("denied", "Denied"), ("failure", "Failure")] %}
+      <label><input type="radio" name="outcome" value="{{ value }}" {% if filters.outcome == value %}checked{% endif %}>{{ label }}</label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  <label class="block lg:w-40"><span class="kx-label">From</span><input type="date" name="since" value="{{ filters.since }}" class="kx-input"></label>
+  <label class="block lg:w-40"><span class="kx-label">To</span><input type="date" name="until" value="{{ filters.until }}" class="kx-input"></label>
+  <div class="flex items-center gap-2">
+    <button type="submit" class="kx-btn-primary">{{ ui.icon("filter", "sm") }} Apply</button>
+    {% if filtered %}<a href="/admin/audit" class="kx-btn-ghost">Clear</a>{% endif %}
+  </div>
+</form>
+
+<div class="mt-5 grid items-start gap-6 xl:grid-cols-12">
+  <section class="kx-card kx-enter overflow-hidden {{ 'xl:col-span-7' if selected else 'xl:col-span-12' }}" aria-label="Events">
+    <div class="flex items-center gap-2 px-5 py-4">
+      <span class="text-label tnum">{{ "{:,}".format(result.total) }} {{ "entry" if result.total == 1 else "entries" }}</span>
+      {% if filtered %}<span class="h-1.5 w-1.5 rounded-full bg-line-strong"></span><span class="text-body-sm text-ink-3">filtered</span>{% endif %}
+    </div>
+    {% if result.rows %}
+    <div class="overflow-x-auto">
+      <table class="kx-table">
+        <thead><tr><th scope="col">When</th><th scope="col">Who</th><th scope="col">Action</th>{% if not selected %}<th scope="col">Record</th>{% endif %}<th scope="col">Outcome</th><th scope="col" class="hidden 2xl:table-cell">IP</th></tr></thead>
+        <tbody>
+          {% for e in result.rows %}
+          {% set is_selected = selected and selected.id == e.id %}
+          <tr class="{{ 'bg-iris-tint' if is_selected else 'hover:bg-surface-sunken/60' }}">
+            <td class="whitespace-nowrap font-mono text-[12px] {{ 'font-semibold text-ink' if is_selected else 'text-ink-2' }}">
+              <a href="/admin/audit?{{ page_query }}&amp;event={{ e.id }}" class="block focus:outline-none focus-visible:underline" {% if is_selected %}aria-current="true"{% endif %}>{{ e.occurred_at | datetime }}</a>
+            </td>
+            <td class="max-w-[220px]"><span class="block truncate {{ 'text-ink-3' if not e.actor_label }}">{{ (e.actor_label or e.actor_type | capitalize).split(" <")[0] }}</span></td>
+            <td class="whitespace-nowrap"><code class="rounded bg-surface-sunken px-2 py-0.5 font-mono text-[12px]">{{ e.action }}</code></td>
+            {% if not selected %}<td class="whitespace-nowrap text-xs">{% if e.entity_type %}<span class="font-mono text-ink-3">{{ e.entity_type }} ·</span> <span class="font-mono">{{ e.entity_id[:8] if e.entity_id and e.entity_id | length > 20 else e.entity_id }}</span>{% else %}<span class="text-ink-3">—</span>{% endif %}</td>{% endif %}
+            <td>{% set b = outcome_badge.get(e.outcome, ("neutral", e.outcome)) %}{{ ui.badge(b[0], b[1]) }}</td>
+            <td class="hidden whitespace-nowrap font-mono text-[12px] text-ink-3 2xl:table-cell">{{ e.ip or "—" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <nav class="flex flex-col items-center justify-between gap-3 border-t border-line px-5 py-4 sm:flex-row" aria-label="Pages">
+      <span class="text-body-sm text-ink-3 tnum">Showing <strong class="text-ink">{{ result.first }}–{{ result.last }}</strong> of <strong class="text-ink">{{ "{:,}".format(result.total) }}</strong></span>
+      <div class="flex items-center gap-2">
+        {% if result.page > 1 %}<a class="kx-btn-secondary h-9" href="/admin/audit?{{ query }}&amp;page={{ result.page - 1 }}">{{ ui.icon("chevron-left", "sm") }} Previous</a>{% endif %}
+        <span class="text-body-sm text-ink-3 tnum">Page {{ result.page }} of {{ result.pages }}</span>
+        {% if result.page < result.pages %}<a class="kx-btn-secondary h-9" href="/admin/audit?{{ query }}&amp;page={{ result.page + 1 }}">Next {{ ui.icon("chevron-right", "sm") }}</a>{% endif %}
+      </div>
+    </nav>
+    {% else %}
+    {% call ui.empty_state("scroll-text", "No entries", "Nothing matches these filters." if filtered else "Nothing has been recorded yet.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if selected %}
+  {% set e = selected %}
+  <aside class="kx-card kx-enter overflow-hidden xl:sticky xl:top-24 xl:col-span-5" aria-labelledby="entry-title">
+    <div class="flex items-center justify-between gap-3 border-b border-line p-5">
+      <div class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-full bg-iris"></span><h2 id="entry-title" class="font-h2 text-h2">Entry details</h2></div>
+      <a href="/admin/audit?{{ page_query }}" class="kx-btn-icon" aria-label="Close details">{{ ui.icon("x") }}</a>
+    </div>
+    <div class="space-y-6 p-5">
+      <div class="flex flex-wrap items-center gap-2.5">
+        <code class="rounded bg-surface-sunken px-2.5 py-1 font-mono text-[13px] font-semibold">{{ e.action }}</code>
+        {% set b = outcome_badge.get(e.outcome, ("neutral", e.outcome)) %}{{ ui.badge(b[0], b[1]) }}
+      </div>
+      {% if e.outcome == "denied" and e.reason %}
+      <div class="flex items-start gap-3 rounded-xl bg-danger-bg/70 p-4 text-danger-text">{{ ui.icon("shield-x", "sm", "mt-0.5 shrink-0") }}<div><p class="font-label font-bold">Access denied</p><p class="text-body-sm text-ink">{{ e.reason }}</p></div></div>
+      {% endif %}
+      <dl class="grid gap-4 rounded-xl bg-surface-sunken/60 p-4 sm:grid-cols-2">
+        <div><dt class="kx-overline">When</dt><dd class="font-mono text-body-sm">{{ e.occurred_at | datetime }}</dd></div>
+        <div class="min-w-0"><dt class="kx-overline">Who</dt><dd class="truncate text-body-sm font-medium">{{ e.actor_label or e.actor_type | capitalize }}</dd></div>
+        <div><dt class="kx-overline">IP address</dt><dd class="font-mono text-body-sm">{{ e.ip or "—" }}</dd></div>
+        <div class="min-w-0"><dt class="kx-overline">Browser</dt><dd class="truncate text-body-sm" title="{{ e.user_agent or '' }}">{{ e.user_agent or "—" }}</dd></div>
+        <div class="sm:col-span-2"><dt class="kx-overline">Record</dt><dd class="font-mono text-body-sm break-all">{{ e.entity_type or "—" }}{% if e.entity_id %} · {{ e.entity_id }}{% endif %}</dd></div>
+        {% if e.request_id %}
+        <div class="sm:col-span-2" x-data="copyText" data-copy="{{ e.request_id }}">
+          <dt class="kx-overline">Request ID</dt>
+          <dd class="mt-0.5 flex items-center justify-between gap-2 rounded-lg bg-surface px-2.5 py-1.5"><code class="truncate font-mono text-[12px]">{{ e.request_id }}</code>
+            <button type="button" class="text-ink-3 hover:text-iris" x-on:click="copy" data-copy="{{ e.request_id }}" aria-label="Copy request ID">{{ ui.icon("copy", "sm") }}</button></dd>
+        </div>
+        {% endif %}
+        {% if e.reason and e.outcome != "denied" %}<div class="sm:col-span-2"><dt class="kx-overline">Reason given</dt><dd class="text-body-sm italic">“{{ e.reason }}”</dd></div>{% endif %}
+      </dl>
+      {% if e.changes %}
+      <div class="space-y-3">
+        <h3 class="font-h3 text-h3">Changes</h3>
+        <div class="overflow-hidden rounded-xl border border-line">
+          <table class="kx-table text-[13px]">
+            <thead><tr><th scope="col">Field</th><th scope="col">Before</th><th scope="col">After</th></tr></thead>
+            <tbody>
+              {% for field, change in e.changes.items() %}
+              {% set masked = change is mapping and change.get("to") == "••••" %}
+              <tr>
+                <td class="font-mono text-[12px] font-semibold text-ink-2">{{ field }}</td>
+                {% if change is mapping %}
+                <td class="font-mono text-ink-3">{% if change.get("from") is none %}—{% else %}<span class="{{ '' if masked else 'rounded bg-danger-bg/60 px-1.5 line-through decoration-danger-text/50' }}">{{ change.get("from") }}</span>{% endif %}</td>
+                <td>{% if masked %}<span class="flex items-center gap-2"><span class="font-mono text-ink-3">••••</span><span class="kx-badge-neutral">{{ ui.icon("lock", "sm") }} Hidden: sensitive field</span></span>{% elif change.get("to") is none %}<span class="font-mono text-ink-3">—</span>{% else %}<span class="rounded bg-success-bg px-1.5 font-mono text-success-text">{{ change.get("to") }}</span>{% endif %}</td>
+                {% else %}
+                <td colspan="2" class="font-mono">{{ change }}</td>
+                {% endif %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+      <p class="flex items-center gap-3 rounded-xl bg-surface-sunken p-4 text-xs text-ink-3">{{ ui.icon("lock", "sm", "shrink-0 text-iris") }} Audit entries are append-only: the application's database account can add entries but never change or delete them.</p>
+    </div>
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

@@ -12,6 +12,7 @@ class NavSection:
     label: str
     href: str
     count: int | None = None
+    permission: str | None = None  # shown only to holders
 
 
 @dataclass(frozen=True, slots=True)
@@ -46,8 +47,11 @@ ADMIN_MODULE = NavModule(
     "shield-check",
     "/admin/users",
     (
-        NavSection("Users", "/admin/users"),
-        NavSection("Mail settings", "/admin/mail"),
+        NavSection("Users", "/admin/users", permission="identity.user.read"),
+        NavSection("Roles", "/admin/roles", permission="authz.role.read"),
+        NavSection("Delegations", "/admin/delegations", permission="authz.delegation.manage"),
+        NavSection("Audit log", "/admin/audit", permission="audit.log.read"),
+        NavSection("Mail settings", "/admin/mail", permission="system.mail.manage"),
     ),
 )
 

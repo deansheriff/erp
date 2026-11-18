@@ -26,3 +26,14 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **My security (password, two-step, devices, API keys)** (`identity.security`) | `GET /me/security` | signed in, own account | — | Dean Sheriff (2026-11-18) |
 | **Users and invitations** (`admin.users`) | `GET /admin/users` | identity.user.read | directory | Dean Sheriff (2026-11-18) |
 | **Mail (SMTP) settings** (`admin.mail`) | `GET /admin/mail` | system.mail.manage | — | Dean Sheriff (2026-11-18) |
+
+## Phase 3
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Roles** (`admin.roles`) | `GET /admin/roles` | authz.role.read | — | Dean Sheriff (2026-11-18) |
+| **Role editor (permission matrix and scopes)** (`admin.role_editor`) | `GET /admin/roles/{role_id}` | authz.role.read | — | Dean Sheriff (2026-11-18) |
+| **A person's access (roles, delegations, effective permissions)** (`admin.user_access`) | `GET /admin/users/{user_id}/access` | identity.user.read | directory | Dean Sheriff (2026-11-18) |
+| **My delegations** (`delegations`) | `GET /delegations` | signed in, own delegations | directory | Dean Sheriff (2026-11-18) |
+| **Everyone's delegations** (`admin.delegations`) | `GET /admin/delegations` | authz.delegation.manage | directory | Dean Sheriff (2026-11-18) |
+| **Audit log viewer** (`admin.audit`) | `GET /admin/audit` | audit.log.read | — | Dean Sheriff (2026-11-18) |

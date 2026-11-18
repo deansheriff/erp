@@ -1,6 +1,6 @@
 # 0010. Interim super-admin flag until the policy engine (Phase 3)
 
-- Status: Accepted (temporary; to be superseded in Phase 3)
+- Status: Superseded by ADR 0014 (2026-11-18)
 - Date: 2026-11-17
 
 ## Context

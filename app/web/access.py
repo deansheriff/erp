@@ -14,6 +14,8 @@ from urllib.parse import quote, urlsplit
 from fastapi import Depends, Request
 from sqlalchemy.orm import Session
 
+from app.audit.service import AuditEvent, record_independent
+from app.authz import engine
 from app.authz.declarations import declared_login, declared_permission, is_public
 from app.core.config import get_settings
 from app.core.context import valid_ip
@@ -59,6 +61,7 @@ def _bearer(request: Request) -> str | None:
 
 
 def access_guard(request: Request, db: Session = Depends(get_db)) -> None:  # noqa: B008
+    engine.begin_request_cache()
     path = request.url.path
     if not identity.is_installed(db):
         if not path.startswith(OPEN_DURING_SETUP):
@@ -85,7 +88,21 @@ def access_guard(request: Request, db: Session = Depends(get_db)) -> None:  # no
         raise RedirectRequired("/login/verify" if actor.mfa_enabled else "/login/two-step")
     permission = declared_permission(endpoint)
     if permission is not None:
-        identity.authorize(actor, permission)
+        decision = engine.check(db, actor.user_id, permission)
+        if not decision:
+            record_independent(
+                AuditEvent(
+                    action=permission,
+                    actor_type="user",
+                    outcome="denied",
+                    actor_id=actor.user_id,
+                    actor_label=actor.label,
+                    entity_type="route",
+                    entity_id=path[:64],
+                    reason=decision.reason,
+                )
+            )
+            raise PermissionDenied()
     elif level != "full":
         raise PermissionDenied()  # undeclared routes are denied by default
 

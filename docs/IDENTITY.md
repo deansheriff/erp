@@ -24,7 +24,7 @@ the values the product owner confirmed:
 |---|---|
 | `organization` | Singleton (one row, enforced by a check constraint): legal and trading name, RC number, TIN, address, timezone, base currency, fiscal year start month. |
 | `installation` | Singleton: `installed_at`, plus the hash and expiry of the current setup token. |
-| `users` | Email (unique, case-insensitive), full name, `status` (`invited`, `active`, `suspended`, `deactivated`), Argon2id `password_hash`, encrypted TOTP secret, `mfa_enabled_at`, failure counter, `locked_until`, `is_super_admin` (interim, ADR 0010). |
+| `users` | Email (unique, case-insensitive), full name, `status` (`invited`, `active`, `suspended`, `deactivated`), Argon2id `password_hash`, encrypted TOTP secret, `mfa_enabled_at`, failure counter, `locked_until`. Who is a super admin is a role assignment (ADR 0014). |
 | `user_sessions` | Server-side sessions: SHA-256 of the cookie token, CSRF token, created/last-seen/absolute-expiry, `mfa_satisfied`, IP, user agent, `revoked_at` and reason. |
 | `user_tokens` | Single-use emailed tokens (`invite`, `password_reset`): SHA-256 hash, expiry, `used_at`. |
 | `mfa_recovery_codes` | Ten one-time codes per user, Argon2id-hashed. |
@@ -57,8 +57,10 @@ Finishing signs the super admin in, consumes the token, audits the event and clo
    required but not set up.
 6. Only an MFA-satisfied session reaches the app.
 
-MFA is required for super admins now; Phase 3 adds per-role requirements (Organisation
-Administrator, Payroll and Finance roles).
+Two-step verification is required for anyone holding a role that requires it (Super
+Administrator, Organisation Administrator, Payroll Officer, Finance Officer and Finance
+Manager by default; editable per role, but only a holder of `system.security.manage` may
+switch the requirement off).
 
 **Sessions.**
 - The cookie `kx_session` is random (32 bytes), `HttpOnly`, `Secure` (except over local

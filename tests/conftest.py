@@ -80,8 +80,8 @@ def db(engine: Engine) -> Iterator[Session]:
 # ---------------------------------------------------------------- Phase 2: identity fixtures
 
 IDENTITY_TABLES = (
-    "mfa_recovery_codes, user_tokens, user_sessions, api_keys, login_attempts, users, "
-    "mail_outbox, mail_settings, organization"
+    "mfa_recovery_codes, user_tokens, user_sessions, api_keys, login_attempts, "
+    "role_assignments, delegations, users, mail_outbox, mail_settings, organization"
 )
 
 
@@ -98,6 +98,8 @@ def clean_db(migrated_db: None) -> Iterator[None]:
     with owner.begin() as conn:
         conn.execute(text("SET ROLE kx_owner"))
         conn.execute(text(f"TRUNCATE {IDENTITY_TABLES} CASCADE"))
+        conn.execute(text("DELETE FROM roles WHERE template_key IS NULL"))
+        conn.execute(text("UPDATE authz_state SET version = version + 1"))
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "
@@ -167,7 +169,6 @@ def installed(clean_db: None) -> Installed:
             user_id=admin_id,
             email="fatima.bello@adeyemiholdings.ng",
             full_name="Fatima Bello",
-            is_super_admin=True,
             mfa_enabled=True,
             mfa_required=True,
             mfa_satisfied=True,

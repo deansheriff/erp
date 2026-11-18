@@ -218,3 +218,98 @@ screens:
       save_and_test: system.mail.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-18)
+
+  - id: admin.roles
+    phase: 3
+    module: authz
+    title: Roles
+    route: GET /admin/roles
+    template: app/authz/templates/authz/roles.html
+    stitch_screens:
+      desktop: e9c5804ef9eb46b08547a20d0ccec348
+    exports:
+      - design/stitch/exports/admin.roles.html
+    permission: authz.role.read
+    actions:
+      create: authz.role.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: admin.role_editor
+    phase: 3
+    module: authz
+    title: Role editor (permission matrix and scopes)
+    route: GET /admin/roles/{role_id}
+    template: app/authz/templates/authz/role_editor.html
+    stitch_screens:
+      desktop: e9c5804ef9eb46b08547a20d0ccec348
+    exports:
+      - design/stitch/exports/admin.roles.html
+    permission: authz.role.read
+    actions:
+      save_and_delete: authz.role.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: admin.user_access
+    phase: 3
+    module: authz
+    title: A person's access (roles, delegations, effective permissions)
+    route: GET /admin/users/{user_id}/access
+    template: app/authz/templates/authz/user_access.html
+    stitch_screens:
+      desktop: 97d6b4b880da4362994cc53e996c67d8
+    exports:
+      - design/stitch/exports/admin.user_access.html
+    permission: identity.user.read
+    actions:
+      give_and_end_roles: authz.assignment.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: delegations
+    phase: 3
+    module: authz
+    title: My delegations
+    route: GET /delegations
+    template: app/authz/templates/authz/delegations.html
+    stitch_screens:
+      desktop: 4fb12c69ba924646ba5f05c7bf42e5ca
+    exports:
+      - design/stitch/exports/delegations.html
+    permission: signed in, own delegations
+    actions:
+      create_and_revoke: signed in (own permissions only)
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: admin.delegations
+    phase: 3
+    module: authz
+    title: Everyone's delegations
+    route: GET /admin/delegations
+    template: app/authz/templates/authz/delegations.html
+    stitch_screens:
+      desktop: 4fb12c69ba924646ba5f05c7bf42e5ca
+    exports:
+      - design/stitch/exports/delegations.html
+    permission: authz.delegation.manage
+    actions:
+      create_on_behalf_and_revoke: authz.delegation.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: admin.audit
+    phase: 3
+    module: audit
+    title: Audit log viewer
+    route: GET /admin/audit
+    template: app/audit/templates/audit/log.html
+    stitch_screens:
+      desktop: 3b03abbc10634bd4bc2cf455e5ba9e32
+    exports:
+      - design/stitch/exports/admin.audit.html
+    permission: audit.log.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)

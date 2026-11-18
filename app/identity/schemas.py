@@ -13,9 +13,8 @@ class Actor:
     user_id: uuid.UUID
     email: str
     full_name: str
-    is_super_admin: bool
     mfa_enabled: bool
-    mfa_required: bool
+    mfa_required: bool  # one of the person's roles requires two-step verification
     mfa_satisfied: bool
     via: Literal["session", "api_key"]
     session_id: uuid.UUID | None = None
@@ -93,7 +92,7 @@ class UserRow:
     email: str
     status: str
     mfa_enabled: bool
-    is_super_admin: bool
+    roles: list[str]
     last_login_at: datetime | None
     locked: bool
 

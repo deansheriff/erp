@@ -1,0 +1,76 @@
+{# Administration → Roles. Design: design/stitch/exports/admin.roles.html (list derived from the editor's role panel) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+<div x-data="modal" data-open="{{ 'true' if create_open else 'false' }}">
+  {% call ui.page_header("Roles", "A role is a set of permissions. Give roles to people on their Access page; changes apply straight away.", view_only=not can_manage) %}
+    {% if can_manage %}<button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("plus", "sm") }} New role</button>{% endif %}
+  {% endcall %}
+
+  {% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+  <ul class="kx-stagger mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    {% for r in roles %}
+    <li>
+      <a href="/admin/roles/{{ r.id }}" class="kx-card group flex h-full flex-col gap-3 p-5 transition duration-base ease-standard hover:-translate-y-0.5 hover:border-line-strong hover:shadow-raised">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl {{ 'bg-ink text-surface' if r.protected else 'bg-iris-tint text-iris' }}">{{ ui.icon("lock" if r.protected else "key-round", "sm") }}</span>
+            <h2 class="font-h3 text-h3">{{ r.name }}</h2>
+          </div>
+          {{ ui.icon("chevron-right", "sm", "mt-1 text-ink-3 transition-transform duration-base group-hover:translate-x-0.5") }}
+        </div>
+        <p class="line-clamp-2 text-body-sm text-ink-3">{{ r.description or "No description yet." }}</p>
+        <div class="mt-auto flex flex-wrap items-center gap-2 pt-1">
+          {% if r.protected %}{{ ui.badge("neutral", "Protected") }}{% elif r.template_key %}{{ ui.badge("info", "Built-in") }}{% else %}{{ ui.badge("new", "Custom") }}{% endif %}
+          {% if r.requires_mfa %}{{ ui.badge("warning", "Two-step required") }}{% endif %}
+        </div>
+        <p class="flex items-center gap-4 border-t border-line pt-3 text-xs text-ink-2 tnum">
+          <span class="flex items-center gap-1.5">{{ ui.icon("users", "sm", "text-ink-3") }} {{ r.member_count }} {{ "person" if r.member_count == 1 else "people" }}</span>
+          <span class="flex items-center gap-1.5">{{ ui.icon("list-checks", "sm", "text-ink-3") }} {{ "All" if r.grants_all else r.permission_count }} permission{{ "" if r.permission_count == 1 else "s" }}</span>
+        </p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if can_manage %}
+  <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex justify-end" x-on:keydown.escape.window="hide">
+    <div class="absolute inset-0 bg-[rgb(11_11_18/0.45)] backdrop-blur-[4px]" x-on:click="hide" x-show="open" x-transition.opacity.duration.200ms></div>
+    <aside x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="new-role-title"
+           class="relative flex h-full w-full max-w-[480px] flex-col border-l border-line bg-surface shadow-overlay sm:rounded-l-sheet"
+           x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+           x-transition:leave="transition duration-base ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+      <form method="post" hx-push-url="false" action="/admin/roles" class="flex h-full flex-col" novalidate>
+        {{ ui.csrf_field() }}
+        <div class="flex items-center justify-between border-b border-line px-6 py-5">
+          <h2 id="new-role-title" class="font-h1 text-[20px]">New role</h2>
+          <button type="button" class="kx-btn-icon" x-on:click="hide" aria-label="Close">{{ ui.icon("x") }}</button>
+        </div>
+        <div class="flex-1 space-y-5 overflow-y-auto p-6">
+          {% if create_errors.get("form") %}{{ ui.alert("danger", create_errors["form"]) }}{% endif %}
+          {{ ui.text_field("name", "Role name", value=create_values.get("name"), errors=create_errors, required=true, autocomplete="off") }}
+          <div>
+            <label for="description" class="kx-label">Description <span class="font-normal text-ink-3">(optional)</span></label>
+            <textarea id="description" name="description" rows="3" maxlength="300" class="kx-input">{{ create_values.get("description", "") }}</textarea>
+          </div>
+          <div>
+            <label for="copy_from" class="kx-label">Start from</label>
+            <select id="copy_from" name="copy_from" class="kx-input">
+              <option value="">No permissions</option>
+              {% for r in roles %}<option value="{{ r.id }}" {% if create_values.get("copy_from") == r.id|string %}selected{% endif %}>A copy of {{ r.name }}</option>{% endfor %}
+            </select>
+          </div>
+          {{ ui.alert("info", "You can only give a role permissions you hold yourself.", "info") }}
+        </div>
+        <div class="flex items-center justify-end gap-3 border-t border-line p-6">
+          <button type="button" class="kx-btn-secondary" x-on:click="hide">Cancel</button>
+          <button type="submit" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Create role</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -10,6 +10,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
+from app.authz import engine
 from app.authz.declarations import pending_login, public, requires, requires_login, screen
 from app.core.config import get_settings
 from app.core.db import get_db
@@ -87,8 +88,11 @@ def _signed_in_redirect(db: Session, request: Request, user_id: uuid.UUID, targe
 
 def _setup_context(db: Session, request: Request, **extra: Any) -> dict[str, Any]:
     organisation = org.get_organization(db)
+    actor = current_actor(request)
     return {
         "step": identity.setup_progress(db),
+        "can_finish": actor is not None
+        and bool(engine.check(db, actor.user_id, "system.mail.manage")),
         "organisation": organisation,
         "page_title": "Set up Kxmeleon",
         **extra,
@@ -788,6 +792,8 @@ def _users_context(
         "status": status or "all",
         "q": q or "",
         "mail_ready": mail.is_configured(db),
+        "can_invite": bool(engine.check(db, actor.user_id, "identity.user.invite")),
+        "can_manage_users": bool(engine.check(db, actor.user_id, "identity.user.manage")),
         "invite_errors": {},
         "invite_values": {},
         "page_title": "Users",

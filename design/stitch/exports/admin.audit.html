@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "danger-text": "#B4232F", "on-tertiary-fixed-variant": "#743400", "iris-hover": "#4A3CC4", "surface-bright": "#f9f9fd", "outline": "#787586", "error-container": "#ffdad6", "error": "#ba1a1a", "line": "#E4E4EE", "tertiary-fixed": "#ffdbc8", "tertiary-fixed-dim": "#ffb68b", "ink": "#16162A", "surface-variant": "#e2e2e6", "iris-tint": "#EEECFD", "canvas": "#F6F6FA", "ink-3": "#626280", "destructive": "#C42836", "on-tertiary": "#ffffff", "iris": "#5A4BDB", "primary-fixed-dim": "#c5c0ff", "lime-ink": "#4D7A0A", "secondary-fixed": "#c7f24c", "line-strong": "#8B8BA6", "on-tertiary-container": "#ffd7c1", "surface-container": "#ededf1", "secondary-container": "#c4ef49", "warning-bg": "#FFF1D6", "on-error": "#ffffff", "surface-container-lowest": "#ffffff", "info-text": "#1D55B8", "secondary": "#4f6600", "surface-container-highest": "#e2e2e6", "on-tertiary-fixed": "#321300", "on-secondary-fixed-variant": "#3b4d00", "primary": "#412ec2", "on-primary-fixed-variant": "#3d28be", "on-error-container": "#93000a", "primary-fixed": "#e4dfff", "surface-dim": "#d9dade", "on-primary-fixed": "#140067", "background": "#f9f9fd", "warning-text": "#8A4B00", "surface": "#FFFFFF", "danger-bg": "#FFE4E6", "on-primary": "#ffffff", "outline-variant": "#c8c4d7", "lime": "#C5F04A", "success-bg": "#DDF7E8", "on-secondary": "#ffffff", "surface-sunken": "#EFEFF6", "on-secondary-container": "#536b00", "on-background": "#1a1c1f", "ink-2": "#4B4B66", "on-secondary-fixed": "#161f00", "primary-container": "#5a4bdb", "surface-tint": "#5646d7", "surface-container-high": "#e8e8ec", "on-surface-variant": "#474554", "surface-container-low": "#f3f3f7", "secondary-fixed-dim": "#acd530", "surface-raised": "#FFFFFF", "info-bg": "#DFEBFF", "inverse-surface": "#2e3034", "on-primary-container": "#e0dbff", "tertiary-container": "#9f4a00", "inverse-primary": "#c5c0ff", "on-surface": "#1a1c1f", "tertiary": "#7a3700", "inverse-on-surface": "#f0f0f4", "on-iris": "#FFFFFF", "success-text": "#0F6B3E" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-2xl": "3rem", "space-xl": "2rem", "space-3xl": "4rem", "space-lg": "1.5rem", "space-md": "1rem", "margin": "2rem", "gutter": "1.5rem", "space-xs": "0.25rem" }, "fontFamily": { "h3": ["Plus Jakarta Sans"], "overline": ["Inter"], "h2": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "display": ["Plus Jakarta Sans"], "label": ["Inter"], "h1": ["Plus Jakarta Sans"], "body": ["Inter"], "stat": ["Plus Jakarta Sans"] }, "fontSize": { "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }] } } } };</script></head><body class="bg-canvas font-body text-on-surface antialiased min-h-screen"><aside class="fixed left-0 top-0 h-full w-[272px] bg-surface z-50 flex flex-col justify-between border-r border-line"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between border-b border-line"><span class="font-h2 text-h2 text-ink truncate">Adeyemi Holdings Ltd</span></div><div class="p-space-md"><div class="flex items-center justify-between w-full h-11 px-3 bg-surface-sunken rounded-lg text-ink-3 hover:text-ink cursor-pointer border border-transparent hover:border-line transition-all"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm text-ink-3">Go to...</span></div><kbd class="px-1.5 py-0.5 text-[11px] font-label font-medium bg-surface text-ink-2 rounded border border-line shadow-sm">Ctrl K</kbd></div></div><nav class="px-3 space-y-1 overflow-y-auto max-h-[calc(100vh-320px)]" data-active-classes="bg-iris-tint text-iris font-semibold border-l-2 border-iris"><div class="px-3 py-1.5 font-overline text-overline uppercase tracking-wider text-ink-3">MODULES</div><a class="flex items-center gap-3 px-3 h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span class="font-label text-label">Home</span></a><a class="flex items-center gap-3 px-3 h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="hr" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label text-label">HR</span></a><a class="flex items-center gap-3 px-3 h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-3 px-3 h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Expenses</span></a><div class="rounded-lg bg-surface-sunken/60 py-1"><div class="flex items-center justify-between px-3 h-10 rounded-lg text-ink font-semibold cursor-pointer"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-iris">admin_panel_settings</span><span class="font-label text-label">Administration</span></div><span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span></div><div class="pl-8 pr-2 py-1 space-y-0.5"><a class="flex items-center px-3 h-8 rounded text-ink-2 hover:bg-surface-variant hover:text-ink text-body-sm font-body-sm transition-all" data-path="users" href="#">Users</a><a class="flex items-center px-3 h-8 rounded text-ink-2 hover:bg-surface-variant hover:text-ink text-body-sm font-body-sm transition-all" data-path="roles" href="#">Roles</a><a class="flex items-center px-3 h-8 rounded text-ink-2 hover:bg-surface-variant hover:text-ink text-body-sm font-body-sm transition-all" data-path="delegations" href="#">Delegations</a><a aria-current="page" class="flex items-center px-3 h-8 rounded transition-all bg-iris-tint text-iris font-semibold border-l-2 border-iris" data-path="audit-log" href="#">Audit log</a><a class="flex items-center px-3 h-8 rounded text-ink-2 hover:bg-surface-variant hover:text-ink text-body-sm font-body-sm transition-all" data-path="mail-settings" href="#">Mail settings</a></div></div></nav></div><div class="p-3 border-t border-line space-y-1"><a class="flex items-center gap-3 px-3 h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span class="font-label text-label">Help &amp; documentation</span></a><a class="flex items-center gap-3 px-3 h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label text-label">Settings</span></a><div class="pt-2 border-t border-line mt-2 flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-surface-sunken transition-all cursor-pointer"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-label text-body-sm font-bold flex-shrink-0">FB</div><div class="flex flex-col min-w-0 flex-1"><span class="font-label text-label text-ink truncate leading-tight">Fatima Bello</span><span class="font-body-sm text-[12px] text-ink-3 truncate leading-tight">Finance Manager</span></div><span class="material-symbols-outlined text-[18px] text-ink-3">unfold_more</span></div></div></aside><div class="pl-[272px]"><header class="fixed top-0 left-[272px] right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-line shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-2 text-ink-3 font-body-sm text-body-sm"><span class="hover:text-ink cursor-pointer">Administration</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-ink font-semibold">Audit log</span></div><div class="w-full max-w-md mx-space-xl"><div class="flex items-center justify-between h-10 px-3 bg-surface-sunken rounded-lg border border-line-strong/20 hover:border-iris transition-all cursor-pointer"><div class="flex items-center gap-2 text-ink-3"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm">Search people, claims, invoices...</span></div><kbd class="px-1.5 py-0.5 text-[11px] font-label font-medium bg-surface text-ink-2 rounded border border-line shadow-sm">Ctrl K</kbd></div></div><div class="flex items-center gap-3"><button aria-label="Approvals" class="relative flex items-center gap-1.5 px-3 h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink border border-line transition-all"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="font-label text-label">Approvals</span><span class="ml-1 px-1.5 py-0.2 bg-iris text-on-iris font-label text-[12px] rounded-full">3</span></button><button aria-label="Notifications" class="relative p-2 h-10 w-10 flex items-center justify-center rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive ring-2 ring-surface"></span></button><button aria-label="Theme Toggle" class="p-2 h-10 w-10 flex items-center justify-center rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer ml-1"><span class="text-on-primary font-label text-[13px] font-bold">FB</span></div></div></header><main class="w-full pt-16 bg-canvas min-h-[calc(100vh)]"><div class="max-w-[1440px] mx-auto p-space-xl"><div class="flex flex-col w-full">
+<!-- Subtle Admin Slate Module Glow Header Area -->
+<div class="relative w-full mb-space-lg">
+<!-- Atmospheric Slate Glow (Restrained corporate ambient depth) -->
+<div class="absolute -top-10 left-1/4 w-[640px] h-36 bg-[#3F3F5A] opacity-10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+            Immutable Event Stream
+          </span>
+<span class="font-overline text-overline text-ink-3">· ISO 27001 / SOC 2 Type II</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Audit log</h1>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+          Every sign-in, change and denied action. Entries can't be edited or deleted.
+        </p>
+</div>
+<!-- Header Secondary Actions -->
+<div class="flex items-center gap-3 self-start md:self-auto">
+<button aria-label="Export audit entries as CSV" class="h-11 px-4 rounded-lg bg-surface text-ink font-label text-label flex items-center gap-2 shadow-sm hover:bg-surface-sunken transition-all active:scale-[0.99] focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px] text-ink-2">download</span>
+<span>Export CSV</span>
+</button>
+<button aria-label="Manage retention and cryptographic verifications" class="h-11 px-4 rounded-lg bg-iris text-on-iris font-label text-label flex items-center gap-2 shadow-sm hover:bg-iris-hover transition-all active:scale-[0.99] focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span>Verify integrity</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Filter & Search Command Strip -->
+<div class="w-full bg-surface rounded-xl p-space-md shadow-sm mb-space-lg flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
+<!-- Search Field with leading icon + shortcut -->
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-ink-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input aria-label="Search action, person or record" class="w-full h-11 pl-11 pr-20 bg-surface-sunken rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:bg-surface transition-all" placeholder="Search action, person or record…" type="text" value="authz.assignment"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<kbd class="px-2 py-0.5 text-[11px] font-label font-medium bg-surface text-ink-2 rounded shadow-sm">⌘F</kbd>
+</div>
+</div>
+<!-- Filter Badges / Chips Ribbon -->
+<div class="flex items-center gap-2 flex-wrap">
+<!-- Active Filter Chip: Denied -->
+<button aria-label="Remove filter: Outcome Denied" class="h-11 px-3.5 rounded-lg bg-iris-tint text-iris font-label text-body-sm flex items-center gap-2 hover:bg-iris-tint/80 transition-colors focus:outline-none" type="button">
+<span>Outcome: <strong>Denied</strong></span>
+<span class="material-symbols-outlined text-[16px] hover:text-destructive">close</span>
+</button>
+<!-- Filter Popover Chip: Person -->
+<button aria-expanded="false" class="h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-label text-body-sm flex items-center gap-2 hover:bg-surface-variant transition-colors focus:outline-none" type="button">
+<span class="text-ink-3">Person:</span>
+<span>All</span>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+<!-- Filter Popover Chip: Action -->
+<button aria-expanded="false" class="h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-label text-body-sm flex items-center gap-2 hover:bg-surface-variant transition-colors focus:outline-none" type="button">
+<span class="text-ink-3">Action:</span>
+<span>Authz &amp; Identity</span>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+<!-- Filter Chip: Date Range -->
+<button class="h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-label text-body-sm flex items-center gap-2 hover:bg-surface-variant transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">calendar_month</span>
+<span>Last 7 days</span>
+</button>
+<!-- Clear All -->
+<button class="h-11 px-2.5 text-iris hover:underline font-label text-body-sm transition-all focus:outline-none" type="button">
+        Clear all
+      </button>
+</div>
+</div>
+<!-- Main Split Canvas: Table + Context Drawer -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Table Container (Left Column, 7 cols on large desktop) -->
+<div class="xl:col-span-7 bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Top Meta Toolbar -->
+<div class="p-space-md flex items-center justify-between bg-surface">
+<div class="flex items-center gap-2">
+<span class="font-label text-label text-ink">Showing 124 entries</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-body-sm text-body-sm text-ink-3">Filtered by <span class="font-semibold text-danger-text">Denied</span></span>
+</div>
+<div class="flex items-center gap-2 text-ink-3">
+<span class="font-overline text-[11px] uppercase tracking-wider text-ink-3">Density</span>
+<button aria-label="Compact view" class="w-8 h-8 rounded flex items-center justify-center bg-surface-sunken text-iris" title="Compact">
+<span class="material-symbols-outlined text-[18px]">density_small</span>
+</button>
+<button aria-label="Standard view" class="w-8 h-8 rounded flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken" title="Standard">
+<span class="material-symbols-outlined text-[18px]">density_medium</span>
+</button>
+</div>
+</div>
+<!-- Responsive Table Scroller -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider select-none">
+<th class="py-3 px-4 w-[170px]" scope="col">When (WAT)</th>
+<th class="py-3 px-3" scope="col">Who</th>
+<th class="py-3 px-3" scope="col">Action</th>
+<th class="py-3 px-3" scope="col">Record</th>
+<th class="py-3 px-3" scope="col">Outcome</th>
+<th class="py-3 px-3" scope="col">IP Address</th>
+<th class="py-3 pr-4 pl-2 text-right" scope="col">Details</th>
+</tr>
+</thead>
+<tbody class="text-ink">
+<!-- Row 1: Selected & Highlighted -->
+<tr class="bg-iris-tint cursor-pointer transition-colors group relative">
+<td class="py-3 px-4 font-mono text-[13px] text-ink font-semibold relative whitespace-nowrap">
+<span class="absolute inset-y-0 left-0 w-1 bg-iris"></span>
+                17 Nov 2026, 14:05:32
+              </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary font-label text-[11px] font-bold shrink-0">
+                    FB
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate leading-tight">Fatima Bello</span>
+<span class="text-[12px] text-ink-3 truncate leading-tight">Finance Mgr</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<code class="px-2 py-1 rounded bg-surface text-ink text-[12px] font-mono shadow-xs">
+                  authz.assignment.create
+                </code>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="text-ink-3 text-[12px] font-mono">user ·</span>
+<span class="font-medium text-ink">Adaeze Okafor</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-destructive"></span>
+                  Denied
+                </span>
+</td>
+<td class="py-3 px-3 font-mono text-[12px] text-ink-2 whitespace-nowrap">
+                102.89.4.17
+              </td>
+<td class="py-3 pr-4 pl-2 text-right">
+<span class="material-symbols-outlined text-[20px] text-iris group-hover:translate-x-0.5 transition-transform">
+                  chevron_right
+                </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-sunken/60 cursor-pointer transition-colors group">
+<td class="py-3 px-4 font-mono text-[13px] text-ink-2 whitespace-nowrap">
+                17 Nov 2026, 13:58:10
+              </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-label text-[11px] font-bold shrink-0">
+                    CE
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate leading-tight">Chinedu Eze</span>
+<span class="text-[12px] text-ink-3 truncate leading-tight">HR Lead</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<code class="px-2 py-1 rounded bg-surface-sunken text-ink-2 text-[12px] font-mono">
+                  identity.login
+                </code>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="text-ink-3 text-[12px] font-mono">session ·</span>
+<span class="font-medium text-ink">sess_89a2</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                  Success
+                </span>
+</td>
+<td class="py-3 px-3 font-mono text-[12px] text-ink-3 whitespace-nowrap">
+                102.89.4.17
+              </td>
+<td class="py-3 pr-4 pl-2 text-right">
+<span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">
+                  chevron_right
+                </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-sunken/60 cursor-pointer transition-colors group">
+<td class="py-3 px-4 font-mono text-[13px] text-ink-2 whitespace-nowrap">
+                17 Nov 2026, 13:42:01
+              </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-surface-variant flex items-center justify-center text-ink-2 font-label text-[11px] font-bold shrink-0">
+                    SY
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink-2 truncate leading-tight">System Worker</span>
+<span class="text-[12px] text-ink-3 truncate leading-tight">Automation</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<code class="px-2 py-1 rounded bg-surface-sunken text-ink-2 text-[12px] font-mono">
+                  identity.user.suspend
+                </code>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="text-ink-3 text-[12px] font-mono">user ·</span>
+<span class="font-medium text-ink">Aisha Mohammed</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+                  Failure
+                </span>
+</td>
+<td class="py-3 px-3 font-mono text-[12px] text-ink-3 whitespace-nowrap">
+                127.0.0.1 (internal)
+              </td>
+<td class="py-3 pr-4 pl-2 text-right">
+<span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">
+                  chevron_right
+                </span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-sunken/60 cursor-pointer transition-colors group">
+<td class="py-3 px-4 font-mono text-[13px] text-ink-2 whitespace-nowrap">
+                17 Nov 2026, 12:15:44
+              </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-surface-sunken flex items-center justify-center text-ink-3 font-label text-[12px] font-bold shrink-0">
+                    ?
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink-3 truncate leading-tight">Anonymous</span>
+<span class="text-[12px] text-ink-3 truncate leading-tight">Guest Gateway</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<code class="px-2 py-1 rounded bg-surface-sunken text-ink-2 text-[12px] font-mono">
+                  identity.mfa.verify
+                </code>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="text-ink-3 text-[12px] font-mono">auth ·</span>
+<span class="font-medium text-ink">attempt_4821</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-destructive"></span>
+                  Denied
+                </span>
+</td>
+<td class="py-3 px-3 font-mono text-[12px] text-ink-3 whitespace-nowrap">
+                197.210.54.88
+              </td>
+<td class="py-3 pr-4 pl-2 text-right">
+<span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">
+                  chevron_right
+                </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-sunken/60 cursor-pointer transition-colors group">
+<td class="py-3 px-4 font-mono text-[13px] text-ink-2 whitespace-nowrap">
+                17 Nov 2026, 11:30:19
+              </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label text-[11px] font-bold flex items-center justify-center shrink-0">
+                    BA
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate leading-tight">Babatunde Adeyemi</span>
+<span class="text-[12px] text-ink-3 truncate leading-tight">Director</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<code class="px-2 py-1 rounded bg-surface-sunken text-ink-2 text-[12px] font-mono">
+                  expenses.claim.approve
+                </code>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="text-ink-3 text-[12px] font-mono">claim ·</span>
+<span class="font-medium text-ink">EXP-2026-000139</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                  Success
+                </span>
+</td>
+<td class="py-3 px-3 font-mono text-[12px] text-ink-3 whitespace-nowrap">
+                105.112.30.8
+              </td>
+<td class="py-3 pr-4 pl-2 text-right">
+<span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">
+                  chevron_right
+                </span>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-sunken/60 cursor-pointer transition-colors group">
+<td class="py-3 px-4 font-mono text-[13px] text-ink-2 whitespace-nowrap">
+                17 Nov 2026, 10:04:12
+              </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary font-label text-[11px] font-bold shrink-0">
+                    FB
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate leading-tight">Fatima Bello</span>
+<span class="text-[12px] text-ink-3 truncate leading-tight">Finance Mgr</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<code class="px-2 py-1 rounded bg-surface-sunken text-ink-2 text-[12px] font-mono">
+                  delegation.rule.create
+                </code>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="text-ink-3 text-[12px] font-mono">delegation ·</span>
+<span class="font-medium text-ink">DEL-004</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                  Success
+                </span>
+</td>
+<td class="py-3 px-3 font-mono text-[12px] text-ink-3 whitespace-nowrap">
+                102.89.4.17
+              </td>
+<td class="py-3 pr-4 pl-2 text-right">
+<span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">
+                  chevron_right
+                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="p-space-md bg-surface-bright flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
+<div class="flex items-center gap-3">
+<span class="font-body-sm text-body-sm text-ink-3">Showing <strong>1–10</strong> of <strong>124</strong> entries</span>
+<div class="flex items-center gap-2 pl-4">
+<span class="font-body-sm text-body-sm text-ink-3">Rows:</span>
+<select aria-label="Rows per page" class="h-8 px-2 bg-surface rounded text-body-sm font-label text-ink focus:outline-none cursor-pointer">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+<option>100</option>
+</select>
+</div>
+</div>
+<nav aria-label="Pagination" class="flex items-center gap-1">
+<button aria-label="Previous Page" class="w-9 h-9 rounded flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 rounded font-label text-[13px] bg-iris text-on-iris font-semibold">1</button>
+<button class="w-9 h-9 rounded font-label text-[13px] text-ink hover:bg-surface-sunken">2</button>
+<button class="w-9 h-9 rounded font-label text-[13px] text-ink hover:bg-surface-sunken">3</button>
+<span class="px-1 text-ink-3">…</span>
+<button class="w-9 h-9 rounded font-label text-[13px] text-ink hover:bg-surface-sunken">13</button>
+<button aria-label="Next Page" class="w-9 h-9 rounded flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</nav>
+</div>
+</div>
+<!-- Inspector / Details Slide Drawer (Right Column, 5 cols on large desktop, simulated open state) -->
+<div class="xl:col-span-5 w-full bg-surface rounded-xl shadow-lg flex flex-col overflow-hidden sticky top-20">
+<!-- Drawer Header Bar -->
+<div class="p-space-lg bg-surface">
+<div class="flex items-center justify-between pb-3">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-iris animate-pulse"></span>
+<h2 class="font-h2 text-h2 text-ink">Entry details</h2>
+</div>
+<button aria-label="Close details inspector" class="w-11 h-11 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<!-- Event Identity Ribbon -->
+<div class="flex flex-wrap items-center gap-2.5 pt-2">
+<code class="px-2.5 py-1 rounded bg-surface-sunken font-mono text-[13px] font-semibold text-ink">
+            authz.assignment.create
+          </code>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[13px] font-semibold">
+<span class="w-2 h-2 rounded-full bg-destructive"></span>
+            Denied
+          </span>
+<span class="font-overline text-overline text-ink-3 uppercase ml-auto">Event #409,218</span>
+</div>
+</div>
+<!-- Drawer Scrollable Content -->
+<div class="p-space-lg space-y-space-lg overflow-y-auto max-h-[calc(100vh-250px)]">
+<!-- Failure Banner / Justification Callout -->
+<div class="p-space-md rounded-xl bg-danger-bg/70 flex items-start gap-3 text-danger-text">
+<span class="material-symbols-outlined text-[22px] shrink-0 mt-0.5">gpp_bad</span>
+<div class="space-y-1">
+<div class="font-label text-label font-bold text-danger-text">Access Evaluation Failed</div>
+<p class="font-body-sm text-[13px] leading-relaxed text-ink">
+              Insufficient privilege: Requires <strong>Executive</strong> or <strong>Director</strong> clearance for Department-level role assignment.
+            </p>
+</div>
+</div>
+<!-- Meta Definition Grid -->
+<div class="space-y-3">
+<div class="font-overline text-overline uppercase tracking-wider text-ink-3">Event Metadata</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-surface-bright p-space-md rounded-xl">
+<div class="flex flex-col">
+<span class="font-overline text-[11px] uppercase tracking-wider text-ink-3">Timestamp</span>
+<span class="font-mono text-body-sm text-ink font-medium">17 Nov 2026, 14:05:32 WAT</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-[11px] uppercase tracking-wider text-ink-3">Actor</span>
+<span class="font-body-sm text-ink font-medium">Fatima Bello</span>
+<span class="text-[12px] text-ink-3 truncate">fatima.bello@adeyemiholdings.ng</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-[11px] uppercase tracking-wider text-ink-3">IP &amp; Location</span>
+<div class="flex items-center gap-1.5 font-mono text-body-sm text-ink">
+<span>102.89.4.17</span>
+<span class="text-ink-3 text-[12px] font-sans font-normal">(Lagos, NG)</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-[11px] uppercase tracking-wider text-ink-3">Client Application</span>
+<span class="font-body-sm text-ink truncate">Chrome 122 · Windows NT 10.0</span>
+</div>
+<div class="sm:col-span-2 flex flex-col pt-1">
+<span class="font-overline text-[11px] uppercase tracking-wider text-ink-3">Request Correlation ID</span>
+<div class="flex items-center justify-between gap-2 mt-0.5 bg-surface-sunken px-2.5 py-1.5 rounded-lg">
+<code class="font-mono text-[12px] text-ink truncate">req_01HX9B4P8VZ2091J_SEC_AUDIT</code>
+<button aria-label="Copy request ID" class="text-ink-3 hover:text-iris flex items-center shrink-0" title="Copy Request ID" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<div class="sm:col-span-2 flex flex-col pt-1">
+<span class="font-overline text-[11px] uppercase tracking-wider text-ink-3">Stated Business Justification</span>
+<p class="font-body-sm text-body-sm text-ink italic mt-0.5">
+                “Covering for Babatunde Adeyemi during off-grid audit window.”
+              </p>
+</div>
+</div>
+</div>
+<!-- Changes / Diff Section -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-h3 text-h3 text-ink">Changes payload</h3>
+<p class="font-body-sm text-[13px] text-ink-3">Proposed record modifications blocked before commit</p>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-mono text-[11px]">JSON schema v2</span>
+</div>
+<!-- Structured Field Diff Table -->
+<div class="rounded-xl overflow-hidden shadow-xs">
+<table class="w-full text-left font-body-sm text-[13px]">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-2.5 px-3">Field</th>
+<th class="py-2.5 px-3">Before</th>
+<th class="py-2.5 px-3">Attempted Value</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-ink">
+<tr class="bg-surface">
+<td class="py-2.5 px-3 font-mono text-[12px] font-semibold text-ink-2">role</td>
+<td class="py-2.5 px-3 text-ink-3 font-mono">—</td>
+<td class="py-2.5 px-3">
+<span class="inline-flex items-center px-2 py-0.5 rounded font-label text-[12px] font-semibold bg-success-bg text-success-text">
+                      + Expense Approver
+                    </span>
+</td>
+</tr>
+<tr class="bg-surface">
+<td class="py-2.5 px-3 font-mono text-[12px] font-semibold text-ink-2">valid_to</td>
+<td class="py-2.5 px-3 text-ink-3 font-mono">—</td>
+<td class="py-2.5 px-3 font-mono text-ink">30 Nov 2026</td>
+</tr>
+<tr class="bg-surface">
+<td class="py-2.5 px-3 font-mono text-[12px] font-semibold text-ink-2">bvn</td>
+<td class="py-2.5 px-3 text-ink-3 font-mono">••••</td>
+<td class="py-2.5 px-3">
+<div class="flex items-center gap-2">
+<span class="font-mono text-ink-3">••••</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 text-[11px] font-medium">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+                        Hidden: sensitive field
+                      </span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Ledger Integrity Guarantee Footer -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex items-center gap-3">
+<span class="material-symbols-outlined text-[24px] text-iris shrink-0">verified</span>
+<p class="font-body-sm text-[12px] leading-relaxed text-ink-3">
+            Audit entries are append-only. Cryptographically signed and committed to the immutable compliance ledger (Sha-256: <code class="font-mono text-[11px] text-ink">9f8a...c4e1</code>).
+          </p>
+</div>
+</div>
+<!-- Drawer Bottom Sticky Action Bar -->
+<div class="p-space-md bg-surface mt-auto flex items-center justify-between">
+<button class="h-11 px-3.5 rounded-lg bg-surface text-ink-2 font-label text-label flex items-center gap-2 hover:bg-surface-sunken transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Copy permalink</span>
+</button>
+<button class="h-11 px-4 rounded-lg bg-surface text-danger-text font-label text-label flex items-center gap-2 hover:bg-danger-bg transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+<span>Escalate to SecOps</span>
+</button>
+</div>
+</div>
+</div>
+</div></div></main></div></body></html>

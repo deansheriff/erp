@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 
+from app.authz import engine
 from app.authz.declarations import requires_login, screen
 from app.core.db import get_db
 from app.identity.schemas import Actor
@@ -31,7 +32,7 @@ def home(
         {
             "shell": build_shell(db, actor, active_module="home", crumbs=["Home"]),
             "first_name": actor.full_name.split()[0],
-            "is_admin": actor.is_super_admin,
+            "is_admin": bool(engine.check(db, actor.user_id, "system.mail.manage")),
             "mail_ready": mail.is_configured(db),
             "mfa_enabled": actor.mfa_enabled,
             "page_title": "Home",

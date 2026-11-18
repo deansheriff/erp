@@ -55,7 +55,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101", "S105", "S106", "PLR2004", "S311", "PLC0415", "PLR0912"]
+"tests/**" = ["S101", "S105", "S106", "PLR2004", "S311", "PLC0415", "PLR0912", "PLR0917"]
 "migrations/**" = ["E501"]
 "scripts/**" = ["T201"]
 "app/cli.py" = ["T201", "PLC0415"]  # commands import what they need lazily
@@ -102,13 +102,17 @@ include_external_packages = true
 name = "Core, audit and modules never import the web layer"
 # A module's routes_api.py / routes_web.py will need an ignore entry here when it lands.
 type = "forbidden"
-source_modules = ["app.core", "app.audit", "app.modules", "app.identity", "app.mail", "app.org"]
+source_modules = ["app.core", "app.audit", "app.authz", "app.modules", "app.identity", "app.mail", "app.org"]
 forbidden_modules = ["fastapi", "starlette", "app.web"]
 ignore_imports = [
   "app.identity.routes_web -> fastapi",
   "app.identity.routes_web -> app.web.*",
   "app.identity.routes_api -> fastapi",
   "app.identity.routes_api -> app.web.access",
+  "app.authz.routes_web -> fastapi",
+  "app.authz.routes_web -> app.web.*",
+  "app.audit.routes_web -> fastapi",
+  "app.audit.routes_web -> app.web.*",
 ]
 
 [[tool.importlinter.contracts]]

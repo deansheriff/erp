@@ -213,6 +213,41 @@
   .kx-nav-pill {
     @apply pointer-events-none absolute left-0 right-0 rounded-md bg-iris-tint transition-[transform,height] duration-base ease-standard;
   }
+
+  /* Segmented control built from radio inputs (scope picker). No script needed. */
+  .kx-segment {
+    @apply inline-flex shrink-0 gap-0.5 rounded-xl border border-line bg-surface-sunken p-1;
+  }
+  .kx-segment > label {
+    @apply relative flex min-h-[32px] cursor-pointer select-none items-center rounded-lg px-2.5 text-xs font-medium text-ink-2 transition-colors duration-base ease-standard hover:text-ink;
+  }
+  .kx-segment > label:has(:checked) {
+    @apply bg-iris font-semibold text-on-iris shadow-card;
+  }
+  .kx-segment > label:has(:checked).kx-segment-none {
+    @apply bg-surface text-ink shadow-card;
+  }
+  .kx-segment > label:has(:disabled) {
+    @apply cursor-not-allowed text-ink-3 opacity-50 hover:text-ink-3;
+  }
+  .kx-segment > label:has(:focus-visible) {
+    @apply ring-2 ring-iris/40;
+  }
+  .kx-segment input {
+    @apply sr-only;
+  }
+  /* Thin progress meter (a native <progress>, so no inline width is needed). */
+  .kx-meter {
+    @apply block h-1.5 w-full appearance-none overflow-hidden rounded-full border-0 bg-surface-sunken;
+  }
+  .kx-meter::-webkit-progress-bar { @apply rounded-full bg-surface-sunken; }
+  .kx-meter::-webkit-progress-value { @apply rounded-full bg-iris transition-[width] duration-slow ease-standard; }
+  .kx-meter::-moz-progress-bar { @apply rounded-full bg-iris; }
+
+  /* A row whose value differs from what was loaded. */
+  .kx-changed {
+    @apply bg-warning-bg/30;
+  }
 }
 
 /* ---------------------------------------------------------------- motion */

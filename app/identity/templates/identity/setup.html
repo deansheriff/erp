@@ -57,7 +57,7 @@
     <div class="flex justify-end pt-2"><button type="submit" class="kx-btn-primary">Continue {{ ui.icon("arrow-right", "sm") }}</button></div>
   </form>
 
-{% elif step == 3 and not (actor and actor.is_super_admin) %}
+{% elif step == 3 and not can_finish %}
   {{ ui.alert("warning", "Sign in as the super admin to finish setup.") }}
   <a href="/login?next=/setup" class="kx-btn-primary mt-4 w-full">Sign in</a>
 

@@ -1,7 +1,7 @@
 """Jinja2 environment shared by every web route."""
 
 import hashlib
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
@@ -41,6 +41,12 @@ def _datetime(value: datetime) -> str:
     return format_datetime(value, get_settings().timezone)
 
 
+def _period_end(value: datetime) -> str:
+    """The last moment of a period that ends (exclusively) at `value`: a delegation until
+    30 Nov is stored as ending at 1 Dec 00:00 but shown as `30 Nov 2026, 23:59 WAT`."""
+    return format_datetime(value - timedelta(minutes=1), get_settings().timezone)
+
+
 @lru_cache(maxsize=64)
 def _hashed_version(path: str) -> str:
     return hashlib.sha256((STATIC_DIR / path).read_bytes()).hexdigest()[:12]
@@ -63,7 +69,12 @@ def build_templates() -> Jinja2Templates:
     env.autoescape = True
     env.trim_blocks = True
     env.lstrip_blocks = True
-    filters: dict[str, Any] = {"money": _money, "date": _date, "datetime": _datetime}
+    filters: dict[str, Any] = {
+        "money": _money,
+        "date": _date,
+        "datetime": _datetime,
+        "period_end": _period_end,
+    }
     env.filters.update(filters)
     env.globals["asset_version"] = asset_version
     return templates

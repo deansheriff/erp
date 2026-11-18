@@ -1,4 +1,4 @@
-.PHONY: check lint test assets migrate screens-doc run
+.PHONY: check lint test assets migrate screens-doc permissions-doc run
 
 check: lint test
 
@@ -8,6 +8,7 @@ lint:
 	uv run mypy
 	uv run lint-imports
 	uv run python scripts/gen_screens_doc.py --check
+	uv run python scripts/gen_permissions_doc.py --check
 
 test:
 	uv run pytest
@@ -21,6 +22,9 @@ migrate:
 
 screens-doc:
 	uv run python scripts/gen_screens_doc.py
+
+permissions-doc:
+	uv run python scripts/gen_permissions_doc.py
 
 run:
 	uv run uvicorn app.main:app --reload

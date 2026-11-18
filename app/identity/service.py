@@ -8,9 +8,10 @@ from sqlalchemy import func, select, update
 from sqlalchemy.orm import Session
 
 from app.audit.service import AuditEvent, record, record_independent
+from app.authz import service as authz
 from app.core import clock
 from app.core.config import get_settings
-from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
+from app.core.errors import Conflict, NotFound, ValidationFailed
 from app.core.formatting import format_datetime
 from app.core.secrets import DecryptionFailed, decrypt, encrypt, hash_token, new_token
 from app.identity import mfa, passwords
@@ -77,15 +78,19 @@ def _audit(db: Session, action: str, actor: Actor | None = None, **kwargs: objec
 
 
 def _actor_for(
-    user: User, *, via: str, session: UserSession | None = None, api_key: ApiKey | None = None
+    db: Session,
+    user: User,
+    *,
+    via: str,
+    session: UserSession | None = None,
+    api_key: ApiKey | None = None,
 ) -> Actor:
     return Actor(
         user_id=user.id,
         email=user.email,
         full_name=user.full_name,
-        is_super_admin=user.is_super_admin,
         mfa_enabled=user.mfa_enabled,
-        mfa_required=user.mfa_required,
+        mfa_required=authz.requires_mfa(db, user.id),
         mfa_satisfied=True if api_key else bool(session and session.mfa_satisfied),
         via="api_key" if api_key else "session",
         session_id=session.id if session else None,
@@ -250,7 +255,6 @@ def setup_create_super_admin(
         email=email,
         full_name=data.full_name.strip(),
         status="active",
-        is_super_admin=True,
         mfa_secret_encrypted=encrypt(mfa_secret),
         mfa_enabled_at=now,
         last_login_at=now,
@@ -260,7 +264,8 @@ def setup_create_super_admin(
     db.add(user)
     db.flush()
     codes = _store_recovery_codes(db, user)
-    actor = _actor_for(user, via="session")
+    authz.grant_super_admin_at_setup(db, user.id)
+    actor = _actor_for(db, user, via="session")
     _audit(
         db,
         "identity.user.create",
@@ -375,7 +380,7 @@ def authenticate(db: Session, email: str, password: str, *, ip: str | None) -> L
     _audit(
         db,
         "identity.login",
-        _actor_for(user, via="session"),
+        _actor_for(db, user, via="session"),
         entity_type="user",
         entity_id=str(user.id),
     )
@@ -403,7 +408,7 @@ def create_session(
 
 def session_needs_mfa(db: Session, user_id: uuid.UUID) -> bool:
     user = db.get(User, user_id)
-    return bool(user and (user.mfa_enabled or user.mfa_required))
+    return bool(user and (user.mfa_enabled or authz.requires_mfa(db, user.id)))
 
 
 def resolve_session(db: Session, raw: str | None) -> Actor | None:
@@ -425,7 +430,7 @@ def resolve_session(db: Session, raw: str | None) -> Actor | None:
         return None
     if (now - session.last_seen_at).total_seconds() >= SESSION_TOUCH_SECONDS:
         session.last_seen_at = now
-    return _actor_for(user, via="session", session=session)
+    return _actor_for(db, user, via="session", session=session)
 
 
 def logout(db: Session, actor: Actor) -> None:
@@ -729,7 +734,7 @@ def reset_password(db: Session, raw: str, new: str, confirm: str) -> uuid.UUID:
     _audit(
         db,
         "identity.password.reset",
-        _actor_for(user, via="session"),
+        _actor_for(db, user, via="session"),
         entity_type="user",
         entity_id=str(user.id),
     )
@@ -832,7 +837,7 @@ def accept_invitation(
     _audit(
         db,
         "identity.user.activate",
-        _actor_for(user, via="session"),
+        _actor_for(db, user, via="session"),
         entity_type="user",
         entity_id=str(user.id),
     )
@@ -849,6 +854,8 @@ def list_users(db: Session, *, status: str | None = None, query: str | None = No
         like = f"%{query.strip().lower()}%"
         stmt = stmt.where(func.lower(User.full_name).like(like) | User.email.like(like))
     now = clock.now()
+    users = list(db.scalars(stmt.limit(500)))
+    roles = authz.role_names(db, [u.id for u in users])
     rows = [
         UserRow(
             id=u.id,
@@ -856,11 +863,11 @@ def list_users(db: Session, *, status: str | None = None, query: str | None = No
             email=u.email,
             status=u.status,
             mfa_enabled=u.mfa_enabled,
-            is_super_admin=u.is_super_admin,
+            roles=roles.get(u.id, []),
             last_login_at=u.last_login_at,
             locked=bool(u.locked_until and u.locked_until > now),
         )
-        for u in db.scalars(stmt.limit(500))
+        for u in users
     ]
     return UserList(rows=rows, counts=counts)
 
@@ -871,17 +878,9 @@ def suspend_user(db: Session, actor: Actor, user_id: uuid.UUID) -> None:
         raise NotFound()
     if user.id == actor.user_id:
         raise Conflict("You can't suspend your own account.")
-    if (
-        user.is_super_admin
-        and db.scalar(
-            select(func.count())
-            .select_from(User)
-            .where(User.is_super_admin.is_(True), User.status == "active")
-        )
-        == 1
-    ):
-        raise Conflict("This is the last super admin, so they can't be suspended.")
+    authz.ensure_not_last_super_admin(db, user.id)
     user.status = "suspended"
+    authz.revoke_delegations_for(db, actor, user.id, "account suspended")
     _revoke_sessions(db, user.id, "user_suspended")
     db.execute(
         update(ApiKey)
@@ -962,15 +961,4 @@ def resolve_api_key(db: Session, raw: str | None) -> Actor | None:
         or (now - key.last_used_at).total_seconds() >= SESSION_TOUCH_SECONDS
     ):
         key.last_used_at = now
-    return _actor_for(user, via="api_key", api_key=key)
-
-
-# ------------------------------------------------------------------ authorisation (interim)
-
-
-def authorize(actor: Actor, permission: str) -> None:
-    """Interim rule until the Phase 3 policy engine (ADR 0010): only an MFA-verified
-    super admin may use permission-protected routes. `permission` is already the name
-    the Phase 3 catalogue will use."""
-    if not (actor.is_super_admin and actor.mfa_satisfied):
-        raise PermissionDenied()
+    return _actor_for(db, user, via="api_key", api_key=key)

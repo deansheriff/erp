@@ -1,0 +1,197 @@
+{# My account → Delegations, and Administration → Delegations (everyone's). Design: design/stitch/exports/delegations.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro delegation_row(d) %}
+{% set total = (d.ends_at - d.starts_at).total_seconds() %}
+{% set done = [0, [(now - d.starts_at).total_seconds(), total] | min] | max %}
+{% set pct = (100 * done / total) | round | int if total else 0 %}
+<li class="flex flex-col gap-4 rounded-xl bg-surface-sunken p-4 transition-shadow duration-base hover:shadow-card">
+  <div class="flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
+    <div class="flex min-w-0 items-center gap-3">
+      {% set other = d.to_name if d.from_user_id == current_user_id else d.from_name %}
+      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-iris font-display text-sm font-bold text-on-iris">{{ other.split()[0][0] }}{{ other.split()[-1][0] }}</span>
+      <div class="min-w-0">
+        <p class="flex flex-wrap items-center gap-2 font-h3 text-h3">
+          {% if everyone %}{{ d.from_name }} {{ ui.icon("arrow-right", "sm", "text-ink-3") }} {{ d.to_name }}{% else %}{{ other }}{% endif %}
+          <span class="kx-badge-info">{{ d.scope.label }} scope</span>
+        </p>
+        <p class="text-body-sm text-ink-3">{% if not everyone %}{{ "You're lending" if d.from_user_id == current_user_id else "Lent to you" }}{% endif %}</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 self-start lg:self-center">
+      {% set st = {"active": ("success", "Active"), "upcoming": ("info", "Upcoming"), "ended": ("neutral", "Ended"), "revoked": ("danger", "Revoked")}[d.status] %}
+      {{ ui.badge(st[0], st[1]) }}
+      {% if d.status in ("active", "upcoming") %}
+      <form method="post" hx-push-url="false" action="/delegations/{{ d.id }}/revoke">
+        {{ ui.csrf_field() }}<input type="hidden" name="back" value="{{ base }}">
+        <button type="submit" class="kx-btn-ghost h-9 hover:bg-danger-bg hover:text-danger-text">{{ ui.icon("x", "sm") }} Revoke</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  <div class="grid items-center gap-3 rounded-lg bg-surface p-3 md:grid-cols-3">
+    <div>
+      <span class="kx-overline mb-1 block">Permission</span>
+      <p class="text-body-sm font-semibold">{{ d.permission_label }}</p>
+      <code class="font-mono text-[11px] text-iris">{{ d.permission_key }}</code>
+    </div>
+    <div>
+      <span class="kx-overline mb-1 block">Period</span>
+      <p class="text-body-sm tnum">{{ d.starts_at | datetime }} – {{ d.ends_at | period_end }}</p>
+    </div>
+    <div>
+      <div class="mb-1 flex items-center justify-between"><span class="kx-overline">Elapsed</span><span class="text-xs font-medium text-iris tnum">{{ pct }}%</span></div>
+      <progress class="kx-meter" value="{{ pct }}" max="100" aria-label="Time elapsed">{{ pct }}%</progress>
+    </div>
+  </div>
+  <p class="flex items-center gap-2 px-1 text-body-sm text-ink-2">{{ ui.icon("message-square", "sm", "text-ink-3") }} <span>Reason: <span class="font-medium text-ink">{{ d.reason }}</span></span></p>
+</li>
+{% endmacro %}
+
+{% block content %}
+<div x-data="modal" data-open="{{ 'true' if drawer_open else 'false' }}">
+  {% call ui.page_header("Delegations", "Everyone's delegations. Revoke any of them, or set one up on someone's behalf." if everyone else "Lend some of your permissions to a colleague while you're away. Delegations end automatically.") %}
+    {% if lendable_groups or everyone %}<button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("plus", "sm") }} New delegation</button>{% endif %}
+  {% endcall %}
+
+  <div class="mt-5 space-y-3">
+    {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+    {% if problem %}{{ ui.alert("danger", problem) }}{% endif %}
+  </div>
+
+  <nav class="mt-6 inline-flex items-center gap-1.5 rounded-control border border-line bg-surface-sunken p-1" aria-label="Show">
+    <a href="{{ base }}" class="flex h-9 items-center rounded-lg px-3.5 text-label {{ 'text-ink-2 hover:bg-surface' if show_past else 'bg-iris-tint font-semibold text-iris-hover' }}" {% if not show_past %}aria-current="page"{% endif %}>Active and upcoming</a>
+    <a href="{{ base }}?past=1" class="flex h-9 items-center rounded-lg px-3.5 text-label {{ 'bg-iris-tint font-semibold text-iris-hover' if show_past else 'text-ink-2 hover:bg-surface' }}" {% if show_past %}aria-current="page"{% endif %}>Past</a>
+  </nav>
+
+  <div class="mt-5 grid items-start gap-6 xl:grid-cols-12">
+    <div class="kx-stagger flex flex-col gap-6 xl:col-span-8">
+      {% set sections = [("Everyone's delegations", "Who is lending what to whom.", lending, "arrow-left-right")] if everyone else [("You're lending", "Colleagues acting on your behalf.", lending, "arrow-left-right"), ("Lent to you", "Permissions colleagues have lent you.", borrowing, "inbox")] %}
+      {% for title, subtitle, rows, icon_name in sections %}
+      <section class="kx-card flex flex-col gap-5 p-5 md:p-6" aria-label="{{ title }}">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-iris-tint text-iris">{{ ui.icon(icon_name, "sm") }}</span>
+            <div><h2 class="font-h2 text-h2">{{ title }}</h2><p class="text-body-sm text-ink-3">{{ subtitle }}</p></div>
+          </div>
+          <span class="rounded-full bg-surface-sunken px-3 py-1 text-label text-ink-3 tnum">{{ rows | length }}</span>
+        </div>
+        {% if rows %}
+        <ul class="flex flex-col gap-4">{% for d in rows %}{{ delegation_row(d) }}{% endfor %}</ul>
+        {% else %}
+        {% call ui.empty_state("shield", "Nothing here", "No past delegations." if show_past else ("Nobody is lending you permissions right now." if title == "Lent to you" else "You aren't lending any permissions.")) %}{% endcall %}
+        {% endif %}
+      </section>
+      {% endfor %}
+    </div>
+
+    <aside class="kx-card kx-enter space-y-4 p-6 xl:col-span-4">
+      <div class="flex items-center gap-3">
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-warning-bg text-warning-text">{{ ui.icon("scale", "sm") }}</span>
+        <h2 class="font-h3 text-h3">The rules</h2>
+      </div>
+      <ul class="space-y-2.5 text-body-sm text-ink-2">
+        <li class="flex items-start gap-2">{{ ui.icon("circle-check", "sm", "mt-0.5 shrink-0 text-iris") }} A delegation lasts at most <strong>{{ max_days }} days</strong>.</li>
+        <li class="flex items-start gap-2">{{ ui.icon("circle-check", "sm", "mt-0.5 shrink-0 text-iris") }} You can only lend what your own roles give you, no more widely than you hold it.</li>
+        <li class="flex items-start gap-2">{{ ui.icon("circle-check", "sm", "mt-0.5 shrink-0 text-iris") }} Scope is counted from you: lending team scope lets them act on your team.</li>
+        <li class="flex items-start gap-2">{{ ui.icon("circle-check", "sm", "mt-0.5 shrink-0 text-iris") }} Revoking takes effect straight away. Everything is in the audit log.</li>
+      </ul>
+      <div class="rounded-xl bg-surface-sunken p-4 text-body-sm text-ink-3"><p class="mb-1 flex items-center gap-2 font-label text-ink">{{ ui.icon("lock", "sm", "text-iris") }} Can't be delegated</p>Access control, security and technical settings.</div>
+    </aside>
+  </div>
+
+  {# ------------------------------------------------------------ new delegation drawer #}
+  <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex justify-end" x-on:keydown.escape.window="hide">
+    <div class="absolute inset-0 bg-[rgb(11_11_18/0.45)] backdrop-blur-[4px]" x-on:click="hide" x-show="open" x-transition.opacity.duration.200ms></div>
+    <aside x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="deleg-title"
+           class="relative flex h-full w-full max-w-[540px] flex-col border-l border-line bg-surface shadow-overlay sm:rounded-l-sheet"
+           x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+           x-transition:leave="transition duration-base ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+      <form method="post" hx-push-url="false" action="{{ base }}" class="flex h-full flex-col" novalidate>
+        {{ ui.csrf_field() }}
+        <div class="flex items-start justify-between border-b border-line px-6 py-5">
+          <div>
+            <h2 id="deleg-title" class="font-h1 text-[20px]">New delegation</h2>
+            <p class="text-body-sm text-ink-3">{{ "Lend one person's permissions to another." if everyone else "Lend permissions you hold to a colleague." }}</p>
+          </div>
+          <button type="button" class="kx-btn-icon" x-on:click="hide" aria-label="Close">{{ ui.icon("x") }}</button>
+        </div>
+        <div class="flex-1 space-y-5 overflow-y-auto p-6">
+          {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+          {% if everyone %}
+          <div>
+            <label for="from_user_id" class="kx-label">On behalf of</label>
+            <select id="from_user_id" name="from_user_id" class="kx-input">
+              <option value="">Myself</option>
+              {% for uid, name, email in colleagues %}<option value="{{ uid }}" {% if values.get("from_user_id") == uid|string %}selected{% endif %}>{{ name }} · {{ email }}</option>{% endfor %}
+            </select>
+            <p class="mt-1.5 text-xs text-ink-3">The permissions below are yours; when acting on someone's behalf, they must hold what you choose.</p>
+          </div>
+          {% endif %}
+          <div>
+            <label for="to_user_id" class="kx-label">Colleague <span class="text-danger-text">*</span></label>
+            <select id="to_user_id" name="to_user_id" class="kx-input" required>
+              <option value="">Choose a colleague…</option>
+              {% for uid, name, email in colleagues %}<option value="{{ uid }}" {% if values.get("to_user_id") == uid|string %}selected{% endif %}>{{ name }} · {{ email }}</option>{% endfor %}
+            </select>
+            {{ ui.field_error(errors, "to_user_id") }}
+          </div>
+          <fieldset>
+            <legend class="kx-label">Permissions to lend <span class="text-danger-text">*</span></legend>
+            {{ ui.field_error(errors, "permissions") }}
+            <div class="space-y-3">
+              {% for module, label, icon_name, perms in lendable_groups %}
+              <div class="space-y-2 rounded-xl bg-surface-sunken p-4">
+                <p class="flex items-center gap-1.5 kx-overline text-iris">{{ ui.icon(icon_name, "sm") }} {{ label }}</p>
+                {% for p in perms %}
+                <label class="flex cursor-pointer items-start gap-3 rounded-lg bg-surface p-3 transition-shadow hover:shadow-card">
+                  <input type="checkbox" name="perm:{{ p.key }}" class="kx-check mt-0.5" {% if values.get("perm:" ~ p.key) == "on" %}checked{% endif %}>
+                  <span class="min-w-0 flex-1">
+                    <span class="flex items-center justify-between gap-2"><span class="text-body-sm font-semibold">{{ p.label }}</span><span class="kx-badge-info">You hold: {{ lendable_scope[p.key].label }}</span></span>
+                    {% if p.description %}<span class="mt-0.5 block text-xs text-ink-3">{{ p.description }}</span>{% endif %}
+                    <code class="mt-1 block font-mono text-[11px] text-ink-3">{{ p.key }}</code>
+                  </span>
+                </label>
+                {% endfor %}
+              </div>
+              {% else %}
+              <p class="rounded-xl bg-surface-sunken p-4 text-body-sm text-ink-3">You don't hold any permissions that can be lent.</p>
+              {% endfor %}
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="kx-label">Scope <span class="text-danger-text">*</span></legend>
+            <div class="kx-segment">
+              {% for s in scopes %}<label><input type="radio" name="scope" value="{{ s.value }}" {% if values.get("scope", "organization") == s.value %}checked{% endif %}>{{ s.label }}</label>{% endfor %}
+            </div>
+            <p class="mt-1.5 text-xs text-ink-3">Never wider than the scope you hold for each permission.</p>
+            {{ ui.field_error(errors, "scope") }}
+          </fieldset>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="starts" class="kx-label">From</label>
+              <input id="starts" type="date" name="starts" min="{{ today }}" value="{{ values.get('starts') or today }}" class="kx-input">
+            </div>
+            <div>
+              <label for="ends" class="kx-label">Until <span class="text-danger-text">*</span></label>
+              <input id="ends" type="date" name="ends" min="{{ today }}" value="{{ values.get('ends', '') }}" class="kx-input" required>
+              {{ ui.field_error(errors, "ends_at") }}
+            </div>
+          </div>
+          <p class="-mt-3 text-xs text-ink-3">Includes the last day. Up to {{ max_days }} days.</p>
+          <div>
+            <label for="reason" class="kx-label">Reason <span class="text-danger-text">*</span></label>
+            <textarea id="reason" name="reason" rows="3" maxlength="300" class="kx-input" placeholder="For example: annual leave handover">{{ values.get("reason", "") }}</textarea>
+            {{ ui.field_error(errors, "reason") }}
+          </div>
+        </div>
+        <div class="flex items-center justify-end gap-3 border-t border-line p-6">
+          <button type="button" class="kx-btn-secondary" x-on:click="hide">Cancel</button>
+          <button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Create delegation</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+</div>
+{% endblock %}

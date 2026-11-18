@@ -52,6 +52,8 @@ class SecuritySettings(IdMixin, Base):
     reset_ttl_minutes: Mapped[int] = mapped_column(SmallInteger, server_default="30")
     ip_attempt_limit: Mapped[int] = mapped_column(SmallInteger, server_default="20")
     ip_attempt_window_minutes: Mapped[int] = mapped_column(SmallInteger, server_default="15")
+    # Longest a delegation may last (confirmed 2026-11-18).
+    delegation_max_days: Mapped[int] = mapped_column(SmallInteger, server_default="90")
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
 
 
@@ -76,8 +78,6 @@ class User(IdMixin, Base):
     failed_login_count: Mapped[int] = mapped_column(Integer, server_default="0")
     locked_until: Mapped[datetime | None]
     last_login_at: Mapped[datetime | None]
-    # Interim until the Phase 3 policy engine (ADR 0010).
-    is_super_admin: Mapped[bool] = mapped_column(Boolean, server_default="false")
     invited_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
@@ -85,11 +85,6 @@ class User(IdMixin, Base):
     @property
     def mfa_enabled(self) -> bool:
         return self.mfa_enabled_at is not None
-
-    @property
-    def mfa_required(self) -> bool:
-        """Phase 3 adds per-role requirements; today super admins must use MFA."""
-        return self.is_super_admin
 
 
 class UserSession(IdMixin, Base):

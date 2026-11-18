@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kxmeleon ERP — Role Editor (Line Manager)</title>
+  <!-- Google Fonts: Plus Jakarta Sans & Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#F6F6FA',
+            surface: '#FFFFFF',
+            'surface-sunken': '#EFEFF6',
+            'surface-raised': '#FFFFFF',
+            line: '#E4E4EE',
+            'line-strong': '#8B8BA6',
+            ink: '#16162A',
+            'ink-2': '#4B4B66',
+            'ink-3': '#626280',
+            iris: '#5A4BDB',
+            'iris-hover': '#4A3CC4',
+            'iris-tint': '#EEECFD',
+            'on-iris': '#FFFFFF',
+            lime: '#C5F04A',
+            'lime-ink': '#4D7A0A',
+            /* Modules */
+            'mod-admin': '#3F3F5A',
+            'mod-hr': '#7C3AED',
+            'mod-leave': '#0369A1',
+            'mod-expenses': '#C2410C',
+            'mod-finance': '#1D4ED8',
+            'mod-attendance': '#0E7490',
+            /* Status */
+            'success-text': '#0F6B3E',
+            'success-bg': '#DDF7E8',
+            'warning-text': '#8A4B00',
+            'warning-bg': '#FFF1D6',
+            'danger-text': '#B4232F',
+            'danger-bg': '#FFE4E6',
+            'info-text': '#1D55B8',
+            'info-bg': '#DFEBFF',
+            'neutral-text': '#4B4B66',
+            'neutral-bg': '#EFEFF6',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            card: '0 1px 2px rgb(22 22 42 / 0.04), 0 1px 1px rgb(22 22 42 / 0.03)',
+            raised: '0 8px 24px -6px rgb(22 22 42 / 0.12), 0 2px 6px rgb(22 22 42 / 0.06)',
+            overlay: '0 24px 48px -12px rgb(22 22 42 / 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F6F6FA;
+      color: #16162A;
+      font-family: 'Inter', sans-serif;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-tabular {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Module radial background glow */
+    .admin-header-glow {
+      background: radial-gradient(circle 520px at 15% 15%, rgba(63, 63, 90, 0.07) 0%, rgba(246, 246, 250, 0) 100%);
+    }
+    /* Custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E4E4EE;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8B8BA6;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex bg-canvas text-ink antialiased">
+
+  <!-- LEFT PERSISTENT SIDEBAR (272px) -->
+  <aside class="w-[272px] bg-surface border-r border-line flex flex-col shrink-0 min-h-screen fixed top-0 bottom-0 left-0 z-30 select-none">
+    <!-- Top Branding / Organisation -->
+    <div class="h-16 px-4 flex items-center justify-between border-b border-line">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-ink text-surface flex items-center justify-center font-heading font-bold text-sm tracking-tight shadow-sm">
+          AH
+        </div>
+        <div class="flex flex-col">
+          <span class="font-heading font-bold text-sm text-ink leading-tight">Adeyemi Holdings</span>
+        </div>
+      </div>
+      <button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" title="Collapse sidebar" aria-label="Collapse sidebar">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Quick Search Command Palette -->
+    <div class="px-3 pt-3 pb-2">
+      <button class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-surface-sunken text-ink-3 text-xs border border-transparent hover:border-line transition-all">
+        <span class="flex items-center gap-2">
+          <i data-lucide="search" class="w-3.5 h-3.5"></i>
+          <span>Go to…</span>
+        </span>
+        <kbd class="px-1.5 py-0.5 rounded bg-surface border border-line text-[11px] font-mono text-ink-2 shadow-xs">Ctrl K</kbd>
+      </button>
+    </div>
+
+    <!-- Navigation Scroll Area -->
+    <div class="flex-1 overflow-y-auto px-3 py-2 space-y-6">
+      <!-- Core Module List -->
+      <div>
+        <div class="px-3 pb-1.5 text-[11px] font-semibold text-ink-3 uppercase tracking-wider font-mono">Modules</div>
+        <nav class="space-y-0.5">
+          <!-- Home -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-ink-2 text-sm hover:bg-surface-sunken hover:text-ink transition-colors group">
+            <div class="w-6 h-6 rounded-lg bg-surface-sunken group-hover:bg-line/60 flex items-center justify-center text-ink-2 transition-colors">
+              <i data-lucide="home" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="font-medium">Home</span>
+          </a>
+
+          <!-- HR -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-ink-2 text-sm hover:bg-surface-sunken hover:text-ink transition-colors group">
+            <div class="w-6 h-6 rounded-lg bg-mod-hr/10 text-mod-hr flex items-center justify-center transition-colors">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="font-medium">HR</span>
+          </a>
+
+          <!-- Leave -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-ink-2 text-sm hover:bg-surface-sunken hover:text-ink transition-colors group">
+            <div class="w-6 h-6 rounded-lg bg-mod-leave/10 text-mod-leave flex items-center justify-center transition-colors">
+              <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="font-medium">Leave</span>
+          </a>
+
+          <!-- Expenses -->
+          <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-ink-2 text-sm hover:bg-surface-sunken hover:text-ink transition-colors group">
+            <div class="w-6 h-6 rounded-lg bg-mod-expenses/10 text-mod-expenses flex items-center justify-center transition-colors">
+              <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+            </div>
+            <span class="font-medium">Expenses</span>
+          </a>
+
+          <!-- Administration Module (Active Parent: Slate #3F3F5A Icon Tile & Tinted Row) -->
+          <div class="pt-1">
+            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-ink text-sm bg-mod-admin/10 transition-colors font-semibold group">
+              <div class="w-6 h-6 rounded-lg bg-mod-admin text-surface flex items-center justify-center transition-colors shadow-xs">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              </div>
+              <span class="flex-1">Administration</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-ink-3"></i>
+            </a>
+
+            <!-- Sub-items under Administration -->
+            <div class="mt-1 ml-4 pl-3 border-l-2 border-line space-y-0.5">
+              <!-- Users -->
+              <a href="#" class="flex items-center px-3 py-1.5 rounded-lg text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+                Users
+              </a>
+
+              <!-- Roles (Active Item: iris-tint #EEECFD pill with 3px slate bar) -->
+              <a href="#" class="relative flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold text-iris bg-iris-tint transition-colors">
+                <span class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-mod-admin rounded-r-full"></span>
+                Roles
+              </a>
+
+              <!-- Delegations -->
+              <a href="#" class="flex items-center px-3 py-1.5 rounded-lg text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+                Delegations
+              </a>
+
+              <!-- Audit log -->
+              <a href="#" class="flex items-center px-3 py-1.5 rounded-lg text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+                Audit log
+              </a>
+
+              <!-- Mail settings -->
+              <a href="#" class="flex items-center px-3 py-1.5 rounded-lg text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+                Mail settings
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Sidebar Bottom Actions & Current User -->
+    <div class="p-3 border-t border-line space-y-1 bg-surface">
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-ink-2 text-xs hover:bg-surface-sunken hover:text-ink transition-colors">
+        <i data-lucide="help-circle" class="w-4 h-4 text-ink-3"></i>
+        <span>Help &amp; documentation</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl text-ink-2 text-xs hover:bg-surface-sunken hover:text-ink transition-colors">
+        <i data-lucide="settings" class="w-4 h-4 text-ink-3"></i>
+        <span>Settings</span>
+      </a>
+
+      <!-- User Mini-Card -->
+      <div class="pt-2 mt-2 border-t border-line/60 flex items-center justify-between px-2 py-1.5">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-iris text-surface font-semibold text-xs flex items-center justify-center">
+            FB
+          </div>
+          <div class="flex flex-col text-left">
+            <span class="text-xs font-semibold text-ink leading-tight">Fatima Bello</span>
+            <span class="text-[11px] text-ink-3 leading-tight">Finance Manager</span>
+          </div>
+        </div>
+        <button class="p-1 rounded-md text-ink-3 hover:text-ink hover:bg-surface-sunken" title="Sign out" aria-label="Sign out">
+          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER (offset by 272px) -->
+  <div class="flex-1 ml-[272px] flex flex-col min-w-0">
+
+    <!-- STICKY GLASS TOP BAR (64px) -->
+    <header class="h-16 sticky top-0 z-20 bg-surface/85 backdrop-blur-md border-b border-line px-8 flex items-center justify-between gap-4">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs" aria-label="Breadcrumb">
+        <span class="text-ink-2 hover:text-ink transition-colors cursor-pointer">Administration</span>
+        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-line-strong"></i>
+        <span class="text-ink-2 hover:text-ink transition-colors cursor-pointer">Roles</span>
+        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-line-strong"></i>
+        <span class="font-semibold text-ink">Line Manager</span>
+      </nav>
+
+      <!-- Center Search Field -->
+      <div class="w-full max-w-md mx-4">
+        <div class="relative flex items-center">
+          <i data-lucide="search" class="w-4 h-4 text-ink-3 absolute left-3.5 pointer-events-none"></i>
+          <input 
+            type="text" 
+            placeholder="Search people, claims, invoices…" 
+            class="w-full h-9 pl-9 pr-14 bg-surface-sunken text-xs text-ink rounded-xl border border-transparent focus:border-iris focus:bg-surface focus:ring-2 focus:ring-iris/20 outline-none transition-all placeholder:text-ink-3"
+          />
+          <kbd class="absolute right-2 px-1.5 py-0.5 rounded bg-surface border border-line text-[10px] font-mono text-ink-3 shadow-xs">Ctrl K</kbd>
+        </div>
+      </div>
+
+      <!-- Right Header Actions -->
+      <div class="flex items-center gap-1.5">
+        <!-- Approvals Inbox -->
+        <button class="relative w-9 h-9 rounded-xl flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" title="Approvals Inbox" aria-label="Approvals inbox">
+          <i data-lucide="inbox" class="w-4 h-4"></i>
+          <span class="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-iris text-white text-[10px] font-bold flex items-center justify-center leading-none">3</span>
+        </button>
+
+        <!-- Notifications Bell with Lime dot -->
+        <button class="relative w-9 h-9 rounded-xl flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" title="Notifications" aria-label="Notifications">
+          <i data-lucide="bell" class="w-4 h-4"></i>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="w-9 h-9 rounded-xl flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" title="Toggle theme" aria-label="Toggle theme">
+          <i data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Vertical Divider -->
+        <div class="w-px h-5 bg-line mx-1.5"></div>
+
+        <!-- Current User Avatar Profile Trigger -->
+        <button class="flex items-center gap-2 pl-1 pr-1.5 py-1 rounded-xl hover:bg-surface-sunken transition-colors">
+          <div class="w-8 h-8 rounded-full bg-iris text-surface font-semibold text-xs flex items-center justify-center shadow-xs">
+            FB
+          </div>
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-ink-3"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN BODY CONTENT WITH SLATE GLOW -->
+    <main class="flex-1 admin-header-glow p-8 pb-16">
+      <div class="max-w-[1360px] mx-auto space-y-6">
+
+        <!-- PAGE HEADER -->
+        <div class="flex flex-col gap-4 pb-1">
+          <div class="flex items-start justify-between gap-4">
+            <div class="space-y-1.5">
+              <div class="flex items-center gap-3">
+                <h1 class="text-2xl font-bold font-heading text-ink tracking-tight">Line Manager</h1>
+                <!-- Neutral Badge: From template -->
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-bg text-neutral-text border border-line">
+                  <span class="w-1.5 h-1.5 rounded-full bg-ink-3"></span>
+                  From template
+                </span>
+              </div>
+              <p class="text-sm text-ink-3 font-normal max-w-2xl">
+                Approves their team's requests and sees their team's records.
+              </p>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="flex items-center gap-3 shrink-0">
+              <button class="h-10 px-4 rounded-xl bg-surface border border-line-strong/60 text-ink text-xs font-medium hover:bg-surface-sunken hover:border-line-strong active:scale-[0.98] transition-all flex items-center gap-2 shadow-xs">
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-ink-2"></i>
+                Duplicate
+              </button>
+              <button class="h-10 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris text-xs font-semibold shadow-xs active:scale-[0.98] transition-all flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4"></i>
+                Save changes
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabs with sliding iris underline -->
+          <div class="border-b border-line flex items-center gap-8 pt-2">
+            <button class="relative pb-3 text-sm font-semibold text-iris flex items-center gap-2">
+              <span>Permissions</span>
+              <!-- Sliding Iris Underline Indicator -->
+              <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-iris rounded-full"></span>
+            </button>
+            <button class="pb-3 text-sm font-medium text-ink-3 hover:text-ink transition-colors flex items-center gap-2">
+              <span>Members</span>
+              <span class="px-1.5 py-0.5 rounded-full bg-surface-sunken text-[11px] font-semibold text-ink-2 border border-line font-tabular">12</span>
+            </button>
+            <button class="pb-3 text-sm font-medium text-ink-3 hover:text-ink transition-colors">
+              History
+            </button>
+          </div>
+        </div>
+
+        <!-- MAIN TWO-COLUMN WORKSPACE: MATRIX + RIGHT SIDE PANEL -->
+        <div class="grid grid-cols-12 gap-6 items-start">
+
+          <!-- LEFT COLUMN: PERMISSION MATRIX (col-span-8 or 9) -->
+          <div class="col-span-12 xl:col-span-8 space-y-4">
+
+            <!-- MATRIX CARD CONTAINER -->
+            <div class="bg-surface rounded-2xl border border-line shadow-card overflow-hidden">
+              
+              <!-- STICKY FILTER BAR ABOVE MATRIX -->
+              <div class="p-4 bg-surface border-b border-line flex flex-wrap items-center justify-between gap-3 sticky top-16 z-10">
+                <!-- Search Filter -->
+                <div class="relative flex-1 min-w-[240px] max-w-sm">
+                  <i data-lucide="search" class="w-4 h-4 text-ink-3 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                  <input 
+                    type="text" 
+                    placeholder="Filter permissions…" 
+                    class="w-full h-9 pl-9 pr-3 text-xs bg-surface-sunken rounded-xl border border-transparent focus:border-iris focus:bg-surface focus:ring-2 focus:ring-iris/20 outline-none transition-all placeholder:text-ink-3"
+                  />
+                </div>
+
+                <!-- Chips & Filters -->
+                <div class="flex items-center gap-2 flex-wrap">
+                  <!-- Chip: Changed only -->
+                  <button class="h-8 px-3 rounded-lg border border-line bg-surface text-xs font-medium text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full border border-ink-3"></span>
+                    Changed only
+                  </button>
+
+                  <!-- Chip: Sensitive only -->
+                  <button class="h-8 px-3 rounded-lg border border-warning-bg bg-warning-bg/40 text-xs font-medium text-warning-text hover:bg-warning-bg/70 transition-colors flex items-center gap-1.5">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                    Sensitive only
+                  </button>
+
+                  <!-- Divider -->
+                  <div class="w-px h-5 bg-line"></div>
+
+                  <!-- Module Filter Dropdown Chip -->
+                  <button class="h-8 px-3 rounded-lg border border-line bg-surface text-xs font-medium text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors flex items-center gap-1.5">
+                    <span>All modules</span>
+                    <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-ink-3"></i>
+                  </button>
+
+                  <button class="text-xs text-iris hover:underline font-medium px-1">
+                    Reset
+                  </button>
+                </div>
+              </div>
+
+              <!-- SCOPE LEGEND / COLUMN HEADER BANNER -->
+              <div class="px-6 py-2.5 bg-surface-sunken/60 border-b border-line flex items-center justify-between text-[11px] font-mono text-ink-3 uppercase tracking-wider">
+                <span>Permission &amp; Key</span>
+                <span class="pr-2">Access Scope Boundary</span>
+              </div>
+
+              <!-- MATRIX TABLE CONTENT -->
+              <div class="divide-y divide-line">
+
+                <!-- ================= HR GROUP ================= -->
+                <div>
+                  <!-- Group Header -->
+                  <div class="px-6 py-2.5 bg-surface-sunken flex items-center gap-2.5 border-b border-line/60">
+                    <div class="w-5 h-5 rounded-md bg-mod-hr text-surface flex items-center justify-center shadow-xs">
+                      <i data-lucide="users" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-heading font-bold text-xs uppercase tracking-wider text-ink">Human Resources</span>
+                    <span class="text-[11px] text-ink-3 font-normal font-mono">(hr.*)</span>
+                  </div>
+
+                  <!-- Row 1: View employees -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">View employees</span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">hr.employee.read</div>
+                    </div>
+                    <!-- Scope Picker: 5-option Segmented Control (Active: Department) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for View employees">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+
+                  <!-- Row 2: View compensation (Sensitive) -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">View compensation</span>
+                        <!-- Amber Sensitive Badge -->
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-warning-bg text-warning-text border border-amber-200">
+                          <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                          Sensitive
+                        </span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">hr.compensation.read</div>
+                    </div>
+                    <!-- Scope Picker (Active: Self) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for View compensation">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+
+                  <!-- Row 3: Manage job requisitions -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">Manage job requisitions</span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">hr.recruitment.requisition</div>
+                    </div>
+                    <!-- Scope Picker (Active: Department) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for Manage job requisitions">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ================= LEAVE GROUP ================= -->
+                <div>
+                  <!-- Group Header -->
+                  <div class="px-6 py-2.5 bg-surface-sunken flex items-center gap-2.5 border-b border-line/60">
+                    <div class="w-5 h-5 rounded-md bg-mod-leave text-surface flex items-center justify-center shadow-xs">
+                      <i data-lucide="calendar" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-heading font-bold text-xs uppercase tracking-wider text-ink">Leave Management</span>
+                    <span class="text-[11px] text-ink-3 font-normal font-mono">(leave.*)</span>
+                  </div>
+
+                  <!-- Row 1: Approve leave requests -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">Approve leave requests</span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">leave.request.approve</div>
+                    </div>
+                    <!-- Scope Picker (Active: Team) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for Approve leave requests">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+
+                  <!-- Row 2: View leave calendar -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">View leave calendar</span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">leave.calendar.read</div>
+                    </div>
+                    <!-- Scope Picker (Active: Department) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for View leave calendar">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ================= EXPENSES GROUP ================= -->
+                <div>
+                  <!-- Group Header -->
+                  <div class="px-6 py-2.5 bg-surface-sunken flex items-center gap-2.5 border-b border-line/60">
+                    <div class="w-5 h-5 rounded-md bg-mod-expenses text-surface flex items-center justify-center shadow-xs">
+                      <i data-lucide="receipt" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-heading font-bold text-xs uppercase tracking-wider text-ink">Expenses</span>
+                    <span class="text-[11px] text-ink-3 font-normal font-mono">(expenses.*)</span>
+                  </div>
+
+                  <!-- Row 1: Approve expense claims -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">Approve expense claims</span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">expenses.claim.approve</div>
+                    </div>
+                    <!-- Scope Picker (Active: Team) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for Approve expense claims">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+
+                  <!-- Row 2: Authorise cash advances (Sensitive) -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">Authorise cash advances</span>
+                        <!-- Amber Sensitive Badge -->
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-warning-bg text-warning-text border border-amber-200">
+                          <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                          Sensitive
+                        </span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">expenses.advance.authorise</div>
+                    </div>
+                    <!-- Scope Picker (Active: Team) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for Authorise cash advances">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+
+                  <!-- Row 3: View expense analytics -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">View expense analytics</span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">expenses.analytics.read</div>
+                    </div>
+                    <!-- Scope Picker (Active: Department) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for View expense analytics">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ================= ADMINISTRATION GROUP ================= -->
+                <div>
+                  <!-- Group Header -->
+                  <div class="px-6 py-2.5 bg-surface-sunken flex items-center gap-2.5 border-b border-line/60">
+                    <div class="w-5 h-5 rounded-md bg-mod-admin text-surface flex items-center justify-center shadow-xs">
+                      <i data-lucide="shield-check" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-heading font-bold text-xs uppercase tracking-wider text-ink">Administration</span>
+                    <span class="text-[11px] text-ink-3 font-normal font-mono">(admin.*)</span>
+                  </div>
+
+                  <!-- Row 1: Read audit log (Sensitive) -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">Read audit log</span>
+                        <!-- Amber Sensitive Badge -->
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-warning-bg text-warning-text border border-amber-200">
+                          <i data-lucide="lock" class="w-2.5 h-2.5"></i>
+                          Sensitive
+                        </span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">admin.audit.read</div>
+                    </div>
+                    <!-- Scope Picker (Active: None) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for Read audit log">
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+
+                  <!-- Row 2: Manage delegation rules -->
+                  <div class="px-6 py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 transition-colors">
+                    <div class="space-y-0.5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-ink">Manage delegation rules</span>
+                      </div>
+                      <div class="font-mono text-[11px] text-ink-3">admin.delegation.write</div>
+                    </div>
+                    <!-- Scope Picker (Active: Self) -->
+                    <div class="inline-flex p-1 bg-surface-sunken rounded-xl border border-line/70 gap-0.5 select-none" role="group" aria-label="Scope for Manage delegation rules">
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">None</button>
+                      <button class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-iris text-white shadow-xs transition-all">Self</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Team</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Department</button>
+                      <button class="px-2.5 py-1 text-xs font-medium rounded-lg text-ink-2 hover:text-ink transition-all">Organisation</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Matrix Footer / Info bar -->
+              <div class="px-6 py-3 bg-surface-sunken/40 border-t border-line flex items-center justify-between text-xs text-ink-3">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="info" class="w-3.5 h-3.5 text-ink-3"></i>
+                  Showing 8 permissions across 4 active modules
+                </span>
+                <span class="text-ink-2 font-medium">Auto-save draft enabled</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: ROLE SETTINGS PANEL (320px / col-span-4) -->
+          <div class="col-span-12 xl:col-span-4 space-y-4">
+
+            <!-- ROLE SETTINGS CARD -->
+            <div class="bg-surface rounded-2xl border border-line shadow-card p-6 space-y-5">
+              <div class="flex items-center justify-between border-b border-line pb-3">
+                <h2 class="text-base font-bold font-heading text-ink">Role settings</h2>
+                <span class="text-[11px] font-mono text-ink-3">ID: ROL-LM-04</span>
+              </div>
+
+              <!-- Role Name Field -->
+              <div class="space-y-1.5">
+                <label for="role-name" class="block text-xs font-semibold text-ink">
+                  Role name <span class="text-ink-3 font-normal">(required)</span>
+                </label>
+                <input 
+                  id="role-name"
+                  type="text" 
+                  value="Line Manager" 
+                  class="w-full h-10 px-3 text-sm bg-surface rounded-xl border border-line-strong focus:border-iris focus:ring-2 focus:ring-iris/20 outline-none transition-all text-ink font-medium"
+                />
+              </div>
+
+              <!-- Description Field -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-center">
+                  <label for="role-desc" class="block text-xs font-semibold text-ink">Description</label>
+                  <span class="text-[11px] text-ink-3 font-mono">61/200</span>
+                </div>
+                <textarea 
+                  id="role-desc"
+                  rows="3" 
+                  class="w-full p-3 text-xs bg-surface rounded-xl border border-line-strong focus:border-iris focus:ring-2 focus:ring-iris/20 outline-none transition-all text-ink leading-relaxed resize-none"
+                >Approves their team's requests and sees their team's records.</textarea>
+              </div>
+
+              <!-- Switch: Require two-step verification (ON) -->
+              <div class="pt-2 border-t border-line flex items-center justify-between gap-3">
+                <div class="space-y-0.5">
+                  <span class="text-xs font-semibold text-ink block">Require two-step verification</span>
+                  <span class="text-[11px] text-ink-3 leading-tight block">Enforces TOTP MFA for all assignees</span>
+                </div>
+                <!-- Accessible Toggle Switch (On) -->
+                <button type="button" class="w-11 h-6 bg-iris rounded-full relative inline-flex items-center px-0.5 transition-colors focus:outline-none focus:ring-2 focus:ring-iris/30" role="switch" aria-checked="true" aria-label="Require two-step verification">
+                  <span class="w-5 h-5 bg-white rounded-full shadow-xs transform translate-x-5 transition-transform flex items-center justify-center">
+                    <i data-lucide="check" class="w-3 h-3 text-iris"></i>
+                  </span>
+                </button>
+              </div>
+
+              <!-- Template Reference & Compare -->
+              <div class="p-3.5 rounded-xl bg-surface-sunken border border-line space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs text-ink-2 font-medium">Template baseline</span>
+                  <span class="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-surface text-ink-2 border border-line">Line Manager (v1)</span>
+                </div>
+                <p class="text-[11px] text-ink-3 leading-snug">
+                  Based on Kxmeleon standard managerial governance archetype.
+                </p>
+                <div class="pt-1">
+                  <button class="text-xs font-medium text-iris hover:text-iris-hover flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="git-compare" class="w-3.5 h-3.5"></i>
+                    <span>Compare with template</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Info Note Banner: 12 People with this role -->
+              <div class="p-3.5 rounded-xl bg-info-bg/60 border border-info-bg text-info-text text-xs flex items-start gap-2.5">
+                <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                <span class="leading-relaxed">
+                  Changes apply immediately to the <strong class="font-semibold text-ink">12 people</strong> with this role.
+                </span>
+              </div>
+
+              <!-- Danger Zone -->
+              <div class="pt-4 border-t border-line space-y-2">
+                <div class="text-[11px] font-mono uppercase tracking-wider text-ink-3 font-semibold">Danger Zone</div>
+                <button 
+                  disabled
+                  class="w-full h-10 px-4 rounded-xl border border-line bg-surface-sunken text-ink-3 text-xs font-medium cursor-not-allowed flex items-center justify-center gap-2 opacity-80"
+                  title="Remove all members first"
+                >
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  Delete role
+                </button>
+                <p class="text-[11px] text-ink-3 text-center flex items-center justify-center gap-1">
+                  <i data-lucide="lock" class="w-3 h-3 text-ink-3"></i>
+                  Remove all members first
+                </p>
+              </div>
+
+            </div>
+
+            <!-- AUDIT & CREATION METADATA CARD -->
+            <div class="bg-surface rounded-2xl border border-line p-4 space-y-2 text-xs text-ink-3">
+              <div class="flex justify-between">
+                <span>Created by</span>
+                <span class="text-ink font-medium">Babatunde Adeyemi</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Created date</span>
+                <span class="font-tabular">12 Oct 2026, 09:14 WAT</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Last modified</span>
+                <span class="font-tabular">17 Nov 2026, 14:05 WAT</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Enforcement</span>
+                <span class="text-success-text font-medium flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Active in tenant
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Initialize Lucide icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

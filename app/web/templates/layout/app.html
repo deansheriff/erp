@@ -112,6 +112,7 @@
               <p class="text-[12px] text-ink-3">{{ shell.user.role }}</p>
             </div>
             <a role="menuitem" href="/me/security" class="flex h-11 items-center gap-2.5 rounded-lg px-3 text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink">{{ ui.icon("shield-check", "sm") }} Security and devices</a>
+            <a role="menuitem" href="/delegations" class="flex h-11 items-center gap-2.5 rounded-lg px-3 text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink">{{ ui.icon("arrow-left-right", "sm") }} Delegations</a>
             <form method="post" action="/logout" hx-boost="false">{{ ui.csrf_field() }}
               <button type="submit" role="menuitem" class="flex h-11 w-full items-center gap-2.5 rounded-lg px-3 text-left text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink">{{ ui.icon("log-out", "sm") }} Sign out</button>
             </form>

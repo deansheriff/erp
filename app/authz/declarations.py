@@ -4,7 +4,7 @@ without a declaration, so nobody can add a route without deciding.
 - `@public`             anyone, signed in or not (health checks, sign-in pages)
 - `@pending_login`      a signed-in session that hasn't finished two-step verification yet
 - `@requires_login`     any fully signed-in person, acting on their own records only
-- `@requires("perm")`   a fully signed-in person holding `perm` (engine: Phase 3, ADR 0010)
+- `@requires("perm")`   a fully signed-in person holding `perm` (policy engine, ADR 0013)
 
 The access guard (app/web/access.py) enforces these for every request.
 """
