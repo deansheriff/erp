@@ -4,6 +4,7 @@
 x-app-env: &app-env
   KX_ENV: ${KX_ENV:-development}
   KX_SECRET_KEY: ${KX_SECRET_KEY}
+  KX_ENCRYPTION_KEY: ${KX_ENCRYPTION_KEY}
   KX_DATABASE_URL: postgresql+psycopg://kx_app:${KX_APP_DB_PASSWORD}@db:5432/kxerp
   KX_REDIS_URL: redis://redis:6379/0
   KX_BASE_URL: ${KX_BASE_URL:-http://localhost:8000}

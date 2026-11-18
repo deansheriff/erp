@@ -1,0 +1,110 @@
+{% extends "layout/standalone.html" %}
+{% import "components/ui.html" as ui with context %}
+{% block card_width %}max-w-[560px]{% endblock %}
+{% block card_align %}text-left{% endblock %}
+{% block card %}
+{% set v = values or {} %}
+{% set actor = request.state.actor if request.state.actor is defined else none %}
+<h1 class="mb-5 font-h1 text-h1">Set up Kxmeleon</h1>
+{{ ui.stepper([
+  {"label": "Organisation", "meta": None, "state": "done" if step > 1 else "current"},
+  {"label": "Super admin", "meta": None, "state": "done" if step > 2 else ("current" if step == 2 else "todo")},
+  {"label": "Email", "meta": None, "state": "current" if step == 3 else "todo"},
+]) }}
+<div class="mt-8 border-t border-line pt-6">
+
+{% if step == 1 %}
+  <form method="post" action="/setup/organisation" class="space-y-5" novalidate>
+    {{ ui.csrf_field() }}
+    {% if not token_ok %}
+    {{ ui.alert("info", "You'll need the setup code from the server log, or run `kx setup-token`. It expires in 60 minutes.", "key-round") }}
+    {{ ui.text_field("setup_code", "Setup code", errors=errors, required=true, autocomplete="off") }}
+    {% endif %}
+    {{ ui.text_field("legal_name", "Legal name", value=v.get("legal_name"), errors=errors, required=true, autocomplete="organization") }}
+    {{ ui.text_field("trading_name", "Trading name", value=v.get("trading_name"), errors=errors) }}
+    <div class="grid gap-5 sm:grid-cols-2">
+      {{ ui.text_field("rc_number", "RC number", value=v.get("rc_number"), errors=errors) }}
+      {{ ui.text_field("tin", "TIN", value=v.get("tin"), errors=errors) }}
+    </div>
+    <div>
+      <label class="kx-label" for="f-address">Registered address</label>
+      <textarea id="f-address" name="address" class="kx-input" rows="3">{{ v.get("address") or "" }}</textarea>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-3">
+      <div>
+        <label class="kx-label" for="f-timezone">Timezone</label>
+        <select id="f-timezone" name="timezone" class="kx-input">
+          {% for tz, label in [("Africa/Lagos", "Africa/Lagos (WAT)"), ("Africa/Accra", "Africa/Accra (GMT)"), ("Africa/Nairobi", "Africa/Nairobi (EAT)"), ("Europe/London", "Europe/London"), ("UTC", "UTC")] %}
+          <option value="{{ tz }}" {% if (v.get("timezone") or "Africa/Lagos") == tz %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label class="kx-label" for="f-currency">Base currency</label>
+        <select id="f-currency" name="base_currency" class="kx-input">
+          <option value="NGN" selected>NGN — Naira</option>
+        </select>
+      </div>
+      <div>
+        <label class="kx-label" for="f-fy">Financial year starts</label>
+        <select id="f-fy" name="fiscal_year_start_month" class="kx-input">
+          {% for m in ["January","February","March","April","May","June","July","August","September","October","November","December"] %}
+          <option value="{{ loop.index }}" {% if (v.get("fiscal_year_start_month") or 1) | int == loop.index %}selected{% endif %}>{{ m }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="flex justify-end pt-2"><button type="submit" class="kx-btn-primary">Continue {{ ui.icon("arrow-right", "sm") }}</button></div>
+  </form>
+
+{% elif step == 3 and not (actor and actor.is_super_admin) %}
+  {{ ui.alert("warning", "Sign in as the super admin to finish setup.") }}
+  <a href="/login?next=/setup" class="kx-btn-primary mt-4 w-full">Sign in</a>
+
+{% elif not token_ok %}
+  <form method="post" action="/setup/code" class="space-y-5" novalidate>
+    {{ ui.csrf_field() }}
+    {{ ui.alert("warning", "Enter a setup code to continue. Codes change each time the server restarts: find the latest in the server log, or run `kx setup-token`.", "key-round") }}
+    {{ ui.text_field("setup_code", "Setup code", errors=errors, required=true, autocomplete="off") }}
+    <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Continue {{ ui.icon("arrow-right", "sm") }}</button></div>
+  </form>
+
+{% elif step == 2 %}
+  <form method="post" action="/setup/admin" class="space-y-5" novalidate>
+    {{ ui.csrf_field() }}
+    {{ ui.alert("info", "This person can change every setting and must use two-step verification.", "shield-check") }}
+    {{ ui.text_field("full_name", "Full name", value=v.get("full_name"), errors=errors, required=true, autocomplete="name") }}
+    {{ ui.text_field("email", "Work email", value=v.get("email"), type="email", errors=errors, required=true, autocomplete="email") }}
+    {{ ui.password_field("password", "Password", errors=errors, autocomplete="new-password", checklist=true) }}
+    {{ ui.password_field("password_confirm", "Confirm password", errors=errors, autocomplete="new-password") }}
+    <fieldset class="rounded-2xl border border-line p-4">
+      <legend class="px-1 font-h3 text-h3">Two-step verification</legend>
+      <div class="flex flex-col gap-4 sm:flex-row">
+        <div class="kx-qr h-[152px] w-[152px] shrink-0 rounded-xl border border-line bg-white p-2">{{ enrolment.qr_svg | safe }}</div>
+        <div class="min-w-0 space-y-3">
+          <p class="text-body-sm text-ink-2">Scan with Google Authenticator, Microsoft Authenticator or similar. Or enter this key:</p>
+          <code class="block rounded-lg bg-surface-sunken px-3 py-2 font-mono text-body-sm">{{ enrolment.secret_grouped }}</code>
+          {{ ui.text_field("mfa_code", "6-digit code", errors=errors, inputmode="numeric", autocomplete="one-time-code") }}
+        </div>
+      </div>
+    </fieldset>
+    <div class="flex justify-end pt-2"><button type="submit" class="kx-btn-primary">Continue {{ ui.icon("arrow-right", "sm") }}</button></div>
+  </form>
+
+{% else %}
+  <p class="mb-5 text-ink-2">Kxmeleon sends invitations and password resets through your mail server. You can skip this and do it later, but nobody else can be invited until mail works.</p>
+  {% if test_result %}<div class="mb-5">{{ ui.alert("success" if test_result.ok else "danger", test_result.message) }}</div>{% endif %}
+  <form method="post" action="/setup/mail" class="space-y-5" novalidate>
+    {{ ui.csrf_field() }}
+    {% include "identity/_smtp_fields.html" %}
+    <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-between">
+      <button type="submit" name="action" value="skip" class="kx-btn-ghost" formnovalidate>Skip for now</button>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <button type="submit" name="action" value="test" class="kx-btn-secondary">{{ ui.icon("send", "sm") }} Save and send test email</button>
+        <button type="submit" name="action" value="save" class="kx-btn-primary">Finish setup</button>
+      </div>
+    </div>
+  </form>
+{% endif %}
+</div>
+{% endblock %}

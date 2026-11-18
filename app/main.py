@@ -1,19 +1,36 @@
 """The FastAPI application."""
 
+import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 import anyio.to_thread
-from fastapi import FastAPI
+from fastapi import APIRouter, Depends, FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from app.core.config import get_settings
-from app.core.db import get_engine, verify_database_role
+from app.core.config import Settings, get_settings
+from app.core.db import get_engine, session_scope, verify_database_role
 from app.core.logging import configure_logging
-from app.web import routes_dev, routes_health
+from app.identity import routes_api as identity_api
+from app.identity import routes_web as identity_web
+from app.identity import service as identity
+from app.web import routes_dev, routes_health, routes_home
+from app.web.access import access_guard, csrf_guard
 from app.web.errors import register_error_handlers
 from app.web.middleware import RequestContextMiddleware
 from app.web.templating import STATIC_DIR
+
+
+def _announce_setup_code() -> None:
+    """Until setup is complete, print a fresh one-time setup code to the log (ADR 0002)."""
+    with session_scope() as db:
+        if identity.is_installed(db):
+            return
+        code = identity.issue_setup_token(db)
+    logging.getLogger("app.setup").warning(
+        "kxmeleon_not_set_up",
+        extra={"setup_code": code, "open": "/setup", "valid_minutes": identity.SETUP_TOKEN_MINUTES},
+    )
 
 
 @asynccontextmanager
@@ -21,8 +38,17 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     anyio.to_thread.current_default_thread_limiter().total_tokens = settings.web_threads
     await anyio.to_thread.run_sync(verify_database_role, get_engine())
+    await anyio.to_thread.run_sync(_announce_setup_code)
     yield
     get_engine().dispose()
+
+
+def routers(settings: Settings) -> list[APIRouter]:
+    """Every router the app serves. CI walks these to check each route's declarations."""
+    included = [routes_health.router, routes_home.router, identity_web.router, identity_api.router]
+    if settings.dev_routes_enabled:
+        included.append(routes_dev.router)
+    return included
 
 
 def create_app() -> FastAPI:
@@ -35,14 +61,15 @@ def create_app() -> FastAPI:
         docs_url="/api/docs" if settings.dev_routes_enabled else None,
         redoc_url=None,
         openapi_url="/api/openapi.json" if settings.dev_routes_enabled else None,
+        # Every route passes the access guard, then the CSRF check (ADR 0009).
+        dependencies=[Depends(access_guard), Depends(csrf_guard)],
     )
     app.add_middleware(RequestContextMiddleware, hsts=settings.is_production)
     register_error_handlers(app)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-    app.include_router(routes_health.router)
-    if settings.dev_routes_enabled:
-        app.include_router(routes_dev.router)
+    for router in routers(settings):
+        app.include_router(router)
     return app
 
 

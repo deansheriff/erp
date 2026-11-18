@@ -19,9 +19,13 @@ STATIC_DIR = WEB_DIR / "static"
 
 
 def _template_dirs() -> list[Path]:
+    """app/web/templates first, then every package's own templates (app/<pkg>/templates
+    and app/modules/<module>/templates). Mail templates are rendered separately."""
     dirs = [WEB_DIR / "templates"]
-    modules_dir = APP_DIR / "modules"
-    dirs.extend(sorted(p for p in modules_dir.glob("*/templates") if p.is_dir()))
+    candidates = list(APP_DIR.glob("*/templates")) + list((APP_DIR / "modules").glob("*/templates"))
+    dirs.extend(
+        sorted(p for p in candidates if p.is_dir() and p.parent.name not in ("web", "mail"))
+    )
     return dirs
 
 

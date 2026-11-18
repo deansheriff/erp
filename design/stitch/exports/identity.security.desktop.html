@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-canvas text-ink" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Security — Adeyemi Holdings Ltd | Kxmeleon ERP</title>
+<!-- Typography: Plus Jakarta Sans & Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim from instructions -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#ffffff",
+            "ink": "#16162A",
+            "primary-container": "#5a4bdb",
+            "inverse-on-surface": "#f0f0f4",
+            "surface-tint": "#5646d7",
+            "on-iris": "#FFFFFF",
+            "ink-3": "#626280",
+            "tertiary-container": "#9f4a00",
+            "inverse-primary": "#c5c0ff",
+            "on-primary-container": "#e0dbff",
+            "outline": "#787586",
+            "surface-sunken": "#EFEFF6",
+            "surface-container-highest": "#e2e2e6",
+            "canvas": "#F6F6FA",
+            "lime-ink": "#4D7A0A",
+            "tertiary-fixed-dim": "#ffb68b",
+            "primary-fixed": "#e4dfff",
+            "info-text": "#1D55B8",
+            "surface-container-low": "#f3f3f7",
+            "line": "#E4E4EE",
+            "iris-tint": "#EEECFD",
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#c5c0ff",
+            "danger-text": "#B4232F",
+            "primary": "#412ec2",
+            "warning-text": "#8A4B00",
+            "on-secondary": "#ffffff",
+            "success-text": "#0F6B3E",
+            "error-container": "#ffdad6",
+            "background": "#f9f9fd",
+            "on-tertiary-container": "#ffd7c1",
+            "success-bg": "#DDF7E8",
+            "tertiary": "#7a3700",
+            "on-primary": "#ffffff",
+            "tertiary-fixed": "#ffdbc8",
+            "outline-variant": "#c8c4d7",
+            "info-bg": "#DFEBFF",
+            "destructive": "#C42836",
+            "surface-dim": "#d9dade",
+            "on-surface": "#1a1c1f",
+            "secondary": "#4f6600",
+            "surface-variant": "#e2e2e6",
+            "on-surface-variant": "#474554",
+            "line-strong": "#8B8BA6",
+            "surface-raised": "#FFFFFF",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "iris-hover": "#4A3CC4",
+            "surface-container-high": "#e8e8ec",
+            "on-secondary-container": "#536b00",
+            "on-background": "#1a1c1f",
+            "warning-bg": "#FFF1D6",
+            "surface-bright": "#f9f9fd",
+            "danger-bg": "#FFE4E6",
+            "ink-2": "#4B4B66",
+            "on-secondary-fixed": "#161f00",
+            "on-error-container": "#93000a",
+            "secondary-container": "#c4ef49",
+            "inverse-surface": "#2e3034",
+            "surface-container-lowest": "#ffffff",
+            "surface-container": "#ededf1",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#140067",
+            "secondary-fixed": "#c7f24c",
+            "on-tertiary-fixed": "#321300",
+            "surface": "#FFFFFF",
+            "lime": "#C5F04A",
+            "on-tertiary-fixed-variant": "#743400",
+            "secondary-fixed-dim": "#acd530",
+            "on-primary-fixed-variant": "#3d28be",
+            "iris": "#5A4BDB"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "space-3xl": "4rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-2xl": "3rem",
+            "gutter": "1.5rem",
+            "space-xl": "2rem"
+          },
+          "fontFamily": {
+            "label": ["Inter"],
+            "h1": ["Plus Jakarta Sans"],
+            "body": ["Inter"],
+            "overline": ["Inter"],
+            "body-sm": ["Inter"],
+            "h3": ["Plus Jakarta Sans"],
+            "stat": ["Plus Jakarta Sans"],
+            "h2": ["Plus Jakarta Sans"],
+            "display": ["Plus Jakarta Sans"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-canvas text-ink antialiased flex flex-row">
+<!-- ======================================================== -->
+<!-- SIDE NAVIGATION (Shared Component: SideNavBar execution) -->
+<!-- ======================================================== -->
+<aside class="fixed top-0 left-0 h-screen w-[272px] z-30 flex flex-col bg-surface border-r border-line shadow-[0_1px_2px_rgba(22,22,42,0.04)] justify-between p-4 overflow-y-auto">
+<!-- Top Org Section -->
+<div class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-ink text-surface flex items-center justify-center font-h3 text-h3 font-bold shadow-sm">
+            A
+          </div>
+<div>
+<div class="font-h2 text-h2 font-bold text-ink tracking-tight">Adeyemi Holdings Ltd</div>
+<div class="font-overline text-overline text-ink-3 uppercase tracking-wider">Enterprise Hub</div>
+</div>
+</div>
+<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container-low transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">dock_to_left</span>
+</button>
+</div>
+<!-- Quick Nav Pill -->
+<div class="relative">
+<button class="w-full flex items-center justify-between px-3 py-2 bg-surface-sunken hover:bg-surface-container-high rounded-lg text-ink-3 text-body-sm font-body-sm transition-colors duration-150 border border-line" type="button">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<span>Go to...</span>
+</span>
+<kbd class="font-mono text-[11px] font-semibold bg-surface border border-line px-1.5 py-0.5 rounded text-ink-2">Ctrl K</kbd>
+</button>
+</div>
+<!-- Module Navigation List with Tinted Tiles -->
+<div class="space-y-1 pt-1">
+<div class="px-2 py-1 font-overline text-overline text-ink-3 uppercase tracking-wider">Modules</div>
+<!-- Dashboard (Home / Admin) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low transition-colors duration-150" href="#">
+<div class="w-7 h-7 rounded-md bg-[#3F3F5A] text-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+</div>
+<span>Dashboard</span>
+</a>
+<!-- Financials -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low transition-colors duration-150" href="#">
+<div class="w-7 h-7 rounded-md bg-[#2563EB] text-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+<span>Financials</span>
+</a>
+<!-- Human Resources -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low transition-colors duration-150" href="#">
+<div class="w-7 h-7 rounded-md bg-[#7C3AED] text-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</div>
+<span>Human Resources</span>
+</a>
+<!-- Supply Chain -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low transition-colors duration-150" href="#">
+<div class="w-7 h-7 rounded-md bg-[#D97706] text-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+<span>Supply Chain</span>
+</a>
+<!-- Compliance -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low transition-colors duration-150" href="#">
+<div class="w-7 h-7 rounded-md bg-[#059669] text-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<span>Compliance</span>
+</a>
+<!-- Settings (Parent Module) -->
+<div class="pt-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low transition-colors duration-150" href="#">
+<div class="w-7 h-7 rounded-md bg-[#4B4B66] text-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+</div>
+<span>Settings</span>
+</a>
+<!-- Sub-navigation: Security is Active Item -->
+<div class="ml-9 pl-2 border-l border-line mt-1 space-y-1">
+<a class="block px-2.5 py-1.5 text-body-sm font-body-sm text-ink-2 hover:text-ink rounded-md transition-colors" href="#">General</a>
+<a class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-iris-tint text-iris font-label text-label font-semibold" href="#">
+<span>Security</span>
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+</a>
+<a class="block px-2.5 py-1.5 text-body-sm font-body-sm text-ink-2 hover:text-ink rounded-md transition-colors" href="#">Notifications</a>
+<a class="block px-2.5 py-1.5 text-body-sm font-body-sm text-ink-2 hover:text-ink rounded-md transition-colors" href="#">Connected Apps</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Actions & User Profile Card -->
+<div class="pt-4 border-t border-line space-y-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span>Help &amp; Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Log Out</span>
+</a>
+<!-- User mini-card -->
+<div class="flex items-center gap-3 p-2 bg-surface-sunken rounded-xl border border-line mt-2">
+<div class="w-9 h-9 rounded-full bg-iris text-surface font-label text-[13px] font-bold flex items-center justify-center shadow-sm">
+          CE
+        </div>
+<div class="flex-1 min-w-0">
+<div class="font-label text-body-sm font-semibold text-ink truncate leading-tight">Chinedu Eze</div>
+<div class="font-body-sm text-[12px] text-ink-3 truncate leading-tight">Software Engineer / Systems</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- ======================================================== -->
+<!-- MAIN WORKSPACE & TOP BAR                                 -->
+<!-- ======================================================== -->
+<div class="flex-1 ml-[272px] flex flex-col min-h-screen bg-canvas">
+<!-- Top Navigation Bar (Shared Component: TopNavBar execution) -->
+<header class="sticky top-0 right-0 h-16 z-20 bg-surface/80 backdrop-blur-md border-b border-line shadow-[0_1px_2px_rgba(22,22,42,0.04)] flex items-center justify-between px-8">
+<!-- Left: Breadcrumbs -->
+<div class="flex items-center gap-2 font-label text-label">
+<span class="text-ink-2 hover:text-ink cursor-pointer">My account</span>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="text-ink font-semibold">Security</span>
+</div>
+<!-- Center: Universal ERP Global Search -->
+<div class="w-96 max-w-md hidden md:block">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3">search</span>
+<input class="w-full h-10 pl-9 pr-14 bg-surface-sunken border border-line rounded-lg text-body-sm text-ink placeholder-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/20 focus:border-iris transition-all" placeholder="Search people, claims, invoices..." type="text"/>
+<kbd class="absolute right-2.5 font-mono text-[11px] font-semibold bg-surface border border-line px-1.5 py-0.5 rounded text-ink-2 shadow-xs">Ctrl K</kbd>
+</div>
+</div>
+<!-- Right: Action & Profile Cluster -->
+<div class="flex items-center gap-3">
+<!-- Approvals Inbox Button -->
+<button class="relative h-10 px-3 flex items-center gap-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">inbox</span>
+<span class="hidden lg:inline text-body-sm font-medium">Approvals</span>
+<span class="px-1.5 py-0.5 text-[11px] font-semibold rounded-full bg-iris-tint text-iris">3</span>
+</button>
+<!-- Notifications with Lime Unread Dot -->
+<button aria-label="Notifications" class="relative w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2 right-2 w-2.5 h-2.5 bg-lime rounded-full ring-2 ring-surface"></span>
+</button>
+<!-- Theme Toggle -->
+<button aria-label="Toggle theme" class="w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">light_mode</span>
+</button>
+<div class="h-6 w-[1px] bg-line mx-1"></div>
+<!-- User Dropdown Anchor -->
+<button class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg hover:bg-surface-container-high transition-colors" type="button">
+<div class="w-8 h-8 rounded-full bg-iris text-surface font-label text-[12px] font-bold flex items-center justify-center">
+            CE
+          </div>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+</header>
+<!-- Content Workspace Canvas -->
+<main class="flex-1 px-8 py-8 relative">
+<!-- Faint Iris Radial Glow behind header -->
+<div class="absolute top-0 left-12 w-96 h-48 bg-iris/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- Max-width focused container (920px for optimal form & card density) -->
+<div class="max-w-4xl mx-auto space-y-6">
+<!-- Page Header -->
+<div class="space-y-1">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Security</h1>
+<p class="font-body-sm text-body-sm text-ink-3">Your password, two-step verification, signed-in devices and API keys.</p>
+</div>
+<!-- ============================================== -->
+<!-- CARD 1: Password                               -->
+<!-- ============================================== -->
+<section class="bg-surface rounded-2xl border border-line p-6 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-[22px] text-iris">lock</span>
+<h2 class="font-h2 text-h2 text-ink">Password</h2>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+<p class="font-body-sm text-body-sm text-ink-2">
+              Last changed <span class="font-medium text-ink">2 Nov 2026</span>.
+            </p>
+<button class="h-11 px-5 rounded-lg border border-line-strong bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-colors duration-150 inline-flex items-center justify-center active:scale-[0.99]" type="button">
+              Change password
+            </button>
+</div>
+</section>
+<!-- ============================================== -->
+<!-- CARD 2: Two-Step Verification                  -->
+<!-- ============================================== -->
+<section class="bg-surface rounded-2xl border border-line p-6 shadow-[0_1px_2px_rgba(22,22,42,0.04)] space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[22px] text-iris">phonelink_lock</span>
+<h2 class="font-h2 text-h2 text-ink">Two-step verification</h2>
+</div>
+<!-- Status Badge: On -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+              On
+            </span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+<div class="space-y-1">
+<p class="font-body-sm text-body-sm text-ink-2">
+                Using an authenticator app since <span class="font-medium text-ink">2 Nov 2026</span>.
+              </p>
+<p class="font-body-sm text-[13px] text-ink-3">
+                8 of 10 recovery codes left.
+              </p>
+</div>
+<button class="h-11 px-5 rounded-lg border border-line-strong bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-colors duration-150 inline-flex items-center justify-center active:scale-[0.99]" type="button">
+              Regenerate recovery codes
+            </button>
+</div>
+</section>
+<!-- ============================================== -->
+<!-- CARD 3: Where you're signed in                 -->
+<!-- ============================================== -->
+<section class="bg-surface rounded-2xl border border-line p-6 shadow-[0_1px_2px_rgba(22,22,42,0.04)] space-y-5">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[22px] text-iris">devices</span>
+<h2 class="font-h2 text-h2 text-ink">Where you're signed in</h2>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+              These devices are currently signed in to your Kxmeleon account.
+            </p>
+</div>
+<!-- Devices List -->
+<div class="divide-y divide-line">
+<!-- Row 1: Current Device -->
+<div class="py-3.5 flex items-center justify-between min-h-[56px] first:pt-0">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken border border-line flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[22px]">desktop_windows</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label text-body-sm font-semibold text-ink">Chrome on Windows · Lagos</span>
+<span class="px-2 py-0.5 rounded-full bg-lime text-ink font-label text-[11px] font-bold uppercase tracking-wider">
+                      This device
+                    </span>
+</div>
+<div class="font-mono text-[12px] text-ink-3 mt-0.5">
+                    Last active just now · 102.89.4.17
+                  </div>
+</div>
+</div>
+<div class="flex items-center gap-2 pr-1">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-text opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-success-text"></span>
+</span>
+<span class="font-body-sm text-[12px] text-success-text font-medium hidden sm:inline">Active</span>
+</div>
+</div>
+<!-- Row 2: iPhone -->
+<div class="py-3.5 flex items-center justify-between min-h-[56px]">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken border border-line flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[22px]">smartphone</span>
+</div>
+<div>
+<div class="font-label text-body-sm font-semibold text-ink">Safari on iPhone · Abuja</div>
+<div class="font-mono text-[12px] text-ink-3 mt-0.5">
+                    Last active 2 hours ago · 105.112.30.8
+                  </div>
+</div>
+</div>
+<button class="h-9 px-3.5 rounded-lg border border-line-strong bg-surface hover:bg-surface-sunken text-ink font-label text-[13px] font-medium transition-colors" type="button">
+                Sign out
+              </button>
+</div>
+<!-- Row 3: Edge -->
+<div class="py-3.5 flex items-center justify-between min-h-[56px]">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken border border-line flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[22px]">laptop_mac</span>
+</div>
+<div>
+<div class="font-label text-body-sm font-semibold text-ink">Edge on Windows · Lagos</div>
+<div class="font-mono text-[12px] text-ink-3 mt-0.5">
+                    Last active 3 days ago · 102.89.12.94
+                  </div>
+</div>
+</div>
+<button class="h-9 px-3.5 rounded-lg border border-line-strong bg-surface hover:bg-surface-sunken text-ink font-label text-[13px] font-medium transition-colors" type="button">
+                Sign out
+              </button>
+</div>
+</div>
+<!-- Footer Destructive Action -->
+<div class="pt-4 border-t border-line">
+<button class="inline-flex items-center gap-2 px-3 py-2 -ml-3 rounded-lg text-danger-text hover:bg-danger-bg/50 font-label text-body-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span>Sign out of all other devices</span>
+</button>
+</div>
+</section>
+<!-- ============================================== -->
+<!-- CARD 4: API Keys                               -->
+<!-- ============================================== -->
+<section class="bg-surface rounded-2xl border border-line p-6 shadow-[0_1px_2px_rgba(22,22,42,0.04)] space-y-5">
+<!-- Card Header & Primary Action -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-[22px] text-iris">key</span>
+<h2 class="font-h2 text-h2 text-ink">API keys</h2>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+                Let other systems call Kxmeleon on your behalf. A key can only do what you can do.
+              </p>
+</div>
+<button class="h-10 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label flex items-center justify-center gap-2 shrink-0 shadow-sm active:scale-[0.99] transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Create API key</span>
+</button>
+</div>
+<!-- Success Banner for newly created key -->
+<div class="bg-success-bg border border-[#B3ECC7] rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-start md:items-center gap-3">
+<span class="material-symbols-outlined text-success-text text-[20px] mt-0.5 md:mt-0">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium text-success-text">
+                Copy your new key now. You won't see it again.
+              </span>
+</div>
+<div class="flex items-center gap-2 bg-surface px-3 py-1.5 rounded-lg border border-[#B3ECC7] self-start md:self-auto">
+<span class="font-mono text-body-sm text-ink select-all font-medium tracking-tight">
+                kx_N4pV8tYs_q3J9wK1lP2m0Z
+              </span>
+<button class="p-1 rounded text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" id="copyKeyBtn" onclick="navigator.clipboard.writeText('kx_N4pV8tYs_q3J9wK1lP2m0Z'); this.innerHTML='&lt;span class=\'material-symbols-outlined text-[16px] text-success-text\'&gt;done&lt;/span&gt;'; setTimeout(() =&gt; this.innerHTML='&lt;span class=\'material-symbols-outlined text-[16px]\'&gt;content_copy&lt;/span&gt;', 2000)" title="Copy key" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Compact Dense Data Table -->
+<div class="rounded-xl border border-line overflow-hidden mt-4">
+<table class="w-full table-auto border-collapse text-left">
+<thead>
+<tr class="bg-surface-sunken border-b border-line">
+<th class="py-3 px-4 font-overline text-overline uppercase tracking-wider text-ink-2 font-semibold">Name</th>
+<th class="py-3 px-4 font-overline text-overline uppercase tracking-wider text-ink-2 font-semibold">Key</th>
+<th class="py-3 px-4 font-overline text-overline uppercase tracking-wider text-ink-2 font-semibold">Created</th>
+<th class="py-3 px-4 font-overline text-overline uppercase tracking-wider text-ink-2 font-semibold">Expires</th>
+<th class="py-3 px-4 font-overline text-overline uppercase tracking-wider text-ink-2 font-semibold">Last used</th>
+<th class="py-3 px-4 font-overline text-overline uppercase tracking-wider text-ink-2 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line text-body-sm font-body-sm">
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-3.5 px-4 font-medium text-ink">
+                    Bank reconciliation script
+                  </td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2">
+                    kx_7Hq2mP4z_••••
+                  </td>
+<td class="py-3.5 px-4 text-ink-2">
+                    12 Nov 2026
+                  </td>
+<td class="py-3.5 px-4 text-ink-2">
+                    12 Feb 2027
+                  </td>
+<td class="py-3.5 px-4 text-ink-3">
+                    Today, 06:00 WAT
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-danger-text font-label text-[13px] font-medium hover:underline hover:text-destructive transition-colors" type="button">
+                      Revoke
+                    </button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-3.5 px-4 font-medium text-ink">
+                    CI/CD Deployment Webhook
+                  </td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2">
+                    kx_9Lk3pT1q_••••
+                  </td>
+<td class="py-3.5 px-4 text-ink-2">
+                    28 Oct 2026
+                  </td>
+<td class="py-3.5 px-4 text-ink-2">
+                    Never
+                  </td>
+<td class="py-3.5 px-4 text-ink-3">
+                    Yesterday, 14:22 WAT
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-danger-text font-label text-[13px] font-medium hover:underline hover:text-destructive transition-colors" type="button">
+                      Revoke
+                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

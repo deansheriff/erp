@@ -40,6 +40,17 @@ MODULES: tuple[NavModule, ...] = (
     NavModule("ai", "Assistant", "sparkles", "/assistant"),
 )
 
+ADMIN_MODULE = NavModule(
+    "admin",
+    "Administration",
+    "shield-check",
+    "/admin/users",
+    (
+        NavSection("Users", "/admin/users"),
+        NavSection("Mail settings", "/admin/mail"),
+    ),
+)
+
 
 @dataclass(frozen=True, slots=True)
 class Breadcrumb:
@@ -70,6 +81,7 @@ class ShellContext:
     breadcrumbs: tuple[Breadcrumb, ...] = ()
     approvals_count: int = 0
     has_unread: bool = False
+    csrf_token: str | None = None
 
     @property
     def org_initials(self) -> str:

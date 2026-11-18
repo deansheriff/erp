@@ -6,14 +6,19 @@ readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "alembic>=1.14",
+    "argon2-cffi>=23.1",
     "celery[redis]>=5.4",
+    "cryptography>=43",
+    "email-validator>=2.2",
     "fastapi>=0.115",
     "jinja2>=3.1",
     "psycopg[binary]>=3.2",
     "pydantic>=2.9",
     "pydantic-settings>=2.6",
+    "pyotp>=2.9",
     "python-multipart>=0.0.17",
     "pyyaml>=6.0",
+    "qrcode>=8.0",
     "redis>=5.2",
     "sqlalchemy>=2.0.36",
     "uvicorn[standard]>=0.32",
@@ -54,6 +59,10 @@ ignore = [
 "migrations/**" = ["E501"]
 "scripts/**" = ["T201"]
 "app/cli.py" = ["T201", "PLC0415"]  # commands import what they need lazily
+# Field names such as "password_confirm" are not hard-coded secrets.
+"app/identity/*.py" = ["S105"]
+# FastAPI form handlers take one parameter per form field.
+"app/**/routes_web.py" = ["PLR0917"]
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "sqlalchemy.orm.Query".msg = "Use select() with Session.execute/scalars; session.query() is banned."
@@ -72,7 +81,7 @@ plugins = ["pydantic.mypy"]
 warn_unreachable = true
 
 [[tool.mypy.overrides]]
-module = ["celery.*", "kombu.*"]
+module = ["celery.*", "kombu.*", "qrcode.*"]
 ignore_missing_imports = true
 
 # ---------------------------------------------------------------- pytest
@@ -93,13 +102,19 @@ include_external_packages = true
 name = "Core, audit and modules never import the web layer"
 # A module's routes_api.py / routes_web.py will need an ignore entry here when it lands.
 type = "forbidden"
-source_modules = ["app.core", "app.audit", "app.modules"]
-forbidden_modules = ["fastapi", "starlette", "jinja2", "app.web"]
+source_modules = ["app.core", "app.audit", "app.modules", "app.identity", "app.mail", "app.org"]
+forbidden_modules = ["fastapi", "starlette", "app.web"]
+ignore_imports = [
+  "app.identity.routes_web -> fastapi",
+  "app.identity.routes_web -> app.web.*",
+  "app.identity.routes_api -> fastapi",
+  "app.identity.routes_api -> app.web.access",
+]
 
 [[tool.importlinter.contracts]]
 name = "Only app.files talks to object storage"
 type = "forbidden"
-source_modules = ["app.core", "app.audit", "app.web", "app.modules", "app.authz"]
+source_modules = ["app.core", "app.audit", "app.web", "app.modules", "app.authz", "app.identity", "app.mail", "app.org"]
 forbidden_modules = ["boto3", "botocore"]
 
 [dependency-groups]

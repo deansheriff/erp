@@ -1,0 +1,14 @@
+{% extends "layout/standalone.html" %}
+{% import "components/ui.html" as ui with context %}
+{% block card_align %}text-left{% endblock %}
+{% block card %}
+<div class="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-iris-tint text-iris">{{ ui.icon("lock-keyhole", "lg") }}</div>
+<h1 class="mb-2 font-h1 text-h1">Choose a new password</h1>
+<p class="mb-6 text-ink-2">For {{ view.email }}. You'll be signed out on every other device.</p>
+<form method="post" action="/reset-password/{{ token }}" class="space-y-5">
+    {{ ui.csrf_field() }}
+  {{ ui.password_field("new_password", "New password", errors=errors, autocomplete="new-password", checklist=true) }}
+  {{ ui.password_field("confirm_password", "Confirm new password", errors=errors, autocomplete="new-password") }}
+  <button type="submit" class="kx-btn-primary w-full">Save password and sign in</button>
+</form>
+{% endblock %}

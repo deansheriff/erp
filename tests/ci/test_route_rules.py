@@ -9,14 +9,24 @@ import yaml
 from fastapi.responses import HTMLResponse
 from fastapi.routing import APIRoute
 
-from app.authz.declarations import declared_permission, declared_screen, is_public
-from app.main import create_app
+from app.authz.declarations import (
+    declared_login,
+    declared_permission,
+    declared_screen,
+    is_public,
+)
+from app.core.config import get_settings
+from app.main import routers
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 def _routes() -> list[APIRoute]:
-    return [r for r in create_app().routes if isinstance(r, APIRoute)]
+    routes = [
+        r for router in routers(get_settings()) for r in router.routes if isinstance(r, APIRoute)
+    ]
+    assert len(routes) >= 20, "the route walk found too few routes; has FastAPI's API changed?"
+    return routes
 
 
 def _screens() -> dict[str, dict[str, Any]]:
@@ -28,9 +38,14 @@ def test_every_route_declares_a_permission_or_is_public() -> None:
     undeclared = [
         f"{sorted(r.methods)} {r.path}"
         for r in _routes()
-        if not is_public(r.endpoint) and declared_permission(r.endpoint) is None
+        if not is_public(r.endpoint)
+        and declared_permission(r.endpoint) is None
+        and declared_login(r.endpoint) is None
     ]
-    assert undeclared == [], "Add @requires('<permission>') or @public to: " + ", ".join(undeclared)
+    assert undeclared == [], (
+        "Add @public, @pending_login, @requires_login or @requires('<permission>') to: "
+        + ", ".join(undeclared)
+    )
 
 
 def test_no_route_handler_is_async() -> None:

@@ -1,0 +1,8 @@
+Hello {{ name }},
+
+{{ inviter }} has invited you to use Kxmeleon at {{ organisation }}.
+
+Create your account: {{ link }}
+
+This link works once and expires on {{ expires }}.
+If you weren't expecting this, you can ignore this email.

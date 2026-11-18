@@ -1,0 +1,18 @@
+{% extends "layout/standalone.html" %}
+{% import "components/ui.html" as ui with context %}
+{% block card %}
+<div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-iris-tint text-iris">{{ ui.icon("key-round", "lg") }}</div>
+<h1 class="mb-2 font-h1 text-h1">Reset your password</h1>
+{% if sent %}
+<div class="mb-6 text-left">{{ ui.alert("info", "If that address has an account, we've sent a link. Check your inbox. It works once and expires in 30 minutes.", "mail") }}</div>
+<a href="/login" class="kx-btn-primary w-full">Back to sign in</a>
+{% else %}
+<p class="mx-auto mb-6 max-w-[340px] text-ink-2">Enter your work email and we'll send you a link. It works once and expires in 30 minutes.</p>
+<form method="post" action="/forgot-password" class="space-y-5 text-left">
+    {{ ui.csrf_field() }}
+  {{ ui.text_field("email", "Work email", type="email", autocomplete="username", inputmode="email") }}
+  <button type="submit" class="kx-btn-primary w-full">Send reset link</button>
+</form>
+<a href="/login" class="kx-btn-ghost mt-3 w-full">Back to sign in</a>
+{% endif %}
+{% endblock %}

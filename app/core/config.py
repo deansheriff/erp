@@ -12,6 +12,8 @@ class Settings(BaseSettings):
 
     env: Literal["development", "test", "production"] = "development"
     secret_key: SecretStr = Field(min_length=32)
+    # Fernet key(s), comma-separated; the first encrypts (ADR 0011).
+    encryption_key: SecretStr
 
     # The application connects as kx_app. Migrations use a separate role (ADR 0007).
     database_url: str
@@ -32,6 +34,10 @@ class Settings(BaseSettings):
     @property
     def dev_routes_enabled(self) -> bool:
         return self.env in ("development", "test")
+
+    @property
+    def secure_cookies(self) -> bool:
+        return self.base_url.startswith("https://")
 
 
 @lru_cache(maxsize=1)

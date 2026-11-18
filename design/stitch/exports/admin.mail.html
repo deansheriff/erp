@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-canvas text-ink antialiased" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mail settings — Kxmeleon ERP</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms & Container Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "success-text": "#0F6B3E",
+            "warning-text": "#8A4B00",
+            "lime": "#C5F04A",
+            "lime-ink": "#4D7A0A",
+            "on-iris": "#FFFFFF",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "info-text": "#1D55B8",
+            "background": "#f9f9fd",
+            "primary-fixed-dim": "#c5c0ff",
+            "surface-tint": "#5646d7",
+            "tertiary-container": "#9f4a00",
+            "success-bg": "#DDF7E8",
+            "surface": "#FFFFFF",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed-variant": "#743400",
+            "primary-fixed": "#e4dfff",
+            "inverse-on-surface": "#f0f0f4",
+            "on-surface": "#1a1c1f",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#2e3034",
+            "iris-hover": "#4A3CC4",
+            "danger-text": "#B4232F",
+            "secondary-container": "#c4ef49",
+            "surface-dim": "#d9dade",
+            "surface-variant": "#e2e2e6",
+            "destructive": "#C42836",
+            "on-primary-fixed": "#140067",
+            "tertiary-fixed": "#ffdbc8",
+            "on-tertiary": "#ffffff",
+            "iris": "#5A4BDB",
+            "surface-container": "#ededf1",
+            "line-strong": "#8B8BA6",
+            "on-background": "#1a1c1f",
+            "on-primary-container": "#e0dbff",
+            "surface-bright": "#f9f9fd",
+            "ink-3": "#626280",
+            "primary": "#412ec2",
+            "surface-raised": "#FFFFFF",
+            "info-bg": "#DFEBFF",
+            "ink-2": "#4B4B66",
+            "on-error-container": "#93000a",
+            "canvas": "#F6F6FA",
+            "on-primary-fixed-variant": "#3d28be",
+            "surface-sunken": "#EFEFF6",
+            "tertiary-fixed-dim": "#ffb68b",
+            "error-container": "#ffdad6",
+            "secondary": "#4f6600",
+            "on-secondary-container": "#536b00",
+            "secondary-fixed": "#c7f24c",
+            "error": "#ba1a1a",
+            "ink": "#16162A",
+            "iris-tint": "#EEECFD",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#acd530",
+            "outline": "#787586",
+            "on-surface-variant": "#474554",
+            "surface-container-low": "#f3f3f7",
+            "on-secondary": "#ffffff",
+            "line": "#E4E4EE",
+            "tertiary": "#7a3700",
+            "primary-container": "#5a4bdb",
+            "surface-container-highest": "#e2e2e6",
+            "outline-variant": "#c8c4d7",
+            "on-tertiary-fixed": "#321300",
+            "on-tertiary-container": "#ffd7c1",
+            "on-secondary-fixed": "#161f00",
+            "inverse-primary": "#c5c0ff",
+            "warning-bg": "#FFF1D6",
+            "surface-container-high": "#e8e8ec",
+            "danger-bg": "#FFE4E6",
+            "module-slate": "#3F3F5A"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "10px": "10px",
+            "full": "9999px"
+          },
+          "boxShadow": {
+            "card": "0 1px 2px rgba(22, 22, 42, 0.04)",
+            "raised": "0 8px 24px -6px rgba(22, 22, 42, 0.12)"
+          },
+          "fontFamily": {
+            "h3": ["Plus Jakarta Sans"],
+            "label": ["Inter"],
+            "h2": ["Plus Jakarta Sans"],
+            "overline": ["Inter"],
+            "body-sm": ["Inter"],
+            "h1": ["Plus Jakarta Sans"],
+            "stat": ["Plus Jakarta Sans"],
+            "display": ["Plus Jakarta Sans"],
+            "body": ["Inter"]
+          },
+          "fontSize": {
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-1 {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E4E4EE;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8B8BA6;
+    }
+  </style>
+</head>
+<body class="h-full bg-canvas text-ink font-body selection:bg-iris-tint selection:text-iris">
+<div class="min-h-screen flex flex-row w-full">
+<!-- FIXED SIDEBAR NAVIGATION (272px fixed) -->
+<aside class="fixed top-0 left-0 h-screen w-[272px] z-30 flex flex-col bg-surface border-r border-line shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Sidebar Header -->
+<div class="h-16 px-4 flex items-center justify-between border-b border-line">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-module-slate flex items-center justify-center text-white font-h2 text-h2 font-bold tracking-tight shadow-sm">
+            K
+          </div>
+<span class="font-h2 text-h2 font-bold text-ink tracking-tight truncate max-w-[170px]" title="Adeyemi Holdings Ltd">Adeyemi Holdings Ltd</span>
+</div>
+<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-container-low transition-colors duration-150 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]">dock_to_right</span>
+</button>
+</div>
+<!-- Quick Nav Combobox CTA -->
+<div class="p-3 border-b border-line">
+<button class="w-full h-9 px-3 rounded-lg bg-surface-sunken border border-line text-ink-3 hover:border-line-strong hover:text-ink transition-colors flex items-center justify-between group" type="button">
+<span class="flex items-center gap-2 font-label text-label">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<span>Go to...</span>
+</span>
+<kbd class="font-overline text-[10px] bg-surface px-1.5 py-0.5 rounded border border-line font-medium text-ink-3 tracking-wider">Ctrl K</kbd>
+</button>
+</div>
+<!-- Scrollable Navigation Area -->
+<div class="flex-1 overflow-y-auto p-3 space-y-6">
+<!-- Standard Modules -->
+<div class="space-y-0.5">
+<div class="px-3 pb-1.5 font-overline text-overline uppercase tracking-wider text-ink-3">Core Modules</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>HR &amp; People</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+<span>Leave</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span>Attendance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+<span>Expenses</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Payroll</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance</span>
+<span>Finance</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+<span>Projects</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+<span>Support</span>
+</a>
+</div>
+<!-- ADMINISTRATION Module Group -->
+<div class="space-y-0.5 pt-2 border-t border-line/60">
+<div class="px-3 pb-2 flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">ADMINISTRATION</span>
+<span class="w-2 h-2 rounded-full bg-module-slate" title="Administration Module Slate Indicator"></span>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">manage_accounts</span>
+<span>Users &amp; Access</span>
+</a>
+<!-- ACTIVE MAIL SETTINGS NAVIGATION TAB -->
+<div class="relative">
+<!-- 3px active indicator bar in slate (#3F3F5A) on left edge -->
+<div class="absolute left-[-12px] top-1 bottom-1 w-[3px] bg-module-slate rounded-r-sm"></div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-iris-tint text-iris font-semibold font-label text-label shadow-sm transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px] text-iris fill-1">mail</span>
+<span>Mail settings</span>
+</a>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">history_edu</span>
+<span>Audit log</span>
+</a>
+</div>
+</div>
+<!-- Sidebar Bottom Cluster -->
+<div class="p-3 border-t border-line space-y-1 bg-surface">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">help_center</span>
+<span>Help &amp; documentation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</a>
+<!-- Fatima Bello User Card -->
+<div class="pt-2 mt-2 border-t border-line flex items-center justify-between px-2 py-1.5">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full bg-iris-tint text-iris font-h3 text-h3 flex items-center justify-center font-bold">
+              FB
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Fatima Bello</span>
+<span class="font-overline text-overline text-ink-3 truncate leading-tight">Finance Manager</span>
+</div>
+</div>
+<button aria-label="Logout" class="p-1.5 rounded-lg text-ink-3 hover:text-danger-text hover:bg-danger-bg/50 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- MAIN WRAPPER: Responsive canvas offset by 272px for Desktop -->
+<div class="flex-1 ml-[272px] min-h-screen flex flex-col bg-canvas">
+<!-- STICKY TOP APP BAR (64px, Glassmorphism) -->
+<header class="sticky top-0 right-0 h-16 z-20 bg-surface/80 backdrop-blur-md border-b border-line px-8 flex items-center justify-between shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Breadcrumb Navigation -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 font-label text-label">
+<span class="text-ink-2 hover:text-ink cursor-pointer transition-colors">Administration</span>
+<span class="material-symbols-outlined text-ink-3 text-[16px]">chevron_right</span>
+<span class="text-ink font-semibold">Mail settings</span>
+</nav>
+<!-- Center Search Input -->
+<div class="w-full max-w-md mx-6">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-[18px] text-ink-3 pointer-events-none">search</span>
+<input class="w-full h-10 pl-10 pr-20 rounded-lg bg-surface border border-line text-body-sm font-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all" placeholder="Search people, claims, invoices..." type="text"/>
+<div class="absolute right-2.5 flex items-center pointer-events-none">
+<kbd class="font-overline text-[11px] bg-surface-sunken px-1.5 py-0.5 rounded border border-line font-medium text-ink-3 tracking-wider">Ctrl K</kbd>
+</div>
+</div>
+</div>
+<!-- Trailing Action Tools & Profile -->
+<div class="flex items-center gap-3">
+<!-- Approvals with Badge 7 -->
+<button aria-label="Approvals inbox with 7 pending" class="relative w-10 h-10 rounded-lg border border-line bg-surface text-ink-2 hover:text-ink hover:border-line-strong hover:bg-surface-container-low transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]">inbox</span>
+<span class="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-full bg-iris text-white font-label text-[11px] font-bold ring-2 ring-surface tabular-nums">7</span>
+</button>
+<!-- Notifications with Lime Indicator Dot -->
+<button aria-label="Notifications" class="relative w-10 h-10 rounded-lg border border-line bg-surface text-ink-2 hover:text-ink hover:border-line-strong hover:bg-surface-container-low transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-lime border border-white ring-1 ring-lime-ink" title="New notification"></span>
+</button>
+<!-- Light/Dark Mode Switcher -->
+<button aria-label="Toggle theme" class="w-10 h-10 rounded-lg border border-line bg-surface text-ink-2 hover:text-ink hover:border-line-strong hover:bg-surface-container-low transition-colors flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]">light_mode</span>
+</button>
+<div class="h-6 w-px bg-line mx-1"></div>
+<!-- Topbar Avatar -->
+<div class="flex items-center gap-2 pl-1 cursor-pointer">
+<div class="w-9 h-9 rounded-full bg-iris text-white font-h3 text-h3 flex items-center justify-center font-bold shadow-sm">
+              FB
+            </div>
+</div>
+</div>
+</header>
+<!-- PAGE CONTENT AREA -->
+<main class="flex-1 p-8 max-w-[1440px] w-full mx-auto relative">
+<!-- SOFT RADIAL GLOW IN SLATE MODULE HUE (#3F3F5A at 8%) -->
+<div class="absolute top-0 left-12 w-[680px] h-[340px] pointer-events-none bg-[radial-gradient(ellipse_at_top,_rgba(63,63,90,0.08)_0%,_rgba(63,63,90,0)_70%)] -z-10"></div>
+<!-- Page Header -->
+<div class="mb-8">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink tracking-tight font-bold">Mail settings</h1>
+<!-- Status Badge: Connected -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-bg text-success-text font-label text-label font-medium border border-success-text/20">
+<span class="w-2 h-2 rounded-full bg-[#0F6B3E] animate-pulse"></span>
+              Connected
+            </span>
+</div>
+<p class="mt-1 font-body text-body text-ink-2 max-w-2xl">
+            Kxmeleon sends invitations, password resets and notifications through your SMTP server.
+          </p>
+</div>
+<!-- Two-Column Layout Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT COLUMN: Primary Configuration Card (Approx 2/3 width, max 760px) -->
+<div class="lg:col-span-8 max-w-[760px]">
+<section class="bg-surface rounded-2xl border border-line shadow-card p-6">
+<!-- Card Header -->
+<div class="border-b border-line pb-4 mb-6">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-h2 text-h2 text-ink font-semibold">SMTP server</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Configure outgoing email connection for transactional emails.</p>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-surface-sunken text-ink-2 font-overline text-overline uppercase tracking-wider border border-line">
+                    Office 365 Cloud
+                  </span>
+</div>
+</div>
+<!-- Form Body -->
+<form class="space-y-5" onsubmit="event.preventDefault();">
+<!-- Field: Host (required) -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label text-label font-medium text-ink" for="smtp_host">
+                      Host <span class="text-ink-3 font-normal">(required)</span>
+</label>
+<span class="font-overline text-overline text-ink-3">Default port mapping</span>
+</div>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-10px bg-surface border border-line-strong text-ink font-body-sm text-body-sm focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all" id="smtp_host" name="smtp_host" required="" type="text" value="smtp.office365.com"/>
+</div>
+</div>
+<!-- Two-column row: Port & Security -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+<!-- Port -->
+<div class="sm:col-span-4">
+<label class="block font-label text-label font-medium text-ink mb-1.5" for="smtp_port">
+                      Port
+                    </label>
+<input class="w-full h-11 px-3.5 rounded-10px bg-surface border border-line-strong text-ink font-body-sm text-body-sm tabular-nums focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all" id="smtp_port" name="smtp_port" type="text" value="587"/>
+</div>
+<!-- Security Segmented Control -->
+<div class="sm:col-span-8">
+<label class="block font-label text-label font-medium text-ink mb-1.5">
+                      Security protocol
+                    </label>
+<div class="h-11 p-1 bg-surface-sunken border border-line rounded-10px grid grid-cols-3 gap-1">
+<button class="h-full rounded-lg bg-surface text-iris font-label text-label font-semibold shadow-card flex items-center justify-center transition-all duration-150 border border-line/50" type="button">
+                        STARTTLS
+                      </button>
+<button class="h-full rounded-lg text-ink-2 font-label text-label hover:text-ink hover:bg-surface/50 flex items-center justify-center transition-colors" type="button">
+                        SSL/TLS
+                      </button>
+<button class="h-full rounded-lg text-ink-2 font-label text-label hover:text-ink hover:bg-surface/50 flex items-center justify-center transition-colors" type="button">
+                        None
+                      </button>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1.5 text-xs">Use None only for a relay on your own network.</p>
+</div>
+</div>
+<!-- Field: Username -->
+<div>
+<label class="block font-label text-label font-medium text-ink mb-1.5" for="smtp_user">
+                    Username
+                  </label>
+<input class="w-full h-11 px-3.5 rounded-10px bg-surface border border-line-strong text-ink font-body-sm text-body-sm focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all" id="smtp_user" name="smtp_user" type="email" value="erp@adeyemiholdings.ng"/>
+</div>
+<!-- Field: Password (Saved State Pattern) -->
+<div>
+<label class="block font-label text-label font-medium text-ink mb-1.5">
+                    Password
+                  </label>
+<div class="flex items-center gap-3">
+<div class="flex-1 h-11 px-3.5 rounded-10px bg-surface-sunken border border-line flex items-center justify-between text-ink-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-ink-3">lock</span>
+<span class="tracking-widest text-ink font-bold text-sm">••••••••••••••••</span>
+<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-success-bg text-success-text">Saved</span>
+</div>
+<span class="text-xs text-ink-3">Modified 12 Oct 2026</span>
+</div>
+<!-- Ghost Secondary Action Button -->
+<button class="h-11 px-4 rounded-10px border border-line-strong bg-surface hover:bg-surface-container-low text-ink font-label text-label font-medium transition-colors flex items-center gap-1.5 min-w-[100px] justify-center" type="button">
+<span class="material-symbols-outlined text-[18px]">key</span>
+<span>Replace</span>
+</button>
+</div>
+</div>
+<!-- Two-column row: Sender identities -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+<div>
+<label class="block font-label text-label font-medium text-ink mb-1.5" for="from_name">
+                      From name
+                    </label>
+<input class="w-full h-11 px-3.5 rounded-10px bg-surface border border-line-strong text-ink font-body-sm text-body-sm focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all" id="from_name" name="from_name" type="text" value="Adeyemi Holdings ERP"/>
+</div>
+<div>
+<label class="block font-label text-label font-medium text-ink mb-1.5" for="from_address">
+                      From address
+                    </label>
+<input class="w-full h-11 px-3.5 rounded-10px bg-surface border border-line-strong text-ink font-body-sm text-body-sm focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all" id="from_address" name="from_address" type="email" value="erp@adeyemiholdings.ng"/>
+</div>
+</div>
+<!-- Field: Reply-to -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label text-label font-medium text-ink" for="reply_to">
+                      Reply-to
+                    </label>
+<span class="font-overline text-overline text-ink-3">Optional</span>
+</div>
+<input class="w-full h-11 px-3.5 rounded-10px bg-surface border border-line-strong text-ink font-body-sm text-body-sm focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all" id="reply_to" name="reply_to" type="email" value="hr@adeyemiholdings.ng"/>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1.5 text-xs">Optional address for recipient replies</p>
+</div>
+<!-- Sticky Card Action Footer -->
+<div class="border-t border-line pt-5 mt-6 flex justify-between items-center">
+<!-- Secondary button -->
+<button class="h-11 px-4 rounded-10px bg-surface border border-line-strong text-ink hover:bg-surface-container-low font-label text-label font-medium transition-colors flex items-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Send test email</span>
+</button>
+<!-- Primary button -->
+<button class="h-11 px-6 rounded-10px bg-iris text-on-iris hover:bg-iris-hover font-label text-label font-semibold shadow-card transition-all duration-150 flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save changes</span>
+</button>
+</div>
+</form>
+</section>
+</div>
+<!-- RIGHT COLUMN: Telemetry & Insight Cards (Approx 1/3 width) -->
+<div class="lg:col-span-4 flex flex-col gap-5">
+<!-- CARD 1: Last test Delivery -->
+<div class="bg-surface rounded-2xl border border-line shadow-card p-5">
+<div class="flex items-center justify-between mb-3">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">LAST TEST DELIVERY</span>
+<span class="flex items-center gap-1 text-[11px] font-medium text-success-text bg-success-bg px-2 py-0.5 rounded-full border border-success-text/20">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                  250 OK
+                </span>
+</div>
+<!-- Visual Status Block -->
+<div class="p-3.5 rounded-xl bg-surface-sunken border border-line flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-success-bg text-success-text flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+</div>
+<div class="min-w-0">
+<div class="font-label text-label font-medium text-ink break-words">
+                    Delivered to <span class="font-semibold text-iris">fatima.bello@adeyemiholdings.ng</span>
+</div>
+<div class="mt-2 flex flex-wrap items-center gap-3 font-overline text-overline text-ink-3 tabular-nums">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                      17 Nov 2026, 10:42 WAT
+                    </span>
+</div>
+</div>
+</div>
+<div class="mt-3.5 pt-3 border-t border-line flex items-center justify-between text-xs text-ink-3">
+<span>Latency probe:</span>
+<span class="font-semibold text-ink font-body-sm tabular-nums">420ms roundtrip</span>
+</div>
+</div>
+<!-- CARD 2: Outbox Stats -->
+<div class="bg-surface rounded-2xl border border-line shadow-card p-5">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Outbox</h2>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-text opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-success-text"></span>
+</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Live spool</span>
+</div>
+<!-- Three KPI Stat Tiles in Grid -->
+<div class="grid grid-cols-3 gap-2.5">
+<!-- Sent today -->
+<div class="bg-surface-sunken border border-line rounded-xl p-3 flex flex-col justify-between">
+<span class="font-overline text-[11px] text-ink-3 uppercase font-medium">Sent today</span>
+<div class="mt-2 font-stat text-stat text-ink font-bold tabular-nums">38</div>
+</div>
+<!-- Waiting -->
+<div class="bg-surface-sunken border border-line rounded-xl p-3 flex flex-col justify-between">
+<span class="font-overline text-[11px] text-ink-3 uppercase font-medium">Waiting</span>
+<div class="mt-2 font-stat text-stat text-ink-2 font-bold tabular-nums">2</div>
+</div>
+<!-- Failed -->
+<div class="bg-danger-bg/40 border border-destructive/20 rounded-xl p-3 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-[11px] text-danger-text uppercase font-semibold">Failed</span>
+<span class="w-1.5 h-1.5 rounded-full bg-destructive"></span>
+</div>
+<div class="mt-2 font-stat text-stat text-danger-text font-bold tabular-nums">1</div>
+</div>
+</div>
+<!-- Outbox Footer Link -->
+<div class="mt-4 pt-3.5 border-t border-line flex items-center justify-between">
+<a class="inline-flex items-center gap-1.5 text-iris hover:text-iris-hover font-label text-label font-semibold group transition-colors" href="#">
+<span>View failed messages</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</a>
+<span class="font-overline text-overline text-ink-3">Last: 3 mins ago</span>
+</div>
+</div>
+<!-- CARD 3: Security & Encryption Info -->
+<div class="bg-iris-tint/40 border border-iris/20 rounded-2xl p-4 flex items-start gap-3.5 shadow-sm">
+<div class="w-8 h-8 rounded-lg bg-surface text-iris flex items-center justify-center shrink-0 border border-iris/20 shadow-xs">
+<span class="material-symbols-outlined text-[20px] text-iris">verified_user</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-h3 text-h3 text-ink text-sm font-semibold">Encrypted Vault Storage</h3>
+<p class="font-body-sm text-body-sm text-ink-2 text-xs leading-relaxed">
+                  Your password is encrypted and never shown again. Outgoing authentication adheres to TLS 1.3 standards and operations are committed directly to the immutable audit log.
+                </p>
+<div class="pt-1.5 flex items-center gap-3">
+<span class="font-overline text-[10px] text-iris font-semibold tracking-wider uppercase">FIPS 140-2 Compliant</span>
+<span class="text-ink-3 text-[10px]">•</span>
+<span class="font-overline text-[10px] text-ink-3">TLS 1.3 Active</span>
+</div>
+</div>
+</div>
+<!-- Quick Test Helper Hint -->
+<div class="px-2 py-1 flex items-center gap-2 text-ink-3 text-xs">
+<span class="material-symbols-outlined text-[16px] text-ink-3">info</span>
+<span>Need help setting up Exchange? <a class="text-iris hover:underline" href="#">Read configuration guide</a></span>
+</div>
+</div>
+</div>
+</main>
+<!-- Minimal Page Footer -->
+<footer class="h-14 px-8 border-t border-line bg-surface/50 flex items-center justify-between text-xs text-ink-3">
+<div class="flex items-center gap-4">
+<span>Kxmeleon ERP v4.12.0</span>
+<span>•</span>
+<span class="inline-flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+            All SMTP relays operational
+          </span>
+</div>
+<div class="flex items-center gap-4">
+<a class="hover:text-ink transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-ink transition-colors" href="#">Audit Certificate</a>
+<a class="hover:text-ink transition-colors" href="#">System Health</a>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

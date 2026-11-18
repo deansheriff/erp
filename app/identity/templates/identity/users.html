@@ -1,0 +1,121 @@
+{# Administration → Users. Design: design/stitch/exports/admin.users.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+<div x-data="modal" data-open="{{ 'true' if invite_open else 'false' }}">
+  {% call ui.page_header("Users", "Everyone who can sign in to Kxmeleon. Invite people by email; they set their own password.") %}
+    <button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("user-plus", "sm") }} Invite user</button>
+  {% endcall %}
+
+  <div class="mt-5 space-y-3">
+    {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+    {% if problem %}{{ ui.alert("danger", problem) }}{% endif %}
+    {% if not mail_ready %}{{ ui.alert("warning", "Mail isn't set up yet, so invitations can't be sent. Set it up in Mail settings.") }}{% endif %}
+  </div>
+
+  <form method="get" action="/admin/users" class="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center">
+    <label class="relative block w-full lg:w-72">
+      <span class="sr-only">Search users</span>
+      {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+      <input type="search" name="q" value="{{ q }}" class="kx-input pl-10" placeholder="Search by name or email…">
+    </label>
+    <nav class="kx-scroll-x flex items-center gap-1.5 rounded-control border border-line bg-surface-sunken p-1" aria-label="Filter by status">
+      {% for key, label in [("all", "All"), ("active", "Active"), ("invited", "Invited"), ("suspended", "Suspended")] %}
+      <a href="/admin/users{{ '' if key == 'all' else '?status=' ~ key }}" class="flex h-9 items-center whitespace-nowrap rounded-lg px-3.5 text-label {{ 'bg-iris-tint font-semibold text-iris-hover' if status == key else 'text-ink-2 hover:bg-surface' }}" {% if status == key %}aria-current="page"{% endif %}>
+        {{ label }} <span class="ml-1.5 text-xs tnum {{ 'font-bold' if status == key else 'text-ink-3' }}">{{ users.counts.get(key, 0) }}</span>
+      </a>
+      {% endfor %}
+    </nav>
+  </form>
+
+  <section class="kx-card kx-enter mt-5 overflow-hidden">
+    {% if users.rows %}
+    <div class="hidden overflow-x-auto md:block">
+      <table class="kx-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Status</th><th scope="col">Two-step</th><th scope="col">Last sign-in</th><th scope="col" class="text-right">Actions</th></tr></thead>
+        <tbody>
+          {% for u in users.rows %}
+          <tr>
+            <td>
+              <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface-sunken text-xs font-semibold text-ink-2">{{ u.full_name.split()[0][0] }}{{ u.full_name.split()[-1][0] }}</span>
+                <div class="min-w-0">
+                  <p class="flex flex-wrap items-center gap-2 font-semibold">{{ u.full_name }}{% if u.is_super_admin %} {{ ui.badge("new", "Super admin") }}{% endif %}</p>
+                  <p class="truncate text-xs text-ink-3">{{ u.email }}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              {% set s = {"active": ("success", "Active"), "invited": ("info", "Invited"), "suspended": ("danger", "Suspended"), "deactivated": ("neutral", "Deactivated")}[u.status] %}
+              {{ ui.badge(s[0], s[1]) }}{% if u.locked %} {{ ui.badge("warning", "Locked") }}{% endif %}
+            </td>
+            <td><span class="flex items-center gap-1.5 text-xs font-medium {{ 'text-success-text' if u.mfa_enabled else 'text-ink-3' }}">{{ ui.icon("shield-check" if u.mfa_enabled else "shield", "sm") }} {{ "On" if u.mfa_enabled else "Off" }}</span></td>
+            <td class="text-xs text-ink-2 tnum">{{ u.last_login_at | datetime if u.last_login_at else "Never" }}</td>
+            <td class="text-right">
+              <div class="relative inline-block text-left" x-data="menu" x-on:keydown.escape="close" x-on:click.outside="close">
+                <button type="button" class="kx-btn-icon" x-on:click="toggle" aria-haspopup="menu" x-bind:aria-expanded="open" aria-label="Actions for {{ u.full_name }}">{{ ui.icon("ellipsis-vertical", "sm") }}</button>
+                <div x-show="open" x-cloak x-transition.opacity.duration.150ms role="menu" class="absolute right-0 z-10 mt-1 w-52 rounded-2xl border border-line bg-surface-raised p-1.5 shadow-raised">
+                  {% set actions = [] %}
+                  {% if u.status == "invited" %}{% set actions = actions + [("resend", "Resend invite", "send")] %}{% endif %}
+                  {% if u.locked %}{% set actions = actions + [("unlock", "Unlock", "lock-open")] %}{% endif %}
+                  {% if u.status == "active" %}{% set actions = actions + [("suspend", "Suspend", "user-x")] %}{% endif %}
+                  {% if u.status == "suspended" %}{% set actions = actions + [("reactivate", "Reactivate", "user-check")] %}{% endif %}
+                  {% for action, label, icon_name in actions %}
+                  <form method="post" hx-push-url="false" action="/admin/users/{{ u.id }}/{{ action }}">{{ ui.csrf_field() }}
+                    <button type="submit" role="menuitem" class="flex h-11 w-full items-center gap-2.5 rounded-lg px-3 text-left text-body-sm {{ 'text-danger-text hover:bg-danger-bg/50' if action == 'suspend' else 'text-ink-2 hover:bg-surface-sunken hover:text-ink' }}">{{ ui.icon(icon_name, "sm") }} {{ label }}</button>
+                  </form>
+                  {% else %}
+                  <p class="px-3 py-2 text-body-sm text-ink-3">No actions available.</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <ul class="divide-y divide-line md:hidden">
+      {% for u in users.rows %}
+      <li class="flex items-center gap-3 p-4">
+        <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ u.full_name }}</p><p class="truncate text-xs text-ink-3">{{ u.email }}</p></div>
+        {% set s = {"active": ("success", "Active"), "invited": ("info", "Invited"), "suspended": ("danger", "Suspended"), "deactivated": ("neutral", "Deactivated")}[u.status] %}
+        {{ ui.badge(s[0], s[1]) }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {% call ui.empty_state("users", "No one matches", "Try a different name or status filter.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {# ------------------------------------------------------------ invite drawer #}
+  <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex justify-end" x-on:keydown.escape.window="hide">
+    <div class="absolute inset-0 bg-[rgb(11_11_18/0.45)] backdrop-blur-[4px]" x-on:click="hide" x-show="open" x-transition.opacity.duration.200ms></div>
+    <aside x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="invite-title"
+           class="relative flex h-full w-full max-w-[480px] flex-col border-l border-line bg-surface shadow-overlay sm:rounded-l-sheet"
+           x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+           x-transition:leave="transition duration-base ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+      <form method="post" hx-push-url="false" action="/admin/users" class="flex h-full flex-col" novalidate>
+        {{ ui.csrf_field() }}
+        <div class="flex items-center justify-between border-b border-line px-6 py-5">
+          <h2 id="invite-title" class="font-h1 text-[20px]">Invite a user</h2>
+          <button type="button" class="kx-btn-icon" x-on:click="hide" aria-label="Close">{{ ui.icon("x") }}</button>
+        </div>
+        <div class="flex-1 space-y-5 overflow-y-auto p-6">
+          {% if invite_errors.get("form") %}{{ ui.alert("danger", invite_errors["form"]) }}{% endif %}
+          {{ ui.text_field("full_name", "Full name", value=invite_values.get("full_name"), errors=invite_errors, required=true, autocomplete="off") }}
+          {{ ui.text_field("email", "Work email", value=invite_values.get("email"), type="email", errors=invite_errors, required=true, autocomplete="off") }}
+          {{ ui.alert("info", "They'll get an email with a link that works for 72 hours. They choose their own password; you never see it.", "info") }}
+          <p class="text-body-sm text-ink-3">Roles and permissions are assigned after they join.</p>
+        </div>
+        <div class="flex items-center justify-end gap-3 border-t border-line p-6">
+          <button type="button" class="kx-btn-secondary" x-on:click="hide">Cancel</button>
+          <button type="submit" class="kx-btn-primary">{{ ui.icon("send", "sm") }} Send invitation</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+</div>
+{% endblock %}

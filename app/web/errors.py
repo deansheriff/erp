@@ -12,10 +12,17 @@ from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse, RedirectResponse, Response
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app.core.errors import Conflict, DomainError, NotFound, PermissionDenied, ValidationFailed
+from app.core.errors import (
+    Conflict,
+    DomainError,
+    NotFound,
+    PermissionDenied,
+    RedirectRequired,
+    ValidationFailed,
+)
 from app.web.templating import templates
 
 log = logging.getLogger("app.errors")
@@ -51,7 +58,9 @@ def _render(
     status: int,
     code: str,
     message: str,
+    *,
     field_errors: dict[str, str] | None = None,
+    detail: str | None = None,
 ) -> Response:
     request_id = _request_id(request)
     if _wants_json(request):
@@ -61,7 +70,7 @@ def _render(
         body["error"]["request_id"] = request_id
         return JSONResponse(body, status_code=status)
 
-    context = {"status": status, "message": message, "request_id": request_id}
+    context = {"status": status, "message": message, "request_id": request_id, "detail": detail}
     if request.headers.get("hx-request") == "true":
         return templates.TemplateResponse(
             request,
@@ -74,12 +83,27 @@ def _render(
     return templates.TemplateResponse(request, template, context, status_code=status)
 
 
+def _redirect(request: Request, exc: RedirectRequired) -> Response:
+    if request.url.path.startswith("/api/"):
+        body = {
+            "error": {"code": exc.code, "message": exc.message, "request_id": _request_id(request)}
+        }
+        return JSONResponse(body, status_code=401)
+    if request.headers.get("hx-request") == "true":
+        return Response(status_code=204, headers={"HX-Redirect": exc.redirect_to})
+    return RedirectResponse(exc.redirect_to, status_code=303)
+
+
 async def domain_error_handler(request: Request, exc: Exception) -> Response:
     if not isinstance(exc, DomainError):
         raise exc
+    if isinstance(exc, RedirectRequired):
+        return _redirect(request, exc)
     status = next((s for cls, s in _STATUS.items() if isinstance(exc, cls)), 400)
     field_errors = exc.field_errors if isinstance(exc, ValidationFailed) else None
-    return _render(request, status, exc.code, exc.message, field_errors)
+    # A specific, user-safe explanation (e.g. an expired link) replaces the generic text.
+    detail = exc.message if exc.message != type(exc).default_message else None
+    return _render(request, status, exc.code, exc.message, field_errors=field_errors, detail=detail)
 
 
 async def http_error_handler(request: Request, exc: Exception) -> Response:
@@ -103,7 +127,9 @@ async def validation_error_handler(request: Request, exc: Exception) -> Response
         )
         for err in exc.errors()
     }
-    return _render(request, 422, ValidationFailed.code, ValidationFailed.default_message, fields)
+    return _render(
+        request, 422, ValidationFailed.code, ValidationFailed.default_message, field_errors=fields
+    )
 
 
 async def unhandled_error_handler(request: Request, exc: Exception) -> Response:

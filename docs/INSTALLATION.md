@@ -35,13 +35,14 @@ Required secrets:
 Generate keys with `uv run kx generate-key`. Losing `KX_ENCRYPTION_KEY` means the SMTP
 password must be re-entered. No business data is encrypted with it.
 
-## First run (built in Phase 2)
+## First run
 
 1. `docker compose up`. The `migrate` service creates the schema, and the app starts in
    **uninstalled** mode.
-2. The app log prints a one-time **setup token**. To get a fresh one, run
-   `docker compose exec app uv run kx setup-token`. Each token is valid for 60 minutes,
-   and issuing a new one invalidates the old.
+2. The app log prints a one-time **setup code** (`setup_code` in the JSON log line). To
+   get a fresh one, run `docker compose exec app kx setup-token`. Each code is valid for
+   60 minutes; issuing a new one, or restarting the app, invalidates the old one. If that
+   happens part-way through, the wizard asks for the new code and carries on.
 3. Open `http://localhost:8000/setup`. Every other page redirects there until setup is
    complete.
 4. **Step 1: Organisation.** Legal name, trading name, RC number, TIN, address,

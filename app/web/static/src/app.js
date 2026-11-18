@@ -87,10 +87,57 @@
       };
     });
 
+    Alpine.data("passwordField", function () {
+      return {
+        shown: false,
+        length: 0,
+        min: 12,
+        init: function () { this.min = parseInt(this.$root.getAttribute("data-min") || "12", 10); },
+        toggle: function () { this.shown = !this.shown; },
+        update: function (e) { this.length = e.target.value.length; },
+        get hidden() { return !this.shown; },
+        get inputType() { return this.shown ? "text" : "password"; },
+        get toggleLabel() { return this.shown ? "Hide password" : "Show password"; },
+        get longEnough() { return this.length >= this.min; },
+        get tooShort() { return this.length < this.min; },
+        get lengthClass() { return this.longEnough ? "text-success-text" : "text-ink-3"; },
+      };
+    });
+
+    Alpine.data("recoveryCodes", function () {
+      return {
+        copied: false,
+        saved: false,
+        codes: function () { return (this.$root.getAttribute("data-codes") || "").split(",").join("\n"); },
+        copy: function () {
+          var self = this;
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(this.codes()).then(function () {
+              self.copied = true;
+              setTimeout(function () { self.copied = false; }, 1600);
+            });
+          }
+        },
+        download: function () {
+          var blob = new Blob(["Kxmeleon recovery codes\n\n" + this.codes() + "\n"], { type: "text/plain" });
+          var link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "kxmeleon-recovery-codes.txt";
+          link.click();
+          setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
+        },
+        toggleSaved: function () { this.saved = !this.saved; },
+        get notSaved() { return !this.saved; },
+        get notCopied() { return !this.copied; },
+      };
+    });
+
     Alpine.data("modal", function () {
       return {
         open: false,
         lastFocus: null,
+        init: function () { this.open = this.$root.getAttribute("data-open") === "true"; },
+        get closed() { return !this.open; },
         show: function () {
           this.lastFocus = document.activeElement;
           this.open = true;

@@ -1,0 +1,61 @@
+{# Administration → Mail settings. Design: design/stitch/exports/admin.mail.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Mail settings", "Kxmeleon sends invitations, password resets and notifications through your SMTP server.", badge_status=("success" if settings and settings.last_test_ok else ("warning" if settings else "neutral")), badge_label=("Connected" if settings and settings.last_test_ok else ("Not tested" if settings else "Not set up"))) %}{% endcall %}
+
+<div class="mt-5 space-y-3">
+  {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+  {% if test_result %}{{ ui.alert("success" if test_result.ok else "danger", test_result.message) }}{% endif %}
+</div>
+
+<div class="mt-6 grid items-start gap-6 lg:grid-cols-12">
+  <form method="post" hx-push-url="false" action="/admin/mail" class="kx-card kx-card-body kx-enter space-y-5 lg:col-span-8" novalidate>
+    {{ ui.csrf_field() }}
+    <div class="border-b border-line pb-4">
+      <h2 class="font-h2 text-h2">SMTP server</h2>
+      <p class="text-body-sm text-ink-3">The outgoing mail server for this installation.</p>
+    </div>
+    {% include "identity/_smtp_fields.html" %}
+    <div class="flex flex-col-reverse gap-3 border-t border-line pt-5 sm:flex-row sm:justify-between">
+      <button type="submit" name="action" value="test" class="kx-btn-secondary">{{ ui.icon("send", "sm") }} Save and send test email</button>
+      <button type="submit" name="action" value="save" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Save changes</button>
+    </div>
+  </form>
+
+  <div class="kx-stagger flex flex-col gap-5 lg:col-span-4">
+    <section class="kx-card p-5">
+      <p class="kx-overline mb-3">Last test</p>
+      {% if settings and settings.last_test_at %}
+      <div class="flex items-start gap-3 rounded-xl border border-line bg-surface-sunken p-3.5">
+        <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full {{ 'bg-success-bg text-success-text' if settings.last_test_ok else 'bg-danger-bg text-danger-text' }}">{{ ui.icon("circle-check" if settings.last_test_ok else "circle-alert", "sm") }}</span>
+        <div class="min-w-0 text-label">
+          <p class="break-words">{{ "Delivered to" if settings.last_test_ok else "Failed for" }} <strong class="text-iris-hover">{{ settings.last_test_to }}</strong></p>
+          <p class="mt-1 text-[12px] text-ink-3 tnum">{{ settings.last_test_at | datetime }}</p>
+        </div>
+      </div>
+      {% else %}
+      <p class="text-body-sm text-ink-3">No test sent yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="kx-card p-5">
+      <h2 class="mb-4 font-h2 text-h2">Outbox</h2>
+      <div class="grid grid-cols-3 gap-2.5">
+        <div class="rounded-xl border border-line bg-surface-sunken p-3"><p class="text-[11px] font-medium uppercase text-ink-3">Sent today</p><p class="mt-2 font-stat text-stat tnum" data-count-to="{{ stats.sent_today }}">{{ stats.sent_today }}</p></div>
+        <div class="rounded-xl border border-line bg-surface-sunken p-3"><p class="text-[11px] font-medium uppercase text-ink-3">Waiting</p><p class="mt-2 font-stat text-stat tnum text-ink-2">{{ stats.waiting }}</p></div>
+        <div class="rounded-xl border p-3 {{ 'border-danger-text/20 bg-danger-bg/40' if stats.failed else 'border-line bg-surface-sunken' }}"><p class="text-[11px] font-semibold uppercase {{ 'text-danger-text' if stats.failed else 'text-ink-3' }}">Failed</p><p class="mt-2 font-stat text-stat tnum {{ 'text-danger-text' if stats.failed }}">{{ stats.failed }}</p></div>
+      </div>
+    </section>
+
+    <section class="flex items-start gap-3.5 rounded-2xl border border-iris/20 bg-iris-tint/40 p-4">
+      <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-iris/20 bg-surface text-iris">{{ ui.icon("shield-check", "sm") }}</span>
+      <div>
+        <h3 class="font-h3 text-[14px]">Your password is encrypted</h3>
+        <p class="mt-1 text-xs text-ink-2">It's stored encrypted and never shown again. Every change here is recorded in the audit log.</p>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

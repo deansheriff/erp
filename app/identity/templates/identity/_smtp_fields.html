@@ -1,0 +1,33 @@
+{# SMTP form fields shared by the setup wizard and Administration → Mail settings.
+   Expects: values (dict), errors (dict), and optionally settings (MailSettingsView). #}
+{% set v = values or {} %}
+{% set s = settings if settings is defined and settings else none %}
+{{ ui.text_field("host", "SMTP host", value=v.get("host") or (s.host if s else ""), errors=errors, required=true, autocomplete="off") }}
+<div class="grid gap-5 sm:grid-cols-[8rem_1fr]">
+  {{ ui.text_field("port", "Port", value=v.get("port") or (s.port if s else 587), errors=errors, inputmode="numeric") }}
+  <fieldset>
+    <legend class="kx-label">Security</legend>
+    {% set current = v.get("security") or (s.security if s else "starttls") %}
+    <div class="inline-flex rounded-full bg-surface-sunken p-1" role="radiogroup">
+      {% for value, label in [("starttls", "STARTTLS"), ("ssl", "SSL/TLS"), ("none", "None")] %}
+      <label class="relative">
+        <input type="radio" name="security" value="{{ value }}" class="peer sr-only" {% if current == value %}checked{% endif %}>
+        <span class="flex h-9 min-w-[5.5rem] cursor-pointer items-center justify-center rounded-full px-3 text-label text-ink-2 transition-colors duration-fast peer-checked:bg-surface peer-checked:text-ink peer-checked:shadow-card peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus">{{ label }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <p class="mt-1.5 text-body-sm text-ink-3">Use None only for a relay on your own network.</p>
+  </fieldset>
+</div>
+{{ ui.text_field("username", "Username", value=v.get("username") or (s.username if s else ""), errors=errors, autocomplete="off") }}
+<div>
+  {% if s and s.has_password %}
+  <p class="mb-2 flex items-center gap-2 text-body-sm text-ink-2">{{ ui.badge("success", "Password saved") }} Leave blank to keep it.</p>
+  {% endif %}
+  {{ ui.password_field("password", "Password" if not (s and s.has_password) else "Replace password", errors=errors, autocomplete="new-password") }}
+</div>
+<div class="grid gap-5 sm:grid-cols-2">
+  {{ ui.text_field("from_name", "From name", value=v.get("from_name") or (s.from_name if s else ""), errors=errors, required=true) }}
+  {{ ui.text_field("from_address", "From address", value=v.get("from_address") or (s.from_address if s else ""), type="email", errors=errors, required=true) }}
+</div>
+{{ ui.text_field("reply_to", "Reply-to (optional)", value=v.get("reply_to") or (s.reply_to if s else ""), type="email", errors=errors) }}

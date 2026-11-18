@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP · Secure Authentication</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "info-bg": "#DFEBFF",
+            "iris": "#5A4BDB",
+            "error": "#ba1a1a",
+            "on-iris": "#FFFFFF",
+            "on-error-container": "#93000a",
+            "on-surface-variant": "#474554",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#e4dfff",
+            "danger-bg": "#FFE4E6",
+            "primary-fixed-dim": "#c5c0ff",
+            "primary-container": "#5a4bdb",
+            "on-surface": "#1a1c1f",
+            "surface-raised": "#FFFFFF",
+            "warning-text": "#8A4B00",
+            "surface-container-low": "#f3f3f7",
+            "surface-variant": "#e2e2e6",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2e3034",
+            "surface-dim": "#d9dade",
+            "on-secondary-container": "#536b00",
+            "on-secondary-fixed": "#161f00",
+            "on-primary": "#ffffff",
+            "ink-3": "#626280",
+            "warning-bg": "#FFF1D6",
+            "tertiary-fixed": "#ffdbc8",
+            "secondary-fixed": "#c7f24c",
+            "lime-ink": "#4D7A0A",
+            "success-bg": "#DDF7E8",
+            "on-background": "#1a1c1f",
+            "on-primary-container": "#e0dbff",
+            "ink-2": "#4B4B66",
+            "primary": "#412ec2",
+            "tertiary-fixed-dim": "#ffb68b",
+            "ink": "#16162A",
+            "on-error": "#ffffff",
+            "danger-text": "#B4232F",
+            "surface-container-highest": "#e2e2e6",
+            "secondary-container": "#c4ef49",
+            "surface-bright": "#f9f9fd",
+            "destructive": "#C42836",
+            "line": "#E4E4EE",
+            "surface-container": "#ededf1",
+            "info-text": "#1D55B8",
+            "on-primary-fixed-variant": "#3d28be",
+            "tertiary-container": "#9f4a00",
+            "surface-container-lowest": "#ffffff",
+            "iris-tint": "#EEECFD",
+            "inverse-primary": "#c5c0ff",
+            "secondary-fixed-dim": "#acd530",
+            "surface": "#FFFFFF",
+            "on-primary-fixed": "#140067",
+            "lime": "#C5F04A",
+            "on-tertiary-container": "#ffd7c1",
+            "surface-sunken": "#EFEFF6",
+            "success-text": "#0F6B3E",
+            "canvas": "#F6F6FA",
+            "iris-hover": "#4A3CC4",
+            "tertiary": "#7a3700",
+            "surface-container-high": "#e8e8ec",
+            "on-tertiary-fixed-variant": "#743400",
+            "outline-variant": "#c8c4d7",
+            "inverse-on-surface": "#f0f0f4",
+            "background": "#f9f9fd",
+            "surface-tint": "#5646d7",
+            "error-container": "#ffdad6",
+            "secondary": "#4f6600",
+            "outline": "#787586",
+            "line-strong": "#8B8BA6",
+            "on-tertiary-fixed": "#321300"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "20": "1.25rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-2xl": "3rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-3xl": "4rem",
+            "space-sm": "0.5rem",
+            "gutter": "1.5rem",
+            "space-xl": "2rem"
+          },
+          "fontFamily": {
+            "body": ["Inter"],
+            "body-sm": ["Inter"],
+            "overline": ["Inter"],
+            "stat": ["Plus Jakarta Sans"],
+            "display": ["Plus Jakarta Sans"],
+            "h1": ["Plus Jakarta Sans"],
+            "h2": ["Plus Jakarta Sans"],
+            "label": ["Inter"],
+            "h3": ["Plus Jakarta Sans"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-canvas text-ink antialiased min-h-screen flex flex-col items-center justify-start p-4 relative overflow-x-hidden selection:bg-iris-tint selection:text-iris">
+<!-- Faint Ambient Iris/Lime Glow Mesh -->
+<div aria-hidden="true" class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute -top-32 -left-24 w-80 h-80 rounded-full bg-iris/10 blur-[90px] mix-blend-multiply"></div>
+<div class="absolute top-1/4 -right-28 w-72 h-72 rounded-full bg-lime/25 blur-[100px] mix-blend-multiply"></div>
+<div class="absolute bottom-20 left-1/2 -translate-x-1/2 w-96 h-80 rounded-full bg-iris-tint/60 blur-[110px]"></div>
+</div>
+<!-- Mobile Viewport Shell (Strict 390px constrained canvas) -->
+<main class="w-full max-w-[390px] relative z-10 flex flex-col pt-4 pb-12">
+<!-- Top System Context / Live Security Indicator -->
+<header class="flex items-center justify-between px-1 mb-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface/90 border border-line shadow-sm backdrop-blur-md">
+<span aria-hidden="true" class="w-2 h-2 rounded-full bg-lime-ink animate-pulse"></span>
+<span class="font-overline text-overline uppercase text-ink-3">SSO / MFA Guard</span>
+</div>
+<div class="flex items-center gap-1 text-ink-3 text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-iris">lock</span>
+<span class="font-body-sm text-[12px] font-medium tracking-tight">256-bit TLS</span>
+</div>
+</header>
+<!-- Header Section (Centred Brand Mark & Corporate Anchor) -->
+<section class="flex flex-col items-center text-center mb-7">
+<div class="flex items-center justify-center gap-2.5 mb-2">
+<div class="w-11 h-11 rounded-[12px] bg-iris shadow-md shadow-iris/20 flex items-center justify-center text-on-iris transform transition-transform active:scale-95 duration-100">
+<!-- Chameleon Shield Geometric Monogram -->
+<svg class="w-6 h-6 fill-current" viewbox="0 0 24 24">
+<path d="M12 2L4 5.5v6.2c0 5.4 3.4 10.4 8 11.8 4.6-1.4 8-6.4 8-11.8V5.5L12 2zm-1 14.5l-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4L11 16.5z"></path>
+</svg>
+</div>
+<span class="font-h1 text-h1 font-bold tracking-tight text-ink">Kxmeleon</span>
+</div>
+<div class="inline-flex items-center gap-1.5 text-ink-3">
+<span class="font-label text-label font-normal text-ink-3">Adeyemi Holdings Ltd</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="inline-flex items-center text-[11px] font-semibold px-1.5 py-0.2 rounded bg-surface-variant text-ink-2">NG-HQ</span>
+</div>
+</section>
+<!-- CARD 1: Sign in -->
+<section aria-labelledby="signin-title" class="bg-surface rounded-20 border border-line shadow-[0_4px_20px_-2px_rgba(22,22,42,0.06)] p-5 mb-5 relative transition-all duration-150">
+<!-- Card Title & Subtitle -->
+<div class="mb-5">
+<h1 class="font-h1 text-[22px] leading-7 font-bold text-ink mb-1" id="signin-title">Sign in</h1>
+<p class="font-body-sm text-body-sm text-ink-3">Access your ERP enterprise workspace</p>
+</div>
+<form action="#" class="space-y-4" method="POST" onsubmit="event.preventDefault();">
+<!-- Control 1: Work email -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-medium text-ink-2" for="work-email">
+            Work email
+          </label>
+<div class="relative flex items-center">
+<input autocomplete="email" class="w-full h-11 px-3.5 bg-surface text-ink text-body-sm font-body border border-line-strong rounded-[10px] focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all duration-150 placeholder:text-outline" id="work-email" name="email" placeholder="e.g. fatima.bello@adeyemiholdings.ng" required="" type="email" value="fatima.bello@adeyemiholdings.ng"/>
+</div>
+</div>
+<!-- Control 2: Password with Forgot Password link -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label font-medium text-ink-2" for="user-password">
+              Password
+            </label>
+<a class="min-h-[44px] inline-flex items-center text-iris hover:text-iris-hover text-label font-medium transition-colors duration-150 active:scale-95" href="#reset">
+              Forgot password?
+            </a>
+</div>
+<div class="relative flex items-center">
+<input autocomplete="current-password" class="w-full h-11 pl-3.5 pr-12 bg-surface text-ink text-body-sm font-body border border-line-strong rounded-[10px] focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all duration-150 tracking-wider" id="user-password" name="password" required="" type="password" value="••••••••••••"/>
+<!-- 44x44px accessible touch-target icon toggle -->
+<button aria-label="Toggle password visibility" class="absolute right-0 h-11 w-11 flex items-center justify-center text-ink-3 hover:text-iris transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-iris/30 rounded-r-[10px]" id="toggle-pwd-btn" onclick="const p = document.getElementById('user-password'); const icon = document.getElementById('pwd-icon'); if(p.type === 'password'){ p.type = 'text'; icon.textContent = 'visibility_off'; } else { p.type = 'password'; icon.textContent = 'visibility'; }" type="button">
+<span class="material-symbols-outlined text-ink-3" id="pwd-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Control 3: Sign In Action Button (48px primary) -->
+<div class="pt-1">
+<button class="w-full h-12 bg-iris hover:bg-iris-hover active:scale-[0.98] text-on-iris font-label text-body font-medium rounded-[10px] shadow-sm flex items-center justify-center gap-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-iris" type="submit">
+<span>Sign in</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Security / Domain Meta Badge -->
+<div class="mt-4 pt-3.5 border-t border-line flex items-center justify-between text-overline">
+<span class="font-overline text-ink-3">ORGANIZATION TENANT</span>
+<span class="font-overline text-lime-ink bg-success-bg px-2 py-0.5 rounded-full">ACTIVE · SSO ENFORCED</span>
+</div>
+</section>
+<!-- Sub-footer text below Card 1 -->
+<p class="text-center font-body-sm text-body-sm text-ink-3 mb-8 px-4">
+      Trouble signing in? <a class="text-iris font-medium underline underline-offset-2 hover:text-iris-hover focus:outline-none focus:ring-1 focus:ring-iris rounded" href="#support">Contact your administrator</a>.
+    </p>
+<!-- Contextual Section Divider / Sequential Badge -->
+<div class="flex items-center justify-center gap-2 mb-4">
+<div class="h-px bg-line flex-1"></div>
+<div class="px-3 py-1 bg-iris-tint border border-iris/20 rounded-full flex items-center gap-1.5 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+<span class="font-overline text-[11px] font-bold text-iris tracking-wider uppercase">Step 2 · Multi-Factor Authentication</span>
+</div>
+<div class="h-px bg-line flex-1"></div>
+</div>
+<!-- CARD 2: MFA Verification Code -->
+<section aria-labelledby="mfa-title" class="bg-surface rounded-20 border border-line shadow-[0_4px_20px_-2px_rgba(22,22,42,0.06)] p-5 relative transition-all duration-150">
+<!-- Top Center Icon Tile (48px rounded-2xl iris-tint) -->
+<div class="flex flex-col items-center text-center">
+<div class="w-12 h-12 rounded-2xl bg-iris-tint flex items-center justify-center text-iris shadow-inner">
+<span class="material-symbols-outlined text-[26px]">verified_user</span>
+</div>
+<h2 class="font-h1 text-[20px] leading-7 font-bold text-ink mt-3" id="mfa-title">
+          Enter verification code
+        </h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1 mb-5 max-w-[280px]">
+          Open your authenticator app and enter the 6-digit code for Kxmeleon.
+        </p>
+</div>
+<!-- Security Passcode Input Boxes (JetBrains Mono) -->
+<div class="mb-4">
+<div aria-label="6-digit authentication code" class="flex items-center justify-between gap-1.5 sm:gap-2" role="group">
+<!-- Box 1 -->
+<div class="w-11 h-13 py-2 flex flex-col items-center justify-center bg-surface-sunken border border-line rounded-[10px] shadow-sm">
+<span class="font-mono text-[22px] font-semibold text-ink leading-none">4</span>
+</div>
+<!-- Box 2 -->
+<div class="w-11 h-13 py-2 flex flex-col items-center justify-center bg-surface-sunken border border-line rounded-[10px] shadow-sm">
+<span class="font-mono text-[22px] font-semibold text-ink leading-none">8</span>
+</div>
+<!-- Box 3 -->
+<div class="w-11 h-13 py-2 flex flex-col items-center justify-center bg-surface-sunken border border-line rounded-[10px] shadow-sm">
+<span class="font-mono text-[22px] font-semibold text-ink leading-none">2</span>
+</div>
+<!-- Divider Hyphen -->
+<span class="text-line-strong font-mono font-bold text-lg select-none px-0.5">-</span>
+<!-- Box 4 (Active/Focus State) -->
+<div class="w-11 h-13 py-2 flex flex-col items-center justify-center bg-surface border-2 border-iris rounded-[10px] shadow-sm ring-2 ring-iris/20 relative animate-pulse">
+<span class="font-mono text-[22px] font-semibold text-iris leading-none">•</span>
+<span class="absolute bottom-1 w-3 h-0.5 bg-iris rounded-full"></span>
+</div>
+<!-- Box 5 -->
+<div class="w-11 h-13 py-2 flex flex-col items-center justify-center bg-surface border border-line-strong rounded-[10px] shadow-sm">
+<span class="font-mono text-[22px] font-semibold text-outline leading-none">•</span>
+</div>
+<!-- Box 6 -->
+<div class="w-11 h-13 py-2 flex flex-col items-center justify-center bg-surface border border-line-strong rounded-[10px] shadow-sm">
+<span class="font-mono text-[22px] font-semibold text-outline leading-none">•</span>
+</div>
+</div>
+<!-- Time-based Token Indicator -->
+<div class="flex items-center justify-center gap-1.5 mt-3.5">
+<span class="material-symbols-outlined text-[16px] text-ink-3">timer</span>
+<span class="font-body-sm text-[12px] font-medium text-ink-3">24s remaining</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant mx-1"></span>
+<button class="text-[12px] font-medium text-iris hover:underline focus:outline-none" type="button">Resend SMS</button>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="space-y-2.5 pt-1">
+<!-- 48px Primary Iris Button -->
+<button class="w-full h-12 bg-iris hover:bg-iris-hover active:scale-[0.98] text-on-iris font-label text-body font-medium rounded-[10px] shadow-sm flex items-center justify-center gap-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-iris" type="button">
+<span class="material-symbols-outlined text-[20px]">check</span>
+<span>Verify</span>
+</button>
+<!-- Ghost / Recovery Code Action (Min 44px hit-box) -->
+<button class="w-full h-11 flex items-center justify-center text-iris hover:text-iris-hover hover:underline font-label text-body-sm font-medium rounded-[10px] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-iris/20" type="button">
+          Use a recovery code instead
+        </button>
+</div>
+<!-- Device Trust Checkbox -->
+<div class="mt-4 pt-3.5 border-t border-line flex items-center gap-2.5">
+<input checked="" class="w-4 h-4 rounded border-line-strong text-iris focus:ring-iris focus:ring-offset-0 transition duration-150 cursor-pointer" id="trust-device" type="checkbox"/>
+<label class="font-body-sm text-[13px] text-ink-2 select-none cursor-pointer" for="trust-device">
+          Remember this device for 30 days
+        </label>
+</div>
+</section>
+<!-- Sign out / Return Navigation Action (Min 44px hit-area) -->
+<div class="mt-4 flex justify-center">
+<a class="min-h-[44px] px-4 inline-flex items-center gap-1.5 text-body-sm font-medium text-ink-3 hover:text-ink transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-line-strong rounded" href="#login">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Back to sign in</span>
+</a>
+</div>
+<!-- Corporate Footer & Compliance Notice -->
+<footer class="mt-8 text-center text-ink-3 font-body-sm text-[12px] space-y-1">
+<div class="flex items-center justify-center gap-3">
+<a class="hover:text-ink transition-colors underline underline-offset-2" href="#privacy">Privacy Policy</a>
+<span>•</span>
+<a class="hover:text-ink transition-colors underline underline-offset-2" href="#terms">Security Standard</a>
+<span>•</span>
+<a class="hover:text-ink transition-colors underline underline-offset-2" href="#help">Helpdesk</a>
+</div>
+<p class="text-outline text-[11px] pt-1">
+        © 2025 Kxmeleon ERP. Licensed to Adeyemi Holdings Ltd.
+      </p>
+</footer>
+</main>
+</body></html>

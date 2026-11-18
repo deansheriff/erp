@@ -4,11 +4,14 @@
 {% import "components/ui.html" as ui with context %}
 
 {% block body %}
-<main id="main" class="kx-ambient flex min-h-screen items-center justify-center px-4 py-12">
-  <article class="kx-enter w-full max-w-[420px] rounded-sheet border border-line bg-surface p-6 text-center shadow-raised sm:p-8">
-    <div class="mb-6 flex items-center justify-center gap-2 border-b border-line pb-6">
-      <img src="{{ url_for('static', path='img/mark.svg') }}" alt="" class="h-8 w-8">
-      <span class="font-h2 text-h2 font-bold">Kxmeleon</span>
+<main id="main" class="kx-ambient flex min-h-screen items-center justify-center px-4 py-10">
+  <article class="kx-enter w-full {% block card_width %}max-w-[420px]{% endblock %} rounded-sheet border border-line bg-surface p-6 shadow-raised sm:p-8 {% block card_align %}text-center{% endblock %}">
+    <div class="mb-6 flex flex-col items-center gap-1 border-b border-line pb-6 text-center">
+      <span class="flex items-center gap-2">
+        <img src="{{ url_for('static', path='img/mark.svg') }}" alt="" class="h-8 w-8">
+        <span class="font-h2 text-h2 font-bold">Kxmeleon</span>
+      </span>
+      {% if organisation is defined and organisation %}<span class="text-body-sm text-ink-3">{{ organisation.display_name }}</span>{% endif %}
     </div>
     {% block card %}{% endblock %}
   </article>

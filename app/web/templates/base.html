@@ -15,7 +15,8 @@
   <script defer src="{{ url_for('static', path='dist/app.js') }}?v={{ asset_version('dist/app.js') }}"></script>
   <script defer src="{{ url_for('static', path='dist/vendor/alpine-csp.min.js') }}?v={{ asset_version('dist/vendor/alpine-csp.min.js') }}"></script>
 </head>
-<body class="{% block body_class %}{% endblock %}">
+{% set _actor = request.state.actor if request.state.actor is defined else none %}
+<body class="{% block body_class %}{% endblock %}"{% if _actor and _actor.csrf_token %} hx-headers='{"X-CSRF-Token": "{{ _actor.csrf_token }}"}'{% endif %}>
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] kx-btn-primary">Skip to content</a>
   {% block body %}{% endblock %}
   <div id="toasts" class="pointer-events-none fixed inset-x-4 top-4 z-[90] flex flex-col items-end gap-2 md:inset-x-auto md:bottom-6 md:right-6 md:top-auto" aria-live="polite"></div>

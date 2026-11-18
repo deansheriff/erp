@@ -1,0 +1,8 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ name }},</p>
+<p style="margin:0 0 16px;">{{ inviter }} has invited you to use Kxmeleon at {{ organisation }}. Create your account to get started.</p>
+<p style="margin:24px 0;"><a href="{{ link }}" style="display:inline-block;background:#5A4BDB;color:#FFFFFF;text-decoration:none;font-weight:600;padding:12px 20px;border-radius:10px;">Create your account</a></p>
+<p style="margin:0 0 8px;color:#4B4B66;">This link works once and expires on {{ expires }}.</p>
+<p style="margin:0;color:#4B4B66;">If you weren't expecting this, you can ignore this email.</p>
+{% endblock %}

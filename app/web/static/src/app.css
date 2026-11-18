@@ -1,5 +1,8 @@
 @import "./tokens.css";
 
+/* Administration shares the neutral Home hue. */
+.module-admin { --kx-hue: var(--kx-mod-home); }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

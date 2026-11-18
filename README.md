@@ -23,8 +23,11 @@ Then open:
 | Mail catcher (Mailpit) | http://localhost:8025 |
 | Object storage console (MinIO) | http://localhost:9001 |
 
-The `migrate` service creates the database schema before the app starts. The first-run
-setup wizard (organisation, super admin, SMTP) arrives in Phase 2. See
+The `migrate` service creates the database schema before the app starts. The app then
+prints a one-time **setup code** in its log (`docker compose logs app | grep setup_code`).
+Open http://localhost:8000, enter the code, and the wizard creates the organisation, the
+super admin and the mail settings. For local mail use host `mailpit`, port `1025`,
+security "None", and read the messages at http://localhost:8025. See
 [docs/INSTALLATION.md](docs/INSTALLATION.md).
 
 ## Develop

@@ -9,12 +9,16 @@ from fastapi.testclient import TestClient
 from app.authz.declarations import public
 from app.core.errors import NotFound, PermissionDenied, ValidationFailed
 from app.main import create_app
+from tests.conftest import Installed
 
 SECRET_DETAIL = "psycopg.OperationalError: password for kx_app at 10.0.0.5"
 
 
+pytestmark = pytest.mark.db
+
+
 @pytest.fixture()
-def app() -> FastAPI:
+def app(installed: Installed) -> FastAPI:
     app = create_app()
 
     @app.get("/boom")

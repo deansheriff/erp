@@ -1,0 +1,33 @@
+{% extends "layout/standalone.html" %}
+{% import "components/ui.html" as ui with context %}
+{% block card %}
+<div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-iris-tint text-iris">{{ ui.icon("shield-check", "lg") }}</div>
+{% if recovery %}
+<h1 class="mb-2 font-h1 text-h1">Use a recovery code</h1>
+<p class="mx-auto mb-6 max-w-[320px] text-ink-2">Enter one of the recovery codes you saved when you set up two-step verification. Each works once.</p>
+{% else %}
+<h1 class="mb-2 font-h1 text-h1">Enter your verification code</h1>
+<p class="mx-auto mb-6 max-w-[320px] text-ink-2">Open your authenticator app and enter the 6-digit code for Kxmeleon.</p>
+{% endif %}
+{% if error %}<div class="mb-5 text-left">{{ ui.alert("danger", error) }}</div>{% endif %}
+<form method="post" action="/login/verify" class="space-y-4">
+  {{ ui.csrf_field() }}
+  <input type="hidden" name="next" value="{{ next }}">
+  <input type="hidden" name="recovery" value="{{ 'true' if recovery else 'false' }}">
+  <label class="sr-only" for="f-code">{{ "Recovery code" if recovery else "6-digit code" }}</label>
+  {% if recovery %}
+  <input id="f-code" name="code" class="kx-input h-14 text-center font-mono text-xl uppercase tracking-[0.2em]" autocomplete="off" placeholder="XXXX-XXXX" required autofocus>
+  {% else %}
+  <input id="f-code" name="code" class="kx-input h-14 text-center font-mono text-2xl tracking-[0.5em]" inputmode="numeric" autocomplete="one-time-code" maxlength="7" placeholder="••••••" required autofocus>
+  {% endif %}
+  <button type="submit" class="kx-btn-primary w-full">Verify</button>
+</form>
+<div class="mt-4 space-y-1">
+  {% if recovery %}
+  <a href="/login/verify?next={{ next | urlencode }}" class="kx-btn-ghost w-full">Use my authenticator app instead</a>
+  {% else %}
+  <a href="/login/verify?recovery=true&amp;next={{ next | urlencode }}" class="kx-btn-ghost w-full">Use a recovery code instead</a>
+  {% endif %}
+  <form method="post" action="/logout">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost w-full">Sign out</button></form>
+</div>
+{% endblock %}

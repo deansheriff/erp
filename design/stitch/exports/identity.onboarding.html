@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP — Account Onboarding Pages</title>
+<!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration Verbatim from System Guidance -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "canvas": "#F6F6FA",
+            "surface-container-high": "#e8e8ec",
+            "surface-tint": "#5646d7",
+            "ink-3": "#626280",
+            "surface-raised": "#FFFFFF",
+            "background": "#f9f9fd",
+            "secondary-fixed-dim": "#acd530",
+            "surface-container-lowest": "#ffffff",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#161f00",
+            "ink": "#16162A",
+            "success-bg": "#DDF7E8",
+            "primary": "#412ec2",
+            "iris-hover": "#4A3CC4",
+            "success-text": "#0F6B3E",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#c7f24c",
+            "on-surface": "#1a1c1f",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "inverse-primary": "#c5c0ff",
+            "inverse-surface": "#2e3034",
+            "ink-2": "#4B4B66",
+            "on-tertiary-container": "#ffd7c1",
+            "error": "#ba1a1a",
+            "warning-bg": "#FFF1D6",
+            "on-primary-fixed-variant": "#3d28be",
+            "on-secondary-container": "#536b00",
+            "destructive": "#C42836",
+            "lime": "#C5F04A",
+            "iris-tint": "#EEECFD",
+            "error-container": "#ffdad6",
+            "warning-text": "#8A4B00",
+            "on-surface-variant": "#474554",
+            "on-background": "#1a1c1f",
+            "tertiary-fixed": "#ffdbc8",
+            "tertiary-container": "#9f4a00",
+            "info-text": "#1D55B8",
+            "tertiary-fixed-dim": "#ffb68b",
+            "on-iris": "#FFFFFF",
+            "on-tertiary-fixed-variant": "#743400",
+            "secondary": "#4f6600",
+            "on-primary-container": "#e0dbff",
+            "outline": "#787586",
+            "primary-container": "#5a4bdb",
+            "line-strong": "#8B8BA6",
+            "on-tertiary-fixed": "#321300",
+            "outline-variant": "#c8c4d7",
+            "info-bg": "#DFEBFF",
+            "primary-fixed-dim": "#c5c0ff",
+            "surface-container-low": "#f3f3f7",
+            "surface": "#FFFFFF",
+            "surface-variant": "#e2e2e6",
+            "on-primary-fixed": "#140067",
+            "primary-fixed": "#e4dfff",
+            "inverse-on-surface": "#f0f0f4",
+            "iris": "#5A4BDB",
+            "on-tertiary": "#ffffff",
+            "lime-ink": "#4D7A0A",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "tertiary": "#7a3700",
+            "danger-bg": "#FFE4E6",
+            "surface-container": "#ededf1",
+            "surface-dim": "#d9dade",
+            "line": "#E4E4EE",
+            "secondary-container": "#c4ef49",
+            "surface-bright": "#f9f9fd",
+            "surface-container-highest": "#e2e2e6",
+            "danger-text": "#B4232F",
+            "surface-sunken": "#EFEFF6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-2xl": "3rem",
+            "space-lg": "1.5rem",
+            "space-3xl": "4rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "gutter": "1.5rem",
+            "space-xl": "2rem"
+          },
+          "fontFamily": {
+            "h3": ["Plus Jakarta Sans"],
+            "label": ["Inter"],
+            "body": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "h2": ["Plus Jakarta Sans"],
+            "stat": ["Plus Jakarta Sans"],
+            "h1": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "overline": ["Inter"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-1 {
+      font-variation-settings: 'FILL' 1;
+    }
+    /* Ambient drifting mesh gradient effect */
+    .bg-mesh-canvas {
+      background-color: #F6F6FA;
+      background-image: 
+        radial-gradient(circle at 18% 24%, rgba(90, 75, 219, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 84% 78%, rgba(197, 240, 74, 0.08) 0%, transparent 48%),
+        radial-gradient(circle at 50% 10%, rgba(90, 75, 219, 0.04) 0%, transparent 40%);
+    }
+    /* Custom subtle card drop shadow according to style guidelines */
+    .card-elevation {
+      box-shadow: 0 8px 24px -6px rgba(22, 22, 42, 0.06), 0 2px 6px rgba(22, 22, 42, 0.04);
+    }
+  </style>
+</head>
+<body class="bg-mesh-canvas text-ink font-body min-h-screen flex flex-col justify-between selection:bg-iris selection:text-white antialiased">
+<!-- Minimalist Canvas Meta Header Banner -->
+<header class="w-full border-b border-line bg-surface/90 backdrop-blur-md sticky top-0 z-40 px-6 py-2.5">
+<div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center w-8 h-8 rounded-lg bg-iris text-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="shield">shield</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-h3 text-h3 font-bold text-ink">Kxmeleon</span>
+<span class="font-overline text-overline bg-iris-tint text-iris px-2 py-0.5 rounded-full font-semibold">Chroma Spec</span>
+</div>
+<span class="text-line-strong text-xs hidden sm:inline">•</span>
+<span class="font-body-sm text-body-sm text-ink-2 hidden sm:inline">Onboarding Flow • New Employee Setup</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-xs font-semibold">
+<span class="material-symbols-outlined text-[15px] fill-1" data-icon="verified">verified</span>
+<span>WCAG 2.2 AA Verified</span>
+</div>
+<div class="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-sunken border border-line text-xs text-ink-2 font-mono">
+<span class="material-symbols-outlined text-[14px] text-ink-3" data-icon="domain">domain</span>
+<span>Tenant: Adeyemi Holdings Ltd</span>
+</div>
+<span class="font-label text-xs text-ink-3 hidden lg:inline">Desktop Viewport (1440px)</span>
+</div>
+</div>
+</header>
+<!-- Main Canvas: 3-Stage Horizontally Balanced Presentation -->
+<main class="w-full max-w-[1440px] mx-auto px-6 py-10 flex-1 flex flex-col justify-center">
+<div class="mb-8 text-center max-w-2xl mx-auto">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-line text-xs font-medium text-ink-2 mb-3 shadow-xs">
+<span class="w-2 h-2 rounded-full bg-lime border border-lime-ink"></span>
+<span>Identity &amp; Access Management Engine v2.4.0</span>
+</div>
+<h1 class="font-display text-display text-ink tracking-tight mb-2">Employee Onboarding Stages</h1>
+<p class="font-body text-body text-ink-2 text-sm">
+        Complete high-trust credential initialization sequence engineered for enterprise security governance and zero-friction activation.
+      </p>
+</div>
+<!-- Cards Row -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start justify-center">
+<!-- CARD 1: ACCEPT INVITATION -->
+<section class="w-full max-w-[420px] mx-auto bg-surface rounded-2xl border border-line p-8 card-elevation flex flex-col transition-all hover:border-line-strong/60">
+<!-- Brand + Tenant Header -->
+<div class="flex items-center justify-between pb-4 mb-4 border-b border-line">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-iris/10 text-iris flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield">shield</span>
+</div>
+<div>
+<span class="font-h3 text-h3 text-ink leading-tight block">Kxmeleon</span>
+<span class="font-body-sm text-xs text-ink-3 block">Adeyemi Holdings Ltd</span>
+</div>
+</div>
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider text-[11px] bg-surface-sunken px-2 py-0.5 rounded">Stage 1</span>
+</div>
+<!-- Inviter Context Banner -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-iris-tint/60 border border-iris/15 mb-6">
+<div class="w-9 h-9 rounded-full bg-iris text-white font-h3 text-xs font-bold flex items-center justify-center shrink-0 shadow-sm">
+            AO
+          </div>
+<p class="font-body-sm text-body-sm text-ink-2 text-xs leading-snug">
+<strong class="text-ink font-semibold">Adaeze Okafor</strong> invited you to <span class="text-ink font-medium">Adeyemi Holdings Ltd</span> on Kxmeleon.
+          </p>
+</div>
+<!-- Title -->
+<h2 class="font-h1 text-[22px] font-bold text-ink mb-5">Create your account</h2>
+<!-- Form Elements -->
+<form class="space-y-4" onsubmit="event.preventDefault()">
+<!-- Read-only Work Email -->
+<div>
+<label class="block font-label text-label text-ink mb-1.5 text-xs font-medium">Work email</label>
+<div class="h-[44px] px-3.5 bg-surface-sunken border border-line rounded-lg flex items-center justify-between text-ink-2 select-none">
+<span class="font-mono text-xs text-ink-2 truncate">chinedu.eze@adeyemiholdings.ng</span>
+<span class="material-symbols-outlined text-ink-3 text-[18px] ml-2" data-icon="lock" title="Managed by tenant organization">lock</span>
+</div>
+</div>
+<!-- Full Name -->
+<div>
+<label class="block font-label text-label text-ink mb-1.5 text-xs font-medium" for="c1-fullname">Full name</label>
+<input class="w-full h-[44px] px-3.5 bg-surface border border-line-strong rounded-lg font-body text-sm text-ink focus:outline-none focus:ring-2 focus:ring-iris/20 focus:border-iris transition-colors" id="c1-fullname" type="text" value="Chinedu Eze"/>
+</div>
+<!-- Password Field -->
+<div>
+<label class="block font-label text-label text-ink mb-1.5 text-xs font-medium" for="c1-pwd">Password</label>
+<div class="relative flex items-center">
+<input class="w-full h-[44px] pl-3.5 pr-11 bg-surface border border-line-strong rounded-lg font-mono text-sm text-ink focus:outline-none focus:ring-2 focus:ring-iris/20 focus:border-iris transition-colors tracking-widest" id="c1-pwd" type="password" value="Ch1nedU_Str0ngP@ss2026!"/>
+<button aria-label="Toggle password visibility" class="absolute right-0 top-0 h-[44px] w-[44px] flex items-center justify-center text-ink-3 hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Confirm Password Field -->
+<div>
+<label class="block font-label text-label text-ink mb-1.5 text-xs font-medium" for="c1-pwd-confirm">Confirm password</label>
+<div class="relative flex items-center">
+<input class="w-full h-[44px] pl-3.5 pr-11 bg-surface border border-line-strong rounded-lg font-mono text-sm text-ink focus:outline-none focus:ring-2 focus:ring-iris/20 focus:border-iris transition-colors tracking-widest" id="c1-pwd-confirm" type="password" value="Ch1nedU_Str0ngP@ss2026!"/>
+<button aria-label="Toggle password visibility" class="absolute right-0 top-0 h-[44px] w-[44px] flex items-center justify-center text-ink-3 hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Password Checklist -->
+<div class="pt-1 space-y-1.5 text-xs">
+<div class="flex items-center gap-2 text-success-text">
+<span class="material-symbols-outlined text-[16px] text-success-text" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm">At least 12 characters</span>
+</div>
+<div class="flex items-center gap-2 text-success-text">
+<span class="material-symbols-outlined text-[16px] text-success-text" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm">Not a common password</span>
+</div>
+<div class="flex items-center gap-2 text-success-text">
+<span class="material-symbols-outlined text-[16px] text-success-text" data-icon="check_circle">check_circle</span>
+<span class="font-body-sm">Doesn't contain your name or email</span>
+</div>
+</div>
+<!-- Password Strength Meter -->
+<div class="pt-2">
+<div class="flex items-center justify-between text-xs mb-1.5">
+<span class="font-label text-ink-3">Password strength</span>
+<span class="font-label text-success-text font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text inline-block"></span> Strong
+              </span>
+</div>
+<div class="grid grid-cols-4 gap-1.5 h-1.5">
+<div class="bg-success-text rounded-full"></div>
+<div class="bg-success-text rounded-full"></div>
+<div class="bg-success-text rounded-full"></div>
+<div class="bg-line rounded-full"></div>
+</div>
+</div>
+<!-- Primary CTA Button -->
+<div class="pt-2">
+<button class="w-full h-[44px] rounded-[10px] bg-iris hover:bg-iris-hover active:scale-[0.98] text-white font-label font-medium text-sm flex items-center justify-center transition-all duration-150 shadow-sm" type="submit">
+              Create account
+            </button>
+</div>
+</form>
+<!-- Footer Notice -->
+<p class="mt-4 text-center font-body-sm text-xs text-ink-3">
+          This invitation expires on 20 Nov 2026 at 14:05 WAT.
+        </p>
+</section>
+<!-- CARD 2: SET UP TWO-STEP VERIFICATION -->
+<section class="w-full max-w-[420px] mx-auto bg-surface rounded-2xl border border-line p-8 card-elevation flex flex-col transition-all hover:border-line-strong/60">
+<!-- Brand + Tenant Header -->
+<div class="flex items-center justify-between pb-4 mb-4 border-b border-line">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-iris/10 text-iris flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield">shield</span>
+</div>
+<div>
+<span class="font-h3 text-h3 text-ink leading-tight block">Kxmeleon</span>
+<span class="font-body-sm text-xs text-ink-3 block">Adeyemi Holdings Ltd</span>
+</div>
+</div>
+<span class="font-label text-xs font-semibold px-2.5 py-0.5 rounded-full bg-iris-tint text-iris">
+            Step 2 of 2
+          </span>
+</div>
+<!-- Title & Subtitle -->
+<div class="mb-5">
+<h2 class="font-h1 text-[22px] font-bold text-ink mb-1">Protect your account</h2>
+<p class="font-body-sm text-body-sm text-ink-2 text-xs">
+            Your role requires two-step verification.
+          </p>
+</div>
+<!-- Numbered Sequence -->
+<div class="space-y-5">
+<!-- Step 1 -->
+<div class="flex items-start gap-3">
+<div class="w-6 h-6 rounded-full bg-iris-tint text-iris font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              1
+            </div>
+<div>
+<p class="font-label text-xs font-semibold text-ink leading-tight">Install an authenticator app</p>
+<p class="font-body-sm text-[12px] text-ink-2 mt-0.5 leading-snug">
+                Use Google Authenticator, Microsoft Authenticator, or 1Password.
+              </p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex items-start gap-3">
+<div class="w-6 h-6 rounded-full bg-iris-tint text-iris font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              2
+            </div>
+<div class="w-full">
+<p class="font-label text-xs font-semibold text-ink leading-tight mb-2">Scan this code</p>
+<!-- QR Code Mock Container -->
+<div class="bg-surface-sunken border border-line rounded-xl p-3 flex flex-col items-center justify-center mb-2.5">
+<div class="w-[168px] h-[168px] bg-white rounded-lg p-2.5 border border-line shadow-xs flex flex-col justify-between relative">
+<!-- Custom SVG Representation of QR Code pattern -->
+<svg class="w-full h-full text-ink fill-current" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<!-- Top-Left Target -->
+<rect fill="#16162A" height="28" rx="3" width="28" x="2" y="2"></rect>
+<rect fill="#FFFFFF" height="18" width="18" x="7" y="7"></rect>
+<rect fill="#16162A" height="10" rx="1.5" width="10" x="11" y="11"></rect>
+<!-- Top-Right Target -->
+<rect fill="#16162A" height="28" rx="3" width="28" x="70" y="2"></rect>
+<rect fill="#FFFFFF" height="18" width="18" x="75" y="7"></rect>
+<rect fill="#16162A" height="10" rx="1.5" width="10" x="79" y="11"></rect>
+<!-- Bottom-Left Target -->
+<rect fill="#16162A" height="28" rx="3" width="28" x="2" y="70"></rect>
+<rect fill="#FFFFFF" height="18" width="18" x="7" y="75"></rect>
+<rect fill="#16162A" height="10" rx="1.5" width="10" x="11" y="79"></rect>
+<!-- Alignment Pattern & Data Cells -->
+<rect fill="#5A4BDB" height="16" rx="2" width="16" x="42" y="42"></rect>
+<rect fill="#FFFFFF" height="8" width="8" x="46" y="46"></rect>
+<!-- Decorative high-density data grid dots -->
+<circle cx="36" cy="10" r="2.5"></circle>
+<circle cx="44" cy="10" r="2.5"></circle>
+<circle cx="52" cy="10" r="2.5"></circle>
+<circle cx="60" cy="10" r="2.5"></circle>
+<circle cx="36" cy="20" r="2.5"></circle>
+<circle cx="48" cy="22" r="2.5"></circle>
+<circle cx="58" cy="18" r="2.5"></circle>
+<circle cx="10" cy="36" r="2.5"></circle>
+<circle cx="20" cy="36" r="2.5"></circle>
+<circle cx="12" cy="46" r="2.5"></circle>
+<circle cx="22" cy="54" r="2.5"></circle>
+<circle cx="14" cy="62" r="2.5"></circle>
+<circle cx="74" cy="38" r="2.5"></circle>
+<circle cx="84" cy="38" r="2.5"></circle>
+<circle cx="92" cy="46" r="2.5"></circle>
+<circle cx="78" cy="54" r="2.5"></circle>
+<circle cx="88" cy="62" r="2.5"></circle>
+<circle cx="38" cy="74" r="2.5"></circle>
+<circle cx="48" cy="80" r="2.5"></circle>
+<circle cx="58" cy="74" r="2.5"></circle>
+<circle cx="42" cy="90" r="2.5"></circle>
+<circle cx="54" cy="88" r="2.5"></circle>
+<circle cx="70" cy="74" r="2.5"></circle>
+<circle cx="80" cy="74" r="2.5"></circle>
+<circle cx="90" cy="80" r="2.5"></circle>
+<circle cx="74" cy="88" r="2.5"></circle>
+<circle cx="84" cy="92" r="2.5"></circle>
+<circle cx="92" cy="92" r="2.5"></circle>
+</svg>
+<div class="absolute inset-0 m-auto w-6 h-6 rounded bg-white flex items-center justify-center shadow-xs">
+<span class="material-symbols-outlined text-[14px] text-iris" data-icon="lock">lock</span>
+</div>
+</div>
+</div>
+<!-- Manual Key Entry Fallback -->
+<p class="font-body-sm text-[11px] text-ink-3 mb-1">Can't scan? Enter this key:</p>
+<div class="flex items-center justify-between bg-surface-sunken border border-line rounded-lg pl-3 pr-1 py-1">
+<span class="font-mono text-xs font-semibold text-ink tracking-wider">JBSW Y3DP EHPK 3PXP</span>
+<button aria-label="Copy key" class="w-[36px] h-[36px] rounded hover:bg-surface text-ink-2 hover:text-ink flex items-center justify-center transition-colors" title="Copy key to clipboard" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex items-start gap-3">
+<div class="w-6 h-6 rounded-full bg-iris-tint text-iris font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+              3
+            </div>
+<div class="w-full">
+<label class="block font-label text-xs font-semibold text-ink leading-tight mb-2" for="c2-otp-code">Enter the 6-digit code</label>
+<!-- 6-digit OTP Box Pattern -->
+<div class="grid grid-cols-6 gap-2">
+<div class="h-[44px] rounded-lg border-2 border-iris bg-surface flex items-center justify-center font-mono text-base font-bold text-ink shadow-sm">
+                  8
+                </div>
+<div class="h-[44px] rounded-lg border-2 border-iris bg-surface flex items-center justify-center font-mono text-base font-bold text-ink shadow-sm">
+                  4
+                </div>
+<div class="h-[44px] rounded-lg border-2 border-iris bg-surface flex items-center justify-center font-mono text-base font-bold text-ink shadow-sm">
+                  1
+                </div>
+<div class="h-[44px] rounded-lg border border-line-strong bg-surface flex items-center justify-center font-mono text-base font-medium text-ink-3 relative">
+<span class="w-0.5 h-4 bg-iris animate-pulse"></span>
+</div>
+<div class="h-[44px] rounded-lg border border-line bg-surface-sunken flex items-center justify-center font-mono text-base font-medium text-line-strong">
+                  •
+                </div>
+<div class="h-[44px] rounded-lg border border-line bg-surface-sunken flex items-center justify-center font-mono text-base font-medium text-line-strong">
+                  •
+                </div>
+</div>
+<input aria-hidden="true" class="sr-only" id="c2-otp-code" maxlength="6" type="text" value="841"/>
+</div>
+</div>
+</div>
+<!-- Primary CTA Button -->
+<div class="pt-6 mt-auto">
+<button class="w-full h-[44px] rounded-[10px] bg-iris hover:bg-iris-hover active:scale-[0.98] text-white font-label font-medium text-sm flex items-center justify-center transition-all duration-150 shadow-sm" type="button">
+            Turn on two-step verification
+          </button>
+</div>
+</section>
+<!-- CARD 3: SAVE YOUR RECOVERY CODES -->
+<section class="w-full max-w-[420px] mx-auto bg-surface rounded-2xl border border-line p-8 card-elevation flex flex-col transition-all hover:border-line-strong/60">
+<!-- Brand + Tenant Header -->
+<div class="flex items-center justify-between pb-4 mb-4 border-b border-line">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-iris/10 text-iris flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield">shield</span>
+</div>
+<div>
+<span class="font-h3 text-h3 text-ink leading-tight block">Kxmeleon</span>
+<span class="font-body-sm text-xs text-ink-3 block">Adeyemi Holdings Ltd</span>
+</div>
+</div>
+<span class="font-overline text-overline text-success-text uppercase tracking-wider text-[11px] bg-success-bg px-2 py-0.5 rounded font-semibold">Verified</span>
+</div>
+<!-- Success Banner Tile -->
+<div class="rounded-2xl bg-success-bg border border-success-text/20 p-4 mb-5 flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-white text-success-text flex items-center justify-center shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[24px] fill-1 text-success-text" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<h3 class="font-h3 text-sm font-bold text-success-text leading-tight">Two-step verification is on</h3>
+<p class="font-body-sm text-xs text-ink-2 mt-0.5">Identity protection profile activated</p>
+</div>
+</div>
+<!-- Title & Subtext -->
+<div class="mb-4">
+<h2 class="font-h2 text-h2 font-bold text-ink mb-1.5">Save your recovery codes</h2>
+<p class="font-body-sm text-body-sm text-ink-2 text-xs leading-relaxed">
+            Keep these recovery codes somewhere safe. Each works once if you lose your phone.
+          </p>
+</div>
+<!-- 2-Column Grid of 10 Recovery Codes -->
+<div class="bg-surface-sunken border border-line rounded-xl p-4 mb-4">
+<div class="grid grid-cols-2 gap-x-4 gap-y-2 font-mono text-[13px] text-ink">
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">01</span>
+<span class="font-semibold tracking-wider">4F7K-9QX2</span>
+</div>
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">06</span>
+<span class="font-semibold tracking-wider">H8NZ-5WL3</span>
+</div>
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">02</span>
+<span class="font-semibold tracking-wider">M2PD-7HJ8</span>
+</div>
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">07</span>
+<span class="font-semibold tracking-wider">QB1T-9JC4</span>
+</div>
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">03</span>
+<span class="font-semibold tracking-wider">TR9W-3KL5</span>
+</div>
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">08</span>
+<span class="font-semibold tracking-wider">P6RE-4MF8</span>
+</div>
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">04</span>
+<span class="font-semibold tracking-wider">VX6B-8NQ1</span>
+</div>
+<div class="flex items-center justify-between py-0.5 border-b border-line/60">
+<span class="text-ink-3 text-xs">09</span>
+<span class="font-semibold tracking-wider">WY3S-7KA2</span>
+</div>
+<div class="flex items-center justify-between py-0.5">
+<span class="text-ink-3 text-xs">05</span>
+<span class="font-semibold tracking-wider">KD4M-2YP7</span>
+</div>
+<div class="flex items-center justify-between py-0.5">
+<span class="text-ink-3 text-xs">10</span>
+<span class="font-semibold tracking-wider">ZL5X-8VT9</span>
+</div>
+</div>
+</div>
+<!-- Secondary Actions Row -->
+<div class="grid grid-cols-2 gap-2.5 mb-5">
+<button class="h-[44px] rounded-lg border border-line-strong hover:bg-surface-sunken active:bg-surface text-ink font-label text-xs font-medium flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px] text-ink-2" data-icon="content_copy">content_copy</span>
+<span>Copy codes</span>
+</button>
+<button class="h-[44px] rounded-lg border border-line-strong hover:bg-surface-sunken active:bg-surface text-ink font-label text-xs font-medium flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[17px] text-ink-2" data-icon="download">download</span>
+<span>Download as text</span>
+</button>
+</div>
+<!-- Confirmation Checkbox -->
+<label class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-sunken/60 cursor-pointer select-none mb-5 transition-colors">
+<input checked="" class="w-5 h-5 rounded border-line-strong text-iris focus:ring-iris/30 focus:ring-offset-0 transition-colors" type="checkbox"/>
+<span class="font-label text-sm text-ink-2 font-medium">I've saved my recovery codes</span>
+</label>
+<!-- Primary CTA Button -->
+<div class="mt-auto">
+<button class="w-full h-[44px] rounded-[10px] bg-iris hover:bg-iris-hover active:scale-[0.98] text-white font-label font-medium text-sm flex items-center justify-center gap-2 transition-all duration-150 shadow-sm" type="button">
+<span>Continue to Kxmeleon</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Spec Status Bar (SCREEN_2 Style) -->
+<footer class="w-full border-t border-line bg-surface/90 backdrop-blur-md px-6 py-3 mt-10">
+<div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between text-xs text-ink-3 gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-iris"></span>
+<span class="font-mono text-ink-2">System: Kxmeleon Enterprise Design System v2.4.0</span>
+</div>
+<div class="flex items-center flex-wrap gap-4 font-body-sm text-ink-2">
+<span>Tokens: <strong class="text-ink">Iris</strong> (#5A4BDB)</span>
+<span>•</span>
+<span><strong class="text-ink">Lime</strong> (#C5F04A)</span>
+<span>•</span>
+<span><strong class="text-ink">Canvas</strong> (#F6F6FA)</span>
+<span>•</span>
+<span class="px-2 py-0.5 rounded bg-surface-sunken border border-line text-ink font-mono text-[11px]">Standard Control Target: 44×44px Minimum</span>
+</div>
+</div>
+</footer>
+</body></html>

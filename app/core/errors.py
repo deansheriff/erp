@@ -46,3 +46,16 @@ class ValidationFailed(DomainError):
 class Conflict(DomainError):
     code = "conflict"
     default_message = "This record changed while you were working on it. Reload and try again."
+
+
+class RedirectRequired(DomainError):
+    """The request can't continue here; the person must go elsewhere first (sign in,
+    finish two-step verification, complete setup). Web requests are redirected; API
+    requests get 401 with the code."""
+
+    code = "authentication_required"
+    default_message = "Please sign in to continue."
+
+    def __init__(self, redirect_to: str, *, code: str | None = None) -> None:
+        super().__init__(code=code)
+        self.redirect_to = redirect_to

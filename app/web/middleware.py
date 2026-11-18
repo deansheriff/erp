@@ -6,7 +6,12 @@ from starlette.datastructures import MutableHeaders
 from starlette.requests import Request
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
-from app.core.context import RequestContext, reset_request_context, set_request_context
+from app.core.context import (
+    RequestContext,
+    reset_request_context,
+    set_request_context,
+    valid_ip,
+)
 from app.web.errors import unhandled_error_handler
 
 CONTENT_SECURITY_POLICY = "; ".join(
@@ -64,7 +69,7 @@ class RequestContextMiddleware:
         )
         ctx = RequestContext(
             request_id=request_id,
-            ip=client[0] if client else None,
+            ip=valid_ip(client[0]) if client else None,
             user_agent=user_agent,
         )
         scope.setdefault("state", {})["request_id"] = request_id

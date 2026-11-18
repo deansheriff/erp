@@ -1,5 +1,6 @@
 """Per-request context shared by logging and audit."""
 
+import ipaddress
 import uuid
 from contextvars import ContextVar, Token
 from dataclasses import dataclass
@@ -25,3 +26,13 @@ def reset_request_context(token: Token[RequestContext | None]) -> None:
 
 def current_request() -> RequestContext | None:
     return _current.get()
+
+
+def valid_ip(value: str | None) -> str | None:
+    """The address if it parses as IPv4/IPv6, else None (Unix sockets, test clients)."""
+    if not value:
+        return None
+    try:
+        return str(ipaddress.ip_address(value))
+    except ValueError:
+        return None

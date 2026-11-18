@@ -55,3 +55,166 @@ screens:
     actions: {}
     field_classes: []
     approved_by: Dean Sheriff (2026-11-17)
+
+  # ------------------------------------------------------------------ Phase 2: identity
+  - id: core.home
+    phase: 2
+    module: core
+    title: Signed-in home
+    route: GET /
+    template: app/web/templates/home.html
+    stitch_screens:
+      desktop: 01b75fe38d10435aa293cfa2e290bad3
+      mobile: 3a8453ff8d5d410d88f5c77fb1998131
+    exports:
+      - design/stitch/exports/core.shell.desktop.html
+      - design/stitch/exports/core.shell.mobile.html
+    permission: signed in
+    actions: {}
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: setup.wizard
+    phase: 2
+    module: identity
+    title: First-run setup wizard (organisation, super admin, mail)
+    route: GET /setup
+    template: app/identity/templates/identity/setup.html
+    stitch_screens:
+      desktop: 2bd61fee051946098d98dfc21e81714a
+    exports:
+      - design/stitch/exports/setup.wizard.html
+    permission: public until installed, then closed (setup code required)
+    actions:
+      finish_with_mail: system.mail.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: identity.login
+    phase: 2
+    module: identity
+    title: Sign in
+    route: GET /login
+    template: app/identity/templates/identity/login.html
+    stitch_screens:
+      desktop: 3b3b5297c94345809c3008bf042a1253
+      mobile: b590da91e4074a67be11e101c0bc4f89
+    exports:
+      - design/stitch/exports/identity.auth_pages.html
+      - design/stitch/exports/identity.login.mobile.html
+    permission: public
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: identity.mfa_verify
+    phase: 2
+    module: identity
+    title: Two-step verification code and recovery code
+    route: GET /login/verify
+    template: app/identity/templates/identity/verify.html
+    stitch_screens:
+      desktop: 3b3b5297c94345809c3008bf042a1253
+      mobile: b590da91e4074a67be11e101c0bc4f89
+    exports:
+      - design/stitch/exports/identity.auth_pages.html
+      - design/stitch/exports/identity.login.mobile.html
+    permission: signed in, awaiting two-step verification
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: identity.mfa_enrol
+    phase: 2
+    module: identity
+    title: Set up two-step verification and recovery codes
+    route: GET /login/two-step
+    template: app/identity/templates/identity/enrol.html
+    stitch_screens:
+      desktop: 1ef2f7f2ee7d40bab8359b49b46017d4
+    exports:
+      - design/stitch/exports/identity.onboarding.html
+    permission: signed in, own account
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: identity.password_reset
+    phase: 2
+    module: identity
+    title: Forgot password and choose a new password
+    route: GET /forgot-password
+    template: app/identity/templates/identity/forgot.html
+    stitch_screens:
+      desktop: 3b3b5297c94345809c3008bf042a1253
+    exports:
+      - design/stitch/exports/identity.auth_pages.html
+    permission: public (single-use emailed link)
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: identity.invite_accept
+    phase: 2
+    module: identity
+    title: Accept invitation and create account
+    route: GET /invite/{token}
+    template: app/identity/templates/identity/invite.html
+    stitch_screens:
+      desktop: 1ef2f7f2ee7d40bab8359b49b46017d4
+    exports:
+      - design/stitch/exports/identity.onboarding.html
+    permission: public (single-use emailed link)
+    actions: {}
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: identity.security
+    phase: 2
+    module: identity
+    title: My security (password, two-step, devices, API keys)
+    route: GET /me/security
+    template: app/identity/templates/identity/security.html
+    stitch_screens:
+      desktop: c323a4bb7dda4873aea2fbf9cfaaafbe
+      mobile: 43d504e2877343edb97534b5c1caa038
+    exports:
+      - design/stitch/exports/identity.security.desktop.html
+      - design/stitch/exports/identity.security.mobile.html
+    permission: signed in, own account
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: admin.users
+    phase: 2
+    module: identity
+    title: Users and invitations
+    route: GET /admin/users
+    template: app/identity/templates/identity/users.html
+    stitch_screens:
+      desktop: bcc0e8ac8073412da3f39161df19d2a7
+    exports:
+      - design/stitch/exports/admin.users.html
+    permission: identity.user.read
+    actions:
+      invite: identity.user.invite
+      resend_suspend_reactivate_unlock: identity.user.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-18)
+
+  - id: admin.mail
+    phase: 2
+    module: mail
+    title: Mail (SMTP) settings
+    route: GET /admin/mail
+    template: app/identity/templates/identity/mail_settings.html
+    stitch_screens:
+      desktop: 8361396ba20342da9baa07fcfbe13083
+    exports:
+      - design/stitch/exports/admin.mail.html
+    permission: system.mail.manage
+    actions:
+      save_and_test: system.mail.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-18)

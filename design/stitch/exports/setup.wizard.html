@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP — First-Run Setup Wizard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Exact Design System Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container": "#ededf1",
+            "warning-text": "#8A4B00",
+            "secondary-fixed-dim": "#acd530",
+            "surface-container-highest": "#e2e2e6",
+            "secondary": "#4f6600",
+            "background": "#f9f9fd",
+            "line": "#E4E4EE",
+            "on-secondary": "#ffffff",
+            "tertiary-container": "#9f4a00",
+            "on-secondary-container": "#536b00",
+            "error": "#ba1a1a",
+            "surface-sunken": "#EFEFF6",
+            "secondary-container": "#c4ef49",
+            "inverse-primary": "#c5c0ff",
+            "primary": "#412ec2",
+            "destructive": "#C42836",
+            "iris-hover": "#4A3CC4",
+            "info-bg": "#DFEBFF",
+            "iris-tint": "#EEECFD",
+            "lime": "#C5F04A",
+            "on-iris": "#FFFFFF",
+            "line-strong": "#8B8BA6",
+            "outline-variant": "#c8c4d7",
+            "on-error": "#ffffff",
+            "ink-2": "#4B4B66",
+            "on-tertiary-container": "#ffd7c1",
+            "on-tertiary-fixed": "#321300",
+            "inverse-on-surface": "#f0f0f4",
+            "ink": "#16162A",
+            "ink-3": "#626280",
+            "surface-bright": "#f9f9fd",
+            "on-primary-fixed": "#140067",
+            "error-container": "#ffdad6",
+            "lime-ink": "#4D7A0A",
+            "info-text": "#1D55B8",
+            "surface-container-high": "#e8e8ec",
+            "iris": "#5A4BDB",
+            "on-background": "#1a1c1f",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "on-primary-fixed-variant": "#3d28be",
+            "surface-container-low": "#f3f3f7",
+            "on-surface-variant": "#474554",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed-variant": "#743400",
+            "canvas": "#F6F6FA",
+            "primary-container": "#5a4bdb",
+            "warning-bg": "#FFF1D6",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#c5c0ff",
+            "success-bg": "#DDF7E8",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#ffdbc8",
+            "outline": "#787586",
+            "tertiary-fixed-dim": "#ffb68b",
+            "primary-fixed": "#e4dfff",
+            "surface-variant": "#e2e2e6",
+            "on-primary-container": "#e0dbff",
+            "on-surface": "#1a1c1f",
+            "inverse-surface": "#2e3034",
+            "danger-bg": "#FFE4E6",
+            "surface-raised": "#FFFFFF",
+            "surface-tint": "#5646d7",
+            "danger-text": "#B4232F",
+            "secondary-fixed": "#c7f24c",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#d9dade",
+            "tertiary": "#7a3700",
+            "surface": "#FFFFFF",
+            "on-secondary-fixed": "#161f00",
+            "success-text": "#0F6B3E"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "20": "1.25rem",
+            "10": "0.625rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "space-3xl": "4rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-2xl": "3rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "display": ["Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "overline": ["Inter", "sans-serif"],
+            "h1": ["Plus Jakarta Sans", "sans-serif"],
+            "h2": ["Plus Jakarta Sans", "sans-serif"],
+            "h3": ["Plus Jakarta Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"],
+            "stat": ["Plus Jakarta Sans", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          "fontSize": {
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }]
+          },
+          "boxShadow": {
+            "card": "0 1px 2px rgb(22 22 42 / 0.04), 0 8px 24px -6px rgb(22 22 42 / 0.06)",
+            "raised": "0 8px 24px -6px rgb(22 22 42 / 0.12)",
+            "focus-iris": "0 0 0 3px rgba(90, 75, 219, 0.2)"
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined[data-weight="fill"],
+    .material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Subtle background mesh gradient */
+    .bg-mesh-glow {
+      background-color: #F6F6FA;
+      background-image: 
+        radial-gradient(circle at 12% 18%, rgba(90, 75, 219, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 88% 22%, rgba(197, 240, 74, 0.09) 0%, transparent 40%),
+        radial-gradient(circle at 50% 85%, rgba(90, 75, 219, 0.05) 0%, transparent 50%);
+    }
+  </style>
+</head>
+<body class="bg-mesh-glow text-ink min-h-screen flex flex-col font-body selection:bg-iris-tint selection:text-iris antialiased">
+<!-- TOP APP BAR / BRAND HEADER -->
+<header class="sticky top-0 z-50 flex items-center justify-between px-8 py-3.5 w-full bg-surface/85 backdrop-blur-md border-b border-line shadow-sm">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<!-- Shield Icon Emblem -->
+<div class="w-10 h-10 rounded-[10px] bg-iris flex items-center justify-center text-on-iris shadow-sm">
+<span class="material-symbols-outlined text-[22px]" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="flex flex-col">
+<span class="font-h2 text-h2 font-bold text-ink tracking-tight flex items-center gap-2">
+            Kxmeleon Chroma
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-label font-semibold bg-iris-tint text-iris border border-iris/20">
+              ERP Core
+            </span>
+</span>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Tenant: Adeyemi Holdings Limited</span>
+</div>
+</div>
+<div class="h-6 w-px bg-line"></div>
+<div class="flex items-center gap-2 text-ink-2 font-label text-label">
+<span class="w-2 h-2 rounded-full bg-lime border border-lime-ink/40"></span>
+<span class="font-semibold text-ink">First-Run Initialisation</span>
+</div>
+</div>
+<!-- Center Navigation Links -->
+<nav class="hidden lg:flex items-center gap-8 font-label text-label">
+<a class="text-iris font-semibold border-b-2 border-iris pb-1" href="#components">Components</a>
+<a class="text-ink-2 font-medium hover:text-iris transition-colors duration-150" href="#tokens">Tokens</a>
+<a class="text-ink-2 font-medium hover:text-iris transition-colors duration-150" href="#patterns">Patterns</a>
+<a class="text-ink-2 font-medium hover:text-iris transition-colors duration-150" href="#guidelines">Guidelines</a>
+</nav>
+<!-- Right Controls -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text text-overline font-semibold border border-success-text/15">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified">verified</span>
+<span>WCAG 2.2 AA Verified</span>
+</div>
+<div class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-[6px] bg-surface-sunken text-ink-3 text-overline font-mono">
+        Desktop Viewport (1440px)
+      </div>
+<div class="flex items-center gap-1 ml-2 border-l border-line pl-3">
+<button aria-label="Notifications" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-2 hover:text-iris hover:bg-surface-sunken transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Contrast Mode" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-2 hover:text-iris hover:bg-surface-sunken transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="contrast">contrast</span>
+</button>
+<button aria-label="Settings" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-2 hover:text-iris hover:bg-surface-sunken transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+</button>
+</div>
+<button class="ml-2 h-9 px-3.5 rounded-10 bg-iris hover:bg-iris-hover active:scale-95 text-on-iris font-label text-label font-semibold flex items-center gap-1.5 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="file_download">file_download</span>
+<span>Export Spec</span>
+</button>
+</div>
+</header>
+<!-- SUBHEADER / BANNER -->
+<section class="w-full max-w-[1440px] mx-auto px-8 pt-8 pb-4">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-line pb-6">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="font-overline text-overline uppercase tracking-widest text-iris font-bold">System Deployment Milestone</span>
+<span class="text-line-strong">•</span>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Instance ID: KX-NG-2025-01</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">FIRST-RUN SYSTEM INITIALISATION</h1>
+<p class="font-body-sm text-body-sm text-ink-2 mt-1">
+          Setup Wizard Overview: 3 Sequential Milestones Side-by-Side. Complete configuration to spin up core multi-tenant ERP operations.
+        </p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<div class="px-3.5 py-1.5 rounded-10 bg-surface border border-line flex items-center gap-2 shadow-xs">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-iris opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-iris"></span>
+</span>
+<span class="font-label text-label font-semibold text-ink">3-Step Verification Pipeline</span>
+</div>
+</div>
+</div>
+</section>
+<!-- MAIN CANVAS: 3-COLUMN SIDE-BY-SIDE SETUP CARDS -->
+<main class="w-full max-w-[1440px] mx-auto px-8 py-6 flex-1">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+<!-- ============================================================== -->
+<!-- CARD 1: STEP 1 — ORGANISATION (Current = 1) -->
+<!-- ============================================================== -->
+<div class="w-full max-w-[440px] mx-auto bg-surface rounded-20 border border-line p-7 shadow-card flex flex-col justify-between transition-all duration-200 hover:border-iris/40">
+<div>
+<!-- Card Header & Identity -->
+<div class="flex items-center justify-between pb-4 border-b border-line mb-5">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-iris text-on-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<span class="font-h3 text-h3 font-bold text-ink block leading-none">Kxmeleon</span>
+<span class="font-body-sm text-[12px] text-ink-3 leading-tight">Adeyemi Holdings Limited</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-overline font-semibold bg-surface-sunken text-ink-2 border border-line">
+              Step 1 of 3
+            </span>
+</div>
+<div class="mb-5">
+<h2 class="font-h2 text-h2 font-bold text-ink tracking-tight">Set up Kxmeleon</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Establish corporate entity &amp; legal financial baseline</p>
+</div>
+<!-- Stepper: 1 (Current), 2 (Upcoming), 3 (Upcoming) -->
+<div class="relative flex items-center justify-between mb-6 px-1">
+<div class="absolute left-6 right-6 top-3 h-0.5 bg-line -z-0"></div>
+<!-- Step 1 (Current) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-lime text-ink font-label text-[13px] font-bold flex items-center justify-center ring-4 ring-surface shadow-xs">
+                1
+              </div>
+<span class="font-label text-[12px] font-bold text-ink mt-1.5 flex items-center gap-1">
+                Organisation
+              </span>
+<span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-lime text-ink border border-lime-ink/20 mt-0.5">Current</span>
+</div>
+<!-- Step 2 (Upcoming) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full border border-line-strong bg-surface text-ink-3 font-label text-[12px] font-medium flex items-center justify-center ring-4 ring-surface">
+                2
+              </div>
+<span class="font-label text-[12px] font-medium text-ink-3 mt-1.5">Super admin</span>
+<span class="opacity-0 text-[10px] mt-0.5">•</span>
+</div>
+<!-- Step 3 (Upcoming) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full border border-line-strong bg-surface text-ink-3 font-label text-[12px] font-medium flex items-center justify-center ring-4 ring-surface">
+                3
+              </div>
+<span class="font-label text-[12px] font-medium text-ink-3 mt-1.5">Email</span>
+<span class="opacity-0 text-[10px] mt-0.5">•</span>
+</div>
+</div>
+<!-- Notice: Setup Code -->
+<div class="p-3 bg-surface-sunken rounded-10 border border-line mb-4">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[18px] text-iris shrink-0 mt-0.5" data-icon="vpn_key">vpn_key</span>
+<div class="flex-1">
+<p class="font-body-sm text-[13px] text-ink-3">
+                  You'll need the setup code from the server log. It expires in 60 minutes.
+                </p>
+<div class="mt-2 relative">
+<span class="material-symbols-outlined text-[18px] text-ink-3 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" data-icon="lock">lock</span>
+<input class="w-full h-11 pl-9 pr-3 rounded-10 border border-line-strong bg-surface font-mono text-[14px] text-ink font-semibold tracking-wider focus:ring-2 focus:ring-iris/20 focus:border-iris" readonly="" type="text" value="7KQ2-M9XD-4TPA"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Form Fields -->
+<form class="space-y-3.5" onsubmit="event.preventDefault();">
+<div>
+<label class="block font-label text-label text-ink mb-1.5">Legal name <span class="text-destructive font-normal">(required)</span></label>
+<input class="w-full h-11 px-3.5 rounded-10 border border-line-strong bg-surface font-body text-body text-ink focus:border-iris focus:ring-iris/20 focus:ring-2" type="text" value="Adeyemi Holdings Limited"/>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1.5">Trading name</label>
+<input class="w-full h-11 px-3.5 rounded-10 border border-line-strong bg-surface font-body text-body text-ink focus:border-iris focus:ring-iris/20" type="text" value="Adeyemi Holdings"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-label text-label text-ink mb-1.5">RC number</label>
+<input class="w-full h-11 px-3 rounded-10 border border-line-strong bg-surface font-mono text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="text" value="RC 1234567"/>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1.5">TIN</label>
+<input class="w-full h-11 px-3 rounded-10 border border-line-strong bg-surface font-mono text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="text" value="12345678-0001"/>
+</div>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1.5">Registered address</label>
+<textarea class="w-full px-3.5 py-2.5 rounded-10 border border-line-strong bg-surface font-body text-body-sm text-ink focus:border-iris focus:ring-iris/20 resize-none" rows="2">14 Adeola Odeku Street, Victoria Island, Lagos</textarea>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-label text-label text-ink mb-1.5">Timezone</label>
+<div class="relative">
+<select class="w-full h-11 pl-3 pr-8 rounded-10 border border-line-strong bg-surface font-body text-body-sm text-ink focus:border-iris focus:ring-iris/20 appearance-none">
+<option selected="">Africa/Lagos (WAT)</option>
+<option>Europe/London (GMT)</option>
+<option>America/New_York (EST)</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-ink-3 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1.5">Base currency</label>
+<div class="relative">
+<select class="w-full h-11 pl-3 pr-8 rounded-10 border border-line-strong bg-surface font-body text-body-sm text-ink focus:border-iris focus:ring-iris/20 appearance-none">
+<option selected="">NGN — Nigerian naira</option>
+<option>USD — US Dollar</option>
+<option>EUR — Euro</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-ink-3 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1.5">Financial year starts</label>
+<div class="relative">
+<select class="w-full h-11 pl-3.5 pr-8 rounded-10 border border-line-strong bg-surface font-body text-body text-ink focus:border-iris focus:ring-iris/20 appearance-none">
+<option selected="">January</option>
+<option>April</option>
+<option>July</option>
+<option>October</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-ink-3 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</form>
+</div>
+<!-- Card Footer Action -->
+<div class="mt-6 pt-5 border-t border-line flex justify-end">
+<button class="w-full h-11 px-5 rounded-10 bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm" type="button">
+<span>Continue</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- CARD 2: STEP 2 — SUPER ADMIN (Current = 2) -->
+<!-- ============================================================== -->
+<div class="w-full max-w-[440px] mx-auto bg-surface rounded-20 border-2 border-iris/50 p-7 shadow-card flex flex-col justify-between transition-all duration-200 relative ring-2 ring-iris/10">
+<div>
+<!-- Card Header & Identity -->
+<div class="flex items-center justify-between pb-4 border-b border-line mb-5">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-iris text-on-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<span class="font-h3 text-h3 font-bold text-ink block leading-none">Kxmeleon</span>
+<span class="font-body-sm text-[12px] text-ink-3 leading-tight">Adeyemi Holdings Limited</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-overline font-semibold bg-iris-tint text-iris border border-iris/20">
+              Step 2 of 3
+            </span>
+</div>
+<div class="mb-5">
+<h2 class="font-h2 text-h2 font-bold text-ink tracking-tight">Set up Kxmeleon</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Provision root system administrator credentials</p>
+</div>
+<!-- Stepper: 1 (Completed), 2 (Current), 3 (Upcoming) -->
+<div class="relative flex items-center justify-between mb-6 px-1">
+<div class="absolute left-6 right-6 top-3 h-0.5 bg-line -z-0">
+<div class="h-full bg-iris w-1/2"></div>
+</div>
+<!-- Step 1 (Completed) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-iris text-on-iris flex items-center justify-center ring-4 ring-surface shadow-xs">
+<span class="material-symbols-outlined text-[15px]" data-icon="check" data-weight="fill">check</span>
+</div>
+<span class="font-label text-[12px] font-semibold text-ink-2 mt-1.5">Organisation</span>
+<span class="opacity-0 text-[10px] mt-0.5">•</span>
+</div>
+<!-- Step 2 (Current) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-lime text-ink font-label text-[13px] font-bold flex items-center justify-center ring-4 ring-surface shadow-xs">
+                2
+              </div>
+<span class="font-label text-[12px] font-bold text-ink mt-1.5">Super admin</span>
+<span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-lime text-ink border border-lime-ink/20 mt-0.5">Current</span>
+</div>
+<!-- Step 3 (Upcoming) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full border border-line-strong bg-surface text-ink-3 font-label text-[12px] font-medium flex items-center justify-center ring-4 ring-surface">
+                3
+              </div>
+<span class="font-label text-[12px] font-medium text-ink-3 mt-1.5">Email</span>
+<span class="opacity-0 text-[10px] mt-0.5">•</span>
+</div>
+</div>
+<!-- Info Alert Banner -->
+<div class="p-3 bg-iris-tint text-iris-hover rounded-10 border border-iris/20 mb-4 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-iris shrink-0 mt-0.5" data-icon="info" data-weight="fill">info</span>
+<p class="font-body-sm text-[13px] leading-snug font-medium">
+              This person can change every setting and must use two-step verification.
+            </p>
+</div>
+<!-- Form Fields -->
+<form class="space-y-3" onsubmit="event.preventDefault();">
+<div>
+<label class="block font-label text-label text-ink mb-1">Full name <span class="text-destructive font-normal">(required)</span></label>
+<input class="w-full h-11 px-3.5 rounded-10 border border-line-strong bg-surface font-body text-body text-ink focus:border-iris focus:ring-iris/20" type="text" value="Fatima Bello"/>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">Work email <span class="text-destructive font-normal">(required)</span></label>
+<input class="w-full h-11 px-3.5 rounded-10 border border-line-strong bg-surface font-body text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="email" value="fatima.bello@adeyemiholdings.ng"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-label text-label text-ink mb-1">Password</label>
+<div class="relative">
+<input class="w-full h-11 pl-3 pr-10 rounded-10 border border-line-strong bg-surface font-mono text-[14px] text-ink focus:border-iris focus:ring-iris/20" type="password" value="SuperSecurePass2025#"/>
+<button aria-label="Toggle password visibility" class="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">Confirm password</label>
+<div class="relative">
+<input class="w-full h-11 pl-3 pr-10 rounded-10 border border-line-strong bg-surface font-mono text-[14px] text-ink focus:border-iris focus:ring-iris/20" type="password" value="SuperSecurePass2025#"/>
+<button aria-label="Toggle password visibility" class="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Password Checklist -->
+<div class="p-2.5 rounded-10 bg-surface-sunken border border-line space-y-1">
+<div class="flex items-center gap-1.5 text-success-text text-[12px] font-label">
+<span class="material-symbols-outlined text-[15px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span>At least 12 characters</span>
+</div>
+<div class="flex items-center gap-1.5 text-success-text text-[12px] font-label">
+<span class="material-symbols-outlined text-[15px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span>Not a common password</span>
+</div>
+<div class="flex items-center gap-1.5 text-success-text text-[12px] font-label">
+<span class="material-symbols-outlined text-[15px]" data-icon="check_circle" data-weight="fill">check_circle</span>
+<span>Doesn't contain your name or email</span>
+</div>
+</div>
+<!-- Two-step verification Section -->
+<div class="pt-2">
+<span class="block font-label text-label font-semibold text-ink mb-1.5">Two-step verification (2FA)</span>
+<div class="p-3 rounded-10 border border-line-strong bg-surface flex gap-3 items-center">
+<!-- QR Visual Container -->
+<div class="w-20 h-20 bg-white p-1 rounded-lg border border-line flex items-center justify-center shrink-0 shadow-xs">
+<svg class="w-full h-full text-ink fill-current" viewbox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+<!-- Standard QR corner anchors -->
+<rect fill="currentColor" height="16" width="16" x="2" y="2"></rect>
+<rect fill="#ffffff" height="10" width="10" x="5" y="5"></rect>
+<rect fill="currentColor" height="6" width="6" x="7" y="7"></rect>
+<rect fill="currentColor" height="16" width="16" x="42" y="2"></rect>
+<rect fill="#ffffff" height="10" width="10" x="45" y="5"></rect>
+<rect fill="currentColor" height="6" width="6" x="47" y="7"></rect>
+<rect fill="currentColor" height="16" width="16" x="2" y="42"></rect>
+<rect fill="#ffffff" height="10" width="10" x="5" y="45"></rect>
+<rect fill="currentColor" height="6" width="6" x="7" y="47"></rect>
+<!-- Data dots -->
+<rect height="4" width="4" x="22" y="4"></rect>
+<rect height="4" width="6" x="32" y="4"></rect>
+<rect height="6" width="4" x="24" y="12"></rect>
+<rect height="4" width="4" x="34" y="14"></rect>
+<rect height="4" width="16" x="22" y="22"></rect>
+<rect height="6" width="4" x="4" y="24"></rect>
+<rect height="4" width="6" x="12" y="26"></rect>
+<rect height="6" width="6" x="22" y="30"></rect>
+<rect height="8" width="6" x="34" y="28"></rect>
+<rect height="6" width="4" x="44" y="24"></rect>
+<rect height="6" width="4" x="52" y="24"></rect>
+<rect height="6" width="4" x="24" y="42"></rect>
+<rect height="4" width="6" x="34" y="44"></rect>
+<rect height="4" width="12" x="44" y="42"></rect>
+<rect height="6" width="4" x="44" y="50"></rect>
+<rect height="4" width="4" x="52" y="52"></rect>
+</svg>
+</div>
+<!-- QR Manual & Instructions -->
+<div class="flex-1 min-w-0">
+<p class="text-[11px] text-ink-3 leading-tight mb-1.5">
+                    Scan with Google Authenticator, Microsoft Authenticator or similar.
+                  </p>
+<div class="flex items-center justify-between bg-surface-sunken px-2 py-1 rounded-md border border-line mb-2">
+<span class="font-mono text-[11px] font-semibold text-ink truncate">JBSW Y3DP EHPK 3PXP</span>
+<button aria-label="Copy secret key" class="w-7 h-7 flex items-center justify-center text-iris hover:bg-iris-tint rounded" type="button">
+<span class="material-symbols-outlined text-[15px]" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+<div>
+<input class="w-full h-9 px-2.5 rounded-md border border-line-strong bg-surface font-mono text-[13px] text-ink focus:border-iris focus:ring-iris/20 text-center tracking-widest" placeholder="e.g. 482 910" type="text"/>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Card Footer Action -->
+<div class="mt-6 pt-5 border-t border-line flex items-center justify-between gap-3">
+<button class="h-11 px-4 rounded-10 text-ink-2 hover:bg-surface-sunken font-label text-label font-semibold flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_back">arrow_back</span>
+<span>Back</span>
+</button>
+<button class="h-11 px-5 rounded-10 bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold flex items-center gap-2 transition-all active:scale-[0.98] shadow-sm" type="button">
+<span>Continue</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- ============================================================== -->
+<!-- CARD 3: STEP 3 — EMAIL (Current = 3) -->
+<!-- ============================================================== -->
+<div class="w-full max-w-[440px] mx-auto bg-surface rounded-20 border border-line p-7 shadow-card flex flex-col justify-between transition-all duration-200 hover:border-iris/40">
+<div>
+<!-- Card Header & Identity -->
+<div class="flex items-center justify-between pb-4 border-b border-line mb-5">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-iris text-on-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<span class="font-h3 text-h3 font-bold text-ink block leading-none">Kxmeleon</span>
+<span class="font-body-sm text-[12px] text-ink-3 leading-tight">Adeyemi Holdings Limited</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-overline font-semibold bg-surface-sunken text-ink-2 border border-line">
+              Step 3 of 3
+            </span>
+</div>
+<div class="mb-5">
+<h2 class="font-h2 text-h2 font-bold text-ink tracking-tight">Set up Kxmeleon</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Integrate SMTP gateway for transactional delivery</p>
+</div>
+<!-- Stepper: 1 (Completed), 2 (Completed), 3 (Current) -->
+<div class="relative flex items-center justify-between mb-6 px-1">
+<div class="absolute left-6 right-6 top-3 h-0.5 bg-iris -z-0"></div>
+<!-- Step 1 (Completed) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-iris text-on-iris flex items-center justify-center ring-4 ring-surface shadow-xs">
+<span class="material-symbols-outlined text-[15px]" data-icon="check" data-weight="fill">check</span>
+</div>
+<span class="font-label text-[12px] font-semibold text-ink-2 mt-1.5">Organisation</span>
+<span class="opacity-0 text-[10px] mt-0.5">•</span>
+</div>
+<!-- Step 2 (Completed) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-iris text-on-iris flex items-center justify-center ring-4 ring-surface shadow-xs">
+<span class="material-symbols-outlined text-[15px]" data-icon="check" data-weight="fill">check</span>
+</div>
+<span class="font-label text-[12px] font-semibold text-ink-2 mt-1.5">Super admin</span>
+<span class="opacity-0 text-[10px] mt-0.5">•</span>
+</div>
+<!-- Step 3 (Current) -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-6 h-6 rounded-full bg-lime text-ink font-label text-[13px] font-bold flex items-center justify-center ring-4 ring-surface shadow-xs">
+                3
+              </div>
+<span class="font-label text-[12px] font-bold text-ink mt-1.5">Email</span>
+<span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-lime text-ink border border-lime-ink/20 mt-0.5">Current</span>
+</div>
+</div>
+<!-- Description Text -->
+<p class="font-body-sm text-[13px] text-ink-3 mb-4 leading-normal">
+            Kxmeleon sends invitations and password resets through your mail server.
+          </p>
+<!-- Form Fields -->
+<form class="space-y-3" onsubmit="event.preventDefault();">
+<div>
+<label class="block font-label text-label text-ink mb-1">SMTP host</label>
+<input class="w-full h-11 px-3.5 rounded-10 border border-line-strong bg-surface font-mono text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="text" value="smtp.office365.com"/>
+</div>
+<div class="grid grid-cols-5 gap-3">
+<div class="col-span-2">
+<label class="block font-label text-label text-ink mb-1">Port</label>
+<input class="w-full h-11 px-3 rounded-10 border border-line-strong bg-surface font-mono text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="text" value="587"/>
+</div>
+<!-- Security Segmented Control -->
+<div class="col-span-3">
+<label class="block font-label text-label text-ink mb-1">Security</label>
+<div class="h-11 bg-surface-sunken p-1 rounded-10 border border-line flex items-center justify-between text-[11px] font-semibold">
+<button class="flex-1 h-full rounded-[7px] bg-white text-iris shadow-xs border border-iris/10 font-bold flex items-center justify-center" type="button">
+                    STARTTLS
+                  </button>
+<button class="flex-1 h-full rounded-[7px] text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+                    SSL/TLS
+                  </button>
+<button class="flex-1 h-full rounded-[7px] text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+                    None
+                  </button>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">Username</label>
+<input class="w-full h-11 px-3.5 rounded-10 border border-line-strong bg-surface font-body text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="text" value="erp@adeyemiholdings.ng"/>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">Password</label>
+<div class="relative">
+<input class="w-full h-11 pl-3 pr-10 rounded-10 border border-line-strong bg-surface font-mono text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="password" value="office365TokenPass"/>
+<button aria-label="Toggle password visibility" class="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-label text-label text-ink mb-1">From name</label>
+<input class="w-full h-11 px-3 rounded-10 border border-line-strong bg-surface font-body text-body-sm text-ink focus:border-iris focus:ring-iris/20" type="text" value="Adeyemi Holdings ERP"/>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">From address</label>
+<input class="w-full h-11 px-3 rounded-10 border border-line-strong bg-surface font-body text-[13px] text-ink focus:border-iris focus:ring-iris/20 truncate" type="email" value="erp@adeyemiholdings.ng"/>
+</div>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">Reply-to <span class="text-ink-3 font-normal">(optional)</span></label>
+<input class="w-full h-11 px-3.5 rounded-10 border border-line-strong bg-surface font-body text-body-sm text-ink focus:border-iris focus:ring-iris/20" placeholder="support@adeyemiholdings.ng" type="email"/>
+</div>
+</form>
+<!-- Test Email Action & Confirmation Banner -->
+<div class="mt-3.5 space-y-2">
+<button class="w-full h-11 rounded-10 border border-line-strong hover:border-ink hover:bg-surface-sunken text-ink font-label text-label font-semibold flex items-center justify-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
+<span>Send test email</span>
+</button>
+<!-- Success Alert Banner directly underneath -->
+<div class="p-2.5 rounded-10 bg-success-bg text-success-text border border-success-text/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-success-text shrink-0" data-icon="check_circle" data-weight="fill">check_circle</span>
+<p class="font-body-sm text-[12px] font-medium truncate">
+                Test email sent to fatima.bello@adeyemiholdings.ng.
+              </p>
+</div>
+</div>
+</div>
+<!-- Card Footer Action -->
+<div class="mt-6 pt-5 border-t border-line flex items-center justify-between gap-3">
+<button class="h-11 px-3 rounded-10 text-ink-3 hover:text-ink hover:bg-surface-sunken font-label text-label font-semibold transition-colors" type="button">
+            Skip for now
+          </button>
+<button class="h-11 px-5 rounded-10 bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold flex items-center gap-2 transition-all active:scale-[0.98] shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="auto_awesome" data-weight="fill">auto_awesome</span>
+<span>Finish setup</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- FOOTER METADATA BAR -->
+<footer class="w-full border-t border-line bg-surface/90 py-3.5 px-8 mt-auto backdrop-blur-sm">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-ink-3 font-body-sm text-[13px]">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-semibold text-ink">Design Tokens:</span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-iris-tint text-iris font-mono text-[12px] font-medium">
+<span class="w-2 h-2 rounded-full bg-iris"></span> Iris (#5A4BDB)
+        </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-lime/20 text-lime-ink font-mono text-[12px] font-medium">
+<span class="w-2 h-2 rounded-full bg-lime border border-lime-ink"></span> Lime (#C5F04A)
+        </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-surface-sunken text-ink font-mono text-[12px]">
+          Canvas (#F6F6FA)
+        </span>
+</div>
+<div class="flex items-center gap-4 text-ink-2 font-label text-label">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-success-text" data-icon="check_circle">check_circle</span>
+          WCAG 2.2 AA Verified
+        </span>
+<span class="text-line-strong">•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-iris" data-icon="touch_app">touch_app</span>
+          Control target 44px minimum
+        </span>
+<span class="text-line-strong">•</span>
+<span class="font-mono text-ink-3 text-[12px]">v2.4.0 • Chameleon Core</span>
+</div>
+</div>
+</footer>
+</body></html>

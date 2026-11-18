@@ -1,0 +1,37 @@
+{# Signed-in home. Uses the shell (design/stitch/exports/core.shell.*); module dashboards
+   are added here as each phase delivers them. #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+<div class="relative">
+  <div class="kx-hue-glow" aria-hidden="true"></div>
+  <div class="relative">
+    <h1 class="font-display text-[26px] leading-9 sm:text-display">Welcome, {{ first_name }}</h1>
+    <p class="mt-1 text-body-sm text-ink-3">Your modules will appear here as they're switched on.</p>
+  </div>
+</div>
+
+<div class="kx-stagger mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+  {% if not mfa_enabled %}
+  <a href="/login/two-step" class="kx-card group flex items-start gap-4 p-5 transition-shadow duration-fast hover:shadow-raised">
+    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-warning-bg text-warning-text">{{ ui.icon("shield-alert") }}</span>
+    <span><span class="block font-h3 text-h3">Turn on two-step verification</span><span class="mt-1 block text-body-sm text-ink-3">Protect your account with a code from your phone.</span></span>
+  </a>
+  {% endif %}
+  <a href="/me/security" class="kx-card group flex items-start gap-4 p-5 transition-shadow duration-fast hover:shadow-raised">
+    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-iris-tint text-iris">{{ ui.icon("lock-keyhole") }}</span>
+    <span><span class="block font-h3 text-h3">Security</span><span class="mt-1 block text-body-sm text-ink-3">Password, devices and API keys.</span></span>
+  </a>
+  {% if is_admin %}
+  <a href="/admin/users" class="kx-card group flex items-start gap-4 p-5 transition-shadow duration-fast hover:shadow-raised">
+    <span class="module-admin flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-hue/[0.12] text-hue">{{ ui.icon("users") }}</span>
+    <span><span class="block font-h3 text-h3">Users</span><span class="mt-1 block text-body-sm text-ink-3">Invite colleagues and manage access.</span></span>
+  </a>
+  <a href="/admin/mail" class="kx-card group flex items-start gap-4 p-5 transition-shadow duration-fast hover:shadow-raised">
+    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl {{ 'bg-success-bg text-success-text' if mail_ready else 'bg-warning-bg text-warning-text' }}">{{ ui.icon("mail") }}</span>
+    <span><span class="block font-h3 text-h3">Mail settings</span><span class="mt-1 block text-body-sm text-ink-3">{{ "Mail is set up." if mail_ready else "Set up mail so you can invite people." }}</span></span>
+  </a>
+  {% endif %}
+</div>
+{% endblock %}

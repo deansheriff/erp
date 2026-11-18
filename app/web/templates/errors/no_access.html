@@ -5,7 +5,8 @@
 <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-iris-tint text-iris">{{ ui.icon("lock", "lg") }}</div>
 <h1 class="mb-3 font-h1 text-h1">You don't have access to this page</h1>
 <p class="mx-auto mb-8 max-w-[340px] text-ink-2">
-  {% if resource_label is defined and resource_label %}If you need it, ask your administrator for access to <em>{{ resource_label }}</em>.
+  {% if detail is defined and detail %}{{ detail }}
+  {% elif resource_label is defined and resource_label %}If you need it, ask your administrator for access to <em>{{ resource_label }}</em>.
   {% else %}If you need it, ask your administrator for access.{% endif %}
 </p>
 <a href="/" class="kx-btn-primary w-full">{{ ui.icon("house", "sm") }} Back to home</a>

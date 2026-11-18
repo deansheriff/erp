@@ -5,6 +5,63 @@
 <svg class="kx-icon {{ 'kx-icon-' ~ size if size }} {{ cls }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="{{ url_for('static', path='dist/icons.svg') }}?v={{ asset_version('dist/icons.svg') }}#{{ name }}"></use></svg>
 {%- endmacro %}
 
+{# Hidden CSRF field for forms posted by signed-in people (ADR 0009). #}
+{% macro csrf_field() -%}
+{%- set actor = request.state.actor if request.state.actor is defined else none -%}
+{%- if actor and actor.csrf_token %}<input type="hidden" name="csrf_token" value="{{ actor.csrf_token }}">{% endif -%}
+{%- endmacro %}
+
+{# status: success | warning | danger | info #}
+{% macro alert(status, message, icon_name=None) -%}
+<div class="flex items-start gap-3 rounded-xl border border-{{ status }}-text/20 bg-{{ status }}-bg px-4 py-3 text-body-sm text-{{ status }}-text {{ 'kx-nudge' if status == 'danger' }}" role="{{ 'alert' if status == 'danger' else 'status' }}">
+  {{ icon(icon_name or ("circle-check" if status == "success" else "circle-alert"), "sm", "mt-0.5") }}
+  <p>{{ message }}</p>
+</div>
+{%- endmacro %}
+
+{% macro field_error(errors, name) -%}
+{% if errors and errors.get(name) %}<p class="kx-field-error" id="{{ name }}-error">{{ icon("circle-alert", "sm") }} {{ errors[name] }}</p>{% endif %}
+{%- endmacro %}
+
+{% macro text_field(name, label, value="", type="text", errors=None, required=false, autocomplete=None, hint=None, inputmode=None, readonly=false) -%}
+{% set invalid = errors and errors.get(name) %}
+<div>
+  <label class="kx-label" for="f-{{ name }}">{{ label }}{% if required %} <span class="font-normal text-ink-3">(required)</span>{% endif %}</label>
+  {% if hint %}<span class="kx-hint" id="{{ name }}-hint">{{ hint }}</span>{% endif %}
+  <input id="f-{{ name }}" name="{{ name }}" type="{{ type }}" value="{{ value or '' }}" class="kx-input{{ ' bg-surface-sunken' if readonly }}"
+         {% if required %}required{% endif %} {% if readonly %}readonly{% endif %}
+         {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %} {% if inputmode %}inputmode="{{ inputmode }}"{% endif %}
+         {% if invalid %}aria-invalid="true" aria-describedby="{{ name }}-error"{% elif hint %}aria-describedby="{{ name }}-hint"{% endif %}>
+  {{ field_error(errors, name) }}
+</div>
+{%- endmacro %}
+
+{# Password with a show/hide button. `checklist` shows the live rule list (the server
+   re-checks everything; this is guidance only). #}
+{% macro password_field(name, label, errors=None, autocomplete="current-password", checklist=false, min_length=12, link=None) -%}
+{% set invalid = errors and errors.get(name) %}
+<div x-data="passwordField" data-min="{{ min_length }}">
+  <div class="mb-1.5 flex items-center justify-between">
+    <label class="kx-label mb-0" for="f-{{ name }}">{{ label }}</label>
+    {% if link %}<a href="{{ link[1] }}" class="text-label text-iris hover:underline">{{ link[0] }}</a>{% endif %}
+  </div>
+  <div class="relative">
+    <input id="f-{{ name }}" name="{{ name }}" x-bind:type="inputType" type="password" class="kx-input pr-12" autocomplete="{{ autocomplete }}" required
+           x-on:input="update" {% if invalid %}aria-invalid="true" aria-describedby="{{ name }}-error"{% endif %}>
+    <button type="button" class="absolute right-0 top-0 flex h-11 w-11 items-center justify-center rounded-control text-ink-3 hover:text-ink" x-on:click="toggle" x-bind:aria-label="toggleLabel" aria-label="Show password">
+      <span x-show="hidden">{{ icon("eye", "sm") }}</span><span x-show="shown" x-cloak>{{ icon("eye-off", "sm") }}</span>
+    </button>
+  </div>
+  {{ field_error(errors, name) }}
+  {% if checklist %}
+  <ul class="mt-2.5 space-y-1.5 text-body-sm" aria-live="polite">
+    <li class="flex items-center gap-2" x-bind:class="lengthClass"><span x-show="longEnough">{{ icon("circle-check", "sm") }}</span><span x-show="tooShort">{{ icon("circle", "sm") }}</span> At least {{ min_length }} characters</li>
+    <li class="flex items-center gap-2 text-ink-3">{{ icon("shield-check", "sm") }} Not a common password, and not your name or email</li>
+  </ul>
+  {% endif %}
+</div>
+{%- endmacro %}
+
 {# status: success | warning | danger | info | neutral | new #}
 {% macro badge(status, label, pulse=false) -%}
 <span class="kx-badge-{{ status }}{{ ' kx-badge-pulse' if pulse }}">{{ label }}</span>

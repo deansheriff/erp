@@ -1,0 +1,140 @@
+{# My security. Design: design/stitch/exports/identity.security.desktop.html and .mobile.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+<div class="mx-auto max-w-4xl space-y-6">
+  {{ ui.page_header("Security", "Your password, two-step verification, signed-in devices and API keys.") }}
+  {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+
+  <div class="kx-stagger space-y-6">
+  {# ---------------------------------------------------------------- password #}
+  <section class="kx-card kx-card-body" x-data="modal" data-open="{{ 'true' if open_password else 'false' }}" aria-labelledby="s-password">
+    <h2 id="s-password" class="mb-3 flex items-center gap-2 font-h2 text-h2">{{ ui.icon("lock", "", "text-iris") }} Password</h2>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-body-sm text-ink-2">{% if overview.password_changed_at %}Last changed <strong class="font-medium text-ink">{{ overview.password_changed_at | datetime }}</strong>.{% else %}Not set.{% endif %}</p>
+      <button type="button" class="kx-btn-secondary" x-on:click="show" x-show="closed">Change password</button>
+    </div>
+    <form method="post" hx-push-url="false" action="/me/security/password" class="mt-5 grid gap-5 border-t border-line pt-5 sm:grid-cols-3" x-show="open" x-cloak x-ref="panel">
+      {{ ui.csrf_field() }}
+      {{ ui.password_field("current_password", "Current password", errors=errors) }}
+      {{ ui.password_field("new_password", "New password", errors=errors, autocomplete="new-password", checklist=true) }}
+      {{ ui.password_field("confirm_password", "Confirm new password", errors=errors, autocomplete="new-password") }}
+      <div class="flex gap-3 sm:col-span-3 sm:justify-end">
+        <button type="button" class="kx-btn-ghost" x-on:click="hide">Cancel</button>
+        <button type="submit" class="kx-btn-primary">Save new password</button>
+      </div>
+    </form>
+  </section>
+
+  {# ---------------------------------------------------------------- two-step #}
+  <section class="kx-card kx-card-body" aria-labelledby="s-mfa">
+    <div class="mb-3 flex items-center justify-between gap-3">
+      <h2 id="s-mfa" class="flex items-center gap-2 font-h2 text-h2">{{ ui.icon("smartphone", "", "text-iris") }} Two-step verification</h2>
+      {{ ui.badge("success", "On") if overview.mfa_enabled_at else ui.badge("neutral", "Off") }}
+    </div>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {% if overview.mfa_enabled_at %}
+      <div class="space-y-1">
+        <p class="text-body-sm text-ink-2">Using an authenticator app since <strong class="font-medium text-ink">{{ overview.mfa_enabled_at | datetime }}</strong>.</p>
+        <p class="text-body-sm text-ink-3">{{ overview.recovery_codes_left }} of 10 recovery codes left.</p>
+      </div>
+      <form method="post" hx-push-url="false" action="/me/security/recovery-codes">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-secondary">Regenerate recovery codes</button></form>
+      {% else %}
+      <p class="text-body-sm text-ink-2">Add a code from your phone each time you sign in. It stops someone who learns your password.</p>
+      <a href="/login/two-step" class="kx-btn-primary">Turn on</a>
+      {% endif %}
+    </div>
+  </section>
+
+  {# ---------------------------------------------------------------- sessions #}
+  <section class="kx-card kx-card-body" aria-labelledby="s-sessions">
+    <h2 id="s-sessions" class="mb-1 flex items-center gap-2 font-h2 text-h2">{{ ui.icon("monitor-smartphone", "", "text-iris") }} Where you're signed in</h2>
+    <p class="mb-3 text-body-sm text-ink-3">These devices are signed in to your Kxmeleon account.</p>
+    <ul class="divide-y divide-line">
+      {% for s in overview.sessions %}
+      <li class="flex min-h-[56px] items-center justify-between gap-3 py-3.5">
+        <div class="flex min-w-0 items-center gap-3.5">
+          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-line bg-surface-sunken text-ink-2">{{ ui.icon("smartphone" if s.device == "mobile" else "monitor") }}</span>
+          <div class="min-w-0">
+            <p class="flex flex-wrap items-center gap-2 text-body-sm font-semibold">{{ s.browser }}{% if s.is_current %} {{ ui.badge("new", "This device") }}{% endif %}</p>
+            <p class="font-mono text-[12px] text-ink-3">Last active {{ s.last_seen_at | datetime }}{% if s.ip %} · {{ s.ip }}{% endif %}</p>
+          </div>
+        </div>
+        {% if s.is_current %}
+        <span class="flex items-center gap-2 text-[12px] font-medium text-success-text"><span class="h-2 w-2 rounded-full bg-success-text"></span><span class="hidden sm:inline">Active</span></span>
+        {% else %}
+        <form method="post" hx-push-url="false" action="/me/sessions/{{ s.id }}/revoke">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-secondary h-11 px-3.5 text-[13px]">Sign out</button></form>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% if overview.sessions | length > 1 %}
+    <form method="post" hx-push-url="false" action="/me/sessions/revoke-others" class="mt-1 border-t border-line pt-4">
+      {{ ui.csrf_field() }}
+      <button type="submit" class="kx-btn -ml-3 text-danger-text hover:bg-danger-bg/50">{{ ui.icon("log-out", "sm") }} Sign out of all other devices</button>
+    </form>
+    {% endif %}
+  </section>
+
+  {# ---------------------------------------------------------------- API keys #}
+  <section class="kx-card kx-card-body space-y-5" x-data="modal" data-open="{{ 'true' if open_api_key else 'false' }}" aria-labelledby="s-keys">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 id="s-keys" class="mb-1 flex items-center gap-2 font-h2 text-h2">{{ ui.icon("key-round", "", "text-iris") }} API keys</h2>
+        <p class="text-body-sm text-ink-2">Let other systems call Kxmeleon on your behalf. A key can only do what you can do.</p>
+      </div>
+      <button type="button" class="kx-btn-primary shrink-0" x-on:click="show" x-show="closed">{{ ui.icon("plus", "sm") }} Create API key</button>
+    </div>
+
+    <form method="post" hx-push-url="false" action="/me/api-keys" class="grid gap-4 rounded-xl border border-line bg-surface-sunken/50 p-4 sm:grid-cols-[1fr_12rem_auto] sm:items-end" x-show="open" x-cloak x-ref="panel">
+      {{ ui.csrf_field() }}
+      {{ ui.text_field("name", "Key name", errors=errors, hint=None, autocomplete="off") }}
+      <div>
+        <label class="kx-label" for="f-expiry">Expires</label>
+        <select id="f-expiry" name="expires_in_days" class="kx-input">
+          <option value="30">In 30 days</option><option value="90" selected>In 90 days</option><option value="365">In 1 year</option>
+        </select>
+      </div>
+      <div class="flex gap-2"><button type="button" class="kx-btn-ghost" x-on:click="hide">Cancel</button><button type="submit" class="kx-btn-primary">Create</button></div>
+    </form>
+
+    {% if new_key %}
+    <div class="flex flex-col gap-3 rounded-xl border border-success-text/20 bg-success-bg p-4 md:flex-row md:items-center md:justify-between" role="status">
+      <p class="flex items-center gap-2 text-body-sm font-medium text-success-text">{{ ui.icon("circle-check", "sm") }} Copy your new key now. You won't see it again.</p>
+      <div class="flex min-w-0 items-center gap-2 rounded-lg border border-success-text/20 bg-surface px-3 py-1.5" x-data="copyText" data-copy="{{ new_key }}">
+        <code class="truncate font-mono text-body-sm">{{ new_key }}</code>
+        <button type="button" class="kx-btn-icon h-9 w-9" x-on:click="copy" aria-label="Copy key">
+          <span x-show="copied" x-cloak class="text-success-text">{{ ui.icon("check", "sm") }}</span><span x-show="notCopied">{{ ui.icon("copy", "sm") }}</span>
+        </button>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if overview.api_keys %}
+    <div class="overflow-x-auto rounded-xl border border-line">
+      <table class="kx-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Key</th><th scope="col">Created</th><th scope="col">Expires</th><th scope="col">Last used</th><th scope="col" class="text-right">Actions</th></tr></thead>
+        <tbody>
+          {% for k in overview.api_keys %}
+          <tr>
+            <td class="font-medium">{{ k.name }}</td>
+            <td class="font-mono text-[13px] text-ink-2">{{ k.display }}</td>
+            <td class="text-ink-2">{{ k.created_at | datetime }}</td>
+            <td class="text-ink-2">{{ k.expires_at | datetime if k.expires_at else "Never" }}</td>
+            <td class="text-ink-3">{{ k.last_used_at | datetime if k.last_used_at else "Not yet" }}</td>
+            <td class="text-right">
+              <form method="post" hx-push-url="false" action="/me/api-keys/{{ k.id }}/revoke">{{ ui.csrf_field() }}<button type="submit" class="kx-btn h-11 px-2 text-[13px] text-danger-text hover:underline">Revoke</button></form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% elif not new_key %}
+    <p class="rounded-xl bg-surface-sunken px-4 py-6 text-center text-body-sm text-ink-3">No API keys yet.</p>
+    {% endif %}
+  </section>
+  </div>
+</div>
+{% endblock %}
