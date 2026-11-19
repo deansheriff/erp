@@ -71,4 +71,6 @@ class People:
 @pytest.fixture()
 def people(clean_db: None, db: Session) -> Iterator[People]:
     yield People(db)
-    engine.set_org_resolver(engine.NoOrgStructure())
+    from app.wiring import configure_runtime
+
+    configure_runtime()  # tests may swap in a fake resolver

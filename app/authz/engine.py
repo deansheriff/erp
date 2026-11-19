@@ -37,6 +37,9 @@ class OrgResolver(Protocol):
     def team_employees(self, db: Session, user_id: uuid.UUID, at: datetime) -> set[uuid.UUID]: ...
     def departments_of(self, db: Session, user_id: uuid.UUID, at: datetime) -> set[uuid.UUID]: ...
     def departments_under(self, db: Session, department_id: uuid.UUID) -> set[uuid.UUID]: ...
+    def department_employees(
+        self, db: Session, department_ids: set[uuid.UUID], at: datetime
+    ) -> set[uuid.UUID]: ...
 
 
 class NoOrgStructure:
@@ -54,6 +57,11 @@ class NoOrgStructure:
 
     def departments_under(self, db: Session, department_id: uuid.UUID) -> set[uuid.UUID]:
         return {department_id}
+
+    def department_employees(
+        self, db: Session, department_ids: set[uuid.UUID], at: datetime
+    ) -> set[uuid.UUID]:
+        return set()
 
 
 _resolver: OrgResolver = NoOrgStructure()
@@ -340,6 +348,29 @@ def _to_redis(grants: Grants, version: int) -> None:
 # ------------------------------------------------------------------ decisions
 
 
+def _departments_reached(
+    db: Session, resolver: OrgResolver, subject: uuid.UUID, at: datetime
+) -> set[uuid.UUID]:
+    """The subject's departments and everything under them."""
+    departments: set[uuid.UUID] = set()
+    for dep in resolver.departments_of(db, subject, at):
+        departments |= resolver.departments_under(db, dep)
+    return departments
+
+
+def _in_departments(
+    db: Session, resolver: OrgResolver, subject: uuid.UUID, resource: Resource, at: datetime
+) -> bool:
+    departments = _departments_reached(db, resolver, subject, at)
+    if resource.department_id is not None:
+        return resource.department_id in departments
+    # Records without a department of their own (an employee) belong to the departments
+    # of their owner's positions.
+    return bool(departments) and resource.owner_employee_id in resolver.department_employees(
+        db, departments, at
+    )
+
+
 def _covers(db: Session, grant: Grant, actor_id: uuid.UUID, resource: Resource) -> bool:
     resolver = org_resolver()
     at = clock.now()
@@ -363,10 +394,7 @@ def _covers(db: Session, grant: Grant, actor_id: uuid.UUID, resource: Resource) 
     if grant.scope is Scope.TEAM:
         return resource.owner_employee_id in resolver.team_employees(db, subject, at)
     if grant.scope is Scope.DEPARTMENT:
-        departments = set()
-        for dep in resolver.departments_of(db, subject, at):
-            departments |= resolver.departments_under(db, dep)
-        return resource.department_id in departments
+        return _in_departments(db, resolver, subject, resource, at)
     return False
 
 
@@ -411,12 +439,14 @@ def _grant_clause(
         team = resolver.team_employees(db, subject, at)
         if team:
             parts.append(cols.owner_employee.in_(team))
-    if grant.scope is Scope.DEPARTMENT and cols.department is not None:
-        departments: set[uuid.UUID] = set()
-        for dep in resolver.departments_of(db, subject, at):
-            departments |= resolver.departments_under(db, dep)
-        if departments:
+    if grant.scope is Scope.DEPARTMENT:
+        departments = _departments_reached(db, resolver, subject, at)
+        if departments and cols.department is not None:
             parts.append(cols.department.in_(departments))
+        elif departments and cols.owner_employee is not None:
+            members = resolver.department_employees(db, departments, at)
+            if members:
+                parts.append(cols.owner_employee.in_(members))
     return or_(*parts) if parts else false()
 
 

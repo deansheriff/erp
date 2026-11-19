@@ -1,0 +1,100 @@
+{# HR → Org chart. Design: design/stitch/exports/hr.org_chart.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% import "hr/_org.html" as orgui with context %}
+
+{% block content %}
+<div x-data="modal" data-open="{{ 'true' if position_open else 'false' }}">
+  {% call ui.page_header("Org chart", "Positions and who holds them. Reporting lines follow positions, not people.") %}
+    {% if can_manage %}<button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("plus", "sm") }} New position</button>{% endif %}
+  {% endcall %}
+
+  {% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+  <form method="get" action="/hr/org-chart" class="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center">
+    <label class="relative block w-full lg:w-80">
+      <span class="sr-only">Find a person or position</span>
+      {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+      <input type="search" name="q" value="{{ filters.q }}" class="kx-input pl-10" placeholder="Find a person or position…">
+    </label>
+    <label class="block lg:w-64"><span class="sr-only">Department</span>
+      <select name="department" class="kx-input">
+        <option value="">All departments</option>
+        {% for d in departments %}<option value="{{ d.id }}" {% if filters.department == d.id|string %}selected{% endif %}>{{ "— " * d.depth }}{{ d.name }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="flex h-11 cursor-pointer items-center gap-2 rounded-control border border-line bg-surface px-3.5 text-label text-ink-2">
+      <input type="checkbox" name="vacant" value="1" class="kx-check" {% if filters.vacant %}checked{% endif %}> Vacant only <span class="text-xs text-ink-3 tnum">({{ vacant_count }})</span>
+    </label>
+    <div class="flex items-center gap-2">
+      <button type="submit" class="kx-btn-secondary">{{ ui.icon("filter", "sm") }} Apply</button>
+      {% if filtered %}<a href="/hr/org-chart" class="kx-btn-ghost">Clear</a>{% endif %}
+    </div>
+  </form>
+
+  <div class="mt-5 grid items-start gap-6 {{ 'xl:grid-cols-12' if selected }}">
+    <section class="kx-card kx-enter overflow-hidden {{ 'xl:col-span-8' if selected }}" aria-label="Positions">
+      {% if not nodes %}
+        {% call ui.empty_state("network", "No positions yet", "Create the top position first (for example Managing Director), then the positions that report to it.") %}{% endcall %}
+      {% elif filtered %}
+        {% if matches %}
+        <ul class="kx-stagger grid gap-4 p-5 sm:grid-cols-2 2xl:grid-cols-3">
+          {% for n in matches %}<li>{{ orgui.node(n, selected) }}</li>{% endfor %}
+        </ul>
+        {% else %}
+        {% call ui.empty_state("search", "No matches", "Try a different name, department or filter.") %}{% endcall %}
+        {% endif %}
+      {% else %}
+        {# Desktop: top-down chart. Phones: an indented outline. #}
+        <div class="kx-scroll-x hidden p-6 md:block">
+          <div class="kx-orgchart min-w-max">
+            <ul>
+              {% for n in children[None] recursive %}
+              <li>
+                {{ orgui.node(n, selected) }}
+                {% if children[n.id] %}<ul>{{ loop(children[n.id]) }}</ul>{% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <ul class="divide-y divide-line md:hidden">
+          {% for n in nodes %}
+          <li>
+            <a href="/hr/positions/{{ n.id }}" class="flex items-center gap-3 py-3 pr-4 hover:bg-surface-sunken/60 {{ ['pl-4', 'pl-8', 'pl-12', 'pl-16', 'pl-20'][[n.depth, 4] | min] }}">
+              {{ orgui.avatar(n, names) }}
+              <span class="min-w-0 flex-1">
+                <span class="block truncate text-body-sm font-semibold">{{ n.title }}</span>
+                <span class="block truncate text-xs text-ink-3">{{ names.get(n.holder.employee_id) if n.holder else "Vacant" }} · {{ n.department }}</span>
+              </span>
+              {{ orgui.kind_badge(n) }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+
+    {% if selected %}
+    {% set s = selected.node %}
+    <aside class="kx-card kx-enter space-y-5 p-5 xl:sticky xl:top-24 xl:col-span-4" aria-labelledby="sel-title">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h2 id="sel-title" class="font-h2 text-h2">{{ s.title }}</h2>
+          <p class="mt-1 flex flex-wrap gap-1.5">{{ ui.badge("neutral", s.department) }}{% if s.grade %}{{ ui.badge("neutral", s.grade) }}{% endif %}{% if s.branch %}{{ ui.badge("neutral", s.branch) }}{% endif %}</p>
+        </div>
+        <a href="/hr/org-chart" class="kx-btn-icon" aria-label="Close">{{ ui.icon("x") }}</a>
+      </div>
+      <dl class="space-y-3 text-body-sm">
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Reports to</dt><dd class="text-right font-medium">{{ selected.parent_title or "Nobody (top)" }}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Held by</dt><dd class="text-right font-medium">{% if s.holder %}{{ names.get(s.holder.employee_id) }}{% if s.holder.kind != "primary" %} ({{ kind_labels[s.holder.kind] | lower }}){% endif %}{% else %}<span class="text-warning-text">Vacant</span>{% endif %}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Direct reports · team</dt><dd class="tnum font-medium">{{ s.direct_reports }} · {{ s.team_size }}</dd></div>
+      </dl>
+      <a href="/hr/positions/{{ s.id }}" class="kx-btn-primary w-full">Open position {{ ui.icon("arrow-right", "sm") }}</a>
+    </aside>
+    {% endif %}
+  </div>
+
+  {% if can_manage %}{{ orgui.position_drawer("/hr/positions", "New position") }}{% endif %}
+</div>
+{% endblock %}

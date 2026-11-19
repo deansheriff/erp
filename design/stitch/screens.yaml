@@ -313,3 +313,101 @@ screens:
     actions: {}
     field_classes: []
     approved_by: Dean Sheriff (2026-11-18)
+
+  - id: hr.org_chart
+    phase: 4
+    module: hr
+    title: Org chart
+    route: GET /hr/org-chart
+    template: app/modules/hr/templates/hr/org_chart.html
+    stitch_screens:
+      desktop: 317e2c2f3a4d4ccbad1fa821056c7633
+    exports:
+      - design/stitch/exports/hr.org_chart.html
+    permission: org.structure.read
+    actions:
+      new_position: org.structure.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.position
+    phase: 4
+    module: hr
+    title: Position detail (holders, reports, reporting line)
+    route: GET /hr/positions/{position_id}
+    template: app/modules/hr/templates/hr/position.html
+    stitch_screens:
+      desktop: ba6490c864e24703aa7ae6a84b426717
+    exports:
+      - design/stitch/exports/hr.position.html
+    permission: org.structure.read
+    actions:
+      edit_and_deactivate: org.structure.manage
+      assign_and_end: org.assignment.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.departments
+    phase: 4
+    module: hr
+    title: Departments
+    route: GET /hr/departments
+    template: app/modules/hr/templates/hr/departments.html
+    stitch_screens:
+      desktop: 9822f133349b447b9d976fe835c7a837
+    exports:
+      - design/stitch/exports/hr.departments.html
+    permission: org.structure.read
+    actions:
+      create_edit_deactivate: org.structure.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.structure
+    phase: 4
+    module: hr
+    title: Structure setup (branches, cost centres, grades)
+    route: GET /hr/structure
+    template: app/modules/hr/templates/hr/structure.html
+    stitch_screens:
+      desktop: 47ca88c947a74da691fb42a5df9722d8
+    exports:
+      - design/stitch/exports/hr.structure.html
+    permission: org.structure.read
+    actions:
+      create_edit_deactivate: org.structure.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.people
+    phase: 4
+    module: hr
+    title: People (directory)
+    route: GET /hr/people
+    template: app/modules/hr/templates/hr/people.html
+    stitch_screens:
+      desktop: 6723979653af46e49fbf2ba0dee7a28b
+    exports:
+      - design/stitch/exports/hr.people.html
+    permission: hr.employee.read
+    actions:
+      add: hr.employee.create
+      edit: hr.employee.update
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: admin.organisation
+    phase: 4
+    module: org
+    title: Organisation details and document colours
+    route: GET /admin/organisation
+    template: app/org/templates/org/organisation.html
+    stitch_screens:
+      desktop: aee0edfb31a5497b87e1102bbe237bb9
+    exports:
+      - design/stitch/exports/admin.organisation.html
+    permission: system.branding.manage
+    actions:
+      save: system.branding.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-19)

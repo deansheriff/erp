@@ -1,0 +1,104 @@
+{# HR → Structure setup (branches, cost centres, grades). Design: design/stitch/exports/hr.structure.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+<div x-data="modal" data-open="{{ 'true' if drawer_open else 'false' }}">
+  {% call ui.page_header("Structure setup", "Branches, cost centres and grades used across the organisation.", view_only=not can_manage) %}
+    {% if can_manage %}<button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("plus", "sm") }} New {{ noun }}</button>{% endif %}
+  {% endcall %}
+
+  <div class="mt-5 space-y-3">
+    {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+    {% if problem %}{{ ui.alert("danger", problem) }}{% endif %}
+  </div>
+
+  <nav class="kx-scroll-x mt-6 flex gap-6 border-b border-line" aria-label="Structure lists">
+    {% for key, label, count in tabs %}
+    <a href="/hr/structure?tab={{ key }}" class="relative flex items-center gap-2 whitespace-nowrap pb-3 text-label {{ 'font-semibold text-iris' if key == tab else 'text-ink-3 hover:text-ink' }}" {% if key == tab %}aria-current="page"{% endif %}>
+      {{ label }} <span class="rounded-full border border-line bg-surface-sunken px-1.5 text-[11px] font-semibold text-ink-2 tnum">{{ count }}</span>
+      {% if key == tab %}<span class="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-iris"></span>{% endif %}
+    </a>
+    {% endfor %}
+  </nav>
+
+  <section class="kx-card kx-enter mt-5 overflow-hidden" aria-label="{{ tab }}">
+    {% if items %}
+    <div class="overflow-x-auto">
+      <table class="kx-table">
+        <thead><tr>
+          <th scope="col">Code</th><th scope="col">Name</th>
+          {% if tab == "grades" %}<th scope="col" class="text-right">Rank</th>{% endif %}
+          {% if tab == "branches" %}<th scope="col">Address</th><th scope="col">State</th>{% endif %}
+          <th scope="col" class="text-right">{{ "Departments" if tab == "cost_centres" else "Positions" }}</th>
+          <th scope="col">Status</th>{% if can_manage %}<th scope="col" class="text-right">Actions</th>{% endif %}
+        </tr></thead>
+        <tbody>
+          {% for i in items %}
+          <tr class="{{ 'opacity-60' if not i.is_active }}">
+            <td class="font-mono text-[12px] font-semibold">{{ i.code }}</td>
+            <td class="font-medium">{{ i.name }}</td>
+            {% if tab == "grades" %}<td class="text-right tnum">{{ i.rank }}</td>{% endif %}
+            {% if tab == "branches" %}<td class="max-w-xs truncate text-ink-2" title="{{ i.address or '' }}">{{ i.address or "—" }}</td><td class="text-ink-2">{{ i.state or "—" }}</td>{% endif %}
+            <td class="text-right tnum">{{ i.usage }}</td>
+            <td>{{ ui.badge("success", "Active") if i.is_active else ui.badge("neutral", "Inactive") }}</td>
+            {% if can_manage %}
+            <td class="text-right">
+              <div class="inline-flex items-center gap-1">
+                <a href="/hr/structure?tab={{ tab }}&amp;edit={{ i.id }}" class="kx-btn-ghost h-9 px-3">Edit</a>
+                <form method="post" hx-push-url="false" action="/hr/structure/{{ tab }}/{{ i.id }}/active">
+                  {{ ui.csrf_field() }}<input type="hidden" name="active" value="{{ '0' if i.is_active else '1' }}">
+                  <button type="submit" class="kx-btn-ghost h-9 px-3 {{ 'text-danger-text' if i.is_active }}">{{ "Deactivate" if i.is_active else "Reactivate" }}</button>
+                </form>
+              </div>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    {% call ui.empty_state({"branches": "building-2", "cost_centres": "wallet", "grades": "layers"}[tab], "No " ~ noun ~ "s yet", "Add the first one to use it on departments and positions." if tab != "grades" else "Grades rank positions; higher numbers are more senior.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if can_manage %}
+  <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex justify-end" x-on:keydown.escape.window="hide">
+    <div class="absolute inset-0 bg-[rgb(11_11_18/0.45)] backdrop-blur-[4px]" x-on:click="hide" x-show="open" x-transition.opacity.duration.200ms></div>
+    <aside x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="ref-title"
+           class="relative flex h-full w-full max-w-[480px] flex-col border-l border-line bg-surface shadow-overlay sm:rounded-l-sheet"
+           x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+           x-transition:leave="transition duration-base ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+      <form method="post" hx-push-url="false" action="/hr/structure/{{ tab }}" class="flex h-full flex-col" novalidate>
+        {{ ui.csrf_field() }}
+        <input type="hidden" name="item_id" value="{{ editing.id if editing else '' }}">
+        <div class="flex items-center justify-between border-b border-line px-6 py-5">
+          <h2 id="ref-title" class="font-h1 text-[20px]">{{ ("Edit " if editing else "New ") ~ noun }}</h2>
+          <a href="/hr/structure?tab={{ tab }}" class="kx-btn-icon" x-on:click.prevent="hide" aria-label="Close">{{ ui.icon("x") }}</a>
+        </div>
+        <div class="flex-1 space-y-5 overflow-y-auto p-6">
+          {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+          {{ ui.text_field("code", "Code", value=values.get("code"), errors=errors, required=true, autocomplete="off", hint="Short and unique, for example " ~ {"branches": "LAG-HQ", "cost_centres": "CC-200", "grades": "GL-12"}[tab] ~ ".") }}
+          {{ ui.text_field("name", "Name", value=values.get("name"), errors=errors, required=true, autocomplete="off") }}
+          {% if tab == "grades" %}
+          {{ ui.text_field("rank", "Rank", value=values.get("rank"), type="number", errors=errors, required=true, inputmode="numeric", hint="Higher is more senior. Used to order grades.") }}
+          {% endif %}
+          {% if tab == "branches" %}
+          <div>
+            <label for="address" class="kx-label">Address <span class="font-normal text-ink-3">(optional)</span></label>
+            <textarea id="address" name="address" rows="3" class="kx-input">{{ values.get("address") or "" }}</textarea>
+          </div>
+          {{ ui.text_field("state", "State", value=values.get("state"), errors=errors, autocomplete="off", hint="For example: Lagos.") }}
+          {% endif %}
+        </div>
+        <div class="flex items-center justify-end gap-3 border-t border-line p-6">
+          <a href="/hr/structure?tab={{ tab }}" class="kx-btn-secondary" x-on:click.prevent="hide">Cancel</a>
+          <button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Save {{ noun }}</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

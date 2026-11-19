@@ -27,13 +27,17 @@ def build_shell(
 ) -> ShellContext:
     organisation = org.get_organization(db)
     grants = engine.load_grants(db, actor.user_id)
-    # Modules appear here as each phase delivers them, and only with a permission in them.
-    modules: list[NavModule] = [m for m in MODULES if m.key == "home"]
-    admin_sections = tuple(
-        s for s in ADMIN_MODULE.sections if s.permission is None or grants.holds(s.permission)
-    )
-    if admin_sections:
-        modules.append(replace(ADMIN_MODULE, href=admin_sections[0].href, sections=admin_sections))
+    # A module appears once it has a section the viewer may use (Home always does).
+    modules: list[NavModule] = []
+    for module in (*MODULES, ADMIN_MODULE):
+        if module.key == "home":
+            modules.append(module)
+            continue
+        sections = tuple(
+            s for s in module.sections if s.permission is None or grants.holds(s.permission)
+        )
+        if sections:
+            modules.append(replace(module, href=sections[0].href, sections=sections))
     return ShellContext(
         org_name=organisation.display_name if organisation else "Kxmeleon",
         user=ShellUser(actor.full_name, ", ".join(grants.role_names[:2]) or "No role yet"),

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP - All claims</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-raised": "#FFFFFF",
+            "danger-text": "#B4232F",
+            "primary": "#412ec2",
+            "background": "#f9f9fd",
+            "on-secondary-fixed": "#161f00",
+            "surface-container-high": "#e8e8ec",
+            "iris-tint": "#EEECFD",
+            "on-secondary": "#ffffff",
+            "warning-text": "#8A4B00",
+            "success-bg": "#DDF7E8",
+            "iris": "#5A4BDB",
+            "on-error-container": "#93000a",
+            "inverse-on-surface": "#f0f0f4",
+            "error-container": "#ffdad6",
+            "line": "#E4E4EE",
+            "destructive": "#C42836",
+            "tertiary-fixed-dim": "#ffb68b",
+            "primary-fixed-dim": "#c5c0ff",
+            "tertiary-container": "#9f4a00",
+            "on-iris": "#FFFFFF",
+            "error": "#ba1a1a",
+            "danger-bg": "#FFE4E6",
+            "secondary-fixed": "#c7f24c",
+            "secondary-container": "#c4ef49",
+            "info-bg": "#DFEBFF",
+            "secondary-fixed-dim": "#acd530",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#c5c0ff",
+            "on-background": "#1a1c1f",
+            "warning-bg": "#FFF1D6",
+            "on-surface-variant": "#474554",
+            "on-tertiary": "#ffffff",
+            "iris-hover": "#4A3CC4",
+            "tertiary-fixed": "#ffdbc8",
+            "secondary": "#4f6600",
+            "surface-tint": "#5646d7",
+            "surface-bright": "#f9f9fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#140067",
+            "surface-container-low": "#f3f3f7",
+            "ink-2": "#4B4B66",
+            "on-tertiary-fixed": "#321300",
+            "ink-3": "#626280",
+            "info-text": "#1D55B8",
+            "surface-container-highest": "#e2e2e6",
+            "surface-dim": "#d9dade",
+            "on-surface": "#1a1c1f",
+            "outline": "#787586",
+            "tertiary": "#7a3700",
+            "lime": "#C5F04A",
+            "on-tertiary-fixed-variant": "#743400",
+            "surface-variant": "#e2e2e6",
+            "on-tertiary-container": "#ffd7c1",
+            "lime-ink": "#4D7A0A",
+            "surface-container": "#ededf1",
+            "line-strong": "#8B8BA6",
+            "primary-container": "#5a4bdb",
+            "success-text": "#0F6B3E",
+            "surface-sunken": "#EFEFF6",
+            "ink": "#16162A",
+            "surface": "#FFFFFF",
+            "on-error": "#ffffff",
+            "on-secondary-container": "#536b00",
+            "on-primary-container": "#e0dbff",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "outline-variant": "#c8c4d7",
+            "canvas": "#F6F6FA",
+            "inverse-surface": "#2e3034",
+            "primary-fixed": "#e4dfff",
+            "on-primary-fixed-variant": "#3d28be",
+            "tangerine": "#C2410C",
+            "tangerine-tint": "#FFF7ED"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "body": ["Inter"],
+            "h2": ["Plus Jakarta Sans"],
+            "label": ["Inter"],
+            "h1": ["Plus Jakarta Sans"],
+            "overline": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "h3": ["Plus Jakarta Sans"],
+            "stat": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          },
+          "boxShadow": {
+            "card": "0 1px 2px rgba(22, 22, 42, 0.04)",
+            "raised": "0 8px 24px -6px rgba(22, 22, 42, 0.12)"
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-1 {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .animate-shimmer {
+      background: linear-gradient(90deg, #EFEFF6 25%, #F6F6FA 50%, #EFEFF6 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite ease-in-out;
+    }
+
+    /* Custom scrollbar styling for sidebar */
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: #E4E4EE;
+      border-radius: 9999px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+      background: #8B8BA6;
+    }
+  </style>
+<meta content="web_dashboard" name="shell-type"/></head>
+<body class="bg-canvas text-ink antialiased min-h-screen overflow-x-hidden selection:bg-iris selection:text-white">
+<!-- ========================================================================= -->
+<!-- 1. LEFT SIDEBAR COMPONENT (Fixed 272px)                                   -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-[272px] z-30 flex flex-col justify-between p-4 bg-surface border-r border-line shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Top Block: Brand Header & Combobox -->
+<div class="flex-shrink-0">
+<!-- Organization Brand Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div aria-label="Adeyemi Holdings Ltd Corporate Crest" class="w-9 h-9 rounded-xl bg-ink text-white font-h2 text-label font-bold flex items-center justify-center shadow-sm tracking-tight">
+            AH
+          </div>
+<div class="flex flex-col"><span class="font-h2 text-label font-bold text-ink leading-tight">Adeyemi Holdings Ltd</span></div>
+</div>
+<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+</div>
+<!-- Quick Nav Combobox -->
+<button aria-label="Quick Navigation" class="w-full bg-surface-sunken hover:bg-surface-container-low text-ink-3 hover:text-ink rounded-lg px-3 py-2 text-label font-label flex items-center justify-between border border-line mt-3 mb-4 transition-all duration-150 active:scale-[0.99] group" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-ink-3 group-hover:text-ink">search</span>
+<span class="font-body-sm text-body-sm">Go to…</span>
+</div>
+<kbd class="font-label text-[11px] bg-surface text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-sm font-semibold">Ctrl K</kbd>
+</button>
+</div>
+<!-- Navigation Modules Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto sidebar-scroll pr-1 -mr-1">
+<div class="font-overline text-[11px] font-semibold text-ink-3 tracking-wider uppercase mb-2 px-2">
+        MODULES
+      </div>
+<nav aria-label="Enterprise Modules" class="space-y-0.5"><!-- Home -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#3F3F5A]/[0.12] text-[#3F3F5A] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">home</span>
+</div>
+<span class="truncate">Home</span>
+</a>
+<!-- ACTIVE MODULE: HR -->
+<div class="pt-0.5 pb-1">
+<div class="h-11 flex items-center justify-between px-2 rounded-lg bg-[#7C3AED]/[0.12] text-ink font-semibold">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#7C3AED]/[0.16] text-[#7C3AED] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px] fill-1">badge</span>
+</div>
+<span class="font-h3 text-label text-ink">HR</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-[#7C3AED] mr-1"></span>
+</div>
+<!-- Indented Sub-sections under HR -->
+<div class="ml-6 pl-4 border-l border-line mt-1 space-y-0.5">
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+      Org chart
+    </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+      Departments
+    </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+      People
+    </a>
+<!-- ACTIVE SUB-ITEM: Structure setup -->
+<a class="relative flex items-center py-1.5 pl-3 pr-2.5 text-label font-medium bg-iris-tint text-iris-hover rounded-md transition-colors duration-150 shadow-sm" href="#">
+<span class="absolute left-0 top-1 bottom-1 w-[3px] bg-[#7C3AED] rounded-full"></span>
+<span class="font-semibold text-iris-hover">Structure setup</span>
+</a>
+</div>
+</div>
+<!-- Leave -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0369A1]/[0.12] text-[#0369A1] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</div>
+<span class="truncate">Leave</span>
+</a>
+<!-- Attendance -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0E7490]/[0.12] text-[#0E7490] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+<span class="truncate">Attendance</span>
+</a>
+<!-- Expenses (Inactive) -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#92400E]/[0.12] text-[#92400E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<span class="truncate">Expenses</span>
+</a>
+<!-- Payroll -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#047857]/[0.12] text-[#047857] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+<span class="truncate">Payroll</span>
+</a>
+<!-- Finance -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#1D4ED8]/[0.12] text-[#1D4ED8] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">query_stats</span>
+</div>
+<span class="truncate">Finance</span>
+</a>
+<!-- Inventory -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#92400E]/[0.12] text-[#92400E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<span class="truncate">Inventory</span>
+</a>
+<!-- Projects -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0F766E]/[0.12] text-[#0F766E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">work</span>
+</div>
+<span class="truncate">Projects</span>
+</a>
+<!-- Support -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#BE185D]/[0.12] text-[#BE185D] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+</div>
+<span class="truncate">Support</span>
+</a></nav>
+</div>
+<!-- Sidebar Bottom: Secondary Navigation & User Mini-Card -->
+<div class="flex-shrink-0 pt-3 border-t border-line mt-2 space-y-1">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span>Help &amp; documentation</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Settings</span>
+</a>
+<!-- User Mini-Card -->
+<div class="rounded-xl p-2.5 bg-surface-sunken/60 hover:bg-surface-sunken border border-line flex items-center justify-between mt-2 cursor-pointer transition-colors duration-150 group">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center flex-shrink-0 shadow-sm">
+            FB
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink truncate leading-snug">Fatima Bello</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-snug">Finance Manager</span>
+</div>
+</div>
+<button aria-label="Account options" class="w-7 h-7 rounded-md flex items-center justify-center text-ink-3 group-hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- 2. TOP BAR COMPONENT (Sticky 64px, ML 272px)                              -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 ml-[272px] h-16 bg-surface/80 backdrop-blur-md border-b border-line flex items-center justify-between px-8 z-20 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Left: Breadcrumb Trail -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2"><span class="font-label text-body-sm text-ink-2">HR</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">Structure setup</span></nav>
+<!-- Centre: Global Search Field -->
+<div class="max-w-md w-full mx-6">
+<div class="relative flex items-center bg-surface-sunken rounded-[10px] px-3.5 py-2 border border-transparent focus-within:border-iris focus-within:bg-white transition-all shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-ink-3 mr-2.5">search</span>
+<input class="w-full bg-transparent border-0 p-0 text-body-sm text-ink placeholder:text-ink-3 focus:ring-0 focus:outline-none" placeholder="Search people, claims, invoices…" type="text"/>
+<kbd class="font-label text-[11px] bg-white text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-xs font-semibold ml-2 select-none">
+          Ctrl K
+        </kbd>
+</div>
+</div>
+<!-- Right: 44x44 Touch Target Action Cluster -->
+<div class="flex items-center gap-2">
+<!-- Approvals Inbox Button -->
+<button aria-label="Approvals inbox" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">inbox</span>
+<span class="absolute top-2 right-2 bg-iris text-white font-label text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center leading-none ring-2 ring-surface">3</span>
+</button>
+<!-- Notifications Bell Button -->
+<button aria-label="Notifications" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span>
+</button>
+<!-- Theme Toggle Button -->
+<button aria-label="Toggle theme" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">light_mode</span>
+</button>
+<!-- User Profile Avatar Mini-Pill -->
+<button aria-label="User profile menu" class="h-11 pl-1.5 pr-2.5 rounded-[10px] hover:bg-surface-sunken flex items-center gap-2 border border-transparent hover:border-line transition-all duration-150 ml-1" type="button">
+<div class="w-8 h-8 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center shadow-xs">
+          FB
+        </div>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Bottom Loading Bar: Simulating HTMX 60% loading state in Tangerine -->
+<div class="absolute bottom-0 left-0 w-3/5 h-[2px] bg-[#7C3AED] transition-all duration-300"></div>
+</header>
+<!-- ========================================================================= -->
+<!-- 3. MAIN CONTENT AREA (ML 272px, Min H calc(100vh - 64px))                 -->
+<!-- ========================================================================= -->
+<main class="ml-[272px] min-h-[calc(100vh-64px)] bg-canvas p-8 relative overflow-hidden"><div class="flex flex-col w-full relative">
+<!-- Soft Ambient Violet Glow behind Header -->
+<div class="absolute -top-10 -left-10 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-20 right-1/4 w-80 h-80 rounded-full bg-primary/5 blur-3xl pointer-events-none -z-10"></div>
+<!-- Page Header & Key Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-overline font-overline bg-iris-tint text-primary font-semibold tracking-wide">
+          ORGANIZATION ARCHITECTURE
+        </span>
+<span class="text-overline font-overline text-ink-3">v2.4</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Structure setup</h1>
+<p class="font-body text-body-sm text-ink-2 max-w-xl">
+        Branches, cost centres and grades used across the organisation.
+      </p>
+</div>
+<!-- Action Group -->
+<div class="flex items-center gap-3">
+<button class="h-11 px-4 rounded-xl bg-surface text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-label flex items-center gap-2 shadow-sm transition-all duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export matrix</span>
+</button>
+<button class="h-11 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold flex items-center gap-2 shadow-md shadow-iris/25 transition-all duration-150 active:scale-[0.98]" id="openDrawerBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New grade</span>
+</button>
+</div>
+</div>
+<!-- Horizontal Tabs with Pill Counters -->
+<div class="flex items-center justify-between border-b-0 mb-6 bg-surface-sunken/60 p-1.5 rounded-2xl w-fit">
+<nav aria-label="Structure Sections" class="flex items-center gap-1.5">
+<!-- Branches Tab -->
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl font-label text-body-sm text-ink-2 hover:text-ink hover:bg-surface transition-all duration-150" type="button">
+<span>Branches</span>
+<span class="px-2 py-0.5 rounded-full text-overline font-overline bg-surface text-ink-3">4</span>
+</button>
+<!-- Cost centres Tab -->
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl font-label text-body-sm text-ink-2 hover:text-ink hover:bg-surface transition-all duration-150" type="button">
+<span>Cost centres</span>
+<span class="px-2 py-0.5 rounded-full text-overline font-overline bg-surface text-ink-3">6</span>
+</button>
+<!-- Grades Tab (Active) -->
+<button class="relative flex items-center gap-2 px-4 py-2 rounded-xl font-h3 text-body-sm text-primary font-semibold bg-surface shadow-sm transition-all duration-150" type="button">
+<span>Grades</span>
+<span class="px-2 py-0.5 rounded-full text-overline font-overline bg-iris-tint text-primary font-semibold">5</span>
+</button>
+</nav>
+</div>
+<!-- Underlay Main Card: Grades Data Table -->
+<div class="bg-surface rounded-2xl shadow-card overflow-hidden transition-all duration-300">
+<!-- Toolbar -->
+<div class="p-5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface">
+<div class="relative w-full sm:max-w-sm">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-xl bg-surface-sunken text-body-sm font-body-sm text-ink placeholder:text-ink-3 border-0 focus:ring-2 focus:ring-iris/40 focus:bg-surface transition-all duration-150" placeholder="Search grades, ranks, codes…" type="text"/>
+</div>
+<div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+<button class="h-10 px-3.5 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink-2 font-label text-body-sm flex items-center gap-2 transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="h-10 px-3.5 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink-2 font-label text-body-sm flex items-center gap-2 transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">tune</span>
+<span>Columns</span>
+</button>
+</div>
+</div>
+<!-- Table Canvas -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken/80 font-overline text-overline uppercase tracking-wider text-ink-3">
+<th class="py-3.5 pl-6 pr-4 font-semibold" scope="col">Code</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Grade Name</th>
+<th class="py-3.5 px-4 text-right font-semibold" scope="col">Rank</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Positions</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Status</th>
+<th class="py-3.5 pl-4 pr-6 text-right font-semibold" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-ink">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-4 pl-6 pr-4 font-mono font-medium text-ink tracking-tight">GL-16</td>
+<td class="py-4 px-4 font-h3 font-semibold text-ink">
+<div class="flex items-center gap-2">
+<span>Executive</span>
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+</div>
+</td>
+<td class="py-4 px-4 text-right font-mono font-semibold text-ink">16</td>
+<td class="py-4 px-4 text-ink-2">2 positions</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-4 pl-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2.5 py-1.5 rounded-lg text-ink-2 hover:text-primary hover:bg-iris-tint font-label text-body-sm transition-colors" type="button">Edit</button>
+<button class="px-2.5 py-1.5 rounded-lg text-ink-3 hover:text-destructive hover:bg-danger-bg font-label text-body-sm transition-colors" type="button">Deactivate</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-4 pl-6 pr-4 font-mono font-medium text-ink tracking-tight">GL-14</td>
+<td class="py-4 px-4 font-h3 font-semibold text-ink">Head of Department</td>
+<td class="py-4 px-4 text-right font-mono font-semibold text-ink">14</td>
+<td class="py-4 px-4 text-ink-2">5 positions</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-4 pl-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2.5 py-1.5 rounded-lg text-ink-2 hover:text-primary hover:bg-iris-tint font-label text-body-sm transition-colors" type="button">Edit</button>
+<button class="px-2.5 py-1.5 rounded-lg text-ink-3 hover:text-destructive hover:bg-danger-bg font-label text-body-sm transition-colors" type="button">Deactivate</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-4 pl-6 pr-4 font-mono font-medium text-ink tracking-tight">GL-12</td>
+<td class="py-4 px-4 font-h3 font-semibold text-ink">Manager</td>
+<td class="py-4 px-4 text-right font-mono font-semibold text-ink">12</td>
+<td class="py-4 px-4 text-ink-2">8 positions</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-4 pl-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2.5 py-1.5 rounded-lg text-ink-2 hover:text-primary hover:bg-iris-tint font-label text-body-sm transition-colors" type="button">Edit</button>
+<button class="px-2.5 py-1.5 rounded-lg text-ink-3 hover:text-destructive hover:bg-danger-bg font-label text-body-sm transition-colors" type="button">Deactivate</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-4 pl-6 pr-4 font-mono font-medium text-ink tracking-tight">GL-10</td>
+<td class="py-4 px-4 font-h3 font-semibold text-ink">Senior Officer</td>
+<td class="py-4 px-4 text-right font-mono font-semibold text-ink">10</td>
+<td class="py-4 px-4 text-ink-2">14 positions</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-4 pl-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2.5 py-1.5 rounded-lg text-ink-2 hover:text-primary hover:bg-iris-tint font-label text-body-sm transition-colors" type="button">Edit</button>
+<button class="px-2.5 py-1.5 rounded-lg text-ink-3 hover:text-destructive hover:bg-danger-bg font-label text-body-sm transition-colors" type="button">Deactivate</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low/70 transition-colors group">
+<td class="py-4 pl-6 pr-4 font-mono font-medium text-ink tracking-tight">GL-08</td>
+<td class="py-4 px-4 font-h3 font-semibold text-ink">Officer</td>
+<td class="py-4 px-4 text-right font-mono font-semibold text-ink">8</td>
+<td class="py-4 px-4 text-ink-2">19 positions</td>
+<td class="py-4 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-4 pl-4 pr-6 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2.5 py-1.5 rounded-lg text-ink-2 hover:text-primary hover:bg-iris-tint font-label text-body-sm transition-colors" type="button">Edit</button>
+<button class="px-2.5 py-1.5 rounded-lg text-ink-3 hover:text-destructive hover:bg-danger-bg font-label text-body-sm transition-colors" type="button">Deactivate</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="px-6 py-4 bg-surface-sunken/40 flex items-center justify-between text-body-sm font-body-sm text-ink-3">
+<span>Showing 1–5 of 5 grades</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 opacity-40 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="px-2.5 py-1 rounded-md bg-surface font-label text-body-sm font-medium text-ink shadow-sm">1</span>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 opacity-40 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Structure Matrix Insight Banner -->
+<div class="mt-6 p-4 rounded-2xl bg-surface shadow-card flex items-start gap-4">
+<div class="w-10 h-10 rounded-xl bg-iris-tint text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-h3 text-h3 text-ink">Grade and Seniority Hierarchy</h3>
+<p class="font-body text-body-sm text-ink-2 mt-0.5">
+        Grades define approval thresholds, payroll salary bands, and hierarchy reporting order. A total of <strong>48 active positions</strong> across 6 departments map to these 5 operational tiers.
+      </p>
+</div>
+<button class="px-3.5 py-1.5 rounded-xl bg-surface-sunken hover:bg-surface-container text-ink font-label text-body-sm font-medium flex items-center gap-1.5 transition-colors self-center" type="button">
+<span>Band schema</span>
+<span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+</button>
+</div>
+<!-- ========================================================================= -->
+<!-- RIGHT-SIDE DRAWER OVERLAY & FORM (In Focus)                                -->
+<!-- ========================================================================= -->
+<!-- Scrim Overlay -->
+<div aria-hidden="true" class="fixed inset-0 bg-[#0B0B12]/45 backdrop-blur-[4px] z-40 transition-opacity duration-200" id="drawerScrim"></div>
+<!-- Slide-Over Drawer Container -->
+<aside aria-labelledby="drawerTitle" aria-modal="true" class="fixed top-0 right-0 h-screen w-full sm:w-[480px] bg-surface z-50 flex flex-col justify-between shadow-2xl transition-transform duration-300 ease-out" id="gradeDrawer" role="dialog">
+<!-- Drawer Header -->
+<div class="px-6 py-5 bg-surface flex items-start justify-between">
+<div>
+<span class="inline-block text-overline font-overline text-primary font-semibold tracking-wide uppercase mb-1">
+          GRADE CONFIGURATION
+        </span>
+<h2 class="font-h2 text-h2 text-ink" id="drawerTitle">New grade</h2>
+<p class="font-body text-body-sm text-ink-2 mt-0.5">Define a compensation and seniority grade level.</p>
+</div>
+<button aria-label="Close panel" class="w-9 h-9 rounded-xl flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" id="closeDrawerBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Form Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+<!-- Field 1: Grade Code -->
+<div class="space-y-1.5">
+<label class="block font-label text-body-sm font-semibold text-ink" for="gradeCode">
+          Grade Code <span class="text-destructive">*</span>
+</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-body-sm font-mono font-medium text-ink border-0 focus:ring-2 focus:ring-iris focus:bg-surface transition-all duration-150" id="gradeCode" placeholder="e.g. GL-07" type="text" value="GL-07"/>
+<span class="absolute right-3.5 top-1/2 -translate-y-1/2 font-mono text-overline text-ink-3 bg-surface px-1.5 py-0.5 rounded">
+            CODE
+          </span>
+</div>
+<p class="font-body text-body-sm text-ink-3">Short and unique, for example GL-12.</p>
+</div>
+<!-- Field 2: Grade Name -->
+<div class="space-y-1.5">
+<label class="block font-label text-body-sm font-semibold text-ink" for="gradeName">
+          Grade Name <span class="text-destructive">*</span>
+</label>
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-body-sm font-body-sm text-ink border-0 focus:ring-2 focus:ring-iris focus:bg-surface transition-all duration-150" id="gradeName" placeholder="e.g. Associate or Assistant Officer" type="text" value="Assistant Officer"/>
+<p class="font-body text-body-sm text-ink-3">The standardized enterprise grade identifier.</p>
+</div>
+<!-- Field 3: Rank -->
+<div class="space-y-1.5">
+<label class="block font-label text-body-sm font-semibold text-ink" for="gradeRank">
+          Rank <span class="text-destructive">*</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 pl-3.5 pr-20 rounded-xl bg-surface-sunken text-body-sm font-mono font-semibold text-ink border-0 focus:ring-2 focus:ring-iris focus:bg-surface transition-all duration-150" id="gradeRank" max="30" min="1" type="number" value="7"/>
+<div class="absolute right-2 flex items-center gap-1">
+<button aria-label="Decrease rank" class="w-7 h-7 rounded-lg bg-surface hover:bg-surface-sunken text-ink-2 flex items-center justify-center shadow-xs transition-colors" onclick="document.getElementById('gradeRank').stepDown()" type="button">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+</button>
+<button aria-label="Increase rank" class="w-7 h-7 rounded-lg bg-surface hover:bg-surface-sunken text-ink-2 flex items-center justify-center shadow-xs transition-colors" onclick="document.getElementById('gradeRank').stepUp()" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+<p class="font-body text-body-sm text-ink-3">Higher is more senior.</p>
+</div>
+<!-- Field 4: Description & Salary Band Notes -->
+<div class="space-y-1.5">
+<label class="block font-label text-body-sm font-semibold text-ink" for="gradeDesc">
+          Salary band &amp; notes <span class="text-ink-3 font-normal">(Optional)</span>
+</label>
+<textarea class="w-full p-3.5 rounded-xl bg-surface-sunken text-body-sm font-body-sm text-ink border-0 focus:ring-2 focus:ring-iris focus:bg-surface transition-all duration-150 resize-none" id="gradeDesc" placeholder="Baseline range, qualification requirements, or cross-branch exceptions..." rows="3">Baseline entry tier for campus recruits and technical apprentices.</textarea>
+</div>
+<!-- Module Context Pill Info Box -->
+<div class="p-3.5 rounded-xl bg-iris-tint/60 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">verified_user</span>
+<div class="text-body-sm font-body-sm text-ink-2">
+          New grades automatically inherit standard health insurance, group life coverage tier C, and 18 days annual leave.
+        </div>
+</div>
+<!-- Active Toggle Switch -->
+<div class="flex items-center justify-between p-3.5 rounded-xl bg-surface-sunken">
+<div>
+<span class="block font-label text-body-sm font-semibold text-ink">Mark grade active</span>
+<span class="font-body text-overline text-ink-3">Eligible for role assignments immediately upon saving</span>
+</div>
+<button aria-checked="true" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-iris transition-colors duration-200 ease-in-out focus:outline-none" role="switch" type="button">
+<span class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+</div>
+</div>
+<!-- Drawer Sticky Footer -->
+<div class="p-6 bg-surface flex items-center justify-end gap-3 shadow-[0_-4px_16px_rgba(22,22,42,0.04)]">
+<button class="h-11 px-5 rounded-xl text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-label font-medium transition-colors duration-150" id="cancelDrawerBtn" type="button">
+        Cancel
+      </button>
+<button class="h-11 px-6 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-md shadow-iris/25 transition-all duration-150 active:scale-[0.98]" id="saveGradeBtn" type="button">
+        Save grade
+      </button>
+</div>
+</aside>
+<!-- Interactive Drawer Behavior Script -->
+<script>
+    (function () {
+      const scrim = document.getElementById('drawerScrim');
+      const drawer = document.getElementById('gradeDrawer');
+      const openBtn = document.getElementById('openDrawerBtn');
+      const closeBtn = document.getElementById('closeDrawerBtn');
+      const cancelBtn = document.getElementById('cancelDrawerBtn');
+      const saveBtn = document.getElementById('saveGradeBtn');
+
+      function hideDrawer() {
+        if (!drawer || !scrim) return;
+        drawer.classList.add('translate-x-full');
+        scrim.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => {
+          drawer.style.display = 'none';
+          scrim.style.display = 'none';
+        }, 200);
+      }
+
+      function showDrawer() {
+        if (!drawer || !scrim) return;
+        drawer.style.display = 'flex';
+        scrim.style.display = 'block';
+        setTimeout(() => {
+          drawer.classList.remove('translate-x-full');
+          scrim.classList.remove('opacity-0', 'pointer-events-none');
+        }, 10);
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', hideDrawer);
+      if (cancelBtn) cancelBtn.addEventListener('click', hideDrawer);
+      if (scrim) scrim.addEventListener('click', hideDrawer);
+      if (openBtn) openBtn.addEventListener('click', showDrawer);
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+          saveBtn.innerText = 'Saving…';
+          setTimeout(() => {
+            saveBtn.innerText = 'Save grade';
+            hideDrawer();
+          }, 450);
+        });
+      }
+    })();
+  </script>
+</div></main>
+</body></html>

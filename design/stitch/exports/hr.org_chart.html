@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"iris":"#5A4BDB","iris-hover":"#4A3CC4","canvas":"#F6F6FA","success-bg":"#DDF7E8","line-strong":"#8B8BA6","on-secondary-fixed-variant":"#3b4d00","on-secondary-container":"#536b00","surface-container":"#ededf1","surface-container-high":"#e8e8ec","on-iris":"#FFFFFF","primary-fixed":"#e4dfff","inverse-primary":"#c5c0ff","surface-variant":"#e2e2e6","success-text":"#0F6B3E","ink-2":"#4B4B66","iris-tint":"#EEECFD","on-primary-fixed-variant":"#3d28be","surface-container-low":"#f3f3f7","on-surface-variant":"#474554","surface-bright":"#f9f9fd","tertiary-fixed-dim":"#ffb68b","on-tertiary-container":"#ffd7c1","on-primary":"#ffffff","surface-container-lowest":"#ffffff","primary-fixed-dim":"#c5c0ff","surface-tint":"#5646d7","danger-text":"#B4232F","lime":"#C5F04A","info-text":"#1D55B8","on-surface":"#1a1c1f","background":"#f9f9fd","on-primary-container":"#e0dbff","on-secondary-fixed":"#161f00","destructive":"#C42836","on-primary-fixed":"#140067","lime-ink":"#4D7A0A","primary-container":"#5a4bdb","on-error":"#ffffff","surface-raised":"#FFFFFF","on-tertiary":"#ffffff","inverse-on-surface":"#f0f0f4","line":"#E4E4EE","on-tertiary-fixed-variant":"#743400","surface-container-highest":"#e2e2e6","ink":"#16162A","error-container":"#ffdad6","ink-3":"#626280","info-bg":"#DFEBFF","secondary-container":"#c4ef49","surface-sunken":"#EFEFF6","secondary-fixed":"#c7f24c","outline":"#787586","inverse-surface":"#2e3034","on-tertiary-fixed":"#321300","tertiary-fixed":"#ffdbc8","warning-bg":"#FFF1D6","on-background":"#1a1c1f","secondary":"#4f6600","surface-dim":"#d9dade","primary":"#412ec2","tertiary-container":"#9f4a00","secondary-fixed-dim":"#acd530","danger-bg":"#FFE4E6","outline-variant":"#c8c4d7","warning-text":"#8A4B00","tertiary":"#7a3700","on-error-container":"#93000a","on-secondary":"#ffffff","error":"#ba1a1a","surface":"#FFFFFF"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-3xl":"4rem","space-xs":"0.25rem","gutter":"1.5rem","space-2xl":"3rem","space-md":"1rem","space-sm":"0.5rem","margin":"2rem","space-lg":"1.5rem","space-xl":"2rem"},"fontFamily":{"h1":["Plus Jakarta Sans"],"label":["Inter"],"body":["Inter"],"stat":["Plus Jakarta Sans"],"overline":["Inter"],"h3":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"],"body-sm":["Inter"],"display":["Plus Jakarta Sans"]},"fontSize":{"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}}</script></head><body class="bg-canvas font-body text-body text-ink antialiased"><aside class="fixed left-0 top-0 h-screen w-[272px] bg-surface flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-50"><div class="h-16 px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">corporate_fare</span></div><div class="min-w-0 flex flex-col"><span class="font-h3 text-h3 text-ink truncate leading-tight">Adeyemi Holdings</span><span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Kxmeleon ERP</span></div></div><button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:bg-surface-container hover:text-ink transition-colors"><span class="material-symbols-outlined text-[18px]">unfold_more</span></button></div><div class="px-space-md py-space-xs"><button class="w-full h-9 px-space-sm bg-surface-sunken hover:bg-surface-container rounded-lg flex items-center justify-between text-ink-3 hover:text-ink transition-all"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm">Go to...</span></div><kbd class="px-1.5 py-0.5 bg-surface rounded text-overline font-label text-ink-3 text-[10px] shadow-sm">⌘K</kbd></button></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-space-xs"><div class="px-space-sm pt-space-xs pb-space-xs font-overline text-overline uppercase text-ink-3">Core Modules</div><nav class="space-y-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Home</span></a><div class="space-y-0.5"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-body-sm font-label text-iris bg-iris-tint/60 transition-colors" data-path="hr" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-iris">group</span><span class="font-semibold text-iris">HR</span></div><span class="material-symbols-outlined text-[16px] text-iris">expand_more</span></a><div class="pl-6 pr-space-xs py-1 space-y-0.5"><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-1.5 transition-colors bg-iris-tint text-iris font-semibold rounded-lg" data-path="org-chart" href="#"><span class="w-1.5 h-1.5 rounded-full bg-iris"></span><span>Org chart</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="departments" href="#"><span class="w-1.5 h-1.5 rounded-full bg-transparent"></span><span>Departments</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="people" href="#"><span class="w-1.5 h-1.5 rounded-full bg-transparent"></span><span>People</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="structure-setup" href="#"><span class="w-1.5 h-1.5 rounded-full bg-transparent"></span><span>Structure setup</span></a></div></div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_busy</span><span>Leave</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payroll</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">domain_verification</span><span>Projects</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">help_center</span><span>Support</span></a><div class="pt-space-sm pb-space-xs"><span class="px-space-sm font-overline text-overline uppercase text-ink-3">System</span></div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></a></nav></div><div class="p-space-sm bg-surface-bright space-y-space-xs"><div class="flex flex-col gap-0.5"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-body-sm font-label text-ink-2 hover:bg-surface-container hover:text-ink transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a></div><div class="pt-space-xs"><div class="flex items-center gap-space-sm p-2 rounded-xl bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0 font-label text-body-sm font-semibold">FB</div><div class="min-w-0 flex-1"><div class="font-label text-body-sm font-semibold text-ink truncate">Fatima Bello</div><div class="font-label text-overline text-ink-3 truncate">Finance Manager</div></div><span class="material-symbols-outlined text-[18px] text-ink-3">more_vert</span></div></div></div></aside><div class="pl-[272px]"><header class="fixed top-0 left-[272px] right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm text-body-sm font-label text-ink-2"><span class="hover:text-ink cursor-pointer">HR</span><span class="text-ink-3">/</span><span class="font-semibold text-ink">Org chart</span></div><div class="flex-1 max-w-xl mx-auto"><div class="relative w-full"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-9 pr-16 bg-surface-sunken hover:bg-surface-container focus:bg-surface rounded-xl text-body-sm text-ink placeholder:text-ink-3 outline-none focus:ring-2 focus:ring-iris/20 transition-all" placeholder="Search people, claims, invoices..." type="text"/><kbd class="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 bg-surface rounded text-overline font-label text-ink-3 text-[10px] shadow-sm">Ctrl K</kbd></div></div><div class="flex items-center gap-space-sm shrink-0"><button class="h-9 px-space-sm rounded-lg bg-surface-sunken hover:bg-surface-container flex items-center gap-1.5 text-ink-2 hover:text-ink transition-colors"><span class="material-symbols-outlined text-[18px]">task_alt</span><span class="font-label text-body-sm">Approvals</span><span class="px-1.5 py-0.2 rounded-full bg-iris text-on-iris font-label text-overline text-[11px]">3</span></button><button class="relative w-9 h-9 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container hover:text-ink transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive ring-2 ring-surface"></span></button><button class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container hover:text-ink transition-colors"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-canvas w-full px-gutter"><div class="flex flex-col w-full pb-space-2xl">
+<!-- Subtle Soft Violet Radial Glow Decor -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-24 left-1/3 w-[640px] h-[280px] bg-iris/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- Top Action & Title Row -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pt-space-md pb-space-lg">
+<div class="space-y-1">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Org chart</h1>
+<p class="font-body-sm text-body-sm text-ink-3">Positions and who holds them. Reporting lines follow positions, not people.</p>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="h-10 px-4 rounded-xl bg-surface hover:bg-surface-container text-ink-2 hover:text-ink font-label text-body-sm flex items-center gap-1.5 shadow-sm transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+<span>Matrix view</span>
+</button>
+<button class="h-10 px-4 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-body-sm font-semibold flex items-center gap-2 shadow-sm transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New position</span>
+</button>
+</div>
+</div>
+<!-- Filter & Zoom Control Toolbar -->
+<div class="w-full bg-surface rounded-2xl p-space-sm shadow-sm flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-sm flex-1 min-w-[280px]">
+<!-- Search Input -->
+<div class="relative min-w-[240px] flex-1 max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-3 bg-surface-sunken hover:bg-surface-container focus:bg-surface rounded-xl text-body-sm text-ink placeholder:text-ink-3 outline-none transition-all" id="orgSearchInput" placeholder="Find a person or position…" type="text"/>
+</div>
+<!-- Department Dropdown Trigger -->
+<div class="relative">
+<button class="h-10 px-3.5 bg-surface-sunken hover:bg-surface-container rounded-xl flex items-center gap-2 text-body-sm font-label text-ink transition-colors" id="deptDropdownBtn" type="button">
+<span class="material-symbols-outlined text-ink-3 text-[18px]">domain</span>
+<span id="deptFilterLabel">All departments</span>
+<span class="material-symbols-outlined text-ink-3 text-[18px]">keyboard_arrow_down</span>
+</button>
+</div>
+<!-- Vacant Filter Toggle Chip -->
+<label class="h-10 px-3.5 bg-surface-sunken hover:bg-surface-container rounded-xl flex items-center gap-2 cursor-pointer transition-colors select-none">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris/20 accent-iris cursor-pointer" id="vacantToggle" type="checkbox"/>
+<span class="font-label text-body-sm text-ink-2">Vacant only</span>
+<span class="px-1.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-overline text-[11px]">2</span>
+</label>
+<!-- Apply Button -->
+<button class="h-10 px-4 rounded-xl bg-surface-container hover:bg-surface-container-high text-ink font-label text-body-sm transition-colors" type="button">
+          Apply
+        </button>
+</div>
+<!-- Right Zoom & View Controls -->
+<div class="flex items-center gap-1 bg-surface-sunken p-1 rounded-xl shrink-0">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface hover:text-ink transition-all" id="zoomOutBtn" title="Zoom out" type="button">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-2 font-label text-overline text-ink select-none" id="zoomLevelDisplay">100%</span>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface hover:text-ink transition-all" id="zoomInBtn" title="Zoom in" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<div class="w-px h-4 bg-line-strong/30 mx-1"></div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface hover:text-ink transition-all" id="fitScreenBtn" title="Fit to screen" type="button">
+<span class="material-symbols-outlined text-[18px]">fit_screen</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface hover:text-ink transition-all" id="exportBtn" title="Export hierarchy view" type="button">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Workspace Canvas + Inspector Grid -->
+<div class="mt-space-lg flex flex-col lg:flex-row gap-space-lg items-start min-h-[760px] relative">
+<!-- Central Org Chart Interactive Stage -->
+<div class="w-full lg:flex-1 bg-surface rounded-2xl p-space-md md:p-space-lg shadow-sm overflow-x-auto min-h-[740px] relative flex flex-col items-center">
+<!-- Canvas Mini Badge Indicator -->
+<div class="w-full flex items-center justify-between pb-space-md text-ink-3">
+<div class="flex items-center gap-2">
+<span class="inline-flex w-2 h-2 rounded-full bg-success-text"></span>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Live Enterprise Structure · Adeyemi Holdings Ltd</span>
+</div>
+<div class="flex items-center gap-3 font-label text-overline text-ink-3">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-iris"></span> Selected</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-warning-bg"></span> Vacant</span>
+</div>
+</div>
+<!-- Zoom/Pan Stage Container -->
+<div class="w-full min-w-[820px] flex flex-col items-center py-4 transition-transform duration-200 origin-top" id="treeContainer">
+<!-- LEVEL 1: Root Node (Managing Director) -->
+<div class="flex flex-col items-center">
+<div class="org-node group w-[240px] rounded-2xl bg-surface shadow-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer p-3.5 relative hover:shadow-md" data-node="pos-exec-001">
+<div class="flex items-center justify-between gap-1 mb-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-overline text-ink-2">Executive</span>
+<span class="font-label text-overline text-ink-3 font-semibold">GL-16</span>
+</div>
+<div class="font-h3 text-h3 text-ink leading-snug truncate" title="Managing Director">Managing Director</div>
+<div class="my-2.5 h-px bg-surface-sunken"></div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary font-h3 text-body-sm flex items-center justify-center font-bold shrink-0">
+                AO
+              </div>
+<div class="min-w-0 flex-1">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Ada Okeke</p>
+<p class="font-label text-overline text-ink-3 truncate">Direct: 2 · Team: 6</p>
+</div>
+</div>
+</div>
+<!-- Vertical Stem Down from Level 1 -->
+<div class="w-0.5 h-8 bg-line-strong/40"></div>
+</div>
+<!-- Connector Horizontal Bus (Level 1 -> Level 2) -->
+<div class="w-[490px] h-0.5 bg-line-strong/40 relative">
+<!-- Drop line to Head of Finance (Left) -->
+<div class="absolute -left-px top-0 w-0.5 h-8 bg-line-strong/40"></div>
+<!-- Drop line to Head of HR (Right) -->
+<div class="absolute -right-px top-0 w-0.5 h-8 bg-line-strong/40"></div>
+</div>
+<!-- LEVEL 2: Two Branches (Finance & HR) -->
+<div class="w-[740px] flex justify-between items-start pt-8">
+<!-- LEFT BRANCH: Head of Finance & Sub-tree -->
+<div class="flex flex-col items-center w-[440px]">
+<!-- Level 2 Node: Head of Finance (SELECTED STATE) -->
+<div class="org-node group w-[240px] rounded-2xl bg-surface shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer p-3.5 relative shadow-iris/15 ring-2 ring-iris bg-iris-tint/30" data-node="pos-fin-001" id="nodeFinanceHead">
+<div class="flex items-center justify-between gap-1 mb-2">
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-iris font-label text-overline font-semibold">Finance</span>
+<span class="font-label text-overline text-ink-3 font-semibold">GL-14</span>
+</div>
+<div class="font-h3 text-h3 text-ink leading-snug truncate" title="Head of Finance">Head of Finance</div>
+<div class="my-2.5 h-px bg-iris-tint"></div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-iris text-on-iris font-h3 text-body-sm flex items-center justify-center font-bold shrink-0">
+                  BA
+                </div>
+<div class="min-w-0 flex-1">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Bola Ade</p>
+<p class="font-label text-overline text-ink-3 truncate">Direct: 1 · Team: 4</p>
+</div>
+</div>
+<!-- Selected Marker Tag -->
+<span class="absolute -top-2.5 right-3 px-2 py-0.5 rounded-full bg-iris text-on-iris font-label text-[10px] font-bold tracking-wide uppercase shadow-sm">
+                Selected
+              </span>
+</div>
+<!-- Vertical Connector from Head of Finance to Finance Manager -->
+<div class="w-0.5 h-8 bg-line-strong/40"></div>
+<!-- LEVEL 3: Finance Manager (Acting Badge) -->
+<div class="org-node group w-[240px] rounded-2xl bg-surface shadow-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer p-3.5 relative hover:shadow-md" data-node="pos-fin-002">
+<div class="flex items-center justify-between gap-1 mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-overline text-ink-2">Finance</span>
+<span class="px-2 py-0.5 rounded-full bg-info-bg text-info-text font-label text-overline font-semibold">Acting</span>
+</div>
+<span class="font-label text-overline text-ink-3 font-semibold">GL-12</span>
+</div>
+<div class="font-h3 text-h3 text-ink leading-snug truncate" title="Finance Manager">Finance Manager</div>
+<div class="my-2.5 h-px bg-surface-sunken"></div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-info-bg text-info-text font-h3 text-body-sm flex items-center justify-center font-bold shrink-0">
+                  GO
+                </div>
+<div class="min-w-0 flex-1">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Gbenga Obi</p>
+<p class="font-label text-overline text-info-text truncate">Acting until 31 Dec 2026</p>
+</div>
+</div>
+</div>
+<!-- Stem down from Finance Manager -->
+<div class="w-0.5 h-8 bg-line-strong/40"></div>
+<!-- Connector Crossbar for Level 4 (Accountant + Treasury Analyst) -->
+<div class="w-[280px] h-0.5 bg-line-strong/40 relative">
+<div class="absolute -left-px top-0 w-0.5 h-8 bg-line-strong/40"></div>
+<div class="absolute -right-px top-0 w-0.5 h-8 bg-line-strong/40"></div>
+</div>
+<!-- LEVEL 4: Level 4 Siblings -->
+<div class="w-[480px] flex justify-between items-start pt-8">
+<!-- Sub-node 1: Accountant -->
+<div class="org-node group w-[220px] rounded-2xl bg-surface shadow-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer p-3.5 relative hover:shadow-md" data-node="pos-fin-003">
+<div class="flex items-center justify-between gap-1 mb-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-overline text-ink-2">Finance</span>
+<span class="font-label text-overline text-ink-3 font-semibold">GL-09</span>
+</div>
+<div class="font-h3 text-h3 text-ink leading-snug truncate" title="Accountant">Accountant</div>
+<div class="my-2.5 h-px bg-surface-sunken"></div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-ink font-h3 text-body-sm flex items-center justify-center font-bold shrink-0">
+                    EN
+                  </div>
+<div class="min-w-0 flex-1">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Efe Nwosu</p>
+<p class="font-label text-overline text-ink-3 truncate">Reporting to Mgr</p>
+</div>
+</div>
+</div>
+<!-- Sub-node 2: Treasury Analyst -->
+<div class="org-node group w-[220px] rounded-2xl bg-surface shadow-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer p-3.5 relative hover:shadow-md" data-node="pos-fin-004">
+<div class="flex items-center justify-between gap-1 mb-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-overline text-ink-2">Finance</span>
+<span class="font-label text-overline text-ink-3 font-semibold">GL-08</span>
+</div>
+<div class="font-h3 text-h3 text-ink leading-snug truncate" title="Treasury Analyst">Treasury Analyst</div>
+<div class="my-2.5 h-px bg-surface-sunken"></div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-ink font-h3 text-body-sm flex items-center justify-center font-bold shrink-0">
+                    FO
+                  </div>
+<div class="min-w-0 flex-1">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Femi Ojo</p>
+<p class="font-label text-overline text-ink-3 truncate">Reporting to Mgr</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT BRANCH: Head of HR & HR Officer (Vacant) -->
+<div class="flex flex-col items-center w-[250px]">
+<!-- Level 2 Node: Head of HR -->
+<div class="org-node group w-[240px] rounded-2xl bg-surface shadow-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer p-3.5 relative hover:shadow-md" data-node="pos-hr-001">
+<div class="flex items-center justify-between gap-1 mb-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-overline text-ink-2">Human Resources</span>
+<span class="font-label text-overline text-ink-3 font-semibold">GL-14</span>
+</div>
+<div class="font-h3 text-h3 text-ink leading-snug truncate" title="Head of HR">Head of HR</div>
+<div class="my-2.5 h-px bg-surface-sunken"></div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-surface-container text-ink font-h3 text-body-sm flex items-center justify-center font-bold shrink-0">
+                  CE
+                </div>
+<div class="min-w-0 flex-1">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Chi Eze</p>
+<p class="font-label text-overline text-ink-3 truncate">Direct: 1 · Team: 1</p>
+</div>
+</div>
+</div>
+<!-- Stem down to HR Officer -->
+<div class="w-0.5 h-8 bg-line-strong/40"></div>
+<!-- LEVEL 3: HR Officer (VACANT NODE) -->
+<div class="org-node group w-[240px] rounded-2xl bg-surface shadow-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer p-3.5 relative ring-2 ring-dashed ring-warning-text/60 bg-warning-bg/10" data-node="pos-hr-002" id="nodeHrOfficer">
+<div class="flex items-center justify-between gap-1 mb-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-overline text-ink-2">Human Resources</span>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-overline font-semibold">Vacant</span>
+</div>
+<div class="font-h3 text-h3 text-ink leading-snug truncate" title="HR Officer">HR Officer</div>
+<div class="my-2.5 h-px bg-surface-sunken"></div>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-warning-bg text-warning-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">person_off</span>
+</div>
+<div class="min-w-0 flex-1">
+<p class="font-label text-body-sm font-semibold text-warning-text truncate">No current holder</p>
+<p class="font-label text-overline text-ink-3 truncate">Recruitment in progress</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Canvas Footnote / Legend -->
+<div class="mt-auto pt-space-lg w-full flex flex-wrap items-center justify-between gap-2 border-t border-transparent text-ink-3 font-label text-overline">
+<span>Click any node card to view comprehensive position parameters, incumbent profile, and cost centre allocations.</span>
+<span>Drag canvas or use controls to pan</span>
+</div>
+</div>
+<!-- Right Side Panel: Node Inspector -->
+<aside class="w-full lg:w-[350px] shrink-0 bg-surface rounded-2xl shadow-sm p-space-lg flex flex-col justify-between self-stretch" id="inspectorPanel">
+<div>
+<!-- Inspector Header -->
+<div class="flex items-start justify-between pb-space-md">
+<div class="space-y-1 min-w-0 pr-2">
+<div class="flex items-center gap-2">
+<span class="font-mono text-overline text-ink-3 bg-surface-sunken px-2 py-0.5 rounded" id="inspectorCode">POS-FIN-001</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold" id="inspectorStatus">
+                Active · Filled
+              </span>
+</div>
+<h2 class="font-h2 text-h2 text-ink truncate leading-tight mt-1" id="inspectorTitle">Head of Finance</h2>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:bg-surface-sunken hover:text-ink transition-colors" id="closeInspectorBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Incumbent Snapshot -->
+<div class="p-space-sm rounded-xl bg-surface-sunken my-space-sm flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-iris text-on-iris font-h3 text-body flex items-center justify-center font-bold shrink-0" id="inspectorAvatar">
+            BA
+          </div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5">
+<span class="font-label text-body-sm font-semibold text-ink truncate" id="inspectorName">Bola Ade</span>
+<span class="px-1.5 py-0.2 rounded bg-surface text-ink-3 font-label text-[10px]">Primary</span>
+</div>
+<p class="font-label text-overline text-ink-3 truncate" id="inspectorEmail">bola.ade@adeyemiholdings.ng</p>
+</div>
+</div>
+<!-- Key-Value Specifications List -->
+<div class="space-y-3 py-space-sm text-body-sm">
+<div class="flex items-center justify-between py-1.5">
+<span class="font-label text-ink-3 text-body-sm">Department</span>
+<span class="font-label text-ink font-medium text-right" id="inspectorDept">Finance &amp; Accounts</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="font-label text-ink-3 text-body-sm">Grade level</span>
+<span class="font-label text-ink font-medium text-right" id="inspectorGrade">GL-14 (Senior Mgmt)</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="font-label text-ink-3 text-body-sm">Reports to</span>
+<span class="font-label text-iris font-semibold text-right truncate max-w-[170px]" id="inspectorReportsTo">Managing Director</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="font-label text-ink-3 text-body-sm">Direct reports · Team</span>
+<span class="font-label text-ink font-medium text-right" id="inspectorTeamCount">1 direct · 4 total</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="font-label text-ink-3 text-body-sm">Cost centre</span>
+<span class="font-mono text-ink-2 text-body-sm text-right" id="inspectorCostCenter">CC-200 Fin Ops</span>
+</div>
+<div class="flex items-center justify-between py-1.5">
+<span class="font-label text-ink-3 text-body-sm">FTE allocation</span>
+<span class="font-label text-ink font-medium text-right" id="inspectorFte">1.0 FTE</span>
+</div>
+</div>
+<!-- Additional Operational Meta Card -->
+<div class="mt-space-md p-3.5 rounded-xl bg-surface-container-low text-ink-2 space-y-2">
+<div class="flex items-center justify-between text-overline font-label uppercase text-ink-3">
+<span>Mandate Scope</span>
+<span class="text-iris font-semibold">Active Cycle</span>
+</div>
+<p class="font-label text-overline text-ink-3 leading-relaxed">
+            Authorized sign-off up to ₦25,000,000. Oversees treasury liquidity, Statutory FIRS audit filings, and annual corporate budgets.
+          </p>
+</div>
+</div>
+<!-- Bottom Inspector Actions -->
+<div class="pt-space-lg space-y-2">
+<button class="w-full h-11 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-body-sm font-semibold flex items-center justify-center gap-2 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">launch</span>
+<span>Open position dossier</span>
+</button>
+<button class="w-full h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-ink font-label text-body-sm font-medium flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>Reassign or edit</span>
+</button>
+</div>
+</aside>
+</div>
+</div>
+<script>
+  (function initOrgChart() {
+    // Position Dataset
+    const positionData = {
+      'pos-exec-001': {
+        title: 'Managing Director',
+        code: 'POS-EXE-001',
+        dept: 'Executive Directorate',
+        grade: 'GL-16 (Executive)',
+        reportsTo: 'Board of Directors',
+        status: 'Active · Filled',
+        statusClass: 'bg-success-bg text-success-text',
+        name: 'Ada Okeke',
+        initials: 'AO',
+        email: 'ada.okeke@adeyemiholdings.ng',
+        team: '2 direct · 6 total',
+        costCenter: 'CC-100 Executive',
+        fte: '1.0 FTE'
+      },
+      'pos-fin-001': {
+        title: 'Head of Finance',
+        code: 'POS-FIN-001',
+        dept: 'Finance & Accounts',
+        grade: 'GL-14 (Senior Mgmt)',
+        reportsTo: 'Managing Director',
+        status: 'Active · Filled',
+        statusClass: 'bg-success-bg text-success-text',
+        name: 'Bola Ade',
+        initials: 'BA',
+        email: 'bola.ade@adeyemiholdings.ng',
+        team: '1 direct · 4 total',
+        costCenter: 'CC-200 Fin Ops',
+        fte: '1.0 FTE'
+      },
+      'pos-fin-002': {
+        title: 'Finance Manager',
+        code: 'POS-FIN-002',
+        dept: 'Finance & Accounts',
+        grade: 'GL-12 (Middle Mgmt)',
+        reportsTo: 'Head of Finance',
+        status: 'Acting Appointment',
+        statusClass: 'bg-info-bg text-info-text',
+        name: 'Gbenga Obi',
+        initials: 'GO',
+        email: 'gbenga.obi@adeyemiholdings.ng',
+        team: '2 direct · 2 total',
+        costCenter: 'CC-210 Treasury & Accts',
+        fte: '1.0 FTE (Acting)'
+      },
+      'pos-fin-003': {
+        title: 'Accountant',
+        code: 'POS-FIN-003',
+        dept: 'Finance & Accounts',
+        grade: 'GL-09 (Professional)',
+        reportsTo: 'Finance Manager',
+        status: 'Active · Filled',
+        statusClass: 'bg-success-bg text-success-text',
+        name: 'Efe Nwosu',
+        initials: 'EN',
+        email: 'efe.nwosu@adeyemiholdings.ng',
+        team: '0 direct · 0 total',
+        costCenter: 'CC-210 Treasury & Accts',
+        fte: '1.0 FTE'
+      },
+      'pos-fin-004': {
+        title: 'Treasury Analyst',
+        code: 'POS-FIN-004',
+        dept: 'Finance & Accounts',
+        grade: 'GL-08 (Associate)',
+        reportsTo: 'Finance Manager',
+        status: 'Active · Filled',
+        statusClass: 'bg-success-bg text-success-text',
+        name: 'Femi Ojo',
+        initials: 'FO',
+        email: 'femi.ojo@adeyemiholdings.ng',
+        team: '0 direct · 0 total',
+        costCenter: 'CC-210 Treasury & Accts',
+        fte: '1.0 FTE'
+      },
+      'pos-hr-001': {
+        title: 'Head of HR',
+        code: 'POS-HR-001',
+        dept: 'Human Resources',
+        grade: 'GL-14 (Senior Mgmt)',
+        reportsTo: 'Managing Director',
+        status: 'Active · Filled',
+        statusClass: 'bg-success-bg text-success-text',
+        name: 'Chi Eze',
+        initials: 'CE',
+        email: 'chi.eze@adeyemiholdings.ng',
+        team: '1 direct · 1 total',
+        costCenter: 'CC-300 HR Dept',
+        fte: '1.0 FTE'
+      },
+      'pos-hr-002': {
+        title: 'HR Officer',
+        code: 'POS-HR-002',
+        dept: 'Human Resources',
+        grade: 'GL-09 (Professional)',
+        reportsTo: 'Head of HR',
+        status: 'Vacant Position',
+        statusClass: 'bg-warning-bg text-warning-text',
+        name: 'Unassigned',
+        initials: '—',
+        email: 'talent@adeyemiholdings.ng',
+        team: '0 direct · 0 total',
+        costCenter: 'CC-300 HR Dept',
+        fte: '0.0 FTE (Budgeted 1.0)'
+      }
+    };
+
+    // Zoom Controls
+    let currentZoom = 100;
+    const treeContainer = document.getElementById('treeContainer');
+    const zoomLevelDisplay = document.getElementById('zoomLevelDisplay');
+    const zoomInBtn = document.getElementById('zoomInBtn');
+    const zoomOutBtn = document.getElementById('zoomOutBtn');
+    const fitScreenBtn = document.getElementById('fitScreenBtn');
+
+    function applyZoom(delta) {
+      currentZoom = Math.min(Math.max(currentZoom + delta, 60), 140);
+      zoomLevelDisplay.textContent = currentZoom + '%';
+      treeContainer.style.transform = `scale(${currentZoom / 100})`;
+    }
+
+    if (zoomInBtn) zoomInBtn.addEventListener('click', () => applyZoom(10));
+    if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => applyZoom(-10));
+    if (fitScreenBtn) fitScreenBtn.addEventListener('click', () => {
+      currentZoom = 100;
+      zoomLevelDisplay.textContent = '100%';
+      treeContainer.style.transform = 'scale(1)';
+    });
+
+    // Inspector Nodes Interaction
+    const nodeElements = document.querySelectorAll('.org-node');
+    const inspectorTitle = document.getElementById('inspectorTitle');
+    const inspectorCode = document.getElementById('inspectorCode');
+    const inspectorStatus = document.getElementById('inspectorStatus');
+    const inspectorName = document.getElementById('inspectorName');
+    const inspectorAvatar = document.getElementById('inspectorAvatar');
+    const inspectorEmail = document.getElementById('inspectorEmail');
+    const inspectorDept = document.getElementById('inspectorDept');
+    const inspectorGrade = document.getElementById('inspectorGrade');
+    const inspectorReportsTo = document.getElementById('inspectorReportsTo');
+    const inspectorTeamCount = document.getElementById('inspectorTeamCount');
+    const inspectorCostCenter = document.getElementById('inspectorCostCenter');
+    const inspectorFte = document.getElementById('inspectorFte');
+    const inspectorPanel = document.getElementById('inspectorPanel');
+    const closeInspectorBtn = document.getElementById('closeInspectorBtn');
+
+    function selectNode(nodeKey, clickedEl) {
+      const data = positionData[nodeKey];
+      if (!data) return;
+
+      // Update Inspector Panel UI
+      inspectorTitle.textContent = data.title;
+      inspectorCode.textContent = data.code;
+      inspectorStatus.textContent = data.status;
+      inspectorStatus.className = `px-2 py-0.5 rounded-full font-label text-overline font-semibold ${data.statusClass}`;
+      inspectorName.textContent = data.name;
+      inspectorAvatar.textContent = data.initials;
+      inspectorEmail.textContent = data.email;
+      inspectorDept.textContent = data.dept;
+      inspectorGrade.textContent = data.grade;
+      inspectorReportsTo.textContent = data.reportsTo;
+      inspectorTeamCount.textContent = data.team;
+      inspectorCostCenter.textContent = data.costCenter;
+      inspectorFte.textContent = data.fte;
+
+      // Highlight Active State
+      nodeElements.forEach(el => {
+        el.classList.remove('ring-2', 'ring-iris', 'bg-iris-tint/30', 'shadow-iris/15');
+      });
+
+      if (clickedEl) {
+        clickedEl.classList.add('ring-2', 'ring-iris', 'bg-iris-tint/30', 'shadow-iris/15');
+      }
+
+      inspectorPanel.classList.remove('hidden');
+    }
+
+    nodeElements.forEach(node => {
+      node.addEventListener('click', function () {
+        const key = this.getAttribute('data-node');
+        selectNode(key, this);
+      });
+    });
+
+    if (closeInspectorBtn) {
+      closeInspectorBtn.addEventListener('click', () => {
+        inspectorPanel.classList.add('hidden');
+      });
+    }
+
+    // Vacant Filter Toggle
+    const vacantToggle = document.getElementById('vacantToggle');
+    if (vacantToggle) {
+      vacantToggle.addEventListener('change', function () {
+        const checked = this.checked;
+        nodeElements.forEach(node => {
+          const key = node.getAttribute('data-node');
+          const isVacant = positionData[key]?.status.includes('Vacant');
+          if (checked && !isVacant) {
+            node.style.opacity = '0.25';
+          } else {
+            node.style.opacity = '1';
+          }
+        });
+      });
+    }
+
+    // Quick Search
+    const searchInput = document.getElementById('orgSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', function (e) {
+        const query = e.target.value.toLowerCase().trim();
+        nodeElements.forEach(node => {
+          const key = node.getAttribute('data-node');
+          const data = positionData[key];
+          if (!data) return;
+          const match = data.title.toLowerCase().includes(query) ||
+                        data.name.toLowerCase().includes(query) ||
+                        data.dept.toLowerCase().includes(query);
+          node.style.opacity = (!query || match) ? '1' : '0.2';
+        });
+      });
+    }
+  })();
+</script></main></div></body></html>

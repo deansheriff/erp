@@ -17,11 +17,14 @@ from app.core.logging import configure_logging
 from app.identity import routes_api as identity_api
 from app.identity import routes_web as identity_web
 from app.identity import service as identity
+from app.modules.hr import routes_web as hr_web
+from app.org import routes_web as org_web
 from app.web import routes_dev, routes_health, routes_home
 from app.web.access import access_guard, csrf_guard
 from app.web.errors import register_error_handlers
 from app.web.middleware import RequestContextMiddleware
 from app.web.templating import STATIC_DIR
+from app.wiring import configure_runtime
 
 
 def _announce_setup_code() -> None:
@@ -67,6 +70,8 @@ def routers(settings: Settings) -> list[APIRouter]:
         identity_web.router,
         identity_api.router,
         audit_web.router,
+        org_web.router,
+        hr_web.router,
     ]
     if settings.dev_routes_enabled:
         included.append(routes_dev.router)
@@ -76,6 +81,7 @@ def routers(settings: Settings) -> list[APIRouter]:
 def create_app() -> FastAPI:
     settings = get_settings()
     configure_logging(settings.log_level)
+    configure_runtime()
 
     app = FastAPI(
         title="Kxmeleon ERP",

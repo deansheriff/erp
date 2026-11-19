@@ -12,11 +12,12 @@ import uuid
 from collections import defaultdict
 from collections.abc import Mapping
 from datetime import datetime, timedelta
+from typing import Any
 
 from sqlalchemy import ColumnElement, func, or_, select
 from sqlalchemy.orm import Session
 
-from app.audit.service import AuditEvent, record
+from app.audit.service import record_by
 from app.authz import catalogue, engine, sod
 from app.authz.models import Delegation, PermissionRow, Role, RoleAssignment, RoleGrant
 from app.authz.permissions import Scope
@@ -46,17 +47,8 @@ LAST_SUPER_ADMIN = (
 # ------------------------------------------------------------------ helpers
 
 
-def _audit(db: Session, actor: Actor | None, action: str, **kwargs: object) -> None:
-    record(
-        db,
-        AuditEvent(
-            action=action,
-            actor_type="user" if actor else "system",
-            actor_id=actor.user_id if actor else None,
-            actor_label=actor.label if actor else None,
-            **kwargs,  # type: ignore[arg-type]
-        ),
-    )
+def _audit(db: Session, actor: Actor | None, action: str, **kwargs: Any) -> None:
+    record_by(db, actor, action, **kwargs)
 
 
 def _changed(db: Session) -> None:
@@ -76,7 +68,8 @@ def _own_grants(db: Session, actor: Actor) -> engine.Grants:
     return engine.load_grants(db, actor.user_id, include_delegations=False)
 
 
-def _require(db: Session, actor: Actor, permission: str) -> None:
+def require(db: Session, actor: Actor, permission: str) -> None:
+    """For services: refuse unless the actor holds `permission` (at any scope)."""
     if not engine.check(db, actor.user_id, permission):
         raise PermissionDenied()
 
@@ -341,7 +334,7 @@ def create_role(
     copy_from: uuid.UUID | None = None,
     requires_mfa: bool = False,
 ) -> uuid.UUID:
-    _require(db, actor, "authz.role.manage")
+    require(db, actor, "authz.role.manage")
     name = _validate_name(db, name, None)
     grants: dict[str, Scope] = {}
     if copy_from is not None:
@@ -383,7 +376,7 @@ def update_role(
 ) -> None:
     """Replace a role's details and grants. Only permissions the actor holds (at least as
     widely) may be added, changed or removed."""
-    _require(db, actor, "authz.role.manage")
+    require(db, actor, "authz.role.manage")
     role = db.get(Role, role_id)
     if role is None:
         raise NotFound()
@@ -404,7 +397,7 @@ def update_role(
         raise PermissionDenied(f"You can only change permissions you hold yourself: {labels}.")
     if requires_mfa != role.requires_mfa and not requires_mfa:
         # Turning off two-step verification weakens every member's sign-in.
-        _require(db, actor, "system.security.manage")
+        require(db, actor, "system.security.manage")
     changes: dict[str, object] = {}
     if name != role.name:
         changes["name"] = {"from": role.name, "to": name}
@@ -442,7 +435,7 @@ def update_role(
 
 
 def delete_role(db: Session, actor: Actor, role_id: uuid.UUID) -> None:
-    _require(db, actor, "authz.role.manage")
+    require(db, actor, "authz.role.manage")
     role = db.get(Role, role_id)
     if role is None:
         raise NotFound()
@@ -488,7 +481,7 @@ def assign_role(
     reason: str,
     department_id: uuid.UUID | None = None,
 ) -> uuid.UUID:
-    _require(db, actor, "authz.assignment.manage")
+    require(db, actor, "authz.assignment.manage")
     _check_not_self(actor, user_id)
     user = _user(db, user_id)
     if user.status == "deactivated":
@@ -549,7 +542,7 @@ def assign_role(
 
 
 def end_assignment(db: Session, actor: Actor, assignment_id: uuid.UUID, reason: str) -> None:
-    _require(db, actor, "authz.assignment.manage")
+    require(db, actor, "authz.assignment.manage")
     assignment = db.get(RoleAssignment, assignment_id)
     if assignment is None or assignment.ended_at is not None:
         raise NotFound()
@@ -631,7 +624,7 @@ def create_delegation(
     you're on leave). With authz.delegation.manage you may set one up for someone else."""
     delegator = from_user_id or actor.user_id
     if delegator != actor.user_id:
-        _require(db, actor, "authz.delegation.manage")
+        require(db, actor, "authz.delegation.manage")
         if to_user_id == actor.user_id:
             raise PermissionDenied("You can't set up a delegation to yourself on someone's behalf.")
     if to_user_id == delegator:
@@ -754,7 +747,7 @@ def list_delegations(
 ) -> list[DelegationView]:
     stmt = select(Delegation).order_by(Delegation.starts_at.desc())
     if everyone:
-        _require(db, actor, "authz.delegation.manage")
+        require(db, actor, "authz.delegation.manage")
     else:
         stmt = stmt.where(
             or_(Delegation.from_user_id == actor.user_id, Delegation.to_user_id == actor.user_id)

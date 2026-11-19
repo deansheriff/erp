@@ -46,6 +46,14 @@ def _alembic_config() -> Config:
     return cfg
 
 
+@pytest.fixture(scope="session", autouse=True)
+def _runtime() -> None:
+    """Wire the app exactly as the entry points do (real org resolver)."""
+    from app.wiring import configure_runtime
+
+    configure_runtime()
+
+
 @pytest.fixture(scope="session")
 def migrated_db() -> Iterator[None]:
     """Rebuild the test schema from migrations once per run, as kx_migrator."""
@@ -81,7 +89,8 @@ def db(engine: Engine) -> Iterator[Session]:
 
 IDENTITY_TABLES = (
     "mfa_recovery_codes, user_tokens, user_sessions, api_keys, login_attempts, "
-    "role_assignments, delegations, users, mail_outbox, mail_settings, organization"
+    "role_assignments, delegations, position_assignments, positions, departments, grades, "
+    "branches, cost_centres, employees, users, mail_outbox, mail_settings, organization"
 )
 
 
@@ -100,6 +109,7 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         conn.execute(text(f"TRUNCATE {IDENTITY_TABLES} CASCADE"))
         conn.execute(text("DELETE FROM roles WHERE template_key IS NULL"))
         conn.execute(text("UPDATE authz_state SET version = version + 1"))
+        conn.execute(text("UPDATE org_state SET version = version + 1"))
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

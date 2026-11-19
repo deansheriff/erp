@@ -1,0 +1,197 @@
+{# HR → Org chart → one position. Design: design/stitch/exports/hr.position.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% import "hr/_org.html" as orgui with context %}
+
+{% macro assign_drawer() %}
+    <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex justify-end" x-on:keydown.escape.window="hide">
+      <div class="absolute inset-0 bg-[rgb(11_11_18/0.45)] backdrop-blur-[4px]" x-on:click="hide" x-show="open" x-transition.opacity.duration.200ms></div>
+      <aside x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="assign-title"
+             class="relative flex h-full w-full max-w-[480px] flex-col border-l border-line bg-surface shadow-overlay sm:rounded-l-sheet"
+             x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+             x-transition:leave="transition duration-base ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+        <form method="post" hx-push-url="false" action="/hr/positions/{{ detail.node.id }}/assign" class="flex h-full flex-col" novalidate>
+          {{ ui.csrf_field() }}
+          <div class="flex items-start justify-between border-b border-line px-6 py-5">
+            <div><h2 id="assign-title" class="font-h1 text-[20px]">Assign person</h2><p class="text-body-sm text-ink-3">{{ detail.node.title }}</p></div>
+            <button type="button" class="kx-btn-icon" x-on:click="hide" aria-label="Close">{{ ui.icon("x") }}</button>
+          </div>
+          <div class="flex-1 space-y-5 overflow-y-auto p-6">
+            {% if assign_errors.get("form") %}{{ ui.alert("danger", assign_errors["form"]) }}{% endif %}
+            <div>
+              <label for="employee_id" class="kx-label">Person <span class="text-danger-text">*</span></label>
+              <select id="employee_id" name="employee_id" class="kx-input" required>
+                <option value="">Choose a person…</option>
+                {% for pid, pname, pemail in people %}<option value="{{ pid }}" {% if assign_values.get("employee_id") == pid|string %}selected{% endif %}>{{ pname }}{{ " · " ~ pemail if pemail }}</option>{% endfor %}
+              </select>
+              {{ ui.field_error(assign_errors, "employee_id") }}
+              <p class="mt-1.5 text-xs text-ink-3">Not listed? Add them under HR → People first.</p>
+            </div>
+            <fieldset>
+              <legend class="kx-label">Type</legend>
+              <div class="kx-segment">
+                {% for k, label in kind_labels.items() %}<label><input type="radio" name="kind" value="{{ k }}" {% if (assign_values.get("kind") or "primary") == k %}checked{% endif %}>{{ label }}</label>{% endfor %}
+              </div>
+              {{ ui.field_error(assign_errors, "kind") }}
+            </fieldset>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="starts" class="kx-label">Starts <span class="text-danger-text">*</span></label>
+                <input id="starts" type="date" name="starts" value="{{ assign_values.get('starts') or today.isoformat() }}" class="kx-input">
+                {{ ui.field_error(assign_errors, "start_date") }}
+              </div>
+              <div>
+                <label for="ends" class="kx-label">Ends <span class="font-normal text-ink-3">(optional)</span></label>
+                <input id="ends" type="date" name="ends" value="{{ assign_values.get('ends', '') }}" class="kx-input">
+                {{ ui.field_error(assign_errors, "end_date") }}
+              </div>
+            </div>
+            <p class="-mt-3 text-xs text-ink-3">The end date is their last day in the position. Leave blank for open-ended.</p>
+            <div>
+              <label for="reason" class="kx-label">Reason <span class="text-danger-text">*</span></label>
+              <textarea id="reason" name="reason" rows="3" maxlength="300" class="kx-input" placeholder="For example: promoted after the 2026 review">{{ assign_values.get("reason", "") }}</textarea>
+              {{ ui.field_error(assign_errors, "reason") }}
+            </div>
+            {{ ui.alert("info", "A position has one primary holder at a time. Acting and interim holders count only while it has no primary holder. To cover an absence, use a delegation instead.", "info") }}
+          </div>
+          <div class="flex items-center justify-end gap-3 border-t border-line p-6">
+            <button type="button" class="kx-btn-secondary" x-on:click="hide">Cancel</button>
+            <button type="submit" class="kx-btn-primary">Assign</button>
+          </div>
+        </form>
+      </aside>
+    </div>
+{% endmacro %}
+
+{% block content %}
+{% set n = detail.node %}
+<div>
+    <div class="relative">
+      <div class="kx-hue-glow" aria-hidden="true"></div>
+      <div class="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center gap-3">
+            <h1 class="font-h1 text-h1">{{ n.title }}</h1>
+            {% if not n.is_active %}{{ ui.badge("neutral", "Inactive") }}{% elif n.holder %}{{ ui.badge("success", "Filled") }}{% else %}{{ ui.badge("warning", "Vacant") }}{% endif %}
+          </div>
+          <p class="flex flex-wrap gap-1.5">{{ ui.badge("neutral", n.department) }}{% if n.grade %}{{ ui.badge("neutral", n.grade) }}{% endif %}{% if n.branch %}{{ ui.badge("neutral", n.branch) }}{% endif %}</p>
+        </div>
+        <div class="flex shrink-0 flex-wrap items-center gap-3">
+          <a href="/hr/org-chart?selected={{ n.id }}" class="kx-btn-ghost">{{ ui.icon("network", "sm") }} Org chart</a>
+          {% if can_manage %}
+          <div x-data="modal" data-open="{{ 'true' if position_open else 'false' }}" class="contents">
+            <button type="button" class="kx-btn-secondary" x-on:click="show">{{ ui.icon("pencil", "sm") }} Edit position</button>
+            {{ orgui.position_drawer("/hr/positions/" ~ n.id, "Edit position") }}
+          </div>
+          {% endif %}
+          {% if can_assign and n.is_active %}
+          <div x-data="modal" data-open="{{ 'true' if assign_open else 'false' }}" class="contents">
+            <button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("user-plus", "sm") }} Assign person</button>
+            {{ assign_drawer() }}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5 space-y-3">
+      {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+      {% if problem %}{{ ui.alert("danger", problem) }}{% endif %}
+    </div>
+
+    <div class="kx-stagger mt-6 grid items-start gap-6 xl:grid-cols-12">
+      <div class="space-y-6 xl:col-span-8">
+        <section class="kx-card p-5 md:p-6" aria-labelledby="holders-title">
+          <h2 id="holders-title" class="font-h2 text-h2">Holders</h2>
+          <p class="text-body-sm text-ink-3">One primary holder at a time. Acting and interim holders count only while there is no primary holder.</p>
+          {% if detail.history %}
+          <ol class="mt-5 space-y-0">
+            {% for h in detail.history %}
+            <li class="relative flex gap-4 pb-5 last:pb-0">
+              {% if not loop.last %}<span class="absolute left-[7px] top-5 h-full w-0.5 bg-line" aria-hidden="true"></span>{% endif %}
+              <span class="relative mt-1.5 h-4 w-4 shrink-0 rounded-full border-2 {{ 'border-success-text bg-success-bg' if h.status == 'current' else ('border-info-text bg-info-bg' if h.status == 'upcoming' else 'border-line-strong bg-surface') }}"></span>
+              <div class="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between {{ 'opacity-60' if h.status == 'ended' }}">
+                <div class="min-w-0">
+                  <p class="flex flex-wrap items-center gap-2 text-body-sm font-semibold">{{ kind_labels[h.kind] }} · {{ names.get(h.employee_id, "—") }}
+                    {% if h.status == "upcoming" %}{{ ui.badge("info", "Starts later") }}{% elif h.status == "ended" %}{{ ui.badge("neutral", "Ended") }}{% endif %}</p>
+                  <p class="text-xs text-ink-3 tnum">{{ h.start_date | date }} – {{ h.end_date | date if h.end_date else "present" }}</p>
+                  <p class="mt-0.5 line-clamp-2 text-xs text-ink-3">{{ h.reason }}</p>
+                </div>
+                {% if can_assign and h.status != "ended" %}
+                <div class="relative shrink-0" x-data="menu" x-on:keydown.escape="close" x-on:click.outside="close">
+                  <button type="button" class="kx-btn-ghost h-9 text-danger-text" x-on:click="toggle" x-bind:aria-expanded="open">{{ "Cancel" if h.status == "upcoming" else "End" }}</button>
+                  <form x-show="open" x-cloak x-transition.opacity.duration.150ms method="post" hx-push-url="false" action="/hr/assignments/{{ h.assignment_id }}/end"
+                        class="absolute right-0 z-10 mt-1 w-72 space-y-3 rounded-2xl border border-line bg-surface-raised p-4 shadow-raised">
+                    {{ ui.csrf_field() }}
+                    {% if h.status == "current" %}
+                    <label class="kx-label" for="last-{{ h.assignment_id }}">Last day in the position</label>
+                    <input id="last-{{ h.assignment_id }}" type="date" name="last_day" class="kx-input" value="{{ today.isoformat() }}" min="{{ h.start_date.isoformat() }}" required>
+                    {% else %}<input type="hidden" name="last_day" value="{{ today.isoformat() }}">{% endif %}
+                    <label class="kx-label" for="why-{{ h.assignment_id }}">Reason</label>
+                    <input id="why-{{ h.assignment_id }}" name="reason" class="kx-input" required minlength="5" autocomplete="off">
+                    <button type="submit" class="kx-btn-danger w-full">{{ "Cancel assignment" if h.status == "upcoming" else "End assignment" }}</button>
+                  </form>
+                </div>
+                {% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          </ol>
+          {% else %}
+          {% call ui.empty_state("user-plus", "Nobody has held this position yet", "Assign a primary holder, or an acting holder while you recruit.") %}{% endcall %}
+          {% endif %}
+        </section>
+
+        <section class="kx-card p-5 md:p-6" aria-labelledby="reports-title">
+          <h2 id="reports-title" class="font-h2 text-h2">Reports to this position</h2>
+          {% if detail.children %}
+          <ul class="mt-4 divide-y divide-line">
+            {% for c in detail.children %}
+            <li><a href="/hr/positions/{{ c.id }}" class="flex items-center gap-3 py-3 hover:bg-surface-sunken/50">
+              {{ orgui.avatar(c, names) }}
+              <span class="min-w-0 flex-1"><span class="block truncate text-body-sm font-semibold">{{ c.title }}</span><span class="block truncate text-xs text-ink-3">{{ names.get(c.holder.employee_id) if c.holder else "Vacant" }} · {{ c.department }}</span></span>
+              {{ orgui.kind_badge(c) }}{{ ui.icon("chevron-right", "sm", "text-ink-3") }}
+            </a></li>
+            {% endfor %}
+          </ul>
+          {% else %}<p class="mt-3 text-body-sm text-ink-3">No positions report to this one.</p>{% endif %}
+        </section>
+      </div>
+
+      <aside class="space-y-6 xl:sticky xl:top-24 xl:col-span-4">
+        <section class="kx-card p-5 md:p-6" aria-labelledby="chain-title">
+          <h2 id="chain-title" class="font-h2 text-h2">Reporting line</h2>
+          <p class="text-xs text-ink-3">Approvals for this position's holder go upwards. Vacant positions are skipped.</p>
+          <ol class="mt-4 space-y-3">
+            <li class="flex items-center gap-3"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-hue text-xs font-bold text-white">{{ ui.icon("map-pin", "sm") }}</span><span class="text-body-sm font-semibold">{{ n.title }}</span></li>
+            {% for title, holder in detail.chain %}
+            <li class="flex items-center gap-3 {{ 'opacity-60' if not holder }}">
+              <span class="flex h-7 w-7 items-center justify-center rounded-full border border-line bg-surface-sunken text-xs tnum text-ink-2">{{ loop.index }}</span>
+              <span class="min-w-0"><span class="block truncate text-body-sm {{ 'line-through' if not holder }}">{{ title }}</span><span class="block truncate text-xs text-ink-3">{{ names.get(holder) if holder else "Vacant, skipped" }}</span></span>
+            </li>
+            {% else %}
+            <li class="text-body-sm text-ink-3">This is the top of the chart.</li>
+            {% endfor %}
+          </ol>
+        </section>
+        <section class="kx-card space-y-3 p-5 text-body-sm md:p-6" aria-labelledby="details-title">
+          <h2 id="details-title" class="font-h2 text-h2">Details</h2>
+          <dl class="space-y-2.5">
+            <div class="flex justify-between gap-3"><dt class="text-ink-3">Reports to</dt><dd class="text-right font-medium">{{ detail.parent_title or "Nobody (top)" }}</dd></div>
+            <div class="flex justify-between gap-3"><dt class="text-ink-3">Department</dt><dd class="text-right font-medium">{{ n.department }}</dd></div>
+            <div class="flex justify-between gap-3"><dt class="text-ink-3">Grade</dt><dd class="text-right font-medium">{{ n.grade or "—" }}</dd></div>
+            <div class="flex justify-between gap-3"><dt class="text-ink-3">Branch</dt><dd class="text-right font-medium">{{ n.branch or "—" }}</dd></div>
+            <div class="flex justify-between gap-3"><dt class="text-ink-3">Direct reports · team</dt><dd class="tnum font-medium">{{ n.direct_reports }} · {{ n.team_size }}</dd></div>
+          </dl>
+          {% if can_manage %}
+          <form method="post" hx-push-url="false" action="/hr/positions/{{ n.id }}/active" class="border-t border-line pt-3">
+            {{ ui.csrf_field() }}<input type="hidden" name="active" value="{{ '0' if n.is_active else '1' }}">
+            <button type="submit" class="kx-btn-ghost h-9 px-2 {{ 'text-danger-text' if n.is_active }}">{{ ui.icon("archive" if n.is_active else "archive-restore", "sm") }} {{ "Deactivate position" if n.is_active else "Reactivate position" }}</button>
+          </form>
+          {% endif %}
+        </section>
+      </aside>
+    </div>
+
+</div>
+{% endblock %}

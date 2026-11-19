@@ -5,6 +5,25 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 4: Organisation structure
+- Branches, cost centres, grades, nestable departments, positions (a reporting tree) and
+  position assignments (primary, acting or interim, with dates), plus a minimal employee
+  record in the new HR module (ADR 0015).
+- The org resolver: who holds a position, a person's manager, their direct and indirect
+  reports, the approval chain and their departments, as of any date. Vacant positions are
+  skipped, a primary holder always wins, and cycles in bad data stop the walk and are
+  logged. Moving a department or position under its own descendant is refused.
+- Team and department scopes now come from the position tree, including for records
+  without a department of their own (employees).
+- Screens: Org chart, Position detail, Departments, Structure setup and People under HR;
+  Organisation (legal details and document colours) under Administration.
+- Permissions `org.structure.read`, `org.structure.manage`, `org.assignment.manage`
+  (sensitive), `hr.employee.read`, `hr.employee.create` and `hr.employee.update`.
+
+### Changed
+- The worker starts with `celery -A app.worker`; `app/wiring.py` connects the core to
+  business modules, and an import contract stops core packages importing `app.modules`.
+
 ### Added — Phase 3: Authorisation
 - One policy engine (ADR 0013): permission catalogue declared in each package's
   `policies.py`, scopes (self, team, department, organisation), `check()` with a reason and

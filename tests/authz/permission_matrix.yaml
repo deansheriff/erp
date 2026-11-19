@@ -3,7 +3,9 @@
 auditor:
   audit.log.read: organization
   authz.role.read: organization
+  hr.employee.read: organization
   identity.user.read: organization
+  org.structure.read: organization
 employee: {}
 expense_approver: {}
 finance_manager: {}
@@ -19,9 +21,15 @@ organization_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  hr.employee.create: organization
+  hr.employee.read: organization
+  hr.employee.update: organization
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization
+  org.assignment.manage: organization
+  org.structure.manage: organization
+  org.structure.read: organization
 payroll_officer: {}
 procurement_officer: {}
 reimburser: {}
@@ -31,9 +39,15 @@ super_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  hr.employee.create: organization
+  hr.employee.read: organization
+  hr.employee.update: organization
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization
+  org.assignment.manage: organization
+  org.structure.manage: organization
+  org.structure.read: organization
   system.branding.manage: organization
   system.mail.manage: organization
   system.security.manage: organization

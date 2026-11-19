@@ -23,20 +23,38 @@ from app.identity.models import (
     UserToken,
 )
 from app.mail.models import MailOutbox, MailSettings
-from app.org.models import Organization
+from app.modules.hr.models import Employee
+from app.org.models import (
+    Branch,
+    CostCentre,
+    Department,
+    Grade,
+    Organization,
+    OrgState,
+    Position,
+    PositionAssignment,
+)
 
 __all__ = [
     "ApiKey",
     "AuditLog",
     "AuthzState",
+    "Branch",
+    "CostCentre",
     "Delegation",
+    "Department",
+    "Employee",
+    "Grade",
     "Installation",
     "LoginAttempt",
     "MailOutbox",
     "MailSettings",
     "MfaRecoveryCode",
+    "OrgState",
     "Organization",
     "PermissionRow",
+    "Position",
+    "PositionAssignment",
     "Role",
     "RoleAssignment",
     "RoleGrant",

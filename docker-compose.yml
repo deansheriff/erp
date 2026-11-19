@@ -83,7 +83,7 @@ services:
 
   worker:
     build: .
-    command: ["celery", "-A", "app.core.worker", "worker", "--loglevel=INFO", "--concurrency=2"]
+    command: ["celery", "-A", "app.worker", "worker", "--loglevel=INFO", "--concurrency=2"]
     environment: *app-env
     depends_on:
       migrate: { condition: service_completed_successfully }

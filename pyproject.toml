@@ -113,7 +113,19 @@ ignore_imports = [
   "app.authz.routes_web -> app.web.*",
   "app.audit.routes_web -> fastapi",
   "app.audit.routes_web -> app.web.*",
+  "app.org.routes_web -> fastapi",
+  "app.org.routes_web -> app.web.*",
+  "app.modules.hr.routes_web -> fastapi",
+  "app.modules.hr.routes_web -> app.web.*",
 ]
+
+[[tool.importlinter.contracts]]
+name = "Core packages never import business modules"
+# Business modules build on the core, never the reverse. app/wiring.py, app/main.py and
+# app/worker.py are the composition roots that connect them.
+type = "forbidden"
+source_modules = ["app.core", "app.audit", "app.authz", "app.identity", "app.mail", "app.org", "app.files", "app.web"]
+forbidden_modules = ["app.modules"]
 
 [[tool.importlinter.contracts]]
 name = "Only app.files talks to object storage"

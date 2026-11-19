@@ -1,4 +1,4 @@
-"""Celery application. Run with: celery -A app.core.worker worker
+"""Celery application. The worker process starts from app/worker.py (celery -A app.worker worker)
 
 Tasks are plain functions that call service functions inside `session_scope()`.
 """

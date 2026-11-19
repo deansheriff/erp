@@ -21,6 +21,14 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `authz.role.manage` | Manage roles | Organisation | yes | Create, edit and delete roles. |
 | `authz.role.read` | View roles | Organisation |  | See roles and their permissions. |
 
+### hr
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `hr.employee.create` | Add people | Organisation |  | Add someone to the organisation chart. |
+| `hr.employee.read` | View people | Self, Team, Department, Organisation |  | Names, positions, departments and work emails (the directory fields). |
+| `hr.employee.update` | Edit people | Self, Team, Department, Organisation |  | Change directory details and link a sign-in account. |
+
 ### identity
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -28,6 +36,14 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `identity.user.invite` | Invite users | Organisation |  | Send invitations to new people. |
 | `identity.user.manage` | Manage user accounts | Organisation | yes | Resend invitations, suspend, reactivate and unlock accounts. |
 | `identity.user.read` | View user accounts | Organisation |  | See everyone who can sign in. |
+
+### org
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `org.assignment.manage` | Assign people to positions | Organisation | yes | Put people in positions as primary, acting or interim holders. This changes who manages whom, and so who can see and approve what. |
+| `org.structure.manage` | Manage the organisation structure | Organisation |  | Create and change departments, positions, branches, cost centres and grades. |
+| `org.structure.read` | View the organisation chart | Organisation |  | Departments, positions, branches, cost centres, grades and who holds each position. |
 
 ### system
 
@@ -52,9 +68,15 @@ Everything, including technical settings. Can't be edited or removed.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `hr.employee.create` | O |
+| `hr.employee.read` | O |
+| `hr.employee.update` | O |
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `org.assignment.manage` | O |
+| `org.structure.manage` | O |
+| `org.structure.read` | O |
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
@@ -70,9 +92,15 @@ Everything except technical settings such as mail, branding and security.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `hr.employee.create` | O |
+| `hr.employee.read` | O |
+| `hr.employee.update` | O |
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `org.assignment.manage` | O |
+| `org.structure.manage` | O |
+| `org.structure.read` | O |
 
 ### Auditor
 
@@ -82,7 +110,9 @@ Reads everything, including the audit log. Changes nothing.
 |---|---|
 | `audit.log.read` | O |
 | `authz.role.read` | O |
+| `hr.employee.read` | O |
 | `identity.user.read` | O |
+| `org.structure.read` | O |
 
 ### Employee
 

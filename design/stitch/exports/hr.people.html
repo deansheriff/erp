@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "lime-ink": "#4D7A0A",
+          "tertiary": "#7a3700",
+          "on-surface-variant": "#474554",
+          "surface-tint": "#5646d7",
+          "on-primary-fixed-variant": "#3d28be",
+          "on-primary-container": "#e0dbff",
+          "tertiary-container": "#9f4a00",
+          "surface-raised": "#FFFFFF",
+          "on-secondary-fixed": "#161f00",
+          "warning-bg": "#FFF1D6",
+          "iris-tint": "#EEECFD",
+          "primary-fixed-dim": "#c5c0ff",
+          "canvas": "#F6F6FA",
+          "danger-text": "#B4232F",
+          "info-text": "#1D55B8",
+          "on-error-container": "#93000a",
+          "secondary": "#4f6600",
+          "surface-container-low": "#f3f3f7",
+          "error": "#ba1a1a",
+          "warning-text": "#8A4B00",
+          "on-background": "#1a1c1f",
+          "inverse-primary": "#c5c0ff",
+          "ink-3": "#626280",
+          "iris-hover": "#4A3CC4",
+          "on-error": "#ffffff",
+          "on-primary-fixed": "#140067",
+          "on-iris": "#FFFFFF",
+          "on-tertiary": "#ffffff",
+          "surface-container-lowest": "#ffffff",
+          "destructive": "#C42836",
+          "secondary-container": "#c4ef49",
+          "surface-container": "#ededf1",
+          "line-strong": "#8B8BA6",
+          "surface-bright": "#f9f9fd",
+          "primary-container": "#5a4bdb",
+          "outline-variant": "#c8c4d7",
+          "success-text": "#0F6B3E",
+          "surface-variant": "#e2e2e6",
+          "on-tertiary-fixed-variant": "#743400",
+          "inverse-surface": "#2e3034",
+          "surface-container-highest": "#e2e2e6",
+          "surface": "#FFFFFF",
+          "inverse-on-surface": "#f0f0f4",
+          "background": "#f9f9fd",
+          "danger-bg": "#FFE4E6",
+          "error-container": "#ffdad6",
+          "on-tertiary-container": "#ffd7c1",
+          "tertiary-fixed-dim": "#ffb68b",
+          "lime": "#C5F04A",
+          "ink": "#16162A",
+          "on-secondary-fixed-variant": "#3b4d00",
+          "on-secondary": "#ffffff",
+          "on-secondary-container": "#536b00",
+          "surface-container-high": "#e8e8ec",
+          "surface-dim": "#d9dade",
+          "iris": "#5A4BDB",
+          "secondary-fixed": "#c7f24c",
+          "on-surface": "#1a1c1f",
+          "primary": "#412ec2",
+          "tertiary-fixed": "#ffdbc8",
+          "success-bg": "#DDF7E8",
+          "on-tertiary-fixed": "#321300",
+          "primary-fixed": "#e4dfff",
+          "on-primary": "#ffffff",
+          "outline": "#787586",
+          "secondary-fixed-dim": "#acd530",
+          "line": "#E4E4EE",
+          "info-bg": "#DFEBFF",
+          "ink-2": "#4B4B66",
+          "surface-sunken": "#EFEFF6"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "margin": "2rem",
+          "gutter": "1.5rem",
+          "space-2xl": "3rem",
+          "space-sm": "0.5rem",
+          "space-md": "1rem",
+          "space-xs": "0.25rem",
+          "space-lg": "1.5rem",
+          "space-3xl": "4rem",
+          "space-xl": "2rem"
+        },
+        "fontFamily": {
+          "h2": [
+            "Plus Jakarta Sans"
+          ],
+          "label": [
+            "Inter"
+          ],
+          "display": [
+            "Plus Jakarta Sans"
+          ],
+          "stat": [
+            "Plus Jakarta Sans"
+          ],
+          "h3": [
+            "Plus Jakarta Sans"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "overline": [
+            "Inter"
+          ],
+          "h1": [
+            "Plus Jakarta Sans"
+          ],
+          "body": [
+            "Inter"
+          ]
+        },
+        "fontSize": {
+          "h2": [
+            "18px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "label": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "500"
+            }
+          ],
+          "display": [
+            "32px",
+            {
+              "lineHeight": "40px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "stat": [
+            "30px",
+            {
+              "lineHeight": "36px",
+              "fontWeight": "700"
+            }
+          ],
+          "h3": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-sm": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "400"
+            }
+          ],
+          "overline": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "600"
+            }
+          ],
+          "h1": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "body": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "400"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-canvas font-body text-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-[272px] bg-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col min-h-0"><div class="h-16 px-space-lg flex items-center bg-surface"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-h3 text-h3">K</div><span class="font-h3 text-h3 text-ink tracking-tight truncate">Adeyemi Holdings Ltd</span></div></div><div class="px-space-md pt-space-xs pb-space-sm"><button class="w-full h-11 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center justify-between text-ink-3 hover:text-on-surface" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm">Go to...</span></div><kbd class="px-space-xs py-0.5 rounded bg-surface font-label text-overline text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.06)]">Ctrl K</kbd></button></div><div class="flex-1 overflow-y-auto px-space-sm py-space-xs space-y-space-xs"><nav class="flex flex-col gap-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label text-label">Home</span></a><div class="rounded-xl bg-[#7C3AED]/[0.12] p-1"><a class="flex items-center justify-between px-space-md h-10 rounded-lg text-[#7C3AED] font-semibold" data-path="hr" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px] text-[#7C3AED]">badge</span><span class="font-label text-label">HR</span></div><span class="material-symbols-outlined text-[18px]">expand_more</span></a><div class="flex flex-col gap-0.5 pl-space-md pr-1 py-1"><a class="flex items-center px-space-md h-9 rounded-lg text-ink-2 hover:bg-surface hover:text-on-surface transition-colors font-label text-label" data-path="hr-org-chart" href="#">Org chart</a><a class="flex items-center px-space-md h-9 rounded-lg text-ink-2 hover:bg-surface hover:text-on-surface transition-colors font-label text-label" data-path="hr-departments" href="#">Departments</a><a aria-current="page" class="relative flex items-center px-space-md h-9 shadow-sm bg-iris-tint text-iris font-semibold rounded-lg" data-path="hr-people" href="#"><div class="absolute left-0 top-1.5 bottom-1.5 w-1 bg-[#7C3AED] rounded-r-full"></div>People</a><a class="flex items-center px-space-md h-9 rounded-lg text-ink-2 hover:bg-surface hover:text-on-surface transition-colors font-label text-label" data-path="hr-structure-setup" href="#">Structure setup</a></div></div><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-label text-label">Attendance</span></a><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Expenses</span></a><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payroll</span></a><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-label text-label">Finance</span></a><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label text-label">Inventory</span></a><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-md px-space-md h-11 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">help_center</span><span class="font-label text-label">Support</span></a></nav></div></div><div class="p-space-sm space-y-0.5 bg-surface"><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container text-on-surface font-semibold rounded-lg"><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-3 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span class="font-label text-label">Help &amp; documentation</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-3 hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label text-label">Settings</span></a></nav><div class="pt-space-xs"><div class="flex items-center justify-between p-space-sm rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer"><div class="flex items-center gap-space-sm overflow-hidden"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="font-h3 text-h3 text-on-primary">FB</span></div><div class="flex flex-col min-w-0"><span class="font-label text-label text-ink font-semibold truncate">Fatima Bello</span><span class="font-overline text-overline text-ink-3 truncate">Finance Manager</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px]">unfold_more</span></div></div></div></aside><div class="pl-[272px]"><header class="fixed top-0 left-[272px] right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-space-sm"><span class="font-label text-label text-ink-3">HR</span><span class="material-symbols-outlined text-ink-3 text-[16px]">chevron_right</span><span class="font-label text-label font-semibold text-ink">People</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-64 h-10 pl-9 pr-14 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-on-surface placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/20" placeholder="Search directory..." type="text"/><kbd class="absolute right-2.5 px-space-xs py-0.5 rounded bg-surface font-label text-overline text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.06)]">Ctrl K</kbd></div><a class="h-10 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-space-xs text-ink-2 hover:text-on-surface" data-path="approvals" href="#"><span class="font-label text-label">Approvals</span><span class="px-1.5 py-0.5 rounded-full bg-iris font-label text-overline text-on-iris font-semibold">3</span></a><button aria-label="Notifications" class="relative w-10 h-10 rounded-lg hover:bg-surface-container-low transition-colors flex items-center justify-center text-ink-2 hover:text-on-surface" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span></button><button aria-label="Toggle theme" class="w-10 h-10 rounded-lg hover:bg-surface-container-low transition-colors flex items-center justify-center text-ink-2 hover:text-on-surface" type="button"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-canvas w-full px-space-xl py-space-xl min-h-screen"><div class="flex flex-col w-full relative">
+<!-- Dynamic Module Glow (Chroma Violet ERP Accent) -->
+<div class="absolute -top-12 -left-8 w-96 h-96 bg-[#7C3AED]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-ink-3 font-label text-body-sm">
+<span>HR</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-ink font-medium">People</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">People</h1>
+<p class="font-body-sm text-body-sm text-ink-3">
+        Everyone in the organisation chart. Full HR records arrive with the HR module.
+      </p>
+</div>
+<!-- Quick Stats & Action -->
+<div class="flex items-center gap-space-md">
+<div class="hidden lg:flex items-center gap-3 bg-surface px-4 py-2 rounded-xl shadow-sm">
+<div class="w-8 h-8 rounded-lg bg-iris-tint flex items-center justify-center text-iris">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3 uppercase">Total Directory</span>
+<span class="font-label text-label font-bold text-ink">48 active records</span>
+</div>
+</div>
+<button class="h-11 px-5 rounded-[10px] bg-iris hover:bg-iris-hover active:scale-[0.98] transition-all text-on-iris font-label text-label font-semibold shadow-sm flex items-center gap-2 cursor-pointer" id="open-drawer-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+<span>+ Add person</span>
+</button>
+</div>
+</div>
+<!-- Filter & Search Toolbar -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm mb-space-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md">
+<div class="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-3">
+<!-- Search Input -->
+<div class="relative flex-1 min-w-[260px]">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3 text-[20px]">search</span>
+<input class="w-full h-11 pl-10 pr-4 rounded-[10px] bg-surface-sunken text-on-surface font-body-sm text-body-sm placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" placeholder="Search by name or email…" type="text"/>
+</div>
+<!-- Status Dropdown Select -->
+<div class="relative min-w-[160px]">
+<select class="w-full h-11 pl-3.5 pr-9 appearance-none rounded-[10px] bg-surface-sunken font-label text-label text-ink cursor-pointer focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all">
+<option value="all">Any status</option>
+<option value="active">Active</option>
+<option value="leave">On leave</option>
+<option value="suspended">Suspended</option>
+<option value="left">Left</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+</div>
+<!-- Checkbox filter chip -->
+<label class="h-11 px-3.5 rounded-[10px] bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-2.5 cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-surface accent-[#5A4BDB] cursor-pointer" type="checkbox"/>
+<span class="font-label text-label text-ink-2 whitespace-nowrap">No position</span>
+</label>
+</div>
+<!-- Apply & Filter Presets -->
+<div class="flex items-center gap-2">
+<button class="h-11 px-5 rounded-[10px] bg-surface-container-low hover:bg-surface-container text-ink font-label text-label font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>Apply</span>
+</button>
+<button class="w-11 h-11 rounded-[10px] bg-surface-sunken hover:bg-surface-container-high text-ink-3 hover:text-ink flex items-center justify-center transition-colors cursor-pointer" title="Reset filters" type="button">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Data Table Card Container -->
+<div class="bg-surface rounded-2xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken font-overline text-overline text-ink-2 tracking-wider">
+<th class="py-3.5 px-6 font-semibold">NAME</th>
+<th class="py-3.5 px-6 font-semibold">POSITION</th>
+<th class="py-3.5 px-6 font-semibold">SIGN-IN</th>
+<th class="py-3.5 px-6 font-semibold">STATUS</th>
+<th class="py-3.5 px-6 font-semibold text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent font-body-sm text-body-sm text-on-surface">
+<!-- 1. Fatima Bello -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#F3F0FD] flex items-center justify-center text-[#7C3AED] font-h3 text-h3 shrink-0 shadow-sm">
+                  FB
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Fatima Bello</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">fatima.bello@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-label text-label text-ink">Head of Finance</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">how_to_reg</span>
+                Linked
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+                Active
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+<!-- 2. Babatunde Adeyemi -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#EEECFD] flex items-center justify-center text-[#5A4BDB] font-h3 text-h3 shrink-0 shadow-sm">
+                  BA
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Babatunde Adeyemi</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">babatunde.adeyemi@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-label text-label text-ink">Managing Director</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">how_to_reg</span>
+                Linked
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+                Active
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+<!-- 3. Adaeze Okafor -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#EEECFD] flex items-center justify-center text-[#5A4BDB] font-h3 text-h3 shrink-0 shadow-sm">
+                  AO
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Adaeze Okafor</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">adaeze.okafor@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-label text-label text-ink">Chief Operating Officer</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">how_to_reg</span>
+                Linked
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+                Active
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+<!-- 4. Chinedu Eze -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#E0F2FE] flex items-center justify-center text-[#0369A1] font-h3 text-h3 shrink-0 shadow-sm">
+                  CE
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Chinedu Eze</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">chinedu.eze@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2">
+<span class="font-label text-label text-ink">Finance Manager</span>
+<span class="px-2 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline font-semibold">
+                  Acting
+                </span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">how_to_reg</span>
+                Linked
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+                Active
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+<!-- 5. Aisha Mohammed -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#FEF3C7] flex items-center justify-center text-[#B45309] font-h3 text-h3 shrink-0 shadow-sm">
+                  AM
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Aisha Mohammed</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">aisha.mohammed@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-label text-label text-ink">Talent Acquisition Lead</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">how_to_reg</span>
+                Linked
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-[#E0F2FE] text-[#0369A1] font-label text-overline font-semibold">
+                On leave
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+<!-- 6. Olumide Adeleke -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-sunken flex items-center justify-center text-ink-2 font-h3 text-h3 shrink-0 shadow-sm">
+                  OA
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Olumide Adeleke</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">olumide.adeleke@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-[#FFF1D6] text-[#8A4B00] font-label text-overline font-semibold">
+                No position
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-surface-sunken text-ink-2 font-label text-overline font-semibold">
+                No account
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+                Active
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+<!-- 7. Ngozi Nnamdi -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-danger-bg flex items-center justify-center text-danger-text font-h3 text-h3 shrink-0 shadow-sm">
+                  NN
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Ngozi Nnamdi</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">ngozi.nnamdi@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-label text-label text-ink">Senior Systems Auditor</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">how_to_reg</span>
+                Linked
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-[#FFE4E6] text-[#B4232F] font-label text-overline font-semibold">
+                Suspended
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+<!-- 8. Kareem Alabi -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-sunken flex items-center justify-center text-ink-3 font-h3 text-h3 shrink-0 shadow-sm">
+                  KA
+                </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate">Kareem Alabi</span>
+<span class="font-body-sm text-body-sm text-ink-3 truncate">kareem.alabi@adeyemiholdings.ng</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="font-label text-label text-ink">Facilities Supervisor</span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-surface-sunken text-ink-2 font-label text-overline font-semibold">
+                No account
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-surface-container-high text-ink-3 font-label text-overline font-semibold">
+                Left
+              </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="px-6 py-4 bg-surface-sunken/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<span class="font-body-sm text-body-sm text-ink-3">Showing 1–8 of 48 people</span>
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline text-ink-3 uppercase">Per page:</span>
+<select class="h-8 px-2 rounded-lg bg-surface font-label text-body-sm text-ink border-0 shadow-sm focus:outline-none cursor-pointer">
+<option>8</option>
+<option>16</option>
+<option>32</option>
+<option>48</option>
+</select>
+</div>
+</div>
+<!-- Pagination Buttons -->
+<div class="flex items-center gap-1.5">
+<button class="w-9 h-9 rounded-lg bg-surface hover:bg-surface-container-low text-ink-3 hover:text-ink flex items-center justify-center transition-colors disabled:opacity-40 cursor-pointer shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 rounded-lg bg-iris text-on-iris font-label text-label font-bold flex items-center justify-center shadow-sm" type="button">
+          1
+        </button>
+<button class="w-9 h-9 rounded-lg bg-surface hover:bg-surface-container-low text-ink font-label text-label flex items-center justify-center transition-colors cursor-pointer shadow-sm" type="button">
+          2
+        </button>
+<button class="w-9 h-9 rounded-lg bg-surface hover:bg-surface-container-low text-ink font-label text-label flex items-center justify-center transition-colors cursor-pointer shadow-sm" type="button">
+          3
+        </button>
+<span class="px-1 text-ink-3">…</span>
+<button class="w-9 h-9 rounded-lg bg-surface hover:bg-surface-container-low text-ink font-label text-label flex items-center justify-center transition-colors cursor-pointer shadow-sm" type="button">
+          6
+        </button>
+<button class="w-9 h-9 rounded-lg bg-surface hover:bg-surface-container-low text-ink-3 hover:text-ink flex items-center justify-center transition-colors cursor-pointer shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right-side Drawer / Slide-Over Modal for "Add Person" -->
+<div class="fixed inset-0 z-50 flex justify-end transition-opacity duration-300" id="drawer-container">
+<!-- Backdrop Scrim -->
+<div class="fixed inset-0 bg-[#0B0B12]/45 backdrop-blur-[4px] cursor-pointer" id="drawer-scrim"></div>
+<!-- Slide-over Card Panel -->
+<aside class="relative z-10 w-full max-w-[480px] h-full bg-surface shadow-2xl flex flex-col justify-between overflow-hidden">
+<!-- Drawer Header -->
+<div class="px-6 py-5 bg-surface flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-iris-tint flex items-center justify-center text-iris shrink-0">
+<span class="material-symbols-outlined text-[22px]">person_add</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-h2 text-h2 text-ink">Add person</h2>
+<p class="font-body-sm text-body-sm text-ink-3">Create a person record in the organisation directory.</p>
+</div>
+</div>
+<button aria-label="Close drawer" class="w-11 h-11 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors cursor-pointer" id="close-drawer-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Scrollable Body -->
+<div class="flex-1 overflow-y-auto px-6 py-4 space-y-5">
+<!-- Info Callout Card -->
+<div class="p-4 rounded-xl bg-info-bg/70 flex items-start gap-3">
+<span class="material-symbols-outlined text-info-text text-[20px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-info-text leading-relaxed">
+            Personal, banking and statutory details are added later in the HR record.
+          </p>
+</div>
+<!-- Person Form Fields -->
+<form class="space-y-4" id="add-person-form">
+<!-- 2-Column Name Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-semibold text-ink" for="first-name">
+                First name <span class="text-danger-text">*</span>
+</label>
+<input class="w-full h-11 px-3.5 rounded-[10px] bg-surface-sunken text-on-surface font-body-sm text-body-sm placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" id="first-name" name="first-name" placeholder="e.g. Chinedu" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-semibold text-ink" for="last-name">
+                Last name <span class="text-danger-text">*</span>
+</label>
+<input class="w-full h-11 px-3.5 rounded-[10px] bg-surface-sunken text-on-surface font-body-sm text-body-sm placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" id="last-name" name="last-name" placeholder="e.g. Eze" required="" type="text"/>
+</div>
+</div>
+<!-- Other Names -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label font-semibold text-ink" for="other-names">Other names</label>
+<span class="font-overline text-overline text-ink-3">Optional</span>
+</div>
+<input class="w-full h-11 px-3.5 rounded-[10px] bg-surface-sunken text-on-surface font-body-sm text-body-sm placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" id="other-names" name="other-names" placeholder="e.g. Chukwuma" type="text"/>
+</div>
+<!-- Work Email -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-semibold text-ink" for="work-email">
+              Work email <span class="text-danger-text">*</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">mail</span>
+<input class="w-full h-11 pl-10 pr-3.5 rounded-[10px] bg-surface-sunken text-on-surface font-body-sm text-body-sm placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" id="work-email" name="work-email" placeholder="name@adeyemiholdings.ng" required="" type="email"/>
+</div>
+</div>
+<!-- Position Assignment -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-semibold text-ink" for="position">Organisation position</label>
+<div class="relative">
+<select class="w-full h-11 pl-3.5 pr-9 appearance-none rounded-[10px] bg-surface-sunken font-body-sm text-body-sm text-ink cursor-pointer focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" id="position">
+<option value="">Select an open position...</option>
+<option value="fin-mgr">Finance Manager (Finance &amp; Accounts)</option>
+<option value="lead-eng">Lead Systems Engineer (Technology)</option>
+<option value="talent-lead">Talent Acquisition Lead (People Operations)</option>
+<option value="ops-coord">Operations Coordinator (Logistics)</option>
+<option value="audit-assoc">Audit Associate (Risk &amp; Compliance)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Sign-in Account Select -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between">
+<label class="font-label text-label font-semibold text-ink" for="user-account">Sign-in account</label>
+<span class="font-overline text-overline text-ink-3">Optional</span>
+</div>
+<div class="relative">
+<select class="w-full h-11 pl-3.5 pr-9 appearance-none rounded-[10px] bg-surface-sunken font-body-sm text-body-sm text-ink cursor-pointer focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" id="user-account">
+<option value="">Select sign-in account or leave unlinked...</option>
+<option value="invite-new">Create credentials &amp; send activation invite</option>
+<option value="acc-102">adeyemi.b@portal.local (Existing unlinked)</option>
+<option value="acc-104">c.eze@portal.local (Existing unlinked)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1 leading-normal">
+              Linking lets their roles reach their team and department through the org chart.
+            </p>
+</div>
+</form>
+</div>
+<!-- Docked Drawer Footer -->
+<div class="px-6 py-4 bg-surface flex items-center justify-end gap-3 shadow-[0_-4px_12px_rgba(22,22,42,0.03)]">
+<button class="h-11 px-5 rounded-[10px] bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-label font-semibold transition-colors cursor-pointer" id="cancel-drawer-btn" type="button">
+          Cancel
+        </button>
+<button class="h-11 px-6 rounded-[10px] bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-sm transition-all cursor-pointer active:scale-[0.98]" id="submit-person-btn" type="button">
+          Add person
+        </button>
+</div>
+</aside>
+</div>
+</div>
+<script>
+  (function initPeopleDrawer() {
+    const drawerContainer = document.getElementById('drawer-container');
+    const scrim = document.getElementById('drawer-scrim');
+    const openBtn = document.getElementById('open-drawer-btn');
+    const closeBtn = document.getElementById('close-drawer-btn');
+    const cancelBtn = document.getElementById('cancel-drawer-btn');
+    const submitBtn = document.getElementById('submit-person-btn');
+
+    function toggleDrawer(isOpen) {
+      if (isOpen) {
+        drawerContainer.classList.remove('hidden');
+        drawerContainer.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawerContainer.classList.add('hidden');
+        drawerContainer.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (openBtn) openBtn.addEventListener('click', () => toggleDrawer(true));
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleDrawer(false));
+    if (cancelBtn) cancelBtn.addEventListener('click', () => toggleDrawer(false));
+    if (scrim) scrim.addEventListener('click', () => toggleDrawer(false));
+
+    if (submitBtn) {
+      submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const firstName = document.getElementById('first-name');
+        const lastName = document.getElementById('last-name');
+        const email = document.getElementById('work-email');
+
+        if (!firstName.value || !lastName.value || !email.value) {
+          firstName.focus();
+          return;
+        }
+
+        submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span> Adding...';
+        setTimeout(() => {
+          submitBtn.innerHTML = 'Add person';
+          toggleDrawer(false);
+          alert('Staff member ' + firstName.value + ' ' + lastName.value + ' registered to directory successfully.');
+        }, 600);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !drawerContainer.classList.contains('hidden')) {
+        toggleDrawer(false);
+      }
+    });
+  })();
+</script></main></div></body></html>

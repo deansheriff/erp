@@ -37,3 +37,14 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **My delegations** (`delegations`) | `GET /delegations` | signed in, own delegations | directory | Dean Sheriff (2026-11-18) |
 | **Everyone's delegations** (`admin.delegations`) | `GET /admin/delegations` | authz.delegation.manage | directory | Dean Sheriff (2026-11-18) |
 | **Audit log viewer** (`admin.audit`) | `GET /admin/audit` | audit.log.read | — | Dean Sheriff (2026-11-18) |
+
+## Phase 4
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Org chart** (`hr.org_chart`) | `GET /hr/org-chart` | org.structure.read | directory | Dean Sheriff (2026-11-19) |
+| **Position detail (holders, reports, reporting line)** (`hr.position`) | `GET /hr/positions/{position_id}` | org.structure.read | directory | Dean Sheriff (2026-11-19) |
+| **Departments** (`hr.departments`) | `GET /hr/departments` | org.structure.read | — | Dean Sheriff (2026-11-19) |
+| **Structure setup (branches, cost centres, grades)** (`hr.structure`) | `GET /hr/structure` | org.structure.read | — | Dean Sheriff (2026-11-19) |
+| **People (directory)** (`hr.people`) | `GET /hr/people` | hr.employee.read | directory | Dean Sheriff (2026-11-19) |
+| **Organisation details and document colours** (`admin.organisation`) | `GET /admin/organisation` | system.branding.manage | — | Dean Sheriff (2026-11-19) |

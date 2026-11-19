@@ -8,7 +8,7 @@ events that must survive a rollback (denied permissions, failed logins).
 import uuid
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
-from typing import Any, Literal
+from typing import Any, Literal, Protocol
 
 from sqlalchemy.orm import Session
 
@@ -81,6 +81,27 @@ def _to_row(event: AuditEvent) -> AuditLog:
         ip=ctx.ip if ctx else None,
         user_agent=ctx.user_agent[:400] if ctx and ctx.user_agent else None,
         request_id=ctx.request_id if ctx else None,
+    )
+
+
+class ActorLike(Protocol):
+    @property
+    def user_id(self) -> uuid.UUID: ...
+    @property
+    def label(self) -> str: ...
+
+
+def record_by(session: Session, actor: ActorLike | None, action: str, **details: Any) -> None:
+    """Record a change made by a signed-in person (or by the system when `actor` is None)."""
+    record(
+        session,
+        AuditEvent(
+            action=action,
+            actor_type="user" if actor else "system",
+            actor_id=actor.user_id if actor else None,
+            actor_label=actor.label if actor else None,
+            **details,
+        ),
     )
 
 

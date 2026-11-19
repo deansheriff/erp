@@ -26,7 +26,18 @@ class NavModule:
 
 MODULES: tuple[NavModule, ...] = (
     NavModule("home", "Home", "house", "/"),
-    NavModule("hr", "HR", "id-card", "/hr"),
+    NavModule(
+        "hr",
+        "HR",
+        "id-card",
+        "/hr/org-chart",
+        (
+            NavSection("Org chart", "/hr/org-chart", permission="org.structure.read"),
+            NavSection("Departments", "/hr/departments", permission="org.structure.read"),
+            NavSection("People", "/hr/people", permission="hr.employee.read"),
+            NavSection("Structure setup", "/hr/structure", permission="org.structure.read"),
+        ),
+    ),
     NavModule("leave", "Leave", "calendar-check", "/leave"),
     NavModule("attendance", "Attendance", "clock", "/attendance"),
     NavModule("expenses", "Expenses", "receipt", "/expenses"),
@@ -51,6 +62,7 @@ ADMIN_MODULE = NavModule(
         NavSection("Roles", "/admin/roles", permission="authz.role.read"),
         NavSection("Delegations", "/admin/delegations", permission="authz.delegation.manage"),
         NavSection("Audit log", "/admin/audit", permission="audit.log.read"),
+        NavSection("Organisation", "/admin/organisation", permission="system.branding.manage"),
         NavSection("Mail settings", "/admin/mail", permission="system.mail.manage"),
     ),
 )

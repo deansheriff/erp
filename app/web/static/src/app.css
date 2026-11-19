@@ -244,6 +244,50 @@
   .kx-meter::-webkit-progress-value { @apply rounded-full bg-iris transition-[width] duration-slow ease-standard; }
   .kx-meter::-moz-progress-bar { @apply rounded-full bg-iris; }
 
+  /* Org chart: nested lists drawn top-down with connector lines (no script). */
+  .kx-orgchart ul {
+    @apply relative flex justify-center pt-6;
+  }
+  .kx-orgchart > ul {
+    @apply pt-0;
+  }
+  .kx-orgchart li {
+    @apply relative flex flex-col items-center px-2 pt-6;
+  }
+  .kx-orgchart > ul > li {
+    @apply pt-0;
+  }
+  .kx-orgchart li::before,
+  .kx-orgchart li::after {
+    @apply absolute top-0 h-6 w-1/2 border-t-2 border-line-strong/50 content-[''];
+  }
+  .kx-orgchart li::before { @apply right-1/2; }
+  .kx-orgchart li::after { @apply left-1/2 border-l-2; }
+  .kx-orgchart li:only-child::before,
+  .kx-orgchart li:only-child::after,
+  .kx-orgchart > ul > li::before,
+  .kx-orgchart > ul > li::after { @apply hidden; }
+  .kx-orgchart li:first-child::before,
+  .kx-orgchart li:last-child::after { @apply border-0; }
+  .kx-orgchart li:last-child::before { @apply rounded-tr-lg border-r-2; }
+  .kx-orgchart li:first-child::after { @apply rounded-tl-lg; }
+  .kx-orgchart ul ul::before {
+    @apply absolute left-1/2 top-0 h-6 border-l-2 border-line-strong/50 content-[''];
+  }
+  .kx-orgchart li:only-child > .kx-org-node::before {
+    @apply absolute -top-6 left-1/2 h-6 border-l-2 border-line-strong/50 content-[''];
+  }
+  .kx-orgchart > ul > li:only-child > .kx-org-node::before { @apply hidden; }
+  .kx-org-node {
+    @apply relative block w-60 rounded-2xl border border-line bg-surface p-3.5 text-left shadow-card transition duration-base ease-standard hover:-translate-y-0.5 hover:border-line-strong hover:shadow-raised;
+  }
+  .kx-org-node[aria-current="true"] {
+    @apply border-hue ring-2 ring-hue/30;
+  }
+  .kx-org-node-vacant {
+    @apply border-dashed border-warning-text/40 bg-warning-bg/20;
+  }
+
   /* A row whose value differs from what was loaded. */
   .kx-changed {
     @apply bg-warning-bg/30;

@@ -1,0 +1,112 @@
+{# HR → Departments. Design: design/stitch/exports/hr.departments.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+<div x-data="modal" data-open="{{ 'true' if drawer_open else 'false' }}">
+  {% call ui.page_header("Departments", "Departments can sit inside other departments. Department scope covers a department and everything under it.", view_only=not can_manage) %}
+    {% if can_manage %}<a href="/hr/departments?edit=new" class="kx-btn-primary" x-on:click.prevent="show">{{ ui.icon("plus", "sm") }} New department</a>{% endif %}
+  {% endcall %}
+
+  <div class="mt-5 space-y-3">
+    {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+    {% if problem %}{{ ui.alert("danger", problem) }}{% endif %}
+  </div>
+
+  {% if inactive_count %}
+  <nav class="mt-6 inline-flex items-center gap-1.5 rounded-control border border-line bg-surface-sunken p-1" aria-label="Show">
+    <a href="/hr/departments" class="flex h-9 items-center rounded-lg px-3.5 text-label {{ 'text-ink-2 hover:bg-surface' if show_inactive else 'bg-iris-tint font-semibold text-iris-hover' }}">Active</a>
+    <a href="/hr/departments?inactive=1" class="flex h-9 items-center rounded-lg px-3.5 text-label {{ 'bg-iris-tint font-semibold text-iris-hover' if show_inactive else 'text-ink-2 hover:bg-surface' }}">Include inactive <span class="ml-1.5 text-xs text-ink-3 tnum">{{ inactive_count }}</span></a>
+  </nav>
+  {% endif %}
+
+  <section class="kx-card kx-enter mt-5 overflow-hidden" aria-label="Departments">
+    {% if rows %}
+    <div class="overflow-x-auto">
+      <table class="kx-table">
+        <thead><tr><th scope="col">Department</th><th scope="col">Cost centre</th><th scope="col" class="text-right">Positions</th><th scope="col" class="text-right">People</th><th scope="col">Status</th>{% if can_manage %}<th scope="col" class="text-right">Actions</th>{% endif %}</tr></thead>
+        <tbody>
+          {% for d in rows %}
+          <tr class="{{ 'opacity-60' if not d.is_active }}">
+            <td>
+              <span class="flex items-center gap-2 {{ ['', 'pl-6', 'pl-12', 'pl-[4.5rem]', 'pl-24'][[d.depth, 4] | min] }}">
+                {% if d.depth %}<span class="h-4 w-3 -translate-y-1 rounded-bl-md border-b-2 border-l-2 border-line-strong/40" aria-hidden="true"></span>{% endif %}
+                {{ ui.icon("folder-tree" if d.has_children else "folder", "sm", "text-hue") }}
+                <span class="font-semibold">{{ d.name }}</span>
+                <span class="font-mono text-[11px] text-ink-3">{{ d.code }}</span>
+              </span>
+            </td>
+            <td class="text-ink-2">{{ d.cost_centre or "—" }}</td>
+            <td class="text-right tnum">{{ d.positions }}</td>
+            <td class="text-right tnum">{{ d.people }}</td>
+            <td>{{ ui.badge("success", "Active") if d.is_active else ui.badge("neutral", "Inactive") }}</td>
+            {% if can_manage %}
+            <td class="text-right">
+              <div class="relative inline-block text-left" x-data="menu" x-on:keydown.escape="close" x-on:click.outside="close">
+                <button type="button" class="kx-btn-icon" x-on:click="toggle" aria-haspopup="menu" x-bind:aria-expanded="open" aria-label="Actions for {{ d.name }}">{{ ui.icon("ellipsis-vertical", "sm") }}</button>
+                <div x-show="open" x-cloak x-transition.opacity.duration.150ms role="menu" class="absolute right-0 z-10 mt-1 w-52 rounded-2xl border border-line bg-surface-raised p-1.5 shadow-raised">
+                  <a role="menuitem" href="/hr/departments?edit={{ d.id }}" class="flex h-11 items-center gap-2.5 rounded-lg px-3 text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink">{{ ui.icon("pencil", "sm") }} Edit</a>
+                  <form method="post" hx-push-url="false" action="/hr/departments/{{ d.id }}/active">
+                    {{ ui.csrf_field() }}<input type="hidden" name="active" value="{{ '0' if d.is_active else '1' }}">
+                    <button type="submit" role="menuitem" class="flex h-11 w-full items-center gap-2.5 rounded-lg px-3 text-left text-body-sm {{ 'text-danger-text hover:bg-danger-bg/50' if d.is_active else 'text-ink-2 hover:bg-surface-sunken' }}">{{ ui.icon("archive" if d.is_active else "archive-restore", "sm") }} {{ "Deactivate" if d.is_active else "Reactivate" }}</button>
+                  </form>
+                </div>
+              </div>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    {% call ui.empty_state("folder-tree", "No departments yet", "Create your top-level departments first, then the ones inside them.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if can_manage %}
+  <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex justify-end" x-on:keydown.escape.window="hide">
+    <div class="absolute inset-0 bg-[rgb(11_11_18/0.45)] backdrop-blur-[4px]" x-on:click="hide" x-show="open" x-transition.opacity.duration.200ms></div>
+    <aside x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="dept-title"
+           class="relative flex h-full w-full max-w-[480px] flex-col border-l border-line bg-surface shadow-overlay sm:rounded-l-sheet"
+           x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+           x-transition:leave="transition duration-base ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+      <form method="post" hx-push-url="false" action="/hr/departments" class="flex h-full flex-col" novalidate>
+        {{ ui.csrf_field() }}
+        <input type="hidden" name="department_id" value="{{ editing.id if editing else '' }}">
+        <div class="flex items-center justify-between border-b border-line px-6 py-5">
+          <h2 id="dept-title" class="font-h1 text-[20px]">{{ "Edit department" if editing else "New department" }}</h2>
+          <a href="/hr/departments" class="kx-btn-icon" x-on:click.prevent="hide" aria-label="Close">{{ ui.icon("x") }}</a>
+        </div>
+        <div class="flex-1 space-y-5 overflow-y-auto p-6">
+          {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+          {{ ui.text_field("name", "Name", value=values.get("name"), errors=errors, required=true, autocomplete="off") }}
+          {{ ui.text_field("code", "Code", value=values.get("code"), errors=errors, required=true, autocomplete="off", hint="Short and unique, for example FIN.") }}
+          <div>
+            <label for="parent_id" class="kx-label">Inside</label>
+            <select id="parent_id" name="parent_id" class="kx-input">
+              <option value="">Nothing (top level)</option>
+              {% for d in parent_choices %}<option value="{{ d.id }}" {% if values.get("parent_id") == d.id|string %}selected{% endif %}>{{ "— " * d.depth }}{{ d.name }}</option>{% endfor %}
+            </select>
+            {{ ui.field_error(errors, "parent_id") }}
+          </div>
+          <div>
+            <label for="cost_centre_id" class="kx-label">Cost centre <span class="font-normal text-ink-3">(optional)</span></label>
+            <select id="cost_centre_id" name="cost_centre_id" class="kx-input">
+              <option value="">None</option>
+              {% for c in cost_centres %}<option value="{{ c.id }}" {% if values.get("cost_centre_id") == c.id|string %}selected{% endif %}>{{ c.code }} · {{ c.name }}</option>{% endfor %}
+            </select>
+            {{ ui.field_error(errors, "cost_centre_id") }}
+          </div>
+          {{ ui.alert("info", "A department can't be moved inside one of its own sub-departments.", "info") }}
+        </div>
+        <div class="flex items-center justify-end gap-3 border-t border-line p-6">
+          <a href="/hr/departments" class="kx-btn-secondary" x-on:click.prevent="hide">Cancel</a>
+          <button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} {{ "Save department" if editing else "Create department" }}</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

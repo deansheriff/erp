@@ -1,0 +1,77 @@
+{# Administration → Organisation. Design: design/stitch/exports/admin.organisation.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Organisation", "Legal details used on documents, payslips and invoices.") %}{% endcall %}
+
+<div class="mt-5 space-y-3">
+  {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+  {% if errors %}{{ ui.alert("danger", "Some details need your attention.") }}{% endif %}
+</div>
+
+<form method="post" hx-push-url="false" action="/admin/organisation" class="mt-6" novalidate>
+  {{ ui.csrf_field() }}
+  <div class="kx-stagger grid items-start gap-6 xl:grid-cols-12">
+    <div class="space-y-6 xl:col-span-7">
+      <section class="kx-card space-y-5 p-5 md:p-6" aria-labelledby="legal-title">
+        <h2 id="legal-title" class="font-h2 text-h2">Legal details</h2>
+        {{ ui.text_field("legal_name", "Legal name", value=values.get("legal_name"), errors=errors, required=true) }}
+        {{ ui.text_field("trading_name", "Trading name", value=values.get("trading_name"), errors=errors, hint="Shown in the app and on documents when set.") }}
+        <div class="grid gap-5 sm:grid-cols-2">
+          {{ ui.text_field("rc_number", "RC number", value=values.get("rc_number"), errors=errors) }}
+          {{ ui.text_field("tin", "Tax identification number (TIN)", value=values.get("tin"), errors=errors) }}
+        </div>
+        <div>
+          <label class="kx-label" for="address">Registered address</label>
+          <textarea id="address" name="address" class="kx-input" rows="3">{{ values.get("address") or "" }}</textarea>
+          {{ ui.field_error(errors, "address") }}
+        </div>
+      </section>
+
+      <section class="kx-card space-y-5 p-5 md:p-6" aria-labelledby="regional-title">
+        <h2 id="regional-title" class="font-h2 text-h2">Regional</h2>
+        <div class="grid gap-5 sm:grid-cols-3">
+          <div>
+            <span class="kx-label">Timezone</span>
+            <p class="flex h-11 items-center gap-2 rounded-control border border-line bg-surface-sunken px-3 text-body-sm text-ink-2">{{ ui.icon("lock", "sm", "text-ink-3") }} {{ current.timezone }}</p>
+          </div>
+          <div>
+            <span class="kx-label">Base currency</span>
+            <p class="flex h-11 items-center gap-2 rounded-control border border-line bg-surface-sunken px-3 text-body-sm text-ink-2">{{ ui.icon("lock", "sm", "text-ink-3") }} {{ current.base_currency }}</p>
+          </div>
+          <div>
+            <label class="kx-label" for="fiscal">Financial year starts</label>
+            <select id="fiscal" name="fiscal_year_start_month" class="kx-input">
+              {% for m in months %}<option value="{{ loop.index }}" {% if values.get("fiscal_year_start_month") | int == loop.index %}selected{% endif %}>{{ m }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <p class="text-xs text-ink-3">Timezone and currency are fixed at setup: dates and amounts already recorded depend on them.</p>
+      </section>
+    </div>
+
+    <aside class="space-y-6 xl:sticky xl:top-24 xl:col-span-5">
+      <section class="kx-card space-y-5 p-5 md:p-6" aria-labelledby="brand-title">
+        <h2 id="brand-title" class="font-h2 text-h2">Brand on documents</h2>
+        <div class="flex items-center gap-3 rounded-xl border border-dashed border-line-strong bg-surface-sunken/60 p-4 text-body-sm text-ink-3">
+          {{ ui.icon("image", "lg", "shrink-0") }} The logo upload arrives with file storage (Phase 5).
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          {% for name, label, example in [("brand_primary", "Primary colour", "#5A4BDB"), ("brand_accent", "Accent colour", "#C5F04A")] %}
+          <div>
+            <label class="kx-label" for="{{ name }}">{{ label }}</label>
+            <input id="{{ name }}" name="{{ name }}" value="{{ values.get(name) or '' }}" class="kx-input font-mono uppercase" placeholder="{{ example }}" maxlength="7" autocomplete="off" pattern="#[0-9A-Fa-f]{6}">
+            {{ ui.field_error(errors, name) }}
+          </div>
+          {% endfor %}
+        </div>
+        <p class="text-xs text-ink-3">Used on letterheads, payslips and invoices, not in the app itself. Leave blank for neutral colours.</p>
+      </section>
+      <div class="flex justify-end">
+        <button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Save changes</button>
+      </div>
+    </aside>
+  </div>
+</form>
+{% endblock %}

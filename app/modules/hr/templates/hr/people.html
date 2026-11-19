@@ -1,0 +1,117 @@
+{# HR → People (directory fields only). Design: design/stitch/exports/hr.people.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% set statuses = {"active": ("success", "Active"), "on_leave": ("info", "On leave"), "suspended": ("danger", "Suspended"), "terminated": ("neutral", "Left")} %}
+
+{% block content %}
+<div x-data="modal" data-open="{{ 'true' if drawer_open else 'false' }}">
+  {% call ui.page_header("People", "Everyone in the organisation chart. Full HR records arrive with the HR module.") %}
+    {% if can_create %}<button type="button" class="kx-btn-primary" x-on:click="show">{{ ui.icon("user-plus", "sm") }} Add person</button>{% endif %}
+  {% endcall %}
+
+  {% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+  <form method="get" action="/hr/people" class="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center">
+    <label class="relative block w-full lg:w-80">
+      <span class="sr-only">Search people</span>
+      {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+      <input type="search" name="q" value="{{ filters.q }}" class="kx-input pl-10" placeholder="Search by name or email…">
+    </label>
+    <label class="block lg:w-48"><span class="sr-only">Status</span>
+      <select name="status" class="kx-input">
+        <option value="">Any status</option>
+        {% for key, (tone, label) in statuses.items() %}<option value="{{ key }}" {% if filters.status == key %}selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+    </label>
+    <label class="flex h-11 cursor-pointer items-center gap-2 rounded-control border border-line bg-surface px-3.5 text-label text-ink-2">
+      <input type="checkbox" name="unplaced" value="1" class="kx-check" {% if filters.unplaced %}checked{% endif %}> No position
+    </label>
+    <div class="flex items-center gap-2">
+      <button type="submit" class="kx-btn-secondary">{{ ui.icon("filter", "sm") }} Apply</button>
+      {% if filters.q or filters.status or filters.unplaced %}<a href="/hr/people" class="kx-btn-ghost">Clear</a>{% endif %}
+    </div>
+  </form>
+
+  <section class="kx-card kx-enter mt-5 overflow-hidden" aria-label="People">
+    {% if rows %}
+    <div class="hidden overflow-x-auto md:block">
+      <table class="kx-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Position</th><th scope="col">Sign-in</th><th scope="col">Status</th>{% if can_update %}<th scope="col" class="text-right">Actions</th>{% endif %}</tr></thead>
+        <tbody>
+          {% for p in rows %}
+          <tr>
+            <td>
+              <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-hue/10 text-xs font-bold text-hue">{{ p.initials }}</span>
+                <div class="min-w-0"><p class="truncate font-semibold">{{ p.full_name }}</p><p class="truncate text-xs text-ink-3">{{ p.work_email or "No work email" }}</p></div>
+              </div>
+            </td>
+            <td>
+              {% for title, kind in p.positions[:2] %}<p class="flex items-center gap-2 text-body-sm">{{ title }}{% if kind != "primary" %} {{ ui.badge("info" if kind == "acting" else "neutral", kind_labels[kind]) }}{% endif %}</p>
+              {% else %}{{ ui.badge("warning", "No position") }}{% endfor %}
+            </td>
+            <td>{% if p.has_account %}<span class="flex items-center gap-1.5 text-xs font-medium text-success-text">{{ ui.icon("user-check", "sm") }} Linked</span>{% else %}<span class="flex items-center gap-1.5 text-xs text-ink-3">{{ ui.icon("user", "sm") }} No account</span>{% endif %}</td>
+            <td>{% set st = statuses[p.status] %}{{ ui.badge(st[0], st[1]) }}</td>
+            {% if can_update %}<td class="text-right"><a href="/hr/people?edit={{ p.id }}" class="kx-btn-ghost h-9 px-3">Edit</a></td>{% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <ul class="divide-y divide-line md:hidden">
+      {% for p in rows %}
+      <li class="flex items-center gap-3 p-4">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-hue/10 text-xs font-bold text-hue">{{ p.initials }}</span>
+        <div class="min-w-0 flex-1"><p class="truncate font-semibold">{{ p.full_name }}</p><p class="truncate text-xs text-ink-3">{{ p.positions[0][0] if p.positions else "No position" }}</p></div>
+        {% set st = statuses[p.status] %}{{ ui.badge(st[0], st[1]) }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {% call ui.empty_state("users", "No one here", "Try a different search, or add the first person.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if can_create or (editing and can_update) %}
+  <div x-show="open" x-cloak class="fixed inset-0 z-[80] flex justify-end" x-on:keydown.escape.window="hide">
+    <div class="absolute inset-0 bg-[rgb(11_11_18/0.45)] backdrop-blur-[4px]" x-on:click="hide" x-show="open" x-transition.opacity.duration.200ms></div>
+    <aside x-ref="panel" role="dialog" aria-modal="true" aria-labelledby="person-title"
+           class="relative flex h-full w-full max-w-[480px] flex-col border-l border-line bg-surface shadow-overlay sm:rounded-l-sheet"
+           x-show="open" x-transition:enter="transition duration-slow ease-out" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+           x-transition:leave="transition duration-base ease-in" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+      <form method="post" hx-push-url="false" action="/hr/people{{ '/' ~ editing.id if editing }}" class="flex h-full flex-col" novalidate>
+        {{ ui.csrf_field() }}
+        <div class="flex items-center justify-between border-b border-line px-6 py-5">
+          <h2 id="person-title" class="font-h1 text-[20px]">{{ "Edit person" if editing else "Add person" }}</h2>
+          <a href="/hr/people" class="kx-btn-icon" x-on:click.prevent="hide" aria-label="Close">{{ ui.icon("x") }}</a>
+        </div>
+        <div class="flex-1 space-y-5 overflow-y-auto p-6">
+          {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+          <div class="grid gap-4 sm:grid-cols-2">
+            {{ ui.text_field("first_name", "First name", value=values.get("first_name"), errors=errors, required=true, autocomplete="off") }}
+            {{ ui.text_field("last_name", "Last name", value=values.get("last_name"), errors=errors, required=true, autocomplete="off") }}
+          </div>
+          {{ ui.text_field("other_names", "Other names", value=values.get("other_names"), errors=errors, autocomplete="off", hint="Optional.") }}
+          {{ ui.text_field("work_email", "Work email", value=values.get("work_email"), type="email", errors=errors, autocomplete="off", hint="Optional.") }}
+          <div>
+            <label for="user_id" class="kx-label">Sign-in account <span class="font-normal text-ink-3">(optional)</span></label>
+            <select id="user_id" name="user_id" class="kx-input">
+              <option value="">Not linked</option>
+              {% for uid, uname, uemail in accounts %}<option value="{{ uid }}" {% if values.get("user_id") == uid|string %}selected{% endif %}>{{ uname }} · {{ uemail }}</option>{% endfor %}
+            </select>
+            {{ ui.field_error(errors, "user_id") }}
+            <p class="mt-1.5 text-xs text-ink-3">Linking lets their roles reach their team and department through the org chart.</p>
+          </div>
+          {{ ui.alert("info", "Personal, banking and statutory details are added later in the HR record.", "info") }}
+        </div>
+        <div class="flex items-center justify-end gap-3 border-t border-line p-6">
+          <a href="/hr/people" class="kx-btn-secondary" x-on:click.prevent="hide">Cancel</a>
+          <button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} {{ "Save" if editing else "Add person" }}</button>
+        </div>
+      </form>
+    </aside>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

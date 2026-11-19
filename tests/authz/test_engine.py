@@ -152,6 +152,11 @@ class FakeOrg:
     def departments_under(self, db: Session, department_id: uuid.UUID) -> set[uuid.UUID]:
         return self.tree.get(department_id, {department_id})
 
+    def department_employees(
+        self, db: Session, department_ids: set[uuid.UUID], at: datetime
+    ) -> set[uuid.UUID]:
+        return set()
+
 
 @pytest.fixture()
 def org(people: People) -> dict[str, uuid.UUID]:

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kxmeleon ERP — Departments</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#F6F6FA',
+            surface: {
+              DEFAULT: '#FFFFFF',
+              sunken: '#EFEFF6',
+              raised: '#FFFFFF'
+            },
+            line: '#E4E4EE',
+            'line-strong': '#8B8BA6',
+            ink: {
+              DEFAULT: '#16162A',
+              2: '#4B4B66',
+              3: '#626280'
+            },
+            iris: {
+              DEFAULT: '#5A4BDB',
+              hover: '#4A3CC4',
+              tint: '#EEECFD'
+            },
+            lime: {
+              DEFAULT: '#C5F04A',
+              ink: '#4D7A0A'
+            },
+            // HR Module Chameleon Hue: Violet
+            module: {
+              DEFAULT: '#7C3AED',
+              tint: 'rgba(124, 58, 237, 0.10)',
+              glow: 'rgba(124, 58, 237, 0.08)'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            card: '0 1px 2px rgba(22, 22, 42, 0.04), 0 1px 1px rgba(22, 22, 42, 0.03)',
+            raised: '0 8px 24px -6px rgba(22, 22, 42, 0.12), 0 2px 6px rgba(22, 22, 42, 0.06)',
+            overlay: '0 24px 48px -12px rgba(22, 22, 42, 0.25)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .font-tabular {
+      font-variant-numeric: tabular-nums;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      vertical-align: middle;
+    }
+    .tree-guide {
+      position: relative;
+    }
+    .tree-guide::before {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: #E4E4EE;
+    }
+    .tree-guide::after {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 50%;
+      width: 10px;
+      height: 1px;
+      background-color: #E4E4EE;
+    }
+  </style>
+</head>
+<body class="bg-canvas text-ink font-sans antialiased h-full flex overflow-hidden">
+
+  <!-- LEFT PERSISTENT SIDEBAR -->
+  <aside class="w-[272px] h-screen bg-surface border-r border-line flex flex-col shrink-0 z-30 select-none">
+    <!-- Brand / Org header -->
+    <div class="h-16 px-5 flex items-center justify-between border-b border-line">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-ink text-white font-display font-bold text-sm flex items-center justify-center tracking-tight shadow-sm">
+          AH
+        </div>
+        <span class="font-display font-bold text-ink text-[15px] tracking-tight truncate">
+          Adeyemi Holdings Ltd
+        </span>
+      </div>
+      <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 transition-colors" title="Collapse sidebar">
+        <span class="material-symbols-outlined text-[19px]">dock_to_left</span>
+      </button>
+    </div>
+
+    <!-- Quick Switcher Ctrl+K -->
+    <div class="p-3 border-b border-line">
+      <div class="w-full h-9 px-3 rounded-lg bg-surface-sunken flex items-center justify-between text-ink-3 hover:text-ink transition-colors cursor-pointer group">
+        <div class="flex items-center gap-2 text-xs">
+          <span class="material-symbols-outlined text-[17px] text-ink-3 group-hover:text-ink">search</span>
+          <span class="font-medium text-ink-2">Go to...</span>
+        </div>
+        <kbd class="font-mono text-[10px] font-semibold bg-surface border border-line-strong/30 px-1.5 py-0.5 rounded text-ink-2 shadow-xs">Ctrl K</kbd>
+      </div>
+    </div>
+
+    <!-- Navigation Modules -->
+    <nav class="flex-1 overflow-y-auto p-3 space-y-1">
+      <div class="px-2 pt-1 pb-1.5 text-[11px] font-semibold tracking-wider text-ink-3 uppercase font-mono">
+        Modules
+      </div>
+
+      <!-- Home -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">dashboard</span>
+        <span>Home</span>
+      </a>
+
+      <!-- HR Module: ACTIVE with Violet #7C3AED tile and active sub-navigation -->
+      <div class="pt-0.5">
+        <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-[#7C3AED]/10 text-[#7C3AED] font-semibold text-[13.5px] transition-colors cursor-pointer">
+          <div class="flex items-center gap-3">
+            <div class="w-5 h-5 rounded flex items-center justify-center">
+              <span class="material-symbols-outlined text-[20px] text-[#7C3AED]">group</span>
+            </div>
+            <span class="font-semibold text-ink">HR</span>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-[#7C3AED]">expand_less</span>
+        </div>
+
+        <!-- HR Sub-nav Items -->
+        <div class="ml-4 pl-3.5 my-1 border-l-2 border-[#7C3AED]/30 space-y-0.5">
+          <a href="#" class="block px-2.5 py-1.5 rounded-md text-[13px] font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+            Org chart
+          </a>
+          <!-- Departments Active with iris-tint and indicator -->
+          <a href="#" class="flex items-center justify-between px-2.5 py-1.5 rounded-md text-[13px] font-semibold text-iris bg-iris-tint transition-colors">
+            <span>Departments</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+          </a>
+          <a href="#" class="block px-2.5 py-1.5 rounded-md text-[13px] font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+            People
+          </a>
+          <a href="#" class="block px-2.5 py-1.5 rounded-md text-[13px] font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+            Structure setup
+          </a>
+        </div>
+      </div>
+
+      <!-- Other modules -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">calendar_today</span>
+        <span>Leave</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">schedule</span>
+        <span>Attendance</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">payments</span>
+        <span>Expenses</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">account_balance_wallet</span>
+        <span>Payroll</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">account_balance</span>
+        <span>Finance</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">inventory_2</span>
+        <span>Inventory</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">work</span>
+        <span>Projects</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">support_agent</span>
+        <span>Support</span>
+      </a>
+
+      <div class="pt-3 pb-1 px-2 text-[11px] font-semibold tracking-wider text-ink-3 uppercase font-mono">
+        Administration
+      </div>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">admin_panel_settings</span>
+        <span>Users & Access</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors group text-[13.5px] font-medium">
+        <span class="material-symbols-outlined text-[20px] text-ink-3 group-hover:text-ink">history_edu</span>
+        <span>Audit log</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar footer -->
+    <div class="p-3 border-t border-line space-y-1">
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-[13px] font-medium">
+        <span class="material-symbols-outlined text-[19px] text-ink-3">help_outline</span>
+        <span>Help & documentation</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-[13px] font-medium">
+        <span class="material-symbols-outlined text-[19px] text-ink-3">settings</span>
+        <span>Settings</span>
+      </a>
+      <div class="pt-2">
+        <div class="p-2.5 rounded-xl bg-surface-sunken flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-iris text-white font-medium text-xs flex items-center justify-center">
+              FB
+            </div>
+            <div class="truncate">
+              <div class="text-[13px] font-semibold text-ink leading-tight">Fatima Bello</div>
+              <div class="text-[11px] text-ink-3 leading-tight">HR Lead</div>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-ink-3">unfold_more</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden bg-canvas relative">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="h-16 px-8 bg-surface/90 backdrop-blur-md border-b border-line flex items-center justify-between shrink-0 z-20">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-[13px] text-ink-2">
+        <span class="hover:text-ink cursor-pointer font-medium">HR</span>
+        <span class="text-ink-3 text-xs">/</span>
+        <span class="text-ink font-semibold">Departments</span>
+      </nav>
+
+      <!-- Center Omnisearch Bar -->
+      <div class="w-[420px] max-w-md">
+        <div class="w-full h-10 px-3.5 rounded-lg bg-surface-sunken border border-line flex items-center justify-between text-ink-3 hover:border-line-strong transition-colors cursor-pointer group">
+          <div class="flex items-center gap-2.5 text-xs">
+            <span class="material-symbols-outlined text-[19px] text-ink-3 group-hover:text-ink">search</span>
+            <span class="text-ink-3 font-normal">Search people, departments, claims...</span>
+          </div>
+          <kbd class="font-mono text-[11px] font-medium text-ink-3 bg-surface px-1.5 py-0.5 rounded border border-line shadow-xs">Ctrl K</kbd>
+        </div>
+      </div>
+
+      <!-- Trailing Action Icons -->
+      <div class="flex items-center gap-2">
+        <!-- Approvals pill -->
+        <button class="h-9 px-3 rounded-lg border border-line bg-surface hover:bg-surface-sunken flex items-center gap-2 text-ink text-xs font-semibold transition-colors">
+          <span class="material-symbols-outlined text-[18px] text-iris">check_circle</span>
+          <span>Approvals</span>
+          <span class="w-5 h-5 rounded-full bg-iris text-white text-[11px] font-bold flex items-center justify-center">3</span>
+        </button>
+
+        <button class="w-9 h-9 rounded-lg border border-line bg-surface hover:bg-surface-sunken flex items-center justify-center text-ink-2 hover:text-ink transition-colors relative" title="Notifications">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-lime border-2 border-surface"></span>
+        </button>
+
+        <button class="w-9 h-9 rounded-lg border border-line bg-surface hover:bg-surface-sunken flex items-center justify-center text-ink-2 hover:text-ink transition-colors" title="Toggle Theme">
+          <span class="material-symbols-outlined text-[20px]">light_mode</span>
+        </button>
+
+        <div class="w-9 h-9 rounded-full bg-iris text-white text-xs font-semibold flex items-center justify-center ml-1 shadow-sm">
+          FB
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT SCROLL AREA WITH SUBTLE MODULE GLOW -->
+    <main class="flex-1 overflow-y-auto px-8 py-7 relative">
+      <!-- Chameleon Glow Layer behind header (#7C3AED violet at 8%) -->
+      <div class="absolute top-0 left-0 right-0 h-96 pointer-events-none" style="background: radial-gradient(circle at 180px 20px, rgba(124, 58, 237, 0.08) 0%, rgba(124, 58, 237, 0.02) 45%, transparent 70%);"></div>
+
+      <!-- Page Header -->
+      <div class="relative z-10 flex items-start justify-between pb-6 mb-2">
+        <div>
+          <div class="flex items-center gap-3">
+            <h1 class="font-display font-bold text-2xl text-ink tracking-tight">Departments</h1>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#7C3AED]/10 text-[#7C3AED]">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#7C3AED]"></span>
+              HR Architecture
+            </span>
+          </div>
+          <p class="text-[13.5px] text-ink-3 mt-1.5 max-w-2xl leading-normal">
+            Departments can sit inside other departments. Department scope covers a department and everything under it.
+          </p>
+        </div>
+
+        <!-- Header Actions -->
+        <div class="flex items-center gap-3">
+          <button class="h-10 px-4 rounded-lg border border-line bg-surface hover:bg-surface-sunken text-ink text-[13px] font-semibold flex items-center gap-2 transition-colors shadow-xs">
+            <span class="material-symbols-outlined text-[18px] text-ink-2">file_download</span>
+            <span>Export tree</span>
+          </button>
+          <button class="h-10 px-4 rounded-lg bg-iris hover:bg-iris-hover text-white text-[13px] font-semibold flex items-center gap-2 transition-all shadow-sm active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[19px]">add</span>
+            <span>New department</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter / Control Bar -->
+      <div class="relative z-10 bg-surface border border-line rounded-t-2xl p-4 flex items-center justify-between gap-4">
+        <!-- Search field -->
+        <div class="flex items-center gap-3 flex-1 max-w-md">
+          <div class="relative w-full">
+            <span class="material-symbols-outlined text-[19px] text-ink-3 absolute left-3.5 top-1/2 -translate-y-1/2">search</span>
+            <input 
+              type="text" 
+              placeholder="Search by department name, code, or cost centre..." 
+              value=""
+              class="w-full h-10 pl-10 pr-4 rounded-lg bg-surface-sunken border border-line text-[13px] text-ink placeholder-ink-3 focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all"
+            />
+          </div>
+        </div>
+
+        <!-- Controls: Tree expand controls & Show inactive toggle -->
+        <div class="flex items-center gap-5">
+          <div class="flex items-center gap-1.5 text-xs text-ink-2">
+            <button class="px-2.5 py-1.5 rounded-md hover:bg-surface-sunken text-ink-2 font-medium transition-colors flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">unfold_more</span>
+              <span>Expand all</span>
+            </button>
+            <span class="text-line-strong/40">|</span>
+            <button class="px-2.5 py-1.5 rounded-md hover:bg-surface-sunken text-ink-2 font-medium transition-colors flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">unfold_less</span>
+              <span>Collapse</span>
+            </button>
+          </div>
+
+          <div class="h-5 w-px bg-line"></div>
+
+          <!-- Toggle: Show inactive -->
+          <label class="flex items-center gap-2.5 cursor-pointer select-none">
+            <span class="text-[13px] font-medium text-ink-2">Show inactive</span>
+            <div class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer" />
+              <div class="w-9 h-5 bg-surface-sunken border border-line-strong/40 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-line-strong after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-iris peer-checked:border-iris"></div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- MAIN TREE TABLE CARD -->
+      <div class="relative z-10 bg-surface border-x border-b border-line rounded-b-2xl shadow-card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-surface-sunken/80 border-b border-line text-[11.5px] font-mono uppercase tracking-wider text-ink-2">
+                <th class="py-3 px-5 font-semibold text-ink-2 w-[42%]">Department</th>
+                <th class="py-3 px-4 font-semibold text-ink-2 w-[20%]">Cost Centre</th>
+                <th class="py-3 px-4 font-semibold text-ink-2 text-right w-[11%]">Positions</th>
+                <th class="py-3 px-4 font-semibold text-ink-2 text-right w-[11%]">People</th>
+                <th class="py-3 px-4 font-semibold text-ink-2 text-center w-[10%]">Status</th>
+                <th class="py-3 px-4 font-semibold text-ink-2 text-right w-[6%]">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-line text-[13.5px]">
+
+              <!-- 1. Executive Office (Root, Level 0) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3.5 px-5">
+                  <div class="flex items-center gap-2.5">
+                    <button class="w-6 h-6 rounded flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-transform">
+                      <span class="material-symbols-outlined text-[18px]">folder</span>
+                    </button>
+                    <span class="font-semibold text-ink">Executive Office</span>
+                    <span class="font-mono text-xs text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">EXEC</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-4 font-mono text-xs text-ink-2">CC-100 Executive</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">4</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">4</td>
+                <td class="py-3.5 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 2. Finance (Root, Level 0, Expanded) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group bg-surface">
+                <td class="py-3.5 px-5">
+                  <div class="flex items-center gap-2.5">
+                    <button class="w-6 h-6 rounded flex items-center justify-center text-ink-2 hover:bg-surface-sunken transition-transform">
+                      <span class="material-symbols-outlined text-[19px] text-[#7C3AED]">expand_more</span>
+                    </button>
+                    <span class="font-semibold text-ink">Finance</span>
+                    <span class="font-mono text-xs text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">FIN</span>
+                    <span class="text-xs text-ink-3 font-normal ml-1">3 sub-departments</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-4 font-mono text-xs text-ink-2">CC-200 Finance</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">18</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">16</td>
+                <td class="py-3.5 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 2.1 Finance › Accounts Payable (Level 1) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <span class="w-2 h-2 rounded-full bg-line-strong/50"></span>
+                    <span class="font-medium text-ink">Accounts Payable</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">FIN-AP</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-210 Payables</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">6</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">5</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 2.2 Finance › Treasury (Level 1) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <span class="w-2 h-2 rounded-full bg-line-strong/50"></span>
+                    <span class="font-medium text-ink">Treasury</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">FIN-TRS</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-220 Treasury</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">4</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">4</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 2.3 Finance › Tax (Level 1) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <span class="w-2 h-2 rounded-full bg-line-strong/50"></span>
+                    <span class="font-medium text-ink">Tax</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">FIN-TAX</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-230 Statutory Tax</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">3</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">3</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 3. Human Resources (Root, Level 0, Expanded) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group bg-surface">
+                <td class="py-3.5 px-5">
+                  <div class="flex items-center gap-2.5">
+                    <button class="w-6 h-6 rounded flex items-center justify-center text-ink-2 hover:bg-surface-sunken transition-transform">
+                      <span class="material-symbols-outlined text-[19px] text-[#7C3AED]">expand_more</span>
+                    </button>
+                    <span class="font-semibold text-ink">Human Resources</span>
+                    <span class="font-mono text-xs text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">HR</span>
+                    <span class="text-xs text-ink-3 font-normal ml-1">2 sub-departments</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-4 font-mono text-xs text-ink-2">CC-300 People & Org</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">12</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">11</td>
+                <td class="py-3.5 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 3.1 HR › Recruitment (Level 1) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <span class="w-2 h-2 rounded-full bg-line-strong/50"></span>
+                    <span class="font-medium text-ink">Recruitment</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">HR-REC</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-310 Talent Acquisition</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">4</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">4</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 3.2 HR › Payroll Services (Level 1) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <span class="w-2 h-2 rounded-full bg-line-strong/50"></span>
+                    <span class="font-medium text-ink">Payroll Services</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">HR-PAY</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-320 Compensation</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">5</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">4</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 4. Operations (Root, Level 0, Expanded) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group bg-surface">
+                <td class="py-3.5 px-5">
+                  <div class="flex items-center gap-2.5">
+                    <button class="w-6 h-6 rounded flex items-center justify-center text-ink-2 hover:bg-surface-sunken transition-transform">
+                      <span class="material-symbols-outlined text-[19px] text-[#7C3AED]">expand_more</span>
+                    </button>
+                    <span class="font-semibold text-ink">Operations</span>
+                    <span class="font-mono text-xs text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">OPS</span>
+                    <span class="text-xs text-ink-3 font-normal ml-1">1 sub-department</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-4 font-mono text-xs text-ink-2">CC-400 General Operations</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">34</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">32</td>
+                <td class="py-3.5 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 4.1 Operations › Logistics (Level 1, Expanded to Fleet & Warehouse) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <button class="w-5 h-5 rounded flex items-center justify-center text-ink-2 hover:bg-surface-sunken">
+                      <span class="material-symbols-outlined text-[17px] text-[#7C3AED]">expand_more</span>
+                    </button>
+                    <span class="font-medium text-ink">Logistics</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">OPS-LOG</span>
+                    <span class="text-[11px] text-ink-3 font-normal ml-1">2 nested</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-410 Supply & Freight</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">19</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">18</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 4.1.1 Operations › Logistics › Fleet (Level 2) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-2.5 px-5">
+                  <div class="flex items-center pl-16 tree-guide gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-line-strong/40"></span>
+                    <span class="font-normal text-ink">Fleet</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">OPS-FLT</span>
+                  </div>
+                </td>
+                <td class="py-2.5 px-4 font-mono text-xs text-ink-2">CC-412 Fleet Management</td>
+                <td class="py-2.5 px-4 text-right font-tabular text-ink">8</td>
+                <td class="py-2.5 px-4 text-right font-tabular text-ink">8</td>
+                <td class="py-2.5 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-2.5 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 4.1.2 Operations › Logistics › Warehouse (Level 2) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-2.5 px-5">
+                  <div class="flex items-center pl-16 tree-guide gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-line-strong/40"></span>
+                    <span class="font-normal text-ink">Warehouse</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">OPS-WH</span>
+                  </div>
+                </td>
+                <td class="py-2.5 px-4 font-mono text-xs text-ink-2">CC-414 Inbound & Storage</td>
+                <td class="py-2.5 px-4 text-right font-tabular text-ink">11</td>
+                <td class="py-2.5 px-4 text-right font-tabular text-ink">10</td>
+                <td class="py-2.5 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-2.5 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 5. Sales (Root, Level 0, Expanded) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group bg-surface">
+                <td class="py-3.5 px-5">
+                  <div class="flex items-center gap-2.5">
+                    <button class="w-6 h-6 rounded flex items-center justify-center text-ink-2 hover:bg-surface-sunken transition-transform">
+                      <span class="material-symbols-outlined text-[19px] text-[#7C3AED]">expand_more</span>
+                    </button>
+                    <span class="font-semibold text-ink">Sales</span>
+                    <span class="font-mono text-xs text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">SLS</span>
+                    <span class="text-xs text-ink-3 font-normal ml-1">2 sub-departments</span>
+                  </div>
+                </td>
+                <td class="py-3.5 px-4 font-mono text-xs text-ink-2">CC-500 Commercial Sales</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">22</td>
+                <td class="py-3.5 px-4 text-right font-tabular text-ink font-medium">21</td>
+                <td class="py-3.5 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3.5 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 5.1 Sales › Lagos Sales (Level 1) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <span class="w-2 h-2 rounded-full bg-line-strong/50"></span>
+                    <span class="font-medium text-ink">Lagos Sales</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">SLS-LOS</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-510 Lagos Region</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">14</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">13</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+              <!-- 5.2 Sales › Abuja Sales (Level 1, with context menu demo) -->
+              <tr class="hover:bg-surface-sunken/50 transition-colors group relative">
+                <td class="py-3 px-5">
+                  <div class="flex items-center pl-8 tree-guide gap-2">
+                    <span class="w-2 h-2 rounded-full bg-line-strong/50"></span>
+                    <span class="font-medium text-ink">Abuja Sales</span>
+                    <span class="font-mono text-[11px] text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded border border-line">SLS-ABJ</span>
+                  </div>
+                </td>
+                <td class="py-3 px-4 font-mono text-xs text-ink-2">CC-520 Abuja Region</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">8</td>
+                <td class="py-3 px-4 text-right font-tabular text-ink">8</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Active
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">more_vert</span>
+                  </button>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Summary / Footer -->
+        <div class="px-5 py-3.5 bg-surface-sunken/40 border-t border-line flex items-center justify-between text-xs text-ink-2">
+          <div class="flex items-center gap-4">
+            <span>Showing <strong class="text-ink font-semibold">12</strong> departments (5 root, 7 nested)</span>
+            <span class="text-line-strong/40">•</span>
+            <span>Total positions: <strong class="text-ink font-semibold">90</strong></span>
+            <span class="text-line-strong/40">•</span>
+            <span>Assigned headcount: <strong class="text-ink font-semibold">84</strong></span>
+          </div>
+          <div class="flex items-center gap-2 text-ink-3">
+            <span class="material-symbols-outlined text-[16px] text-lime-ink">verified</span>
+            <span>Hierarchical constraints synced with Adeyemi ERP Core v2.4</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- SLIDE-OVER DRAWER OVERLAY & RIGHT-SIDE DRAWER "New department" -->
+    <!-- Backdrop scrim with blur -->
+    <div class="absolute inset-0 bg-[#0B0B12]/40 backdrop-blur-[2px] z-40 transition-opacity"></div>
+
+    <!-- Drawer Panel (500px wide, docked right) -->
+    <aside class="absolute top-0 right-0 bottom-0 w-[500px] bg-surface z-50 shadow-overlay border-l border-line flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-300">
+      
+      <!-- Drawer Header -->
+      <div class="px-6 py-5 border-b border-line flex items-center justify-between shrink-0 bg-surface">
+        <div>
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-[#7C3AED]/10 text-[#7C3AED] flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">domain_add</span>
+            </div>
+            <h2 class="font-display font-bold text-lg text-ink">New department</h2>
+          </div>
+          <p class="text-xs text-ink-3 mt-1">
+            Configure hierarchy, operational code, and associated cost centre.
+          </p>
+        </div>
+
+        <button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors" title="Close drawer">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Drawer Body (Form) -->
+      <div class="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+        
+        <!-- Department Name -->
+        <div>
+          <label class="block text-xs font-semibold text-ink uppercase tracking-wider mb-1.5 font-mono">
+            Department name <span class="text-rose-500">*</span>
+          </label>
+          <input 
+            type="text" 
+            placeholder="e.g. Talent Acquisition, Treasury, Fleet" 
+            value="Internal Audit"
+            class="w-full h-11 px-3.5 rounded-lg bg-surface border border-line-strong/60 text-[13.5px] text-ink placeholder-ink-3 focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all"
+          />
+          <p class="text-[11.5px] text-ink-3 mt-1.5">Official title as recognized across Adeyemi Holdings organisational charts.</p>
+        </div>
+
+        <!-- Department Code -->
+        <div>
+          <label class="block text-xs font-semibold text-ink uppercase tracking-wider mb-1.5 font-mono">
+            Department code <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <input 
+              type="text" 
+              placeholder="e.g. AUD, FIN-AP, HR-REC" 
+              value="AUD"
+              class="w-full h-11 px-3.5 rounded-lg bg-surface border border-line-strong/60 font-mono text-[13.5px] text-ink uppercase tracking-wider placeholder-ink-3 focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all"
+            />
+            <div class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-ink-3">
+              MAX 8 CHARS
+            </div>
+          </div>
+          <p class="text-[11.5px] text-ink-3 mt-1.5">Used as a prefix for position IDs and departmental ledger entries.</p>
+        </div>
+
+        <!-- Parent Department Select -->
+        <div>
+          <label class="block text-xs font-semibold text-ink uppercase tracking-wider mb-1.5 font-mono">
+            Parent department <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <select class="w-full h-11 pl-3.5 pr-10 rounded-lg bg-surface border border-line-strong/60 text-[13.5px] text-ink appearance-none focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all cursor-pointer">
+              <option value="none">None — top level (Root department)</option>
+              <option value="exec">Executive Office (EXEC)</option>
+              <option value="fin">Finance (FIN)</option>
+              <option value="fin-ap">&nbsp;&nbsp;↳ Accounts Payable (FIN-AP)</option>
+              <option value="fin-trs">&nbsp;&nbsp;↳ Treasury (FIN-TRS)</option>
+              <option value="fin-tax">&nbsp;&nbsp;↳ Tax (FIN-TAX)</option>
+              <option value="hr">Human Resources (HR)</option>
+              <option value="hr-rec">&nbsp;&nbsp;↳ Recruitment (HR-REC)</option>
+              <option value="hr-pay">&nbsp;&nbsp;↳ Payroll Services (HR-PAY)</option>
+              <option value="ops">Operations (OPS)</option>
+              <option value="ops-log">&nbsp;&nbsp;↳ Logistics (OPS-LOG)</option>
+              <option value="sls">Sales (SLS)</option>
+            </select>
+            <span class="material-symbols-outlined text-[20px] text-ink-3 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              expand_more
+            </span>
+          </div>
+          <p class="text-[11.5px] text-ink-3 mt-1.5">Select "None — top level" to create a new top-tier division.</p>
+        </div>
+
+        <!-- Cost Centre Select -->
+        <div>
+          <label class="block text-xs font-semibold text-ink uppercase tracking-wider mb-1.5 font-mono">
+            Cost centre <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <select class="w-full h-11 pl-3.5 pr-10 rounded-lg bg-surface border border-line-strong/60 text-[13.5px] text-ink appearance-none focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all cursor-pointer">
+              <option value="cc-240" selected>CC-240 Internal Audit & Assurance</option>
+              <option value="cc-100">CC-100 Executive</option>
+              <option value="cc-200">CC-200 Finance</option>
+              <option value="cc-210">CC-210 Payables</option>
+              <option value="cc-300">CC-300 People & Org</option>
+              <option value="cc-400">CC-400 General Operations</option>
+              <option value="cc-500">CC-500 Commercial Sales</option>
+            </select>
+            <span class="material-symbols-outlined text-[20px] text-ink-3 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              expand_more
+            </span>
+          </div>
+          <p class="text-[11.5px] text-ink-3 mt-1.5">Determines the accounting ledger chart for all claims and payroll under this unit.</p>
+        </div>
+
+        <!-- Hierarchy Scope Info Callout -->
+        <div class="p-4 rounded-xl bg-iris-tint/70 border border-iris/20 flex items-start gap-3">
+          <span class="material-symbols-outlined text-[20px] text-iris shrink-0 mt-0.5">info</span>
+          <div class="text-[12.5px] text-ink leading-relaxed">
+            <strong class="font-semibold text-iris-hover block mb-0.5">Hierarchy rule</strong>
+            A department can't be moved under one of its own sub-departments. Department permissions and delegations will cascade automatically to any nested units.
+          </div>
+        </div>
+
+        <!-- Active by default check -->
+        <div class="pt-1">
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="checkbox" checked class="w-4 h-4 rounded text-iris focus:ring-iris border-line-strong accent-iris cursor-pointer" />
+            <span class="text-[13px] font-medium text-ink">Set as Active immediately upon creation</span>
+          </label>
+        </div>
+
+      </div>
+
+      <!-- Drawer Sticky Footer Actions -->
+      <div class="px-6 py-4 border-t border-line bg-surface-sunken/40 flex items-center justify-end gap-3 shrink-0">
+        <button class="h-10 px-4 rounded-lg border border-line bg-surface hover:bg-surface-sunken text-ink text-[13px] font-semibold transition-colors">
+          Cancel
+        </button>
+        <button class="h-10 px-5 rounded-lg bg-iris hover:bg-iris-hover text-white text-[13px] font-semibold flex items-center gap-2 transition-all shadow-sm active:scale-[0.98]">
+          <span class="material-symbols-outlined text-[18px]">check</span>
+          <span>Create department</span>
+        </button>
+      </div>
+
+    </aside>
+
+  </div>
+
+</body>
+</html>

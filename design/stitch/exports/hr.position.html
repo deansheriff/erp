@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kxmeleon ERP — Position Detail (Finance Manager)</title>
+  <!-- Plus Jakarta Sans & Inter Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            canvas: '#F6F6FA',
+            surface: '#FFFFFF',
+            'surface-sunken': '#EFEFF6',
+            line: '#E4E4EE',
+            'line-strong': '#8B8BA6',
+            ink: '#16162A',
+            'ink-2': '#4B4B66',
+            'ink-3': '#626280',
+            iris: '#5A4BDB',
+            'iris-hover': '#4A3CC4',
+            'iris-tint': '#EEECFD',
+            lime: '#C5F04A',
+            'lime-ink': '#4D7A0A',
+            // HR Module Violet
+            hr: '#7C3AED',
+            'hr-tint': 'rgba(124, 58, 237, 0.12)',
+            'hr-glow': 'rgba(124, 58, 237, 0.08)',
+          },
+          boxShadow: {
+            card: '0 1px 2px rgb(22 22 42 / 0.04), 0 1px 1px rgb(22 22 42 / 0.03)',
+            raised: '0 8px 24px -6px rgb(22 22 42 / 0.12), 0 2px 6px rgb(22 22 42 / 0.06)',
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="bg-canvas text-ink font-sans antialiased min-h-screen flex">
+
+  <!-- LEFT SIDEBAR (272px fixed width) -->
+  <aside class="w-[272px] h-screen bg-surface border-r border-line flex flex-col fixed left-0 top-0 z-30 select-none">
+    <!-- Header: Org Brand -->
+    <div class="h-16 px-5 flex items-center justify-between border-b border-line shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-ink text-white font-display font-bold flex items-center justify-center text-sm shadow-sm">
+          AH
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-semibold text-sm text-ink tracking-tight">Adeyemi Holdings Ltd</span>
+        </div>
+      </div>
+      <button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" title="Collapse sidebar">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Quick Go to search -->
+    <div class="px-4 py-3 shrink-0">
+      <button class="w-full flex items-center justify-between px-3 py-2 text-xs text-ink-3 bg-surface-sunken hover:bg-line/60 rounded-lg transition-colors border border-transparent">
+        <span class="flex items-center gap-2">
+          <i data-lucide="search" class="w-3.5 h-3.5"></i>
+          <span>Go to...</span>
+        </span>
+        <span class="px-1.5 py-0.5 rounded bg-surface text-[10px] font-medium border border-line text-ink-2 shadow-xs">Ctrl K</span>
+      </button>
+    </div>
+
+    <!-- Navigation Modules -->
+    <div class="flex-1 overflow-y-auto px-3 py-1 space-y-1">
+      <div class="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-ink-3">Modules</div>
+
+      <!-- Home -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="home" class="w-4 h-4 text-ink-3"></i>
+        <span>Home</span>
+      </a>
+
+      <!-- HR Module (ACTIVE with violet theme) -->
+      <div class="space-y-1">
+        <button class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-semibold text-hr bg-hr-tint transition-colors">
+          <span class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-md bg-hr/15 flex items-center justify-center text-hr">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+            </span>
+            <span class="text-ink font-semibold">HR</span>
+          </span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-hr"></i>
+        </button>
+
+        <!-- HR Sub-nav items -->
+        <div class="pl-9 pr-1 py-1 space-y-0.5 border-l-2 border-line ml-5">
+          <!-- Org Chart (Active sub-item) -->
+          <a href="#" class="flex items-center justify-between px-3 py-1.5 rounded-lg bg-iris-tint text-iris text-xs font-semibold">
+            <span>Org chart</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-hr"></span>
+          </a>
+          <a href="#" class="flex items-center px-3 py-1.5 rounded-lg text-ink-2 hover:text-ink hover:bg-surface-sunken text-xs font-medium transition-colors">
+            <span>Departments</span>
+          </a>
+          <a href="#" class="flex items-center px-3 py-1.5 rounded-lg text-ink-2 hover:text-ink hover:bg-surface-sunken text-xs font-medium transition-colors">
+            <span>People</span>
+          </a>
+          <a href="#" class="flex items-center px-3 py-1.5 rounded-lg text-ink-2 hover:text-ink hover:bg-surface-sunken text-xs font-medium transition-colors">
+            <span>Structure setup</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Leave -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="calendar" class="w-4 h-4 text-ink-3"></i>
+        <span>Leave</span>
+      </a>
+
+      <!-- Attendance -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="clock" class="w-4 h-4 text-ink-3"></i>
+        <span>Attendance</span>
+      </a>
+
+      <!-- Expenses -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="wallet" class="w-4 h-4 text-ink-3"></i>
+        <span>Expenses</span>
+      </a>
+
+      <!-- Payroll -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="banknote" class="w-4 h-4 text-ink-3"></i>
+        <span>Payroll</span>
+      </a>
+
+      <!-- Finance -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="landmark" class="w-4 h-4 text-ink-3"></i>
+        <span>Finance</span>
+      </a>
+
+      <!-- Inventory -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="package" class="w-4 h-4 text-ink-3"></i>
+        <span>Inventory</span>
+      </a>
+
+      <!-- Projects -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="briefcase" class="w-4 h-4 text-ink-3"></i>
+        <span>Projects</span>
+      </a>
+
+      <!-- Support -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-sm font-medium transition-colors">
+        <i data-lucide="life-buoy" class="w-4 h-4 text-ink-3"></i>
+        <span>Support</span>
+      </a>
+    </div>
+
+    <!-- Bottom Footer Profile & Help -->
+    <div class="p-3 border-t border-line space-y-1 shrink-0 bg-surface">
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-xs font-medium transition-colors">
+        <i data-lucide="help-circle" class="w-4 h-4 text-ink-3"></i>
+        <span>Help & documentation</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink text-xs font-medium transition-colors">
+        <i data-lucide="settings" class="w-4 h-4 text-ink-3"></i>
+        <span>Settings</span>
+      </a>
+      <div class="pt-2 flex items-center justify-between p-2 rounded-xl bg-surface-sunken mt-1">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-iris text-white font-semibold text-xs flex items-center justify-center">
+            FB
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xs font-semibold text-ink leading-tight">Fatima Bello</span>
+            <span class="text-[11px] text-ink-3 leading-tight">Finance Manager</span>
+          </div>
+        </div>
+        <button class="text-ink-3 hover:text-ink p-1">
+          <i data-lucide="more-vertical" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER (offset by 272px) -->
+  <div class="flex-1 ml-[272px] min-h-screen flex flex-col bg-canvas">
+
+    <!-- TOP NAVIGATION BAR (Sticky 64px, Glass) -->
+    <header class="h-16 sticky top-0 z-20 bg-surface/80 backdrop-blur-md border-b border-line px-8 flex items-center justify-between">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-xs font-medium text-ink-3" aria-label="Breadcrumb">
+        <span class="text-ink-2 hover:text-ink cursor-pointer">HR</span>
+        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-line-strong"></i>
+        <span class="text-ink-2 hover:text-ink cursor-pointer">Org chart</span>
+        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-line-strong"></i>
+        <span class="text-ink font-semibold">Finance Manager</span>
+      </nav>
+
+      <!-- Center Search bar with compact single-line Ctrl K keycap -->
+      <div class="w-96 relative">
+        <i data-lucide="search" class="w-4 h-4 text-ink-3 absolute left-3 top-1/2 -translate-y-1/2"></i>
+        <input 
+          type="text" 
+          placeholder="Search people, claims, invoices..." 
+          class="w-full bg-surface-sunken text-xs text-ink placeholder:text-ink-3 pl-9 pr-14 py-2 rounded-lg border border-transparent focus:border-iris focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris/20 transition-all"
+        >
+        <span class="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-surface border border-line text-[10px] font-medium text-ink-3 shadow-xs whitespace-nowrap leading-none select-none">
+          Ctrl K
+        </span>
+      </div>
+
+      <!-- Right Utility Actions -->
+      <div class="flex items-center gap-2">
+        <!-- Approvals Inbox -->
+        <button class="h-9 px-3 rounded-lg border border-line bg-surface hover:bg-surface-sunken text-xs font-medium text-ink flex items-center gap-2 shadow-xs transition-colors">
+          <i data-lucide="check-square" class="w-4 h-4 text-iris"></i>
+          <span>Approvals</span>
+          <span class="px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">3</span>
+        </button>
+
+        <!-- Notifications Bell with Lime dot -->
+        <button class="w-9 h-9 rounded-lg border border-line bg-surface hover:bg-surface-sunken text-ink-2 flex items-center justify-center relative shadow-xs transition-colors" title="Notifications">
+          <i data-lucide="bell" class="w-4 h-4"></i>
+          <span class="w-2 h-2 rounded-full bg-lime absolute top-2 right-2 ring-2 ring-white"></span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="w-9 h-9 rounded-lg border border-line bg-surface hover:bg-surface-sunken text-ink-2 flex items-center justify-center shadow-xs transition-colors" title="Toggle theme">
+          <i data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+
+        <!-- User Avatar Button -->
+        <button class="w-9 h-9 rounded-full bg-iris text-white text-xs font-semibold flex items-center justify-center ml-1 shadow-xs hover:ring-2 hover:ring-iris/20 transition-all">
+          FB
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA WITH HR MODULE VIOLET GLOW -->
+    <main class="flex-1 px-8 py-7 relative">
+      <!-- Soft radial glow for HR Module (#7C3AED) -->
+      <div class="absolute top-0 left-0 right-0 h-96 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-hr/10 via-transparent to-transparent pointer-events-none -z-10"></div>
+
+      <!-- PAGE HEADER -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-line/80">
+        <div>
+          <div class="flex items-center gap-3">
+            <h1 class="text-2xl font-bold font-display text-ink tracking-tight">Finance Manager</h1>
+            <!-- Status Badge: Filled (Green) -->
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#DDF7E8] text-[#0F6B3E] border border-[#0F6B3E]/15">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+              Filled
+            </span>
+          </div>
+
+          <!-- Metadata Chips -->
+          <div class="flex items-center gap-2 mt-2.5">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-surface text-ink-2 border border-line shadow-xs">
+              <i data-lucide="building-2" class="w-3.5 h-3.5 text-hr"></i>
+              Finance
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-surface text-ink-2 border border-line shadow-xs">
+              <i data-lucide="award" class="w-3.5 h-3.5 text-ink-3"></i>
+              GL-12
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-surface text-ink-2 border border-line shadow-xs">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-ink-3"></i>
+              Lagos HQ
+            </span>
+            <span class="text-xs text-ink-3 font-mono ml-2">POS-FIN-002</span>
+          </div>
+        </div>
+
+        <!-- Header Actions: Ghost "Org chart", Secondary "Edit position", Primary "Assign person" -->
+        <div class="flex items-center gap-2.5">
+          <!-- Ghost "Org chart" -->
+          <button class="h-10 px-4 rounded-xl text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken flex items-center gap-2 transition-colors">
+            <i data-lucide="git-branch" class="w-4 h-4 text-ink-3"></i>
+            <span>Org chart</span>
+          </button>
+
+          <!-- Secondary "Edit position" -->
+          <button class="h-10 px-4 rounded-xl border border-line-strong/60 bg-surface hover:bg-surface-sunken text-xs font-medium text-ink flex items-center gap-2 shadow-xs transition-colors">
+            <i data-lucide="edit-3" class="w-4 h-4 text-ink-2"></i>
+            <span>Edit position</span>
+          </button>
+
+          <!-- Primary "Assign person" -->
+          <button class="h-10 px-4 rounded-xl bg-iris hover:bg-iris-hover text-xs font-semibold text-white flex items-center gap-2 shadow-sm transition-all active:scale-[0.98]">
+            <i data-lucide="user-plus" class="w-4 h-4"></i>
+            <span>Assign person</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN TWO-COLUMN GRID -->
+      <div class="grid grid-cols-12 gap-6 mt-6 items-start">
+
+        <!-- LEFT COLUMN (Wide: 8 cols) -->
+        <div class="col-span-12 lg:col-span-8 space-y-6">
+
+          <!-- CARD 1: HOLDERS WITH VERTICAL TIMELINE -->
+          <div class="bg-surface rounded-2xl border border-line p-6 shadow-card">
+            <div class="flex items-center justify-between pb-4 border-b border-line">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+                  <i data-lucide="history" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h2 class="text-base font-semibold font-display text-ink">Holders</h2>
+                  <p class="text-xs text-ink-3">Historical and current incumbents assigned to this position record</p>
+                </div>
+              </div>
+              <span class="text-xs font-medium text-ink-3 bg-surface-sunken px-2.5 py-1 rounded-full border border-line">2 records</span>
+            </div>
+
+            <!-- Vertical Timeline -->
+            <div class="mt-6 relative pl-6 space-y-7 before:absolute before:left-[11px] before:top-3 before:bottom-3 before:w-0.5 before:bg-line">
+              
+              <!-- Timeline Item 1: Active Primary Holder -->
+              <div class="relative group">
+                <!-- Timeline Dot: Green Dot for active holder -->
+                <div class="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-[#0F6B3E] flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></div>
+                </div>
+
+                <div class="bg-surface-sunken/60 hover:bg-surface-sunken rounded-xl p-4 border border-line transition-colors">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                      <!-- Avatar -->
+                      <div class="w-10 h-10 rounded-full bg-hr/15 text-hr font-semibold text-xs flex items-center justify-center shrink-0 border border-hr/20">
+                        HB
+                      </div>
+                      <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                          <span class="text-xs font-bold text-hr uppercase tracking-wider bg-hr/10 px-2 py-0.5 rounded">Primary</span>
+                          <span class="text-sm font-semibold text-ink">Hauwa Bello</span>
+                          <span class="text-xs text-ink-3">·</span>
+                          <span class="text-xs font-medium text-ink-2 tabular-nums">1 Dec 2026 – present</span>
+                        </div>
+                        <p class="text-xs text-ink-3 mt-1.5">
+                          <span class="font-medium text-ink-2">Reason:</span> Regular tenure appointment following Executive Committee confirmation.
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- "End" Danger Ghost Button -->
+                    <button class="h-8 px-3 rounded-lg text-xs font-medium text-[#C42836] hover:bg-rose-50 border border-transparent hover:border-rose-200 transition-colors shrink-0">
+                      End tenure
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Timeline Item 2: Ended Acting Holder -->
+              <div class="relative group opacity-85 hover:opacity-100 transition-opacity">
+                <!-- Timeline Dot: Muted Neutral Dot -->
+                <div class="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-line-strong flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-line-strong"></div>
+                </div>
+
+                <div class="bg-surface rounded-xl p-4 border border-line transition-colors">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                      <!-- Avatar -->
+                      <div class="w-10 h-10 rounded-full bg-surface-sunken text-ink-3 font-semibold text-xs flex items-center justify-center shrink-0 border border-line">
+                        GO
+                      </div>
+                      <div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                          <span class="text-xs font-semibold text-ink-3 bg-surface-sunken px-2 py-0.5 rounded">Acting</span>
+                          <span class="text-sm font-semibold text-ink">Gbenga Obi</span>
+                          <span class="text-xs text-ink-3">·</span>
+                          <span class="text-xs text-ink-3 tabular-nums">1 Oct 2026 – 30 Nov 2026</span>
+                          <!-- Neutral Ended Badge -->
+                          <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#EFEFF6] text-[#4B4B66] border border-line">
+                            Ended
+                          </span>
+                        </div>
+                        <p class="text-xs text-ink-3 mt-1.5">
+                          <span class="font-medium text-ink-2">Reason:</span> Temporary maternity coverage for previous primary holder.
+                        </p>
+                      </div>
+                    </div>
+
+                    <span class="text-[11px] text-ink-3 tabular-nums self-center">61 days</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- CARD 2: REPORTS TO THIS POSITION -->
+          <div class="bg-surface rounded-2xl border border-line p-6 shadow-card">
+            <div class="flex items-center justify-between pb-4 border-b border-line">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+                  <i data-lucide="network" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h2 class="text-base font-semibold font-display text-ink">Reports to this position</h2>
+                  <p class="text-xs text-ink-3">Direct subordinate positions anchored under Finance Manager</p>
+                </div>
+              </div>
+              <span class="text-xs font-medium text-ink-3 bg-surface-sunken px-2.5 py-1 rounded-full border border-line">3 positions</span>
+            </div>
+
+            <!-- List rows with Avatar, Title, Holder, Department, and Chevron -->
+            <div class="divide-y divide-line mt-2">
+              
+              <!-- Row 1: Accountant — Efe Nwosu -->
+              <div class="py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 px-3 -mx-3 rounded-xl transition-colors cursor-pointer group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-9 h-9 rounded-full bg-blue-50 text-blue-700 font-semibold text-xs flex items-center justify-center shrink-0 border border-blue-100">
+                    EN
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-semibold text-ink group-hover:text-iris transition-colors">Accountant</span>
+                      <span class="text-[10px] font-mono text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded">POS-FIN-005</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-ink-3 mt-0.5 truncate">
+                      <span class="font-medium text-ink-2">Efe Nwosu</span>
+                      <span>·</span>
+                      <span>Finance & Accounts</span>
+                      <span>·</span>
+                      <span>GL-09</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 shrink-0">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Filled
+                  </span>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-ink-3 group-hover:text-ink transition-transform group-hover:translate-x-0.5"></i>
+                </div>
+              </div>
+
+              <!-- Row 2: Payables Clerk — Gbenga Obi -->
+              <div class="py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 px-3 -mx-3 rounded-xl transition-colors cursor-pointer group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-9 h-9 rounded-full bg-emerald-50 text-emerald-700 font-semibold text-xs flex items-center justify-center shrink-0 border border-emerald-100">
+                    GO
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-semibold text-ink group-hover:text-iris transition-colors">Payables Clerk</span>
+                      <span class="text-[10px] font-mono text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded">POS-FIN-008</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-ink-3 mt-0.5 truncate">
+                      <span class="font-medium text-ink-2">Gbenga Obi</span>
+                      <span>·</span>
+                      <span>Finance & Accounts</span>
+                      <span>·</span>
+                      <span>GL-07</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 shrink-0">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#DDF7E8] text-[#0F6B3E]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Filled
+                  </span>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-ink-3 group-hover:text-ink transition-transform group-hover:translate-x-0.5"></i>
+                </div>
+              </div>
+
+              <!-- Row 3: Treasury Analyst — Vacant (amber Vacant badge) -->
+              <div class="py-3.5 flex items-center justify-between gap-4 hover:bg-surface-sunken/40 px-3 -mx-3 rounded-xl transition-colors cursor-pointer group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-9 h-9 rounded-full bg-amber-50 text-amber-700 font-semibold text-xs flex items-center justify-center shrink-0 border border-amber-200 border-dashed">
+                    <i data-lucide="user-x" class="w-4 h-4 text-amber-600"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span class="text-sm font-semibold text-ink group-hover:text-iris transition-colors">Treasury Analyst</span>
+                      <span class="text-[10px] font-mono text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded">POS-FIN-011</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-ink-3 mt-0.5 truncate">
+                      <span class="font-medium text-amber-700 italic">No primary holder assigned</span>
+                      <span>·</span>
+                      <span>Finance & Accounts</span>
+                      <span>·</span>
+                      <span>GL-09</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 shrink-0">
+                  <!-- Amber Vacant Badge -->
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#FFF1D6] text-[#8A4B00] border border-[#8A4B00]/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#8A4B00]"></span>
+                    Vacant
+                  </span>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-ink-3 group-hover:text-ink transition-transform group-hover:translate-x-0.5"></i>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN (4 cols) -->
+        <div class="col-span-12 lg:col-span-4 space-y-6">
+
+          <!-- CARD 3: REPORTING LINE (VERTICAL STEPPER) -->
+          <div class="bg-surface rounded-2xl border border-line p-6 shadow-card">
+            <div class="flex items-center gap-2.5 pb-4 border-b border-line">
+              <div class="w-8 h-8 rounded-lg bg-hr-tint text-hr flex items-center justify-center">
+                <i data-lucide="git-commit" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h2 class="text-base font-semibold font-display text-ink">Reporting line</h2>
+                <p class="text-xs text-ink-3">Escalation and managerial lineage</p>
+              </div>
+            </div>
+
+            <!-- Stepper Content -->
+            <div class="mt-5 relative pl-6 space-y-6 before:absolute before:left-[11px] before:top-3 before:bottom-3 before:w-0.5 before:bg-line">
+              
+              <!-- Step 0: Current Position (Violet Pin) -->
+              <div class="relative">
+                <div class="absolute -left-[23px] top-1 w-4 h-4 rounded-full bg-white border-2 border-hr flex items-center justify-center shadow-xs">
+                  <div class="w-1.5 h-1.5 rounded-full bg-hr"></div>
+                </div>
+                <div class="bg-hr-tint/40 p-3 rounded-xl border border-hr/20">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-hr uppercase tracking-wider">Current position</span>
+                    <span class="text-[10px] font-semibold text-hr bg-white/80 px-1.5 py-0.5 rounded">This Node</span>
+                  </div>
+                  <div class="text-sm font-semibold text-ink mt-1">Finance Manager</div>
+                  <div class="text-xs text-ink-2 mt-0.5">Hauwa Bello</div>
+                </div>
+              </div>
+
+              <!-- Step 1: Head of Finance (Bola Ade) -->
+              <div class="relative">
+                <div class="absolute -left-[23px] top-1 w-4 h-4 rounded-full bg-white border-2 border-line-strong flex items-center justify-center">
+                  <span class="text-[9px] font-bold text-ink-2">1</span>
+                </div>
+                <div class="p-3 rounded-xl hover:bg-surface-sunken/60 border border-line transition-colors">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-medium text-ink-3">Immediate manager</span>
+                    <span class="text-[11px] font-mono text-ink-3">GL-14</span>
+                  </div>
+                  <div class="text-sm font-semibold text-ink mt-0.5">Head of Finance</div>
+                  <div class="text-xs text-ink-2 mt-0.5 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    <span>Bola Ade</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Intermediary Step: Vacant, skipped (Muted struck-through) -->
+              <div class="relative">
+                <div class="absolute -left-[23px] top-1.5 w-4 h-4 rounded-full bg-surface-sunken border border-line flex items-center justify-center">
+                  <div class="w-1 h-1 rounded-full bg-ink-3"></div>
+                </div>
+                <div class="px-3 py-2 rounded-xl bg-surface-sunken/40 border border-dashed border-line">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs line-through text-ink-3 font-medium">Director of Financial Operations</span>
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#EFEFF6] text-ink-3">
+                      Vacant, skipped
+                    </span>
+                  </div>
+                  <p class="text-[11px] text-ink-3 mt-0.5 italic">Interim bypass route directly to Executive</p>
+                </div>
+              </div>
+
+              <!-- Step 2: Managing Director (Ada Okeke) -->
+              <div class="relative">
+                <div class="absolute -left-[23px] top-1 w-4 h-4 rounded-full bg-white border-2 border-line-strong flex items-center justify-center">
+                  <span class="text-[9px] font-bold text-ink-2">2</span>
+                </div>
+                <div class="p-3 rounded-xl hover:bg-surface-sunken/60 border border-line transition-colors">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-medium text-ink-3">Executive authority</span>
+                    <span class="text-[11px] font-mono text-ink-3">GL-16</span>
+                  </div>
+                  <div class="text-sm font-semibold text-ink mt-0.5">Managing Director</div>
+                  <div class="text-xs text-ink-2 mt-0.5 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    <span>Ada Okeke</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- CARD 4: DETAILS (KEY/VALUE ROWS & DANGER ACTION) -->
+          <div class="bg-surface rounded-2xl border border-line p-6 shadow-card space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-line">
+              <h2 class="text-base font-semibold font-display text-ink">Details</h2>
+              <span class="text-[11px] font-mono text-ink-3">SPEC-2026-v2</span>
+            </div>
+
+            <!-- Key / Value Rows -->
+            <dl class="space-y-3.5 text-xs">
+              <div class="flex justify-between items-center py-1 border-b border-line/60">
+                <dt class="text-ink-3">Position Code</dt>
+                <dd class="font-mono font-medium text-ink bg-surface-sunken px-2 py-0.5 rounded">POS-FIN-002</dd>
+              </div>
+
+              <div class="flex justify-between items-center py-1 border-b border-line/60">
+                <dt class="text-ink-3">Department</dt>
+                <dd class="font-medium text-ink">Finance & Accounts</dd>
+              </div>
+
+              <div class="flex justify-between items-center py-1 border-b border-line/60">
+                <dt class="text-ink-3">Grade Level</dt>
+                <dd class="font-medium text-ink">GL-12 (Managerial)</dd>
+              </div>
+
+              <div class="flex justify-between items-center py-1 border-b border-line/60">
+                <dt class="text-ink-3">Branch Location</dt>
+                <dd class="font-medium text-ink">Lagos HQ (Adeola Odeku)</dd>
+              </div>
+
+              <div class="flex justify-between items-center py-1 border-b border-line/60">
+                <dt class="text-ink-3">Headcount Allocation</dt>
+                <dd class="font-medium text-ink tabular-nums">1 FTE (1 filled, 0 open)</dd>
+              </div>
+
+              <div class="flex justify-between items-center py-1 border-b border-line/60">
+                <dt class="text-ink-3">Cost Centre</dt>
+                <dd class="font-mono text-ink">CC-200 (Finance)</dd>
+              </div>
+
+              <div class="flex justify-between items-center py-1">
+                <dt class="text-ink-3">Approval Limit</dt>
+                <dd class="font-semibold text-ink tabular-nums">₦5,000,000.00</dd>
+              </div>
+            </dl>
+
+            <!-- Card Bottom Divider & Ghost Danger Button -->
+            <div class="pt-3 border-t border-line">
+              <button class="w-full h-10 px-4 rounded-xl border border-transparent hover:border-rose-200 text-[#C42836] hover:bg-rose-50 text-xs font-semibold flex items-center justify-center gap-2 transition-all">
+                <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                <span>Deactivate position</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Initialize Lucide icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
