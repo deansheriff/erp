@@ -5,6 +5,39 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 6: HR core and self-service
+- The HR record (ADR 0017): personal, employment, next-of-kin, statutory and bank
+  fields, each in a field class. Every screen, list and audit entry gets only the
+  classes the viewer may read; NIN, TIN, RSA PIN, NHF number, account number and BVN
+  are encrypted at rest. Nobody changes their own HR-managed fields.
+- Gap-free employee numbers (`EMP-00001`, prefix and digits editable), allocated in the
+  same transaction as the person.
+- Self-service (`/me`): own details, documents, requests and checklist tasks; contact
+  and next-of-kin changes save at once; statutory and bank changes go to HR as change
+  requests (HR → Change requests), which nobody may approve for themselves.
+- Colleague directory (`/directory`): directory fields only.
+- Employee documents through the files service, one purpose per field class, with
+  editable categories.
+- Onboarding and offboarding checklists from templates per position, department or
+  default; tasks for HR, IT, the manager or the employee (HR → Joiners & leavers).
+- Inviting an employee from their profile links the new account and gives the Employee
+  role. Exits (resignation or termination) start offboarding; access is revoked
+  automatically at midnight Lagos time after the last working day (account, sessions,
+  API keys, delegations, roles and positions).
+- HR settings: employee numbers, document categories, checklist templates.
+- Permissions per field class (`hr.employee.<class>.read/update`),
+  `hr.profile.request_change`, `hr.checklist.manage`, `hr.checklist.it`,
+  `hr.exit.manage`, `hr.settings.manage`; grants for the Employee, Line Manager,
+  HR Officer and HR Manager templates and a new IT Support template.
+
+### Changed
+- HR → People opens a full profile page; adding and editing people use a full-page
+  form instead of the drawer.
+
+### Fixed
+- The Celery worker now imports each package's tasks, so the file scan and retention
+  schedules (Phase 5) and the access-revocation schedule actually run.
+
 ### Added — Phase 5: Files
 - One file service (ADR 0016): random storage keys in private quarantine and clean
   buckets, a purpose registry (types, size, attach and view permissions, retention,

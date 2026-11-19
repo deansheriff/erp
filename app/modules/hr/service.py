@@ -1,5 +1,5 @@
-"""HR: people. Phase 4 keeps the directory record the org chart needs (ADR 0015);
-Phase 6 adds the HR record with its field classes."""
+"""HR: people and their directory fields (ADR 0015, ADR 0017). The classed fields are in
+records.py."""
 
 import uuid
 from datetime import date
@@ -10,12 +10,34 @@ from sqlalchemy.orm import Session
 from app.audit.service import diff_changes, record_by
 from app.authz import engine
 from app.authz import service as authz
-from app.core.errors import Conflict, NotFound, ValidationFailed
+from app.core import numbering
+from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.models import User
 from app.identity.schemas import Actor
 from app.modules.hr.models import EMPLOYEE_STATUSES, Employee
 from app.modules.hr.schemas import PersonInput, PersonRow
 from app.org import service as org
+from app.org.models import Branch
+
+EMPLOYEE_SEQUENCE = "employee"
+
+
+def _check_branch(db: Session, branch_id: uuid.UUID | None) -> None:
+    if branch_id is None:
+        return
+    branch = db.get(Branch, branch_id)
+    if branch is None or not branch.is_active:
+        raise ValidationFailed(field_errors={"branch_id": "Choose a branch."})
+
+
+def _directory(row: Employee) -> dict[str, object]:
+    return {
+        "name": row.full_name,
+        "work_email": row.work_email,
+        "user_id": row.user_id,
+        "branch_id": row.branch_id,
+        "status": row.status,
+    }
 
 
 def _check_account(db: Session, user_id: uuid.UUID | None, own_id: uuid.UUID | None) -> None:
@@ -44,12 +66,16 @@ def add_person(db: Session, actor: Actor, data: PersonInput) -> uuid.UUID:
     authz.require(db, actor, "hr.employee.create")
     email = _check_email(db, str(data.work_email) if data.work_email else None, None)
     _check_account(db, data.user_id, None)
+    _check_branch(db, data.branch_id)
     row = Employee(
+        employee_number=numbering.next_number(db, EMPLOYEE_SEQUENCE),
         first_name=data.first_name,
         last_name=data.last_name,
         other_names=data.other_names,
         work_email=email,
         user_id=data.user_id,
+        branch_id=data.branch_id,
+        status=data.status or "active",
     )
     db.add(row)
     db.flush()
@@ -59,36 +85,41 @@ def add_person(db: Session, actor: Actor, data: PersonInput) -> uuid.UUID:
         "hr.employee.create",
         entity_type="employee",
         entity_id=str(row.id),
-        changes=diff_changes(
-            {}, {"name": row.full_name, "work_email": email, "user_id": data.user_id}
-        ),
+        changes=diff_changes({}, {"employee_number": row.employee_number, **_directory(row)}),
     )
     return row.id
 
 
 def update_person(db: Session, actor: Actor, employee_id: uuid.UUID, data: PersonInput) -> None:
     authz.require(db, actor, "hr.employee.update")
-    row = db.get(Employee, employee_id)
-    if row is None:
+    row = get_person(db, actor, employee_id)
+    if not engine.check(
+        db, actor.user_id, "hr.employee.update", engine.Resource(owner_employee_id=row.id)
+    ):
         raise NotFound()
+    if row.user_id is not None and row.user_id == actor.user_id:
+        raise PermissionDenied("Ask someone else in HR to change your own record.")
     email = _check_email(db, str(data.work_email) if data.work_email else None, row.id)
     _check_account(db, data.user_id, row.id)
-    before = {"name": row.full_name, "work_email": row.work_email, "user_id": row.user_id}
+    _check_branch(db, data.branch_id if data.branch_id != row.branch_id else None)
+    if data.status is not None and row.status == "terminated":
+        raise Conflict("This person has left. Their status can't be changed.")
+    before = _directory(row)
     row.first_name, row.last_name, row.other_names = (
         data.first_name,
         data.last_name,
         data.other_names,
     )
-    row.work_email, row.user_id = email, data.user_id
+    row.work_email, row.user_id, row.branch_id = email, data.user_id, data.branch_id
+    if data.status is not None:
+        row.status = data.status
     record_by(
         db,
         actor,
         "hr.employee.update",
         entity_type="employee",
         entity_id=str(row.id),
-        changes=diff_changes(
-            before, {"name": row.full_name, "work_email": email, "user_id": data.user_id}
-        ),
+        changes=diff_changes(before, _directory(row)),
     )
 
 
@@ -113,10 +144,12 @@ def list_people(
                 func.lower(Employee.first_name + " " + Employee.last_name).like(like),
                 func.lower(func.coalesce(Employee.other_names, "")).like(like),
                 func.lower(func.coalesce(Employee.work_email, "")).like(like),
+                func.lower(func.coalesce(Employee.employee_number, "")).like(like),
             )
         )
     rows = list(db.scalars(stmt.order_by(Employee.last_name, Employee.first_name).limit(1000)))
     held = org.positions_held(db, [r.id for r in rows])
+    branches = branch_names(db)
     people = [
         PersonRow(
             id=r.id,
@@ -127,10 +160,29 @@ def list_people(
             status=r.status,
             has_account=r.user_id is not None,
             positions=held.get(r.id, []),
+            employee_number=r.employee_number,
+            branch=branches.get(r.branch_id) if r.branch_id else None,
         )
         for r in rows
     ]
     return [p for p in people if not p.positions] if without_position else people
+
+
+def branch_names(db: Session) -> dict[uuid.UUID, str]:
+    return dict(db.execute(select(Branch.id, Branch.name)).all())
+
+
+def branch_choices(db: Session, keep: uuid.UUID | None = None) -> list[tuple[uuid.UUID, str]]:
+    return [
+        (b.id, b.name)
+        for b in db.scalars(
+            select(Branch).where(or_(Branch.is_active, Branch.id == keep)).order_by(Branch.name)
+        )
+    ]
+
+
+def employee_of_user(db: Session, user_id: uuid.UUID) -> uuid.UUID | None:
+    return db.scalar(select(Employee.id).where(Employee.user_id == user_id))
 
 
 def get_person(db: Session, actor: Actor, employee_id: uuid.UUID) -> Employee:

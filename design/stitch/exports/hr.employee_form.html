@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-primary-fixed":"#140067","lime-ink":"#4D7A0A","info-bg":"#DFEBFF","tertiary-container":"#9f4a00","surface-bright":"#f9f9fd","surface-container-highest":"#e2e2e6","iris-tint":"#EEECFD","inverse-on-surface":"#f0f0f4","primary-fixed-dim":"#c5c0ff","on-secondary-fixed-variant":"#3b4d00","on-background":"#1a1c1f","primary":"#412ec2","surface-raised":"#FFFFFF","inverse-primary":"#c5c0ff","on-primary-fixed-variant":"#3d28be","on-error-container":"#93000a","lime":"#C5F04A","ink":"#16162A","secondary":"#4f6600","error-container":"#ffdad6","danger-text":"#B4232F","outline-variant":"#c8c4d7","on-error":"#ffffff","inverse-surface":"#2e3034","canvas":"#F6F6FA","warning-bg":"#FFF1D6","on-tertiary-fixed-variant":"#743400","background":"#f9f9fd","on-surface-variant":"#474554","secondary-container":"#c4ef49","surface-dim":"#d9dade","secondary-fixed-dim":"#acd530","success-text":"#0F6B3E","surface-container-high":"#e8e8ec","surface-tint":"#5646d7","secondary-fixed":"#c7f24c","on-secondary":"#ffffff","surface-sunken":"#EFEFF6","warning-text":"#8A4B00","tertiary-fixed":"#ffdbc8","on-secondary-fixed":"#161f00","iris":"#5A4BDB","surface":"#FFFFFF","on-tertiary":"#ffffff","iris-hover":"#4A3CC4","on-tertiary-container":"#ffd7c1","error":"#ba1a1a","outline":"#787586","surface-container":"#ededf1","tertiary":"#7a3700","on-primary-container":"#e0dbff","primary-container":"#5a4bdb","destructive":"#C42836","ink-2":"#4B4B66","line":"#E4E4EE","surface-container-low":"#f3f3f7","success-bg":"#DDF7E8","surface-variant":"#e2e2e6","primary-fixed":"#e4dfff","info-text":"#1D55B8","on-surface":"#1a1c1f","on-primary":"#ffffff","tertiary-fixed-dim":"#ffb68b","ink-3":"#626280","on-iris":"#FFFFFF","surface-container-lowest":"#ffffff","line-strong":"#8B8BA6","on-secondary-container":"#536b00","danger-bg":"#FFE4E6","on-tertiary-fixed":"#321300"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","space-3xl":"4rem","space-xs":"0.25rem","space-md":"1rem","space-lg":"1.5rem","margin":"2rem","gutter":"1.5rem","space-2xl":"3rem","space-xl":"2rem"},"fontFamily":{"h3":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"body":["Inter"],"body-sm":["Inter"],"stat":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"],"label":["Inter"],"overline":["Inter"],"h1":["Plus Jakarta Sans"]},"fontSize":{"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}}</script></head><body class="bg-surface-bright font-body text-on-surface"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-space-lg flex items-center justify-between bg-surface-container-lowest"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center text-on-primary shrink-0"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col min-w-0"><span class="font-h3 text-h3 text-on-surface truncate">Kxmeleon</span><span class="font-overline text-overline text-ink-3 truncate uppercase tracking-wider">Adeyemi Holdings Ltd</span></div></div><button aria-label="Collapse navigation" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">menu_open</span></button></div><div class="overflow-y-auto flex-1 px-space-md py-space-sm space-y-space-md"><div class="space-y-1"><span class="px-space-sm font-overline text-overline uppercase text-ink-3">Core</span><nav class="space-y-0.5" data-active-classes="bg-primary-container text-on-primary font-semibold"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Home</span></a></nav></div><div class="space-y-1"><span class="px-space-sm font-overline text-overline uppercase text-ink-3">Operations</span><nav class="space-y-0.5" data-active-classes="bg-primary-container text-on-primary font-semibold"><div class="rounded-xl bg-iris-tint/40 p-1"><div class="flex items-center justify-between px-space-sm py-2 rounded-lg text-primary font-semibold"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-primary">groups</span><span class="font-label text-label text-primary">HR</span></div><span class="material-symbols-outlined text-[16px] text-primary">expand_less</span></div><div class="mt-1 pl-space-md space-y-0.5 border-l border-primary/20 ml-3.5"><a class="flex items-center px-space-sm py-1.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="people" href="#">People</a><a class="flex items-center px-space-sm py-1.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="departments" href="#">Departments</a><a class="flex items-center px-space-sm py-1.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="org-chart" href="#">Org chart</a><a class="flex items-center px-space-sm py-1.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="structure-setup" href="#">Structure setup</a></div></div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">date_range</span><span>Leave</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payroll</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">domain</span><span>Projects</span></a></nav></div><div class="space-y-1"><span class="px-space-sm font-overline text-overline uppercase text-ink-3">Management</span><nav class="space-y-0.5" data-active-classes="bg-primary-container text-on-primary font-semibold"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">contact_support</span><span>Support</span></a><div class="space-y-0.5"><div class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></div><div class="pl-space-xl space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="administration-users" href="#">Users</a><a class="flex items-center px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="mail-settings" href="#">Mail settings</a><a class="flex items-center px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-log" href="#">Audit log</a></div></div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px]">help</span><span>Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Settings</span></a></nav></div></div></div><div class="p-space-md bg-surface-container-lowest shadow-[0_-1px_4px_rgba(22,22,42,0.03)]"><div class="flex items-center gap-space-sm p-space-sm rounded-xl bg-surface-container-low"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-h3 text-h3 shrink-0">FB</div><div class="flex flex-col min-w-0 flex-1"><span class="font-label text-label text-on-surface font-semibold truncate">Fatima Bello</span><span class="font-overline text-overline text-ink-3 truncate">Finance Manager</span></div><button aria-label="User account options" class="w-7 h-7 rounded flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">more_vert</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter"><div class="flex items-center gap-space-md min-w-0"><div class="flex items-center gap-space-xs font-label text-label text-on-surface-variant"><span class="hover:text-on-surface cursor-pointer">HR</span><span class="text-ink-3">/</span><span class="font-semibold text-primary">People</span></div></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">search</span><input aria-label="Global system search" class="w-72 h-10 pl-9 pr-14 rounded-lg bg-surface-sunken text-on-surface placeholder:text-ink-3 font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/30 focus:bg-surface transition-all" placeholder="Search employees, records..." type="search"/><div class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-container font-overline text-overline text-ink-3 border border-outline-variant/30 flex items-center gap-0.5"><span>⌘</span><span>K</span></div></div><a class="relative h-10 px-space-md rounded-lg flex items-center gap-space-xs font-label text-label text-on-surface-variant bg-surface-sunken hover:bg-surface-container hover:text-on-surface transition-colors" data-path="approvals" href="#"><span class="material-symbols-outlined text-[18px]">assignment_turned_in</span><span>Approvals</span><span class="inline-flex items-center justify-center px-1.5 py-0.2 rounded-full font-overline text-overline bg-warning-bg text-warning-text font-bold">3</span></a><button aria-label="View notifications" class="relative w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive ring-2 ring-surface"></span></button><button aria-label="Toggle light and dark theme" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface-bright min-h-screen"><div class="flex flex-col w-full pb-32">
+<!-- Soft Ambient Glow for HR Section -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-24 left-12 w-96 h-96 rounded-full bg-iris/10 blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-1/3 right-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl pointer-events-none -z-10"></div>
+<!-- Page Header Area -->
+<div class="px-gutter pt-8 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4 max-w-[1440px] mx-auto w-full">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-iris-tint text-primary font-overline text-overline uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            HR Portal · Onboarding
+          </span>
+<span class="font-overline text-overline text-ink-3">ID: REF-2026-HQ</span>
+</div>
+<h1 class="font-display text-display text-ink tracking-tight font-bold">Add person</h1>
+<p class="font-body-sm text-body-sm text-ink-2 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-iris">info</span>
+          Employee number is assigned automatically when you save.
+        </p>
+</div>
+<!-- Quick Action / Status pill -->
+<div class="flex items-center gap-3">
+<div class="px-3.5 py-2 rounded-xl bg-surface shadow-sm flex items-center gap-2.5">
+<span class="w-2.5 h-2.5 rounded-full bg-success-text animate-pulse"></span>
+<span class="font-label text-label text-ink-2">Branch: <strong class="text-ink">Lagos HQ</strong></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Layout: Asymmetric 2-Column with Sticky Sidebar -->
+<div class="px-gutter max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT MAIN COLUMN: Stacked Form Section Cards (8 cols) -->
+<div class="lg:col-span-8 flex flex-col space-y-6">
+<!-- 01 · DIRECTORY IDENTIFIER -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface shadow-[0_1px_3px_rgba(22,22,42,0.05)] transition-all hover:shadow-[0_4px_16px_rgba(22,22,42,0.06)]" id="section-directory">
+<div class="flex items-start justify-between pb-6 mb-6 bg-gradient-to-r from-transparent via-line/40 to-transparent">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-primary font-overline text-overline">01</span>
+<span class="font-overline text-overline uppercase text-ink-3 tracking-wider font-semibold">Directory Identifier</span>
+</div>
+<h2 class="font-h1 text-h1 text-ink">Directory &amp; Workplace Identity</h2>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-sunken font-overline text-overline text-ink-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-success-text" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            Core Required
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- First name -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="firstName">
+<span>First name <span class="text-destructive">*</span></span>
+</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all placeholder:text-ink-3" id="firstName" placeholder="e.g. Chinedu" type="text" value="Chinedu"/>
+</div>
+<!-- Last name -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="lastName">
+<span>Last name <span class="text-destructive">*</span></span>
+</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all placeholder:text-ink-3" id="lastName" placeholder="e.g. Okafor" type="text" value="Okafor"/>
+</div>
+<!-- Other names -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="otherNames">
+<span>Other names <span class="text-ink-3 text-xs font-normal">(Optional)</span></span>
+</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all placeholder:text-ink-3" id="otherNames" placeholder="Middle name" type="text" value="Emeka"/>
+</div>
+<!-- Work email with suffix addon -->
+<div class="md:col-span-2 space-y-1.5">
+<label class="font-label text-label text-ink" for="workEmail">Work email <span class="text-destructive">*</span></label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">mail</span>
+<input class="w-full h-11 pl-9 pr-4 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono" id="workEmail" placeholder="username@adeyemiholdings.ng" type="email" value="chinedu.okafor@adeyemiholdings.ng"/>
+</div>
+<p class="font-overline text-overline text-ink-3">SSO authentication and invitations will dispatch to this corporate address.</p>
+</div>
+<!-- Branch -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="branchSelect">Branch / Office <span class="text-destructive">*</span></label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="branchSelect">
+<option selected="">Lagos HQ - Victoria Island</option>
+<option>Abuja Regional Hub - Maitama</option>
+<option>Port Harcourt Operational Base</option>
+<option>London Representative Office</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Sign-in Account Select -->
+<div class="md:col-span-3 space-y-1.5">
+<label class="font-label text-label text-ink">Sign-in Account Provisioning</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+<label class="cursor-pointer relative flex items-start gap-3 p-3.5 rounded-xl bg-iris-tint/50 transition-all">
+<input checked="" class="mt-1 text-iris focus:ring-iris" name="accountAction" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label text-label text-ink font-semibold">Create new portal login</span>
+<span class="font-body-sm text-body-sm text-ink-2">Issues invite link upon employee confirmation</span>
+</div>
+</label>
+<label class="cursor-pointer relative flex items-start gap-3 p-3.5 rounded-xl bg-surface-sunken transition-all hover:bg-surface-container">
+<input class="mt-1 text-iris focus:ring-iris" name="accountAction" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label text-label text-ink font-semibold">Link existing user record</span>
+<span class="font-body-sm text-body-sm text-ink-2">Associate with pre-provisioned Azure AD account</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- 02 · APPOINTMENT & TENURE -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface shadow-[0_1px_3px_rgba(22,22,42,0.05)] transition-all hover:shadow-[0_4px_16px_rgba(22,22,42,0.06)]" id="section-employment">
+<div class="flex items-start justify-between pb-6 mb-6 bg-gradient-to-r from-transparent via-line/40 to-transparent">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-primary font-overline text-overline">02</span>
+<span class="font-overline text-overline uppercase text-ink-3 tracking-wider font-semibold">Appointment &amp; Tenure</span>
+</div>
+<h2 class="font-h1 text-h1 text-ink">Employment Details</h2>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-info-bg font-overline text-overline text-info-text font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+            Full-time Contract
+          </span>
+</div>
+<div class="space-y-6">
+<!-- Segmented Employment Type Control -->
+<div class="space-y-2">
+<label class="font-label text-label text-ink">Employment Type</label>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 rounded-xl bg-surface-sunken">
+<button class="h-10 rounded-lg bg-surface shadow-sm font-label text-label text-primary font-bold transition-all" type="button">Permanent</button>
+<button class="h-10 rounded-lg text-ink-2 hover:text-ink font-label text-label transition-all" type="button">Contract</button>
+<button class="h-10 rounded-lg text-ink-2 hover:text-ink font-label text-label transition-all" type="button">Intern</button>
+<button class="h-10 rounded-lg text-ink-2 hover:text-ink font-label text-label transition-all" type="button">NYSC Corps</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Hire Date -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="hireDate">Hire date <span class="text-destructive">*</span></label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="hireDate" type="date" value="2026-12-01"/>
+</div>
+</div>
+<!-- Probation End -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="probationDate">Probation ends</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="probationDate" type="date" value="2027-06-01"/>
+</div>
+<!-- Confirmation Date -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="confirmationDate">Confirmation date</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="confirmationDate" type="date" value="2027-06-01"/>
+</div>
+</div>
+<!-- Secondary NYSC / Sub-Tenure Accordion or Card Box -->
+<div class="p-4 rounded-xl bg-surface-sunken/60 space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-label text-label text-ink font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-ink-2">school</span>
+                NYSC Service Registry <span class="font-body-sm text-body-sm text-ink-3 font-normal">(if applicable)</span>
+</span>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Exemption / Completed</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="space-y-1">
+<label class="font-overline text-overline text-ink-3">Call-up Number</label>
+<input class="w-full h-10 px-3 rounded-lg bg-surface text-ink font-body-sm text-body-sm focus:ring-2 focus:ring-iris/30 focus:outline-none uppercase font-mono" placeholder="NYSC/LA/2020/094821" type="text" value="NYSC/LA/2020/094821"/>
+</div>
+<div class="space-y-1">
+<label class="font-overline text-overline text-ink-3">Service Start Date</label>
+<input class="w-full h-10 px-3 rounded-lg bg-surface text-ink font-body-sm text-body-sm focus:ring-2 focus:ring-iris/30 focus:outline-none" type="date" value="2020-11-04"/>
+</div>
+<div class="space-y-1">
+<label class="font-overline text-overline text-ink-3">Service End Date</label>
+<input class="w-full h-10 px-3 rounded-lg bg-surface text-ink font-body-sm text-body-sm focus:ring-2 focus:ring-iris/30 focus:outline-none" type="date" value="2021-10-28"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 03 · INDIVIDUAL PROFILE -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface shadow-[0_1px_3px_rgba(22,22,42,0.05)] transition-all hover:shadow-[0_4px_16px_rgba(22,22,42,0.06)]" id="section-personal">
+<div class="flex items-start justify-between pb-6 mb-6 bg-gradient-to-r from-transparent via-line/40 to-transparent">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-primary font-overline text-overline">03</span>
+<span class="font-overline text-overline uppercase text-ink-3 tracking-wider font-semibold">Individual Profile</span>
+</div>
+<h2 class="font-h1 text-h1 text-ink">Personal Information</h2>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Date of birth -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="dob">Date of birth <span class="text-destructive">*</span></label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="dob" type="date" value="1998-06-14"/>
+</div>
+<!-- Gender -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="gender">Gender <span class="text-destructive">*</span></label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="gender">
+<option selected="">Male</option>
+<option>Female</option>
+<option>Prefer not to say</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- State of Origin -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="stateOrigin">State of origin <span class="text-destructive">*</span></label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="stateOrigin">
+<option selected="">Anambra State</option>
+<option>Abia State</option>
+<option>Delta State</option>
+<option>Enugu State</option>
+<option>Lagos State</option>
+<option>Ogun State</option>
+<option>Rivers State</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 04 · RESIDENCE & CONTACT -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface shadow-[0_1px_3px_rgba(22,22,42,0.05)] transition-all hover:shadow-[0_4px_16px_rgba(22,22,42,0.06)]" id="section-contact">
+<div class="flex items-start justify-between pb-6 mb-6 bg-gradient-to-r from-transparent via-line/40 to-transparent">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-primary font-overline text-overline">04</span>
+<span class="font-overline text-overline uppercase text-ink-3 tracking-wider font-semibold">Residence &amp; Contact</span>
+</div>
+<h2 class="font-h1 text-h1 text-ink">Contact Details</h2>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- Phone number -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="phoneNum">Phone number <span class="text-destructive">*</span></label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">call</span>
+<input class="w-full h-11 pl-9 pr-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono" id="phoneNum" type="tel" value="+234 803 123 4567"/>
+</div>
+</div>
+<!-- Personal email -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="personalEmail">Personal email <span class="text-destructive">*</span></label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">alternate_email</span>
+<input class="w-full h-11 pl-9 pr-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono" id="personalEmail" type="email" value="chinedu.okafor@gmail.com"/>
+</div>
+</div>
+<!-- Residential address -->
+<div class="md:col-span-2 space-y-1.5">
+<label class="font-label text-label text-ink" for="resAddress">Residential address <span class="text-destructive">*</span></label>
+<textarea class="w-full p-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="resAddress" rows="2">14 Admiralty Way, Lekki Phase 1, Lagos State</textarea>
+</div>
+<!-- State of residence -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="stateResidence">State of residence <span class="text-destructive">*</span></label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="stateResidence">
+<option selected="">Lagos State</option>
+<option>Abuja FCT</option>
+<option>Ogun State</option>
+<option>Oyo State</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Marital status -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="maritalStatus">Marital status</label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="maritalStatus">
+<option selected="">Single</option>
+<option>Married</option>
+<option>Divorced</option>
+<option>Widowed</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 05 · EMERGENCY & SUCCESSION -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface shadow-[0_1px_3px_rgba(22,22,42,0.05)] transition-all hover:shadow-[0_4px_16px_rgba(22,22,42,0.06)]" id="section-nextofkin">
+<div class="flex items-start justify-between pb-6 mb-6 bg-gradient-to-r from-transparent via-line/40 to-transparent">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-primary font-overline text-overline">05</span>
+<span class="font-overline text-overline uppercase text-ink-3 tracking-wider font-semibold">Emergency &amp; Succession</span>
+</div>
+<h2 class="font-h1 text-h1 text-ink">Next of Kin</h2>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-sunken font-overline text-overline text-ink-2">Primary Contact</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Full Name -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="kinName">Full name <span class="text-destructive">*</span></label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="kinName" type="text" value="Amara Okafor"/>
+</div>
+<!-- Relationship -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="kinRel">Relationship <span class="text-destructive">*</span></label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="kinRel">
+<option selected="">Sibling (Sister)</option>
+<option>Spouse</option>
+<option>Parent (Mother)</option>
+<option>Parent (Father)</option>
+<option>Child</option>
+<option>Other Relative</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Phone Number -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="kinPhone">Emergency phone <span class="text-destructive">*</span></label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">contact_phone</span>
+<input class="w-full h-11 pl-9 pr-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono" id="kinPhone" type="tel" value="+234 802 987 6543"/>
+</div>
+</div>
+<!-- Residential address -->
+<div class="md:col-span-3 space-y-1.5">
+<label class="font-label text-label text-ink" for="kinAddress">Residential address</label>
+<div class="relative">
+<textarea class="w-full p-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="kinAddress" rows="2">Same as employee residential address: 14 Admiralty Way, Lekki Phase 1, Lagos State</textarea>
+</div>
+</div>
+</div>
+</section>
+<!-- 06 · COMPLIANCE & PENSION (WITH ACTIVE ERROR STATE) -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface shadow-[0_4px_20px_rgba(180,35,47,0.08)] ring-2 ring-destructive/40 transition-all" id="section-statutory">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between pb-6 mb-6 gap-3 bg-gradient-to-r from-transparent via-line/40 to-transparent">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-danger-bg text-danger-text font-overline text-overline font-bold">06</span>
+<span class="font-overline text-overline uppercase text-danger-text tracking-wider font-semibold">Compliance &amp; Pension</span>
+</div>
+<h2 class="font-h1 text-h1 text-ink flex items-center gap-2">
+              Statutory Identifiers
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-danger-bg text-danger-text">
+                1 error
+              </span>
+</h2>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-surface-sunken font-overline text-overline text-ink-2 flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-iris">lock</span>
+              Encrypted at rest
+            </span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- NIN Field WITH EXPLICIT VALIDATION ERROR STATE -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-danger-text font-semibold flex items-center gap-1" for="ninInput">
+<span>National Identity Number (NIN)</span>
+<span class="text-destructive">*</span>
+</label>
+<span class="font-overline text-overline text-danger-text font-bold">Requires 11 digits</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-10 rounded-lg bg-danger-bg/25 text-danger-text ring-2 ring-destructive font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-destructive transition-all font-mono tracking-wider font-medium" id="ninInput" type="text" value="23891048"/>
+<span class="material-symbols-outlined absolute right-3 text-[20px] text-destructive pointer-events-none">error</span>
+</div>
+<div class="flex items-start gap-1.5 text-danger-text pt-0.5">
+<span class="material-symbols-outlined text-[15px] mt-0.5 shrink-0">priority_high</span>
+<span class="font-overline text-overline font-semibold leading-tight">The NIN is 11 digits. (Currently contains 8 digits)</span>
+</div>
+</div>
+<!-- Tax Identification Number (TIN) -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink" for="tinInput">Tax Identification Number (TIN)</label>
+<span class="px-1.5 py-0.2 rounded bg-surface-sunken font-overline text-overline text-ink-3">FIRS Verified</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono" id="tinInput" type="text" value="23019847-0001"/>
+<span class="material-symbols-outlined absolute right-3 text-[18px] text-success-text pointer-events-none">verified</span>
+</div>
+</div>
+<!-- Pension Fund Administrator (PFA) -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="pfaSelect">Pension Fund Administrator (PFA)</label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="pfaSelect">
+<option selected="">Stanbic IBTC Pension Managers</option>
+<option>ARM Pension Managers</option>
+<option>Leadway Pensure PFA</option>
+<option>Premium Pension Limited</option>
+<option>FCMB Pensions Limited</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- RSA PIN -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="rsaPin">Retirement Savings Account (RSA PIN)</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono tracking-wide" id="rsaPin" type="text" value="PEN100847291048"/>
+</div>
+</div>
+<!-- NHF Number -->
+<div class="md:col-span-2 space-y-1.5">
+<label class="font-label text-label text-ink" for="nhfNumber">National Housing Fund (NHF) Number</label>
+<input class="w-full md:w-1/2 h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono" id="nhfNumber" type="text" value="NHF-8492048"/>
+</div>
+</div>
+</div>
+</section>
+<!-- 07 · PAYROLL DISBURSEMENT -->
+<section class="p-6 md:p-8 rounded-2xl bg-surface shadow-[0_1px_3px_rgba(22,22,42,0.05)] transition-all hover:shadow-[0_4px_16px_rgba(22,22,42,0.06)]" id="section-bank">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between pb-6 mb-6 gap-3 bg-gradient-to-r from-transparent via-line/40 to-transparent">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-primary font-overline text-overline">07</span>
+<span class="font-overline text-overline uppercase text-ink-3 tracking-wider font-semibold">Payroll Disbursement</span>
+</div>
+<h2 class="font-h1 text-h1 text-ink">Bank Account Details</h2>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-success-bg font-overline text-overline text-success-text font-semibold flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">task_alt</span>
+              NIBSS Instant Verified
+            </span>
+<span class="px-2.5 py-1 rounded-full bg-surface-sunken font-overline text-overline text-ink-2 flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-iris">lock</span>
+              Encrypted at rest
+            </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- Bank Select -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="bankSelect">Bank <span class="text-destructive">*</span></label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-9 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all appearance-none" id="bankSelect">
+<option selected="">Zenith Bank PLC</option>
+<option>Access Bank PLC</option>
+<option>Guaranty Trust Bank (GTBank)</option>
+<option>First Bank of Nigeria</option>
+<option>United Bank for Africa (UBA)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-ink-3 pointer-events-none">account_balance</span>
+</div>
+</div>
+<!-- Account number + Action -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="accountNum">
+<span>Account number (NUBAN) <span class="text-destructive">*</span></span>
+<span class="font-overline text-overline text-success-text">Active Match</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 pl-3.5 pr-24 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono tracking-wider" id="accountNum" type="text" value="0123456789"/>
+<button class="absolute right-1.5 px-3 py-1.5 rounded-md bg-surface text-ink-2 hover:text-primary font-overline text-overline font-semibold shadow-sm transition-colors" type="button">
+                Re-verify
+              </button>
+</div>
+</div>
+<!-- Verified Account name with badge -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink" for="accountName">Account name (Auto-resolved)</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-10 rounded-lg bg-surface-container-low text-ink font-body-sm text-body-sm font-semibold cursor-not-allowed select-none" id="accountName" readonly="" type="text" value="CHINEDU EMEKA OKAFOR"/>
+<span class="material-symbols-outlined absolute right-3 text-[18px] text-success-text" title="Validated with NIBSS Name Lookup">check_circle</span>
+</div>
+<p class="font-overline text-overline text-ink-3">Must match Directory First &amp; Last name for direct automated salary clearance.</p>
+</div>
+<!-- BVN with Mask & Reveal -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink" for="bvnField">Bank Verification Number (BVN) <span class="text-destructive">*</span></label>
+<span class="font-overline text-overline text-ink-3">11 Digits</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-11 pl-3.5 pr-20 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all font-mono tracking-widest" id="bvnField" type="password" value="22998811281"/>
+<button class="absolute right-2 px-2.5 py-1 text-ink-2 hover:text-ink font-overline text-overline font-semibold transition-colors" onclick="const f=document.getElementById('bvnField'); f.type = f.type==='password'?'text':'password'; this.innerText = f.type==='password'?'Reveal':'Mask';" type="button">
+                Reveal
+              </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT SLIM SIDEBAR COLUMN: Sticky Section Index & Completion Meter (4 cols) -->
+<div class="lg:col-span-4 sticky top-24 space-y-4">
+<!-- Progress Meter Card -->
+<div class="p-6 rounded-2xl bg-surface shadow-[0_1px_4px_rgba(22,22,42,0.06)] space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Form Progress</span>
+<span class="font-stat text-h2 text-iris font-bold">86%</span>
+</div>
+<!-- Custom Visual Progress Bar with gradient indicator -->
+<div class="w-full h-2 rounded-full bg-surface-sunken overflow-hidden flex">
+<div class="h-full bg-gradient-to-r from-iris to-primary rounded-full transition-all duration-500" style="width: 86%;"></div>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-ink-2">
+<span>6 of 7 sections verified</span>
+<span class="inline-flex items-center gap-1 text-danger-text font-semibold">
+<span class="w-2 h-2 rounded-full bg-destructive"></span>
+            1 issue to resolve
+          </span>
+</div>
+</div>
+<!-- Navigation Index Navigator Card -->
+<div class="p-5 rounded-2xl bg-surface shadow-[0_1px_4px_rgba(22,22,42,0.06)] space-y-3">
+<div class="px-2 pb-2 flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Profile Sections</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">list</span>
+</div>
+<nav class="space-y-1">
+<!-- 1. Directory -->
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-sunken transition-colors group" href="#section-directory">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-success-bg text-success-text flex items-center justify-center font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label text-label text-ink group-hover:text-primary transition-colors">1. Directory</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Identity</span>
+</a>
+<!-- 2. Employment -->
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-sunken transition-colors group" href="#section-employment">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-success-bg text-success-text flex items-center justify-center font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label text-label text-ink group-hover:text-primary transition-colors">2. Employment</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Tenure</span>
+</a>
+<!-- 3. Personal details -->
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-sunken transition-colors group" href="#section-personal">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-success-bg text-success-text flex items-center justify-center font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label text-label text-ink group-hover:text-primary transition-colors">3. Personal details</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Profile</span>
+</a>
+<!-- 4. Contact -->
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-sunken transition-colors group" href="#section-contact">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-success-bg text-success-text flex items-center justify-center font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label text-label text-ink group-hover:text-primary transition-colors">4. Contact</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Address</span>
+</a>
+<!-- 5. Next of kin -->
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-sunken transition-colors group" href="#section-nextofkin">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-success-bg text-success-text flex items-center justify-center font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label text-label text-ink group-hover:text-primary transition-colors">5. Next of kin</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Emergency</span>
+</a>
+<!-- 6. Statutory [Highlighted with Error Badge] -->
+<a class="flex items-center justify-between p-2.5 rounded-xl bg-danger-bg/50 hover:bg-danger-bg transition-colors group" href="#section-statutory">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-destructive text-on-error flex items-center justify-center font-overline text-overline font-bold">
+                !
+              </span>
+<span class="font-label text-label text-danger-text font-bold">6. Statutory</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-destructive text-on-error font-overline text-overline font-bold">1 issue</span>
+</a>
+<!-- 7. Bank -->
+<a class="flex items-center justify-between p-2.5 rounded-xl hover:bg-surface-sunken transition-colors group" href="#section-bank">
+<div class="flex items-center gap-3">
+<span class="w-6 h-6 rounded-full bg-success-bg text-success-text flex items-center justify-center font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label text-label text-ink group-hover:text-primary transition-colors">7. Bank</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Payroll</span>
+</a>
+</nav>
+<!-- Compliance advisory note inside sidebar -->
+<div class="mt-4 p-3 rounded-xl bg-surface-sunken/80 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">shield</span>
+<p class="font-overline text-overline text-ink-2 leading-relaxed">
+            Data collected under NDPR guidelines. Encrypted and scoped to Fatima Bello's HR administration role.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<!-- FLOATING DOCKED BOTTOM ACTION BAR -->
+<div class="fixed bottom-0 left-72 right-0 bg-surface/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(22,22,42,0.08)] z-40 px-gutter py-3">
+<div class="max-w-[1440px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+<!-- Auto-save state -->
+<div class="flex items-center gap-2 text-ink-2 font-body-sm text-body-sm">
+<span class="w-2 h-2 rounded-full bg-primary/40 animate-ping"></span>
+<span>Unsaved changes · <span class="text-ink-3">Draft auto-saved 2 mins ago</span></span>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+<button class="h-11 px-5 rounded-xl font-label text-label text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button">
+          Cancel
+        </button>
+<button class="h-11 px-6 rounded-xl bg-surface-container font-label text-label text-ink hover:bg-surface-container-high transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+          Save draft
+        </button>
+<button class="h-11 px-7 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-[0_4px_12px_rgba(90,75,219,0.25)] hover:shadow-[0_6px_16px_rgba(90,75,219,0.35)] active:scale-[0.98] transition-all flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>Save person</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Interactive client-side enhancements: Smooth scroll to form sections
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+</script></main></div></body></html>

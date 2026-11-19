@@ -31,9 +31,24 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 
 | Key | Permission | Scopes | Sensitive | Description |
 |---|---|---|---|---|
-| `hr.employee.create` | Add people | Organisation |  | Add someone to the organisation chart. |
+| `hr.checklist.it` | Complete IT checklist tasks | Organisation |  | Tick off the IT tasks on onboarding and offboarding checklists. |
+| `hr.checklist.manage` | Run onboarding and offboarding | Organisation |  | Start checklists and complete any task on them. |
+| `hr.employee.banking.read` | View bank details | Self, Team, Department, Organisation | yes | Bank account number and BVN. |
+| `hr.employee.banking.update` | Change bank details | Self, Team, Department, Organisation | yes | Bank account number and BVN. |
+| `hr.employee.compensation.read` | View pay documents | Self, Team, Department, Organisation | yes | Contracts and other pay documents. |
+| `hr.employee.compensation.update` | Change pay documents | Self, Team, Department, Organisation | yes | Contracts and other pay documents. |
+| `hr.employee.create` | Add people | Organisation |  | Add someone to the organisation. |
+| `hr.employee.personal.read` | View personal details | Self, Team, Department, Organisation |  | Contact details, next of kin, date of birth and employment dates. |
+| `hr.employee.personal.update` | Change personal details | Self, Team, Department, Organisation |  | Contact details, next of kin, date of birth and employment dates. |
 | `hr.employee.read` | View people | Self, Team, Department, Organisation |  | Names, positions, departments and work emails (the directory fields). |
-| `hr.employee.update` | Edit people | Self, Team, Department, Organisation |  | Change directory details and link a sign-in account. |
+| `hr.employee.sensitive.read` | View sensitive documents | Self, Team, Department, Organisation | yes | Medical and other sensitive documents. |
+| `hr.employee.sensitive.update` | Change sensitive documents | Self, Team, Department, Organisation | yes | Medical and other sensitive documents. |
+| `hr.employee.statutory.read` | View statutory details | Self, Team, Department, Organisation | yes | NIN, TIN, pension and NHF numbers. |
+| `hr.employee.statutory.update` | Change statutory details | Self, Team, Department, Organisation | yes | NIN, TIN, pension and NHF numbers. |
+| `hr.employee.update` | Edit people | Self, Team, Department, Organisation |  | Change directory details and status, link a sign-in account. |
+| `hr.exit.manage` | Record exits | Organisation | yes | Record resignations and terminations; access ends after the last working day. |
+| `hr.profile.request_change` | Request changes to own details | Self |  | Ask HR to change your own statutory or bank details. |
+| `hr.settings.manage` | Manage HR settings | Organisation |  | Employee numbers, document categories and checklist templates. |
 
 ### identity
 
@@ -76,9 +91,24 @@ Everything, including technical settings. Can't be edited or removed.
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
 | `files.file.manage` | O |
+| `hr.checklist.it` | O |
+| `hr.checklist.manage` | O |
+| `hr.employee.banking.read` | O |
+| `hr.employee.banking.update` | O |
+| `hr.employee.compensation.read` | O |
+| `hr.employee.compensation.update` | O |
 | `hr.employee.create` | O |
+| `hr.employee.personal.read` | O |
+| `hr.employee.personal.update` | O |
 | `hr.employee.read` | O |
+| `hr.employee.sensitive.read` | O |
+| `hr.employee.sensitive.update` | O |
+| `hr.employee.statutory.read` | O |
+| `hr.employee.statutory.update` | O |
 | `hr.employee.update` | O |
+| `hr.exit.manage` | O |
+| `hr.profile.request_change` | O |
+| `hr.settings.manage` | O |
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
@@ -102,9 +132,24 @@ Everything except technical settings such as mail, branding and security.
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
 | `files.file.manage` | O |
+| `hr.checklist.it` | O |
+| `hr.checklist.manage` | O |
+| `hr.employee.banking.read` | O |
+| `hr.employee.banking.update` | O |
+| `hr.employee.compensation.read` | O |
+| `hr.employee.compensation.update` | O |
 | `hr.employee.create` | O |
+| `hr.employee.personal.read` | O |
+| `hr.employee.personal.update` | O |
 | `hr.employee.read` | O |
+| `hr.employee.sensitive.read` | O |
+| `hr.employee.sensitive.update` | O |
+| `hr.employee.statutory.read` | O |
+| `hr.employee.statutory.update` | O |
 | `hr.employee.update` | O |
+| `hr.exit.manage` | O |
+| `hr.profile.request_change` | S |
+| `hr.settings.manage` | O |
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
@@ -120,7 +165,12 @@ Reads everything, including the audit log. Changes nothing.
 |---|---|
 | `audit.log.read` | O |
 | `authz.role.read` | O |
+| `hr.employee.banking.read` | O |
+| `hr.employee.compensation.read` | O |
+| `hr.employee.personal.read` | O |
 | `hr.employee.read` | O |
+| `hr.employee.sensitive.read` | O |
+| `hr.employee.statutory.read` | O |
 | `identity.user.read` | O |
 | `org.structure.read` | O |
 
@@ -128,25 +178,79 @@ Reads everything, including the audit log. Changes nothing.
 
 Self-service: their own profile, requests and payslips.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `hr.employee.banking.read` | S |
+| `hr.employee.compensation.read` | S |
+| `hr.employee.personal.read` | S |
+| `hr.employee.personal.update` | S |
+| `hr.employee.read` | O |
+| `hr.employee.sensitive.read` | S |
+| `hr.employee.statutory.read` | S |
+| `hr.profile.request_change` | S |
 
 ### Line Manager
 
 Approves their team's requests and sees their team.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `hr.employee.personal.read` | T |
 
 ### HR Officer
 
 Day-to-day HR records and requests.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `hr.checklist.manage` | O |
+| `hr.employee.banking.read` | O |
+| `hr.employee.banking.update` | O |
+| `hr.employee.create` | O |
+| `hr.employee.personal.read` | O |
+| `hr.employee.personal.update` | O |
+| `hr.employee.read` | O |
+| `hr.employee.statutory.read` | O |
+| `hr.employee.statutory.update` | O |
+| `hr.employee.update` | O |
+| `hr.exit.manage` | O |
+| `identity.user.invite` | O |
+| `org.structure.read` | O |
 
 ### HR Manager
 
 All HR records, including sensitive ones.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `hr.checklist.it` | O |
+| `hr.checklist.manage` | O |
+| `hr.employee.banking.read` | O |
+| `hr.employee.banking.update` | O |
+| `hr.employee.compensation.read` | O |
+| `hr.employee.compensation.update` | O |
+| `hr.employee.create` | O |
+| `hr.employee.personal.read` | O |
+| `hr.employee.personal.update` | O |
+| `hr.employee.read` | O |
+| `hr.employee.sensitive.read` | O |
+| `hr.employee.sensitive.update` | O |
+| `hr.employee.statutory.read` | O |
+| `hr.employee.statutory.update` | O |
+| `hr.employee.update` | O |
+| `hr.exit.manage` | O |
+| `hr.settings.manage` | O |
+| `identity.user.invite` | O |
+| `org.structure.read` | O |
+
+### IT Support
+
+Completes the IT tasks on onboarding and offboarding checklists.
+
+| Permission | Scope |
+|---|---|
+| `hr.checklist.it` | O |
+| `hr.employee.read` | O |
 
 ### Payroll Officer (two-step required)
 

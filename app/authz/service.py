@@ -230,8 +230,9 @@ def grant_super_admin_at_setup(db: Session, user_id: uuid.UUID) -> None:
     )
 
 
-def revoke_delegations_for(db: Session, actor: Actor, user_id: uuid.UUID, why: str) -> int:
-    """Revoke every live delegation to or from this person (on suspension)."""
+def revoke_delegations_for(db: Session, actor: Actor | None, user_id: uuid.UUID, why: str) -> int:
+    """Revoke every live delegation to or from this person (on suspension, or by the
+    system when they leave)."""
     now = clock.now()
     live = list(
         db.scalars(
@@ -243,7 +244,7 @@ def revoke_delegations_for(db: Session, actor: Actor, user_id: uuid.UUID, why: s
         )
     )
     for d in live:
-        d.revoked_at, d.revoked_by = now, actor.user_id
+        d.revoked_at, d.revoked_by = now, actor.user_id if actor else None
         _audit(
             db,
             actor,
@@ -574,6 +575,92 @@ def end_assignment(db: Session, actor: Actor, assignment_id: uuid.UUID, reason: 
         reason=reason,
         changes={"role": {"from": role.name, "to": None}},
     )
+
+
+EMPLOYEE_TEMPLATE = "employee"
+# The only permission the Employee role may grant beyond `self` (the colleague directory).
+EMPLOYEE_ROLE_WIDER = frozenset({"hr.employee.read"})
+EMPLOYEE_ROLE_CHANGED = (
+    "The Employee role now includes more than self-service access, so it can't be given "
+    "automatically. Ask an administrator to assign their roles."
+)
+
+
+def give_employee_role(db: Session, actor: Actor, user_id: uuid.UUID) -> bool:
+    """Give a newly invited employee the role copied from the Employee template (ADR 0017).
+    HR can't hold every self-scoped permission, so this skips "can't grant what you don't
+    hold", but only while that role grants nothing wider than self apart from the
+    directory. Returns False when the role no longer exists or is already held."""
+    role = db.scalars(select(Role).where(Role.template_key == EMPLOYEE_TEMPLATE)).one_or_none()
+    if role is None:
+        return False
+    grants = _role_grants(db, role)
+    wider = [k for k, s in grants.items() if s is not Scope.SELF and k not in EMPLOYEE_ROLE_WIDER]
+    if role.grants_all or wider:
+        raise Conflict(EMPLOYEE_ROLE_CHANGED)
+    now = clock.now()
+    held = db.scalar(
+        select(func.count())
+        .select_from(RoleAssignment)
+        .where(
+            RoleAssignment.user_id == user_id,
+            RoleAssignment.role_id == role.id,
+            *_now_window(RoleAssignment, now),
+        )
+    )
+    if held:
+        return False
+    reason = "Invited from their HR record"
+    db.add(
+        RoleAssignment(
+            user_id=user_id,
+            role_id=role.id,
+            valid_from=now,
+            reason=reason,
+            assigned_by=actor.user_id,
+        )
+    )
+    db.flush()
+    _changed(db)
+    _audit(
+        db,
+        actor,
+        "authz.assignment.create",
+        entity_type="user",
+        entity_id=str(user_id),
+        reason=reason,
+        changes={"role": {"from": None, "to": role.name}},
+    )
+    return True
+
+
+def end_all_access(db: Session, user_id: uuid.UUID, why: str) -> None:
+    """The system ends every role assignment and delegation of someone who has left."""
+    now = clock.now()
+    live = list(
+        db.scalars(
+            select(RoleAssignment).where(
+                RoleAssignment.user_id == user_id,
+                RoleAssignment.ended_at.is_(None),
+                or_(RoleAssignment.valid_to.is_(None), RoleAssignment.valid_to > now),
+            )
+        )
+    )
+    for assignment in live:
+        assignment.ended_at = now
+        role = db.get(Role, assignment.role_id)
+        _audit(
+            db,
+            None,
+            "authz.assignment.end",
+            entity_type="user",
+            entity_id=str(user_id),
+            reason=why,
+            changes={"role": {"from": role.name if role else None, "to": None}},
+        )
+    if live:
+        _changed(db)
+    revoke_delegations_for(db, None, user_id, why)
 
 
 def assignment_owner(db: Session, assignment_id: uuid.UUID) -> uuid.UUID | None:

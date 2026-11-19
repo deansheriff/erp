@@ -7,7 +7,7 @@ from datetime import timedelta
 from sqlalchemy import func, select, update
 from sqlalchemy.orm import Session
 
-from app.audit.service import AuditEvent, record, record_independent
+from app.audit.service import AuditEvent, record, record_by, record_independent
 from app.authz import service as authz
 from app.core import clock
 from app.core.config import get_settings
@@ -888,6 +888,34 @@ def suspend_user(db: Session, actor: Actor, user_id: uuid.UUID) -> None:
         .values(revoked_at=clock.now())
     )
     _audit(db, "identity.user.suspend", actor, entity_type="user", entity_id=str(user.id))
+
+
+def deactivate_for_exit(db: Session, user_id: uuid.UUID, why: str) -> bool:
+    """The system closes the account of someone who has left (ADR 0017): deactivated,
+    signed out everywhere, API keys revoked, roles and delegations ended. Returns False
+    (and changes nothing) for the last active Super Administrator."""
+    user = db.get(User, user_id)
+    if user is None or user.status == "deactivated":
+        return False
+    try:
+        authz.ensure_not_last_super_admin(db, user.id)
+    except Conflict:
+        record_by(
+            db, None, "identity.user.deactivate_blocked", entity_type="user", entity_id=str(user.id)
+        )
+        return False
+    user.status = "deactivated"
+    _revoke_sessions(db, user.id, "employee_exit")
+    db.execute(
+        update(ApiKey)
+        .where(ApiKey.user_id == user.id, ApiKey.revoked_at.is_(None))
+        .values(revoked_at=clock.now())
+    )
+    authz.end_all_access(db, user.id, why)
+    record_by(
+        db, None, "identity.user.deactivate", entity_type="user", entity_id=str(user.id), reason=why
+    )
+    return True
 
 
 def reactivate_user(db: Session, actor: Actor, user_id: uuid.UUID) -> None:

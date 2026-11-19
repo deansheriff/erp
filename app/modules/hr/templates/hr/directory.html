@@ -1,0 +1,69 @@
+{# Directory: colleagues' directory fields only (brief 9.2). Design: design/stitch/exports/hr.directory.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Directory", "Find colleagues. You see names, positions, departments and work emails.") %}{% endcall %}
+
+<form method="get" action="/directory" class="mt-6 flex flex-col gap-3 lg:flex-row lg:items-center">
+  <label class="relative block w-full lg:max-w-md">
+    <span class="sr-only">Search colleagues</span>
+    {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+    <input type="search" name="q" value="{{ filters.q }}" class="kx-input h-12 pl-10" placeholder="Search by name, position or email…" autofocus>
+  </label>
+  <label class="block lg:w-52"><span class="sr-only">Department</span>
+    <select name="department" class="kx-input">
+      <option value="">All departments</option>
+      {% for did, dname in departments %}<option value="{{ did }}" {% if filters.department == did|string %}selected{% endif %}>{{ dname }}</option>{% endfor %}
+    </select>
+  </label>
+  <label class="block lg:w-44"><span class="sr-only">Branch</span>
+    <select name="branch" class="kx-input">
+      <option value="">All branches</option>
+      {% for bid, bname in branches %}<option value="{{ bid }}" {% if filters.branch == bid|string %}selected{% endif %}>{{ bname }}</option>{% endfor %}
+    </select>
+  </label>
+  <div class="flex items-center gap-2">
+    <button type="submit" class="kx-btn-secondary">{{ ui.icon("filter", "sm") }} Apply</button>
+    {% if filters.q or filters.department or filters.branch %}<a href="/directory" class="kx-btn-ghost">Clear</a>{% endif %}
+  </div>
+</form>
+
+{% if result.entries %}
+<ul class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4" aria-label="Colleagues">
+  {% for p in result.entries %}
+  <li class="kx-card kx-enter flex flex-col gap-4 p-5 transition-shadow duration-base hover:shadow-raised">
+    <div class="flex items-center gap-3">
+      <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-hue/10 font-h3 text-[15px] text-hue">{{ p.initials }}</span>
+      <div class="min-w-0">
+        <p class="truncate font-semibold">{{ p.full_name }}</p>
+        <p class="flex items-center gap-1.5 truncate text-body-sm text-ink-2">{{ p.position or "No position" }}{% if p.position_kind and p.position_kind != "primary" %} {{ ui.badge("info", p.position_kind | capitalize) }}{% endif %}</p>
+      </div>
+    </div>
+    <dl class="space-y-1.5 text-body-sm text-ink-3">
+      {% if p.department %}<div class="flex items-center gap-2">{{ ui.icon("building-2", "sm") }}<dt class="sr-only">Department</dt><dd class="truncate">{{ p.department }}</dd></div>{% endif %}
+      {% if p.branch %}<div class="flex items-center gap-2">{{ ui.icon("map-pin", "sm") }}<dt class="sr-only">Branch</dt><dd class="truncate">{{ p.branch }}</dd></div>{% endif %}
+      {% if p.work_email %}
+      <div class="flex items-center gap-2" x-data="copyText" data-copy="{{ p.work_email }}">
+        {{ ui.icon("mail", "sm") }}<dt class="sr-only">Work email</dt>
+        <dd class="min-w-0 flex-1 truncate"><a href="mailto:{{ p.work_email }}" class="hover:text-iris">{{ p.work_email }}</a></dd>
+        <button type="button" class="kx-btn-icon h-8 w-8" x-on:click="copy" aria-label="Copy email"><span x-show="notCopied">{{ ui.icon("copy", "sm") }}</span><span x-show="copied" x-cloak>{{ ui.icon("check", "sm") }}</span></button>
+      </div>
+      {% endif %}
+    </dl>
+  </li>
+  {% endfor %}
+</ul>
+{% if result.pages > 1 %}
+<nav class="mt-6 flex items-center justify-between text-body-sm text-ink-3" aria-label="Pages">
+  <span>Showing {{ (result.page - 1) * 24 + 1 }}–{{ (result.page - 1) * 24 + result.entries | length }} of {{ result.total }}</span>
+  <div class="flex gap-2">
+    {% if result.page > 1 %}<a class="kx-btn-secondary h-9 px-3" href="/directory?q={{ filters.q | urlencode }}&department={{ filters.department }}&branch={{ filters.branch }}&page={{ result.page - 1 }}">Previous</a>{% endif %}
+    {% if result.page < result.pages %}<a class="kx-btn-secondary h-9 px-3" href="/directory?q={{ filters.q | urlencode }}&department={{ filters.department }}&branch={{ filters.branch }}&page={{ result.page + 1 }}">Next</a>{% endif %}
+  </div>
+</nav>
+{% endif %}
+{% else %}
+<section class="kx-card mt-6">{% call ui.empty_state("users", "No one found", "Try another name, or clear the filters.") %}{% endcall %}</section>
+{% endif %}
+{% endblock %}

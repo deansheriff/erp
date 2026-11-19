@@ -7,7 +7,6 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
-from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
 from app.authz import engine
@@ -17,11 +16,10 @@ from app.core.db import get_db
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
 from app.modules.hr import service as hr
-from app.modules.hr.schemas import PersonInput
 from app.org import service as org
 from app.org.schemas import PositionNode
 from app.web.access import require_actor
-from app.web.forms import field_errors, parse_day
+from app.web.forms import parse_day
 from app.web.shell import build_shell
 from app.web.templating import templates
 
@@ -629,43 +627,16 @@ def reference_active(
 
 
 def _people_context(
-    db: Session,
-    actor: Actor,
-    *,
-    q: str = "",
-    status: str = "",
-    unplaced: bool = False,
-    edit: str = "",
-    **extra: Any,
+    db: Session, actor: Actor, *, q: str = "", status: str = "", unplaced: bool = False
 ) -> dict[str, Any]:
     rows = hr.list_people(db, actor, query=q, status=status or None, without_position=unplaced)
-    editing = hr.get_person(db, actor, uuid.UUID(edit)) if _uuid(edit) else None
-    values = extra.pop("values", None) or (
-        {
-            "first_name": editing.first_name,
-            "last_name": editing.last_name,
-            "other_names": editing.other_names or "",
-            "work_email": editing.work_email or "",
-            "user_id": str(editing.user_id or ""),
-        }
-        if editing
-        else {}
-    )
-    accounts = hr.accounts_without_person(db, keep=editing.user_id if editing else None)
     return {
         "shell": _shell(db, actor, "People", ["People"]),
         "rows": rows,
         "filters": {"q": q, "status": status, "unplaced": unplaced},
-        "editing": editing,
-        "values": values,
-        "errors": {},
-        "accounts": accounts,
         "can_create": _can(db, actor, "hr.employee.create"),
-        "can_update": _can(db, actor, "hr.employee.update"),
         "kind_labels": KIND_LABELS,
-        "drawer_open": editing is not None,
         "page_title": "People",
-        **extra,
     }
 
 
@@ -679,106 +650,6 @@ def people(
     q: str = "",
     status: str = "",
     unplaced: int = 0,
-    edit: str = "",
-    notice: str = "",
 ) -> HTMLResponse:
-    context = _people_context(
-        db,
-        actor,
-        q=q,
-        status=status,
-        unplaced=bool(unplaced),
-        edit=edit,
-        notice="Saved." if notice == "saved" else None,
-    )
+    context = _people_context(db, actor, q=q, status=status, unplaced=bool(unplaced))
     return _render(request, "hr/people.html", context)
-
-
-def _person_input(values: dict[str, str]) -> PersonInput:
-    return PersonInput(
-        first_name=values["first_name"],
-        last_name=values["last_name"],
-        other_names=values["other_names"] or None,
-        work_email=values["work_email"] or None,
-        user_id=_uuid(values["user_id"]),
-    )
-
-
-def _save_person(
-    request: Request, db: Session, actor: Actor, person_id: uuid.UUID | None, values: dict[str, str]
-) -> Response:
-    try:
-        data = _person_input(values)
-        if person_id:
-            hr.update_person(db, actor, person_id, data)
-        else:
-            hr.add_person(db, actor, data)
-    except ValidationError as exc:
-        context = _people_context(
-            db,
-            actor,
-            values=values,
-            errors=field_errors(exc),
-            drawer_open=True,
-            edit=str(person_id or ""),
-        )
-        return _render(request, "hr/people.html", context, 422)
-    except (ValidationFailed, Conflict, PermissionDenied) as exc:
-        context = _people_context(
-            db,
-            actor,
-            values=values,
-            errors=_errors(exc),
-            drawer_open=True,
-            edit=str(person_id or ""),
-        )
-        return _render(request, "hr/people.html", context, 422)
-    return RedirectResponse("/hr/people?notice=saved", status_code=303)
-
-
-@router.post("/hr/people", response_class=HTMLResponse)
-@requires("hr.employee.create")
-@screen("hr.people")
-def add_person(
-    request: Request,
-    db: Db,
-    actor: CurrentActor,
-    first_name: FormStr = "",
-    last_name: FormStr = "",
-    other_names: FormStr = "",
-    work_email: FormStr = "",
-    user_id: FormStr = "",
-) -> Response:
-    values = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "other_names": other_names,
-        "work_email": work_email,
-        "user_id": user_id,
-    }
-    return _save_person(request, db, actor, None, values)
-
-
-@router.post("/hr/people/{person_id}", response_class=HTMLResponse)
-@requires("hr.employee.update")
-@screen("hr.people")
-def update_person(
-    request: Request,
-    db: Db,
-    actor: CurrentActor,
-    person_id: uuid.UUID,
-    first_name: FormStr = "",
-    last_name: FormStr = "",
-    other_names: FormStr = "",
-    work_email: FormStr = "",
-    user_id: FormStr = "",
-) -> Response:
-    hr.get_person(db, actor, person_id)  # out of scope answers 404
-    values = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "other_names": other_names,
-        "work_email": work_email,
-        "user_id": user_id,
-    }
-    return _save_person(request, db, actor, person_id, values)

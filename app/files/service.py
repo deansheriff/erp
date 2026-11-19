@@ -391,6 +391,41 @@ def current_file(
     return _view(db, row) if row else None
 
 
+def group_of(db: Session, file_id: uuid.UUID) -> uuid.UUID | None:
+    row = db.get(StoredFile, file_id)
+    return row.version_group_id if row else None
+
+
+def latest_versions(db: Session, group_ids: list[uuid.UUID]) -> dict[uuid.UUID, FileView]:
+    """The newest version of each document that hasn't been deleted (any scan state, so
+    owners can see a version waiting for its scan or quarantined)."""
+    if not group_ids:
+        return {}
+    newest: dict[uuid.UUID, StoredFile] = {}
+    for row in db.scalars(
+        select(StoredFile)
+        .where(StoredFile.version_group_id.in_(group_ids), StoredFile.status != "deleted")
+        .order_by(StoredFile.version.desc())
+    ):
+        newest.setdefault(row.version_group_id, row)
+    return {group: _view(db, row) for group, row in newest.items()}
+
+
+def delete_group(db: Session, actor: Actor, group_id: uuid.UUID) -> None:
+    """Soft-delete every live version of a document."""
+    rows = list(
+        db.scalars(
+            select(StoredFile).where(
+                StoredFile.version_group_id == group_id, StoredFile.status != "deleted"
+            )
+        )
+    )
+    if not rows:
+        raise NotFound()
+    for row in rows:
+        delete(db, actor, row.id)
+
+
 def usage(db: Session) -> Usage:
     settings = _settings_row(db)
     counts = dict(

@@ -1,0 +1,192 @@
+{# My profile (self-service, mobile-first; brief 9.3). Design: design/stitch/exports/me.profile.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% set tab_labels = {"details": "Details", "documents": "Documents", "requests": "Requests", "tasks": "Tasks"} %}
+{% set request_labels = {"statutory": "Statutory details", "banking": "Bank details"} %}
+{% set status_tones = {"pending": "warning", "approved": "success", "rejected": "danger", "cancelled": "neutral"} %}
+
+{% macro readonly_section(section, note=None) -%}
+<section class="kx-card kx-enter p-5" aria-labelledby="me-{{ section.key }}">
+  <h2 id="me-{{ section.key }}" class="kx-overline">{{ section.title }}</h2>
+  <dl class="mt-4 grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
+    {% for f in section.fields %}
+    <div class="min-w-0"><dt class="text-xs text-ink-3">{{ f.field.label }}</dt><dd class="mt-0.5 break-words text-body-sm {{ 'font-medium' if f.display else 'text-ink-3' }} {{ 'font-mono tnum' if f.field.encrypted and f.display }}">{{ f.display or "Not set" }}</dd></div>
+    {% endfor %}
+  </dl>
+  {% if note %}<p class="mt-4 text-xs text-ink-3">{{ note }}</p>{% endif %}
+  {% if caller %}{{ caller() }}{% endif %}
+</section>
+{%- endmacro %}
+
+{% block content %}
+{% if not record %}
+<section class="kx-card mx-auto max-w-lg">
+  {% call ui.empty_state("id-card", "No HR record yet", "Your sign-in account isn't linked to an HR record. Ask HR to link it.") %}{% endcall %}
+</section>
+{% else %}
+{% if notice %}<div class="mb-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mb-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<section class="kx-card kx-enter relative overflow-hidden p-5">
+  <div class="kx-hue-glow" aria-hidden="true"></div>
+  <div class="relative flex items-center gap-4">
+    <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-iris-tint font-h1 text-[22px] text-iris-hover">{{ record.initials }}</span>
+    <div class="min-w-0">
+      <h1 class="truncate font-h1 text-h1">{{ record.full_name }}</h1>
+      <p class="truncate text-body-sm text-ink-2">{{ record.positions[0][0] if record.positions else "No position yet" }}</p>
+      <p class="mt-1 flex flex-wrap items-center gap-2 text-xs text-ink-3">{% if record.employee_number %}<span class="font-mono">{{ record.employee_number }}</span>{% endif %}{% if record.manager %}<span>Manager: {{ record.manager }}</span>{% endif %}</p>
+    </div>
+  </div>
+</section>
+
+<nav class="kx-scroll-x -mx-4 mt-5 flex gap-2 px-4" aria-label="Profile sections">
+  {% for key, label in tab_labels.items() %}
+  <a href="/me?tab={{ key }}" class="shrink-0 {{ 'bg-iris text-on-iris' if tab == key else 'bg-surface text-ink-2 border border-line' }} inline-flex h-10 items-center gap-1.5 rounded-full px-4 text-label" {% if tab == key %}aria-current="page"{% endif %}>
+    {{ label }}
+    {% if key == "tasks" and tasks %}<span class="rounded-full bg-lime px-1.5 text-[11px] font-bold text-ink">{{ tasks | length }}</span>{% endif %}
+    {% if key == "requests" and pending %}<span class="h-2 w-2 rounded-full bg-warning-text"></span>{% endif %}
+  </a>
+  {% endfor %}
+</nav>
+
+<div class="mt-5 space-y-5">
+{% if tab == "details" %}
+  {% for kind in ("statutory", "banking") if kind in pending %}
+  {{ ui.alert("warning", request_labels[kind] ~ " change waiting for HR approval. See Requests.", "clock") }}
+  {% endfor %}
+
+  {# Self-service sections: contact and next of kin. #}
+  {% set own = record.sections | selectattr("key", "in", ["contact", "next_of_kin"]) | list %}
+  {% if own %}
+  <section class="kx-card kx-enter p-5" aria-labelledby="me-own">
+    <h2 id="me-own" class="kx-overline">Contact and next of kin</h2>
+    {% for s in own %}
+    <dl class="mt-4 grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
+      {% for f in s.fields %}
+      <div class="min-w-0"><dt class="text-xs text-ink-3">{{ "Next of kin · " if s.key == "next_of_kin" }}{{ f.field.label }}</dt><dd class="mt-0.5 break-words text-body-sm {{ 'font-medium' if f.display else 'text-ink-3' }}">{{ f.display or "Not set" }}</dd></div>
+      {% endfor %}
+    </dl>
+    {% endfor %}
+  <details class="mt-4" {% if editing == "details" %}open{% endif %}>
+    <summary class="kx-btn-secondary h-10 cursor-pointer list-none px-4">{{ ui.icon("pencil", "sm") }} Edit my details</summary>
+    <form method="post" action="/me/details" class="mt-4 space-y-4 rounded-2xl border border-line bg-surface-sunken/50 p-4" novalidate>
+      {{ ui.csrf_field() }}
+      {% for s in own %}
+      <fieldset class="min-w-0 space-y-4">
+        <legend class="mb-2 text-label font-semibold">{{ s.title }}</legend>
+        <div class="grid gap-4 sm:grid-cols-2">
+        {% for f in s.fields if f.editable %}
+          {% set name = f.field.name %}
+          <div class="{{ 'sm:col-span-2' if f.field.kind == 'textarea' }}">
+          {% if f.field.kind == "select" %}
+            <label for="f-{{ name }}" class="kx-label">{{ f.field.label }}</label>
+            <select id="f-{{ name }}" name="{{ name }}" class="kx-input"><option value="">Not set</option>{% for v, label in f.field.choices %}<option value="{{ v }}" {% if values.get(name) == v %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+            {{ ui.field_error(errors, name) }}
+          {% elif f.field.kind == "textarea" %}
+            <label for="f-{{ name }}" class="kx-label">{{ f.field.label }}</label>
+            <textarea id="f-{{ name }}" name="{{ name }}" rows="2" class="kx-input h-auto py-2.5">{{ values.get(name, "") }}</textarea>
+            {{ ui.field_error(errors, name) }}
+          {% else %}
+            {{ ui.text_field(name, f.field.label, value=values.get(name), type={"email": "email", "phone": "tel"}.get(f.field.kind, "text"), errors=errors, inputmode="tel" if f.field.kind == "phone" else None) }}
+          {% endif %}
+          </div>
+        {% endfor %}
+        </div>
+      </fieldset>
+      {% endfor %}
+      <div class="flex justify-end gap-3"><a href="/me" class="kx-btn-secondary">Cancel</a><button type="submit" class="kx-btn-primary">Save</button></div>
+    </form>
+  </details>
+  </section>
+  {% endif %}
+
+  {% for key in ("employment", "personal") %}{% set s = record.section(key) %}{% if s %}
+  {{ readonly_section(s, "Ask HR to change these.") }}
+  {% endif %}{% endfor %}
+
+  {% for kind in ("statutory", "banking") %}{% set s = record.section(kind) %}{% if s %}
+  {% call readonly_section(s) %}
+    {% if can_request and kind not in pending %}
+    <details class="mt-4" {% if editing == kind %}open{% endif %}>
+      <summary class="kx-btn-secondary h-10 cursor-pointer list-none px-4">{{ ui.icon("send", "sm") }} Request a change</summary>
+      <form method="post" action="/me/requests/{{ kind }}" class="mt-4 space-y-4 rounded-2xl border border-line bg-surface-sunken/50 p-4" novalidate>
+        {{ ui.csrf_field() }}
+        <p class="text-body-sm text-ink-2">HR checks and approves the change before it's used{{ " for salary payments" if kind == "banking" else "" }}.</p>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {% for field in request_fields[kind] %}
+          {{ ui.text_field(field.name, field.label, value=values.get(field.name), errors=errors, inputmode="numeric" if field.name in ("nin", "bvn", "account_number") else None) }}
+          {% endfor %}
+        </div>
+        <button type="submit" class="kx-btn-primary w-full sm:w-auto">Send to HR</button>
+      </form>
+    </details>
+    {% endif %}
+  {% endcall %}
+  {% endif %}{% endfor %}
+
+{% elif tab == "documents" %}
+  <section class="kx-card overflow-hidden">
+    {% if documents %}
+    <ul class="divide-y divide-line">
+      {% for d in documents %}
+      <li class="flex items-center justify-between gap-3 px-5 py-4">
+        <div class="min-w-0"><p class="truncate font-semibold">{{ d.title }}</p><p class="text-xs text-ink-3">{{ d.category }} · {{ d.created_at | date }}</p></div>
+        {% if d.file and d.file.status == "clean" %}<a href="/files/{{ d.file.id }}" class="kx-btn-secondary h-10 px-3">{{ ui.icon("download", "sm") }}<span class="sr-only sm:not-sr-only">Download</span></a>
+        {% else %}{{ ui.badge("info", "Being checked") }}{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {% call ui.empty_state("folder-open", "No documents", "Your contract, certificates and letters appear here once HR adds them.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+{% elif tab == "requests" %}
+  <section class="kx-card overflow-hidden">
+    {% if requests %}
+    <ul class="divide-y divide-line">
+      {% for r in requests %}
+      <li class="space-y-2 px-5 py-4">
+        <div class="flex items-center justify-between gap-3">
+          <p class="font-semibold">{{ r.class_label }}</p>{{ ui.badge(status_tones[r.status], r.status | capitalize) }}
+        </div>
+        <p class="text-xs text-ink-3">Sent {{ r.requested_at | datetime }}{% if r.decided_by %} · {{ r.status | capitalize }} by {{ r.decided_by }}{% endif %}</p>
+        <p class="text-body-sm text-ink-2">{{ r.changes | map(attribute="label") | join(", ") }}</p>
+        {% if r.decision_note %}<p class="rounded-xl bg-surface-sunken px-3 py-2 text-body-sm">{{ r.decision_note }}</p>{% endif %}
+        {% if r.status == "pending" %}
+        <form method="post" action="/me/requests/{{ r.id }}/cancel">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost h-9 px-3">Cancel request</button></form>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {% call ui.empty_state("inbox", "No requests", "Requests to change your statutory or bank details appear here.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+{% else %}
+  <section class="kx-card overflow-hidden">
+    {% if tasks %}
+    <ul class="divide-y divide-line">
+      {% for c, t in tasks %}
+      <li class="flex items-center gap-3 px-5 py-4">
+        <form method="post" action="/hr/checklist-tasks/{{ t.id }}">{{ ui.csrf_field() }}
+          <input type="hidden" name="done" value="1"><input type="hidden" name="return_to" value="/me?tab=tasks&notice=task">
+          <button type="submit" class="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-3 transition-colors hover:border-iris hover:text-iris" aria-label="Mark “{{ t.title }}” done">{{ ui.icon("check", "sm") }}</button>
+        </form>
+        <div class="min-w-0 flex-1">
+          <p class="font-medium">{{ t.title }}</p>
+          <p class="text-xs {{ 'text-danger-text' if t.overdue else 'text-ink-3' }}">{{ "Onboarding" if c.kind == "onboarding" else "Offboarding" }} · {{ c.employee_name }} · due {{ t.due_date | date }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {% call ui.empty_state("list-checks", "Nothing to do", "Onboarding and offboarding tasks for you appear here.") %}{% endcall %}
+    {% endif %}
+  </section>
+{% endif %}
+</div>
+{% endif %}
+{% endblock %}

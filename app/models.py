@@ -12,6 +12,7 @@ from app.authz.models import (
     RoleAssignment,
     RoleGrant,
 )
+from app.core.numbering import NumberSequence
 from app.files.models import FileLink, StorageSettings, StoredFile
 from app.identity.models import (
     ApiKey,
@@ -24,7 +25,17 @@ from app.identity.models import (
     UserToken,
 )
 from app.mail.models import MailOutbox, MailSettings
-from app.modules.hr.models import Employee
+from app.modules.hr.models import (
+    ChangeRequest,
+    Checklist,
+    ChecklistTask,
+    ChecklistTemplate,
+    ChecklistTemplateTask,
+    DocumentCategory,
+    Employee,
+    EmployeeDocument,
+    EmployeeExit,
+)
 from app.org.models import (
     Branch,
     CostCentre,
@@ -41,10 +52,18 @@ __all__ = [
     "AuditLog",
     "AuthzState",
     "Branch",
+    "ChangeRequest",
+    "Checklist",
+    "ChecklistTask",
+    "ChecklistTemplate",
+    "ChecklistTemplateTask",
     "CostCentre",
     "Delegation",
     "Department",
+    "DocumentCategory",
     "Employee",
+    "EmployeeDocument",
+    "EmployeeExit",
     "FileLink",
     "Grade",
     "Installation",
@@ -52,6 +71,7 @@ __all__ = [
     "MailOutbox",
     "MailSettings",
     "MfaRecoveryCode",
+    "NumberSequence",
     "OrgState",
     "Organization",
     "PermissionRow",

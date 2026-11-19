@@ -392,7 +392,7 @@ screens:
     permission: hr.employee.read
     actions:
       add: hr.employee.create
-      edit: hr.employee.update
+      open_profile: hr.employee.read
     field_classes: [directory]
     approved_by: Dean Sheriff (2026-11-19)
 
@@ -428,4 +428,120 @@ screens:
       hold_and_delete: files.file.manage
       quota: system.storage.manage
     field_classes: []
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.employee
+    phase: 6
+    module: hr
+    title: Employee profile
+    route: GET /hr/people/{id}
+    template: app/modules/hr/templates/hr/employee.html
+    stitch_screens:
+      desktop: 98de3d83541e4c6a8589a4f5a75b21a1
+    exports:
+      - design/stitch/exports/hr.employee.html
+    permission: hr.employee.read
+    actions:
+      invite: identity.user.invite
+      start_onboarding: hr.checklist.manage
+      record_exit: hr.exit.manage
+      documents: hr.employee.<class>.update
+    field_classes: [directory, personal, statutory, banking, compensation, sensitive]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.employee_form
+    phase: 6
+    module: hr
+    title: Add or edit a person
+    route: GET /hr/people/new, GET /hr/people/{id}/edit
+    template: app/modules/hr/templates/hr/employee_form.html
+    stitch_screens:
+      desktop: 79515ca0618740198e75179383db5ac6
+    exports:
+      - design/stitch/exports/hr.employee_form.html
+    permission: hr.employee.create
+    actions:
+      save_directory: hr.employee.update
+      save_classes: hr.employee.<class>.update
+    field_classes: [directory, personal, statutory, banking]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.change_requests
+    phase: 6
+    module: hr
+    title: Change requests
+    route: GET /hr/change-requests
+    template: app/modules/hr/templates/hr/change_requests.html
+    stitch_screens:
+      desktop: 2b1ef2353ac848e182027483343bb8f0
+    exports:
+      - design/stitch/exports/hr.change_requests.html
+    permission: hr.employee.statutory.update
+    actions:
+      decide: hr.employee.<class>.update
+    field_classes: [statutory, banking]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.checklists
+    phase: 6
+    module: hr
+    title: Joiners and leavers
+    route: GET /hr/checklists
+    template: app/modules/hr/templates/hr/checklists.html
+    stitch_screens:
+      desktop: 3aa84220bc6d40ec9c526db4c971deac
+    exports:
+      - design/stitch/exports/hr.checklists.html
+    permission: login
+    actions:
+      complete_task: hr.checklist.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.settings
+    phase: 6
+    module: hr
+    title: HR settings
+    route: GET /hr/settings
+    template: app/modules/hr/templates/hr/settings.html
+    stitch_screens:
+      desktop: d11ca45fe9c54237a3098f31511e1301
+    exports:
+      - design/stitch/exports/hr.settings.html
+    permission: hr.settings.manage
+    actions:
+      save: hr.settings.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: hr.directory
+    phase: 6
+    module: hr
+    title: Colleague directory
+    route: GET /directory
+    template: app/modules/hr/templates/hr/directory.html
+    stitch_screens:
+      desktop: 5fce9f32f23c459c95362cfcf71eaf30
+    exports:
+      - design/stitch/exports/hr.directory.html
+    permission: hr.employee.read
+    actions: {}
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: me.profile
+    phase: 6
+    module: hr
+    title: My profile (self-service)
+    route: GET /me
+    template: app/modules/hr/templates/hr/me.html
+    stitch_screens:
+      mobile: 2c15ffc6375849a58ff49a3edc160da4
+    exports:
+      - design/stitch/exports/me.profile.html
+    permission: login
+    actions:
+      save_details: hr.employee.personal.update
+      request_change: hr.profile.request_change
+    field_classes: [directory, personal, statutory, banking, compensation, sensitive]
     approved_by: Dean Sheriff (2026-11-19)

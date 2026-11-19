@@ -54,3 +54,15 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | Screen | Route | Permission | Field classes | Approved by |
 |---|---|---|---|---|
 | **Files and storage** (`admin.files`) | `GET /admin/files` | files.file.manage | — | Dean Sheriff (2026-11-19) |
+
+## Phase 6
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Employee profile** (`hr.employee`) | `GET /hr/people/{id}` | hr.employee.read | directory, personal, statutory, banking, compensation, sensitive | Dean Sheriff (2026-11-19) |
+| **Add or edit a person** (`hr.employee_form`) | `GET /hr/people/new, GET /hr/people/{id}/edit` | hr.employee.create | directory, personal, statutory, banking | Dean Sheriff (2026-11-19) |
+| **Change requests** (`hr.change_requests`) | `GET /hr/change-requests` | hr.employee.statutory.update | statutory, banking | Dean Sheriff (2026-11-19) |
+| **Joiners and leavers** (`hr.checklists`) | `GET /hr/checklists` | login | directory | Dean Sheriff (2026-11-19) |
+| **HR settings** (`hr.settings`) | `GET /hr/settings` | hr.settings.manage | — | Dean Sheriff (2026-11-19) |
+| **Colleague directory** (`hr.directory`) | `GET /directory` | hr.employee.read | directory | Dean Sheriff (2026-11-19) |
+| **My profile (self-service)** (`me.profile`) | `GET /me` | login | directory, personal, statutory, banking, compensation, sensitive | Dean Sheriff (2026-11-19) |

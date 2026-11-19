@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"surface-container-highest":"#e2e2e6","surface":"#FFFFFF","on-iris":"#FFFFFF","on-primary-fixed-variant":"#3d28be","line":"#E4E4EE","surface-container-low":"#f3f3f7","on-secondary":"#ffffff","lime-ink":"#4D7A0A","error":"#ba1a1a","surface-container":"#ededf1","iris-tint":"#EEECFD","on-tertiary-fixed-variant":"#743400","danger-bg":"#FFE4E6","line-strong":"#8B8BA6","surface-sunken":"#EFEFF6","tertiary":"#7a3700","inverse-surface":"#2e3034","inverse-primary":"#c5c0ff","iris":"#5A4BDB","on-error":"#ffffff","ink-3":"#626280","on-tertiary-fixed":"#321300","on-secondary-fixed":"#161f00","ink":"#16162A","on-surface-variant":"#474554","surface-tint":"#5646d7","on-tertiary-container":"#ffd7c1","on-primary-container":"#e0dbff","on-secondary-container":"#536b00","outline":"#787586","on-error-container":"#93000a","primary":"#412ec2","surface-variant":"#e2e2e6","warning-text":"#8A4B00","warning-bg":"#FFF1D6","surface-container-lowest":"#ffffff","inverse-on-surface":"#f0f0f4","surface-raised":"#FFFFFF","on-primary-fixed":"#140067","outline-variant":"#c8c4d7","info-text":"#1D55B8","surface-container-high":"#e8e8ec","info-bg":"#DFEBFF","success-bg":"#DDF7E8","secondary-fixed":"#c7f24c","primary-container":"#5a4bdb","background":"#f9f9fd","success-text":"#0F6B3E","canvas":"#F6F6FA","lime":"#C5F04A","secondary-container":"#c4ef49","primary-fixed-dim":"#c5c0ff","secondary":"#4f6600","on-background":"#1a1c1f","danger-text":"#B4232F","tertiary-fixed":"#ffdbc8","surface-bright":"#f9f9fd","on-primary":"#ffffff","on-surface":"#1a1c1f","tertiary-container":"#9f4a00","on-secondary-fixed-variant":"#3b4d00","destructive":"#C42836","ink-2":"#4B4B66","primary-fixed":"#e4dfff","error-container":"#ffdad6","surface-dim":"#d9dade","secondary-fixed-dim":"#acd530","on-tertiary":"#ffffff","iris-hover":"#4A3CC4","tertiary-fixed-dim":"#ffb68b"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"2rem","space-md":"1rem","space-xs":"0.25rem","space-2xl":"3rem","gutter":"1.5rem","space-lg":"1.5rem","space-3xl":"4rem","space-xl":"2rem","space-sm":"0.5rem"},"fontFamily":{"body":["Inter"],"h3":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"body-sm":["Inter"],"overline":["Inter"],"label":["Inter"]},"fontSize":{"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}]}}}}</script></head><body class="bg-canvas font-body text-body text-ink antialiased"><aside class="fixed left-0 top-0 h-full w-[272px] bg-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col h-full"><div class="h-16 px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0"><span class="font-h3 text-h3 text-on-primary">AH</span></div><span class="font-h2 text-h2 text-ink truncate">Adeyemi Holdings Ltd</span></div></div><div class="px-space-md py-space-xs"><button class="w-full h-9 px-space-sm bg-surface-sunken hover:bg-surface-container-high rounded-lg flex items-center justify-between text-ink-3 transition-colors duration-150" type="button"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm">Search modules</span></div><kbd class="px-1.5 py-0.5 bg-surface text-ink-2 font-overline text-overline rounded shadow-[0_1px_2px_rgba(22,22,42,0.06)]">Ctrl K</kbd></button></div><div class="flex-1 overflow-y-auto px-space-xs py-space-sm space-y-0.5"><nav class="space-y-0.5" data-active-classes="bg-iris-tint text-primary font-label rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Home</span></a><div class="pt-0.5"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-iris-tint/60 text-primary font-label text-label" data-path="hr-overview" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-iris">group</span><span>HR</span></div><span class="material-symbols-outlined text-[18px] text-iris">expand_more</span></a><div class="ml-4 pl-3 my-1 space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-container-low transition-colors font-body-sm text-body-sm" data-path="org-chart" href="#">Org chart</a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-container-low transition-colors font-body-sm text-body-sm" data-path="departments" href="#">Departments</a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-container-low transition-colors font-body-sm text-body-sm" data-path="people" href="#">People</a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-container-low transition-colors font-body-sm text-body-sm" data-path="structure-setup" href="#">Structure setup</a><a aria-current="page" class="flex items-center justify-between px-space-sm py-1.5 shadow-[inset_3px_0_0_0_#5A4BDB] bg-iris-tint text-primary font-label rounded-lg" data-path="change-requests" href="#"><span>Change requests</span><span class="px-1.5 py-0.5 text-overline font-overline bg-iris text-on-iris rounded-full">3</span></a></div></div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span>Leave</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payroll</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span>Projects</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">help_center</span><span>Support</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-label" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></a></nav></div><div class="p-space-sm bg-surface-container-lowest"><nav class="space-y-0.5 mb-space-sm" data-active-classes="bg-iris-tint text-primary font-label rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-3 hover:bg-surface-container-low hover:text-ink transition-colors font-label text-label" data-path="documentation" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span>Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-3 hover:bg-surface-container-low hover:text-ink transition-colors font-label text-label" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Settings</span></a></nav><div class="flex items-center gap-space-sm p-space-xs rounded-xl bg-surface-sunken"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="font-label text-label text-on-primary">FB</span></div><div class="flex-1 min-w-0"><div class="font-h3 text-body-sm text-ink truncate">Fatima Bello</div><div class="font-body-sm text-overline text-ink-3 truncate">Finance Manager</div></div><button aria-label="User menu" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">unfold_more</span></button></div></div></div></aside><div class="pl-[272px]"><header class="fixed top-0 left-[272px] right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm text-body-sm"><a class="text-ink-3 hover:text-ink font-body-sm transition-colors" data-path="hr-overview" href="#">HR</a><span class="text-line-strong text-[14px]">/</span><span class="font-label text-label text-ink">Change requests</span></div><div class="flex items-center gap-space-md"><div class="relative w-80"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 bg-surface-sunken text-ink placeholder:text-ink-3 rounded-lg font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:shadow-[0_0_0_2px_#5A4BDB] transition-all" placeholder="Search people, claims, invoices..." type="text"/><kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 bg-surface text-ink-3 font-overline text-overline rounded shadow-[0_1px_2px_rgba(22,22,42,0.06)]">Ctrl K</kbd></div><div class="flex items-center gap-space-xs"><button aria-label="Approvals" class="h-10 px-space-sm rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 hover:text-ink flex items-center gap-1.5 transition-colors font-label text-body-sm" type="button"><span class="material-symbols-outlined text-[18px]">fact_check</span><span class="px-1.5 py-0.2 bg-iris text-on-iris text-overline font-overline rounded-full">3</span></button><button aria-label="Notifications" class="w-10 h-10 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 hover:text-ink flex items-center justify-center relative transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span></button><button aria-label="Toggle theme" class="w-10 h-10 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full relative">
+<!-- Soft Ambient Glow -->
+<div class="absolute -top-12 left-1/4 w-[600px] h-[340px] bg-iris/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+<!-- Main Container -->
+<div class="px-gutter py-space-lg max-w-[1440px] mx-auto w-full flex flex-col gap-space-lg">
+<!-- PAGE HEADER -->
+<header class="flex flex-col gap-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center justify-center w-2 h-2 rounded-full bg-iris"></span>
+<span class="font-overline text-overline text-iris uppercase">Statutory Governance</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Change requests</h1>
+<p class="font-body-sm text-body-sm text-ink-3 max-w-2xl">
+            Employees asked to change their statutory or bank details. Nobody can approve their own request.
+          </p>
+</div>
+<!-- Top Right Utility / Stat Widget -->
+<div class="flex items-center gap-space-sm shrink-0">
+<div class="px-space-md py-space-xs rounded-xl bg-surface shadow-sm flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-warning-bg flex items-center justify-center text-warning-text">
+<span class="material-symbols-outlined text-[18px]">pending_actions</span>
+</div>
+<div class="flex flex-col">
+<span class="font-h3 text-h3 text-ink leading-none">3</span>
+<span class="font-overline text-overline text-ink-3">Awaiting Review</span>
+</div>
+</div>
+<a class="h-11 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 hover:text-ink font-label text-label flex items-center gap-1.5 transition-colors shadow-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">history_edu</span>
+<span>Audit log</span>
+</a>
+</div>
+</div>
+<!-- Segmented Filter Tabs & Secondary Search Row -->
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-sm pt-space-xs">
+<!-- Segmented Control -->
+<div class="inline-flex p-1 bg-surface-sunken rounded-xl gap-1 overflow-x-auto">
+<button class="px-space-md py-2 rounded-lg bg-surface text-ink font-label text-label shadow-sm flex items-center gap-2 transition-all" type="button">
+<span>Pending</span>
+<span class="px-1.5 py-0.5 rounded-full bg-iris text-on-iris font-overline text-overline leading-none">3</span>
+</button>
+<button class="px-space-md py-2 rounded-lg text-ink-3 hover:text-ink font-label text-label hover:bg-surface/50 transition-all flex items-center gap-2" type="button">
+<span>Approved</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface text-ink-3 font-overline text-overline leading-none">42</span>
+</button>
+<button class="px-space-md py-2 rounded-lg text-ink-3 hover:text-ink font-label text-label hover:bg-surface/50 transition-all flex items-center gap-2" type="button">
+<span>Rejected</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface text-ink-3 font-overline text-overline leading-none">5</span>
+</button>
+<button class="px-space-md py-2 rounded-lg text-ink-3 hover:text-ink font-label text-label hover:bg-surface/50 transition-all" type="button">
+<span>Cancelled</span>
+</button>
+</div>
+<!-- Search & Filter Controls -->
+<div class="flex items-center gap-space-xs flex-wrap sm:flex-nowrap">
+<div class="relative flex-1 sm:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-11 pl-9 pr-4 bg-surface text-ink placeholder:text-ink-3 rounded-lg font-body-sm text-body-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/20 transition-all" placeholder="Filter by employee name or ID..." type="text"/>
+</div>
+<div class="relative shrink-0">
+<select class="h-11 pl-3.5 pr-8 bg-surface text-ink-2 font-label text-label rounded-lg shadow-sm appearance-none focus:outline-none focus:ring-2 focus:ring-iris/20 cursor-pointer">
+<option>All change types</option>
+<option>Bank details</option>
+<option>Statutory &amp; Pension</option>
+<option>Tax ID / TIN</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none text-[18px]">expand_more</span>
+</div>
+<button aria-label="Sort options" class="w-11 h-11 rounded-lg bg-surface text-ink-2 hover:text-ink shadow-sm flex items-center justify-center hover:bg-surface-container transition-colors shrink-0" type="button">
+<span class="material-symbols-outlined text-[20px]">sort</span>
+</button>
+</div>
+</div>
+</header>
+<!-- MASTER-DETAIL WORKSPACE -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: REQUEST CARDS LIST (lg:col-span-4 / ~380px) -->
+<section aria-label="Requests inbox" class="lg:col-span-4 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<span class="font-overline text-overline uppercase text-ink-3">Awaiting Action (3)</span>
+<span class="font-body-sm text-overline text-ink-3">Sorted by newest</span>
+</div>
+<div class="flex flex-col gap-space-xs" id="request-list">
+<!-- Card 1: Selected / Active -->
+<article class="relative p-space-md rounded-xl bg-surface shadow-md cursor-pointer transition-all hover:shadow-lg group" tabindex="0">
+<!-- Subtle active left marker without border token -->
+<div class="absolute left-0 top-3 bottom-3 w-1 bg-iris rounded-r-full"></div>
+<div class="flex items-start gap-space-sm pl-1.5">
+<div class="w-11 h-11 rounded-full bg-iris-tint text-iris flex items-center justify-center font-h3 text-body-sm font-semibold shrink-0 shadow-sm">
+                AO
+              </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h2 class="font-h3 text-h3 text-ink truncate group-hover:text-primary transition-colors">Amaka Okafor</h2>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline shrink-0">
+                    Pending review
+                  </span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-body-sm text-overline text-ink-3">GL-10 · Sr. Accountant</span>
+<span class="text-ink-3 text-[10px]">•</span>
+<span class="font-body-sm text-overline font-mono text-ink-2 bg-surface-sunken px-1.5 py-0.5 rounded">EMP-00042</span>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 mt-space-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline">
+<span class="material-symbols-outlined text-[13px]">account_balance</span>
+                    Bank details
+                  </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">
+                    3 fields
+                  </span>
+</div>
+<div class="flex items-center gap-1 text-ink-3 mt-space-sm font-body-sm text-overline">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Requested 2 hours ago</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2: Chinedu Eze -->
+<article class="p-space-md rounded-xl bg-surface shadow-sm hover:shadow-md cursor-pointer transition-all group" tabindex="0">
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-h3 text-body-sm font-semibold shrink-0">
+                CE
+              </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h2 class="font-h3 text-h3 text-ink truncate group-hover:text-primary transition-colors">Chinedu Eze</h2>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline shrink-0">
+                    Pending review
+                  </span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-body-sm text-overline text-ink-3">Logistics Lead</span>
+<span class="text-ink-3 text-[10px]">•</span>
+<span class="font-body-sm text-overline font-mono text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded">EMP-00109</span>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 mt-space-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">
+<span class="material-symbols-outlined text-[13px]">badge</span>
+                    Statutory (RSA)
+                  </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">
+                    2 fields
+                  </span>
+</div>
+<div class="flex items-center gap-1 text-ink-3 mt-space-sm font-body-sm text-overline">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Requested yesterday, 16:30 WAT</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3: Aisha Mohammed -->
+<article class="p-space-md rounded-xl bg-surface shadow-sm hover:shadow-md cursor-pointer transition-all group" tabindex="0">
+<div class="flex items-start gap-space-sm">
+<div class="w-11 h-11 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-h3 text-body-sm font-semibold shrink-0">
+                AM
+              </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h2 class="font-h3 text-h3 text-ink truncate group-hover:text-primary transition-colors">Aisha Mohammed</h2>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline shrink-0">
+                    Pending review
+                  </span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-body-sm text-overline text-ink-3">HR Business Partner</span>
+<span class="text-ink-3 text-[10px]">•</span>
+<span class="font-body-sm text-overline font-mono text-ink-3 bg-surface-sunken px-1.5 py-0.5 rounded">EMP-00215</span>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 mt-space-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline">
+<span class="material-symbols-outlined text-[13px]">account_balance</span>
+                    Bank details
+                  </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">
+                    1 field
+                  </span>
+</div>
+<div class="flex items-center gap-1 text-ink-3 mt-space-sm font-body-sm text-overline">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Requested 2 days ago</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- RIGHT COLUMN: SELECTED REQUEST DETAIL PANEL (lg:col-span-8 / flex-1) -->
+<section aria-label="Request details" class="lg:col-span-8 flex flex-col gap-space-md">
+<div class="p-space-lg lg:p-space-xl bg-surface rounded-2xl shadow-md flex flex-col gap-space-lg relative overflow-hidden">
+<!-- Subtle top accent gradient line -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-iris via-primary to-iris-tint"></div>
+<!-- Detail Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="relative shrink-0">
+<div class="w-14 h-14 rounded-2xl bg-iris text-on-iris flex items-center justify-center font-h2 text-h2 font-bold shadow-md">
+                  AO
+                </div>
+<div class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-surface flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-warning-text text-[15px]" style="font-variation-settings: 'FILL' 1;">hourglass_top</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<h2 class="font-h2 text-h2 text-ink">Amaka Okafor</h2>
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-primary font-mono font-overline text-overline">
+                    EMP-00042
+                  </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">
+                    Grade Level 10
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 truncate mt-0.5">
+                  Senior Accountant · Finance &amp; Accounts Division
+                </p>
+</div>
+</div>
+<div class="flex md:flex-col items-end justify-between md:justify-center gap-1 shrink-0">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-info-bg text-info-text font-label text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">account_balance</span>
+                Bank details change
+              </span>
+<span class="font-body-sm text-overline text-ink-3">Submitted 17 Nov 2026, 12:15 WAT</span>
+</div>
+</div>
+<!-- Policy & Security Notice Banner -->
+<div class="p-space-md rounded-xl bg-iris-tint/60 flex items-start gap-space-sm text-ink">
+<div class="w-8 h-8 rounded-lg bg-surface text-primary flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="flex flex-col gap-0.5 text-body-sm">
+<span class="font-label text-label text-ink">Separation of Duties Enforced</span>
+<p class="text-ink-2 font-body-sm text-body-sm">
+                Nobody can approve their own request. You are reviewing this submission as <strong class="text-ink font-semibold">Fatima Bello</strong> (Finance Manager).
+              </p>
+</div>
+</div>
+<!-- COMPARISON WORKSPACE -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase text-ink-2 tracking-wider">Field Comparisons</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">3 changed</span>
+</div>
+<span class="font-body-sm text-overline text-ink-3">BVN validation verified</span>
+</div>
+<!-- Comparison Table Container -->
+<div class="overflow-x-auto rounded-xl bg-surface-sunken">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/60 text-ink-2 font-overline text-overline uppercase">
+<th class="py-3 px-space-md" scope="col">Field</th>
+<th class="py-3 px-space-md" scope="col">Current on File</th>
+<th class="py-3 px-space-md" scope="col">Requested Change</th>
+<th class="py-3 px-space-md text-right" scope="col">Verification</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<!-- Row 1: Bank Name -->
+<tr class="bg-surface hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-space-md font-label text-label text-ink">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-ink-3 text-[18px]">account_balance</span>
+<span>Bank name</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-ink-3 line-through">
+                      GTBank
+                    </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-iris-tint font-label text-label text-primary">
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+<span>Access Bank PLC</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<span class="inline-flex items-center gap-1 text-success-text font-label text-overline bg-success-bg px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                        CBN Validated
+                      </span>
+</td>
+</tr>
+<!-- Row 2: Account Number -->
+<tr class="bg-surface-sunken/40 hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-space-md font-label text-label text-ink">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-ink-3 text-[18px]">pin</span>
+<span>Account number</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-ink-3">
+                      ••••4821
+                    </td>
+<td class="py-3.5 px-space-md font-mono">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-iris-tint font-label text-label text-primary font-mono">
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+<span>••••7710</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<span class="inline-flex items-center gap-1 text-success-text font-label text-overline bg-success-bg px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                        NIBSS Active
+                      </span>
+</td>
+</tr>
+<!-- Row 3: Account Name -->
+<tr class="bg-surface hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-space-md font-label text-label text-ink">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-ink-3 text-[18px]">person</span>
+<span>Account name</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-ink-3 line-through">
+                      Amaka C. Okafor
+                    </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-iris-tint font-label text-label text-primary">
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+<span>Amaka Chioma Okafor</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<span class="inline-flex items-center gap-1 text-success-text font-label text-overline bg-success-bg px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[13px]">verified</span>
+                        100% BVN Match
+                      </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Supporting Document & Masking Info (Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Supporting Document Attachment -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex flex-col justify-between gap-space-sm">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface text-danger-text flex items-center justify-center shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate">bank_statement_verification_nov26.pdf</span>
+<span class="font-body-sm text-overline text-ink-3">240 KB · Void Cheque / Statement</span>
+</div>
+</div>
+<button aria-label="Download attachment" class="w-8 h-8 rounded-lg bg-surface hover:bg-surface-container text-ink-2 hover:text-ink flex items-center justify-center transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="inline-flex items-center gap-1 text-success-text font-label text-overline">
+<span class="material-symbols-outlined text-[15px]">task_alt</span>
+                  Verified signature match
+                </span>
+<button class="text-primary hover:text-iris font-label text-overline underline" type="button">
+                  View PDF preview
+                </button>
+</div>
+</div>
+<!-- Privacy & Masking Callout -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface text-ink-2 flex items-center justify-center shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label text-label text-ink">Privacy &amp; Audit Masking</span>
+<p class="font-body-sm text-overline text-ink-3 leading-relaxed">
+                  Values are displayed masked for compliance. Full NUBAN account numbers are unmasked solely during the automated payroll batch execution by authorized treasury officers.
+                </p>
+</div>
+</div>
+</div>
+<!-- DECISION FORM & ACTIONS -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink" for="decision-note">
+                  Decision note <span class="font-normal text-ink-3">(Optional for approval, required for rejection)</span>
+</label>
+<span class="font-body-sm text-overline text-ink-3">Visible in employee notification</span>
+</div>
+<textarea class="w-full p-space-sm bg-surface-sunken text-ink placeholder:text-ink-3 rounded-xl font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/20 shadow-sm transition-all" id="decision-note" placeholder="Add notes or reasons for this decision (visible in employee audit trail)..." rows="3"></textarea>
+</div>
+<!-- Action Button Group -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-sm">
+<div class="flex items-center gap-2 text-ink-3 font-body-sm text-overline">
+<span class="material-symbols-outlined text-success-text text-[18px]">verified</span>
+<span>Approved changes commit immediately to the live payroll disbursement register.</span>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="h-11 px-space-lg rounded-xl bg-danger-bg text-danger-text hover:bg-danger-text hover:text-white font-label text-label flex items-center justify-center gap-2 transition-colors min-w-[110px]" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Reject</span>
+</button>
+<button class="h-11 px-space-xl rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98] min-w-[180px]" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Approve and apply</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div></main></div></body></html>

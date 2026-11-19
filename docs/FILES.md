@@ -15,6 +15,7 @@ Phase 5. Decisions are in ADR 0016.
 | Purpose | Types | Max size | Attach | View | Retention | Inline | Class |
 |---|---|---|---|---|---|---|---|
 | `organization_logo` | PNG, JPEG, WebP, SVG (sanitised) | 2 MB | `system.branding.manage` | any signed-in person | 1 year after it's replaced or deleted (confirm) | yes | directory |
+| `employee_document_<class>` (personal, statutory, banking, compensation, sensitive) | PDF, PNG, JPEG, WebP | 10 MB | `hr.employee.<class>.update` on the employee | `hr.employee.<class>.read` on the employee | 6 years after it's replaced or deleted (confirm) | no | the class |
 
 Later modules add their own purposes (expense receipts, employee documents, payslips,
 invoices) in their `files.py`.

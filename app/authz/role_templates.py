@@ -20,12 +20,20 @@ def _everything(_: Permission) -> Scope:
 def _all_but_system(p: Permission) -> Scope | None:
     """Organisation Administrator: everything except technical settings (SMTP, branding,
     security). Confirmed by the product owner on 2026-11-18."""
-    return None if p.module == "system" else Scope.ORGANIZATION
+    return None if p.module == "system" else p.scopes[-1]  # the widest scope it allows
 
 
 def _read_everything(p: Permission) -> Scope | None:
     """Auditor: read-only access to everything, sensitive fields included (2026-11-18)."""
     return Scope.ORGANIZATION if p.is_read else None
+
+
+def _hr_everything(p: Permission) -> Scope | None:
+    """HR Manager: every HR permission that applies beyond the person themself."""
+    return Scope.ORGANIZATION if p.module == "hr" and Scope.ORGANIZATION in p.scopes else None
+
+
+ORG, SELF = Scope.ORGANIZATION, Scope.SELF
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,12 +82,60 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "Reads everything, including the audit log. Changes nothing.",
         rule=_read_everything,
     ),
-    RoleTemplate("employee", "Employee", "Self-service: their own profile, requests and payslips."),
     RoleTemplate(
-        "line_manager", "Line Manager", "Approves their team's requests and sees their team."
+        "employee",
+        "Employee",
+        "Self-service: their own profile, requests and payslips.",
+        grants={
+            "hr.employee.read": ORG,  # the colleague directory
+            "hr.employee.personal.read": SELF,
+            "hr.employee.personal.update": SELF,  # self-service fields only (ADR 0017)
+            "hr.employee.statutory.read": SELF,
+            "hr.employee.banking.read": SELF,
+            "hr.employee.compensation.read": SELF,
+            "hr.employee.sensitive.read": SELF,
+            "hr.profile.request_change": SELF,
+        },
     ),
-    RoleTemplate("hr_officer", "HR Officer", "Day-to-day HR records and requests."),
-    RoleTemplate("hr_manager", "HR Manager", "All HR records, including sensitive ones."),
+    RoleTemplate(
+        "line_manager",
+        "Line Manager",
+        "Approves their team's requests and sees their team.",
+        grants={"hr.employee.personal.read": Scope.TEAM},  # (confirm)
+    ),
+    RoleTemplate(
+        "hr_officer",
+        "HR Officer",
+        "Day-to-day HR records and requests.",
+        grants={
+            "hr.employee.read": ORG,
+            "hr.employee.create": ORG,
+            "hr.employee.update": ORG,
+            "hr.employee.personal.read": ORG,
+            "hr.employee.personal.update": ORG,
+            "hr.employee.statutory.read": ORG,
+            "hr.employee.statutory.update": ORG,
+            "hr.employee.banking.read": ORG,
+            "hr.employee.banking.update": ORG,
+            "hr.checklist.manage": ORG,
+            "hr.exit.manage": ORG,
+            "identity.user.invite": ORG,
+            "org.structure.read": ORG,
+        },
+    ),
+    RoleTemplate(
+        "hr_manager",
+        "HR Manager",
+        "All HR records, including sensitive ones.",
+        rule=_hr_everything,
+        grants={"identity.user.invite": ORG, "org.structure.read": ORG},
+    ),
+    RoleTemplate(
+        "it_support",
+        "IT Support",
+        "Completes the IT tasks on onboarding and offboarding checklists.",
+        grants={"hr.employee.read": ORG, "hr.checklist.it": ORG},
+    ),
     RoleTemplate("payroll_officer", "Payroll Officer", "Prepares payroll runs.", requires_mfa=True),
     RoleTemplate("finance_officer", "Finance Officer", "Day-to-day accounting.", requires_mfa=True),
     RoleTemplate(

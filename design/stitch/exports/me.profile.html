@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-error-container": "#93000a", "inverse-primary": "#c5c0ff", "info-text": "#1D55B8", "on-error": "#ffffff", "ink-3": "#626280", "danger-bg": "#FFE4E6", "tertiary-container": "#9f4a00", "primary": "#412ec2", "surface-container-low": "#f3f3f7", "tertiary-fixed-dim": "#ffb68b", "on-secondary": "#ffffff", "error": "#ba1a1a", "surface-bright": "#f9f9fd", "error-container": "#ffdad6", "tertiary-fixed": "#ffdbc8", "line-strong": "#8B8BA6", "surface-raised": "#FFFFFF", "destructive": "#C42836", "on-surface-variant": "#474554", "background": "#f9f9fd", "secondary": "#4f6600", "inverse-surface": "#2e3034", "on-primary": "#ffffff", "surface-container": "#ededf1", "ink": "#16162A", "ink-2": "#4B4B66", "primary-container": "#5a4bdb", "on-primary-container": "#e0dbff", "iris-tint": "#EEECFD", "success-text": "#0F6B3E", "secondary-fixed-dim": "#acd530", "on-primary-fixed": "#140067", "tertiary": "#7a3700", "secondary-container": "#c4ef49", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#743400", "on-tertiary": "#ffffff", "primary-fixed": "#e4dfff", "iris": "#5A4BDB", "surface-variant": "#e2e2e6", "iris-hover": "#4A3CC4", "on-primary-fixed-variant": "#3d28be", "primary-fixed-dim": "#c5c0ff", "surface-container-highest": "#e2e2e6", "on-tertiary-container": "#ffd7c1", "warning-text": "#8A4B00", "warning-bg": "#FFF1D6", "lime-ink": "#4D7A0A", "surface-dim": "#d9dade", "on-secondary-fixed-variant": "#3b4d00", "surface": "#FFFFFF", "inverse-on-surface": "#f0f0f4", "on-tertiary-fixed": "#321300", "line": "#E4E4EE", "secondary-fixed": "#c7f24c", "surface-tint": "#5646d7", "on-secondary-fixed": "#161f00", "danger-text": "#B4232F", "on-iris": "#FFFFFF", "on-surface": "#1a1c1f", "on-secondary-container": "#536b00", "surface-container-high": "#e8e8ec", "canvas": "#F6F6FA", "lime": "#C5F04A", "outline": "#787586", "on-background": "#1a1c1f", "info-bg": "#DFEBFF", "outline-variant": "#c8c4d7", "surface-sunken": "#EFEFF6", "success-bg": "#DDF7E8" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-3xl": "4rem", "space-xl": "2rem", "margin": "2rem", "gutter": "1.5rem", "space-sm": "0.5rem", "space-md": "1rem", "space-2xl": "3rem", "space-lg": "1.5rem" }, "fontFamily": { "h2": ["Plus Jakarta Sans"], "h3": ["Plus Jakarta Sans"], "stat": ["Plus Jakarta Sans"], "overline": ["Inter"], "body": ["Inter"], "label": ["Inter"], "h1": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "display": ["Plus Jakarta Sans"] }, "fontSize": { "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }] } } } };</script><style>@layer base{html,body{width:100vw;min-height:100%;margin:0;padding:0;}body{overscroll-behavior:none;background-color:#F6F6FA;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-canvas font-body text-body text-ink flex flex-col antialiased selection:bg-iris-tint selection:text-iris"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] pt-safe"><div class="h-16 px-space-md flex items-center justify-between"><button aria-label="Navigation menu" class="w-11 h-11 flex items-center justify-center rounded-lg text-ink hover:bg-surface-sunken transition-colors" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><h1 class="font-h2 text-h2 text-ink truncate px-space-xs text-center flex-1">My Profile</h1><button aria-label="Account profile" class="w-11 h-11 flex items-center justify-center rounded-full hover:opacity-90 transition-opacity" type="button"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></button></div></header><main class="flex flex-col relative w-full px-space-md pt-16 pb-24 bg-canvas min-h-screen"><div class="flex flex-col w-full pb-8 space-y-5">
+<!-- Profile Header Card -->
+<div class="w-full bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden">
+<div class="absolute -right-6 -top-6 w-28 h-28 rounded-full bg-iris-tint/60 pointer-events-none"></div>
+<div class="flex items-center space-x-4 relative z-10">
+<!-- Initials Avatar -->
+<div class="w-14 h-14 rounded-full bg-primary flex items-center justify-center flex-shrink-0 shadow-sm">
+<span class="font-h2 text-h2 text-on-primary tracking-normal">CE</span>
+</div>
+<!-- Identity Meta -->
+<div class="flex-1 min-w-0">
+<h2 class="font-h1 text-[22px] leading-tight text-ink truncate">Chinedu Eze</h2>
+<p class="font-label text-ink-2 text-label truncate mt-0.5">Sales Executive · Sales</p>
+<!-- Badges Row -->
+<div class="flex items-center gap-2 mt-2 flex-wrap">
+<span class="font-overline text-[11px] font-mono tracking-wider px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2">
+            EMP-00017
+          </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+            Active
+          </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Horizontal Scrollable Tab Bar -->
+<div class="w-full overflow-x-auto no-scrollbar -mx-space-md px-space-md py-1">
+<div class="flex items-center gap-2 min-w-max">
+<button class="min-h-[44px] px-4 rounded-full bg-iris text-on-iris font-label text-label flex items-center justify-center shadow-sm transition-transform active:scale-95" type="button">
+        Details
+      </button>
+<button class="min-h-[44px] px-4 rounded-full bg-surface text-ink-2 hover:text-ink font-label text-label flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span>Documents</span>
+</button>
+<button class="min-h-[44px] px-4 rounded-full bg-surface text-ink-2 hover:text-ink font-label text-label flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span>Requests</span>
+<span class="px-1.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-[10px]">1</span>
+</button>
+<button class="min-h-[44px] px-4 rounded-full bg-surface text-ink-2 hover:text-ink font-label text-label flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span>Tasks</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-[10px]">3</span>
+</button>
+</div>
+</div>
+<!-- Warning Info Banner (Pending Request) -->
+<div class="w-full bg-warning-bg rounded-xl p-3.5 shadow-sm flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px] text-warning-text">pending_actions</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-label text-label font-semibold text-warning-text leading-tight">Bank change pending HR approval</p>
+<p class="font-body-sm text-[13px] text-warning-text/90 mt-0.5">Requested 2 days ago via self-service portal</p>
+<div class="mt-2">
+<button class="min-h-[44px] inline-flex items-center text-ink font-label text-[13px] font-semibold underline underline-offset-4 active:opacity-70 transition-opacity" type="button">
+          Cancel request
+        </button>
+</div>
+</div>
+</div>
+<!-- Details Content Sections -->
+<div class="flex flex-col space-y-4">
+<!-- Card 1: Contact & Next of Kin -->
+<div class="w-full bg-surface rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-3">
+<div>
+<h3 class="font-h3 text-h3 text-ink">Contact &amp; next of kin</h3>
+<p class="font-body-sm text-body-sm text-ink-3">Personal communication addresses</p>
+</div>
+<button class="min-h-[44px] min-w-[44px] px-3 py-1.5 rounded-lg bg-iris-tint text-iris hover:bg-iris-tint/80 flex items-center justify-center gap-1 font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit</span>
+</button>
+</div>
+<div class="space-y-3 pt-2">
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Phone number</span>
+<span class="font-body text-body text-ink font-medium tabular-nums">+234 803 123 4567</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Personal email</span>
+<span class="font-body text-body text-ink truncate block">chinedu.eze@gmail.com</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Residential address</span>
+<span class="font-body text-body text-ink">14 Admiralty Way, Lekki Phase 1, Lagos State</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">State</span>
+<span class="font-body text-body text-ink">Lagos State</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Marital status</span>
+<span class="font-body text-body text-ink">Single</span>
+</div>
+</div>
+<div class="pt-2">
+<span class="font-label text-label font-semibold text-ink-2 block mb-2">Emergency Contact</span>
+<div class="bg-surface-container-low p-3 rounded-lg space-y-2">
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block">Name &amp; Relationship</span>
+<span class="font-body text-body text-ink font-medium">Amara Eze · Sibling (Sister)</span>
+</div>
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block">Emergency Phone</span>
+<span class="font-body text-body text-ink tabular-nums">+234 802 987 6543</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Employment (Read-only) -->
+<div class="w-full bg-surface rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-3">
+<div class="flex items-center gap-2">
+<h3 class="font-h3 text-h3 text-ink">Employment</h3>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-[10px]">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+            Read only
+          </span>
+</div>
+</div>
+<div class="flex items-center gap-2.5 p-3 rounded-lg bg-surface-sunken mb-4 text-ink-3">
+<span class="material-symbols-outlined text-[18px] flex-shrink-0 text-ink-2">info</span>
+<p class="font-body-sm text-[13px] leading-snug">To update job classification or compensation level, contact people operations.</p>
+</div>
+<div class="space-y-3">
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Hire date</span>
+<span class="font-body text-body text-ink font-medium tabular-nums">1 Feb 2024</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Grade level</span>
+<span class="font-body text-body text-ink font-medium">GL-08</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Employment type</span>
+<span class="font-body text-body text-ink">Permanent (Full-time)</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Direct manager</span>
+<span class="font-body text-body text-ink font-medium">Adaeze Okafor (VP Sales)</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Work email</span>
+<span class="font-body text-body text-ink truncate block font-mono text-[13px]">chinedu.eze@adeyemiholdings.ng</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Statutory Identifiers -->
+<div class="w-full bg-surface rounded-xl p-space-md shadow-sm">
+<div class="flex items-start justify-between pb-2">
+<div>
+<h3 class="font-h3 text-h3 text-ink">Statutory identifiers</h3>
+<span class="inline-flex items-center gap-1 text-[12px] font-label text-success-text mt-0.5">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+            Encrypted &amp; compliance masked
+          </span>
+</div>
+<button class="min-h-[44px] px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-variant text-ink-2 font-label text-label flex items-center justify-center transition-colors" type="button">
+          Request change
+        </button>
+</div>
+<div class="space-y-3 pt-2">
+<div class="bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block">National Identity No. (NIN)</span>
+<span class="font-body text-body text-ink font-mono font-medium tracking-widest">•••• •••• 4821</span>
+</div>
+<button aria-label="Reveal NIN" class="min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-overline text-overline text-ink-3 uppercase block">Tax Identification (TIN)</span>
+<span class="px-1.5 py-0.2 rounded bg-success-bg text-success-text font-overline text-[9px]">FIRS</span>
+</div>
+<span class="font-body text-body text-ink font-mono font-medium">23456789-0001</span>
+</div>
+<button aria-label="Copy TIN" class="min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Pension Administrator (PFA)</span>
+<span class="font-body text-body text-ink font-medium">Stanbic IBTC Pension Managers</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase block">RSA PIN</span>
+<span class="font-body text-body text-ink font-mono font-medium">PEN •••••••• 8829</span>
+</div>
+<button aria-label="Reveal RSA PIN" class="min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">National Housing Fund (NHF)</span>
+<span class="font-body text-body text-ink font-mono font-medium">NHF-8492019-LAG</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Bank Details -->
+<div class="w-full bg-surface rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-3">
+<div>
+<h3 class="font-h3 text-h3 text-ink">Bank account</h3>
+<p class="font-body-sm text-body-sm text-ink-3">Salary disbursement channel</p>
+</div>
+<button class="min-h-[44px] px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-variant text-ink-2 font-label text-label flex items-center justify-center transition-colors" type="button">
+          Request change
+        </button>
+</div>
+<div class="space-y-3">
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Bank Name</span>
+<div class="flex items-center gap-2 mt-0.5">
+<div class="w-6 h-6 rounded-full bg-danger-bg flex items-center justify-center text-[10px] font-bold text-danger-text">Z</div>
+<span class="font-body text-body text-ink font-semibold">Zenith Bank PLC</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Account Number</span>
+<span class="font-body text-body text-ink font-mono font-medium tracking-wide">••••••3892</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">NIBSS Status</span>
+<span class="inline-flex items-center gap-1 font-label text-success-text text-[13px] font-semibold mt-0.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+              Verified
+            </span>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg">
+<span class="font-overline text-overline text-ink-3 uppercase block">Account Name</span>
+<span class="font-body text-body text-ink font-medium">Chinedu Eze</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg flex items-center justify-between">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-overline text-overline text-ink-3 uppercase block">Bank Verification No. (BVN)</span>
+<span class="px-1.5 py-0.2 rounded bg-success-bg text-success-text font-overline text-[9px]">Linked</span>
+</div>
+<span class="font-body text-body text-ink font-mono tracking-widest font-medium">••••••••412</span>
+</div>
+<button aria-label="Reveal BVN" class="min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interactions for masked statutory fields
+  document.querySelectorAll('button[aria-label^="Reveal"]').forEach(button => {
+    button.addEventListener('click', function() {
+      const icon = this.querySelector('.material-symbols-outlined');
+      if (icon) {
+        if (icon.textContent === 'visibility') {
+          icon.textContent = 'visibility_off';
+          this.classList.add('text-iris');
+        } else {
+          icon.textContent = 'visibility';
+          this.classList.remove('text-iris');
+        }
+      }
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(22,22,42,0.04)]" data-active-classes="text-iris font-semibold bg-iris-tint/60 rounded-xl"><div class="grid grid-cols-4 items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 px-2 text-ink-3 hover:text-ink transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-overline text-[11px] leading-tight mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 px-2 text-ink-3 hover:text-ink transition-colors" data-path="directory" href="#"><span class="material-symbols-outlined text-[24px]">groups</span><span class="font-overline text-[11px] leading-tight mt-0.5">Directory</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 px-2 transition-colors text-iris font-semibold bg-iris-tint/60 rounded-xl" data-path="my-profile" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-overline text-[11px] leading-tight mt-0.5">Profile</span></a><a class="flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 px-2 text-ink-3 hover:text-ink transition-colors" data-path="tasks" href="#"><span class="material-symbols-outlined text-[24px]">task_alt</span><span class="font-overline text-[11px] leading-tight mt-0.5">Tasks</span></a></div></nav></body></html>

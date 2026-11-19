@@ -1,0 +1,90 @@
+{# HR → Joiners & leavers: onboarding and offboarding checklists (ADR 0017).
+   Design: design/stitch/exports/hr.checklists.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Joiners & leavers", "Checklists for people starting and leaving. You see every checklist with a task you can complete.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+  <nav class="kx-segment" aria-label="Checklists">
+    {% for key, label in tabs.items() %}
+    <a href="/hr/checklists?tab={{ key }}" class="flex min-h-[32px] items-center gap-1.5 rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>
+      {{ label }}{% if key == "mine" and mine_count %} <span class="rounded-full bg-lime px-1.5 text-[10px] font-bold text-ink">{{ mine_count }}</span>{% endif %}
+    </a>
+    {% endfor %}
+  </nav>
+  <a href="/hr/checklists?tab={{ tab }}{{ '' if overdue else '&overdue=1' }}" class="flex h-10 items-center gap-2 rounded-control border px-3 text-label {{ 'border-danger-text/40 bg-danger-bg text-danger-text' if overdue else 'border-line bg-surface text-ink-2' }}">{{ ui.icon("alarm-clock", "sm") }} Overdue only</a>
+</div>
+
+{% if rows %}
+<div class="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_420px]">
+  <section class="kx-card overflow-hidden" aria-label="Open checklists">
+    <ul class="divide-y divide-line">
+      {% for c in rows %}
+      <li>
+        <a href="/hr/checklists?tab={{ tab }}{{ '&overdue=1' if overdue }}&selected={{ c.id }}" class="flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-surface-sunken/60 sm:flex-row sm:items-center {{ 'bg-iris-tint/50' if selected and selected.id == c.id }}">
+          <div class="flex min-w-0 flex-1 items-center gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-hue/10 text-xs font-bold text-hue">{{ c.employee_name.split()[0][:1] }}{{ c.employee_name.split()[-1][:1] }}</span>
+            <div class="min-w-0 space-y-1">
+              <p class="truncate font-semibold">{{ c.employee_name }}</p>
+              <p class="truncate text-xs text-ink-3">{{ c.position or "No position" }} · {{ c.name }}</p>
+              <div class="flex flex-wrap items-center gap-2 text-xs">
+                {% if c.kind == "onboarding" %}<span class="text-ink-2">Starts {{ c.anchor_date | date }}</span>
+                {% else %}<span class="text-ink-2">Last day {{ c.anchor_date | date }}</span>{% if c.access_ends %}{{ ui.badge("danger", "Access ends " ~ (c.access_ends | datetime)) }}{% endif %}{% endif %}
+                {% if c.overdue %}{{ ui.badge("warning", c.overdue ~ " overdue") }}{% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="flex w-full items-center gap-2 sm:w-40">
+            <progress class="kx-meter" value="{{ c.percent }}" max="100" aria-label="{{ c.percent }}% done">{{ c.percent }}%</progress>
+            <span class="shrink-0 text-xs font-semibold tnum">{{ c.done }}/{{ c.tasks | length }}</span>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {% if selected %}
+  <section class="kx-card kx-enter self-start p-5" aria-labelledby="cl-title">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h2 id="cl-title" class="font-h2 text-h2"><a href="/hr/people/{{ selected.employee_id }}" class="hover:text-iris">{{ selected.employee_name }}</a></h2>
+        <p class="text-body-sm text-ink-3">{{ selected.name }}</p>
+      </div>
+      {{ ui.badge("info" if selected.kind == "onboarding" else "warning", selected.kind | capitalize) }}
+    </div>
+    {% for group in ("hr", "it", "manager", "employee") %}
+    {% set group_tasks = selected.tasks | selectattr("assignee", "equalto", group) | list %}
+    {% if group_tasks %}
+    <h3 class="kx-overline mt-5">{{ assignee_labels[group] }}</h3>
+    <ul class="mt-2 space-y-1">
+      {% for t in group_tasks %}
+      <li class="flex items-start gap-3 rounded-xl px-2 py-2 {{ 'bg-danger-bg/40' if t.overdue }}">
+        {% if t.can_complete %}
+        <form method="post" action="/hr/checklist-tasks/{{ t.id }}">{{ ui.csrf_field() }}
+          <input type="hidden" name="done" value="{{ '0' if t.done_at else '1' }}">
+          <input type="hidden" name="return_to" value="/hr/checklists?tab={{ tab }}&selected={{ selected.id }}&notice=task">
+          <button type="submit" class="flex h-7 w-7 items-center justify-center rounded-lg border transition-colors {{ 'border-success-text bg-success-bg text-success-text' if t.done_at else 'border-line text-transparent hover:border-iris hover:text-iris' }}" aria-label="{{ 'Reopen' if t.done_at else 'Mark done' }}: {{ t.title }}">{{ ui.icon("check", "sm") }}</button>
+        </form>
+        {% else %}
+        <span class="flex h-7 w-7 items-center justify-center rounded-lg border {{ 'border-success-text bg-success-bg text-success-text' if t.done_at else 'border-dashed border-line text-transparent' }}">{{ ui.icon("check", "sm") }}</span>
+        {% endif %}
+        <div class="min-w-0 flex-1">
+          <p class="text-body-sm {{ 'text-ink-3 line-through' if t.done_at else 'font-medium' }}">{{ t.title }}</p>
+          <p class="text-xs {{ 'text-danger-text' if t.overdue else 'text-ink-3' }}">{% if t.done_at %}Done by {{ t.done_by or "someone" }}, {{ t.done_at | date }}{% else %}Due {{ t.due_date | date }}{% endif %}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endfor %}
+  </section>
+  {% endif %}
+</div>
+{% else %}
+<section class="kx-card mt-5">{% call ui.empty_state("list-checks", "Nothing open", "Checklists start when HR begins onboarding or records an exit.") %}{% endcall %}</section>
+{% endif %}
+{% endblock %}

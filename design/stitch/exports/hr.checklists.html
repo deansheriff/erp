@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#e8e8ec", "secondary-fixed-dim": "#acd530", "surface-sunken": "#EFEFF6", "on-surface": "#1a1c1f", "on-tertiary-fixed-variant": "#743400", "inverse-primary": "#c5c0ff", "surface-container-low": "#f3f3f7", "error-container": "#ffdad6", "surface-container-highest": "#e2e2e6", "on-tertiary-container": "#ffd7c1", "inverse-on-surface": "#f0f0f4", "on-secondary-fixed-variant": "#3b4d00", "canvas": "#F6F6FA", "tertiary-fixed-dim": "#ffb68b", "surface-container-lowest": "#ffffff", "success-bg": "#DDF7E8", "lime-ink": "#4D7A0A", "on-secondary": "#ffffff", "destructive": "#C42836", "warning-text": "#8A4B00", "primary": "#412ec2", "surface-raised": "#FFFFFF", "surface-dim": "#d9dade", "ink-3": "#626280", "surface-variant": "#e2e2e6", "danger-bg": "#FFE4E6", "on-primary": "#ffffff", "line": "#E4E4EE", "info-text": "#1D55B8", "on-error": "#ffffff", "iris-hover": "#4A3CC4", "outline": "#787586", "primary-fixed-dim": "#c5c0ff", "on-primary-fixed": "#140067", "on-primary-container": "#e0dbff", "iris-tint": "#EEECFD", "tertiary-fixed": "#ffdbc8", "on-iris": "#FFFFFF", "tertiary": "#7a3700", "surface-container": "#ededf1", "ink": "#16162A", "iris": "#5A4BDB", "on-error-container": "#93000a", "on-secondary-fixed": "#161f00", "outline-variant": "#c8c4d7", "on-secondary-container": "#536b00", "secondary-fixed": "#c7f24c", "on-tertiary": "#ffffff", "on-surface-variant": "#474554", "lime": "#C5F04A", "warning-bg": "#FFF1D6", "on-tertiary-fixed": "#321300", "primary-container": "#5a4bdb", "surface-tint": "#5646d7", "tertiary-container": "#9f4a00", "line-strong": "#8B8BA6", "surface": "#FFFFFF", "info-bg": "#DFEBFF", "ink-2": "#4B4B66", "surface-bright": "#f9f9fd", "primary-fixed": "#e4dfff", "on-primary-fixed-variant": "#3d28be", "background": "#f9f9fd", "inverse-surface": "#2e3034", "secondary-container": "#c4ef49", "secondary": "#4f6600", "error": "#ba1a1a", "success-text": "#0F6B3E", "danger-text": "#B4232F", "on-background": "#1a1c1f" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "margin": "2rem", "space-sm": "0.5rem", "space-3xl": "4rem", "space-xl": "2rem", "space-xs": "0.25rem", "gutter": "1.5rem", "space-2xl": "3rem", "space-md": "1rem" }, "fontFamily": { "body": ["Inter"], "h1": ["Plus Jakarta Sans"], "label": ["Inter"], "h3": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "h2": ["Plus Jakarta Sans"], "display": ["Plus Jakarta Sans"], "overline": ["Inter"], "stat": ["Plus Jakarta Sans"] }, "fontSize": { "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }] } } } };</script></head><body class="bg-canvas font-body text-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-[272px] bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col min-h-0"><div class="h-16 px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm"><span class="material-symbols-outlined text-[20px]">grid_view</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-on-surface leading-tight">Kxmeleon</span><span class="font-overline text-overline text-ink-3 uppercase leading-none tracking-wider">Adeyemi Holdings</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-on-surface">unfold_more</span></div><div class="px-space-md py-space-xs"><button class="w-full h-9 px-space-sm bg-surface-sunken hover:bg-surface-container-high text-on-surface-variant flex items-center justify-between rounded-lg transition-colors" type="button"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-ink-3">search</span><span class="font-body-sm text-body-sm text-ink-3">Go to...</span></div><kbd class="px-1.5 py-0.5 text-[11px] font-label font-medium bg-surface-raised rounded text-ink-3 shadow-sm">Ctrl K</kbd></button></div><div class="overflow-y-auto px-space-sm py-space-xs flex-1 max-h-[calc(100vh-230px)]"><div class="px-space-sm py-1"><span class="font-overline text-overline uppercase text-ink-3 tracking-wider">Modules</span></div><nav class="flex flex-col gap-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[18px]">home</span><span>Home</span></a><div class="flex flex-col"><button class="flex items-center justify-between px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface hover:bg-surface-container-low transition-colors" type="button"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px] text-primary">groups</span><span class="font-label text-label font-semibold text-on-surface">HR &amp; People</span></div><span class="material-symbols-outlined text-[16px] text-ink-3">expand_less</span></button><div class="flex flex-col pl-7 pr-space-xs gap-0.5 py-1"><a class="flex items-center h-8 px-space-xs rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="org-chart" href="#">Org chart</a><a class="flex items-center h-8 px-space-xs rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="departments" href="#">Departments</a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="people" href="#">People</a><a class="flex items-center h-8 px-space-xs rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="structure-setup" href="#">Structure setup</a></div></div><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[18px]">event_available</span><span>Leave</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[18px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span>Payroll</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="finance" href="#"><span class="material-symbols-outlined text-[18px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="inventory" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[18px]">assignment</span><span>Projects</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="support" href="#"><span class="material-symbols-outlined text-[18px]">support_agent</span><span>Support</span></a><a class="flex items-center gap-space-sm px-space-sm h-9 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span><span>Administration</span></a></nav></div></div><div class="p-space-sm bg-surface-container-low"><div class="flex flex-col gap-0.5"><a class="flex items-center gap-space-sm px-space-sm h-8 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="help" href="#"><span class="material-symbols-outlined text-[18px]">help_outline</span><span>Help &amp; docs</span></a><a class="flex items-center gap-space-sm px-space-sm h-8 rounded-lg font-body-sm text-body-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a></div><div class="mt-2 pt-2 flex items-center justify-between px-space-sm"><div class="flex items-center gap-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col min-w-0"><span class="font-label text-label font-medium text-on-surface truncate">Fatima Bello</span><span class="font-overline text-overline text-ink-3 truncate">Finance Manager</span></div></div><button class="text-ink-3 hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">logout</span></button></div></div></aside><div class="pl-[272px]"><header class="fixed top-0 left-[272px] right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 flex items-center justify-between px-gutter"><div class="flex items-center gap-2 font-body-sm text-body-sm"><span class="text-ink-3 font-medium">HR</span><span class="material-symbols-outlined text-[14px] text-ink-3">chevron_right</span><span class="text-ink-3 font-medium">People</span><span class="material-symbols-outlined text-[14px] text-ink-3">chevron_right</span><span class="text-on-surface font-semibold">Amaka Okafor</span></div><div class="w-[400px]"><div class="h-10 px-space-sm bg-surface-sunken flex items-center justify-between rounded-lg"><div class="flex items-center gap-space-xs w-full"><span class="material-symbols-outlined text-[18px] text-ink-3">search</span><span class="font-body-sm text-body-sm text-ink-3 select-none">Search people, claims, invoices...</span></div><kbd class="px-1.5 py-0.5 text-[11px] font-label font-medium bg-surface-raised rounded text-ink-3 shadow-sm">Ctrl K</kbd></div></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-1.5 h-8 px-2.5 rounded-full bg-warning-bg text-warning-text font-label text-[12px] font-semibold hover:opacity-90 transition-opacity" type="button"><span class="material-symbols-outlined text-[15px]">task_alt</span><span>3 Approvals</span></button><button class="relative w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive"></span></button><button class="w-9 h-9 rounded-lg hover:bg-surface-container flex items-center justify-center text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="flex items-center gap-space-xs pl-space-xs cursor-pointer"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="material-symbols-outlined text-ink-3 text-[18px]">expand_more</span></div></div></header><main class="w-full pt-16 bg-canvas"><div class="flex flex-col w-full px-gutter py-space-md gap-space-lg max-w-[1560px] mx-auto">
+<!-- Top Page Header Area -->
+<div class="flex flex-col gap-space-sm sm:flex-row sm:items-center sm:justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Joiners &amp; leavers</h1>
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-overline">
+          12 Active
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+        Checklists for people starting and leaving. You see every task you can complete.
+      </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-sm self-start sm:self-auto">
+<button class="h-10 px-4 rounded-xl bg-surface-raised text-on-surface font-label text-label font-medium shadow-sm hover:bg-surface-container-low transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">settings_suggest</span>
+<span>Template settings</span>
+</button>
+<button class="h-10 px-4 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-md shadow-iris/20 transition-all flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Start checklist</span>
+</button>
+</div>
+</div>
+<!-- Segmented Tabs & Operational Metrics Strip -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- Navigation Tabs -->
+<div class="flex items-center p-1 bg-surface-container-low rounded-xl w-fit">
+<button class="px-4 py-2 rounded-lg font-label text-label text-ink-3 hover:text-ink transition-colors" type="button">
+        Onboarding
+      </button>
+<button class="px-4 py-2 rounded-lg bg-surface-raised font-label text-label font-semibold text-iris shadow-sm flex items-center gap-2" type="button">
+<span>Offboarding</span>
+<span class="w-2 h-2 rounded-full bg-iris"></span>
+</button>
+<button class="px-4 py-2 rounded-lg font-label text-label text-ink-3 hover:text-ink transition-colors flex items-center gap-2" type="button">
+<span>Assigned to me</span>
+<span class="px-1.5 py-0.2 rounded-full bg-iris-tint text-iris font-overline text-[11px] font-bold">4</span>
+</button>
+</div>
+<!-- Mini SLA Status Metric Strip -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-raised rounded-lg shadow-sm">
+<span class="w-2 h-2 rounded-full bg-destructive animate-pulse"></span>
+<span class="font-body-sm text-body-sm text-ink-2">System access SLA:</span>
+<span class="font-label text-label font-bold text-destructive">3 Overdue today</span>
+</div>
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-surface-raised rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-lime-ink">verified_user</span>
+<span class="font-body-sm text-body-sm text-ink-2">Offboarding audit rate:</span>
+<span class="font-label text-label font-bold text-ink">98.4%</span>
+</div>
+</div>
+</div>
+<!-- Filter and Search Toolbar -->
+<div class="bg-surface-raised rounded-xl p-space-sm shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-sm flex-1">
+<!-- Search Input -->
+<div class="relative w-full sm:w-72">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-ink-3 pointer-events-none">search</span>
+<input class="w-full h-10 pl-9 pr-3 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-on-surface placeholder:text-ink-3 focus:outline-none focus:bg-surface-raised transition-colors" placeholder="Search person or checklist..." type="text"/>
+</div>
+<!-- Assignee Filter Dropdown -->
+<div class="relative">
+<button class="h-10 px-3.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm flex items-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">badge</span>
+<span>Assignee: <strong>All (HR, IT, Mgr)</strong></span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">keyboard_arrow_down</span>
+</button>
+</div>
+<!-- Overdue Only Toggle Chip -->
+<button class="h-10 px-3 rounded-lg bg-danger-bg text-danger-text font-label text-label font-semibold flex items-center gap-1.5 hover:opacity-90 transition-opacity" type="button">
+<span class="material-symbols-outlined text-[16px]">error</span>
+<span>Overdue only</span>
+<span class="w-5 h-5 rounded-full bg-destructive text-on-error font-overline text-[11px] flex items-center justify-center">2</span>
+</button>
+</div>
+<!-- Right utility controls -->
+<div class="flex items-center gap-1 self-end md:self-auto">
+<button aria-label="Sort checklists" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">sort</span>
+</button>
+<button aria-label="Export table" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<button aria-label="Table density" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">density_medium</span>
+</button>
+</div>
+</div>
+<!-- Split Layout: Main Checklists Table (62%) + Focused Details Panel (38%) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT PANEL: Data Table of Active Checklists (7 cols) -->
+<div class="xl:col-span-7 flex flex-col gap-space-sm bg-surface-raised rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken">
+<th class="py-3 px-4 font-overline text-overline uppercase text-ink-3 tracking-wider" scope="col">Person</th>
+<th class="py-3 px-3 font-overline text-overline uppercase text-ink-3 tracking-wider" scope="col">Template / Role</th>
+<th class="py-3 px-3 font-overline text-overline uppercase text-ink-3 tracking-wider" scope="col">Anchor Date</th>
+<th class="py-3 px-3 font-overline text-overline uppercase text-ink-3 tracking-wider" scope="col">Progress</th>
+<th class="py-3 px-3 font-overline text-overline uppercase text-ink-3 tracking-wider" scope="col">Status</th>
+<th class="py-3 px-4 text-right font-overline text-overline uppercase text-ink-3 tracking-wider" scope="col">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1: Active Selected Row (Babatunde Adeyemi) -->
+<tr class="bg-iris-tint/60 hover:bg-iris-tint transition-colors cursor-pointer relative">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="relative w-9 h-9 rounded-xl bg-primary text-on-primary flex items-center justify-center font-h3 text-body-sm font-bold shadow-sm">
+                    BA
+                    <span class="absolute -top-1 -left-1 w-2.5 h-2.5 rounded-full bg-iris"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink leading-tight truncate">Babatunde Adeyemi</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">VP Operations · Lagos HQ</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-body-sm text-[13px] font-medium text-ink leading-tight">Executive Offboarding</span>
+<span class="font-overline text-[11px] text-ink-3 uppercase">Standard tier 1</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col gap-0.5">
+<span class="font-body-sm text-[13px] font-medium text-ink">Last day 28 Nov</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-danger-bg text-danger-text font-overline text-[10px] font-bold w-fit">
+                    Access ends 29 Nov 00:00
+                  </span>
+</div>
+</td>
+<td class="py-3.5 px-3 min-w-[130px]">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-body-sm text-[12px]">
+<span class="text-ink font-medium">6/9 tasks</span>
+<span class="text-iris font-semibold">67%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-iris h-full rounded-full" style="width: 67%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[11px] font-bold">
+<span class="material-symbols-outlined text-[13px]">warning</span>
+<span>1 overdue</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="inline-flex items-center gap-1 font-label text-[12px] font-bold text-iris">
+<span>Selected</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</span>
+</td>
+</tr>
+<!-- Row 2: Chinedu Eze -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-surface-sunken text-ink-2 flex items-center justify-center font-h3 text-body-sm font-bold">
+                    CE
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink leading-tight truncate">Chinedu Eze</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Sr Systems Engineer · Lagos</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-body-sm text-[13px] font-medium text-ink leading-tight">Technical Staff</span>
+<span class="font-overline text-[11px] text-ink-3 uppercase">Onboarding</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-body-sm text-[13px] font-medium text-ink">Starts 1 Dec 2026</span>
+</td>
+<td class="py-3.5 px-3 min-w-[130px]">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-body-sm text-[12px]">
+<span class="text-ink font-medium">7/10 tasks</span>
+<span class="text-ink-2 font-semibold">70%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 70%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-warning-bg text-warning-text font-label text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[13px]">schedule</span>
+<span>Due tomorrow</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-ink-3 hover:text-iris font-label text-[12px] font-medium transition-colors" type="button">
+                  View
+                </button>
+</td>
+</tr>
+<!-- Row 3: Ngozi Nnamdi -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-surface-sunken text-ink-2 flex items-center justify-center font-h3 text-body-sm font-bold">
+                    NM
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink leading-tight truncate">Ngozi Nnamdi</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Payroll Specialist · Abuja</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-body-sm text-[13px] font-medium text-ink leading-tight">Finance &amp; Accounts</span>
+<span class="font-overline text-[11px] text-ink-3 uppercase">Onboarding</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-body-sm text-[13px] font-medium text-ink">Starts 25 Nov 2026</span>
+</td>
+<td class="py-3.5 px-3 min-w-[130px]">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-body-sm text-[12px]">
+<span class="text-ink font-medium">4/8 tasks</span>
+<span class="text-ink-2 font-semibold">50%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-success-bg text-success-text font-label text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+<span>On track</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-ink-3 hover:text-iris font-label text-[12px] font-medium transition-colors" type="button">
+                  View
+                </button>
+</td>
+</tr>
+<!-- Row 4: Funke Bello -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-surface-sunken text-ink-2 flex items-center justify-center font-h3 text-body-sm font-bold">
+                    FB
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink leading-tight truncate">Funke Bello</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Treasury Officer · Lagos HQ</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-body-sm text-[13px] font-medium text-ink leading-tight">Standard Staff</span>
+<span class="font-overline text-[11px] text-ink-3 uppercase">Offboarding</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col gap-0.5">
+<span class="font-body-sm text-[13px] font-medium text-ink">Last day 30 Nov</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2 font-overline text-[10px] w-fit">
+                    Access ends 1 Dec
+                  </span>
+</div>
+</td>
+<td class="py-3.5 px-3 min-w-[130px]">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-body-sm text-[12px]">
+<span class="text-ink font-medium">3/9 tasks</span>
+<span class="text-danger-text font-semibold">33%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-destructive h-full rounded-full" style="width: 33%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[11px] font-bold">
+<span class="material-symbols-outlined text-[13px]">warning</span>
+<span>2 overdue</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-ink-3 hover:text-iris font-label text-[12px] font-medium transition-colors" type="button">
+                  View
+                </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="px-4 py-3 bg-surface-sunken/60 flex items-center justify-between font-body-sm text-body-sm text-ink-3">
+<span>Showing <strong>4</strong> of <strong>12</strong> active checklists</span>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded hover:bg-surface-raised disabled:opacity-40 transition-colors" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="px-2 font-label text-label font-medium text-on-surface">Page 1 of 3</span>
+<button class="p-1 rounded hover:bg-surface-raised transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- RIGHT PANEL: Checklist Detail Drawer / Inspector (5 cols) -->
+<div class="xl:col-span-5 flex flex-col bg-surface-raised rounded-xl shadow-md overflow-hidden sticky top-20">
+<!-- Drawer Top Bar -->
+<div class="p- space-md bg-surface-raised flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-destructive"></span>
+<span>Offboarding</span>
+</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-ink-2 font-overline text-[11px] font-medium">
+              In progress
+            </span>
+</div>
+<button aria-label="Close panel" class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Subject Header Info -->
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-iris text-on-iris flex items-center justify-center font-h2 text-h2 font-bold shadow-md shadow-iris/20">
+            BA
+          </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-h2 text-h2 text-ink font-bold truncate">Babatunde Adeyemi</h2>
+<span class="px-2 py-0.2 rounded bg-surface-sunken text-ink-2 font-overline text-[10px]">C-SUITE</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-2">VP Operations · Lagos HQ</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">babatunde.adeyemi@adeyemiholdings.ng</span>
+</div>
+</div>
+<!-- Offboarding Schedule Summary Box -->
+<div class="p-3 rounded-xl bg-surface-sunken flex flex-col gap-2">
+<div class="flex items-center justify-between font-body-sm text-body-sm">
+<span class="font-semibold text-ink">Overall Handover</span>
+<span class="font-bold text-iris">6 of 9 completed (67%)</span>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-iris h-full rounded-full transition-all duration-300" style="width: 67%"></div>
+</div>
+<div class="flex items-center justify-between text-[11px] text-ink-3 pt-0.5">
+<span>Last official day: <strong class="text-ink">28 Nov 2026</strong></span>
+<span>Revocation: <strong class="text-destructive">29 Nov 00:00 WAT</strong></span>
+</div>
+</div>
+</div>
+<!-- Task List Container Grouped by Functional Area -->
+<div class="p-space-md flex flex-col gap-space-md overflow-y-auto max-h-[calc(100vh-320px)] bg-canvas/30">
+<!-- SECTION 1: HR Tasks (2 tasks) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-iris">contacts_product</span>
+<span>1. People &amp; Culture (2 tasks)</span>
+</span>
+<span class="font-overline text-[11px] text-success-text font-bold">2/2 done</span>
+</div>
+<!-- Task 1: Completed -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex items-start gap-3 opacity-80">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-iris flex items-center justify-center text-on-iris">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink-3 line-through">Conduct formal exit interview</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span class="material-symbols-outlined text-[13px] text-success-text">verified</span>
+<span>Done by Fatima Bello, 20 Nov 2026</span>
+</div>
+</div>
+</div>
+<!-- Task 2: Completed -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex items-start gap-3 opacity-80">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-iris flex items-center justify-center text-on-iris">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink-3 line-through">Prepare terminal benefits statement &amp; NDA</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span class="material-symbols-outlined text-[13px] text-success-text">verified</span>
+<span>Done by Fatima Bello, 20 Nov 2026</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: IT & Security Tasks (3 tasks - 1 Overdue, 1 Pending, 1 Done) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">security</span>
+<span>2. IT &amp; Security (3 tasks)</span>
+</span>
+<span class="font-overline text-[11px] text-danger-text font-bold">1 overdue</span>
+</div>
+<!-- Task 3: Completed Hardware Return -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex items-start gap-3 opacity-80">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-iris flex items-center justify-center text-on-iris">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink-3 line-through">Return company laptop (MacBook Pro M3) and peripherals</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span class="material-symbols-outlined text-[13px] text-success-text">verified</span>
+<span>Done by Kareem Alabi (IT), 21 Nov</span>
+</div>
+</div>
+</div>
+<!-- Task 4: CRITICAL OVERDUE TASK -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex items-start gap-3">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-surface-raised flex items-center justify-center cursor-pointer hover:bg-danger-bg transition-colors">
+<span class="material-symbols-outlined text-[16px] text-destructive">priority_high</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-body-sm text-[13px] font-bold text-ink">Disable corporate VPN, Single Sign-On and email access</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-danger-bg text-danger-text font-overline text-[10px] font-bold">
+                    Overdue (Due 19 Nov)
+                  </span>
+<span class="font-body-sm text-[11px] text-ink-3">Assignee: IT · Kareem Alabi</span>
+</div>
+</div>
+</div>
+<!-- Sub-action trigger -->
+<div class="flex items-center justify-between pl-8 pt-1">
+<span class="text-[11px] text-ink-3">Required before severance payout release</span>
+<button class="h-7 px-2.5 rounded-lg bg-danger-bg text-danger-text hover:bg-destructive hover:text-on-error font-label text-[11px] font-bold transition-all flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">notifications_active</span>
+<span>Remind IT</span>
+</button>
+</div>
+</div>
+<!-- Task 5: Pending Future Date -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex items-start gap-3">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-surface-sunken flex items-center justify-center cursor-pointer hover:bg-iris-tint transition-colors"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink">Revoke AWS production access tokens &amp; audit log keys</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span>Due 28 Nov, 18:00</span>
+<span>·</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-sunken text-ink-2 font-medium">IT · SecOps</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: Line Manager Tasks (2 tasks - 1 Done, 1 Pending) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-ink-2">supervisor_account</span>
+<span>3. Line Management (2 tasks)</span>
+</span>
+<span class="font-overline text-[11px] text-ink-3 font-medium">1/2 complete</span>
+</div>
+<!-- Task 6: Completed Handover -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex items-start gap-3 opacity-80">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-iris flex items-center justify-center text-on-iris">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink-3 line-through">Knowledge transfer handover sessions with team leads</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span class="material-symbols-outlined text-[13px] text-success-text">verified</span>
+<span>Done by Adaeze Okafor, 16 Nov</span>
+</div>
+</div>
+</div>
+<!-- Task 7: Pending Manager Delegations -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex items-start gap-3">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-surface-sunken flex items-center justify-center cursor-pointer hover:bg-iris-tint transition-colors"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink">Reassign open project approvals and delegations</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span>Due 27 Nov</span>
+<span>·</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-sunken text-ink-2 font-medium">Mgr · Adaeze Okafor</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 4: Finance & Payroll (2 tasks - 1 Done, 1 Pending) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-ink-2">payments</span>
+<span>4. Finance &amp; Payroll (2 tasks)</span>
+</span>
+<span class="font-overline text-[11px] text-ink-3 font-medium">1/2 complete</span>
+</div>
+<!-- Task 8: Expense Clearance -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex items-start gap-3 opacity-80">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-iris flex items-center justify-center text-on-iris">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink-3 line-through">Verify outstanding expense claims &amp; petty cash returns</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span class="material-symbols-outlined text-[13px] text-success-text">verified</span>
+<span>Done by Fatima Bello, 19 Nov</span>
+</div>
+</div>
+</div>
+<!-- Task 9: Final Pay cycle Flagging -->
+<div class="p-3 bg-surface-raised rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex items-start gap-3">
+<div class="pt-0.5">
+<div class="w-5 h-5 rounded-md bg-surface-sunken flex items-center justify-center cursor-pointer hover:bg-iris-tint transition-colors"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-sm text-[13px] font-medium text-ink">Final pay flagged to payroll for next salary cycle</span>
+<div class="flex items-center gap-2 mt-1 text-[11px] text-ink-3">
+<span>Due 28 Nov</span>
+<span>·</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-sunken text-ink-2 font-medium">Payroll · Chinedu Eze</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end pl-8">
+<button class="h-6 px-2 rounded bg-surface-sunken text-ink-2 hover:bg-surface-container-high font-label text-[11px] font-medium transition-colors" type="button">
+                Send reminder
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Bottom Actions Footer -->
+<div class="p-space-sm bg-surface-raised flex flex-col sm:flex-row items-center gap-2">
+<button class="w-full sm:flex-1 h-10 px-3 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-sm transition-all flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+<span>Mark my tasks complete</span>
+</button>
+<button class="w-full sm:w-auto h-10 px-3 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-on-surface font-label text-label font-medium transition-colors flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">picture_as_pdf</span>
+<span>Export (PDF)</span>
+</button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

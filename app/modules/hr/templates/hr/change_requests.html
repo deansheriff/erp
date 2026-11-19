@@ -1,0 +1,80 @@
+{# HR → Change requests: employees' statutory and bank detail changes (ADR 0017).
+   Design: design/stitch/exports/hr.change_requests.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% set tones = {"pending": "warning", "approved": "success", "rejected": "danger", "cancelled": "neutral"} %}
+
+{% block content %}
+{% call ui.page_header("Change requests", "Employees asked to change their statutory or bank details. Nobody can approve their own request.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<nav class="kx-segment mt-6" aria-label="Status">
+  {% for key, label in statuses.items() %}
+  <a href="/hr/change-requests?status={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if status == key else 'text-ink-2 hover:text-ink' }}" {% if status == key %}aria-current="page"{% endif %}>
+    {{ label }}{% if key == "pending" and pending_count %} ({{ pending_count }}){% endif %}
+  </a>
+  {% endfor %}
+</nav>
+
+{% if rows %}
+<div class="mt-5 grid gap-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
+  <ul class="space-y-3" aria-label="Requests">
+    {% for r in rows %}
+    <li>
+      <a href="/hr/change-requests?status={{ status }}&selected={{ r.id }}" class="kx-card flex items-center gap-3 p-4 transition-shadow duration-base hover:shadow-raised {{ 'ring-2 ring-iris' if selected and selected.id == r.id }}" {% if selected and selected.id == r.id %}aria-current="true"{% endif %}>
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-hue/10 text-xs font-bold text-hue">{{ r.employee_name.split()[0][:1] }}{{ r.employee_name.split()[-1][:1] }}</span>
+        <div class="min-w-0 flex-1">
+          <p class="truncate font-semibold">{{ r.employee_name }}</p>
+          <p class="flex flex-wrap items-center gap-2 text-xs text-ink-3">{% if r.employee_number %}<span class="font-mono">{{ r.employee_number }}</span>{% endif %}{{ ui.badge("info", r.class_label) }}<span>{{ r.changes | length }} field{{ "s" if r.changes | length != 1 }}</span></p>
+        </div>
+        <span class="shrink-0 text-xs text-ink-3">{{ r.requested_at | date }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if selected %}
+  <section class="kx-card kx-enter self-start p-5 md:p-6" aria-labelledby="req-title">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h2 id="req-title" class="font-h2 text-h2">{{ selected.class_label }}</h2>
+        <p class="text-body-sm text-ink-3"><a href="/hr/people/{{ selected.employee_id }}" class="font-medium text-ink hover:text-iris">{{ selected.employee_name }}</a> · requested by {{ selected.requested_by or "them" }}, {{ selected.requested_at | datetime }}</p>
+      </div>
+      {{ ui.badge(tones[selected.status], selected.status | capitalize) }}
+    </div>
+    <div class="mt-5 overflow-x-auto">
+      <table class="kx-table">
+        <thead><tr><th scope="col">Field</th><th scope="col">Current</th><th scope="col">Requested</th></tr></thead>
+        <tbody>
+          {% for c in selected.changes %}
+          <tr><td class="font-medium">{{ c.label }}</td><td class="font-mono text-ink-3">{{ c.current or "Not set" }}</td><td class="font-mono font-semibold">{{ c.requested or "Remove" }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if selected.decision_note %}<p class="mt-4 rounded-xl bg-surface-sunken px-4 py-3 text-body-sm"><span class="font-semibold">{{ selected.decided_by }}:</span> {{ selected.decision_note }}</p>{% endif %}
+    {% if selected.can_decide %}
+    <form method="post" class="mt-5 space-y-4" novalidate>
+      {{ ui.csrf_field() }}
+      {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+      <div>
+        <label for="f-note" class="kx-label">Note <span class="font-normal text-ink-3">(required to reject)</span></label>
+        <textarea id="f-note" name="note" rows="3" class="kx-input h-auto py-2.5">{{ note if note is defined else "" }}</textarea>
+        {{ ui.field_error(errors, "note") }}
+      </div>
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="submit" formaction="/hr/change-requests/{{ selected.id }}/reject" class="kx-btn-secondary">{{ ui.icon("x", "sm") }} Reject</button>
+        <button type="submit" formaction="/hr/change-requests/{{ selected.id }}/approve" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Approve and apply</button>
+      </div>
+    </form>
+    {% elif selected.status == "pending" %}
+    <div class="mt-5">{{ ui.alert("info", "You can't decide this request. Someone else in HR must.") }}</div>
+    {% endif %}
+  </section>
+  {% endif %}
+</div>
+{% else %}
+<section class="kx-card mt-5">{% call ui.empty_state("inbox", "Nothing here", "No " ~ statuses[status] | lower ~ " requests.") %}{% endcall %}</section>
+{% endif %}
+{% endblock %}

@@ -65,7 +65,7 @@ ignore = [
 # Field names such as "password_confirm" are not hard-coded secrets.
 "app/identity/*.py" = ["S105"]
 # FastAPI form handlers take one parameter per form field.
-"app/**/routes_web.py" = ["PLR0917"]
+"app/**/routes_*.py" = ["PLR0917"]
 # The one module allowed to use the S3 client (ADR 0016).
 "app/files/storage.py" = ["TID251"]
 
@@ -122,6 +122,12 @@ ignore_imports = [
   "app.org.routes_web -> app.web.*",
   "app.modules.hr.routes_web -> fastapi",
   "app.modules.hr.routes_web -> app.web.*",
+  "app.modules.hr.routes_people -> fastapi",
+  "app.modules.hr.routes_people -> app.web.*",
+  "app.modules.hr.routes_self -> fastapi",
+  "app.modules.hr.routes_self -> app.web.*",
+  "app.modules.hr.routes_process -> fastapi",
+  "app.modules.hr.routes_process -> app.web.*",
   "app.files.routes_web -> fastapi",
   "app.files.routes_web -> app.web.*",
   "app.files.web -> fastapi",

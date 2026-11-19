@@ -132,6 +132,9 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         conn.execute(text("UPDATE org_state SET version = version + 1"))
         conn.execute(text("UPDATE storage_settings SET used_bytes = 0, quota_bytes = 53687091200"))
         conn.execute(
+            text("UPDATE number_sequences SET prefix = 'EMP-', padding = 5, next_value = 1")
+        )
+        conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "
                 "setup_token_expires_at = NULL"

@@ -3,18 +3,67 @@
 auditor:
   audit.log.read: organization
   authz.role.read: organization
+  hr.employee.banking.read: organization
+  hr.employee.compensation.read: organization
+  hr.employee.personal.read: organization
   hr.employee.read: organization
+  hr.employee.sensitive.read: organization
+  hr.employee.statutory.read: organization
   identity.user.read: organization
   org.structure.read: organization
-employee: {}
+employee:
+  hr.employee.banking.read: self
+  hr.employee.compensation.read: self
+  hr.employee.personal.read: self
+  hr.employee.personal.update: self
+  hr.employee.read: organization
+  hr.employee.sensitive.read: self
+  hr.employee.statutory.read: self
+  hr.profile.request_change: self
 expense_approver: {}
 finance_manager: {}
 finance_officer: {}
 fleet_manager: {}
-hr_manager: {}
-hr_officer: {}
+hr_manager:
+  hr.checklist.it: organization
+  hr.checklist.manage: organization
+  hr.employee.banking.read: organization
+  hr.employee.banking.update: organization
+  hr.employee.compensation.read: organization
+  hr.employee.compensation.update: organization
+  hr.employee.create: organization
+  hr.employee.personal.read: organization
+  hr.employee.personal.update: organization
+  hr.employee.read: organization
+  hr.employee.sensitive.read: organization
+  hr.employee.sensitive.update: organization
+  hr.employee.statutory.read: organization
+  hr.employee.statutory.update: organization
+  hr.employee.update: organization
+  hr.exit.manage: organization
+  hr.settings.manage: organization
+  identity.user.invite: organization
+  org.structure.read: organization
+hr_officer:
+  hr.checklist.manage: organization
+  hr.employee.banking.read: organization
+  hr.employee.banking.update: organization
+  hr.employee.create: organization
+  hr.employee.personal.read: organization
+  hr.employee.personal.update: organization
+  hr.employee.read: organization
+  hr.employee.statutory.read: organization
+  hr.employee.statutory.update: organization
+  hr.employee.update: organization
+  hr.exit.manage: organization
+  identity.user.invite: organization
+  org.structure.read: organization
 inventory_clerk: {}
-line_manager: {}
+it_support:
+  hr.checklist.it: organization
+  hr.employee.read: organization
+line_manager:
+  hr.employee.personal.read: team
 organization_administrator:
   audit.log.read: organization
   authz.assignment.manage: organization
@@ -22,9 +71,24 @@ organization_administrator:
   authz.role.manage: organization
   authz.role.read: organization
   files.file.manage: organization
+  hr.checklist.it: organization
+  hr.checklist.manage: organization
+  hr.employee.banking.read: organization
+  hr.employee.banking.update: organization
+  hr.employee.compensation.read: organization
+  hr.employee.compensation.update: organization
   hr.employee.create: organization
+  hr.employee.personal.read: organization
+  hr.employee.personal.update: organization
   hr.employee.read: organization
+  hr.employee.sensitive.read: organization
+  hr.employee.sensitive.update: organization
+  hr.employee.statutory.read: organization
+  hr.employee.statutory.update: organization
   hr.employee.update: organization
+  hr.exit.manage: organization
+  hr.profile.request_change: self
+  hr.settings.manage: organization
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization
@@ -41,9 +105,24 @@ super_administrator:
   authz.role.manage: organization
   authz.role.read: organization
   files.file.manage: organization
+  hr.checklist.it: organization
+  hr.checklist.manage: organization
+  hr.employee.banking.read: organization
+  hr.employee.banking.update: organization
+  hr.employee.compensation.read: organization
+  hr.employee.compensation.update: organization
   hr.employee.create: organization
+  hr.employee.personal.read: organization
+  hr.employee.personal.update: organization
   hr.employee.read: organization
+  hr.employee.sensitive.read: organization
+  hr.employee.sensitive.update: organization
+  hr.employee.statutory.read: organization
+  hr.employee.statutory.update: organization
   hr.employee.update: organization
+  hr.exit.manage: organization
+  hr.profile.request_change: organization
+  hr.settings.manage: organization
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization

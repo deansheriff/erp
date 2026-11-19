@@ -1,0 +1,137 @@
+{# HR → HR settings: employee numbers, document categories and checklist templates.
+   Design: design/stitch/exports/hr.settings.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro template_form(kind, t=None) -%}
+{% set key = "template:" ~ (t.id if t else kind) %}
+<form method="post" action="/hr/settings/templates" class="mt-4 space-y-4" novalidate>
+  {{ ui.csrf_field() }}
+  <input type="hidden" name="kind" value="{{ kind }}">
+  {% if t %}<input type="hidden" name="template_id" value="{{ t.id }}">{% endif %}
+  {% if editing == key and errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+  <div class="grid gap-4 sm:grid-cols-2">
+    {{ ui.text_field("name", "Template name", value=t.name if t else "", errors=errors if editing == key else None) }}
+    <div>
+      <label class="kx-label" for="target-{{ t.id if t else kind }}">Applies to</label>
+      <select id="target-{{ t.id if t else kind }}" name="target" class="kx-input">
+        <option value="">Default (everyone else)</option>
+        <optgroup label="Departments">{% for did, dname in departments %}<option value="department:{{ did }}" {% if t and t.department_id == did %}selected{% endif %}>{{ dname }}</option>{% endfor %}</optgroup>
+        <optgroup label="Positions">{% for pid, pname in positions %}<option value="position:{{ pid }}" {% if t and t.position_id == pid %}selected{% endif %}>{{ pname }}</option>{% endfor %}</optgroup>
+      </select>
+      {% if editing == key %}{{ ui.field_error(errors, "target") }}{% endif %}
+    </div>
+  </div>
+  <fieldset class="min-w-0">
+    <legend class="kx-label">Tasks</legend>
+    <p class="kx-hint">Due day: days after the start date{{ "" if kind == "onboarding" else ", negative for before the last working day" }}. Blank rows are ignored.</p>
+    <div class="space-y-2">
+      {% set rows = (t.tasks if t else []) %}
+      {% for i in range((rows | length) + 3) %}
+      {% set task = rows[i] if i < rows | length else none %}
+      <div class="grid grid-cols-[minmax(0,1fr)_120px_84px] gap-2">
+        <input name="task_title" value="{{ task.title if task else '' }}" class="kx-input" placeholder="Task" aria-label="Task {{ i + 1 }}">
+        <select name="task_assignee" class="kx-input" aria-label="Who does task {{ i + 1 }}">
+          {% for a, label in assignee_labels.items() %}<option value="{{ a }}" {% if task and task.assignee == a %}selected{% endif %}>{{ label }}</option>{% endfor %}
+        </select>
+        <input name="task_due" value="{{ task.due_offset_days if task else '0' }}" class="kx-input" inputmode="numeric" aria-label="Due day for task {{ i + 1 }}">
+      </div>
+      {% if editing == key %}{{ ui.field_error(errors, "task_" ~ i) }}{% endif %}
+      {% endfor %}
+    </div>
+    {% if editing == key %}{{ ui.field_error(errors, "tasks") }}{% endif %}
+  </fieldset>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    {% if t %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if t.is_active %}checked{% endif %}> Active</label>{% else %}<span></span>{% endif %}
+    <button type="submit" class="kx-btn-primary">{{ "Save template" if t else "Add template" }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("HR settings", "Employee numbers, document categories and onboarding and offboarding checklists.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<div class="mt-6 space-y-6">
+  {# ------------------------------------------------------------ numbers #}
+  <section class="kx-card kx-enter p-5 md:p-6" aria-labelledby="h-numbers">
+    <h2 id="h-numbers" class="font-h3 text-h3">Employee numbers</h2>
+    <p class="mt-1 text-body-sm text-ink-3">New people get the next number when they're added. Numbers are never reused.</p>
+    <form method="post" action="/hr/settings/numbers" class="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end" novalidate>
+      {{ ui.csrf_field() }}
+      <div class="sm:w-40">{{ ui.text_field("prefix", "Prefix", value=sequence.prefix if sequence else "EMP-", errors=errors if editing == "numbers" else None) }}</div>
+      <div class="sm:w-32">{{ ui.text_field("padding", "Digits", value=sequence.padding if sequence else 5, errors=errors if editing == "numbers" else None, inputmode="numeric") }}</div>
+      <p class="pb-3 text-body-sm text-ink-3">Next number: <span class="font-mono font-semibold text-ink">{{ next_number }}</span></p>
+      <button type="submit" class="kx-btn-secondary sm:ml-auto">Save</button>
+    </form>
+  </section>
+
+  {# ------------------------------------------------------------ categories #}
+  <section id="categories" class="kx-card kx-enter overflow-hidden" aria-labelledby="h-categories">
+    <div class="px-5 pt-5 md:px-6">
+      <h2 id="h-categories" class="font-h3 text-h3">Document categories</h2>
+      <p class="mt-1 text-body-sm text-ink-3">The class decides who may see a document: the same people who may see that class of details.</p>
+    </div>
+    <div class="mt-4 overflow-x-auto">
+      <table class="kx-table">
+        <thead><tr><th scope="col">Name</th><th scope="col">Class</th><th scope="col">Documents</th><th scope="col">Status</th><th scope="col" class="text-right">Edit</th></tr></thead>
+        <tbody>
+          {% for c in categories %}
+          <tr>
+            <td class="font-medium">{{ c.name }}</td>
+            <td>{{ ui.badge("neutral", class_labels[c.field_class]) }}</td>
+            <td class="tnum">{{ c.in_use }}</td>
+            <td>{{ ui.badge("success", "Active") if c.is_active else ui.badge("neutral", "Inactive") }}</td>
+            <td class="text-right">
+              <details class="relative inline-block text-left" {% if editing == "category:" ~ c.id %}open{% endif %}>
+                <summary class="kx-btn-ghost h-9 cursor-pointer list-none px-3">Edit</summary>
+                <form method="post" action="/hr/settings/categories" class="absolute right-0 z-10 mt-2 w-72 space-y-3 rounded-2xl border border-line bg-surface-raised p-4 shadow-raised" novalidate>
+                  {{ ui.csrf_field() }}<input type="hidden" name="category_id" value="{{ c.id }}">
+                  {{ ui.text_field("name", "Name", value=c.name, errors=errors if editing == "category:" ~ c.id else None) }}
+                  <select name="field_class" class="kx-input" aria-label="Class">{% for k in document_classes %}<option value="{{ k }}" {% if c.field_class == k %}selected{% endif %}>{{ class_labels[k] }}</option>{% endfor %}</select>
+                  <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if c.is_active %}checked{% endif %}> Active</label>
+                  <p class="text-xs text-ink-3">Documents already filed keep the class they were filed under.</p>
+                  <button type="submit" class="kx-btn-primary w-full">Save</button>
+                </form>
+              </details>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <form method="post" action="/hr/settings/categories" class="flex flex-col gap-3 border-t border-line p-5 sm:flex-row sm:items-start md:px-6" novalidate>
+      {{ ui.csrf_field() }}
+      <div class="flex-1">{{ ui.text_field("name", "New category", errors=errors if editing == "category:new" else None) }}</div>
+      <div class="sm:w-48">
+        <label for="f-new-class" class="kx-label">Class</label>
+        <select id="f-new-class" name="field_class" class="kx-input">{% for k in document_classes %}<option value="{{ k }}">{{ class_labels[k] }}</option>{% endfor %}</select>
+        {% if editing == "category:new" %}{{ ui.field_error(errors, "field_class") }}{% endif %}
+      </div>
+      <button type="submit" class="kx-btn-secondary sm:mt-[26px]">{{ ui.icon("plus", "sm") }} Add</button>
+    </form>
+  </section>
+
+  {# ------------------------------------------------------------ templates #}
+  <section id="templates" class="grid gap-6 lg:grid-cols-2" aria-label="Checklist templates">
+    {% for kind in ("onboarding", "offboarding") %}
+    <div class="space-y-4">
+      <h2 class="font-h3 text-h3">{{ kind | capitalize }} templates</h2>
+      {% for t in templates_by_kind[kind] %}
+      <details class="kx-card kx-enter p-5" {% if editing == "template:" ~ t.id %}open{% endif %}>
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-3">
+          <span class="min-w-0"><span class="block truncate font-semibold">{{ t.name }}</span><span class="text-xs text-ink-3">{{ t.target }} · {{ t.tasks | length }} tasks</span></span>
+          {{ ui.badge("success", "Active") if t.is_active else ui.badge("neutral", "Inactive") }}
+        </summary>
+        {{ template_form(kind, t) }}
+      </details>
+      {% endfor %}
+      <details class="rounded-2xl border border-dashed border-line p-5" {% if editing == "template:" ~ kind %}open{% endif %}>
+        <summary class="flex cursor-pointer list-none items-center gap-2 text-label text-iris">{{ ui.icon("plus", "sm") }} New {{ kind }} template</summary>
+        {{ template_form(kind) }}
+      </details>
+    </div>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

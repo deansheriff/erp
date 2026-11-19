@@ -13,9 +13,17 @@ from app.web.navigation import (
     MODULES,
     Breadcrumb,
     NavModule,
+    NavSection,
     ShellContext,
     ShellUser,
 )
+
+
+def _visible(section: NavSection, grants: engine.Grants) -> bool:
+    if section.permission is None:
+        return True
+    needed = (section.permission,) if isinstance(section.permission, str) else section.permission
+    return any(grants.holds(p) for p in needed)
 
 
 def build_shell(
@@ -34,9 +42,7 @@ def build_shell(
         if module.key == "home":
             modules.append(module)
             continue
-        sections = tuple(
-            s for s in module.sections if s.permission is None or grants.holds(s.permission)
-        )
+        sections = tuple(s for s in module.sections if _visible(s, grants))
         if sections:
             modules.append(replace(module, href=sections[0].href, sections=sections))
     org_id = org.organization_id(db)

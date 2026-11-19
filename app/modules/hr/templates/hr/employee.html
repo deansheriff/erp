@@ -1,0 +1,254 @@
+{# HR → Employee profile. Only the field classes the viewer may read reach this template
+   (ADR 0017). Design: design/stitch/exports/hr.employee.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% set st = statuses[record.status] %}
+
+{% macro section_card(section) -%}
+<section class="kx-card kx-enter p-5" aria-labelledby="s-{{ section.key }}">
+  <div class="mb-4 flex items-center justify-between gap-3">
+    <h2 id="s-{{ section.key }}" class="kx-overline">{{ section.title }}</h2>
+    {% if section.field_class.value in ("statutory", "banking") %}
+    <span class="flex items-center gap-1.5 text-xs text-ink-3">{{ ui.icon("lock", "sm") }} Encrypted · visible to you</span>
+    {% endif %}
+  </div>
+  <dl class="grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
+    {% for f in section.fields %}
+    <div class="min-w-0 {{ 'sm:col-span-2' if f.field.kind == 'textarea' }}">
+      <dt class="text-xs text-ink-3">{{ f.field.label }}</dt>
+      <dd class="mt-0.5 break-words text-body-sm {{ 'font-medium text-ink' if f.display else 'text-ink-3' }} {{ 'font-mono tnum' if f.field.encrypted and f.display }}">{{ f.display or "Not set" }}</dd>
+    </div>
+    {% endfor %}
+  </dl>
+</section>
+{%- endmacro %}
+
+{% block content %}
+{% if notice %}<div class="mb-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mb-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{# ---------------------------------------------------------------- header #}
+<section class="kx-card kx-enter relative overflow-hidden p-5 md:p-6">
+  <div class="kx-hue-glow" aria-hidden="true"></div>
+  <div class="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+    <div class="flex min-w-0 items-center gap-4">
+      <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-hue/10 font-h1 text-[22px] text-hue">{{ record.initials }}</span>
+      <div class="min-w-0 space-y-1">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <h1 class="font-h1 text-h1">{{ record.full_name }}</h1>
+          {{ ui.badge(st[0], st[1]) }}
+          {% if exit and exit.status == "scheduled" %}{{ ui.badge("warning", "Leaving") }}{% endif %}
+        </div>
+        <p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-body-sm text-ink-3">
+          {% if record.employee_number %}<span class="font-mono text-ink-2">{{ record.employee_number }}</span>{% endif %}
+          {% if record.positions %}<span>{{ record.positions[0][0] }}{% if record.positions[0][1] != "primary" %} ({{ kind_labels[record.positions[0][1]] | lower }}){% endif %}</span>{% else %}<span>No position</span>{% endif %}
+          {% if record.branch %}<span class="flex items-center gap-1">{{ ui.icon("map-pin", "sm") }} {{ record.branch }}</span>{% endif %}
+          {% if record.work_email %}<span class="flex items-center gap-1">{{ ui.icon("mail", "sm") }} {{ record.work_email }}</span>{% endif %}
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      {% if can_edit %}<a href="/hr/people/{{ record.id }}/edit" class="kx-btn-secondary">{{ ui.icon("pencil", "sm") }} Edit</a>{% endif %}
+      {% if can_invite %}
+      <form method="post" action="/hr/people/{{ record.id }}/invite">{{ ui.csrf_field() }}
+        <button type="submit" class="kx-btn-secondary" {% if not record.work_email %}disabled title="Add a work email first"{% endif %}>{{ ui.icon("send", "sm") }} Invite to sign in</button>
+      </form>
+      {% elif record.account_status %}
+      <span class="flex items-center gap-1.5 text-xs font-medium {{ 'text-success-text' if record.account_status == 'active' else 'text-ink-3' }}">{{ ui.icon("user-check", "sm") }} Sign-in {{ "invited" if record.account_status == "invited" else record.account_status }}</span>
+      {% endif %}
+      {% if can_onboard and not checklists | selectattr("kind", "equalto", "onboarding") | list %}
+      <form method="post" action="/hr/people/{{ record.id }}/onboarding">{{ ui.csrf_field() }}
+        <button type="submit" class="kx-btn-secondary">{{ ui.icon("list-checks", "sm") }} Start onboarding</button>
+      </form>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+  {# -------------------------------------------------------------- main column #}
+  <div class="min-w-0 space-y-6">
+    <section class="kx-card kx-enter p-5" aria-labelledby="s-employment-summary">
+      <h2 id="s-employment-summary" class="kx-overline mb-4">Organisation</h2>
+      <dl class="grid gap-x-6 gap-y-3.5 sm:grid-cols-3">
+        <div><dt class="text-xs text-ink-3">Manager</dt><dd class="mt-0.5 text-body-sm font-medium">{{ record.manager or "None" }}</dd></div>
+        <div><dt class="text-xs text-ink-3">Positions</dt><dd class="mt-0.5 text-body-sm font-medium">
+          {% for title, kind in record.positions %}<span class="block">{{ title }}{% if kind != "primary" %} {{ ui.badge("info" if kind == "acting" else "neutral", kind_labels[kind]) }}{% endif %}</span>{% else %}None{% endfor %}
+        </dd></div>
+        <div><dt class="text-xs text-ink-3">Branch</dt><dd class="mt-0.5 text-body-sm font-medium">{{ record.branch or "Not set" }}</dd></div>
+      </dl>
+    </section>
+
+    <div class="grid gap-6 lg:grid-cols-2">
+      {% for section in record.sections %}{{ section_card(section) }}{% endfor %}
+    </div>
+
+    {% if hidden_classes %}
+    <div class="flex items-center gap-3 rounded-2xl border border-dashed border-line px-5 py-4 text-body-sm text-ink-3">
+      {{ ui.icon("eye-off", "sm") }} Hidden: you don't have access to {{ hidden_classes | join(", ") | lower }} details.
+    </div>
+    {% endif %}
+
+    {# ------------------------------------------------------------ documents #}
+    <section id="documents" class="kx-card kx-enter overflow-hidden" aria-labelledby="s-documents">
+      <div class="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
+        <h2 id="s-documents" class="font-h3 text-h3">Documents</h2>
+        {% if upload_categories %}
+        <details class="group relative" {% if document_open is defined and document_open %}open{% endif %}>
+          <summary class="kx-btn-secondary h-9 cursor-pointer list-none px-3">{{ ui.icon("upload", "sm") }} Add document</summary>
+          <form method="post" action="/hr/people/{{ record.id }}/documents" enctype="multipart/form-data" class="absolute right-0 z-10 mt-2 w-[min(92vw,380px)] space-y-4 rounded-2xl border border-line bg-surface-raised p-5 shadow-raised">
+            {{ ui.csrf_field() }}
+            {% if document_errors.get("form") %}{{ ui.alert("danger", document_errors["form"]) }}{% endif %}
+            <div>
+              <label for="f-category" class="kx-label">Category</label>
+              <select id="f-category" name="category_id" class="kx-input" required>
+                {% for c in upload_categories %}<option value="{{ c.id }}">{{ c.name }} · {{ class_labels[c.field_class] }}</option>{% endfor %}
+              </select>
+              {{ ui.field_error(document_errors, "category_id") }}
+            </div>
+            {{ ui.text_field("title", "Title", errors=document_errors, hint="Optional. The file name is used if blank.") }}
+            <div>
+              <label for="f-file" class="kx-label">File</label>
+              <input id="f-file" name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp" class="kx-input py-2" required>
+              <p class="kx-hint mt-1.5">PDF or image, up to 10 MB. It's checked for viruses before anyone can open it.</p>
+              {{ ui.field_error(document_errors, "file") }}
+            </div>
+            <button type="submit" class="kx-btn-primary w-full">{{ ui.icon("upload", "sm") }} Upload</button>
+          </form>
+        </details>
+        {% endif %}
+      </div>
+      {% if documents %}
+      <ul class="divide-y divide-line">
+        {% for d in documents %}
+        <li class="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex min-w-0 items-center gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface-sunken text-ink-2">{{ ui.icon("file-text", "sm") }}</span>
+            <div class="min-w-0">
+              <p class="truncate font-semibold">{{ d.title }}</p>
+              <p class="flex flex-wrap items-center gap-2 text-xs text-ink-3">
+                <span>{{ d.category }}</span>{{ ui.badge("neutral", class_labels[d.field_class]) }}
+                {% if d.file %}<span>{{ d.file.size_bytes | filesize }}</span>{% if d.file.version > 1 %}<span>v{{ d.file.version }}</span>{% endif %}{% endif %}
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            {% if not d.file %}{{ ui.badge("neutral", "No file") }}
+            {% elif d.file.status == "pending_scan" %}{{ ui.badge("info", "Checking for viruses", pulse=true) }}
+            {% elif d.file.status in ("quarantined", "infected") %}{{ ui.badge("danger", "Blocked: virus found") }}
+            {% else %}<a href="/files/{{ d.file.id }}" class="kx-btn-ghost h-9 px-3">{{ ui.icon("download", "sm") }} Download</a>{% endif %}
+            {% if d.can_change %}
+            <details class="relative">
+              <summary class="kx-btn-ghost h-9 cursor-pointer list-none px-3">{{ ui.icon("refresh-cw", "sm") }} Replace</summary>
+              <form method="post" action="/hr/documents/{{ d.id }}/replace" enctype="multipart/form-data" class="absolute right-0 z-10 mt-2 w-[min(92vw,320px)] space-y-3 rounded-2xl border border-line bg-surface-raised p-4 shadow-raised">
+                {{ ui.csrf_field() }}
+                <input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp" class="kx-input py-2" required aria-label="New version">
+                <button type="submit" class="kx-btn-primary w-full">Upload new version</button>
+              </form>
+            </details>
+            <form method="post" action="/hr/documents/{{ d.id }}/delete">{{ ui.csrf_field() }}
+              <button type="submit" class="kx-btn-ghost h-9 px-3 text-danger-text">{{ ui.icon("trash-2", "sm") }} Delete</button>
+            </form>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      {% call ui.empty_state("folder-open", "No documents", "Contracts, IDs and certificates you may see appear here.") %}{% endcall %}
+      {% endif %}
+    </section>
+
+    {% if timeline %}
+    <section class="kx-card kx-enter p-5" aria-labelledby="s-history">
+      <h2 id="s-history" class="font-h3 text-h3">History</h2>
+      <ol class="mt-4 space-y-4 border-l border-line pl-5">
+        {% for when, what, who in timeline %}
+        <li class="relative">
+          <span class="absolute -left-[25px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-surface bg-iris"></span>
+          <p class="text-body-sm font-medium">{{ what }}</p>
+          <p class="text-xs text-ink-3">{{ who }} · {{ when | datetime }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endif %}
+  </div>
+
+  {# -------------------------------------------------------------- right rail #}
+  <aside class="space-y-6">
+    {% for c in checklists %}
+    <section class="kx-card kx-enter p-5" aria-label="{{ c.name }}">
+      <div class="flex items-center justify-between gap-3">
+        <h2 class="font-h3 text-h3">{{ "Onboarding" if c.kind == "onboarding" else "Offboarding" }}</h2>
+        <span class="text-body-sm font-semibold tnum">{{ c.done }} of {{ c.tasks | length }}</span>
+      </div>
+      <progress class="kx-meter mt-3" value="{{ c.percent }}" max="100" aria-label="{{ c.percent }}% done">{{ c.percent }}%</progress>
+      <ul class="mt-4 space-y-2.5">
+        {% for t in c.tasks if not t.done_at %}{% if loop.index <= 4 %}
+        <li class="flex items-start justify-between gap-3 text-body-sm">
+          <span class="min-w-0">{{ t.title }}</span>
+          <span class="flex shrink-0 items-center gap-1.5">{{ ui.badge("neutral", assignee_labels[t.assignee]) }}<span class="text-xs {{ 'text-danger-text' if t.overdue else 'text-ink-3' }}">{{ t.due_date | date }}</span></span>
+        </li>
+        {% endif %}{% else %}<li class="text-body-sm text-success-text">All tasks done.</li>{% endfor %}
+      </ul>
+      <a href="/hr/checklists?selected={{ c.id }}&tab={{ c.kind }}" class="mt-4 inline-flex items-center gap-1 text-label text-iris hover:underline">Open checklist {{ ui.icon("arrow-right", "sm") }}</a>
+    </section>
+    {% endfor %}
+
+    {% if exit %}
+    <section class="kx-card kx-enter border-warning-text/30 p-5" aria-labelledby="s-exit">
+      <h2 id="s-exit" class="font-h3 text-h3">{{ "Resignation" if exit.kind == "resignation" else "Termination" }}</h2>
+      <dl class="mt-3 space-y-2 text-body-sm">
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Notice given</dt><dd>{{ exit.notice_date | date }}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Last working day</dt><dd class="font-semibold">{{ exit.last_working_day | date }}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Final pay</dt><dd>{{ "Due" if exit.final_pay_due else "Not due" }}</dd></div>
+      </dl>
+      <p class="mt-3 text-body-sm text-ink-2">{{ exit.reason }}</p>
+      {% if exit.status == "scheduled" %}
+      <div class="mt-4">{{ ui.alert("warning", "Access ends automatically at " ~ (exit.access_ends | datetime) ~ ".", "clock") }}</div>
+      <form method="post" action="/hr/exits/{{ exit.id }}/cancel" class="mt-3">{{ ui.csrf_field() }}
+        <button type="submit" class="kx-btn-ghost h-9 px-3">Cancel exit</button>
+      </form>
+      {% else %}
+      <div class="mt-4">{{ ui.alert("info", "Access was revoked on " ~ (exit.revoked_at | datetime) ~ ".", "lock") }}</div>
+      {% endif %}
+    </section>
+    {% elif can_exit %}
+    <details class="kx-card kx-enter p-5" {% if exit_open is defined and exit_open %}open{% endif %}>
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-3">
+        <span class="font-h3 text-h3">Record exit</span>{{ ui.icon("chevron-down", "sm", "text-ink-3") }}
+      </summary>
+      <form method="post" action="/hr/people/{{ record.id }}/exit" class="mt-4 space-y-4" novalidate>
+        {{ ui.csrf_field() }}
+        {% if exit_errors.get("form") %}{{ ui.alert("danger", exit_errors["form"]) }}{% endif %}
+        <fieldset class="min-w-0">
+          <legend class="kx-label">Kind</legend>
+          <div class="grid grid-cols-2 gap-2">
+            {% for value, label in (("resignation", "Resignation"), ("termination", "Termination")) %}
+            <label class="flex h-11 cursor-pointer items-center gap-2 rounded-control border border-line px-3 text-body-sm has-[:checked]:border-iris has-[:checked]:bg-iris-tint">
+              <input type="radio" name="kind" value="{{ value }}" class="kx-check" {% if exit_values.get("kind", "resignation") == value %}checked{% endif %}> {{ label }}
+            </label>
+            {% endfor %}
+          </div>
+          {{ ui.field_error(exit_errors, "kind") }}
+        </fieldset>
+        <div>
+          <label for="f-reason" class="kx-label">Reason</label>
+          <textarea id="f-reason" name="reason" rows="3" class="kx-input h-auto py-2.5">{{ exit_values.get("reason", "") }}</textarea>
+          {{ ui.field_error(exit_errors, "reason") }}
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          {{ ui.text_field("notice_date", "Notice given", value=exit_values.get("notice_date"), type="date", errors=exit_errors) }}
+          {{ ui.text_field("last_working_day", "Last working day", value=exit_values.get("last_working_day"), type="date", errors=exit_errors) }}
+        </div>
+        <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="final_pay_due" value="1" class="kx-check" {% if exit_values.get("final_pay_due", "1") %}checked{% endif %}> Final pay is due</label>
+        <p class="text-xs text-ink-3">Their account, roles, delegations and positions end automatically at midnight after the last working day. The offboarding checklist starts now.</p>
+        <button type="submit" class="kx-btn-danger w-full">Record exit</button>
+      </form>
+    </details>
+    {% endif %}
+  </aside>
+</div>
+{% endblock %}

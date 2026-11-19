@@ -1,0 +1,105 @@
+{# HR → Add / edit person. Only sections the viewer may change are shown (ADR 0017).
+   Design: design/stitch/exports/hr.employee_form.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro hr_field(f) -%}
+{% set name = f.field.name %}
+{% set value = values.get(name, "") %}
+{% set wide = f.field.kind == "textarea" %}
+<div class="{{ 'sm:col-span-2' if wide }}">
+  {% if f.field.kind == "select" %}
+  <label for="f-{{ name }}" class="kx-label">{{ f.field.label }}</label>
+  {% if f.field.hint %}<span class="kx-hint">{{ f.field.hint }}</span>{% endif %}
+  <select id="f-{{ name }}" name="{{ name }}" class="kx-input" {% if errors.get(name) %}aria-invalid="true"{% endif %}>
+    <option value="">Not set</option>
+    {% for v, label in f.field.choices %}<option value="{{ v }}" {% if value == v %}selected{% endif %}>{{ label }}</option>{% endfor %}
+  </select>
+  {{ ui.field_error(errors, name) }}
+  {% elif f.field.kind == "textarea" %}
+  <label for="f-{{ name }}" class="kx-label">{{ f.field.label }}</label>
+  <textarea id="f-{{ name }}" name="{{ name }}" rows="3" class="kx-input h-auto py-2.5" {% if errors.get(name) %}aria-invalid="true"{% endif %}>{{ value }}</textarea>
+  {{ ui.field_error(errors, name) }}
+  {% else %}
+  {{ ui.text_field(name, f.field.label, value=value, type={"date": "date", "email": "email", "phone": "tel"}.get(f.field.kind, "text"), errors=errors, autocomplete="off", hint=f.field.hint or None, inputmode="numeric" if name in ("nin", "bvn", "account_number") else None) }}
+  {% endif %}
+</div>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header(record.full_name if record else "Add person", "Employee number is assigned when you save." if not record else (record.employee_number or "")) %}{% endcall %}
+
+<form method="post" action="{{ '/hr/people/' ~ record.id ~ '/edit' if record else '/hr/people/new' }}" class="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_220px]" novalidate>
+  {{ ui.csrf_field() }}
+  <div class="min-w-0 space-y-6">
+    {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+
+    {% if directory_editable %}
+    <section id="directory" class="kx-card kx-enter scroll-mt-24 p-5 md:p-6" aria-labelledby="h-directory">
+      <h2 id="h-directory" class="kx-overline">Directory</h2>
+      <p class="mt-1 text-body-sm text-ink-3">Everyone in the organisation can see these.</p>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2">
+        {{ ui.text_field("first_name", "First name", value=values.get("first_name"), errors=errors, required=true, autocomplete="off") }}
+        {{ ui.text_field("last_name", "Last name", value=values.get("last_name"), errors=errors, required=true, autocomplete="off") }}
+        {{ ui.text_field("other_names", "Other names", value=values.get("other_names"), errors=errors, autocomplete="off") }}
+        {{ ui.text_field("work_email", "Work email", value=values.get("work_email"), type="email", errors=errors, autocomplete="off", hint="Needed to invite them to sign in.") }}
+        <div>
+          <label for="f-branch_id" class="kx-label">Branch</label>
+          <select id="f-branch_id" name="branch_id" class="kx-input">
+            <option value="">Not set</option>
+            {% for bid, bname in branches %}<option value="{{ bid }}" {% if values.get("branch_id") == bid|string %}selected{% endif %}>{{ bname }}</option>{% endfor %}
+          </select>
+          {{ ui.field_error(errors, "branch_id") }}
+        </div>
+        {% if record %}
+        <div>
+          <label for="f-status" class="kx-label">Status</label>
+          {% if record.status == "terminated" %}
+          <input id="f-status" class="kx-input bg-surface-sunken" value="Left" readonly>
+          {% else %}
+          <select id="f-status" name="status" class="kx-input">
+            {% for key, (tone, label) in statuses.items() %}<option value="{{ key }}" {% if values.get("status") == key %}selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select>
+          {% endif %}
+          {{ ui.field_error(errors, "status") }}
+        </div>
+        {% endif %}
+        <div class="sm:col-span-2">
+          <label for="f-user_id" class="kx-label">Sign-in account</label>
+          <select id="f-user_id" name="user_id" class="kx-input">
+            <option value="">Not linked</option>
+            {% for uid, uname, uemail in accounts %}<option value="{{ uid }}" {% if values.get("user_id") == uid|string %}selected{% endif %}>{{ uname }} · {{ uemail }}</option>{% endfor %}
+          </select>
+          {{ ui.field_error(errors, "user_id") }}
+          <p class="mt-1.5 text-xs text-ink-3">Or save without one and use "Invite to sign in" on their profile.</p>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% for section in sections %}
+    <section id="{{ section.key }}" class="kx-card kx-enter scroll-mt-24 p-5 md:p-6" aria-labelledby="h-{{ section.key }}">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h2 id="h-{{ section.key }}" class="kx-overline">{{ section.title }}</h2>
+        {% if section.field_class.value in ("statutory", "banking") %}<span class="kx-badge-neutral">{{ ui.icon("lock", "sm") }} Encrypted at rest</span>{% endif %}
+      </div>
+      <div class="mt-5 grid gap-4 sm:grid-cols-2">
+        {% for f in section.fields if f.editable %}{{ hr_field(f) }}{% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+
+    <div class="sticky bottom-20 z-20 flex items-center justify-end gap-3 rounded-2xl border border-line bg-surface/90 p-3 shadow-raised backdrop-blur-md lg:bottom-4">
+      <a href="{{ back_href }}" class="kx-btn-secondary">Cancel</a>
+      <button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} {{ "Save changes" if record else "Save person" }}</button>
+    </div>
+  </div>
+
+  <nav class="hidden xl:block" aria-label="Form sections">
+    <ol class="sticky top-24 space-y-1 border-l border-line pl-4 text-body-sm">
+      {% if directory_editable %}<li><a href="#directory" class="block py-1 text-ink-2 hover:text-iris">Directory</a></li>{% endif %}
+      {% for section in sections %}<li><a href="#{{ section.key }}" class="block py-1 text-ink-2 hover:text-iris">{{ section.title }}</a></li>{% endfor %}
+    </ol>
+  </nav>
+</form>
+{% endblock %}

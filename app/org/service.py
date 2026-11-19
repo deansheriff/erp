@@ -11,7 +11,7 @@ from collections import defaultdict
 from collections.abc import Callable
 from datetime import date
 
-from sqlalchemy import ColumnElement, func, or_, select
+from sqlalchemy import ColumnElement, case, func, or_, select
 from sqlalchemy.orm import Session
 
 from app.audit.service import diff_changes, record_by
@@ -808,6 +808,78 @@ def end_assignment(
             }
         },
     )
+
+
+def end_assignments_for_exit(
+    db: Session, employee_id: uuid.UUID, *, last_day: date, reason: str
+) -> int:
+    """The system ends every position of someone who has left, after `last_day`.
+    Assignments starting later are cancelled."""
+    rows = list(
+        db.scalars(
+            select(PositionAssignment).where(
+                PositionAssignment.employee_id == employee_id,
+                or_(PositionAssignment.end_date.is_(None), PositionAssignment.end_date > last_day),
+            )
+        )
+    )
+    for row in rows:
+        if row.start_date > last_day:
+            db.delete(row)
+            action = "org.assignment.cancel"
+            changes: dict[str, dict[str, str | None]] = {
+                "employee_id": {"from": str(employee_id), "to": None}
+            }
+        else:
+            previous = row.end_date
+            row.end_date = last_day
+            action = "org.assignment.end"
+            changes = {
+                "end_date": {
+                    "from": previous.isoformat() if previous else None,
+                    "to": last_day.isoformat(),
+                }
+            }
+        record_by(
+            db,
+            None,
+            action,
+            entity_type="position",
+            entity_id=str(row.position_id),
+            reason=reason,
+            changes=changes,
+        )
+    if rows:
+        _changed(db)
+    return len(rows)
+
+
+def manager_of(db: Session, employee_id: uuid.UUID, on: date) -> uuid.UUID | None:
+    return resolver.manager_of(db, employee_id, on)
+
+
+def primary_position(db: Session, employee_id: uuid.UUID) -> tuple[uuid.UUID, uuid.UUID] | None:
+    """Today's best position (position ID, department ID) of an employee, for choosing a
+    checklist template."""
+    today = clock.today()
+    row = db.execute(
+        select(Position.id, Position.department_id)
+        .join(PositionAssignment, PositionAssignment.position_id == Position.id)
+        .where(
+            PositionAssignment.employee_id == employee_id,
+            PositionAssignment.start_date <= today,
+            or_(PositionAssignment.end_date.is_(None), PositionAssignment.end_date >= today),
+        )
+        .order_by(
+            case(
+                (PositionAssignment.kind == "primary", 0),
+                (PositionAssignment.kind == "acting", 1),
+                else_=2,
+            )
+        )
+        .limit(1)
+    ).first()
+    return (row[0], row[1]) if row else None
 
 
 def assignment_position(db: Session, assignment_id: uuid.UUID) -> uuid.UUID | None:

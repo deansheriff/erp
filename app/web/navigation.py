@@ -12,7 +12,8 @@ class NavSection:
     label: str
     href: str
     count: int | None = None
-    permission: str | None = None  # shown only to holders
+    # Shown only to holders (of any one, when several are given).
+    permission: str | tuple[str, ...] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,10 +33,22 @@ MODULES: tuple[NavModule, ...] = (
         "id-card",
         "/hr/org-chart",
         (
+            NavSection("Directory", "/directory", permission="hr.employee.read"),
             NavSection("Org chart", "/hr/org-chart", permission="org.structure.read"),
+            NavSection("People", "/hr/people", permission="hr.employee.update"),
+            NavSection(
+                "Change requests",
+                "/hr/change-requests",
+                permission=("hr.employee.statutory.update", "hr.employee.banking.update"),
+            ),
+            NavSection(
+                "Joiners & leavers",
+                "/hr/checklists",
+                permission=("hr.checklist.manage", "hr.checklist.it"),
+            ),
             NavSection("Departments", "/hr/departments", permission="org.structure.read"),
-            NavSection("People", "/hr/people", permission="hr.employee.read"),
             NavSection("Structure setup", "/hr/structure", permission="org.structure.read"),
+            NavSection("HR settings", "/hr/settings", permission="hr.settings.manage"),
         ),
     ),
     NavModule("leave", "Leave", "calendar-check", "/leave"),

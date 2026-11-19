@@ -101,3 +101,15 @@ def actors(db: Session) -> list[tuple[uuid.UUID, str]]:
         .order_by(func.max(AuditLog.actor_label))
     ).all()
     return [(actor_id, label or "—") for actor_id, label in rows if actor_id is not None]
+
+
+def for_entity(db: Session, entity_type: str, entity_id: str, limit: int = 20) -> list[AuditLog]:
+    """The newest events about one record, for activity timelines."""
+    return list(
+        db.scalars(
+            select(AuditLog)
+            .where(AuditLog.entity_type == entity_type, AuditLog.entity_id == entity_id)
+            .order_by(AuditLog.occurred_at.desc())
+            .limit(limit)
+        )
+    )

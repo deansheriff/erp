@@ -78,7 +78,7 @@ def test_building_a_structure_through_the_forms(admin: TestClient) -> None:
 
     _post(
         admin,
-        "/hr/people",
+        "/hr/people/new",
         first_name="Bola",
         last_name="Ade",
         work_email="bola.ade@adeyemiholdings.ng",
@@ -150,12 +150,12 @@ def test_filters_on_the_org_chart(admin: TestClient) -> None:
 
 
 def test_people_can_be_edited_and_unknown_people_are_404(admin: TestClient) -> None:
-    _post(admin, "/hr/people", first_name="Efe", last_name="Nwosu")
+    _post(admin, "/hr/people/new", first_name="Efe", last_name="Nwosu")
     efe = _id(Employee, first_name="Efe")
-    r = _post(admin, f"/hr/people/{efe}", first_name="Efe", last_name="Okon")
+    r = _post(admin, f"/hr/people/{efe}/edit", first_name="Efe", last_name="Okon")
     assert r.status_code == 200  # type: ignore[attr-defined]
     assert "Efe Okon" in admin.get("/hr/people").text
-    assert admin.get(f"/hr/people?edit={uuid.uuid4()}").status_code == 404
+    assert admin.get(f"/hr/people/{uuid.uuid4()}").status_code == 404
 
 
 def test_organisation_details_and_brand_colours(admin: TestClient) -> None:

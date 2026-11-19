@@ -19,6 +19,9 @@ from app.files import scanner
 from app.identity import routes_api as identity_api
 from app.identity import routes_web as identity_web
 from app.identity import service as identity
+from app.modules.hr import routes_people as hr_people_web
+from app.modules.hr import routes_process as hr_process_web
+from app.modules.hr import routes_self as hr_self_web
 from app.modules.hr import routes_web as hr_web
 from app.org import routes_web as org_web
 from app.web import routes_dev, routes_health, routes_home
@@ -74,7 +77,11 @@ def routers(settings: Settings) -> list[APIRouter]:
         identity_api.router,
         audit_web.router,
         org_web.router,
+        # Before hr_web: /hr/people/new must not be read as a person ID.
+        hr_people_web.router,
         hr_web.router,
+        hr_process_web.router,
+        hr_self_web.router,
         files_web.router,
     ]
     if settings.dev_routes_enabled:
