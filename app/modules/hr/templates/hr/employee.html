@@ -228,7 +228,7 @@
           <div class="grid grid-cols-2 gap-2">
             {% for value, label in (("resignation", "Resignation"), ("termination", "Termination")) %}
             <label class="flex h-11 cursor-pointer items-center gap-2 rounded-control border border-line px-3 text-body-sm has-[:checked]:border-iris has-[:checked]:bg-iris-tint">
-              <input type="radio" name="kind" value="{{ value }}" class="kx-check" {% if exit_values.get("kind", "resignation") == value %}checked{% endif %}> {{ label }}
+              <input type="radio" name="kind" value="{{ value }}" class="kx-check rounded-full" {% if exit_values.get("kind", "resignation") == value %}checked{% endif %}> {{ label }}
             </label>
             {% endfor %}
           </div>

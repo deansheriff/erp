@@ -29,8 +29,9 @@ def _read_everything(p: Permission) -> Scope | None:
 
 
 def _hr_everything(p: Permission) -> Scope | None:
-    """HR Manager: every HR permission that applies beyond the person themself."""
-    return Scope.ORGANIZATION if p.module == "hr" and Scope.ORGANIZATION in p.scopes else None
+    """HR Manager: every HR and leave permission that applies beyond the person themself."""
+    in_scope = p.module in {"hr", "leave"} and Scope.ORGANIZATION in p.scopes
+    return Scope.ORGANIZATION if in_scope else None
 
 
 ORG, SELF = Scope.ORGANIZATION, Scope.SELF
@@ -95,13 +96,21 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "hr.employee.compensation.read": SELF,
             "hr.employee.sensitive.read": SELF,
             "hr.profile.request_change": SELF,
+            "leave.request.create": SELF,
+            "leave.request.read": SELF,
+            "leave.balance.read": SELF,
         },
     ),
     RoleTemplate(
         "line_manager",
         "Line Manager",
         "Approves their team's requests and sees their team.",
-        grants={"hr.employee.personal.read": Scope.TEAM},  # (confirm)
+        grants={
+            "hr.employee.personal.read": Scope.TEAM,  # (confirm)
+            "leave.request.read": Scope.TEAM,
+            "leave.request.approve": Scope.TEAM,
+            "leave.balance.read": Scope.TEAM,
+        },
     ),
     RoleTemplate(
         "hr_officer",
@@ -121,6 +130,10 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "hr.exit.manage": ORG,
             "identity.user.invite": ORG,
             "org.structure.read": ORG,
+            "leave.request.create": ORG,  # recording leave for someone
+            "leave.request.read": ORG,
+            "leave.request.approve_hr": ORG,
+            "leave.balance.read": ORG,
         },
     ),
     RoleTemplate(

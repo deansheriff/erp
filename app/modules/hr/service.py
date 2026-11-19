@@ -259,3 +259,58 @@ def assign_to_position(
         end_date=end_date,
         reason=reason,
     )
+
+
+# ------------------------------------------------------------------ for other modules
+
+
+def hire_dates(db: Session, employee_ids: list[uuid.UUID]) -> dict[uuid.UUID, date | None]:
+    """Hire dates for entitlement and service calculations (not for display)."""
+    if not employee_ids:
+        return {}
+    return dict(
+        db.execute(
+            select(Employee.id, Employee.hire_date).where(Employee.id.in_(employee_ids))
+        ).all()
+    )
+
+
+def status_and_account(db: Session, employee_id: uuid.UUID) -> tuple[str, uuid.UUID | None] | None:
+    row = db.execute(
+        select(Employee.status, Employee.user_id).where(Employee.id == employee_id)
+    ).first()
+    return (row[0], row[1]) if row else None
+
+
+def current_ids(db: Session) -> list[uuid.UUID]:
+    """Everyone who hasn't left."""
+    return list(db.scalars(select(Employee.id).where(Employee.status != "terminated")))
+
+
+def page_in_scope(
+    db: Session, actor: Actor, permission: str, *, q: str = "", page: int = 1, size: int = 50
+) -> tuple[list[Employee], int]:
+    """Current people within the actor's scope of `permission`, searchable by name or
+    number, one page at a time. Returns the page and the number of pages."""
+    stmt = select(Employee).where(
+        Employee.status != "terminated",
+        engine.scope_filter(db, actor.user_id, permission, Employee),
+    )
+    if q.strip():
+        like = f"%{q.strip().lower()}%"
+        stmt = stmt.where(
+            or_(
+                func.lower(Employee.first_name + " " + Employee.last_name).like(like),
+                func.lower(func.coalesce(Employee.employee_number, "")).like(like),
+            )
+        )
+    total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
+    pages = max(1, -(-total // size))
+    rows = list(
+        db.scalars(
+            stmt.order_by(Employee.first_name, Employee.last_name)
+            .offset((min(page, pages) - 1) * size)
+            .limit(size)
+        )
+    )
+    return rows, pages

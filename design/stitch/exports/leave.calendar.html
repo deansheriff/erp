@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"iris":"#5A4BDB","tertiary":"#7a3700","on-error-container":"#93000a","canvas":"#F6F6FA","surface-variant":"#e2e2e6","iris-tint":"#EEECFD","line":"#E4E4EE","ink-3":"#626280","on-primary":"#ffffff","surface-bright":"#f9f9fd","secondary-fixed-dim":"#acd530","info-bg":"#DFEBFF","secondary":"#4f6600","surface-raised":"#FFFFFF","on-secondary":"#ffffff","outline-variant":"#c8c4d7","danger-bg":"#FFE4E6","surface-tint":"#5646d7","lime":"#C5F04A","success-bg":"#DDF7E8","warning-text":"#8A4B00","on-tertiary-container":"#ffd7c1","on-tertiary":"#ffffff","on-secondary-fixed":"#161f00","on-primary-container":"#e0dbff","on-surface":"#1a1c1f","inverse-primary":"#c5c0ff","secondary-fixed":"#c7f24c","lime-ink":"#4D7A0A","tertiary-fixed-dim":"#ffb68b","inverse-on-surface":"#f0f0f4","surface-container-highest":"#e2e2e6","surface-container-high":"#e8e8ec","line-strong":"#8B8BA6","secondary-container":"#c4ef49","tertiary-container":"#9f4a00","on-iris":"#FFFFFF","destructive":"#C42836","surface":"#FFFFFF","on-secondary-container":"#536b00","primary-fixed-dim":"#c5c0ff","on-primary-fixed-variant":"#3d28be","on-tertiary-fixed-variant":"#743400","error":"#ba1a1a","surface-container-lowest":"#ffffff","on-surface-variant":"#474554","iris-hover":"#4A3CC4","success-text":"#0F6B3E","surface-container-low":"#f3f3f7","tertiary-fixed":"#ffdbc8","error-container":"#ffdad6","info-text":"#1D55B8","primary-container":"#5a4bdb","background":"#f9f9fd","surface-container":"#ededf1","surface-dim":"#d9dade","on-error":"#ffffff","warning-bg":"#FFF1D6","ink-2":"#4B4B66","inverse-surface":"#2e3034","surface-sunken":"#EFEFF6","on-primary-fixed":"#140067","on-tertiary-fixed":"#321300","primary":"#412ec2","ink":"#16162A","outline":"#787586","primary-fixed":"#e4dfff","on-background":"#1a1c1f","danger-text":"#B4232F","on-secondary-fixed-variant":"#3b4d00"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"2rem","gutter":"1.5rem","space-xl":"2rem","space-xs":"0.25rem","space-sm":"0.5rem","space-md":"1rem","space-2xl":"3rem","space-3xl":"4rem","space-lg":"1.5rem"},fontFamily:{"body":["Inter"],"body-sm":["Inter"],"display":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"label":["Inter"],"h2":["Plus Jakarta Sans"],"overline":["Inter"],"h3":["Plus Jakarta Sans"]},fontSize:{"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}}</script></head><body class="bg-canvas font-body text-body text-ink antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface flex flex-col z-50 shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">token</span></div><div class="flex flex-col min-w-0"><span class="font-h3 text-h3 text-ink truncate">Adeyemi Holdings Ltd</span><span class="font-overline text-overline text-ink-3 uppercase">Kxmeleon ERP</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-space-xs"><nav class="space-y-space-xs" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Home</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="hr" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span>HR</span></a><div class="rounded-xl bg-[#0369A1]/5 p-1 space-y-1"><div class="flex items-center justify-between px-space-md py-space-sm rounded-lg text-[#0369A1] font-semibold cursor-pointer"><div class="flex items-center gap-space-sm font-label text-label"><span class="material-symbols-outlined text-[20px]">event_available</span><span>Leave</span></div><span class="material-symbols-outlined text-[18px]">expand_less</span></div><div class="pl-8 pr-1 space-y-space-xs pb-1"><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-ink-2 hover:bg-surface hover:text-ink transition-colors font-body-sm text-body-sm" data-path="my-leave" href="#"><span class="truncate">My leave</span></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-ink-2 hover:bg-surface hover:text-ink transition-colors font-body-sm text-body-sm" data-path="leave-approvals" href="#"><span class="truncate">Leave approvals</span><span class="px-1.5 py-0.5 rounded-full bg-iris-tint text-iris font-label text-[11px] leading-none font-semibold">4</span></a><a aria-current="page" class="flex items-center justify-between px-space-sm py-1.5 transition-colors bg-iris-tint text-iris font-semibold rounded-lg" data-path="team-calendar" href="#"><span class="truncate">Team calendar</span></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-ink-2 hover:bg-surface hover:text-ink transition-colors font-body-sm text-body-sm" data-path="leave-balances" href="#"><span class="truncate">Leave balances</span></a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-ink-2 hover:bg-surface hover:text-ink transition-colors font-body-sm text-body-sm" data-path="leave-settings" href="#"><span class="truncate">Leave settings</span></a></div></div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">pace</span><span>Attendance</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payroll</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder_supervised</span><span>Projects</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span><span>Support</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></a></nav></div><div class="p-space-sm bg-surface"><div class="space-y-space-xs"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span>Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Settings</span></a></div><div class="mt-space-sm p-space-sm rounded-xl bg-surface-sunken flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-label text-label font-bold shrink-0">FB</div><div class="flex flex-col min-w-0"><span class="font-label text-label text-ink font-semibold truncate">Fatima Bello</span><span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Finance Manager / HR</span></div></div><button class="p-1 text-ink-3 hover:text-ink rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">unfold_more</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(22,22,42,0.04)] px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label text-body-sm text-ink-3"><span class="hover:text-ink cursor-pointer transition-colors">Leave</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-ink font-semibold">Team calendar</span></div></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-72 h-10 pl-9 pr-14 rounded-lg bg-surface-sunken text-ink placeholder:text-ink-3 font-body-sm text-body-sm outline-none focus:ring-2 focus:ring-iris/30 transition-all" placeholder="Search records, actions..." type="text"/><span class="absolute right-2 px-1.5 py-0.5 rounded bg-surface text-ink-3 font-overline text-[11px] shadow-[0_1px_2px_rgba(22,22,42,0.06)]">Ctrl K</span></div><div class="flex items-center gap-space-xs"><button class="relative h-10 px-space-sm rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink flex items-center gap-1.5 transition-colors font-label text-label" type="button"><span class="material-symbols-outlined text-[20px]">rule</span><span class="px-1.5 py-0.5 rounded-full bg-iris text-on-iris text-[11px] font-bold leading-none">4</span></button><button class="relative w-10 h-10 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive ring-2 ring-surface"></span></button><button class="w-10 h-10 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="h-6 w-px bg-surface-variant mx-1"></div><div class="flex items-center gap-space-sm cursor-pointer"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="font-label text-label text-ink font-semibold">Fatima</span><span class="material-symbols-outlined text-ink-3 text-[16px]">keyboard_arrow_down</span></div></div></header><main class="w-full pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full">
+<!-- Subtle ambient decorative glow for the Leave Module (Ocean/Iris theme) -->
+<div class="relative w-full px-space-lg py-space-md">
+<div class="absolute top-0 right-1/4 w-96 h-40 bg-iris-tint/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-10 left-1/3 w-80 h-32 bg-[#0369A1]/5 rounded-full blur-2xl pointer-events-none -z-10"></div>
+<!-- PAGE HEADER -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-iris"></span>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Team calendar</h1>
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-[11px] font-semibold">Q4 • LIVE</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+          Who is away. Approved absences are solid; pending requests are dashed outlines.
+        </p>
+</div>
+<!-- Right controls -->
+<div class="flex items-center flex-wrap gap-space-sm">
+<!-- Month switcher container -->
+<div class="flex items-center bg-surface rounded-xl shadow-sm p-1">
+<button aria-label="Previous month" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<div class="px-space-md flex items-center gap-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-[18px] text-iris">calendar_month</span>
+<span class="font-h3 text-h3 text-ink select-none">November 2026</span>
+</div>
+<button aria-label="Next month" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+<!-- Today shortcut button -->
+<button class="h-11 px-space-md rounded-xl bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-colors shadow-sm flex items-center gap-1.5" onclick="document.getElementById('today-col')?.scrollIntoView({behavior:'smooth', inline:'center'});" type="button">
+<span class="w-2 h-2 rounded-full bg-iris animate-pulse"></span>
+<span>Today</span>
+</button>
+<!-- Quick Action: Request Leave Primary -->
+<button class="h-11 px-space-lg rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label flex items-center gap-2 shadow-[0_4px_14px_rgba(90,75,219,0.35)] transition-all transform active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Request leave</span>
+</button>
+</div>
+</div>
+<!-- FILTER & SUMMARY ROW BAR -->
+<div class="bg-surface rounded-2xl p-space-sm shadow-sm mb-space-md flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Department dropdown -->
+<div class="relative inline-flex items-center">
+<div class="flex items-center gap-2 h-10 pl-3 pr-8 rounded-xl bg-surface-sunken text-ink font-label text-label cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-ink-3 text-[18px]">domain</span>
+<span class="truncate font-semibold text-ink">Everyone I can see</span>
+<span class="material-symbols-outlined absolute right-2.5 text-ink-3 text-[18px]">expand_more</span>
+</div>
+</div>
+<button class="h-10 px-4 rounded-xl bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-colors shadow-sm" type="button">
+          Apply
+        </button>
+<div class="h-6 w-px bg-surface-variant mx-1 hidden sm:block"></div>
+<!-- KPI Pill: Away today -->
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-warning-bg text-warning-text font-label text-label shadow-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span class="font-normal text-xs">Away today:</span>
+<span class="font-bold text-sm">3</span>
+<span class="text-[11px] font-medium text-warning-text/80 hidden lg:inline">(Fatima, Kelechi, Segun)</span>
+</div>
+<!-- KPI Overlap alert chip -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-danger-bg text-danger-text font-label text-label shadow-xs">
+<span class="material-symbols-outlined text-[16px]">crisis_alert</span>
+<span class="text-xs font-semibold">Peak overlap:</span>
+<span class="text-xs">26 Nov (5 away)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-1 sm:flex-initial justify-end">
+<!-- Quick search input -->
+<div class="relative flex items-center min-w-[210px]">
+<span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">filter_list</span>
+<input class="w-full h-10 pl-9 pr-3 rounded-xl bg-surface-sunken text-ink placeholder:text-ink-3 font-body-sm text-body-sm outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="colleague-search" placeholder="Filter colleague or role..." type="text"/>
+</div>
+<!-- Segmented Control: View mode -->
+<div class="flex items-center p-1 bg-surface-sunken rounded-xl text-ink-2 font-label text-label">
+<button class="px-3 py-1 rounded-lg bg-surface text-ink font-semibold shadow-xs" type="button">Month</button>
+<button class="px-3 py-1 rounded-lg text-ink-3 hover:text-ink transition-colors" type="button">Quarter</button>
+<button class="px-3 py-1 rounded-lg text-ink-3 hover:text-ink transition-colors" type="button">Year</button>
+</div>
+</div>
+</div>
+<!-- MAIN CALENDAR GRID CARD -->
+<div class="bg-surface rounded-2xl shadow-sm overflow-hidden flex flex-col relative">
+<!-- HORIZONTAL TIMELINE SCROLL WRAPPER -->
+<div class="w-full overflow-x-auto relative scroll-smooth focus:outline-none" tabindex="0">
+<div class="min-w-[1720px] select-none flex flex-col">
+<!-- GRID HEADER ROW -->
+<div class="flex items-stretch bg-surface-sunken sticky top-0 z-30 shadow-xs">
+<!-- Sticky First Column: Employee & Role Header -->
+<div class="sticky left-0 z-40 bg-surface-sunken min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center justify-between shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Employee &amp; Role</span>
+<span class="px-1.5 py-0.5 rounded bg-surface text-ink-3 font-overline text-[10px]">11 TEAM</span>
+</div>
+<!-- Days 1 to 30 Column Headers -->
+<div class="grid grid-cols-30 flex-1 divide-x-0" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<!-- Day 1: Sun (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">1</span>
+</div>
+<!-- Day 2: Mon -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">M</span>
+<span class="text-xs font-semibold mt-1">2</span>
+</div>
+<!-- Day 3: Tue -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">T</span>
+<span class="text-xs font-semibold mt-1">3</span>
+</div>
+<!-- Day 4: Wed -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">W</span>
+<span class="text-xs font-semibold mt-1">4</span>
+</div>
+<!-- Day 5: Thu -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">T</span>
+<span class="text-xs font-semibold mt-1">5</span>
+</div>
+<!-- Day 6: Fri -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">F</span>
+<span class="text-xs font-semibold mt-1">6</span>
+</div>
+<!-- Day 7: Sat (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">7</span>
+</div>
+<!-- Day 8: Sun (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">8</span>
+</div>
+<!-- Day 9: Mon -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">M</span>
+<span class="text-xs font-semibold mt-1">9</span>
+</div>
+<!-- Day 10: Tue -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">T</span>
+<span class="text-xs font-semibold mt-1">10</span>
+</div>
+<!-- Day 11: Wed -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">W</span>
+<span class="text-xs font-semibold mt-1">11</span>
+</div>
+<!-- Day 12: Thu -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">T</span>
+<span class="text-xs font-semibold mt-1">12</span>
+</div>
+<!-- Day 13: Fri -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">F</span>
+<span class="text-xs font-semibold mt-1">13</span>
+</div>
+<!-- Day 14: Sat (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">14</span>
+</div>
+<!-- Day 15: Sun (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">15</span>
+</div>
+<!-- Day 16: Mon -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">M</span>
+<span class="text-xs font-semibold mt-1">16</span>
+</div>
+<!-- Day 17: Tue (TODAY) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-iris-tint/60 text-iris relative" id="today-col">
+<span class="text-[10px] font-extrabold uppercase tracking-tight text-iris">Today</span>
+<span class="w-6 h-6 rounded-full bg-iris text-on-iris font-bold text-xs flex items-center justify-center mt-0.5 shadow-xs">17</span>
+</div>
+<!-- Day 18: Wed -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">W</span>
+<span class="text-xs font-semibold mt-1">18</span>
+</div>
+<!-- Day 19: Thu -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">T</span>
+<span class="text-xs font-semibold mt-1">19</span>
+</div>
+<!-- Day 20: Fri -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">F</span>
+<span class="text-xs font-semibold mt-1">20</span>
+</div>
+<!-- Day 21: Sat (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">21</span>
+</div>
+<!-- Day 22: Sun (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">22</span>
+</div>
+<!-- Day 23: Mon -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">M</span>
+<span class="text-xs font-semibold mt-1">23</span>
+</div>
+<!-- Day 24: Tue -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">T</span>
+<span class="text-xs font-semibold mt-1">24</span>
+</div>
+<!-- Day 25: Wed (PUBLIC HOLIDAY - Eid-el-Maulud) -->
+<div class="py-2 px-1 flex flex-col items-center justify-center bg-warning-bg/70 text-warning-text relative">
+<span class="px-1 py-0.5 rounded bg-warning-text text-surface font-extrabold text-[9px] leading-tight">HOL</span>
+<span class="text-xs font-bold mt-0.5 text-warning-text">25</span>
+</div>
+<!-- Day 26: Thu (Peak overlap) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">T</span>
+<span class="text-xs font-semibold mt-1">26</span>
+</div>
+<!-- Day 27: Fri -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">F</span>
+<span class="text-xs font-semibold mt-1">27</span>
+</div>
+<!-- Day 28: Sat (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">28</span>
+</div>
+<!-- Day 29: Sun (Weekend) -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center bg-surface-container-low text-ink-3">
+<span class="text-[11px] font-medium leading-none">S</span>
+<span class="text-xs font-semibold mt-1">29</span>
+</div>
+<!-- Day 30: Mon -->
+<div class="py-2.5 px-1 flex flex-col items-center justify-center text-ink">
+<span class="text-[11px] font-medium text-ink-3 leading-none">M</span>
+<span class="text-xs font-semibold mt-1">30</span>
+</div>
+</div>
+</div>
+<!-- GRID BODY ROWS CONTAINER -->
+<div class="flex flex-col relative text-ink">
+<!-- ROW 1: Fatima Bello -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<!-- Sticky Left Column -->
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-iris-tint text-iris flex items-center justify-center font-bold text-xs shrink-0 ring-2 ring-iris/20">FB</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-h3 text-h3 text-ink truncate">Fatima Bello</span>
+<span class="w-2 h-2 rounded-full bg-iris" title="Away today"></span>
+</div>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Finance Mgr • Finance &amp; Accounts</span>
+</div>
+</div>
+<!-- Timeline Grid Cells -->
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<!-- Background column guidelines -->
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Fatima Leave Bar: Nov 16 to Nov 20 (5 days: cols 16 to 20) -->
+<div class="col-start-16 col-span-5 z-10 mx-1">
+<div class="h-8 rounded-full bg-iris text-on-iris px-3 flex items-center justify-between text-xs font-semibold shadow-sm hover:brightness-110 cursor-pointer transition-all">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px]">flight_takeoff</span>
+<span class="truncate">Annual leave</span>
+</div>
+<span class="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-bold">5d</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 2: Amaka Okafor -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-surface-variant text-ink-2 flex items-center justify-center font-bold text-xs shrink-0">AO</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Amaka Okafor</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Sr Accountant • Finance &amp; Accounts</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Amaka Leave Bar: Nov 24 to Nov 28 (Pending Annual leave -> dashed border Iris outline) -->
+<div class="col-start-24 col-span-5 z-10 mx-1">
+<div class="h-8 rounded-full border-2 border-dashed border-iris bg-iris-tint/60 text-iris px-3 flex items-center justify-between text-xs font-semibold hover:bg-iris-tint transition-all cursor-pointer">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px]">pending_actions</span>
+<span class="truncate">Pending annual</span>
+</div>
+<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-iris/10">4.5d</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 3: Tunde Bakare (In office / fully available) -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-surface-variant text-ink-2 flex items-center justify-center font-bold text-xs shrink-0">TB</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Tunde Bakare</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Head of Finance • Executive</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Clean in office row with faint badge -->
+<div class="col-start-10 col-span-11 flex justify-center">
+<span class="text-[11px] font-medium text-ink-3/40 select-none tracking-wide">Available all month</span>
+</div>
+</div>
+</div>
+<!-- ROW 4: Kelechi Obi -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-surface-variant text-ink-2 flex items-center justify-center font-bold text-xs shrink-0">KO</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-h3 text-h3 text-ink truncate">Kelechi Obi</span>
+<span class="w-2 h-2 rounded-full bg-iris" title="Away today"></span>
+</div>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Treasury Lead • Finance &amp; Accounts</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Kelechi Leave Bar: Nov 17 to Nov 20 (Annual leave 4d) -->
+<div class="col-start-17 col-span-4 z-10 mx-1">
+<div class="h-8 rounded-full bg-iris text-on-iris px-3 flex items-center justify-between text-xs font-semibold shadow-sm hover:brightness-110 cursor-pointer transition-all">
+<span class="truncate">Annual • 4d</span>
+<span class="material-symbols-outlined text-[16px] opacity-80">beach_access</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 5: Segun Afolabi -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-warning-bg text-warning-text flex items-center justify-center font-bold text-xs shrink-0">SA</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-h3 text-h3 text-ink truncate">Segun Afolabi</span>
+<span class="w-2 h-2 rounded-full bg-amber-500" title="Away today (Sick)"></span>
+</div>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Fleet Supervisor • Ops &amp; Logistics</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Segun: Nov 16 to Nov 18: Sick leave (Amber bar) -->
+<div class="col-start-16 col-span-3 z-10 mx-1">
+<div class="h-8 rounded-full bg-[#D97706] text-white px-3 flex items-center justify-between text-xs font-semibold shadow-sm hover:brightness-105 cursor-pointer">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px]">local_hospital</span>
+<span class="truncate">Sick • 3d (Med cert)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 6: Emeka Nwosu -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0">EN</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Emeka Nwosu</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Logistics Coord • Ops &amp; Logistics</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Emeka: Nov 9 - Nov 18: Paternity / Parental leave (Green/Emerald bar #047857) -->
+<div class="col-start-9 col-span-10 z-10 mx-1">
+<div class="h-8 rounded-full bg-[#047857] text-white px-3 flex items-center justify-between text-xs font-semibold shadow-sm hover:brightness-105 cursor-pointer">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px]">child_friendly</span>
+<span class="truncate">Paternity • 8 working days</span>
+</div>
+<span class="text-[10px] font-semibold bg-white/20 px-1.5 py-0.5 rounded-full">Approved</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 7: Halima Sani -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-surface-variant text-ink-2 flex items-center justify-center font-bold text-xs shrink-0">HS</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Halima Sani</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Procurement Off. • Supply Chain</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Halima: Nov 24 - Nov 27: Pending Compassionate leave -> dashed Iris outline -->
+<div class="col-start-24 col-span-4 z-10 mx-1">
+<div class="h-8 rounded-full border-2 border-dashed border-iris bg-iris-tint/50 text-iris px-3 flex items-center justify-between text-xs font-semibold hover:bg-iris-tint transition-all cursor-pointer">
+<span class="truncate">Pending approval • 3d</span>
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 8: Chinedu Eze -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-surface-variant text-ink-2 flex items-center justify-center font-bold text-xs shrink-0">CE</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Chinedu Eze</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Systems Eng. • Engineering &amp; IT</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Chinedu: Nov 23 - Nov 24: Unpaid leave (Grey bar) -->
+<div class="col-start-23 col-span-2 z-10 mx-1">
+<div class="h-8 rounded-full bg-surface-variant text-ink-2 px-3 flex items-center justify-between text-xs font-semibold hover:bg-surface-container transition-all cursor-pointer">
+<span class="truncate">Unpaid • 2d</span>
+<span class="material-symbols-outlined text-[15px] text-ink-3">money_off</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 9: Aisha Lawal -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-iris-tint text-iris flex items-center justify-center font-bold text-xs shrink-0">AL</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Aisha Lawal</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">HR Business Partner • People Ops</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Aisha: Nov 26 - Nov 30: Annual leave (Iris bar) -->
+<div class="col-start-26 col-span-5 z-10 mx-1">
+<div class="h-8 rounded-full bg-iris text-on-iris px-3 flex items-center justify-between text-xs font-semibold shadow-sm hover:brightness-110 cursor-pointer">
+<span class="truncate">Annual • 4d</span>
+<span class="material-symbols-outlined text-[16px] opacity-80">luggage</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 10: Babatunde Adeyemi -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-iris-tint text-iris flex items-center justify-center font-bold text-xs shrink-0">BA</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Babatunde Adeyemi</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">VP Ops &amp; Strategy • Executive</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Babatunde: Nov 2 - Nov 6: Executive Recess (Annual leave filled Iris bar) -->
+<div class="col-start-2 col-span-5 z-10 mx-1">
+<div class="h-8 rounded-full bg-iris text-on-iris px-3 flex items-center justify-between text-xs font-semibold shadow-sm hover:brightness-110 cursor-pointer">
+<span class="truncate">Executive Recess • 5d</span>
+<span class="material-symbols-outlined text-[16px] opacity-80">grade</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW 11: Ngozi Adeyemi -->
+<div class="flex items-stretch hover:bg-surface-sunken/40 transition-colors group">
+<div class="sticky left-0 z-20 bg-surface group-hover:bg-surface-sunken/60 min-w-[260px] max-w-[260px] px-space-md py-3 flex items-center gap-3 shadow-[2px_0_6px_rgba(22,22,42,0.04)]">
+<div class="w-9 h-9 rounded-full bg-warning-bg text-warning-text flex items-center justify-center font-bold text-xs shrink-0">NA</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-h3 text-ink truncate">Ngozi Adeyemi</span>
+<span class="font-overline text-[11px] text-ink-3 truncate leading-tight">Sr Auditor • Internal Audit</span>
+</div>
+</div>
+<div class="grid flex-1 relative items-center py-2" style="display: grid; grid-template-columns: repeat(30, minmax(44px, 1fr));">
+<div class="col-start-1 col-span-1 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-7 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-14 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-17 col-span-1 h-full bg-iris-tint/25 pointer-events-none -z-0"></div>
+<div class="col-start-21 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<div class="col-start-25 col-span-1 h-full bg-warning-bg/35 pointer-events-none -z-0"></div>
+<div class="col-start-28 col-span-2 h-full bg-surface-container-low/60 pointer-events-none -z-0"></div>
+<!-- Ngozi: Nov 19 - Nov 20: Sick leave (Amber bar) -->
+<div class="col-start-19 col-span-2 z-10 mx-1">
+<div class="h-8 rounded-full bg-[#D97706] text-white px-2.5 flex items-center justify-between text-xs font-semibold shadow-sm hover:brightness-105 cursor-pointer">
+<span class="truncate">Sick • 2d</span>
+<span class="material-symbols-outlined text-[15px]">medical_services</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- LEGEND ROW AT THE BOTTOM -->
+<div class="bg-surface-sunken p-space-md flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Leave categories:</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+<!-- Annual leave -->
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-iris shrink-0"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Annual leave</span>
+</div>
+<!-- Sick leave -->
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#D97706] shrink-0"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Sick leave</span>
+</div>
+<!-- Maternity / Paternity -->
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#047857] shrink-0"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Maternity / Paternity</span>
+</div>
+<!-- Unpaid -->
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-ink-3/40 shrink-0"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Unpaid / Sabbatical</span>
+</div>
+<!-- Pending request -->
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-full border-2 border-dashed border-iris bg-iris-tint/60 shrink-0"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Pending request</span>
+</div>
+<!-- Weekend -->
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-md bg-surface-container-high shrink-0"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Weekend</span>
+</div>
+<!-- Statutory Holiday -->
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-md bg-warning-bg ring-1 ring-warning-text/30 shrink-0"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Statutory holiday (Eid-el-Maulud)</span>
+</div>
+</div>
+<!-- Export / Sync link -->
+<button class="flex items-center gap-1.5 text-iris hover:text-iris-hover font-label text-body-sm transition-colors cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Subscribe to iCal</span>
+</button>
+</div>
+</div>
+<!-- BOTTOM KPI CARDS / QUICK STATS -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md mt-space-md">
+<!-- Card 1: Capacity forecast -->
+<div class="bg-surface rounded-2xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3 uppercase">November Average Headcount</span>
+<span class="font-stat text-stat text-ink mt-1">91.4%</span>
+<span class="font-body-sm text-body-sm text-success-text flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+            Healthy staffing threshold maintained
+          </span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-success-bg flex items-center justify-center text-success-text">
+<span class="material-symbols-outlined text-[26px]">groups</span>
+</div>
+</div>
+<!-- Card 2: Peak staffing constraint -->
+<div class="bg-surface rounded-2xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3 uppercase">Critical Team Bottleneck</span>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-stat text-stat text-ink">Nov 26</span>
+<span class="px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-bold text-xs">5 away</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+            Accounts &amp; Ops overlapping leave
+          </span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-danger-bg flex items-center justify-center text-danger-text">
+<span class="material-symbols-outlined text-[26px]">event_busy</span>
+</div>
+</div>
+<!-- Card 3: Pending Approvals -->
+<div class="bg-surface rounded-2xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3 uppercase">Action Required</span>
+<span class="font-stat text-stat text-iris mt-1">2 Requests</span>
+<span class="font-body-sm text-body-sm text-ink-2 mt-0.5">
+            Amaka Okafor &amp; Halima Sani awaiting signoff
+          </span>
+</div>
+<button class="h-10 px-4 rounded-xl bg-iris-tint text-iris hover:bg-iris hover:text-on-iris font-label text-label transition-colors flex items-center gap-1.5 shadow-xs" type="button">
+<span>Review</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Client-side filter micro-interaction -->
+<script>
+    document.getElementById('colleague-search')?.addEventListener('input', function(e) {
+      const term = e.target.value.toLowerCase().trim();
+      const rows = document.querySelectorAll('.group');
+      rows.forEach(row => {
+        const text = row.querySelector('.sticky')?.textContent.toLowerCase() || '';
+        if (text.includes(term)) {
+          row.style.display = 'flex';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</div></main></div></body></html>

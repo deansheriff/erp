@@ -545,3 +545,100 @@ screens:
       request_change: hr.profile.request_change
     field_classes: [directory, personal, statutory, banking, compensation, sensitive]
     approved_by: Dean Sheriff (2026-11-19)
+
+  - id: leave.my
+    phase: 7
+    module: leave
+    title: My leave (self-service)
+    route: GET /leave
+    template: app/modules/leave/templates/leave/my.html
+    stitch_screens:
+      mobile: 197261d3dd154efca7273d614d791f84
+    exports:
+      - design/stitch/exports/leave.my.html
+    permission: leave.request.read
+    actions:
+      upload_certificate: leave.request.create
+      cancel: leave.request.create
+    field_classes: [directory, sensitive]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: leave.request
+    phase: 7
+    module: leave
+    title: Request leave
+    route: GET /leave/new
+    template: app/modules/leave/templates/leave/request.html
+    stitch_screens:
+      mobile: de696c06155b485d9325c4b7f07da71d
+    exports:
+      - design/stitch/exports/leave.request.html
+    permission: leave.request.create
+    actions:
+      send: leave.request.create
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: leave.approvals
+    phase: 7
+    module: leave
+    title: Leave approvals
+    route: GET /leave/approvals
+    template: app/modules/leave/templates/leave/approvals.html
+    stitch_screens:
+      desktop: 88fa332db8a1462286ec306d416bde2e
+    exports:
+      - design/stitch/exports/leave.approvals.html
+    permission: login
+    actions:
+      decide_manager_step: leave.request.approve
+      decide_hr_step: leave.request.approve_hr
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: leave.calendar
+    phase: 7
+    module: leave
+    title: Team leave calendar
+    route: GET /leave/calendar
+    template: app/modules/leave/templates/leave/calendar.html
+    stitch_screens:
+      desktop: 4e35af0fdd09495a8677f36ba63e3904
+    exports:
+      - design/stitch/exports/leave.calendar.html
+    permission: leave.request.read
+    actions: {}
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: leave.balances
+    phase: 7
+    module: leave
+    title: Leave balances
+    route: GET /leave/balances
+    template: app/modules/leave/templates/leave/balances.html
+    stitch_screens:
+      desktop: cd7b353dcdb246ed93615808508b41df
+    exports:
+      - design/stitch/exports/leave.balances.html
+    permission: leave.balance.read
+    actions:
+      adjust: leave.balance.adjust
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: leave.settings
+    phase: 7
+    module: leave
+    title: Leave settings
+    route: GET /leave/settings
+    template: app/modules/leave/templates/leave/settings.html
+    stitch_screens:
+      desktop: 30ac2ff8db954c3fad54822707ce5b9a
+    exports:
+      - design/stitch/exports/leave.settings.html
+    permission: leave.settings.manage
+    actions:
+      save: leave.settings.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-19)

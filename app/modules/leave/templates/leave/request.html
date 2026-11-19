@@ -1,0 +1,60 @@
+{# Leave → Request leave (mobile-first). Design: design/stitch/exports/leave.request.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Request leave", ("Your manager " ~ manager ~ " approves." if manager else "HR approves, as you have no manager on the org chart.")) %}{% endcall %}
+
+<form method="post" action="/leave/new" class="mx-auto mt-6 max-w-2xl space-y-6" novalidate>
+  {{ ui.csrf_field() }}
+  {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+
+  <fieldset class="min-w-0">
+    <legend class="kx-label">Type of leave</legend>
+    <div class="grid gap-2 sm:grid-cols-2">
+      {% for t in types %}
+      {% set b = balances.get(t.id) %}
+      <label class="flex min-h-[56px] cursor-pointer items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-4 py-3 transition-colors has-[:checked]:border-iris has-[:checked]:bg-iris-tint">
+        <span class="flex items-center gap-3">
+          <input type="radio" name="leave_type_id" value="{{ t.id }}" class="kx-check rounded-full" {% if values.get("leave_type_id") == t.id|string %}checked{% endif %} required>
+          <span class="font-medium">{{ t.name }}</span>
+        </span>
+        <span class="text-xs text-ink-3">{% if not t.has_balance %}No limit{% elif b %}{{ b.available | days }} left{% endif %}</span>
+      </label>
+      {% endfor %}
+    </div>
+    {{ ui.field_error(errors, "leave_type_id") }}
+  </fieldset>
+
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div class="space-y-2">
+      {{ ui.text_field("start_date", "First day", value=values.get("start_date"), type="date", errors=errors) }}
+      <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="start_half" value="1" class="kx-check" {% if values.get("start_half") %}checked{% endif %}> Start in the afternoon</label>
+      {{ ui.field_error(errors, "start_half") }}
+    </div>
+    <div class="space-y-2">
+      {{ ui.text_field("end_date", "Last day", value=values.get("end_date"), type="date", errors=errors, hint="Leave blank for a single day.") }}
+      <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="end_half" value="1" class="kx-check" {% if values.get("end_half") %}checked{% endif %}> Finish at midday</label>
+    </div>
+  </div>
+
+  {% if summary %}
+  <section class="kx-card kx-enter space-y-2 border-iris/30 bg-iris-tint/40 p-4" aria-live="polite">
+    <p class="font-h2 text-h2">{{ summary.days | days }} day{{ "" if summary.days == 1 else "s" }}</p>
+    {% for day, name in summary.holidays.items() %}<p class="text-body-sm text-ink-2">Skips {{ name }} ({{ day | date }})</p>{% endfor %}
+    {% if summary.balance.has_balance %}<p class="text-body-sm text-ink-2">Balance after: <span class="font-semibold {{ 'text-danger-text' if summary.balance.available - summary.days < 0 }}">{{ (summary.balance.available - summary.days) | days }} days</span></p>{% endif %}
+    {% if summary.certificate %}<p class="flex items-center gap-1.5 text-body-sm text-warning-text">{{ ui.icon("file-warning", "sm") }} You'll need to upload a medical certificate before it can be approved.</p>{% endif %}
+  </section>
+  {% endif %}
+
+  <div>
+    <label for="f-reason" class="kx-label">Reason <span class="font-normal text-ink-3">(optional)</span></label>
+    <textarea id="f-reason" name="reason" rows="3" class="kx-input h-auto py-2.5">{{ values.get("reason", "") }}</textarea>
+  </div>
+
+  <div class="sticky bottom-20 z-20 flex flex-col-reverse gap-3 rounded-2xl border border-line bg-surface/90 p-3 shadow-raised backdrop-blur-md sm:flex-row sm:justify-end lg:bottom-4">
+    <button type="submit" name="check" value="1" class="kx-btn-secondary">{{ ui.icon("calculator", "sm") }} Check days</button>
+    <button type="submit" class="kx-btn-primary">{{ ui.icon("send", "sm") }} Send request</button>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,96 @@
+{# Leave → Balances (HR). Design: design/stitch/exports/leave.balances.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Leave balances " ~ year, "Entitlement, carry-over and adjustments, less approved and pending leave.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<form method="get" action="/leave/balances" class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+  <label class="relative block w-full sm:w-80"><span class="sr-only">Search people</span>
+    {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+    <input type="search" name="q" value="{{ q }}" class="kx-input pl-10" placeholder="Search by name or number…">
+  </label>
+  <label class="block sm:w-32"><span class="sr-only">Year</span>
+    <select name="year" class="kx-input">{% for y in years %}<option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>{% endfor %}</select>
+  </label>
+  <button type="submit" class="kx-btn-secondary">{{ ui.icon("filter", "sm") }} Apply</button>
+</form>
+
+<div class="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+  <section class="kx-card kx-enter overflow-hidden" aria-label="Balances">
+    {% if rows %}
+    <div class="overflow-x-auto">
+      <table class="kx-table">
+        <thead><tr><th scope="col">Person</th><th scope="col">Type</th><th scope="col" class="text-right">Entitled</th><th scope="col" class="text-right">Carried</th><th scope="col" class="text-right">Adjusted</th><th scope="col" class="text-right">Taken</th><th scope="col" class="text-right">Pending</th><th scope="col" class="text-right">Available</th></tr></thead>
+        <tbody>
+          {% for person in rows %}
+          {% for b in balances[person.id] %}
+          <tr class="{{ 'bg-iris-tint/50' if selected and selected.employee_id == person.id and selected.leave_type_id == b.leave_type_id }}">
+            {% if loop.first %}<td rowspan="{{ balances[person.id] | length }}" class="align-top"><p class="font-semibold">{{ person.full_name }}</p><p class="font-mono text-xs text-ink-3">{{ person.employee_number or "" }}</p>{% if not person.hire_date %}<p class="text-xs text-warning-text">No hire date</p>{% endif %}</td>{% endif %}
+            <td><a href="/leave/balances?year={{ year }}&q={{ q | urlencode }}&page={{ page }}&selected={{ person.id }}:{{ b.leave_type_id }}" class="hover:text-iris">{{ b.type_name }}</a></td>
+            <td class="text-right tnum">{{ b.entitlement | days }}</td>
+            <td class="text-right tnum">{{ b.carried_over | days }}</td>
+            <td class="text-right tnum">{{ b.adjustments | days }}</td>
+            <td class="text-right tnum">{{ b.taken | days }}</td>
+            <td class="text-right tnum">{{ b.pending | days }}</td>
+            <td class="text-right font-semibold tnum {{ 'text-danger-text' if b.available < 0 }}">{{ b.available | days }}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if pages > 1 %}
+    <nav class="flex items-center justify-between border-t border-line px-4 py-3 text-body-sm" aria-label="Pages">
+      <span class="text-ink-3">Page {{ page }} of {{ pages }}</span>
+      <div class="flex gap-2">
+        {% if page > 1 %}<a class="kx-btn-secondary h-9 px-3" href="/leave/balances?year={{ year }}&q={{ q | urlencode }}&page={{ page - 1 }}">Previous</a>{% endif %}
+        {% if page < pages %}<a class="kx-btn-secondary h-9 px-3" href="/leave/balances?year={{ year }}&q={{ q | urlencode }}&page={{ page + 1 }}">Next</a>{% endif %}
+      </div>
+    </nav>
+    {% endif %}
+    {% else %}
+    {% call ui.empty_state("users", "No one found", "Try another search.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if selected %}
+  <aside class="kx-card kx-enter self-start p-5" aria-labelledby="bal-title">
+    <h2 id="bal-title" class="font-h2 text-h2">{{ selected_name }}</h2>
+    <p class="text-body-sm text-ink-3">{{ selected.type_name }} · {{ year }}</p>
+    <dl class="mt-4 space-y-2 text-body-sm">
+      <div class="flex justify-between"><dt class="text-ink-3">Entitlement</dt><dd class="tnum">{{ selected.entitlement | days }}</dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">Carried over{% if selected.carry_over_expires %} (expires {{ selected.carry_over_expires | date }}){% endif %}</dt><dd class="tnum">{{ selected.carried_over | days }}</dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">Adjustments</dt><dd class="tnum">{{ selected.adjustments | days }}</dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">Taken</dt><dd class="tnum">−{{ selected.taken | days }}</dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">Pending</dt><dd class="tnum">−{{ selected.pending | days }}</dd></div>
+      <div class="flex justify-between border-t border-line pt-2 font-semibold"><dt>Available</dt><dd class="tnum">{{ selected.available | days }}</dd></div>
+    </dl>
+    {% if history %}
+    <h3 class="kx-overline mt-5">Adjustments</h3>
+    <ul class="mt-2 space-y-2 text-body-sm">
+      {% for a in history %}<li class="flex justify-between gap-3"><span class="text-ink-2">{{ a.reason }}</span><span class="shrink-0 tnum">{{ "+" if a.days > 0 }}{{ a.days | days }}</span></li>{% endfor %}
+    </ul>
+    {% endif %}
+    {% if can_adjust %}
+    <form method="post" action="/leave/balances/adjust" class="mt-5 space-y-3" novalidate>
+      {{ ui.csrf_field() }}
+      <input type="hidden" name="employee_id" value="{{ selected.employee_id }}">
+      <input type="hidden" name="leave_type_id" value="{{ selected.leave_type_id }}">
+      <input type="hidden" name="year" value="{{ year }}">
+      {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+      {{ ui.text_field("days_change", "Days to add", value=values.get("days_change"), errors={"days_change": errors.get("days")} if errors.get("days") else None, hint="Use a minus to remove days, e.g. -1.5.", inputmode="decimal") }}
+      <div>
+        <label for="f-reason" class="kx-label">Reason</label>
+        <textarea id="f-reason" name="reason" rows="2" class="kx-input h-auto py-2.5">{{ values.get("reason", "") }}</textarea>
+        {{ ui.field_error(errors, "reason") }}
+      </div>
+      <p class="text-xs text-ink-3">Adjustments are audited. You can't adjust your own balance.</p>
+      <button type="submit" class="kx-btn-primary w-full">Save adjustment</button>
+    </form>
+    {% endif %}
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

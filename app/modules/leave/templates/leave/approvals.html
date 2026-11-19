@@ -1,0 +1,97 @@
+{# Leave → Approvals (ADR 0018). Design: design/stitch/exports/leave.approvals.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Leave approvals", "Requests waiting for you. Nobody approves their own leave.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<nav class="kx-segment mt-6" aria-label="Approvals">
+  {% for key, label in (("waiting", "Waiting for me"), ("decided", "Decided by me")) %}
+  <a href="/leave/approvals?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}{% if key == "waiting" and waiting_count %} ({{ waiting_count }}){% endif %}</a>
+  {% endfor %}
+</nav>
+
+{% if rows %}
+<div class="mt-5 grid gap-6 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
+  <ul class="space-y-3" aria-label="Requests">
+    {% for r in rows %}
+    <li>
+      <a href="/leave/approvals?tab={{ tab }}&selected={{ r.id }}" class="kx-card flex items-center gap-3 p-4 transition-shadow duration-base hover:shadow-raised {{ 'ring-2 ring-iris' if selected and selected.id == r.id }}">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-hue/10 text-xs font-bold text-hue">{{ r.employee_name.split()[0][:1] }}{{ r.employee_name.split()[-1][:1] }}</span>
+        <div class="min-w-0 flex-1">
+          <p class="truncate font-semibold">{{ r.employee_name }}</p>
+          <p class="truncate text-xs text-ink-3">{{ r.type_name }} · {{ r.start_date | date }} · {{ r.days | days }} d</p>
+        </div>
+        {% if tab == "waiting" %}{{ ui.badge("info" if r.step == "manager" else "new", "Manager" if r.step == "manager" else "HR final") }}{% else %}{{ ui.badge(tones[r.status], r.status | capitalize) }}{% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if selected %}
+  <section class="kx-card kx-enter self-start p-5 md:p-6" aria-labelledby="sel-title">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h2 id="sel-title" class="font-h2 text-h2">{{ selected.employee_name }}</h2>
+        <p class="text-body-sm text-ink-3">{{ selected.position or "No position" }}</p>
+      </div>
+      {{ ui.badge(tones[selected.status], selected.status | capitalize) }}
+    </div>
+    <dl class="mt-5 grid gap-4 sm:grid-cols-3">
+      <div><dt class="text-xs text-ink-3">Type</dt><dd class="font-medium">{{ selected.type_name }}</dd></div>
+      <div><dt class="text-xs text-ink-3">Dates</dt><dd class="font-medium">{{ selected.start_date | date }}{% if selected.end_date != selected.start_date %} – {{ selected.end_date | date }}{% endif %}</dd></div>
+      <div><dt class="text-xs text-ink-3">Days</dt><dd class="font-medium tnum">{{ selected.days | days }}{% if selected.start_half %} (from noon){% endif %}{% if selected.end_half %} (until noon){% endif %}</dd></div>
+      {% if balance and balance.has_balance and selected.status == "pending" %}
+      {# The balance already counts this request as pending. #}
+      <div><dt class="text-xs text-ink-3">Balance</dt><dd class="font-medium tnum">{{ (balance.available + selected.days) | days }} → {{ balance.available | days }}</dd></div>
+      {% endif %}
+      <div class="sm:col-span-2"><dt class="text-xs text-ink-3">Certificate</dt><dd class="flex items-center gap-1.5 text-body-sm">
+        {% if not selected.certificate_needed %}Not needed
+        {% elif selected.certificate_file_id %}{{ ui.icon("lock", "sm") }} Attached — visible to HR and the employee only
+        {% else %}<span class="text-warning-text">Waiting for the employee to upload it</span>{% endif %}
+      </dd></div>
+    </dl>
+    {% if selected.reason %}<p class="mt-4 rounded-xl bg-surface-sunken px-4 py-3 text-body-sm">{{ selected.reason }}</p>{% endif %}
+
+    <h3 class="kx-overline mt-6">Steps</h3>
+    <ol class="mt-2 space-y-2 text-body-sm">
+      <li class="flex items-center gap-2">{{ ui.icon("user", "sm") }} Manager{% if selected.manager_name %} ({{ selected.manager_name }}){% endif %}:
+        {% set m = selected.decisions | selectattr("step", "equalto", "manager") | list %}
+        {% if m %}<span class="{{ 'text-success-text' if m[-1].decision == 'approved' else 'text-danger-text' }}">{{ m[-1].decision }} by {{ m[-1].by }}</span>{% elif selected.step == "manager" %}<span class="text-ink-3">waiting</span>{% else %}<span class="text-ink-3">skipped (no manager)</span>{% endif %}</li>
+      {% if selected.needs_hr or selected.step == "hr" %}
+      <li class="flex items-center gap-2">{{ ui.icon("shield-check", "sm") }} HR:
+        {% set h = selected.decisions | selectattr("step", "equalto", "hr") | list %}
+        {% if h %}<span class="{{ 'text-success-text' if h[-1].decision == 'approved' else 'text-danger-text' }}">{{ h[-1].decision }} by {{ h[-1].by }}</span>{% else %}<span class="text-ink-3">waiting</span>{% endif %}</li>
+      {% endif %}
+    </ol>
+
+    {% if away %}
+    <h3 class="kx-overline mt-6">Also away</h3>
+    <ul class="mt-2 space-y-1 text-body-sm">
+      {% for a in away %}<li class="flex items-center justify-between gap-3"><span>{{ a.employee_name }}</span><span class="text-xs text-ink-3">{{ a.start_date | date }} – {{ a.end_date | date }}{% if a.status == "pending" %} (pending){% endif %}</span></li>{% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if selected.can_decide %}
+    <form method="post" class="mt-6 space-y-4" novalidate>
+      {{ ui.csrf_field() }}
+      {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+      <div>
+        <label for="f-note" class="kx-label">Note <span class="font-normal text-ink-3">(required to reject)</span></label>
+        <textarea id="f-note" name="note" rows="2" class="kx-input h-auto py-2.5">{{ note }}</textarea>
+        {{ ui.field_error(errors, "note") }}
+      </div>
+      <div class="flex flex-wrap justify-end gap-3">
+        <button type="submit" formaction="/leave/requests/{{ selected.id }}/reject" class="kx-btn-secondary">{{ ui.icon("x", "sm") }} Reject</button>
+        <button type="submit" formaction="/leave/requests/{{ selected.id }}/approve" class="kx-btn-primary" {% if selected.waiting_for_certificate %}disabled title="Waiting for the certificate"{% endif %}>{{ ui.icon("check", "sm") }} Approve</button>
+      </div>
+    </form>
+    {% endif %}
+  </section>
+  {% endif %}
+</div>
+{% else %}
+<section class="kx-card mt-5">{% call ui.empty_state("inbox", "Nothing waiting", "Leave requests you can decide appear here.") %}{% endcall %}</section>
+{% endif %}
+{% endblock %}

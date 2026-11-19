@@ -1,0 +1,76 @@
+{# Leave → Team calendar. Design: design/stitch/exports/leave.calendar.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% set colours = {"annual": "bg-iris", "sick": "bg-warning-text", "maternity": "bg-success-text", "paternity": "bg-success-text", "unpaid": "bg-ink-3"} %}
+
+{% block content %}
+{% call ui.page_header("Team calendar", "Who is away. Pending requests are outlined.") %}
+  <div class="flex items-center gap-2">
+    <a href="/leave/calendar?month={{ prev }}&department={{ department }}" class="kx-btn-icon" aria-label="Previous month">{{ ui.icon("chevron-left") }}</a>
+    <span class="min-w-[9rem] text-center font-h3 text-h3">{{ title }}</span>
+    <a href="/leave/calendar?month={{ next }}&department={{ department }}" class="kx-btn-icon" aria-label="Next month">{{ ui.icon("chevron-right") }}</a>
+    <a href="/leave/calendar?department={{ department }}" class="kx-btn-secondary h-10 px-3">Today</a>
+  </div>
+{% endcall %}
+
+<form method="get" action="/leave/calendar" class="mt-5 flex flex-wrap items-center gap-3">
+  <input type="hidden" name="month" value="{{ current }}">
+  <label class="block w-full sm:w-64"><span class="sr-only">Department</span>
+    <select name="department" class="kx-input">
+      <option value="">Everyone I can see</option>
+      {% for did, dname in departments %}<option value="{{ did }}" {% if department == did|string %}selected{% endif %}>{{ dname }}</option>{% endfor %}
+    </select>
+  </label>
+  <button type="submit" class="kx-btn-secondary">{{ ui.icon("filter", "sm") }} Apply</button>
+  <span class="text-body-sm text-ink-3">Away today: <span class="font-semibold text-ink">{{ away_today }}</span></span>
+</form>
+
+<section class="kx-card kx-enter mt-5 overflow-hidden" aria-label="{{ title }}">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="min-w-full border-separate border-spacing-0 text-xs">
+      <thead>
+        <tr>
+          <th scope="col" class="sticky left-0 z-10 min-w-[200px] bg-surface px-4 py-3 text-left font-semibold text-ink-3">Person</th>
+          {% for d in month_days %}
+          <th scope="col" class="w-8 min-w-[2rem] px-0 py-2 text-center font-medium {{ 'bg-surface-sunken text-ink-3' if d.weekday() in weekend or d in holidays else 'text-ink-2' }} {{ 'text-iris' if d == today }}" {% if d in holidays %}title="{{ holidays[d] }}"{% endif %}>
+            <span class="block text-[10px]">{{ "MTWTFSS"[d.weekday()] }}</span>{{ d.day }}
+          </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <th scope="row" class="sticky left-0 z-10 border-t border-line bg-surface px-4 py-2 text-left font-normal">
+            <span class="block truncate text-body-sm font-semibold text-ink">{{ row.name }}</span>
+            <span class="block truncate text-ink-3">{{ row.position or "" }}</span>
+          </th>
+          {% for d in month_days %}
+          {% set bar = row.bars | selectattr("0", "le", d.day) | selectattr("1", "ge", d.day) | first %}
+          <td class="h-10 border-t border-line p-0.5 {{ 'bg-surface-sunken' if d.weekday() in weekend or d in holidays }}">
+            {% if bar %}
+            <span class="block h-6 rounded-md {{ colours.get(bar[2], 'bg-info-text') if bar[4] == 'approved' else 'border-2 border-dashed border-iris bg-iris-tint' }}" title="{{ bar[3] }}{{ ' (pending)' if bar[4] == 'pending' }}"></span>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex flex-wrap items-center gap-4 border-t border-line px-4 py-3 text-xs text-ink-2">
+    <span class="flex items-center gap-1.5"><span class="h-3 w-5 rounded bg-iris"></span> Annual</span>
+    <span class="flex items-center gap-1.5"><span class="h-3 w-5 rounded bg-warning-text"></span> Sick</span>
+    <span class="flex items-center gap-1.5"><span class="h-3 w-5 rounded bg-success-text"></span> Maternity / paternity</span>
+    <span class="flex items-center gap-1.5"><span class="h-3 w-5 rounded bg-ink-3"></span> Unpaid</span>
+    <span class="flex items-center gap-1.5"><span class="h-3 w-5 rounded bg-info-text"></span> Other</span>
+    <span class="flex items-center gap-1.5"><span class="h-3 w-5 rounded border-2 border-dashed border-iris bg-iris-tint"></span> Pending</span>
+    <span class="flex items-center gap-1.5"><span class="h-3 w-5 rounded bg-surface-sunken"></span> Weekend or public holiday</span>
+  </div>
+  {% else %}
+  {% call ui.empty_state("calendar", "No one is away", "Nobody you can see has leave this month.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

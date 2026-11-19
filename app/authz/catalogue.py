@@ -18,6 +18,7 @@ POLICY_MODULES = (
     "app.authz.policies",
     "app.files.policies",
     "app.modules.hr.policies",
+    "app.modules.leave.policies",
 )
 
 

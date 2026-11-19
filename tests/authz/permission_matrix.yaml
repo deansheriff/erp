@@ -10,6 +10,8 @@ auditor:
   hr.employee.sensitive.read: organization
   hr.employee.statutory.read: organization
   identity.user.read: organization
+  leave.balance.read: organization
+  leave.request.read: organization
   org.structure.read: organization
 employee:
   hr.employee.banking.read: self
@@ -20,6 +22,9 @@ employee:
   hr.employee.sensitive.read: self
   hr.employee.statutory.read: self
   hr.profile.request_change: self
+  leave.balance.read: self
+  leave.request.create: self
+  leave.request.read: self
 expense_approver: {}
 finance_manager: {}
 finance_officer: {}
@@ -43,6 +48,14 @@ hr_manager:
   hr.exit.manage: organization
   hr.settings.manage: organization
   identity.user.invite: organization
+  leave.balance.adjust: organization
+  leave.balance.read: organization
+  leave.request.approve: organization
+  leave.request.approve_hr: organization
+  leave.request.cancel: organization
+  leave.request.create: organization
+  leave.request.read: organization
+  leave.settings.manage: organization
   org.structure.read: organization
 hr_officer:
   hr.checklist.manage: organization
@@ -57,6 +70,10 @@ hr_officer:
   hr.employee.update: organization
   hr.exit.manage: organization
   identity.user.invite: organization
+  leave.balance.read: organization
+  leave.request.approve_hr: organization
+  leave.request.create: organization
+  leave.request.read: organization
   org.structure.read: organization
 inventory_clerk: {}
 it_support:
@@ -64,6 +81,9 @@ it_support:
   hr.employee.read: organization
 line_manager:
   hr.employee.personal.read: team
+  leave.balance.read: team
+  leave.request.approve: team
+  leave.request.read: team
 organization_administrator:
   audit.log.read: organization
   authz.assignment.manage: organization
@@ -92,6 +112,14 @@ organization_administrator:
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization
+  leave.balance.adjust: organization
+  leave.balance.read: organization
+  leave.request.approve: organization
+  leave.request.approve_hr: organization
+  leave.request.cancel: organization
+  leave.request.create: organization
+  leave.request.read: organization
+  leave.settings.manage: organization
   org.assignment.manage: organization
   org.structure.manage: organization
   org.structure.read: organization
@@ -126,6 +154,14 @@ super_administrator:
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization
+  leave.balance.adjust: organization
+  leave.balance.read: organization
+  leave.request.approve: organization
+  leave.request.approve_hr: organization
+  leave.request.cancel: organization
+  leave.request.create: organization
+  leave.request.read: organization
+  leave.settings.manage: organization
   org.assignment.manage: organization
   org.structure.manage: organization
   org.structure.read: organization

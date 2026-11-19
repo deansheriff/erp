@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#F6F6FA] text-[#16162A]">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kxmeleon ERP — Leave approvals</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            canvas: '#F6F6FA',
+            surface: {
+              DEFAULT: '#FFFFFF',
+              sunken: '#EFEFF6',
+              raised: '#FFFFFF'
+            },
+            line: {
+              DEFAULT: '#E4E4EE',
+              strong: '#8B8BA6'
+            },
+            ink: {
+              DEFAULT: '#16162A',
+              2: '#4B4B66',
+              3: '#626280'
+            },
+            iris: {
+              DEFAULT: '#5A4BDB',
+              hover: '#4A3CC4',
+              tint: '#EEECFD'
+            },
+            lime: {
+              DEFAULT: '#C5F04A',
+              ink: '#4D7A0A'
+            },
+            ocean: {
+              DEFAULT: '#0369A1',
+              tint: '#E0F2FE',
+              subtle: 'rgba(3, 105, 161, 0.12)'
+            }
+          },
+          boxShadow: {
+            card: '0 1px 2px rgb(22 22 42 / 0.04), 0 1px 1px rgb(22 22 42 / 0.03)',
+            raised: '0 8px 24px -6px rgb(22 22 42 / 0.12), 0 2px 6px rgb(22 22 42 / 0.06)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .tabular { font-variant-numeric: tabular-nums; }
+    /* Subtle module ocean glow */
+    .module-glow {
+      background: radial-gradient(circle 500px at top left, rgba(3, 105, 161, 0.08), transparent 70%);
+    }
+  </style>
+</head>
+<body class="h-full flex overflow-hidden antialiased font-sans bg-[#F6F6FA] text-ink selection:bg-iris-tint selection:text-iris">
+
+  <!-- Left Sidebar (Adeyemi Holdings Ltd) -->
+  <aside class="w-[272px] h-full bg-surface border-r border-line flex flex-col justify-between shrink-0 z-30 select-none">
+    <div class="flex flex-col h-full overflow-hidden">
+      <!-- Top Brand Header -->
+      <div class="p-4 border-b border-line flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-iris text-white font-display font-bold flex items-center justify-center text-sm shadow-sm tracking-wider">
+            AH
+          </div>
+          <div class="min-w-0">
+            <h1 class="font-display font-bold text-sm text-ink tracking-tight truncate leading-tight">Adeyemi Holdings Ltd</h1>
+          </div>
+        </div>
+        <button class="p-1.5 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" title="Collapse sidebar" aria-label="Collapse sidebar">
+          <i data-lucide="panel-left-close" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Quick switcher / search -->
+      <div class="px-3 pt-3 pb-2">
+        <button class="w-full flex items-center justify-between px-3 py-2 rounded-xl bg-surface-sunken text-ink-3 text-xs border border-transparent hover:border-line transition-all">
+          <span class="flex items-center gap-2">
+            <i data-lucide="search" class="w-3.5 h-3.5"></i>
+            <span>Go to...</span>
+          </span>
+          <kbd class="font-mono text-[10px] bg-surface px-1.5 py-0.5 rounded border border-line text-ink-2">Ctrl K</kbd>
+        </button>
+      </div>
+
+      <!-- Module Navigation List (Scrollable) -->
+      <div class="flex-1 overflow-y-auto px-3 space-y-1 text-sm py-2">
+        <!-- MODULE: Home -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="home" class="w-4 h-4 text-ink-3"></i>
+          <span>Home</span>
+        </a>
+
+        <!-- MODULE: HR -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="users" class="w-4 h-4 text-ink-3"></i>
+          <span>HR & People</span>
+        </a>
+
+        <!-- MODULE: Leave (OPEN & ACTIVE) -->
+        <div class="pt-1">
+          <button class="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-ocean bg-ocean-subtle transition-colors">
+            <span class="flex items-center gap-2.5">
+              <span class="w-4 h-4 flex items-center justify-center text-ocean">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+              </span>
+              <span class="text-ink font-semibold">Leave</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-ocean"></i>
+          </button>
+
+          <!-- Leave Sub-navigation -->
+          <div class="ml-4 pl-3.5 border-l-2 border-ocean/30 mt-1 space-y-0.5">
+            <a href="#" class="block px-2.5 py-1.5 rounded-md text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+              My leave
+            </a>
+            <!-- Active Sub-item: Approvals -->
+            <a href="#" class="flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs font-semibold text-iris bg-iris-tint transition-colors">
+              <span>Approvals</span>
+              <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-iris text-white">4</span>
+            </a>
+            <a href="#" class="block px-2.5 py-1.5 rounded-md text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+              Team calendar
+            </a>
+            <a href="#" class="block px-2.5 py-1.5 rounded-md text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+              Balances
+            </a>
+            <a href="#" class="block px-2.5 py-1.5 rounded-md text-xs font-medium text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors">
+              Settings
+            </a>
+          </div>
+        </div>
+
+        <!-- MODULE: Attendance -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="clock" class="w-4 h-4 text-ink-3"></i>
+          <span>Attendance</span>
+        </a>
+
+        <!-- MODULE: Expenses -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="receipt" class="w-4 h-4 text-ink-3"></i>
+          <span>Expenses</span>
+        </a>
+
+        <!-- MODULE: Payroll -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="wallet" class="w-4 h-4 text-ink-3"></i>
+          <span>Payroll</span>
+        </a>
+
+        <!-- MODULE: Finance -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="landmark" class="w-4 h-4 text-ink-3"></i>
+          <span>Finance</span>
+        </a>
+
+        <!-- MODULE: Inventory -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="boxes" class="w-4 h-4 text-ink-3"></i>
+          <span>Inventory</span>
+        </a>
+
+        <!-- MODULE: Projects -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="briefcase" class="w-4 h-4 text-ink-3"></i>
+          <span>Projects</span>
+        </a>
+
+        <!-- MODULE: Administration -->
+        <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-medium text-xs">
+          <i data-lucide="shield-check" class="w-4 h-4 text-ink-3"></i>
+          <span>Administration</span>
+        </a>
+      </div>
+
+      <!-- Footer User Card -->
+      <div class="p-3 border-t border-line space-y-1">
+        <a href="#" class="flex items-center gap-2.5 px-2 py-1.5 rounded-lg text-xs text-ink-2 hover:bg-surface-sunken transition-colors">
+          <i data-lucide="help-circle" class="w-4 h-4 text-ink-3"></i>
+          <span>Help & documentation</span>
+        </a>
+        <div class="flex items-center justify-between p-2 rounded-xl bg-surface-sunken border border-line/60 mt-1">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-8 h-8 rounded-full bg-iris text-white font-semibold text-xs flex items-center justify-center shrink-0">
+              FB
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-ink truncate leading-tight">Fatima Bello</div>
+              <div class="text-[11px] text-ink-3 truncate leading-tight">Finance Manager / HR</div>
+            </div>
+          </div>
+          <button class="p-1 rounded text-ink-3 hover:text-ink" aria-label="Account options">
+            <i data-lucide="chevrons-up-down" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="flex-1 flex flex-col h-full overflow-hidden module-glow">
+    
+    <!-- Top Bar (Sticky, Glass) -->
+    <header class="h-14 border-b border-line bg-surface/80 backdrop-blur-md px-6 flex items-center justify-between shrink-0 z-20">
+      <!-- Breadcrumbs -->
+      <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs">
+        <span class="text-ink-3 hover:text-ink font-medium">Leave</span>
+        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-line-strong"></i>
+        <span class="font-semibold text-ink">Approvals</span>
+      </nav>
+
+      <!-- Center Search -->
+      <div class="w-96 max-w-md relative">
+        <i data-lucide="search" class="w-4 h-4 text-ink-3 absolute left-3 top-1/2 -translate-y-1/2"></i>
+        <input type="text" placeholder="Search people, claims, invoices..." class="w-full bg-surface-sunken border border-line rounded-lg pl-9 pr-14 py-1.5 text-xs text-ink placeholder:text-ink-3 focus:outline-none focus:border-iris focus:ring-2 focus:ring-iris/20 transition-all">
+        <kbd class="font-mono text-[10px] bg-surface text-ink-3 border border-line px-1.5 py-0.5 rounded absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none">Ctrl K</kbd>
+      </div>
+
+      <!-- Right Actions & Meta -->
+      <div class="flex items-center gap-3">
+        <!-- Approvals count chip -->
+        <button class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-iris-tint text-iris text-xs font-semibold hover:bg-iris-tint/80 transition-colors">
+          <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
+          <span>Approvals</span>
+          <span class="w-4 h-4 rounded-full bg-iris text-white text-[10px] flex items-center justify-center font-bold">4</span>
+        </button>
+
+        <!-- Notification Bell -->
+        <button class="p-2 rounded-lg text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" aria-label="Notifications">
+          <i data-lucide="bell" class="w-4 h-4"></i>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-lime border-2 border-surface"></span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button class="p-2 rounded-lg text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" aria-label="Toggle theme">
+          <i data-lucide="sun" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Current User Avatar -->
+        <div class="w-8 h-8 rounded-full bg-iris text-white font-semibold text-xs flex items-center justify-center cursor-pointer shadow-sm">
+          FB
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Body (Two-Pane Layout) -->
+    <main class="flex-1 flex flex-col overflow-hidden px-8 py-5">
+      
+      <!-- Page Header: Title, Description & Segmented Control -->
+      <div class="flex items-start justify-between pb-5 border-b border-line shrink-0">
+        <div>
+          <div class="flex items-center gap-3">
+            <h1 class="font-display font-bold text-2xl text-ink tracking-tight">Leave approvals</h1>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-ocean-tint text-ocean border border-ocean/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-ocean"></span>
+              Inbox active
+            </span>
+          </div>
+          <p class="text-xs text-ink-3 mt-1">Requests waiting for you. Nobody approves their own leave.</p>
+        </div>
+
+        <!-- Segmented Control + Filter Bar -->
+        <div class="flex items-center gap-3">
+          <div class="inline-flex p-1 bg-surface-sunken border border-line rounded-xl text-xs font-medium">
+            <button class="px-3.5 py-1.5 rounded-lg bg-surface text-ink font-semibold shadow-card flex items-center gap-1.5 transition-all">
+              <span>Waiting for me</span>
+              <span class="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-iris text-white">4</span>
+            </button>
+            <button class="px-3.5 py-1.5 rounded-lg text-ink-2 hover:text-ink transition-colors">
+              Decided by me
+            </button>
+          </div>
+
+          <button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-line bg-surface hover:bg-surface-sunken text-xs font-medium text-ink-2 transition-colors">
+            <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
+            <span>Filter</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Two-Column Master-Detail Workspace -->
+      <div class="flex-1 flex gap-6 pt-5 overflow-hidden min-h-0">
+        
+        <!-- LEFT COLUMN: Request Cards List (Scrollable) -->
+        <section aria-label="Requests queue" class="w-[360px] flex flex-col shrink-0 overflow-hidden">
+          <div class="flex items-center justify-between pb-2.5 text-xs text-ink-3 shrink-0">
+            <span class="font-semibold text-ink-2 tracking-wide uppercase text-[11px]">4 Pending requests</span>
+            <span class="flex items-center gap-1 text-[11px] text-ink-3">
+              <i data-lucide="arrow-down-up" class="w-3 h-3"></i>
+              <span>Newest first</span>
+            </span>
+          </div>
+
+          <div class="flex-1 overflow-y-auto pr-1 space-y-2.5 pb-4">
+            
+            <!-- CARD 1: Selected (Amaka Okafor) with Iris Ring -->
+            <article class="p-4 rounded-2xl bg-surface border-2 border-iris shadow-raised ring-4 ring-iris/10 cursor-pointer transition-all relative">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-iris-tint text-iris font-bold text-sm flex items-center justify-center font-display border border-iris/20">
+                    AO
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-ink leading-snug">Amaka Okafor</h2>
+                    <p class="text-xs text-ink-3">Senior Accountant</p>
+                  </div>
+                </div>
+                <!-- Chip: Manager or HR final -->
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-iris-tint text-iris border border-iris/20">
+                  Manager
+                </span>
+              </div>
+
+              <div class="mt-3 pt-2.5 border-t border-line/60 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1.5 text-ink-2 font-medium">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-ocean"></i>
+                  <span>Annual leave · 23 Nov 2026</span>
+                </div>
+                <span class="font-semibold text-ink tabular">3 d</span>
+              </div>
+
+              <div class="mt-2 flex items-center justify-between text-[11px] text-ink-3">
+                <span class="flex items-center gap-1 text-[#8A4B00]">
+                  <i data-lucide="clock" class="w-3 h-3"></i>
+                  <span>Submitted 2h ago</span>
+                </span>
+                <span class="text-xs font-semibold text-iris flex items-center gap-0.5">
+                  Selected
+                  <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                </span>
+              </div>
+            </article>
+
+            <!-- CARD 2: Chinedu Eze -->
+            <article class="p-4 rounded-2xl bg-surface border border-line shadow-card hover:border-line-strong hover:shadow-md cursor-pointer transition-all">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-surface-sunken text-ink-2 font-bold text-sm flex items-center justify-center font-display border border-line">
+                    CE
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-ink leading-snug">Chinedu Eze</h2>
+                    <p class="text-xs text-ink-3">Systems Engineer</p>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-ocean-tint text-ocean border border-ocean/20">
+                  HR final
+                </span>
+              </div>
+
+              <div class="mt-3 pt-2.5 border-t border-line/60 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1.5 text-ink-2 font-medium">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-ocean"></i>
+                  <span>Sick leave · 26 Nov 2026</span>
+                </div>
+                <span class="font-semibold text-ink tabular">2 d</span>
+              </div>
+
+              <div class="mt-2 flex items-center justify-between text-[11px] text-ink-3">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3"></i>
+                  <span>Yesterday, 16:30</span>
+                </span>
+                <span class="text-[11px] text-[#0F6B3E] font-medium flex items-center gap-1">
+                  <i data-lucide="check" class="w-3 h-3"></i>
+                  <span>Manager signed</span>
+                </span>
+              </div>
+            </article>
+
+            <!-- CARD 3: Segun Afolabi -->
+            <article class="p-4 rounded-2xl bg-surface border border-line shadow-card hover:border-line-strong hover:shadow-md cursor-pointer transition-all">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-surface-sunken text-ink-2 font-bold text-sm flex items-center justify-center font-display border border-line">
+                    SA
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-ink leading-snug">Segun Afolabi</h2>
+                    <p class="text-xs text-ink-3">Fleet Supervisor</p>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-iris-tint text-iris border border-iris/20">
+                  Manager
+                </span>
+              </div>
+
+              <div class="mt-3 pt-2.5 border-t border-line/60 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1.5 text-ink-2 font-medium">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-ocean"></i>
+                  <span>Annual leave · 1 Dec 2026</span>
+                </div>
+                <span class="font-semibold text-ink tabular">5 d</span>
+              </div>
+
+              <div class="mt-2 flex items-center justify-between text-[11px] text-ink-3">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3"></i>
+                  <span>18 Nov, 11:20</span>
+                </span>
+                <span class="text-[11px] text-ink-3">Operations team</span>
+              </div>
+            </article>
+
+            <!-- CARD 4: Halima Sani -->
+            <article class="p-4 rounded-2xl bg-surface border border-line shadow-card hover:border-line-strong hover:shadow-md cursor-pointer transition-all">
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-surface-sunken text-ink-2 font-bold text-sm flex items-center justify-center font-display border border-line">
+                    HS
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-bold text-ink leading-snug">Halima Sani</h2>
+                    <p class="text-xs text-ink-3">Procurement Officer</p>
+                  </div>
+                </div>
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-ocean-tint text-ocean border border-ocean/20">
+                  HR final
+                </span>
+              </div>
+
+              <div class="mt-3 pt-2.5 border-t border-line/60 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1.5 text-ink-2 font-medium">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-ocean"></i>
+                  <span>Compassionate · 4 Dec 2026</span>
+                </div>
+                <span class="font-semibold text-ink tabular">2 d</span>
+              </div>
+
+              <div class="mt-2 flex items-center justify-between text-[11px] text-ink-3">
+                <span class="flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3 h-3"></i>
+                  <span>2 days ago</span>
+                </span>
+                <span class="text-[11px] text-[#0F6B3E] font-medium flex items-center gap-1">
+                  <i data-lucide="check" class="w-3 h-3"></i>
+                  <span>Manager signed</span>
+                </span>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- RIGHT COLUMN: Detail Card & Approval Actions (Scrollable) -->
+        <section aria-label="Request details" class="flex-1 bg-surface border border-line rounded-2xl shadow-card flex flex-col overflow-hidden">
+          
+          <!-- Detail Content Scrollable Area -->
+          <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            
+            <!-- Header: Person, Role, Pending Status Badge -->
+            <div class="flex items-start justify-between gap-4 pb-4 border-b border-line">
+              <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-2xl bg-iris text-white font-display font-bold text-base flex items-center justify-center shadow-sm">
+                  AO
+                </div>
+                <div>
+                  <div class="flex items-center gap-2.5">
+                    <h2 class="font-display font-bold text-xl text-ink">Amaka Okafor</h2>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#FFF1D6] text-[#8A4B00] border border-[#8A4B00]/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#8A4B00]"></span>
+                      Pending
+                    </span>
+                  </div>
+                  <p class="text-xs text-ink-2 mt-0.5">
+                    Senior Accountant &bull; Finance & Accounts Division &bull; EMP-00042
+                  </p>
+                </div>
+              </div>
+
+              <!-- Quick ID & Meta -->
+              <div class="text-right text-xs">
+                <span class="font-mono text-ink-3 bg-surface-sunken px-2 py-1 rounded border border-line">REQ-LV-2026-0038</span>
+                <p class="text-ink-3 text-[11px] mt-1.5">Submitted 17 Nov 2026, 12:15 WAT</p>
+              </div>
+            </div>
+
+            <!-- Parameters Grid: Type / Dates / Days / Balance / Certificate -->
+            <div class="grid grid-cols-5 gap-3">
+              
+              <!-- Type -->
+              <div class="p-3.5 rounded-xl bg-surface-sunken border border-line/80 flex flex-col justify-between">
+                <span class="text-[11px] uppercase tracking-wider font-semibold text-ink-3">Leave Type</span>
+                <div class="mt-2">
+                  <div class="text-sm font-bold text-ink">Annual leave</div>
+                  <span class="text-[11px] text-ocean font-medium">Standard entitlement</span>
+                </div>
+              </div>
+
+              <!-- Dates -->
+              <div class="p-3.5 rounded-xl bg-surface-sunken border border-line/80 flex flex-col justify-between">
+                <span class="text-[11px] uppercase tracking-wider font-semibold text-ink-3">Dates</span>
+                <div class="mt-2">
+                  <div class="text-sm font-bold text-ink">23 – 25 Nov 2026</div>
+                  <span class="text-[11px] text-ink-3">Mon – Wed (3 weekdays)</span>
+                </div>
+              </div>
+
+              <!-- Days -->
+              <div class="p-3.5 rounded-xl bg-surface-sunken border border-line/80 flex flex-col justify-between">
+                <span class="text-[11px] uppercase tracking-wider font-semibold text-ink-3">Duration</span>
+                <div class="mt-2">
+                  <div class="text-sm font-bold text-ink tabular">3 working days</div>
+                  <span class="text-[11px] text-ink-3">0 public holidays</span>
+                </div>
+              </div>
+
+              <!-- Balance: 5 -> 2 -->
+              <div class="p-3.5 rounded-xl bg-surface-sunken border border-line/80 flex flex-col justify-between">
+                <span class="text-[11px] uppercase tracking-wider font-semibold text-ink-3">Balance impact</span>
+                <div class="mt-2">
+                  <div class="text-sm font-bold text-ink flex items-center gap-1.5">
+                    <span class="tabular text-ink-2">5</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-iris"></i>
+                    <span class="tabular text-iris font-bold">2 days</span>
+                  </div>
+                  <span class="text-[11px] text-ink-3">Accrual valid to Dec '26</span>
+                </div>
+              </div>
+
+              <!-- Certificate: Attached - visible to HR and employee only with lock -->
+              <div class="p-3.5 rounded-xl bg-surface-sunken border border-line/80 flex flex-col justify-between">
+                <span class="text-[11px] uppercase tracking-wider font-semibold text-ink-3">Certificate</span>
+                <div class="mt-2 flex items-start gap-1.5">
+                  <i data-lucide="lock" class="w-3.5 h-3.5 text-ink-3 shrink-0 mt-0.5"></i>
+                  <p class="text-[11px] font-medium text-ink-2 leading-snug">
+                    Attached — visible to HR and the employee only
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Reason Box -->
+            <div class="rounded-xl border border-line bg-surface-sunken/40 p-4">
+              <span class="text-[11px] uppercase tracking-wider font-semibold text-ink-3 block mb-1.5">Reason for leave</span>
+              <p class="text-xs text-ink leading-relaxed">
+                "Family travel and child school resumption support. Project deliverables for month-end close handover completed to Gbenga Obi. All pending journal vouchers up to 21 Nov 2026 have been posted and reconciled."
+              </p>
+            </div>
+
+            <!-- Steps List (Approval Stepper) -->
+            <div class="rounded-xl border border-line p-4 bg-surface">
+              <span class="text-xs font-bold text-ink uppercase tracking-wider mb-3 block">Approval Steps</span>
+              
+              <div class="space-y-3.5">
+                <!-- Step 1: Manager (Tunde Bakare) - Approved -->
+                <div class="flex items-start gap-3">
+                  <div class="w-6 h-6 rounded-full bg-[#DDF7E8] text-[#0F6B3E] flex items-center justify-center shrink-0 mt-0.5 border border-[#0F6B3E]/30">
+                    <i data-lucide="check" class="w-3.5 h-3.5 stroke-[2.5]"></i>
+                  </div>
+                  <div class="flex-1 flex items-center justify-between text-xs">
+                    <div>
+                      <div class="font-semibold text-ink flex items-center gap-2">
+                        <span>Line Manager: Tunde Bakare</span>
+                        <span class="text-[10px] font-bold text-[#0F6B3E] bg-[#DDF7E8] px-1.5 py-0.2 rounded">Approved</span>
+                      </div>
+                      <p class="text-ink-3 text-[11px] mt-0.5">Approved by Tunde Bakare &bull; 17 Nov 2026, 14:10 WAT &bull; "Handover notes checked and approved."</p>
+                    </div>
+                    <span class="text-[11px] text-ink-3 tabular">Step 1 of 2</span>
+                  </div>
+                </div>
+
+                <!-- Connector line -->
+                <div class="w-0.5 h-3 bg-line ml-3 -my-2"></div>
+
+                <!-- Step 2: HR - Waiting -->
+                <div class="flex items-start gap-3">
+                  <div class="w-6 h-6 rounded-full bg-lime text-ink flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs shadow-sm">
+                    2
+                  </div>
+                  <div class="flex-1 flex items-center justify-between text-xs">
+                    <div>
+                      <div class="font-semibold text-ink flex items-center gap-2">
+                        <span>HR People Operations: Fatima Bello</span>
+                        <span class="text-[10px] font-bold text-[#8A4B00] bg-[#FFF1D6] px-1.5 py-0.2 rounded">Waiting</span>
+                        <span class="text-[10px] font-semibold text-iris bg-iris-tint px-1.5 py-0.2 rounded border border-iris/20">Your action</span>
+                      </div>
+                      <p class="text-ink-3 text-[11px] mt-0.5">Awaiting your final endorsement to update central payroll ledger & team roster.</p>
+                    </div>
+                    <span class="text-[11px] text-ink-3 tabular">Step 2 of 2</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- "Also away" list of two people with dates -->
+            <div class="rounded-xl border border-line bg-surface p-4">
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="text-xs font-bold text-ink uppercase tracking-wider flex items-center gap-2">
+                  <i data-lucide="users" class="w-3.5 h-3.5 text-ocean"></i>
+                  <span>Also away in Finance & Accounts (Team overlap)</span>
+                </span>
+                <span class="text-[11px] text-ink-3">2 colleagues absent in this window</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <!-- Person 1 -->
+                <div class="p-2.5 rounded-lg bg-surface-sunken border border-line flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-surface text-ink-2 font-display font-semibold flex items-center justify-center border border-line shrink-0">
+                    KO
+                  </div>
+                  <div class="min-w-0">
+                    <p class="font-semibold text-ink truncate">Kelechi Obi</p>
+                    <p class="text-[11px] text-ink-3 truncate">Treasury Lead &bull; 21 – 27 Nov 2026</p>
+                  </div>
+                  <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-ocean-tint text-ocean font-medium shrink-0">Annual</span>
+                </div>
+
+                <!-- Person 2 -->
+                <div class="p-2.5 rounded-lg bg-surface-sunken border border-line flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-full bg-surface text-ink-2 font-display font-semibold flex items-center justify-center border border-line shrink-0">
+                    EN
+                  </div>
+                  <div class="min-w-0">
+                    <p class="font-semibold text-ink truncate">Emeka Nwosu</p>
+                    <p class="text-[11px] text-ink-3 truncate">Tax Accountant &bull; 24 – 28 Nov 2026</p>
+                  </div>
+                  <span class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-[#FFF1D6] text-[#8A4B00] font-medium shrink-0">Paternity</span>
+                </div>
+              </div>
+              <p class="text-[11px] text-ink-3 mt-2.5 flex items-center gap-1.5">
+                <i data-lucide="info" class="w-3.5 h-3.5 text-ocean"></i>
+                <span>Minimum departmental staffing threshold (50%) is preserved during this period.</span>
+              </p>
+            </div>
+
+            <!-- Decision Note Textarea "(required to reject)" -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between">
+                <label for="decision-note" class="text-xs font-semibold text-ink">
+                  Decision note <span class="text-ink-3 font-normal">(required to reject)</span>
+                </label>
+                <span class="text-[11px] text-ink-3 font-mono">0 / 250</span>
+              </div>
+              <textarea id="decision-note" rows="2" placeholder="Add an endorsement comment or specify the reason if rejecting this leave request..." class="w-full bg-surface border border-line-strong rounded-xl p-3 text-xs text-ink placeholder:text-ink-3 focus:outline-none focus:border-iris focus:ring-4 focus:ring-iris/20 transition-all resize-none"></textarea>
+              <p class="text-[11px] text-ink-3">This note will be permanently logged in the audit trail and sent to Amaka Okafor.</p>
+            </div>
+
+          </div>
+
+          <!-- Bottom Sticky Action Bar: Reject (Secondary) and Approve (Primary) -->
+          <div class="p-4 border-t border-line bg-surface-raised flex items-center justify-between shrink-0">
+            <button class="text-xs text-ink-3 hover:text-ink flex items-center gap-1.5 font-medium px-2 py-1.5 rounded-lg hover:bg-surface-sunken transition-colors">
+              <i data-lucide="history" class="w-3.5 h-3.5"></i>
+              <span>View full leave history</span>
+            </button>
+
+            <div class="flex items-center gap-3">
+              <!-- Reject Button (Secondary with line-strong border) -->
+              <button class="px-5 py-2.5 rounded-xl border border-line-strong bg-surface hover:bg-red-50 hover:border-red-300 hover:text-[#B4232F] text-xs font-semibold text-ink transition-all min-h-[44px] flex items-center gap-1.5 shadow-sm active:scale-[0.98]">
+                <i data-lucide="x" class="w-4 h-4"></i>
+                <span>Reject</span>
+              </button>
+
+              <!-- Approve Button (Primary Iris) -->
+              <button class="px-6 py-2.5 rounded-xl bg-iris hover:bg-iris-hover text-white text-xs font-semibold transition-all min-h-[44px] flex items-center gap-2 shadow-sm active:scale-[0.98]">
+                <i data-lucide="check" class="w-4 h-4 stroke-[2.5]"></i>
+                <span>Approve leave</span>
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

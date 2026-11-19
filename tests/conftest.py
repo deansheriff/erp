@@ -134,6 +134,15 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         conn.execute(
             text("UPDATE number_sequences SET prefix = 'EMP-', padding = 5, next_value = 1")
         )
+        # Truncating grades cascades to entitlement rules; restore the seeded defaults.
+        conn.execute(
+            text(
+                "INSERT INTO leave_entitlement_rules (id, leave_type_id, min_service_months, days) "
+                "SELECT gen_random_uuid(), t.id, r.m, r.d FROM leave_types t "
+                "JOIN (VALUES ('annual', 12, 6), ('sick', 0, 12), ('maternity', 0, 84)) "
+                "AS r(c, m, d) ON r.c = t.code"
+            )
+        )
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

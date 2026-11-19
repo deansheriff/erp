@@ -36,6 +36,14 @@ from app.modules.hr.models import (
     EmployeeDocument,
     EmployeeExit,
 )
+from app.modules.leave.models import (
+    EntitlementRule,
+    LeaveAdjustment,
+    LeaveDecision,
+    LeaveRequest,
+    LeaveType,
+    PublicHoliday,
+)
 from app.org.models import (
     Branch,
     CostCentre,
@@ -64,9 +72,14 @@ __all__ = [
     "Employee",
     "EmployeeDocument",
     "EmployeeExit",
+    "EntitlementRule",
     "FileLink",
     "Grade",
     "Installation",
+    "LeaveAdjustment",
+    "LeaveDecision",
+    "LeaveRequest",
+    "LeaveType",
     "LoginAttempt",
     "MailOutbox",
     "MailSettings",
@@ -77,6 +90,7 @@ __all__ = [
     "PermissionRow",
     "Position",
     "PositionAssignment",
+    "PublicHoliday",
     "Role",
     "RoleAssignment",
     "RoleGrant",

@@ -5,6 +5,23 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 7a: Leave
+- Leave types with entitlement rules by grade and length of service, yearly or monthly
+  accrual, carry-over with a cap and expiry, optional HR final approval and a medical
+  certificate threshold (ADR 0018). Defaults to confirm: annual 6 working days after
+  12 months, sick 12 working days (certificate over 2 days), maternity 84 calendar days;
+  paternity, compassionate and study start at zero; unpaid has no balance.
+- Working days skip weekends and an admin-managed list of public holidays (fixed-date
+  and Easter holidays seeded for 2026 and 2027); half days at the start or end.
+- Requests refused beyond the available balance; manager approval from the org chart,
+  then HR when the type requires it (HR can always step in); nobody approves their own
+  leave; certificates stored as `sensitive` files.
+- My leave (balances and requests), request form with a day check, approvals inbox with
+  who else is away, team calendar, balances with audited adjustments, and settings.
+- Carry-over job (daily, writes each new year's carry-over once).
+- Permissions `leave.request.*`, `leave.balance.*`, `leave.settings.manage`; grants for
+  the Employee, Line Manager, HR Officer, HR Manager and Auditor templates.
+
 ### Added — Phase 6: HR core and self-service
 - The HR record (ADR 0017): personal, employment, next-of-kin, statutory and bank
   fields, each in a field class. Every screen, list and audit entry gets only the

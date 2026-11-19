@@ -882,6 +882,28 @@ def primary_position(db: Session, employee_id: uuid.UUID) -> tuple[uuid.UUID, uu
     return (row[0], row[1]) if row else None
 
 
+def grades_of(db: Session, employee_ids: list[uuid.UUID]) -> dict[uuid.UUID, uuid.UUID]:
+    """Today's grade of each employee: the grade of their best current position."""
+    if not employee_ids:
+        return {}
+    today = clock.today()
+    rows = db.execute(
+        select(PositionAssignment.employee_id, PositionAssignment.kind, Position.grade_id)
+        .join(Position, Position.id == PositionAssignment.position_id)
+        .where(
+            PositionAssignment.employee_id.in_(employee_ids),
+            PositionAssignment.start_date <= today,
+            or_(PositionAssignment.end_date.is_(None), PositionAssignment.end_date >= today),
+            Position.grade_id.is_not(None),
+        )
+    ).all()
+    result: dict[uuid.UUID, uuid.UUID] = {}
+    for eid, _kind, grade_id in sorted(rows, key=lambda r: resolver.KIND_ORDER[r.kind]):
+        if grade_id is not None:
+            result.setdefault(eid, grade_id)
+    return result
+
+
 def assignment_position(db: Session, assignment_id: uuid.UUID) -> uuid.UUID | None:
     return db.scalar(
         select(PositionAssignment.position_id).where(PositionAssignment.id == assignment_id)

@@ -66,3 +66,14 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **HR settings** (`hr.settings`) | `GET /hr/settings` | hr.settings.manage | — | Dean Sheriff (2026-11-19) |
 | **Colleague directory** (`hr.directory`) | `GET /directory` | hr.employee.read | directory | Dean Sheriff (2026-11-19) |
 | **My profile (self-service)** (`me.profile`) | `GET /me` | login | directory, personal, statutory, banking, compensation, sensitive | Dean Sheriff (2026-11-19) |
+
+## Phase 7
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **My leave (self-service)** (`leave.my`) | `GET /leave` | leave.request.read | directory, sensitive | Dean Sheriff (2026-11-19) |
+| **Request leave** (`leave.request`) | `GET /leave/new` | leave.request.create | directory | Dean Sheriff (2026-11-19) |
+| **Leave approvals** (`leave.approvals`) | `GET /leave/approvals` | login | directory | Dean Sheriff (2026-11-19) |
+| **Team leave calendar** (`leave.calendar`) | `GET /leave/calendar` | leave.request.read | directory | Dean Sheriff (2026-11-19) |
+| **Leave balances** (`leave.balances`) | `GET /leave/balances` | leave.balance.read | directory | Dean Sheriff (2026-11-19) |
+| **Leave settings** (`leave.settings`) | `GET /leave/settings` | leave.settings.manage | — | Dean Sheriff (2026-11-19) |

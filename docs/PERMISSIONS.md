@@ -58,6 +58,19 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `identity.user.manage` | Manage user accounts | Organisation | yes | Resend invitations, suspend, reactivate and unlock accounts. |
 | `identity.user.read` | View user accounts | Organisation |  | See everyone who can sign in. |
 
+### leave
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `leave.balance.adjust` | Adjust leave balances | Organisation | yes | Add or remove days from someone's balance, with a reason. |
+| `leave.balance.read` | View leave balances | Self, Team, Department, Organisation |  | See leave balances within scope. |
+| `leave.request.approve` | Approve leave | Self, Team, Department, Organisation |  | Decide the manager step of leave requests within scope. |
+| `leave.request.approve_hr` | Give HR approval for leave | Organisation |  | Decide the HR step for leave types that need it, and requests without a manager. |
+| `leave.request.cancel` | Cancel anyone's leave | Organisation |  | Cancel approved leave that has already started, restoring the days. |
+| `leave.request.create` | Request leave | Self, Team, Department, Organisation |  | Ask for leave (for yourself, or for others in scope, e.g. HR recording it). |
+| `leave.request.read` | View leave | Self, Team, Department, Organisation |  | See leave requests and the team calendar within scope. |
+| `leave.settings.manage` | Manage leave settings | Organisation |  | Leave types, entitlement rules and public holidays. |
+
 ### org
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -112,6 +125,14 @@ Everything, including technical settings. Can't be edited or removed.
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `leave.balance.adjust` | O |
+| `leave.balance.read` | O |
+| `leave.request.approve` | O |
+| `leave.request.approve_hr` | O |
+| `leave.request.cancel` | O |
+| `leave.request.create` | O |
+| `leave.request.read` | O |
+| `leave.settings.manage` | O |
 | `org.assignment.manage` | O |
 | `org.structure.manage` | O |
 | `org.structure.read` | O |
@@ -153,6 +174,14 @@ Everything except technical settings such as mail, branding and security.
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `leave.balance.adjust` | O |
+| `leave.balance.read` | O |
+| `leave.request.approve` | O |
+| `leave.request.approve_hr` | O |
+| `leave.request.cancel` | O |
+| `leave.request.create` | O |
+| `leave.request.read` | O |
+| `leave.settings.manage` | O |
 | `org.assignment.manage` | O |
 | `org.structure.manage` | O |
 | `org.structure.read` | O |
@@ -172,6 +201,8 @@ Reads everything, including the audit log. Changes nothing.
 | `hr.employee.sensitive.read` | O |
 | `hr.employee.statutory.read` | O |
 | `identity.user.read` | O |
+| `leave.balance.read` | O |
+| `leave.request.read` | O |
 | `org.structure.read` | O |
 
 ### Employee
@@ -188,6 +219,9 @@ Self-service: their own profile, requests and payslips.
 | `hr.employee.sensitive.read` | S |
 | `hr.employee.statutory.read` | S |
 | `hr.profile.request_change` | S |
+| `leave.balance.read` | S |
+| `leave.request.create` | S |
+| `leave.request.read` | S |
 
 ### Line Manager
 
@@ -196,6 +230,9 @@ Approves their team's requests and sees their team.
 | Permission | Scope |
 |---|---|
 | `hr.employee.personal.read` | T |
+| `leave.balance.read` | T |
+| `leave.request.approve` | T |
+| `leave.request.read` | T |
 
 ### HR Officer
 
@@ -215,6 +252,10 @@ Day-to-day HR records and requests.
 | `hr.employee.update` | O |
 | `hr.exit.manage` | O |
 | `identity.user.invite` | O |
+| `leave.balance.read` | O |
+| `leave.request.approve_hr` | O |
+| `leave.request.create` | O |
+| `leave.request.read` | O |
 | `org.structure.read` | O |
 
 ### HR Manager
@@ -241,6 +282,14 @@ All HR records, including sensitive ones.
 | `hr.exit.manage` | O |
 | `hr.settings.manage` | O |
 | `identity.user.invite` | O |
+| `leave.balance.adjust` | O |
+| `leave.balance.read` | O |
+| `leave.request.approve` | O |
+| `leave.request.approve_hr` | O |
+| `leave.request.cancel` | O |
+| `leave.request.create` | O |
+| `leave.request.read` | O |
+| `leave.settings.manage` | O |
 | `org.structure.read` | O |
 
 ### IT Support
@@ -311,5 +360,8 @@ _No grants yet: added by the phase that delivers its module._
 | Rule | When performing | Blocked if | Message |
 |---|---|---|---|
 | `authz.no_self_assignment` | `authz.assignment.manage` | subject_is_actor | You can't change your own roles. Ask another administrator. |
+| `leave.no_self_approval` | `leave.request.approve` | owner_is_actor | You can't approve your own leave. |
+| `leave.no_self_hr_approval` | `leave.request.approve_hr` | owner_is_actor | You can't approve your own leave. |
+| `leave.no_self_adjustment` | `leave.balance.adjust` | subject_is_actor | You can't adjust your own leave balance. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

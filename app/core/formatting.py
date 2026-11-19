@@ -41,3 +41,10 @@ def format_size(size: int) -> str:
             return f"{value:.1f}".rstrip("0").rstrip(".") + f" {unit}"
         value /= 1024
     return f"{value:.1f} TB"
+
+
+def format_days(value: Decimal | int | None) -> str:
+    """A number of days without trailing zeros: 6, 4.5, 0."""
+    if value is None:
+        return ""
+    return format(Decimal(value).normalize(), "f")

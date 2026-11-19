@@ -1,0 +1,132 @@
+{# Leave → Settings: types, entitlement rules and public holidays (ADR 0018).
+   Design: design/stitch/exports/leave.settings.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro type_form(t=None) -%}
+{% set key = "type:" ~ (t.id if t else "new") %}
+{% set errs = errors if editing == key else {} %}
+<form method="post" action="/leave/settings/types" class="mt-4 space-y-4" novalidate>
+  {{ ui.csrf_field() }}
+  {% if t %}<input type="hidden" name="type_id" value="{{ t.id }}">{% endif %}
+  {% if errs.get("form") %}{{ ui.alert("danger", errs["form"]) }}{% endif %}
+  <div class="grid gap-4 sm:grid-cols-3">
+    {{ ui.text_field("name", "Name", value=t.name if t else "", errors=errs) }}
+    <div>
+      <label class="kx-label" for="counting-{{ key }}">Counts</label>
+      <select id="counting-{{ key }}" name="counting" class="kx-input">
+        <option value="working" {% if not t or t.counting == "working" %}selected{% endif %}>Working days</option>
+        <option value="calendar" {% if t and t.counting == "calendar" %}selected{% endif %}>Calendar days</option>
+      </select>
+    </div>
+    <div>
+      <label class="kx-label" for="accrual-{{ key }}">Builds up</label>
+      <select id="accrual-{{ key }}" name="accrual" class="kx-input">
+        <option value="yearly" {% if not t or t.accrual == "yearly" %}selected{% endif %}>All at the start of the year</option>
+        <option value="monthly" {% if t and t.accrual == "monthly" %}selected{% endif %}>A twelfth each month</option>
+      </select>
+    </div>
+    {{ ui.text_field("carry_over_max_days", "Carry over up to (days)", value=(t.carry_over_max_days | days) if t else "0", errors=errs, inputmode="decimal") }}
+    <div>
+      <label class="kx-label" for="expiry-{{ key }}">Carried days expire at the end of</label>
+      <select id="expiry-{{ key }}" name="carry_over_expiry_month" class="kx-input">
+        {% for m in months %}<option value="{{ loop.index }}" {% if (t.carry_over_expiry_month if t else 3) == loop.index %}selected{% endif %}>{{ m }}</option>{% endfor %}
+      </select>
+    </div>
+    {{ ui.text_field("certificate_after_days", "Certificate when longer than (days)", value=(t.certificate_after_days | days) if t and t.certificate_after_days is not none else "", errors=errs, hint="Blank: never needed.", inputmode="decimal") }}
+  </div>
+  <div class="flex flex-wrap gap-x-6 gap-y-2 text-body-sm">
+    <label class="flex items-center gap-2"><input type="checkbox" name="paid" value="1" class="kx-check" {% if not t or t.paid %}checked{% endif %}> Paid</label>
+    <label class="flex items-center gap-2"><input type="checkbox" name="has_balance" value="1" class="kx-check" {% if not t or t.has_balance %}checked{% endif %}> Has a balance</label>
+    <label class="flex items-center gap-2"><input type="checkbox" name="requires_hr_approval" value="1" class="kx-check" {% if t and t.requires_hr_approval %}checked{% endif %}> HR gives final approval</label>
+    {% if t %}<label class="flex items-center gap-2"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if t.is_active %}checked{% endif %}> Active</label>{% endif %}
+  </div>
+  <fieldset class="min-w-0">
+    <legend class="kx-label">Entitlement</legend>
+    <p class="kx-hint">The person's grade wins over "Any grade"; then the longest service they have. Blank rows are ignored.</p>
+    <div class="space-y-2">
+      {% set rules = t.rules if t else [] %}
+      {% for i in range((rules | length) + 2) %}
+      {% set r = rules[i] if i < rules | length else none %}
+      <div class="grid grid-cols-[minmax(0,1fr)_120px_100px] gap-2">
+        <select name="rule_grade" class="kx-input" aria-label="Grade for rule {{ i + 1 }}">
+          <option value="">Any grade</option>
+          {% for gid, gname in grades %}<option value="{{ gid }}" {% if r and r[0] == gid %}selected{% endif %}>{{ gname }}</option>{% endfor %}
+        </select>
+        <input name="rule_months" value="{{ r[2] if r else '0' }}" class="kx-input" inputmode="numeric" aria-label="Months of service for rule {{ i + 1 }}">
+        <input name="rule_days" value="{{ (r[3] | days) if r else '' }}" class="kx-input" inputmode="decimal" placeholder="Days" aria-label="Days per year for rule {{ i + 1 }}">
+      </div>
+      {% if errs.get("rule_" ~ i) %}{{ ui.field_error(errs, "rule_" ~ i) }}{% endif %}
+      {% endfor %}
+      <p class="text-xs text-ink-3">Columns: grade · after months of service · days per year.</p>
+    </div>
+  </fieldset>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">{{ "Save" if t else "Add type" }}</button></div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Leave settings", "Types of leave, who gets how many days, and public holidays.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<section id="types" class="mt-6 space-y-3" aria-labelledby="h-types">
+  <h2 id="h-types" class="font-h3 text-h3">Types of leave</h2>
+  {% for t in types %}
+  <details class="kx-card kx-enter p-5" {% if editing == "type:" ~ t.id %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3">
+      <span class="min-w-0">
+        <span class="block font-semibold">{{ t.name }}</span>
+        <span class="text-xs text-ink-3">
+          {{ "Calendar days" if t.counting == "calendar" else "Working days" }} ·
+          {% if not t.has_balance %}No balance{% elif t.rules %}{% for r in t.rules %}{{ r[3] | days }} days{% if r[2] %} after {{ r[2] }} months{% endif %}{% if r[0] %} ({{ r[1] }}){% endif %}{{ "; " if not loop.last }}{% endfor %}{% else %}No days set{% endif %}
+          {% if t.carry_over_max_days > 0 %} · carry over {{ t.carry_over_max_days | days }}{% endif %}
+        </span>
+      </span>
+      <span class="flex flex-wrap items-center gap-2">
+        {% if not t.paid %}{{ ui.badge("neutral", "Unpaid") }}{% endif %}
+        {% if t.requires_hr_approval %}{{ ui.badge("info", "HR approval") }}{% endif %}
+        {% if t.certificate_after_days is not none %}{{ ui.badge("warning", "Certificate over " ~ (t.certificate_after_days | days) ~ " d") }}{% endif %}
+        {{ ui.badge("success", "Active") if t.is_active else ui.badge("neutral", "Inactive") }}
+      </span>
+    </summary>
+    {{ type_form(t) }}
+  </details>
+  {% endfor %}
+  <details class="rounded-2xl border border-dashed border-line p-5" {% if editing == "type:new" %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none items-center gap-2 text-label text-iris">{{ ui.icon("plus", "sm") }} New type of leave</summary>
+    {{ type_form() }}
+  </details>
+</section>
+
+<section id="holidays" class="kx-card kx-enter mt-8 overflow-hidden" aria-labelledby="h-holidays">
+  <div class="flex flex-wrap items-center justify-between gap-3 px-5 pt-5">
+    <div>
+      <h2 id="h-holidays" class="font-h3 text-h3">Public holidays {{ year }}</h2>
+      <p class="text-body-sm text-ink-3">Islamic holidays are announced each year — add them when declared.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="/leave/settings?year={{ year - 1 }}#holidays" class="kx-btn-icon" aria-label="Previous year">{{ ui.icon("chevron-left") }}</a>
+      <a href="/leave/settings?year={{ year + 1 }}#holidays" class="kx-btn-icon" aria-label="Next year">{{ ui.icon("chevron-right") }}</a>
+    </div>
+  </div>
+  <ul class="mt-4 divide-y divide-line">
+    {% for h in holidays %}
+    <li class="flex items-center justify-between gap-3 px-5 py-3">
+      <span class="flex items-center gap-3"><span class="w-28 font-mono text-body-sm text-ink-2">{{ h.day | date }}</span><span>{{ h.name }}</span></span>
+      <form method="post" action="/leave/settings/holidays/{{ h.id }}/delete">{{ ui.csrf_field() }}
+        <button type="submit" class="kx-btn-icon h-9 w-9 text-ink-3 hover:text-danger-text" aria-label="Remove {{ h.name }}">{{ ui.icon("trash-2", "sm") }}</button>
+      </form>
+    </li>
+    {% else %}
+    <li class="px-5 py-6 text-body-sm text-ink-3">No holidays entered for {{ year }}.</li>
+    {% endfor %}
+  </ul>
+  <form method="post" action="/leave/settings/holidays" class="flex flex-col gap-3 border-t border-line p-5 sm:flex-row sm:items-start" novalidate>
+    {{ ui.csrf_field() }}
+    {% set errs = errors if editing == "holiday" else {} %}
+    <div class="sm:w-48">{{ ui.text_field("day", "Date", type="date", errors=errs) }}</div>
+    <div class="flex-1">{{ ui.text_field("holiday_name", "Name", errors=errs) }}</div>
+    <button type="submit" class="kx-btn-secondary sm:mt-[26px]">{{ ui.icon("plus", "sm") }} Add</button>
+  </form>
+</section>
+{% endblock %}

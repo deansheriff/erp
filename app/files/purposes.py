@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 from app.authz.engine import Resource
 
 # Imported by name so this core package never imports a business module directly.
-PURPOSE_MODULES = ("app.org.files", "app.modules.hr.files")
+PURPOSE_MODULES = ("app.org.files", "app.modules.hr.files", "app.modules.leave.files")
 
 KB = 1024
 MB = 1024 * KB
