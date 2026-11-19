@@ -29,3 +29,15 @@ def format_datetime(value: datetime, tz_name: str) -> str:
         raise ValueError("Datetimes must be timezone-aware (stored in UTC)")
     local = value.astimezone(ZoneInfo(tz_name))
     return f"{format_date(local.date())}, {local:%H:%M} {local.tzname()}"
+
+
+def format_size(size: int) -> str:
+    """`248 KB`, `2 MB`, `12.4 GB` (binary units, as file managers show them)."""
+    value = float(size)
+    for unit in ("bytes", "KB", "MB", "GB"):
+        if value < 1024 or unit == "GB":
+            if unit == "bytes":
+                return f"{int(value)} bytes"
+            return f"{value:.1f}".rstrip("0").rstrip(".") + f" {unit}"
+        value /= 1024
+    return f"{value:.1f} TB"

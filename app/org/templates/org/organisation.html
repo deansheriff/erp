@@ -54,8 +54,20 @@
     <aside class="space-y-6 xl:sticky xl:top-24 xl:col-span-5">
       <section class="kx-card space-y-5 p-5 md:p-6" aria-labelledby="brand-title">
         <h2 id="brand-title" class="font-h2 text-h2">Brand on documents</h2>
-        <div class="flex items-center gap-3 rounded-xl border border-dashed border-line-strong bg-surface-sunken/60 p-4 text-body-sm text-ink-3">
-          {{ ui.icon("image", "lg", "shrink-0") }} The logo upload arrives with file storage (Phase 5).
+        <div>
+          <span class="kx-label">Logo</span>
+          {% if logo %}
+          <div class="flex items-center gap-4 rounded-xl border border-line bg-surface-sunken/60 p-3">
+            {% if shown_logo %}<img src="/files/{{ shown_logo.id }}" alt="Current logo" class="h-14 w-14 rounded-lg border border-line bg-surface object-contain p-1">
+            {% else %}<span class="flex h-14 w-14 items-center justify-center rounded-lg bg-surface text-ink-3">{{ ui.icon("image", "lg") }}</span>{% endif %}
+            <div class="min-w-0 flex-1">
+              <p class="truncate font-mono text-body-sm font-medium">{{ logo.original_filename }}</p>
+              <p class="text-xs text-ink-3">{{ logo.size_bytes | filesize }}{% if logo.version > 1 %} · version {{ logo.version }}{% endif %}</p>
+            </div>
+            {% if logo.status == "pending_scan" %}{{ ui.badge("warning", "Scanning for viruses", pulse=true) }}{% else %}{{ ui.badge("success", "Ready") }}{% endif %}
+          </div>
+          {% if logo.status == "pending_scan" and shown_logo %}<p class="mt-1.5 text-xs text-ink-3">The current logo stays in use until the new one passes the virus check.</p>{% endif %}
+          {% endif %}
         </div>
         <div class="grid gap-5 sm:grid-cols-2">
           {% for name, label, example in [("brand_primary", "Primary colour", "#5A4BDB"), ("brand_accent", "Accent colour", "#C5F04A")] %}
@@ -74,4 +86,24 @@
     </aside>
   </div>
 </form>
+
+<section class="kx-card mt-6 space-y-4 p-5 md:p-6 xl:ml-auto xl:w-[calc(41.666%-0.75rem)]" aria-labelledby="logo-title">
+  <h2 id="logo-title" class="font-h2 text-h2">{{ "Replace logo" if logo else "Upload a logo" }}</h2>
+  <p class="text-body-sm text-ink-3">PNG, JPEG, WebP or SVG, up to {{ logo_purpose.max_bytes | filesize }}. Every file is checked for viruses before it's shown; SVGs with scripts or external links are refused.</p>
+  {% if logo_errors.get("file") %}{{ ui.alert("danger", logo_errors["file"]) }}{% endif %}
+  <form method="post" hx-push-url="false" action="/admin/organisation/logo" enctype="multipart/form-data" class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <label class="flex flex-1 cursor-pointer items-center gap-3 rounded-xl border border-dashed border-line-strong bg-surface-sunken/60 px-4 py-3 text-body-sm text-ink-2 transition-colors hover:border-iris hover:bg-iris-tint/40">
+      {{ ui.icon("upload", "sm", "text-iris") }}
+      <span>Choose a file</span>
+      <input type="file" name="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" class="sr-only" required>
+    </label>
+    <button type="submit" class="kx-btn-primary">{{ ui.icon("upload", "sm") }} Upload</button>
+  </form>
+  {% if logo %}
+  <form method="post" hx-push-url="false" action="/admin/organisation/logo/remove">
+    {{ ui.csrf_field() }}
+    <button type="submit" class="kx-btn-ghost h-9 px-2 text-danger-text">{{ ui.icon("trash-2", "sm") }} Remove logo</button>
+  </form>
+  {% endif %}
+</section>
 {% endblock %}

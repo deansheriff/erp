@@ -63,6 +63,10 @@ def get_organization(db: Session) -> OrganizationView | None:
     )
 
 
+def organization_id(db: Session) -> uuid.UUID | None:
+    return db.scalar(select(Organization.id))
+
+
 def save_organization(db: Session, data: OrganizationInput) -> None:
     row = db.scalars(select(Organization)).one_or_none()
     if row is None:

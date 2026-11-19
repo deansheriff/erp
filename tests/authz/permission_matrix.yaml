@@ -21,6 +21,7 @@ organization_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  files.file.manage: organization
   hr.employee.create: organization
   hr.employee.read: organization
   hr.employee.update: organization
@@ -39,6 +40,7 @@ super_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  files.file.manage: organization
   hr.employee.create: organization
   hr.employee.read: organization
   hr.employee.update: organization
@@ -51,4 +53,5 @@ super_administrator:
   system.branding.manage: organization
   system.mail.manage: organization
   system.security.manage: organization
+  system.storage.manage: organization
 support_agent: {}

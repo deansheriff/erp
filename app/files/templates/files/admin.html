@@ -1,0 +1,161 @@
+{# Administration → Files. Design: design/stitch/exports/admin.files.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% set status_badge = {"clean": ("success", "Clean"), "pending_scan": ("info", "Scanning"), "quarantined": ("danger", "Quarantined"), "infected": ("danger", "Infected"), "deleted": ("neutral", "Deleted")} %}
+
+{% block content %}
+{% call ui.page_header("Files", "Every stored file, its scan state and who it belongs to. Files are never served until the virus scan passes.") %}{% endcall %}
+
+<div class="mt-5 space-y-3">
+  {% if notice %}{{ ui.alert("success", notice) }}{% endif %}
+  {% if problem %}{{ ui.alert("danger", problem) }}{% endif %}
+</div>
+
+<div class="kx-stagger mt-6 grid gap-4 md:grid-cols-3">
+  <div class="kx-card p-5">
+    <p class="kx-overline">Storage used</p>
+    <p class="mt-2 font-stat text-stat tnum">{{ usage.used_bytes | filesize }}</p>
+    <p class="text-xs text-ink-3">{% if usage.quota_bytes %}of {{ usage.quota_bytes | filesize }} · {{ usage.percent }}%{% else %}No limit set{% endif %}</p>
+    {% if usage.quota_bytes %}<progress class="kx-meter mt-3" value="{{ usage.percent }}" max="100" aria-label="Storage used">{{ usage.percent }}%</progress>{% endif %}
+    {% if can_set_quota %}
+    <form method="post" hx-push-url="false" action="/admin/files/quota" class="mt-4 flex items-end gap-2" novalidate>
+      {{ ui.csrf_field() }}
+      <label class="block flex-1"><span class="kx-label text-xs">Quota (GB)</span>
+        <input name="quota_gb" inputmode="decimal" class="kx-input h-9" value="{{ (usage.quota_bytes / 1073741824) | round(1) | string | replace('.0', '') if usage.quota_bytes else '' }}" placeholder="No limit"></label>
+      <button type="submit" class="kx-btn-secondary h-9">Save</button>
+    </form>
+    {{ ui.field_error(errors, "quota") }}
+    {% endif %}
+  </div>
+  <a href="/admin/files?status=pending_scan" class="kx-card block p-5 transition hover:-translate-y-0.5 hover:shadow-raised">
+    <p class="kx-overline">Awaiting scan</p>
+    <p class="mt-2 font-stat text-stat tnum">{{ usage.pending }}</p>
+    <p class="text-xs text-ink-3">Hidden until the virus check finishes</p>
+  </a>
+  <a href="/admin/files?status=quarantined" class="kx-card block p-5 transition hover:-translate-y-0.5 hover:shadow-raised {{ 'border-danger-text/30 bg-danger-bg/30' if usage.quarantined }}">
+    <p class="kx-overline">Quarantined</p>
+    <p class="mt-2 font-stat text-stat tnum {{ 'text-danger-text' if usage.quarantined }}">{{ usage.quarantined }}</p>
+    <p class="text-xs text-ink-3">Never served</p>
+  </a>
+</div>
+
+<form method="get" action="/admin/files" class="kx-card mt-6 flex flex-col gap-3 p-4 lg:flex-row lg:flex-wrap lg:items-end">
+  <label class="relative block flex-1 lg:min-w-[240px]">
+    <span class="sr-only">Search</span>
+    {{ ui.icon("search", "sm", "pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3") }}
+    <input type="search" name="q" value="{{ filters.q }}" class="kx-input pl-10" placeholder="Search by file name…">
+  </label>
+  <label class="block lg:w-56"><span class="kx-label">Purpose</span>
+    <select name="purpose" class="kx-input">
+      <option value="">All purposes</option>
+      {% for key, label in purposes %}<option value="{{ key }}" {% if filters.purpose == key %}selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select>
+  </label>
+  <fieldset><legend class="kx-label">Status</legend>
+    <div class="kx-segment kx-scroll-x min-w-0 max-w-full">
+      {% for value, label in [("", "All"), ("clean", "Clean"), ("pending_scan", "Scanning"), ("quarantined", "Quarantined"), ("deleted", "Deleted")] %}
+      <label><input type="radio" name="status" value="{{ value }}" {% if filters.status == value %}checked{% endif %}>{{ label }}</label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  <label class="flex h-11 cursor-pointer items-center gap-2 rounded-control border border-line bg-surface px-3.5 text-label text-ink-2">
+    <input type="checkbox" name="held" value="1" class="kx-check" {% if filters.held %}checked{% endif %}> On legal hold
+  </label>
+  <div class="flex items-center gap-2">
+    <button type="submit" class="kx-btn-secondary">{{ ui.icon("filter", "sm") }} Apply</button>
+    {% if filtered %}<a href="/admin/files" class="kx-btn-ghost">Clear</a>{% endif %}
+  </div>
+</form>
+
+<div class="mt-5 grid items-start gap-6 xl:grid-cols-12">
+  <section class="kx-card kx-enter overflow-hidden {{ 'xl:col-span-7' if selected else 'xl:col-span-12' }}" aria-label="Files">
+    {% if result.rows %}
+    <div class="overflow-x-auto">
+      <table class="kx-table">
+        <thead><tr><th scope="col">File</th><th scope="col">Purpose</th><th scope="col">Status</th>{% if not selected %}<th scope="col">Class</th><th scope="col">Uploaded</th>{% endif %}</tr></thead>
+        <tbody>
+          {% for f in result.rows %}
+          {% set is_sel = selected and selected.id == f.id %}
+          <tr class="{{ 'bg-iris-tint' if is_sel else 'hover:bg-surface-sunken/60' }}">
+            <td>
+              <a href="/admin/files?{{ page_query }}&amp;selected={{ f.id }}" class="flex items-center gap-3" {% if is_sel %}aria-current="true"{% endif %}>
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg {{ 'bg-danger-bg text-danger-text' if f.status in ('quarantined', 'infected') else 'bg-surface-sunken text-ink-2' }}">{{ ui.icon("image" if f.is_image else "file-text", "sm") }}</span>
+                <span class="min-w-0">
+                  <span class="flex items-center gap-1.5 truncate font-medium">{{ f.original_filename }}{% if f.legal_hold %}{{ ui.icon("lock", "sm", "text-warning-text") }}{% endif %}</span>
+                  <span class="block font-mono text-[11px] text-ink-3">{{ f.size_bytes | filesize }}{% if f.version_count > 1 %} · v{{ f.version }}{% endif %}</span>
+                </span>
+              </a>
+            </td>
+            <td><span class="rounded-md bg-surface-sunken px-2 py-0.5 text-xs">{{ f.purpose_label }}</span></td>
+            <td>{% set b = status_badge.get(f.status, ("neutral", f.status)) %}{{ ui.badge(b[0], b[1], pulse=f.status == "pending_scan") }}</td>
+            {% if not selected %}
+            <td class="text-xs text-ink-2">{{ f.classification }}</td>
+            <td class="whitespace-nowrap text-xs text-ink-2"><span class="block">{{ f.uploaded_by or "—" }}</span><span class="text-ink-3">{{ f.created_at | datetime }}</span></td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <nav class="flex flex-col items-center justify-between gap-3 border-t border-line px-5 py-4 sm:flex-row" aria-label="Pages">
+      <span class="text-body-sm text-ink-3 tnum">{{ result.total }} file{{ "" if result.total == 1 else "s" }}</span>
+      <div class="flex items-center gap-2">
+        {% if result.page > 1 %}<a class="kx-btn-secondary h-9" href="/admin/files?{{ query }}&amp;page={{ result.page - 1 }}">{{ ui.icon("chevron-left", "sm") }} Previous</a>{% endif %}
+        <span class="text-body-sm text-ink-3 tnum">Page {{ result.page }} of {{ result.pages }}</span>
+        {% if result.page < result.pages %}<a class="kx-btn-secondary h-9" href="/admin/files?{{ query }}&amp;page={{ result.page + 1 }}">Next {{ ui.icon("chevron-right", "sm") }}</a>{% endif %}
+      </div>
+    </nav>
+    {% else %}
+    {% call ui.empty_state("folder-open", "No files", "Nothing matches these filters." if filtered else "Nothing has been uploaded yet.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if selected %}
+  {% set f = selected %}
+  <aside class="kx-card kx-enter space-y-5 p-5 xl:sticky xl:top-24 xl:col-span-5" aria-labelledby="file-title">
+    <div class="flex items-start justify-between gap-3">
+      <div class="min-w-0">
+        <h2 id="file-title" class="truncate font-h2 text-h2">{{ f.original_filename }}</h2>
+        <p class="mt-1 flex flex-wrap gap-1.5">{% set b = status_badge.get(f.status, ("neutral", f.status)) %}{{ ui.badge(b[0], b[1]) }}{% if f.legal_hold %}{{ ui.badge("warning", "Legal hold") }}{% endif %}</p>
+      </div>
+      <a href="/admin/files?{{ page_query }}" class="kx-btn-icon" aria-label="Close details">{{ ui.icon("x") }}</a>
+    </div>
+    {% if f.status in ("quarantined", "infected") %}
+    <div class="flex items-start gap-3 rounded-xl bg-danger-bg/70 p-4 text-danger-text">{{ ui.icon("shield-x", "sm", "mt-0.5 shrink-0") }}<p class="text-body-sm"><strong>Quarantined:</strong> {{ f.scan_result or "a threat was found" }}. This file is never served.</p></div>
+    {% elif f.status == "pending_scan" %}
+    <div class="flex items-start gap-3 rounded-xl bg-info-bg/70 p-4 text-info-text">{{ ui.icon("loader", "sm", "mt-0.5 shrink-0") }}<p class="text-body-sm">Waiting for the virus scanner. It can't be downloaded yet.</p></div>
+    {% endif %}
+    <dl class="grid gap-3 rounded-xl bg-surface-sunken/60 p-4 text-body-sm sm:grid-cols-2">
+      <div><dt class="kx-overline">Size</dt><dd class="tnum">{{ f.size_bytes | filesize }}</dd></div>
+      <div><dt class="kx-overline">Version</dt><dd class="tnum">{{ f.version }} of {{ f.version_count }}</dd></div>
+      <div><dt class="kx-overline">Detected type</dt><dd class="font-mono text-xs">{{ f.detected_mime }}</dd></div>
+      <div><dt class="kx-overline">Declared type</dt><dd class="font-mono text-xs">{{ f.declared_mime or "—" }}</dd></div>
+      <div><dt class="kx-overline">Uploaded</dt><dd>{{ f.uploaded_by or "—" }}<span class="block text-xs text-ink-3">{{ f.created_at | datetime }}</span></dd></div>
+      <div><dt class="kx-overline">Retention until</dt><dd>{{ f.retention_until | datetime if f.retention_until else "Kept while in use" }}</dd></div>
+      <div class="sm:col-span-2" x-data="copyText" data-copy="{{ f.sha256 }}"><dt class="kx-overline">SHA-256</dt>
+        <dd class="mt-0.5 flex items-center justify-between gap-2 rounded-lg bg-surface px-2.5 py-1.5"><code class="truncate font-mono text-[11px]">{{ f.sha256 }}</code>
+          <button type="button" class="text-ink-3 hover:text-iris" x-on:click="copy" data-copy="{{ f.sha256 }}" aria-label="Copy SHA-256">{{ ui.icon("copy", "sm") }}</button></dd></div>
+      <div class="sm:col-span-2"><dt class="kx-overline">Linked to</dt>
+        <dd>{% for l in f.links %}<span class="block font-mono text-xs">{{ l.entity_type }} · {{ l.entity_id[:8] }}…</span>{% endfor %}</dd></div>
+    </dl>
+    {% if f.status != "deleted" or f.retention_until %}
+    <form method="post" hx-push-url="false" action="/admin/files/{{ f.id }}/hold" class="space-y-2 border-t border-line pt-4">
+      {{ ui.csrf_field() }}<input type="hidden" name="on" value="{{ '0' if f.legal_hold else '1' }}">
+      <label class="kx-label" for="hold-reason">{{ "Release legal hold" if f.legal_hold else "Place on legal hold" }}</label>
+      <p class="text-xs text-ink-3">Files on legal hold are never deleted, even after their retention period.</p>
+      <div class="flex gap-2"><input id="hold-reason" name="reason" class="kx-input" placeholder="Reason" required minlength="5" autocomplete="off">
+        <button type="submit" class="kx-btn-secondary shrink-0">{{ ui.icon("lock-open" if f.legal_hold else "lock", "sm") }} {{ "Release" if f.legal_hold else "Hold" }}</button></div>
+    </form>
+    {% endif %}
+    {% if f.status != "deleted" %}
+    <form method="post" hx-push-url="false" action="/admin/files/{{ f.id }}/delete" class="border-t border-line pt-4">
+      {{ ui.csrf_field() }}
+      <button type="submit" class="kx-btn-ghost h-9 px-2 text-danger-text" {% if f.legal_hold %}disabled title="Files on legal hold can't be deleted"{% endif %}>{{ ui.icon("trash-2", "sm") }} Delete</button>
+      <p class="mt-1 text-xs text-ink-3">{{ "Files on legal hold can't be deleted." if f.legal_hold else "The file stops being available now and is removed for good after its retention period." }}</p>
+    </form>
+    {% endif %}
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

@@ -5,6 +5,7 @@ from dataclasses import replace
 from sqlalchemy.orm import Session
 
 from app.authz import engine
+from app.files import service as files
 from app.identity.schemas import Actor
 from app.org import service as org
 from app.web.navigation import (
@@ -38,7 +39,14 @@ def build_shell(
         )
         if sections:
             modules.append(replace(module, href=sections[0].href, sections=sections))
+    org_id = org.organization_id(db)
+    logo = (
+        files.current_file(db, purpose_key="organization_logo", entity_id=str(org_id))
+        if org_id
+        else None
+    )
     return ShellContext(
+        org_logo_url=f"/files/{logo.id}" if logo else None,
         org_name=organisation.display_name if organisation else "Kxmeleon",
         user=ShellUser(actor.full_name, ", ".join(grants.role_names[:2]) or "No role yet"),
         modules=tuple(modules),

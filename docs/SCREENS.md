@@ -48,3 +48,9 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Structure setup (branches, cost centres, grades)** (`hr.structure`) | `GET /hr/structure` | org.structure.read | — | Dean Sheriff (2026-11-19) |
 | **People (directory)** (`hr.people`) | `GET /hr/people` | hr.employee.read | directory | Dean Sheriff (2026-11-19) |
 | **Organisation details and document colours** (`admin.organisation`) | `GET /admin/organisation` | system.branding.manage | — | Dean Sheriff (2026-11-19) |
+
+## Phase 5
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Files and storage** (`admin.files`) | `GET /admin/files` | files.file.manage | — | Dean Sheriff (2026-11-19) |

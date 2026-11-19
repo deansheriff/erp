@@ -409,5 +409,23 @@ screens:
     permission: system.branding.manage
     actions:
       save: system.branding.manage
+      logo: system.branding.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-19)
+
+  - id: admin.files
+    phase: 5
+    module: files
+    title: Files and storage
+    route: GET /admin/files
+    template: app/files/templates/files/admin.html
+    stitch_screens:
+      desktop: 22afe1935d6a4093a76512c39b2af217
+    exports:
+      - design/stitch/exports/admin.files.html
+    permission: files.file.manage
+    actions:
+      hold_and_delete: files.file.manage
+      quota: system.storage.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-19)

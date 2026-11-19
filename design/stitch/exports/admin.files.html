@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container":"#ededf1","warning-text":"#8A4B00","on-secondary-fixed-variant":"#3b4d00","lime-ink":"#4D7A0A","surface-tint":"#5646d7","outline-variant":"#c8c4d7","surface-container-lowest":"#ffffff","secondary-fixed":"#c7f24c","danger-bg":"#FFE4E6","info-text":"#1D55B8","surface-bright":"#f9f9fd","on-primary-container":"#e0dbff","surface":"#FFFFFF","surface-variant":"#e2e2e6","on-tertiary-fixed-variant":"#743400","success-text":"#0F6B3E","on-primary":"#ffffff","on-tertiary":"#ffffff","primary-fixed":"#e4dfff","on-secondary-container":"#536b00","line-strong":"#8B8BA6","on-primary-fixed-variant":"#3d28be","destructive":"#C42836","success-bg":"#DDF7E8","danger-text":"#B4232F","surface-container-high":"#e8e8ec","on-surface":"#1a1c1f","inverse-on-surface":"#f0f0f4","lime":"#C5F04A","primary-container":"#5a4bdb","tertiary-fixed-dim":"#ffb68b","surface-container-highest":"#e2e2e6","background":"#f9f9fd","tertiary-container":"#9f4a00","surface-dim":"#d9dade","on-error":"#ffffff","warning-bg":"#FFF1D6","secondary-container":"#c4ef49","on-secondary-fixed":"#161f00","ink-2":"#4B4B66","on-primary-fixed":"#140067","on-iris":"#FFFFFF","primary":"#412ec2","primary-fixed-dim":"#c5c0ff","on-tertiary-fixed":"#321300","secondary":"#4f6600","tertiary":"#7a3700","line":"#E4E4EE","inverse-surface":"#2e3034","surface-sunken":"#EFEFF6","outline":"#787586","surface-raised":"#FFFFFF","iris":"#5A4BDB","canvas":"#F6F6FA","iris-tint":"#EEECFD","info-bg":"#DFEBFF","surface-container-low":"#f3f3f7","ink":"#16162A","on-background":"#1a1c1f","secondary-fixed-dim":"#acd530","on-tertiary-container":"#ffd7c1","error":"#ba1a1a","on-surface-variant":"#474554","on-error-container":"#93000a","on-secondary":"#ffffff","ink-3":"#626280","iris-hover":"#4A3CC4","error-container":"#ffdad6","tertiary-fixed":"#ffdbc8","inverse-primary":"#c5c0ff"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-3xl":"4rem","space-lg":"1.5rem","space-sm":"0.5rem",margin:"2rem","space-xs":"0.25rem","space-2xl":"3rem","space-md":"1rem","space-xl":"2rem",gutter:"1.5rem"},fontFamily:{h2:["Plus Jakarta Sans"],display:["Plus Jakarta Sans"],label:["Inter"],overline:["Inter"],h3:["Plus Jakarta Sans"],"body-sm":["Inter"],stat:["Plus Jakarta Sans"],body:["Inter"],h1:["Plus Jakarta Sans"]},fontSize:{h2:["18px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],display:["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"700"}],label:["14px",{lineHeight:"20px",fontWeight:"500"}],overline:["12px",{lineHeight:"16px",letterSpacing:"0.06em",fontWeight:"600"}],h3:["16px",{lineHeight:"24px",letterSpacing:"-0.015em",fontWeight:"600"}],"body-sm":["14px",{lineHeight:"20px",fontWeight:"400"}],stat:["30px",{lineHeight:"36px",fontWeight:"700"}],body:["16px",{lineHeight:"24px",fontWeight:"400"}],h1:["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}]}}}}</script></head><body class="bg-canvas font-body text-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)] overflow-y-auto"><div class="flex flex-col"><div class="p-space-lg flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary font-h2 text-h2">K</div><div class="flex flex-col min-w-0"><span class="font-h3 text-h3 text-ink truncate">Kxmeleon ERP</span><span class="font-overline text-overline text-ink-3 uppercase tracking-wider truncate">Adeyemi Holdings Ltd</span></div></div><div class="px-space-md mb-space-sm"><div class="flex items-center justify-between px-space-sm py-2 bg-surface-sunken rounded-lg text-ink-3 hover:text-ink transition-colors cursor-pointer"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm">Go to...</span></div><kbd class="px-1.5 py-0.5 rounded bg-surface-raised font-overline text-overline text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">Ctrl+K</kbd></div></div><nav class="px-space-sm flex flex-col gap-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="dashboard-home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span>Dashboard/Home</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="hr" href="#"><span class="material-symbols-outlined text-[20px]">badge</span>HR</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span>Leave</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span>Attendance</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Expenses</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span>Payroll</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span>Finance</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Inventory</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span>Projects</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span>Support</a><div class="flex flex-col pt-1"><div class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-surface-container text-ink font-semibold font-label text-label cursor-pointer"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></div><span class="material-symbols-outlined text-[18px]">expand_more</span></div><div class="pl-8 pr-1 py-1 flex flex-col gap-0.5"><a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="users" href="#">Users</a><a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="roles" href="#">Roles</a><a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="delegations" href="#">Delegations</a><a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="audit-log" href="#">Audit log</a><a aria-current="page" class="px-space-sm py-1.5 transition-colors bg-iris-tint text-iris font-semibold rounded-lg" data-path="files" href="#">Files</a><a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="organisation" href="#">Organisation</a><a class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="mail-settings" href="#">Mail settings</a></div></div></nav></div><div class="p-space-md flex flex-col gap-2 bg-surface-container-lowest"><nav class="flex flex-col gap-0.5" data-active-classes="bg-surface-container text-ink font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px]">help</span>Help &amp; documentation</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a></nav><div class="pt-2 flex items-center justify-between px-space-sm py-2 rounded-xl bg-surface-sunken"><div class="flex items-center gap-3 min-w-0"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col min-w-0"><span class="font-label text-label text-ink truncate">Fatima Bello</span><span class="font-overline text-overline text-ink-3 truncate">Head of HR &amp; Admin</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-ink">more_vert</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-2 font-label text-label text-ink-3"><span class="hover:text-ink cursor-pointer transition-colors">Administration</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-ink font-semibold">Files</span></div><div class="flex items-center gap-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-64 pl-9 pr-14 py-1.5 rounded-lg bg-surface-sunken text-body-sm font-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/20" placeholder="Search administration, docs, users..." type="text"/><kbd class="absolute right-2.5 px-1.5 py-0.5 rounded bg-surface-raised font-overline text-overline text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">Ctrl K</kbd></div><div class="flex items-center gap-3"><button class="relative p-2 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors"><span class="material-symbols-outlined text-[20px]">verified</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-lime"></span></button><button class="relative p-2 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-destructive"></span></button><button class="p-2 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-canvas flex-1"><div class="flex flex-col w-full">
+<div class="relative w-full px-space-xl py-space-lg">
+<!-- Module Glow Accent -->
+<div class="absolute -top-10 left-12 w-96 h-48 bg-[#3F3F5A]/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-1 max-w-2xl">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink">Files</h1>
+<span class="px-2.5 py-0.5 rounded-full font-overline text-overline bg-surface-sunken text-ink-2">Vault v3.4</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+          Every stored file, its scan state and who it belongs to. Files are never served until the virus scan passes.
+        </p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="inline-flex items-center justify-center gap-2 h-11 px-4 rounded-xl bg-surface hover:bg-surface-sunken text-ink font-label text-label shadow-sm transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[20px] text-ink-2">assignment_returned</span>
+<span>Export storage log</span>
+</button>
+<button class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label shadow-sm transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">upload_file</span>
+<span>Upload file</span>
+</button>
+</div>
+</div>
+<!-- 3 Stat Cards (KPIs) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-lg">
+<!-- Card 1: Storage Used -->
+<div class="flex flex-col justify-between p-5 rounded-xl bg-surface shadow-sm">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Storage used</span>
+<span class="inline-flex items-center gap-1 font-body-sm text-body-sm text-lime-ink bg-success-bg px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px]">cloud_done</span> Healthy
+            </span>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<span class="font-stat text-stat text-ink">12.4 GB</span>
+<span class="font-body-sm text-body-sm text-ink-3">of 50 GB · 25% capacity</span>
+</div>
+<!-- Thin Progress Bar -->
+<div class="w-full h-2 rounded-full bg-surface-sunken overflow-hidden mb-3">
+<div class="h-full bg-iris rounded-full" style="width: 25%"></div>
+</div>
+</div>
+<div class="pt-3">
+<div class="flex items-center justify-between gap-2 p-2 rounded-lg bg-surface-container-low mb-2">
+<label class="font-overline text-overline text-ink-3 shrink-0" for="quota-input">Quota (GB)</label>
+<div class="flex items-center gap-2">
+<input class="w-16 h-8 px-2 text-center rounded bg-surface font-body-sm text-body-sm text-ink shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/30" id="quota-input" type="number" value="50"/>
+<button class="h-8 px-3 rounded bg-surface-sunken hover:bg-surface-variant font-label text-label text-ink transition-colors" type="button">
+                Save
+              </button>
+</div>
+</div>
+<p class="font-overline text-overline text-ink-3 truncate">37.6 GB available across Adeyemi Holdings tenant</p>
+</div>
+</div>
+<!-- Card 2: Awaiting Scan -->
+<div class="flex flex-col justify-between p-5 rounded-xl bg-surface shadow-sm">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Awaiting scan</span>
+<span class="inline-flex items-center gap-1.5 font-overline text-overline text-info-text bg-info-bg px-2.5 py-0.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text animate-pulse"></span> Queue active
+            </span>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-stat text-stat text-ink">3</span>
+<span class="font-body-sm text-body-sm text-ink-2 font-medium">pending verification</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mb-4">Hidden until the virus check finishes</p>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px] text-iris">auto_mode</span>
+<div class="flex flex-col">
+<span class="font-label text-label text-ink">Pipeline Active</span>
+<span class="font-overline text-overline text-ink-3">Automated heuristic pipeline (avg 1.4s)</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Quarantined -->
+<div class="flex flex-col justify-between p-5 rounded-xl bg-danger-bg shadow-sm">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-overline text-overline uppercase tracking-wider text-danger-text">Quarantined</span>
+<span class="inline-flex items-center gap-1 font-overline text-overline bg-white/80 text-danger-text px-2 py-0.5 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[14px]">shield_with_heart</span> Level 1 Alert
+            </span>
+</div>
+<div class="flex items-baseline gap-2 mb-1">
+<span class="font-stat text-stat text-danger-text">1</span>
+<span class="font-body-sm text-body-sm text-danger-text font-medium">file isolated</span>
+</div>
+<p class="font-body-sm text-body-sm text-danger-text/90 mb-3">Never served — isolated in quarantine vault</p>
+</div>
+<div class="p-2.5 rounded-lg bg-white/70 flex items-center gap-2">
+<span class="material-symbols-outlined text-danger-text text-[18px]">gpp_maybe</span>
+<span class="font-label text-label text-danger-text truncate">Threat detected: EICAR signature</span>
+</div>
+</div>
+</div>
+<!-- Filter Card -->
+<div class="p-4 rounded-xl bg-surface shadow-sm mb-space-lg">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<!-- Search and Dropdown -->
+<div class="flex flex-wrap items-center gap-3 flex-1 min-w-[280px]">
+<div class="relative w-full max-w-xs flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-11 pl-9 pr-3 rounded-lg bg-surface-sunken text-body-sm font-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/25 transition-all" placeholder="Search by file name..." type="text"/>
+</div>
+<div class="relative min-w-[190px]">
+<select class="w-full h-11 pl-3 pr-8 rounded-lg bg-surface-sunken text-body-sm font-body-sm text-ink appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-iris/25 transition-all">
+<option value="all">All purposes</option>
+<option value="corp">Corporate filing</option>
+<option value="expense">Expense receipt</option>
+<option value="payroll">Payroll export</option>
+<option value="brand">Organisation logo</option>
+<option value="employee">Employee doc</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+<!-- Status Segmented Control -->
+<div class="inline-flex p-1 rounded-lg bg-surface-sunken gap-1">
+<button class="px-3 py-1.5 rounded font-label text-label bg-surface text-ink shadow-sm" type="button">All</button>
+<button class="px-3 py-1.5 rounded font-label text-label text-ink-2 hover:text-ink flex items-center gap-1.5 transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-success-text"></span> Clean
+            </button>
+<button class="px-3 py-1.5 rounded font-label text-label text-ink-2 hover:text-ink flex items-center gap-1.5 transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-info-text animate-ping"></span> Scanning
+            </button>
+<button class="px-3 py-1.5 rounded font-label text-label text-ink-2 hover:text-ink flex items-center gap-1.5 transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-danger-text"></span> Quarantined
+            </button>
+<button class="px-3 py-1.5 rounded font-label text-label text-ink-2 hover:text-ink transition-colors" type="button">Deleted</button>
+</div>
+</div>
+<!-- Checkbox & Actions -->
+<div class="flex items-center gap-4">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris/30 accent-iris cursor-pointer" type="checkbox"/>
+<span class="font-label text-label text-ink">On legal hold</span>
+</label>
+<div class="flex items-center gap-2">
+<button class="h-11 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-all shadow-sm" type="button">Apply</button>
+<button class="h-11 px-3 rounded-lg text-ink-3 hover:text-ink font-label text-label transition-colors" type="button">Clear</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Layout (Left Table 62% + Right Panel 38%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Data Table (approx 62% width -> 7 cols or 62/38 split via lg:col-span-7 / 5) -->
+<div class="lg:col-span-7 flex flex-col rounded-xl bg-surface shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken">
+<th class="py-3.5 px-4 font-overline text-overline uppercase tracking-wider text-ink-3">File</th>
+<th class="py-3.5 px-3 font-overline text-overline uppercase tracking-wider text-ink-3">Purpose</th>
+<th class="py-3.5 px-3 font-overline text-overline uppercase tracking-wider text-ink-3">Status</th>
+<th class="py-3.5 px-3 font-overline text-overline uppercase tracking-wider text-ink-3">Linked record</th>
+<th class="py-3.5 px-4 text-right font-overline text-overline uppercase tracking-wider text-ink-3">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<!-- Row 1: Selected (receipt-0423.pdf) -->
+<tr class="bg-iris-tint/40 cursor-pointer transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-danger-bg text-danger-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">receipt-0423.pdf</span>
+<span class="font-overline text-overline text-ink-3">344 KB · PDF · v2</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex px-2.5 py-1 rounded-md font-overline text-overline bg-surface-sunken text-ink-2">Expense receipt</span>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-overline text-overline bg-danger-bg text-danger-text">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span> Quarantined
+                  </span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label text-label text-ink hover:text-iris cursor-pointer">EXP-2026-000142</span>
+<span class="font-overline text-overline text-ink-3">Chinedu Eze</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button aria-label="Row options" class="w-9 h-9 inline-flex items-center justify-center rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-danger-bg/70 text-danger-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate">cac-incorporation-cert-2024.pdf</span>
+<span class="font-overline text-overline text-ink-3">2.4 MB · PDF · v1</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex px-2.5 py-1 rounded-md font-overline text-overline bg-surface-sunken text-ink-2">Corporate filing</span>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> Clean
+                  </span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label text-label text-ink">Adeyemi Holdings Ltd</span>
+<span class="font-overline text-overline text-ink-3">Statutory Doc</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button aria-label="Row options" class="w-9 h-9 inline-flex items-center justify-center rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-success-bg text-success-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">table_chart</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate">q3-remita-pension-schedule.xlsx</span>
+<span class="font-overline text-overline text-ink-3">845 KB · XLSX · v3</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex px-2.5 py-1 rounded-md font-overline text-overline bg-surface-sunken text-ink-2">Payroll export</span>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-overline text-overline bg-info-bg text-info-text">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text animate-pulse"></span> Scanning
+                  </span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label text-label text-ink hover:text-iris cursor-pointer">PAY-2026-SEP-02</span>
+<span class="font-overline text-overline text-ink-3">Payroll Batch</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button aria-label="Row options" class="w-9 h-9 inline-flex items-center justify-center rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">image</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate">adeyemi-brandmark-horizontal.png</span>
+<span class="font-overline text-overline text-ink-3">620 KB · PNG · v2</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex px-2.5 py-1 rounded-md font-overline text-overline bg-surface-sunken text-ink-2">Organisation logo</span>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> Clean
+                  </span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label text-label text-ink">Adeyemi Holdings Ltd</span>
+<span class="font-overline text-overline text-ink-3">Brand Identity</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button aria-label="Row options" class="w-9 h-9 inline-flex items-center justify-center rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-danger-bg/70 text-danger-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink truncate">emp-nin-verification-slip.pdf</span>
+<span class="font-overline text-overline text-ink-3">312 KB · PDF · v1</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex px-2.5 py-1 rounded-md font-overline text-overline bg-surface-sunken text-ink-2">Employee doc</span>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> Clean
+                  </span>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="font-label text-label text-ink">EMP-0492</span>
+<span class="font-overline text-overline text-ink-3">Fatima Bello</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button aria-label="Row options" class="w-9 h-9 inline-flex items-center justify-center rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="opacity-75 hover:opacity-100 hover:bg-surface-container-low transition-all">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-sunken text-ink-3 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">description</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink-3 line-through truncate">vendor-quotation-draft-oct.docx</span>
+<span class="font-overline text-overline text-ink-3">1.1 MB · Deleted</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex px-2.5 py-1 rounded-md font-overline text-overline bg-surface-sunken text-ink-3">Procurement draft</span>
+</td>
+<td class="py-3.5 px-3 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-overline text-overline bg-surface-sunken text-ink-2">
+                    Deleted
+                  </span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-body-sm text-body-sm text-ink-3 italic">Unassigned</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button aria-label="Row options" class="w-9 h-9 inline-flex items-center justify-center rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="p-4 bg-surface-bright flex flex-col sm:flex-row items-center justify-between gap-3">
+<span class="font-body-sm text-body-sm text-ink-3">Showing 1–6 of 142 total storage items</span>
+<div class="flex items-center gap-1.5">
+<button class="w-8 h-8 rounded-lg bg-iris text-on-iris font-label text-label flex items-center justify-center shadow-sm" type="button">1</button>
+<button class="w-8 h-8 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label flex items-center justify-center transition-colors" type="button">2</button>
+<button class="w-8 h-8 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label flex items-center justify-center transition-colors" type="button">3</button>
+<span class="px-1 text-ink-3 font-body-sm text-body-sm">…</span>
+<button class="w-8 h-8 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label flex items-center justify-center transition-colors" type="button">24</button>
+<button class="h-8 px-3 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label flex items-center gap-1 transition-colors" type="button">
+<span>Next</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Detail Inspection Panel (approx 38% width -> lg:col-span-5) -->
+<div class="lg:col-span-5 flex flex-col rounded-xl bg-surface shadow-sm p-5">
+<!-- Top Row Header -->
+<div class="flex items-center justify-between gap-3 mb-4">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-danger-text text-[24px]">gpp_bad</span>
+<h2 class="font-h2 text-h2 text-ink truncate">receipt-0423.pdf</h2>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-overline text-overline bg-danger-bg text-danger-text">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span> Quarantined
+            </span>
+<button aria-label="Close details" class="w-8 h-8 inline-flex items-center justify-center rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Danger Banner -->
+<div class="p-3.5 rounded-xl bg-danger-bg text-danger-text mb-5 flex items-start gap-3">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5">warning</span>
+<div class="flex flex-col gap-0.5">
+<span class="font-label text-label font-bold text-danger-text">
+              Quarantined: Eicar-Test-Signature. This file is never served.
+            </span>
+<span class="font-body-sm text-body-sm text-danger-text/90">
+              Detected during automated tier-1 antivirus scan at 14:02 WAT.
+            </span>
+</div>
+</div>
+<!-- Key / Value Metadata Grid -->
+<div class="grid grid-cols-2 gap-y-3.5 gap-x-4 p-4 rounded-xl bg-surface-container-low mb-5">
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Size</span>
+<span class="font-body-sm text-body-sm text-ink font-medium">344 KB (352,256 bytes)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Version</span>
+<div class="flex items-center gap-1.5">
+<span class="font-body-sm text-body-sm text-ink font-medium">Version 2 of 2</span>
+<a class="font-overline text-overline text-iris hover:underline font-semibold" href="#">(View v1)</a>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Detected type</span>
+<span class="font-body-sm text-body-sm text-ink">application/pdf (Magic 25 50 44 46)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Declared type</span>
+<span class="font-body-sm text-body-sm text-ink">application/pdf</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Uploaded by</span>
+<span class="font-body-sm text-body-sm text-ink font-medium">Fatima Bello (Finance Manager)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Uploaded at</span>
+<span class="font-body-sm text-body-sm text-ink">17 Nov 2026, 14:02 WAT</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Statutory retention until</span>
+<span class="font-body-sm text-body-sm text-ink">17 Nov 2033 (7-year policy)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Version state</span>
+<span class="font-body-sm text-body-sm text-success-text font-medium">Earlier clean v1 available</span>
+</div>
+</div>
+<!-- SHA-256 Checksum Card -->
+<div class="flex flex-col gap-1.5 mb-5">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">SHA-256 Checksum</span>
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-sunken">
+<code class="font-mono text-xs text-ink-2 truncate flex-1 select-all" id="sha-hash">
+              e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+            </code>
+<button class="shrink-0 h-8 px-2.5 rounded bg-surface hover:bg-surface-variant font-label text-label text-ink flex items-center gap-1 shadow-sm transition-colors" onclick="navigator.clipboard.writeText(document.getElementById('sha-hash').innerText.trim())" title="Copy Checksum" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>Copy</span>
+</button>
+</div>
+</div>
+<!-- Linked Record Section -->
+<div class="flex flex-col gap-1.5 mb-5">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Linked Record</span>
+<div class="p-3.5 rounded-xl bg-surface-container-low flex items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Expense Claim EXP-2026-000142</span>
+<span class="font-overline text-overline text-ink-3 truncate">Lagos Client Dinner — Eko Hotels · Attached by Chinedu Eze</span>
+</div>
+</div>
+<button class="shrink-0 text-iris hover:text-iris-hover font-label text-label flex items-center gap-0.5" type="button">
+<span>View</span>
+<span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+</button>
+</div>
+</div>
+<!-- Compliance & Legal Directives -->
+<div class="flex flex-col gap-2.5 p-4 rounded-xl bg-warning-bg/40 mb-6">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink font-semibold flex items-center gap-2 cursor-pointer" for="legal-hold-switch">
+<span class="material-symbols-outlined text-[20px] text-warning-text">gavel</span>
+              Place on legal hold
+            </label>
+<input class="w-5 h-5 accent-iris cursor-pointer rounded" id="legal-hold-switch" type="checkbox"/>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+            Freezes all background retention purges and audit lifecycles.
+          </p>
+<div class="flex items-center gap-2 mt-1">
+<input class="flex-1 h-9 px-3 rounded-lg bg-surface text-body-sm font-body-sm text-ink placeholder:text-ink-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/25" placeholder="e.g. FIRS Tax Audit 2026 investigation" type="text"/>
+<button class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-variant font-label text-label text-ink transition-colors shrink-0" type="button">
+              Apply hold
+            </button>
+</div>
+</div>
+<!-- Actions Footer -->
+<div class="flex flex-col gap-3 mt-auto">
+<div class="flex items-center justify-between gap-3">
+<button class="inline-flex items-center gap-2 h-11 px-4 rounded-xl text-danger-text hover:bg-danger-bg font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">delete_forever</span>
+<span>Delete permanently</span>
+</button>
+<button class="inline-flex items-center gap-2 h-11 px-4 rounded-xl bg-surface-sunken hover:bg-surface-variant text-ink font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Download scan log</span>
+</button>
+</div>
+<div class="pt-3 flex items-center justify-between text-ink-3">
+<span class="font-overline text-overline">Audited by Adeyemi SIEM</span>
+<span class="font-mono text-xs">Audit ID: AUD-889104</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

@@ -62,6 +62,7 @@ ADMIN_MODULE = NavModule(
         NavSection("Roles", "/admin/roles", permission="authz.role.read"),
         NavSection("Delegations", "/admin/delegations", permission="authz.delegation.manage"),
         NavSection("Audit log", "/admin/audit", permission="audit.log.read"),
+        NavSection("Files", "/admin/files", permission="files.file.manage"),
         NavSection("Organisation", "/admin/organisation", permission="system.branding.manage"),
         NavSection("Mail settings", "/admin/mail", permission="system.mail.manage"),
     ),
@@ -98,6 +99,7 @@ class ShellContext:
     approvals_count: int = 0
     has_unread: bool = False
     csrf_token: str | None = None
+    org_logo_url: str | None = None
 
     @property
     def org_initials(self) -> str:

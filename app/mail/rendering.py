@@ -17,6 +17,7 @@ SUBJECTS = {
     "invite": "You're invited to {organisation} on Kxmeleon",
     "password_reset": "Reset your Kxmeleon password",
     "test": "Kxmeleon test email",
+    "file_quarantined": "A file was blocked by the virus scanner",
 }
 
 

@@ -14,6 +14,11 @@ import pytest
 os.environ["KX_ENV"] = "test"
 os.environ.setdefault("KX_SECRET_KEY", "test-secret-key-that-is-long-enough-0001")
 os.environ.setdefault("KX_ENCRYPTION_KEY", "q6cpp1uQ3wJ1L9n0bIYw8Hq9Yw2c5P0b7kqvVf3Q0hQ=")
+# Object storage is emulated in-process by moto; files are scanned by a test scanner.
+os.environ["KX_S3_ENDPOINT_URL"] = ""
+os.environ["KX_S3_ACCESS_KEY"] = "test-access-key"
+os.environ["KX_S3_SECRET_KEY"] = "test-secret-key"
+os.environ["KX_SCANNER"] = "accept_all"
 os.environ["KX_DATABASE_URL"] = os.environ.get(
     "KX_TEST_DATABASE_URL", "postgresql+psycopg://kx_app:unset@127.0.0.1:1/unset"
 )
@@ -54,6 +59,20 @@ def _runtime() -> None:
     configure_runtime()
 
 
+@pytest.fixture(autouse=True)
+def s3() -> Iterator[None]:
+    """An in-memory S3 for every test (moto), with both buckets created."""
+    from moto import mock_aws
+
+    from app.files import storage
+
+    with mock_aws():
+        storage.client.cache_clear()
+        storage.ensure_buckets()
+        yield
+    storage.client.cache_clear()
+
+
 @pytest.fixture(scope="session")
 def migrated_db() -> Iterator[None]:
     """Rebuild the test schema from migrations once per run, as kx_migrator."""
@@ -89,7 +108,8 @@ def db(engine: Engine) -> Iterator[Session]:
 
 IDENTITY_TABLES = (
     "mfa_recovery_codes, user_tokens, user_sessions, api_keys, login_attempts, "
-    "role_assignments, delegations, position_assignments, positions, departments, grades, "
+    "file_links, files, role_assignments, delegations, position_assignments, positions, "
+    "departments, grades, "
     "branches, cost_centres, employees, users, mail_outbox, mail_settings, organization"
 )
 
@@ -110,6 +130,7 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         conn.execute(text("DELETE FROM roles WHERE template_key IS NULL"))
         conn.execute(text("UPDATE authz_state SET version = version + 1"))
         conn.execute(text("UPDATE org_state SET version = version + 1"))
+        conn.execute(text("UPDATE storage_settings SET used_bytes = 0, quota_bytes = 53687091200"))
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

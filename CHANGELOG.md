@@ -5,6 +5,30 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 5: Files
+- One file service (ADR 0016): random storage keys in private quarantine and clean
+  buckets, a purpose registry (types, size, attach and view permissions, retention,
+  inline display, classification), and `GET /files/{id}` authorised against the entity
+  the file belongs to. Downloads carry the detected type, `nosniff`, and
+  `attachment` unless the purpose allows inline display; sensitive classes are audited.
+- Uploads are read as they stream in, with the size limit enforced on the way and
+  nothing written to disk; types come from the content (magic bytes); SVGs are refused
+  if they carry scripts, event handlers, embedded HTML or external links, and are served
+  under a sandboxing content policy.
+- Virus scanning through ClamAV (INSTREAM). Clean files move to the clean bucket;
+  infected ones stay quarantined, are audited and reported to the uploader and file
+  managers by email. An unreachable scanner leaves files pending (fail closed).
+- Versions, soft delete, a nightly retention job, legal hold, and a 50 GB organisation
+  quota tracked on upload and purge.
+- The organisation logo (PNG, JPEG, WebP or sanitised SVG, up to 2 MB) on the
+  Organisation page and in the sidebar; Administration → Files with usage, scan states,
+  details, legal hold, deletion and the quota.
+- Permissions `files.file.manage` (sensitive) and `system.storage.manage`.
+
+### Changed
+- Multipart requests must send the CSRF token as the `X-CSRF-Token` header (HTMX does),
+  so uploads are never parsed before the file service can enforce its limits.
+
 ### Added — Phase 4: Organisation structure
 - Branches, cost centres, grades, nestable departments, positions (a reporting tree) and
   position assignments (primary, acting or interim, with dates), plus a minimal employee

@@ -30,7 +30,14 @@ Required secrets:
 - `KX_ENCRYPTION_KEY`: encrypts secrets stored in the database, such as the SMTP password.
 - `KX_DATABASE_URL`: `kx_app` credentials.
 - `KX_MIGRATOR_DATABASE_URL`: `kx_migrator` credentials.
-- The S3 credentials.
+- `KX_S3_ENDPOINT_URL`, `KX_S3_ACCESS_KEY`, `KX_S3_SECRET_KEY` and the two bucket names
+  (`KX_S3_QUARANTINE_BUCKET`, `KX_S3_CLEAN_BUCKET`, default `kx-quarantine` and
+  `kx-clean`). Both buckets must be private.
+- `KX_SCANNER=clamd` with `KX_CLAMD_HOST` and `KX_CLAMD_PORT`. The app refuses to start
+  in production with any other scanner. Uploads stay "awaiting scan" until ClamAV is
+  reachable; nothing is served unscanned (ADR 0016).
+- A Celery worker **and beat** process: beat sweeps pending scans every 30 seconds and runs
+  the retention job nightly at 02:00 UTC (`celery -A app.worker worker --beat`).
 
 Generate keys with `uv run kx generate-key`. Losing `KX_ENCRYPTION_KEY` means the SMTP
 password must be re-entered. No business data is encrypted with it.

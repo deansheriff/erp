@@ -14,6 +14,8 @@ from app.authz import service as authz
 from app.core.config import Settings, get_settings
 from app.core.db import get_engine, session_scope, verify_database_role
 from app.core.logging import configure_logging
+from app.files import routes_web as files_web
+from app.files import scanner
 from app.identity import routes_api as identity_api
 from app.identity import routes_web as identity_web
 from app.identity import service as identity
@@ -54,6 +56,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     anyio.to_thread.current_default_thread_limiter().total_tokens = settings.web_threads
     await anyio.to_thread.run_sync(verify_database_role, get_engine())
     await anyio.to_thread.run_sync(_verify_permission_catalogue)
+    scanner.check_configuration()
     await anyio.to_thread.run_sync(_announce_setup_code)
     yield
     get_engine().dispose()
@@ -72,6 +75,7 @@ def routers(settings: Settings) -> list[APIRouter]:
         audit_web.router,
         org_web.router,
         hr_web.router,
+        files_web.router,
     ]
     if settings.dev_routes_enabled:
         included.append(routes_dev.router)

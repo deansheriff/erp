@@ -1,0 +1,10 @@
+Hello {{ name }},
+
+The virus scanner blocked a file uploaded to Kxmeleon:
+
+File: {{ filename }}
+Uploaded by: {{ uploader }}
+Found: {{ signature }}
+
+The file is kept in quarantine and will never be shown or downloaded.
+{% if is_manager %}You can review it under Administration → Files: {{ link }}{% else %}If you think this is a mistake, contact your administrator.{% endif %}

@@ -21,6 +21,12 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `authz.role.manage` | Manage roles | Organisation | yes | Create, edit and delete roles. |
 | `authz.role.read` | View roles | Organisation |  | See roles and their permissions. |
 
+### files
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `files.file.manage` | Manage files | Organisation | yes | See every file's details and scan state, place legal holds and delete files. Doesn't grant access to file contents. |
+
 ### hr
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -52,6 +58,7 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `system.branding.manage` | Manage organisation details and branding | Organisation |  | Legal details, logo and document colours. |
 | `system.mail.manage` | Manage mail settings | Organisation | yes | Change the SMTP server and send test emails. |
 | `system.security.manage` | Manage security settings | Organisation | yes | Session, password and lockout rules, and who is a super admin. |
+| `system.storage.manage` | Manage storage settings | Organisation |  | Change the organisation's storage quota. |
 
 ## Role templates
 
@@ -68,6 +75,7 @@ Everything, including technical settings. Can't be edited or removed.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `files.file.manage` | O |
 | `hr.employee.create` | O |
 | `hr.employee.read` | O |
 | `hr.employee.update` | O |
@@ -80,6 +88,7 @@ Everything, including technical settings. Can't be edited or removed.
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
+| `system.storage.manage` | O |
 
 ### Organisation Administrator (two-step required)
 
@@ -92,6 +101,7 @@ Everything except technical settings such as mail, branding and security.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `files.file.manage` | O |
 | `hr.employee.create` | O |
 | `hr.employee.read` | O |
 | `hr.employee.update` | O |

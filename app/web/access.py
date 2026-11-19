@@ -122,7 +122,10 @@ async def csrf_guard(request: Request) -> None:
     if actor is None or actor.csrf_token is None:
         return  # anonymous forms (sign-in, reset) rely on the Origin check and SameSite
     sent = request.headers.get("x-csrf-token")
-    if sent is None and "form" in request.headers.get("content-type", ""):
+    content_type = request.headers.get("content-type", "")
+    # Uploads must carry the header: parsing a multipart body here would spool files to
+    # disk before the file service can enforce its limits (ADR 0016).
+    if sent is None and "form" in content_type and "multipart" not in content_type:
         form = await request.form()
         value = form.get("csrf_token")
         sent = value if isinstance(value, str) else None

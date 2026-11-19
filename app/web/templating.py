@@ -11,7 +11,7 @@ from fastapi.templating import Jinja2Templates
 from jinja2 import ChoiceLoader, FileSystemLoader
 
 from app.core.config import get_settings
-from app.core.formatting import format_date, format_datetime, format_money
+from app.core.formatting import format_date, format_datetime, format_money, format_size
 
 WEB_DIR = Path(__file__).parent
 APP_DIR = WEB_DIR.parent
@@ -74,6 +74,7 @@ def build_templates() -> Jinja2Templates:
         "date": _date,
         "datetime": _datetime,
         "period_end": _period_end,
+        "filesize": format_size,
     }
     env.filters.update(filters)
     env.globals["asset_version"] = asset_version

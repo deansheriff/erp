@@ -7,10 +7,13 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "alembic>=1.14",
     "argon2-cffi>=23.1",
+    "boto3>=1.44.6",
     "celery[redis]>=5.4",
     "cryptography>=43",
+    "defusedxml>=0.7.1",
     "email-validator>=2.2",
     "fastapi>=0.115",
+    "filetype>=1.2.0",
     "jinja2>=3.1",
     "psycopg[binary]>=3.2",
     "pydantic>=2.9",
@@ -63,6 +66,8 @@ ignore = [
 "app/identity/*.py" = ["S105"]
 # FastAPI form handlers take one parameter per form field.
 "app/**/routes_web.py" = ["PLR0917"]
+# The one module allowed to use the S3 client (ADR 0016).
+"app/files/storage.py" = ["TID251"]
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "sqlalchemy.orm.Query".msg = "Use select() with Session.execute/scalars; session.query() is banned."
@@ -81,7 +86,7 @@ plugins = ["pydantic.mypy"]
 warn_unreachable = true
 
 [[tool.mypy.overrides]]
-module = ["celery.*", "kombu.*", "qrcode.*"]
+module = ["celery.*", "kombu.*", "qrcode.*", "filetype.*"]
 ignore_missing_imports = true
 
 # ---------------------------------------------------------------- pytest
@@ -102,7 +107,7 @@ include_external_packages = true
 name = "Core, audit and modules never import the web layer"
 # A module's routes_api.py / routes_web.py will need an ignore entry here when it lands.
 type = "forbidden"
-source_modules = ["app.core", "app.audit", "app.authz", "app.modules", "app.identity", "app.mail", "app.org"]
+source_modules = ["app.core", "app.audit", "app.authz", "app.modules", "app.identity", "app.mail", "app.org", "app.files"]
 forbidden_modules = ["fastapi", "starlette", "app.web"]
 ignore_imports = [
   "app.identity.routes_web -> fastapi",
@@ -117,6 +122,9 @@ ignore_imports = [
   "app.org.routes_web -> app.web.*",
   "app.modules.hr.routes_web -> fastapi",
   "app.modules.hr.routes_web -> app.web.*",
+  "app.files.routes_web -> fastapi",
+  "app.files.routes_web -> app.web.*",
+  "app.files.web -> fastapi",
 ]
 
 [[tool.importlinter.contracts]]
@@ -132,14 +140,19 @@ name = "Only app.files talks to object storage"
 type = "forbidden"
 source_modules = ["app.core", "app.audit", "app.web", "app.modules", "app.authz", "app.identity", "app.mail", "app.org"]
 forbidden_modules = ["boto3", "botocore"]
+# Others may call app.files, which uses the S3 client; they may not import it themselves.
+allow_indirect_imports = true
 
 [dependency-groups]
 dev = [
+    "boto3-stubs[s3]>=1.44.6",
     "httpx>=0.28",
     "import-linter>=2.1",
+    "moto[s3]>=5.2.5",
     "mypy>=1.13",
     "pre-commit>=4.0",
     "pytest>=8.3",
     "ruff>=0.8",
+    "types-defusedxml>=0.7.0.20260504",
     "types-pyyaml>=6.0.12.20261113",
 ]

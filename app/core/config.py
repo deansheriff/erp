@@ -27,6 +27,19 @@ class Settings(BaseSettings):
     web_threads: int = 40
     log_level: str = "INFO"
 
+    # Object storage (S3 API; MinIO in docker-compose). Only app/files uses these.
+    s3_endpoint_url: str | None = "http://localhost:9000"
+    s3_region: str = "us-east-1"
+    s3_access_key: SecretStr = SecretStr("")
+    s3_secret_key: SecretStr = SecretStr("")
+    s3_quarantine_bucket: str = "kx-quarantine"
+    s3_clean_bucket: str = "kx-clean"
+    # Virus scanning (ADR 0016). "accept_all" is for development and tests only; the app
+    # refuses to start with it in production.
+    scanner: Literal["clamd", "accept_all"] = "clamd"
+    clamd_host: str = "localhost"
+    clamd_port: int = 3310
+
     @property
     def is_production(self) -> bool:
         return self.env == "production"

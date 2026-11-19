@@ -12,6 +12,7 @@ from app.authz.models import (
     RoleAssignment,
     RoleGrant,
 )
+from app.files.models import FileLink, StorageSettings, StoredFile
 from app.identity.models import (
     ApiKey,
     Installation,
@@ -44,6 +45,7 @@ __all__ = [
     "Delegation",
     "Department",
     "Employee",
+    "FileLink",
     "Grade",
     "Installation",
     "LoginAttempt",
@@ -59,6 +61,8 @@ __all__ = [
     "RoleAssignment",
     "RoleGrant",
     "SecuritySettings",
+    "StorageSettings",
+    "StoredFile",
     "User",
     "UserSession",
     "UserToken",

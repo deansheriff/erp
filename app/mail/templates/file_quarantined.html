@@ -1,0 +1,13 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ name }},</p>
+<p style="margin:0 0 16px;">The virus scanner blocked a file uploaded to Kxmeleon.</p>
+<table role="presentation" style="margin:0 0 16px;border-collapse:collapse;">
+<tr><td style="padding:4px 16px 4px 0;color:#4B4B66;">File</td><td style="padding:4px 0;font-weight:600;">{{ filename }}</td></tr>
+<tr><td style="padding:4px 16px 4px 0;color:#4B4B66;">Uploaded by</td><td style="padding:4px 0;">{{ uploader }}</td></tr>
+<tr><td style="padding:4px 16px 4px 0;color:#4B4B66;">Found</td><td style="padding:4px 0;color:#B4232F;">{{ signature }}</td></tr>
+</table>
+<p style="margin:0 0 16px;">The file is kept in quarantine and will never be shown or downloaded.</p>
+{% if is_manager %}<p style="margin:24px 0;"><a href="{{ link }}" style="display:inline-block;background:#5A4BDB;color:#FFFFFF;text-decoration:none;font-weight:600;padding:12px 20px;border-radius:10px;">Review in Kxmeleon</a></p>
+{% else %}<p style="margin:0;color:#4B4B66;">If you think this is a mistake, contact your administrator.</p>{% endif %}
+{% endblock %}

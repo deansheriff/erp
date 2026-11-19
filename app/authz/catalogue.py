@@ -16,6 +16,7 @@ POLICY_MODULES = (
     "app.org.policies",
     "app.audit.policies",
     "app.authz.policies",
+    "app.files.policies",
     "app.modules.hr.policies",
 )
 
