@@ -5,6 +5,22 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 9b: Payroll remittances, loans and tax certificates
+- Remittances from an approved run as CSV: the bank payment file (CBN bank codes, with
+  anyone who can't be paid listed), PAYE per state of residence, pension per PFA and
+  NHF (ADR 0022). Downloads need `payroll.remittance.export` and are audited.
+- Bank codes for the common Nigerian banks, matched to the bank named on HR records,
+  and ledger account codes, both editable under Payroll settings (to confirm).
+- Journals queued for the ledger: the payroll accrual when a run is posted (costs by
+  cost centre), net pay when it is paid, and disbursement when a loan is approved.
+- Interest-free staff loans and salary advances: recorded by Payroll, approved by
+  Finance (not the recorder or the borrower), repaid by monthly payroll deductions
+  until cleared, with a repayment schedule. Employees see theirs on My payslips.
+- Year-end tax certificates (PDF) by month from approved runs; employees download their
+  own once December is paid.
+- Permissions `payroll.remittance.export`, `payroll.loan.read`, `payroll.loan.manage`,
+  `payroll.loan.approve` and `payroll.certificate.read`; loan numbers `LN-00001`.
+
 ### Added — Phase 9a: Payroll runs and payslips
 - Pay components (earnings and deductions; a fixed amount per person or a percentage
   of another earning; taxable and pensionable flags), salary structures that group

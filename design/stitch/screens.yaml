@@ -955,3 +955,57 @@ screens:
       save: payroll.settings.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.remittances
+    phase: 9
+    module: payroll
+    title: Payroll remittances and files
+    route: GET /payroll/remittances
+    template: app/modules/payroll/templates/payroll/remittances.html
+    stitch_screens:
+      desktop: dd565110c9174aa9b393dfe9bbce512b
+    exports:
+      - design/stitch/exports/payroll.remittances.html
+    permission: payroll.run.read
+    actions:
+      download_bank_file: payroll.remittance.export
+      download_paye: payroll.remittance.export
+      download_pension: payroll.remittance.export
+      download_nhf: payroll.remittance.export
+    field_classes: [statutory, banking, compensation]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.loans
+    phase: 9
+    module: payroll
+    title: Loans and salary advances
+    route: GET /payroll/loans
+    template: app/modules/payroll/templates/payroll/loans.html
+    stitch_screens:
+      desktop: 5125ab1b6ab448a29eba4e761ce43bf9
+    exports:
+      - design/stitch/exports/payroll.loans.html
+    permission: payroll.loan.read
+    actions:
+      record: payroll.loan.manage
+      withdraw: payroll.loan.manage
+      approve: payroll.loan.approve
+      reject: payroll.loan.approve
+    field_classes: [directory, compensation]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.certificates
+    phase: 9
+    module: payroll
+    title: Year-end tax certificates
+    route: GET /payroll/certificates
+    template: app/modules/payroll/templates/payroll/certificates.html
+    stitch_screens:
+      desktop: cda5ed70966b4629a3c9fd6dcec6c233
+    exports:
+      - design/stitch/exports/payroll.certificates.html
+    permission: payroll.certificate.read
+    actions:
+      download_pdf: payroll.certificate.read
+    field_classes: [directory, statutory, compensation]
+    approved_by: Dean Sheriff (2026-11-20)

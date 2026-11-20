@@ -1,6 +1,6 @@
-"""Payroll (ADR 0021): pay groups, components and salary structures, people's pay and
-recurring deductions, effective-dated statutory settings, rent relief declarations, and
-runs with their payslips."""
+"""Payroll (ADR 0021, 0022): pay groups, components and salary structures, people's pay and
+recurring deductions, effective-dated statutory settings, rent relief declarations, runs
+with their payslips, staff loans, bank codes, ledger accounts and queued journals."""
 
 import uuid
 from datetime import date, datetime
@@ -28,7 +28,12 @@ from app.core.db import Base, IdMixin
 KINDS = ("earning", "deduction")
 CALCULATIONS = ("fixed", "percent")
 RUN_STATUSES = ("draft", "calculated", "reviewed", "approved", "posted", "paid")
+COUNTED = ("approved", "posted", "paid")  # runs whose amounts count (PAYE to date, loans)
 DECLARATION_STATUSES = ("pending", "verified", "rejected")
+LOAN_KINDS = ("loan", "advance")
+LOAN_STATUSES = ("pending", "approved", "rejected", "cancelled")
+JOURNAL_KINDS = ("accrual", "payment", "loan")
+JOURNAL_STATUSES = ("queued", "posted")
 
 Money = Numeric(14, 2)
 Rate = Numeric(7, 4)  # 0.0800 = 8%
@@ -297,3 +302,102 @@ class PayslipLine(IdMixin, Base):
     kind: Mapped[str] = mapped_column(String(10))
     amount: Mapped[Decimal] = mapped_column(Money)
     detail: Mapped[str | None] = mapped_column(String(80))  # e.g. "6 h at 1.5x"
+    loan_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("staff_loans.id"), index=True)
+
+
+class StaffLoan(IdMixin, Base):
+    """An interest-free loan or salary advance repaid by monthly payroll deductions."""
+
+    __tablename__ = "staff_loans"
+    __table_args__ = (
+        CheckConstraint(_in("kind", LOAN_KINDS), name="kind"),
+        CheckConstraint(_in("status", LOAN_STATUSES), name="status"),
+        CheckConstraint("amount > 0 AND instalment > 0 AND instalment <= amount", name="amounts"),
+        CheckConstraint("EXTRACT(DAY FROM first_month) = 1", name="first_month"),
+    )
+
+    number: Mapped[str] = mapped_column(String(20), unique=True)
+    employee_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("employees.id"), index=True)
+    kind: Mapped[str] = mapped_column(String(8))
+    amount: Mapped[Decimal] = mapped_column(Money)
+    instalment: Mapped[Decimal] = mapped_column(Money)
+    first_month: Mapped[date]  # the first of the month of the first deduction
+    note: Mapped[str | None] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(10), server_default="pending")
+    recorded_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    decided_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    decided_at: Mapped[datetime | None]
+    decision_note: Mapped[str | None] = mapped_column(Text)
+
+    __authz__: ClassVar[AuthzColumns]
+
+
+StaffLoan.__authz__ = AuthzColumns(owner_employee=StaffLoan.employee_id)
+
+
+class PayrollBank(IdMixin, Base):
+    """A bank and its CBN code, matched to the free-text bank on HR records."""
+
+    __tablename__ = "payroll_banks"
+
+    name: Mapped[str] = mapped_column(String(120), unique=True)
+    code: Mapped[str] = mapped_column(String(10))
+    other_names: Mapped[str | None] = mapped_column(Text)  # comma-separated
+    is_active: Mapped[bool] = mapped_column(Boolean, server_default="true")
+
+
+class PayrollAccounts(Base):
+    """Ledger account codes for payroll journals (one row; defaults to confirm)."""
+
+    __tablename__ = "payroll_accounts"
+    __table_args__ = (CheckConstraint("id = 1", name="single_row"),)
+
+    id: Mapped[int] = mapped_column(SmallInteger, primary_key=True)
+    salaries: Mapped[str] = mapped_column(String(20))
+    employer_pension: Mapped[str] = mapped_column(String(20))
+    employer_nsitf: Mapped[str] = mapped_column(String(20))
+    paye_payable: Mapped[str] = mapped_column(String(20))
+    pension_payable: Mapped[str] = mapped_column(String(20))
+    nhf_payable: Mapped[str] = mapped_column(String(20))
+    nhis_payable: Mapped[str] = mapped_column(String(20))
+    nsitf_payable: Mapped[str] = mapped_column(String(20))
+    deductions_payable: Mapped[str] = mapped_column(String(20))
+    net_pay_payable: Mapped[str] = mapped_column(String(20))
+    staff_loans: Mapped[str] = mapped_column(String(20))
+    bank: Mapped[str] = mapped_column(String(20))
+
+
+class PayrollJournal(IdMixin, Base):
+    """A balanced journal waiting for the ledger (Phase 10)."""
+
+    __tablename__ = "payroll_journals"
+    __table_args__ = (
+        CheckConstraint(_in("kind", JOURNAL_KINDS), name="kind"),
+        CheckConstraint(_in("status", JOURNAL_STATUSES), name="status"),
+        CheckConstraint("(run_id IS NULL) <> (loan_id IS NULL)", name="source"),
+    )
+
+    run_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("payroll_runs.id"), index=True)
+    loan_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("staff_loans.id"), index=True)
+    kind: Mapped[str] = mapped_column(String(8))
+    journal_date: Mapped[date]
+    memo: Mapped[str] = mapped_column(String(200))
+    status: Mapped[str] = mapped_column(String(8), server_default="queued")
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class PayrollJournalLine(IdMixin, Base):
+    __tablename__ = "payroll_journal_lines"
+    __table_args__ = (
+        CheckConstraint("debit >= 0 AND credit >= 0", name="amounts"),
+        CheckConstraint("(debit = 0) <> (credit = 0)", name="one_side"),
+    )
+
+    journal_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("payroll_journals.id", ondelete="CASCADE"), index=True
+    )
+    account: Mapped[str] = mapped_column(String(20))
+    cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    debit: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    credit: Mapped[Decimal] = mapped_column(Money, server_default="0")

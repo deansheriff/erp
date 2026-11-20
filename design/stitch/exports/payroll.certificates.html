@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;font-size:20px;line-height:1;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary-container":"#5a4bdb","surface-variant":"#e2e2e6","on-surface-variant":"#474554","ink":"#16162A","on-tertiary-fixed-variant":"#743400","iris-tint":"#EEECFD","inverse-primary":"#c5c0ff","ink-2":"#4B4B66","on-primary-fixed-variant":"#3d28be","info-text":"#1D55B8","tertiary-fixed-dim":"#ffb68b","surface-container-low":"#f3f3f7","danger-text":"#B4232F","on-error":"#ffffff","outline-variant":"#c8c4d7","secondary-fixed-dim":"#acd530","surface-tint":"#5646d7","on-background":"#1a1c1f","iris-hover":"#4A3CC4","surface":"#FFFFFF","surface-sunken":"#EFEFF6","background":"#f9f9fd","secondary-fixed":"#c7f24c","primary-fixed":"#e4dfff","on-secondary-container":"#536b00","on-primary-container":"#e0dbff","line-strong":"#8B8BA6","warning-text":"#8A4B00","primary":"#412ec2","secondary":"#4f6600","on-secondary":"#ffffff","on-surface":"#1a1c1f","tertiary-fixed":"#ffdbc8","iris":"#5A4BDB","on-primary-fixed":"#140067","on-secondary-fixed-variant":"#3b4d00","success-bg":"#DDF7E8","destructive":"#C42836","on-primary":"#ffffff","surface-container-high":"#e8e8ec","surface-bright":"#f9f9fd","on-error-container":"#93000a","tertiary-container":"#9f4a00","error":"#ba1a1a","lime-ink":"#4D7A0A","outline":"#787586","on-tertiary-fixed":"#321300","on-iris":"#FFFFFF","info-bg":"#DFEBFF","tertiary":"#7a3700","surface-dim":"#d9dade","secondary-container":"#c4ef49","inverse-surface":"#2e3034","line":"#E4E4EE","on-tertiary-container":"#ffd7c1","canvas":"#F6F6FA","lime":"#C5F04A","surface-container-lowest":"#ffffff","error-container":"#ffdad6","success-text":"#0F6B3E","on-tertiary":"#ffffff","warning-bg":"#FFF1D6","surface-container":"#ededf1","primary-fixed-dim":"#c5c0ff","inverse-on-surface":"#f0f0f4","surface-container-highest":"#e2e2e6","danger-bg":"#FFE4E6","on-secondary-fixed":"#161f00","ink-3":"#626280","surface-raised":"#FFFFFF"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xl":"2rem","margin":"2rem","space-md":"1rem","space-sm":"0.5rem","gutter":"1.5rem","space-2xl":"3rem","space-xs":"0.25rem","space-lg":"1.5rem","space-3xl":"4rem"},"fontFamily":{"stat":["Plus Jakarta Sans"],"h3":["Plus Jakarta Sans"],"label":["Inter"],"overline":["Inter"],"body-sm":["Inter"],"h2":["Plus Jakarta Sans"],"body":["Inter"],"h1":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"]},"fontSize":{"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-canvas font-body text-body text-ink antialiased min-h-screen"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface flex flex-col z-50 shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between border-b border-line shrink-0"><div class="flex items-center gap-space-sm min-w-0"><div class="w-8 h-8 rounded-lg bg-emerald-700 flex items-center justify-center shrink-0 shadow-sm"><span class="material-symbols-outlined text-surface text-[18px]">token</span></div><span class="font-h3 text-h3 text-ink truncate select-none tracking-tight">Adeyemi Holdings Ltd</span></div></div><div class="p-space-md pb-space-xs shrink-0"><button class="w-full flex items-center justify-between px-space-md py-space-sm bg-surface-sunken hover:bg-surface-variant text-ink-3 rounded-lg transition-colors" type="button"><span class="flex items-center gap-space-sm text-body-sm font-label"><span class="material-symbols-outlined text-[18px]">search</span><span>Search / Go to...</span></span><kbd class="px-1.5 py-0.5 rounded bg-surface border border-line text-[11px] font-label text-ink-2 shadow-sm">Ctrl K</kbd></button></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm"><nav class="space-y-1" data-active-classes="bg-emerald-50 text-emerald-800 font-semibold"><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="home" href="#"><span class="material-symbols-outlined">dashboard</span><span>Home</span></a><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="hr-and-people" href="#"><span class="material-symbols-outlined">group</span><span>HR &amp; People</span></a><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined">date_range</span><span>Leave</span></a><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined">schedule</span><span>Attendance</span></a><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined">receipt_long</span><span>Expenses</span></a><div class="space-y-1"><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg bg-emerald-50/70 text-emerald-800 font-label text-label font-semibold" data-path="payroll-overview" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-emerald-700">payments</span><span>Payroll</span></div><span class="material-symbols-outlined text-[16px] text-emerald-700">expand_more</span></a><div class="pl-8 pr-1 space-y-1 pt-1"><nav class="space-y-0.5 border-l border-emerald-100 pl-3" data-active-classes="bg-emerald-100/70 text-emerald-900 font-semibold"><a class="block px-space-sm py-1.5 rounded-md text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="payroll-runs" href="#">Runs</a><a class="block px-space-sm py-1.5 rounded-md text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="peoples-pay" href="#">People's pay</a><a class="block px-space-sm py-1.5 rounded-md text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="salary-structures" href="#">Salary structures</a><a class="block px-space-sm py-1.5 rounded-md text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="reliefs" href="#">Reliefs</a><a aria-current="page" class="block px-space-sm py-1.5 rounded-md transition-colors bg-emerald-100/70 text-emerald-900 font-semibold" data-path="tax-certificates" href="#">Tax certificates</a><a class="block px-space-sm py-1.5 rounded-md text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="payroll-settings" href="#">Settings</a></nav></div></div><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="finance" href="#"><span class="material-symbols-outlined">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined">assignment</span><span>Projects</span></a><a class="flex items-center gap-space-md px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="administration" href="#"><span class="material-symbols-outlined">admin_panel_settings</span><span>Administration</span></a></nav></div><div class="p-space-md border-t border-line shrink-0 space-y-2 bg-surface"><nav class="space-y-0.5" data-active-classes="bg-surface-sunken text-ink font-semibold"><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-body-sm" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[18px]">help_outline</span><span>Help &amp; documentation</span></a><a class="flex items-center gap-space-md px-space-md py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-body-sm" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a></nav><div class="pt-2 border-t border-line"><div class="flex items-center gap-3 px-space-sm py-1.5"><div class="w-9 h-9 rounded-full bg-emerald-700 flex items-center justify-center shrink-0 text-surface font-label font-bold text-xs select-none ring-2 ring-emerald-500/20">FB</div><div class="flex-1 min-w-0"><p class="text-body-sm font-label text-ink font-semibold truncate leading-tight">Fatima Bello</p><p class="text-overline font-overline text-ink-3 truncate leading-tight">Finance Manager / HR Lead</p></div><button class="text-ink-3 hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">unfold_more</span></button></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen relative"><div class="pointer-events-none fixed top-0 right-0 w-[640px] h-64 bg-emerald-500/10 rounded-full blur-[120px] -z-10 translate-x-1/4 -translate-y-1/2"></div><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 border-b border-line shadow-[0_1px_8px_rgba(22,22,42,0.03)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-sm min-w-0 shrink-0"><a class="text-ink-3 hover:text-ink font-label text-body-sm transition-colors" data-path="payroll-overview" href="#">Payroll</a><span class="text-line-strong select-none">/</span><span class="font-h3 text-h3 text-ink truncate">Tax certificates</span></div><div class="flex-1 max-w-lg mx-space-md hidden md:block"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 bg-surface-sunken border border-line rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:bg-surface transition-all" placeholder="Search employees, TIN, tax records..." type="text"/><kbd class="absolute right-2 px-1.5 py-0.5 rounded bg-surface border border-line text-[11px] font-label text-ink-3 shadow-sm select-none">Ctrl K</kbd></div></div><div class="flex items-center gap-space-sm shrink-0"><button aria-label="Approvals" class="relative w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button"><span class="material-symbols-outlined">task_alt</span><span class="absolute top-2 right-2 w-4 h-4 rounded-full bg-emerald-700 text-surface text-[10px] font-bold flex items-center justify-center leading-none ring-2 ring-surface">3</span></button><button aria-label="Notifications" class="w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button"><span class="material-symbols-outlined">notifications</span></button><button aria-label="Toggle theme" class="w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button"><span class="material-symbols-outlined">light_mode</span></button><div class="h-6 w-px bg-line mx-1"></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 flex-1 px-space-lg py-space-lg"><div class="flex flex-col w-full space-y-space-lg">
+<!-- PAGE HEADER & PRIMARY ACTION CONTROLS -->
+<div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-space-md">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Tax certificates</h1>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-overline font-overline bg-surface-container-high text-ink-2">
+<span class="material-symbols-outlined text-[14px] text-emerald-700">verified_user</span>
+          Statutory Form H1
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 max-w-3xl">
+        Annual statutory earnings, Consolidated Relief Allowance (CRA), and PAYE tax clearance certificates for statutory filing with State IRS (LIRS, FCT-IRS, and State Revenue Services).
+      </p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm shrink-0">
+<!-- Tax Year Select -->
+<div class="relative">
+<label class="sr-only" for="tax-year">Tax Year</label>
+<div class="flex items-center bg-surface border border-line rounded-lg px-3 py-2 shadow-sm focus-within:ring-2 focus-within:ring-iris transition-all">
+<span class="material-symbols-outlined text-ink-3 text-[18px] mr-1.5">calendar_month</span>
+<span class="text-overline font-overline text-ink-3 mr-2 uppercase">Tax Year</span>
+<select class="bg-transparent font-label text-label text-ink font-semibold focus:outline-none cursor-pointer pr-4" id="tax-year">
+<option selected="" value="2026">2026 (Current)</option>
+<option value="2025">2025 (Audited)</option>
+<option value="2024">2024 (Filed)</option>
+</select>
+</div>
+</div>
+<!-- Secondary Bulk Action -->
+<button class="h-10 px-4 rounded-lg bg-surface border border-line text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm font-semibold transition-all inline-flex items-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">file_download</span>
+<span>Export statutory schedule</span>
+<span class="text-overline font-overline px-1.5 py-0.5 bg-surface-sunken text-ink-3 rounded">CSV</span>
+</button>
+<!-- Primary Batch Action -->
+<button class="h-10 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-body-sm font-semibold transition-all inline-flex items-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+<span>Batch download certificates</span>
+</button>
+</div>
+</div>
+<!-- STATUTORY NOTICE & CYCLE RUN STATUS BANNER -->
+<div class="rounded-xl bg-surface border border-line shadow-sm overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12">
+<!-- Alert Message Box -->
+<div class="lg:col-span-7 p-space-md bg-warning-bg/40 border-b lg:border-b-0 lg:border-r border-line flex items-start gap-space-md">
+<div class="w-9 h-9 rounded-lg bg-warning-bg flex items-center justify-center shrink-0 text-warning-text mt-0.5">
+<span class="material-symbols-outlined text-[20px]">warning_amber</span>
+</div>
+<div class="space-y-1.5 flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-overline font-overline bg-warning-bg text-warning-text font-bold uppercase tracking-wider">
+              December 2026: not paid yet
+            </span>
+<span class="text-body-sm font-label text-ink font-semibold">Provisional 12-Month Projection Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 leading-relaxed">
+            Employees can download finalized slips once December runs are approved and paid. Certificates generated currently reflect 11 executed cycles plus provisional December projections pending cycle disbursement lock on <strong>25 Dec 2026</strong>.
+          </p>
+</div>
+</div>
+<!-- Quick High-Level Metrics -->
+<div class="lg:col-span-5 p-space-md bg-surface flex items-center justify-around divide-x divide-line">
+<div class="px-3 text-center sm:text-left">
+<span class="block text-overline font-overline text-ink-3 uppercase">Workforce</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-h2 text-h2 text-ink font-bold font-stat">86</span>
+<span class="text-overline font-overline text-success-text font-semibold">84 Active</span>
+</div>
+<span class="text-[11px] font-label text-ink-3">Enrolled in PAYE</span>
+</div>
+<div class="px-3 text-center sm:text-left">
+<span class="block text-overline font-overline text-ink-3 uppercase">Cumulative Gross</span>
+<div class="mt-0.5 font-h2 text-h2 text-ink font-bold font-stat [font-variant-numeric:tabular-nums]">
+            ₦381,920,000.00
+          </div>
+<span class="text-[11px] font-label text-ink-3">Statutory Base</span>
+</div>
+<div class="px-3 text-center sm:text-left">
+<span class="block text-overline font-overline text-ink-3 uppercase">PAYE Remitted</span>
+<div class="mt-0.5 font-h2 text-h2 text-emerald-800 font-bold font-stat [font-variant-numeric:tabular-nums]">
+            ₦38,903,800.00
+          </div>
+<span class="text-[11px] font-label text-ink-3">To State Services</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SPLIT MAIN WORKSPACE -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: SEARCH, FILTERS, DATA TABLE -->
+<div class="lg:col-span-7 xl:col-span-8 flex flex-col space-y-space-md min-w-0">
+<!-- TOOLBAR: FILTERS & SEARCH -->
+<div class="bg-surface p-space-md rounded-xl border border-line shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex-1 relative min-w-0">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-4 bg-surface-sunken border border-line rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris focus:bg-surface transition-all" placeholder="Search by employee name, EMP ID, or TIN..." type="text"/>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs shrink-0">
+<!-- Pay Group Filter -->
+<div class="relative">
+<select aria-label="Filter by pay group" class="h-10 pl-3 pr-8 bg-surface-sunken border border-line rounded-lg font-label text-body-sm text-ink focus:outline-none focus:ring-2 focus:ring-iris cursor-pointer appearance-none">
+<option value="all">All pay groups</option>
+<option value="staff">Staff &amp; Operations</option>
+<option value="mgmt">Management &amp; Executives</option>
+<option value="contract">Contract &amp; Logistics</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-ink-3 text-[16px]">expand_more</span>
+</div>
+<!-- State IRS Filter -->
+<div class="relative">
+<select aria-label="Filter by State IRS" class="h-10 pl-3 pr-8 bg-surface-sunken border border-line rounded-lg font-label text-body-sm text-ink focus:outline-none focus:ring-2 focus:ring-iris cursor-pointer appearance-none">
+<option value="all">All states (IRS)</option>
+<option selected="" value="lirs">Lagos (LIRS)</option>
+<option value="fct">FCT Abuja (FCT-IRS)</option>
+<option value="rivers">Rivers State (RIRS)</option>
+<option value="kano">Kano State (KIRS)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-ink-3 text-[16px]">expand_more</span>
+</div>
+<button aria-label="Table column display options" class="h-10 w-10 flex items-center justify-center rounded-lg border border-line text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">view_column</span>
+</button>
+</div>
+</div>
+<!-- MAIN DATA TABLE -->
+<div class="bg-surface rounded-2xl border border-line shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse text-body-sm font-body">
+<thead>
+<tr class="bg-surface-sunken text-overline font-overline text-ink-3 uppercase border-b border-line tracking-wider">
+<th class="py-3.5 px-3 whitespace-nowrap" scope="col">Employee &amp; ID</th>
+<th class="py-3.5 px-3 whitespace-nowrap" scope="col">State &amp; TIN</th>
+<th class="py-3.5 px-2 text-center whitespace-nowrap" scope="col">Months</th>
+<th class="py-3.5 px-3 text-right whitespace-nowrap" scope="col">Gross Pay (₦)</th>
+<th class="py-3.5 px-3 text-right whitespace-nowrap" scope="col">Pension (8%)</th>
+<th class="py-3.5 px-3 text-right whitespace-nowrap" scope="col">NHF (2.5%)</th>
+<th class="py-3.5 px-3 text-right whitespace-nowrap" scope="col">Rent Relief</th>
+<th class="py-3.5 px-3 text-right whitespace-nowrap" scope="col">Taxable Pay (₦)</th>
+<th class="py-3.5 px-3 text-right whitespace-nowrap" scope="col">PAYE Paid (₦)</th>
+<th class="py-3.5 px-3 text-center whitespace-nowrap" scope="col">Certificate</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line [font-variant-numeric:tabular-nums]">
+<!-- ROW 1: ACTIVE / SELECTED -->
+<tr class="bg-emerald-50/50 hover:bg-emerald-50 transition-colors group cursor-pointer border-l-4 border-emerald-600">
+<td class="py-3 px-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-emerald-700 text-surface flex items-center justify-center font-bold text-xs select-none">
+                      AO
+                    </div>
+<div class="min-w-0">
+<p class="font-label text-body-sm font-semibold text-ink group-hover:text-emerald-950 truncate">Amaka Okafor</p>
+<p class="text-[11px] font-mono text-ink-3">EMP-00042 · Sr. Accountant</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-body-sm font-label text-ink">Lagos (LIRS)</div>
+<div class="text-[11px] font-mono text-ink-3">23456789-0001</div>
+</td>
+<td class="py-3 px-2 text-center">
+<span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-surface border border-line text-ink">12 mo</span>
+</td>
+<td class="py-3 px-3 text-right font-medium text-ink">4,440,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">336,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">60,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">360,000.00</td>
+<td class="py-3 px-3 text-right font-medium text-ink">2,684,000.00</td>
+<td class="py-3 px-3 text-right font-semibold text-emerald-800">452,300.00</td>
+<td class="py-3 px-3 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-700 text-surface text-overline font-overline hover:bg-emerald-800 transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[14px]">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</td>
+</tr>
+<!-- ROW 2 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="py-3 px-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-bold text-xs select-none">
+                      BA
+                    </div>
+<div class="min-w-0">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Babatunde Adeyemi</p>
+<p class="text-[11px] font-mono text-ink-3">EMP-00003 · VP Operations</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-body-sm font-label text-ink">Lagos (LIRS)</div>
+<div class="text-[11px] font-mono text-ink-3">10982344-0002</div>
+</td>
+<td class="py-3 px-2 text-center">
+<span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-surface-sunken text-ink-2">12 mo</span>
+</td>
+<td class="py-3 px-3 text-right font-medium text-ink">15,000,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">1,200,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">100,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">500,000.00</td>
+<td class="py-3 px-3 text-right font-medium text-ink">10,200,000.00</td>
+<td class="py-3 px-3 text-right font-semibold text-emerald-800">2,142,000.00</td>
+<td class="py-3 px-3 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface border border-line text-ink hover:bg-surface-sunken text-overline font-overline transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px] text-ink-2">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</td>
+</tr>
+<!-- ROW 3 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="py-3 px-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-bold text-xs select-none">
+                      CE
+                    </div>
+<div class="min-w-0">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Chinedu Eze</p>
+<p class="text-[11px] font-mono text-ink-3">EMP-00109 · Systems Engineer</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-body-sm font-label text-ink">Lagos (LIRS)</div>
+<div class="text-[11px] font-mono text-ink-3">38291044-0005</div>
+</td>
+<td class="py-3 px-2 text-center">
+<span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-surface-sunken text-ink-2">12 mo</span>
+</td>
+<td class="py-3 px-3 text-right font-medium text-ink">5,040,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">403,200.00</td>
+<td class="py-3 px-3 text-right text-ink-2">72,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">500,000.00</td>
+<td class="py-3 px-3 text-right font-medium text-ink">3,064,800.00</td>
+<td class="py-3 px-3 text-right font-semibold text-emerald-800">536,360.00</td>
+<td class="py-3 px-3 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface border border-line text-ink hover:bg-surface-sunken text-overline font-overline transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px] text-ink-2">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</td>
+</tr>
+<!-- ROW 4 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="py-3 px-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-bold text-xs select-none">
+                      SA
+                    </div>
+<div class="min-w-0">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Segun Afolabi</p>
+<p class="text-[11px] font-mono text-ink-3">EMP-00088 · Fleet Supervisor</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-body-sm font-label text-ink">Lagos (LIRS)</div>
+<div class="text-[11px] font-mono text-ink-3">44920199-0008</div>
+</td>
+<td class="py-3 px-2 text-center">
+<span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-surface-sunken text-ink-2">12 mo</span>
+</td>
+<td class="py-3 px-3 text-right font-medium text-ink">3,360,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">268,800.00</td>
+<td class="py-3 px-3 text-right text-ink-2">48,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">240,000.00</td>
+<td class="py-3 px-3 text-right font-medium text-ink">2,131,200.00</td>
+<td class="py-3 px-3 text-right font-semibold text-emerald-800">319,680.00</td>
+<td class="py-3 px-3 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface border border-line text-ink hover:bg-surface-sunken text-overline font-overline transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px] text-ink-2">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</td>
+</tr>
+<!-- ROW 5 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="py-3 px-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-bold text-xs select-none">
+                      HS
+                    </div>
+<div class="min-w-0">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Halima Sani</p>
+<p class="text-[11px] font-mono text-ink-3">EMP-00215 · Procurement Lead</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-body-sm font-label text-ink">Kano (KIRS)</div>
+<div class="text-[11px] font-mono text-ink-3">55819203-0011</div>
+</td>
+<td class="py-3 px-2 text-center">
+<span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-surface-sunken text-ink-2">12 mo</span>
+</td>
+<td class="py-3 px-3 text-right font-medium text-ink">3,720,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">297,600.00</td>
+<td class="py-3 px-3 text-right text-ink-2">52,800.00</td>
+<td class="py-3 px-3 text-right text-ink-2">280,000.00</td>
+<td class="py-3 px-3 text-right font-medium text-ink">2,369,600.00</td>
+<td class="py-3 px-3 text-right font-semibold text-emerald-800">367,240.00</td>
+<td class="py-3 px-3 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface border border-line text-ink hover:bg-surface-sunken text-overline font-overline transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px] text-ink-2">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</td>
+</tr>
+<!-- ROW 6 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="py-3 px-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-bold text-xs select-none">
+                      KO
+                    </div>
+<div class="min-w-0">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Kelechi Obi</p>
+<p class="text-[11px] font-mono text-ink-3">EMP-00064 · Treasury Lead</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-body-sm font-label text-ink">FCT Abuja (FCT-IRS)</div>
+<div class="text-[11px] font-mono text-ink-3">67109283-0014</div>
+</td>
+<td class="py-3 px-2 text-center">
+<span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-surface-sunken text-ink-2">12 mo</span>
+</td>
+<td class="py-3 px-3 text-right font-medium text-ink">5,880,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">470,400.00</td>
+<td class="py-3 px-3 text-right text-ink-2">84,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">450,000.00</td>
+<td class="py-3 px-3 text-right font-medium text-ink">3,675,600.00</td>
+<td class="py-3 px-3 text-right font-semibold text-emerald-800">661,600.00</td>
+<td class="py-3 px-3 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface border border-line text-ink hover:bg-surface-sunken text-overline font-overline transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px] text-ink-2">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</td>
+</tr>
+<!-- ROW 7 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="py-3 px-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-sunken text-ink-2 flex items-center justify-center font-bold text-xs select-none">
+                      AM
+                    </div>
+<div class="min-w-0">
+<p class="font-label text-body-sm font-semibold text-ink truncate">Aisha Mohammed</p>
+<p class="text-[11px] font-mono text-ink-3">EMP-00215 · HR Specialist</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-body-sm font-label text-ink">Rivers (RIRS)</div>
+<div class="text-[11px] font-mono text-ink-3">78912304-0020</div>
+</td>
+<td class="py-3 px-2 text-center">
+<span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-semibold bg-surface-sunken text-ink-2">12 mo</span>
+</td>
+<td class="py-3 px-3 text-right font-medium text-ink">3,960,000.00</td>
+<td class="py-3 px-3 text-right text-ink-2">316,800.00</td>
+<td class="py-3 px-3 text-right text-ink-2">56,400.00</td>
+<td class="py-3 px-3 text-right text-ink-2">300,000.00</td>
+<td class="py-3 px-3 text-right font-medium text-ink">2,566,800.00</td>
+<td class="py-3 px-3 text-right font-semibold text-emerald-800">410,690.00</td>
+<td class="py-3 px-3 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface border border-line text-ink hover:bg-surface-sunken text-overline font-overline transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px] text-ink-2">picture_as_pdf</span>
+<span>PDF</span>
+</button>
+</td>
+</tr>
+</tbody>
+<!-- STATUTORY TOTALS ROW -->
+<tfoot>
+<tr class="bg-surface-sunken font-semibold text-ink border-t-2 border-line-strong border-b-2">
+<td class="py-3.5 px-3" colspan="2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-800 text-[18px]">functions</span>
+<span class="font-h3 text-h3 text-ink">Total (86 enrolled employees)</span>
+</div>
+</td>
+<td class="py-3.5 px-2 text-center text-ink-2 font-mono text-body-sm">
+                  1,032 mo
+                </td>
+<td class="py-3.5 px-3 text-right font-bold text-ink">
+                  ₦381,920,000.00
+                </td>
+<td class="py-3.5 px-3 text-right text-ink-2">
+                  ₦30,553,600.00
+                </td>
+<td class="py-3.5 px-3 text-right text-ink-2">
+                  ₦5,456,000.00
+                </td>
+<td class="py-3.5 px-3 text-right text-ink-2">
+                  ₦28,400,000.00
+                </td>
+<td class="py-3.5 px-3 text-right font-bold text-ink">
+                  ₦244,430,400.00
+                </td>
+<td class="py-3.5 px-3 text-right font-bold text-emerald-800 text-[15px]">
+                  ₦38,903,800.00
+                </td>
+<td class="py-3.5 px-3 text-center text-overline font-overline text-ink-3">
+                  ALL COMPILED
+                </td>
+</tr>
+</tfoot>
+</table>
+</div>
+<!-- TABLE PAGINATION FOOTER -->
+<div class="px-space-md py-3 bg-surface border-t border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-body-sm text-ink-3">
+<div class="flex items-center gap-3">
+<span>Showing <span class="font-semibold text-ink">1–7</span> of <span class="font-semibold text-ink">86</span> employees</span>
+<div class="flex items-center gap-1.5 pl-3 border-l border-line">
+<span>Per page:</span>
+<select aria-label="Rows per page" class="bg-surface-sunken border border-line rounded px-1.5 py-0.5 text-xs text-ink font-semibold focus:outline-none">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-line text-ink-3 opacity-40 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-emerald-700 text-surface font-semibold text-xs shadow-sm" type="button">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-sunken text-ink text-xs font-semibold transition-colors" type="button">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-sunken text-ink text-xs font-semibold transition-colors" type="button">3</button>
+<span class="px-1 text-ink-3 text-xs">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-sunken text-ink text-xs font-semibold transition-colors" type="button">9</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-line hover:bg-surface-sunken text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- INFORMATIVE AUDIT STAMP & COMPLIANCE BAR -->
+<div class="p-space-md rounded-xl bg-surface border border-line flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div>
+<p class="font-label text-body-sm font-semibold text-ink">State IRS Acceptance Guarantee</p>
+<p class="text-overline font-overline text-ink-3">All generated Form H1 schedules and individual deduction cards comply with Section 81 PITA (Cap P8 LFN 2004).</p>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-[11px] font-mono text-ink-2">LIRS eTax Sync OK</span>
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-[11px] font-mono text-ink-2">JTB TIN Verified</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: CERTIFICATE PREVIEW (FORM H1 / PITA 2026) -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col space-y-space-md sticky top-20">
+<!-- PREVIEW TOP CONTROLS -->
+<div class="flex items-center justify-between bg-surface p-3 rounded-xl border border-line shadow-sm">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 text-overline font-overline font-bold uppercase tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+            Previewing: EMP-00042
+          </span>
+</div>
+<div class="flex items-center gap-1.5">
+<button aria-label="Zoom out" class="w-8 h-8 flex items-center justify-center rounded text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">zoom_out</span>
+</button>
+<span class="text-overline font-overline text-ink-3 px-1">100%</span>
+<button aria-label="Zoom in" class="w-8 h-8 flex items-center justify-center rounded text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">zoom_in</span>
+</button>
+<div class="w-px h-5 bg-line mx-1"></div>
+<button class="h-8 px-2.5 rounded bg-iris hover:bg-iris-hover text-on-iris font-label text-xs font-semibold transition-all inline-flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[15px]">download</span>
+<span>Download</span>
+</button>
+</div>
+</div>
+<!-- SIMULATED OFFICIAL A4 TAX CERTIFICATE DOCUMENT -->
+<div class="bg-surface rounded-2xl border-2 border-line shadow-lg p-5 sm:p-6 space-y-4 text-ink relative overflow-hidden bg-gradient-to-b from-surface via-surface to-surface-sunken/20">
+<!-- Watermark background seal -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-[0.03] select-none rotate-12">
+<span class="material-symbols-outlined text-[380px]">shield</span>
+</div>
+<!-- DOCUMENT HEADER -->
+<div class="border-b-2 border-ink pb-3 text-center space-y-1 relative">
+<div class="flex items-center justify-center gap-2 mb-1">
+<div class="w-6 h-6 rounded bg-emerald-800 text-surface flex items-center justify-center text-[12px] font-bold">A</div>
+<span class="font-h2 text-h3 text-ink uppercase tracking-wider font-extrabold">Adeyemi Holdings Limited</span>
+</div>
+<p class="text-[10px] text-ink-2 uppercase tracking-wide leading-tight">
+            14 Adeola Odeku Street, Victoria Island, Lagos State, Nigeria
+          </p>
+<p class="text-[9px] font-mono text-ink-3">
+            RC: 1234567 • TIN: 12345678-0001 • Tax Office: LIRS Micro Station VI
+          </p>
+<div class="pt-2">
+<h2 class="font-h3 text-[13px] font-extrabold uppercase tracking-tight text-ink bg-surface-sunken py-1 px-2 rounded inline-block">
+              Certificate of PAYE Tax Deductions &amp; Statutory Earnings
+            </h2>
+<p class="text-[9px] font-medium text-ink-3 uppercase tracking-wider mt-0.5">
+              Tax Year 2026 • Form H1 Compliance Notice (Sec. 81 PITA)
+            </p>
+</div>
+</div>
+<!-- EMPLOYEE PARTICULARS BOX -->
+<div class="bg-surface-sunken/70 rounded-lg p-3 border border-line text-[11px] grid grid-cols-2 gap-x-4 gap-y-1.5">
+<div>
+<span class="text-ink-3 block text-[9px] uppercase font-semibold">Employee Name:</span>
+<span class="font-bold text-ink text-[12px]">Amaka Chioma Okafor</span>
+</div>
+<div>
+<span class="text-ink-3 block text-[9px] uppercase font-semibold">Staff Identity ID:</span>
+<span class="font-mono font-bold text-ink">EMP-00042</span>
+</div>
+<div>
+<span class="text-ink-3 block text-[9px] uppercase font-semibold">Designation &amp; Dept:</span>
+<span class="text-ink font-medium">Senior Accountant (Finance)</span>
+</div>
+<div>
+<span class="text-ink-3 block text-[9px] uppercase font-semibold">Individual TIN:</span>
+<span class="font-mono font-bold text-emerald-900 bg-emerald-50 px-1 py-0.5 rounded">23456789-0001</span>
+</div>
+<div class="col-span-2 pt-1 border-t border-line/60 flex justify-between items-center text-[10px]">
+<span><strong>Period Covered:</strong> 01 Jan 2026 – 31 Dec 2026 (12 Months)</span>
+<span class="text-ink-3">State IRS: <strong>Lagos (LIRS)</strong></span>
+</div>
+</div>
+<!-- MONTH-BY-MONTH MINI SCHEDULE BREAKDOWN -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between text-[10px] font-bold uppercase text-ink-3 tracking-wider">
+<span>Schedule of Remittances</span>
+<span class="text-[9px] font-normal text-warning-text">* Dec 2026 = Projected</span>
+</div>
+<div class="border border-line rounded-lg overflow-hidden">
+<table class="w-full text-left text-[10px] [font-variant-numeric:tabular-nums]">
+<thead class="bg-surface-sunken text-ink-3 font-semibold border-b border-line uppercase">
+<tr>
+<th class="py-1 px-2">Cycle</th>
+<th class="py-1 px-1.5 text-right">Gross (₦)</th>
+<th class="py-1 px-1.5 text-right">Taxable (₦)</th>
+<th class="py-1 px-2 text-right">PAYE Paid (₦)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line/70 font-mono text-ink">
+<tr>
+<td class="py-1 px-2 font-sans text-ink-2 font-medium">Jan 2026</td>
+<td class="py-1 px-1.5 text-right">370,000.00</td>
+<td class="py-1 px-1.5 text-right text-ink-2">223,666.67</td>
+<td class="py-1 px-2 text-right font-semibold text-emerald-800">37,691.67</td>
+</tr>
+<tr>
+<td class="py-1 px-2 font-sans text-ink-2 font-medium">Feb 2026</td>
+<td class="py-1 px-1.5 text-right">370,000.00</td>
+<td class="py-1 px-1.5 text-right text-ink-2">223,666.67</td>
+<td class="py-1 px-2 text-right font-semibold text-emerald-800">37,691.67</td>
+</tr>
+<tr class="bg-surface-sunken/40">
+<td class="py-1 px-2 font-sans text-ink-3 italic" colspan="4">
+                    ••• Mar through Oct 2026 remitted systematically (8 cycles @ ₦37,691.67/mo)
+                  </td>
+</tr>
+<tr>
+<td class="py-1 px-2 font-sans text-ink-2 font-medium">Nov 2026</td>
+<td class="py-1 px-1.5 text-right">370,000.00</td>
+<td class="py-1 px-1.5 text-right text-ink-2">223,666.67</td>
+<td class="py-1 px-2 text-right font-semibold text-emerald-800">37,691.67</td>
+</tr>
+<tr class="bg-warning-bg/20">
+<td class="py-1 px-2 font-sans text-warning-text font-semibold flex items-center gap-1">
+                    Dec 2026 <span class="text-[8px] px-1 bg-warning-bg text-warning-text rounded font-sans uppercase">Est</span>
+</td>
+<td class="py-1 px-1.5 text-right">370,000.00</td>
+<td class="py-1 px-1.5 text-right text-ink-2">223,666.67</td>
+<td class="py-1 px-2 text-right font-semibold text-emerald-800">37,691.63</td>
+</tr>
+<tr class="bg-surface-sunken font-bold border-t-2 border-line">
+<td class="py-1.5 px-2 font-sans uppercase text-[10px]">Annual Total</td>
+<td class="py-1.5 px-1.5 text-right">4,440,000.00</td>
+<td class="py-1.5 px-1.5 text-right">2,684,000.00</td>
+<td class="py-1.5 px-2 text-right text-emerald-900 text-[11px]">452,300.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- STATUTORY RELIEFS APPLIED SUMMARY -->
+<div class="space-y-1.5 bg-surface p-2.5 rounded-lg border border-line text-[10px]">
+<div class="font-bold uppercase text-ink-3 tracking-wider text-[9px] flex justify-between items-center">
+<span>Statutory Reliefs &amp; Deductions Applied</span>
+<span class="text-emerald-700 font-semibold font-mono">PITA §33</span>
+</div>
+<div class="grid grid-cols-2 gap-x-2 gap-y-1 font-mono">
+<div class="flex justify-between border-b border-line/50 pb-0.5">
+<span class="font-sans text-ink-2">Base CRA (₦200k / 1%):</span>
+<span class="font-semibold text-ink">₦200,000.00</span>
+</div>
+<div class="flex justify-between border-b border-line/50 pb-0.5">
+<span class="font-sans text-ink-2">20% CRA Relief:</span>
+<span class="font-semibold text-ink">₦888,000.00</span>
+</div>
+<div class="flex justify-between border-b border-line/50 pb-0.5">
+<span class="font-sans text-ink-2">Rent Relief (CRA Cap):</span>
+<span class="font-semibold text-ink">₦360,000.00</span>
+</div>
+<div class="flex justify-between border-b border-line/50 pb-0.5">
+<span class="font-sans text-ink-2">Pension Contribution (8%):</span>
+<span class="font-semibold text-ink">₦336,000.00</span>
+</div>
+<div class="col-span-2 flex justify-between pt-0.5">
+<span class="font-sans text-ink-2">National Housing Fund (NHF 2.5%):</span>
+<span class="font-semibold text-ink">₦60,000.00</span>
+</div>
+</div>
+</div>
+<!-- OFFICIAL SIGNATURE & DIGITAL SEAL BLOCK -->
+<div class="pt-2 border-t border-line grid grid-cols-2 items-end gap-3 text-[10px]">
+<!-- Official Audit Validation Stamp -->
+<div class="p-2 rounded border border-emerald-300 bg-emerald-50/60 relative">
+<div class="flex items-center gap-1.5 text-emerald-800 font-bold text-[9px] uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Audit Stamp Valid</span>
+</div>
+<p class="text-[8px] font-mono text-ink-3 mt-1 leading-tight">
+              SHA256: 9e4a81fd4091a13e8f21<br/>
+              TIMESTAMP: 2026-12-18T10:14Z
+            </p>
+</div>
+<!-- Signatory Box -->
+<div class="text-right">
+<div class="h-7 flex items-end justify-end mb-0.5">
+<!-- Simulated cursive signature -->
+<span class="font-serif italic font-bold text-ink text-[16px] tracking-wide select-none transform -rotate-2">Fatima Bello</span>
+</div>
+<div class="border-t border-ink-3/50 pt-0.5">
+<p class="font-semibold text-ink text-[10px] leading-tight">Fatima Bello</p>
+<p class="text-[8px] text-ink-3 uppercase leading-tight">Finance Lead • Auth Signatory</p>
+</div>
+</div>
+</div>
+<!-- Document Security Micro-footer -->
+<div class="text-[8px] text-center text-ink-3 pt-1 border-t border-line/40 flex items-center justify-between">
+<span>Form H1 / REF: AHL-PAYE-2026-00042</span>
+<span>Joint Tax Board (JTB) Electronic Certification</span>
+</div>
+</div>
+<!-- SIDEBAR STATUTORY ACTION CARD -->
+<div class="bg-surface-sunken p-space-md rounded-xl border border-line space-y-2">
+<div class="flex items-center gap-2 text-ink font-label text-body-sm font-semibold">
+<span class="material-symbols-outlined text-[18px] text-iris">send_and_archive</span>
+<span>Annual State IRS Submissions</span>
+</div>
+<p class="text-overline font-overline text-ink-2 font-normal">
+          Statutory annual tax returns (Form H1) must be filed by <strong>31 January 2027</strong>. Pre-formatted schedules are ready for direct upload to the LIRS eTax and FCT-IRS portals.
+        </p>
+<div class="pt-1 flex items-center justify-between">
+<a class="text-xs font-semibold text-iris hover:underline inline-flex items-center gap-1" href="#">
+<span>View filing guidelines</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+<span class="text-[11px] font-mono font-semibold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded">
+            Audit Ready
+          </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Interactive row selection to mirror preview state
+  document.addEventListener('DOMContentLoaded', () => {
+    const tableRows = document.querySelectorAll('tbody tr');
+    tableRows.forEach(row => {
+      row.addEventListener('click', () => {
+        tableRows.forEach(r => {
+          r.classList.remove('bg-emerald-50/50', 'border-l-4', 'border-emerald-600');
+          r.classList.add('hover:bg-surface-sunken/60');
+        });
+        row.classList.add('bg-emerald-50/50', 'border-l-4', 'border-emerald-600');
+        row.classList.remove('hover:bg-surface-sunken/60');
+      });
+    });
+  });
+</script></main></div></body></html>

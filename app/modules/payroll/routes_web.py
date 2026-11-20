@@ -16,7 +16,7 @@ from app.core.db import get_db
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
 from app.modules.hr import service as people
-from app.modules.payroll import reliefs, service, setup, statutory
+from app.modules.payroll import ledger, reliefs, service, setup, statutory
 from app.modules.payroll.statutory import PERCENT_FIELDS
 from app.web.access import require_actor
 from app.web.forms import parse_day
@@ -557,6 +557,9 @@ def _settings_context(
         "selected": chosen,
         "bands": statutory.bands_of(db, chosen) if chosen else [],
         "percent_fields": PERCENT_FIELDS,
+        "accounts": ledger.accounts(db),
+        "account_fields": ledger.ACCOUNT_FIELDS,
+        "banks": ledger.list_banks(db),
         "editing": "",
         "values": {},
         "errors": {},
@@ -639,3 +642,81 @@ def save_settings(
         )
         return _render(request, "payroll/settings.html", context, 422)
     return _see_other(f"/payroll/settings?set={saved}&notice=1")
+
+
+@router.post("/payroll/settings/accounts", response_class=HTMLResponse)
+@requires("payroll.settings.manage")
+@screen("payroll.settings")
+def save_accounts(
+    request: Request,
+    db: Db,
+    actor: CurrentActor,
+    salaries: FormStr = "",
+    employer_pension: FormStr = "",
+    employer_nsitf: FormStr = "",
+    paye_payable: FormStr = "",
+    pension_payable: FormStr = "",
+    nhf_payable: FormStr = "",
+    nhis_payable: FormStr = "",
+    nsitf_payable: FormStr = "",
+    deductions_payable: FormStr = "",
+    net_pay_payable: FormStr = "",
+    staff_loans: FormStr = "",
+    bank: FormStr = "",
+) -> Response:
+    values = {
+        "salaries": salaries,
+        "employer_pension": employer_pension,
+        "employer_nsitf": employer_nsitf,
+        "paye_payable": paye_payable,
+        "pension_payable": pension_payable,
+        "nhf_payable": nhf_payable,
+        "nhis_payable": nhis_payable,
+        "nsitf_payable": nsitf_payable,
+        "deductions_payable": deductions_payable,
+        "net_pay_payable": net_pay_payable,
+        "staff_loans": staff_loans,
+        "bank": bank,
+    }
+    try:
+        with db.begin_nested():
+            ledger.save_accounts(db, actor, values)
+    except (ValidationFailed, Conflict, PermissionDenied) as exc:
+        context = _settings_context(
+            db, actor, values=values, errors=_errors(exc), editing="accounts"
+        )
+        return _render(request, "payroll/settings.html", context, 422)
+    return _see_other("/payroll/settings?notice=1#accounts")
+
+
+@router.post("/payroll/settings/banks", response_class=HTMLResponse)
+@requires("payroll.settings.manage")
+@screen("payroll.settings")
+def save_bank(
+    request: Request,
+    db: Db,
+    actor: CurrentActor,
+    bank_id: FormStr = "",
+    bank_name: FormStr = "",
+    bank_code: FormStr = "",
+    other_names: FormStr = "",
+    is_active: FormStr = "",
+) -> Response:
+    try:
+        with db.begin_nested():
+            ledger.save_bank(
+                db,
+                actor,
+                _uuid(bank_id),
+                name=bank_name,
+                code=bank_code,
+                other_names=other_names,
+                is_active=bool(is_active) or not bank_id,
+            )
+    except (ValidationFailed, Conflict, PermissionDenied) as exc:
+        values = {"bank_name": bank_name, "bank_code": bank_code, "other_names": other_names}
+        context = _settings_context(
+            db, actor, values=values, errors=_errors(exc), editing=f"bank:{bank_id or 'new'}"
+        )
+        return _render(request, "payroll/settings.html", context, 422)
+    return _see_other("/payroll/settings?notice=1#banks")

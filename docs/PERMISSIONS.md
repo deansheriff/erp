@@ -108,11 +108,16 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 
 | Key | Permission | Scopes | Sensitive | Description |
 |---|---|---|---|---|
+| `payroll.certificate.read` | Download tax certificates | Self, Team, Department, Organisation | yes | Year-end tax certificates within scope (your own once December is paid). |
+| `payroll.loan.approve` | Approve staff loans | Organisation | yes | Approve or reject recorded loans and salary advances. |
+| `payroll.loan.manage` | Record staff loans | Organisation | yes | Record loans and salary advances, and cancel ones not yet repaid. |
+| `payroll.loan.read` | View staff loans | Self, Team, Department, Organisation | yes | See loans and salary advances within scope, with their repayments. |
 | `payroll.pay.manage` | Manage people's pay | Organisation | yes | Set people's pay group, salary structure, amounts and recurring deductions. |
 | `payroll.pay.read` | View people's pay | Self, Team, Department, Organisation | yes | See pay records, components and amounts within scope. |
 | `payroll.payslip.read` | View payslips | Self, Team, Department, Organisation | yes | See payslips within scope (your own once the run is paid). |
 | `payroll.relief.declare` | Declare rent for tax relief | Self, Team, Department, Organisation |  | Declare annual rent with proof, for PAYE rent relief. |
 | `payroll.relief.verify` | Verify rent relief | Organisation | yes | Verify or reject rent declarations. |
+| `payroll.remittance.export` | Download remittance files | Organisation | yes | The bank payment file and PAYE, pension and NHF schedules, with account numbers, TINs, RSA PINs and NHF numbers. |
 | `payroll.run.approve` | Approve payroll runs | Organisation | yes | Approve a reviewed run (payslips are generated), or send it back. |
 | `payroll.run.pay` | Mark payroll runs paid | Organisation | yes | Mark a posted run paid; employees then see their payslips. |
 | `payroll.run.post` | Post payroll runs | Organisation | yes | Post an approved run. |
@@ -194,11 +199,16 @@ Everything, including technical settings. Can't be edited or removed.
 | `org.assignment.manage` | O |
 | `org.structure.manage` | O |
 | `org.structure.read` | O |
+| `payroll.certificate.read` | O |
+| `payroll.loan.approve` | O |
+| `payroll.loan.manage` | O |
+| `payroll.loan.read` | O |
 | `payroll.pay.manage` | O |
 | `payroll.pay.read` | O |
 | `payroll.payslip.read` | O |
 | `payroll.relief.declare` | O |
 | `payroll.relief.verify` | O |
+| `payroll.remittance.export` | O |
 | `payroll.run.approve` | O |
 | `payroll.run.pay` | O |
 | `payroll.run.post` | O |
@@ -271,11 +281,16 @@ Everything except technical settings such as mail, branding and security.
 | `org.assignment.manage` | O |
 | `org.structure.manage` | O |
 | `org.structure.read` | O |
+| `payroll.certificate.read` | O |
+| `payroll.loan.approve` | O |
+| `payroll.loan.manage` | O |
+| `payroll.loan.read` | O |
 | `payroll.pay.manage` | O |
 | `payroll.pay.read` | O |
 | `payroll.payslip.read` | O |
 | `payroll.relief.declare` | O |
 | `payroll.relief.verify` | O |
+| `payroll.remittance.export` | O |
 | `payroll.run.approve` | O |
 | `payroll.run.pay` | O |
 | `payroll.run.post` | O |
@@ -305,6 +320,8 @@ Reads everything, including the audit log. Changes nothing.
 | `leave.balance.read` | O |
 | `leave.request.read` | O |
 | `org.structure.read` | O |
+| `payroll.certificate.read` | O |
+| `payroll.loan.read` | O |
 | `payroll.pay.read` | O |
 | `payroll.payslip.read` | O |
 | `payroll.run.read` | O |
@@ -332,6 +349,8 @@ Self-service: their own profile, requests and payslips.
 | `leave.balance.read` | S |
 | `leave.request.create` | S |
 | `leave.request.read` | S |
+| `payroll.certificate.read` | S |
+| `payroll.loan.read` | S |
 | `payroll.pay.read` | S |
 | `payroll.payslip.read` | S |
 | `payroll.relief.declare` | S |
@@ -436,10 +455,14 @@ Prepares payroll runs.
 
 | Permission | Scope |
 |---|---|
+| `payroll.certificate.read` | O |
+| `payroll.loan.manage` | O |
+| `payroll.loan.read` | O |
 | `payroll.pay.manage` | O |
 | `payroll.pay.read` | O |
 | `payroll.payslip.read` | O |
 | `payroll.relief.verify` | O |
+| `payroll.remittance.export` | O |
 | `payroll.run.prepare` | O |
 | `payroll.run.read` | O |
 | `payroll.run.review` | O |
@@ -452,6 +475,8 @@ Day-to-day accounting.
 | Permission | Scope |
 |---|---|
 | `expenses.claim.read` | O |
+| `payroll.loan.read` | O |
+| `payroll.remittance.export` | O |
 | `payroll.run.pay` | O |
 | `payroll.run.read` | O |
 
@@ -465,6 +490,10 @@ Approves and posts finance documents.
 | `expenses.claim.approve_finance` | O |
 | `expenses.claim.read` | O |
 | `expenses.settings.manage` | O |
+| `payroll.certificate.read` | O |
+| `payroll.loan.approve` | O |
+| `payroll.loan.read` | O |
+| `payroll.remittance.export` | O |
 | `payroll.run.approve` | O |
 | `payroll.run.post` | O |
 | `payroll.run.read` | O |
@@ -528,5 +557,7 @@ _No grants yet: added by the phase that delivers its module._
 | `expenses.no_self_reimburse` | `expenses.claim.reimburse` | owner_is_actor | You can't pay your own claim. |
 | `payroll.no_self_pay_change` | `payroll.pay.manage` | subject_is_actor | You can't change your own pay. |
 | `payroll.no_self_relief` | `payroll.relief.verify` | owner_is_actor | You can't verify your own rent declaration. |
+| `payroll.no_self_loan` | `payroll.loan.approve` | owner_is_actor | You can't approve your own loan. |
+| `payroll.loan_four_eyes` | `payroll.loan.approve` | creator_is_actor | Someone else approves a loan you recorded. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

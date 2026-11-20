@@ -1,0 +1,55 @@
+{# Payroll → Year-end tax certificates (ADR 0022).
+   Design: design/stitch/exports/payroll.certificates.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Tax certificates", "Pay and PAYE by month for each person, from approved runs.") %}
+  <form method="get" action="/payroll/certificates" x-data="autoSubmit">
+    <label for="f-year" class="sr-only">Tax year</label>
+    <select id="f-year" name="year" class="kx-input h-10 w-32" x-on:change="send">{% for y in view.years %}<option value="{{ y }}" {% if y == view.year %}selected{% endif %}>{{ y }}</option>{% endfor %}</select>
+    <noscript><button type="submit" class="kx-btn-secondary">Show</button></noscript>
+  </form>
+{% endcall %}
+
+<div class="mt-5">
+  {% if view.december_paid %}
+  {{ ui.alert("success", "December " ~ view.year ~ " is paid: employees can download their own certificates from My payslips.") }}
+  {% else %}
+  {{ ui.alert("warning", "Employees can download theirs once December's runs are paid. December " ~ view.year ~ ": not paid yet.") }}
+  {% endif %}
+</div>
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Certificates for {{ view.year }}">
+  {% if view.rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[980px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3">
+        <tr><th class="px-4 py-3 text-left font-semibold">Person</th><th class="px-3 py-3 text-left font-semibold">State</th><th class="px-3 py-3 text-right font-semibold">Months</th><th class="px-3 py-3 text-right font-semibold">Gross pay</th><th class="px-3 py-3 text-right font-semibold">Pension</th><th class="px-3 py-3 text-right font-semibold">NHF, NHIS</th><th class="whitespace-nowrap px-3 py-3 text-right font-semibold">Rent relief</th><th class="px-3 py-3 text-right font-semibold">Taxable pay</th><th class="px-3 py-3 text-right font-semibold">PAYE</th><th class="px-4 py-3"><span class="sr-only">PDF</span></th></tr>
+      </thead>
+      <tbody class="divide-y divide-line">
+        {% for r in view.rows %}
+        <tr>
+          <td class="whitespace-nowrap px-4 py-3"><span class="block font-semibold">{{ r.name }}</span><span class="text-xs text-ink-3">{{ r.number or "" }}</span></td>
+          <td class="whitespace-nowrap px-3 py-3 {{ 'text-warning-text' if not r.state else 'text-ink-2' }}">{{ r.state or "Not set" }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.months }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.gross | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.pension | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.nhf | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.rent_relief | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.taxable | money }}</td>
+          <td class="px-3 py-3 text-right font-semibold tnum">{{ r.paye | money }}</td>
+          <td class="px-4 py-3 text-right"><a href="/payroll/certificates/{{ view.year }}/{{ r.employee_id }}/pdf" hx-boost="false" download class="kx-btn-secondary h-9 px-3 text-xs">{{ ui.icon("file-text", "sm") }} PDF</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold">
+        <tr><td class="px-4 py-3" colspan="3">Total ({{ view.rows | length }} {{ "person" if view.rows | length == 1 else "people" }})</td><td class="px-3 py-3 text-right tnum">{{ totals.gross | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.pension | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.nhf | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.rent_relief | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.taxable | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.paye | money }}</td><td></td></tr>
+      </tfoot>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("file-text", "Nothing for " ~ view.year ~ " yet", "Certificates draw on approved runs; none are approved for this year.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

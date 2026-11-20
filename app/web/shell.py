@@ -5,6 +5,7 @@ from dataclasses import replace
 from sqlalchemy.orm import Session
 
 from app.authz import engine
+from app.authz.permissions import Scope
 from app.files import service as files
 from app.identity.schemas import Actor
 from app.org import service as org
@@ -23,6 +24,8 @@ def _visible(section: NavSection, grants: engine.Grants) -> bool:
     if section.permission is None:
         return True
     needed = (section.permission,) if isinstance(section.permission, str) else section.permission
+    if section.wide:
+        return any(grants.widest(p) not in {None, Scope.SELF} for p in needed)
     return any(grants.holds(p) for p in needed)
 
 

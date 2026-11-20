@@ -16,6 +16,7 @@
   {% if run.can.approve %}{{ action("approve", "Approve") }}{% endif %}
   {% if run.can.post %}{{ action("post", "Post") }}{% endif %}
   {% if run.can.pay %}{{ action("pay", "Mark paid", icon_name="banknote") }}{% endif %}
+  {% if run.status in ("approved", "posted", "paid") %}<a href="/payroll/remittances?run={{ run.id }}" class="kx-btn-secondary">{{ ui.icon("file-spreadsheet", "sm") }} Remittances</a>{% endif %}
 {% endcall %}
 {% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
 {% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}

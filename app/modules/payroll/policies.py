@@ -1,4 +1,4 @@
-"""Payroll permissions (ADR 0021). Pay amounts are `compensation` class: every payroll
+"""Payroll permissions (ADR 0021, 0022). Pay amounts are `compensation` class: every payroll
 permission that shows them is sensitive."""
 
 from app.authz.permissions import ORG_ONLY, Permission
@@ -89,6 +89,40 @@ RELIEF_VERIFY = Permission(
     sensitive=True,
     scopes=ORG_ONLY,
 )
+REMITTANCE_EXPORT = Permission(
+    "payroll.remittance.export",
+    "Download remittance files",
+    "The bank payment file and PAYE, pension and NHF schedules, with account numbers, "
+    "TINs, RSA PINs and NHF numbers.",
+    sensitive=True,
+    scopes=ORG_ONLY,
+)
+LOAN_READ = Permission(
+    "payroll.loan.read",
+    "View staff loans",
+    "See loans and salary advances within scope, with their repayments.",
+    sensitive=True,
+)
+LOAN_MANAGE = Permission(
+    "payroll.loan.manage",
+    "Record staff loans",
+    "Record loans and salary advances, and cancel ones not yet repaid.",
+    sensitive=True,
+    scopes=ORG_ONLY,
+)
+LOAN_APPROVE = Permission(
+    "payroll.loan.approve",
+    "Approve staff loans",
+    "Approve or reject recorded loans and salary advances.",
+    sensitive=True,
+    scopes=ORG_ONLY,
+)
+CERTIFICATE_READ = Permission(
+    "payroll.certificate.read",
+    "Download tax certificates",
+    "Year-end tax certificates within scope (your own once December is paid).",
+    sensitive=True,
+)
 
 PERMISSIONS = (
     PAY_READ,
@@ -104,6 +138,11 @@ PERMISSIONS = (
     PAYSLIP_READ,
     RELIEF_DECLARE,
     RELIEF_VERIFY,
+    REMITTANCE_EXPORT,
+    LOAN_READ,
+    LOAN_MANAGE,
+    LOAN_APPROVE,
+    CERTIFICATE_READ,
 )
 
 SOD_RULES = (
@@ -118,5 +157,17 @@ SOD_RULES = (
         permission=RELIEF_VERIFY.key,
         conflict="owner_is_actor",
         message="You can't verify your own rent declaration.",
+    ),
+    SodRule(
+        key="payroll.no_self_loan",
+        permission=LOAN_APPROVE.key,
+        conflict="owner_is_actor",
+        message="You can't approve your own loan.",
+    ),
+    SodRule(
+        key="payroll.loan_four_eyes",
+        permission=LOAN_APPROVE.key,
+        conflict="creator_is_actor",
+        message="Someone else approves a loan you recorded.",
     ),
 )

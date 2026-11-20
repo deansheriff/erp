@@ -26,6 +26,7 @@ from app.modules.hr import routes_process as hr_process_web
 from app.modules.hr import routes_self as hr_self_web
 from app.modules.hr import routes_web as hr_web
 from app.modules.leave import routes_web as leave_web
+from app.modules.payroll import routes_outputs as payroll_outputs_web
 from app.modules.payroll import routes_self as payroll_self_web
 from app.modules.payroll import routes_web as payroll_web
 from app.org import routes_web as org_web
@@ -91,6 +92,7 @@ def routers(settings: Settings) -> list[APIRouter]:
         attendance_web.router,
         expenses_web.router,
         payroll_web.router,
+        payroll_outputs_web.router,
         payroll_self_web.router,
         files_web.router,
     ]

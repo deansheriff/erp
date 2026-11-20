@@ -263,3 +263,15 @@ class PayrollFacts:
     last_day: date | None  # last working day of a scheduled or completed exit
     pfa: str | None
     state: str | None
+
+
+@dataclass(frozen=True, slots=True)
+class RemittanceDetails:
+    """Statutory and banking identifiers, decrypted, for payroll's remittance files."""
+
+    tin: str | None
+    rsa_pin: str | None
+    nhf_number: str | None
+    bank_name: str | None
+    account_number: str | None
+    account_name: str | None

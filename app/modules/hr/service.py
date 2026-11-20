@@ -12,10 +12,11 @@ from app.authz import engine
 from app.authz import service as authz
 from app.core import numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
+from app.core.secrets import decrypt
 from app.identity.models import User
 from app.identity.schemas import Actor
 from app.modules.hr.models import EMPLOYEE_STATUSES, Employee, EmployeeExit
-from app.modules.hr.schemas import PayrollFacts, PersonInput, PersonRow
+from app.modules.hr.schemas import PayrollFacts, PersonInput, PersonRow, RemittanceDetails
 from app.org import service as org
 from app.org.models import Branch
 
@@ -372,6 +373,30 @@ def payroll_facts(db: Session, employee_ids: list[uuid.UUID]) -> dict[uuid.UUID,
             last_day=leaving.get(e.id),
             pfa=e.pension_pfa,
             state=e.state_of_residence,
+        )
+        for e in db.scalars(select(Employee).where(Employee.id.in_(employee_ids)))
+    }
+
+
+def remittance_details(
+    db: Session, employee_ids: list[uuid.UUID]
+) -> dict[uuid.UUID, RemittanceDetails]:
+    """Decrypted identifiers for bank and statutory remittance files. Payroll checks
+    `payroll.remittance.export` and audits each download (ADR 0022)."""
+    if not employee_ids:
+        return {}
+
+    def plain(value: str | None) -> str | None:
+        return decrypt(value) if value else None
+
+    return {
+        e.id: RemittanceDetails(
+            tin=plain(e.tin_encrypted),
+            rsa_pin=plain(e.rsa_pin_encrypted),
+            nhf_number=plain(e.nhf_number_encrypted),
+            bank_name=e.bank_name,
+            account_number=plain(e.account_number_encrypted),
+            account_name=e.account_name,
         )
         for e in db.scalars(select(Employee).where(Employee.id.in_(employee_ids)))
     }

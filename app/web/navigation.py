@@ -14,6 +14,8 @@ class NavSection:
     count: int | None = None
     # Shown only to holders (of any one, when several are given).
     permission: str | tuple[str, ...] | None = None
+    # Only to those who hold it beyond their own records (self-service lives elsewhere).
+    wide: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -121,6 +123,14 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("People's pay", "/payroll/people", permission="payroll.pay.manage"),
             NavSection(
                 "Salary structures", "/payroll/structures", permission="payroll.structure.manage"
+            ),
+            NavSection("Remittances", "/payroll/remittances", permission="payroll.run.read"),
+            NavSection("Loans", "/payroll/loans", permission="payroll.loan.read", wide=True),
+            NavSection(
+                "Tax certificates",
+                "/payroll/certificates",
+                permission="payroll.certificate.read",
+                wide=True,
             ),
             NavSection("Rent relief", "/payroll/reliefs", permission="payroll.relief.verify"),
             NavSection("Settings", "/payroll/settings", permission="payroll.settings.manage"),

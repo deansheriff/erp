@@ -15,6 +15,8 @@ auditor:
   leave.balance.read: organization
   leave.request.read: organization
   org.structure.read: organization
+  payroll.certificate.read: organization
+  payroll.loan.read: organization
   payroll.pay.read: organization
   payroll.payslip.read: organization
   payroll.run.read: organization
@@ -36,6 +38,8 @@ employee:
   leave.balance.read: self
   leave.request.create: self
   leave.request.read: self
+  payroll.certificate.read: self
+  payroll.loan.read: self
   payroll.pay.read: self
   payroll.payslip.read: self
   payroll.relief.declare: self
@@ -47,6 +51,10 @@ finance_manager:
   expenses.claim.approve_finance: organization
   expenses.claim.read: organization
   expenses.settings.manage: organization
+  payroll.certificate.read: organization
+  payroll.loan.approve: organization
+  payroll.loan.read: organization
+  payroll.remittance.export: organization
   payroll.run.approve: organization
   payroll.run.post: organization
   payroll.run.read: organization
@@ -54,6 +62,8 @@ finance_manager:
   payroll.settings.manage: organization
 finance_officer:
   expenses.claim.read: organization
+  payroll.loan.read: organization
+  payroll.remittance.export: organization
   payroll.run.pay: organization
   payroll.run.read: organization
 fleet_manager: {}
@@ -182,11 +192,16 @@ organization_administrator:
   org.assignment.manage: organization
   org.structure.manage: organization
   org.structure.read: organization
+  payroll.certificate.read: organization
+  payroll.loan.approve: organization
+  payroll.loan.manage: organization
+  payroll.loan.read: organization
   payroll.pay.manage: organization
   payroll.pay.read: organization
   payroll.payslip.read: organization
   payroll.relief.declare: organization
   payroll.relief.verify: organization
+  payroll.remittance.export: organization
   payroll.run.approve: organization
   payroll.run.pay: organization
   payroll.run.post: organization
@@ -196,10 +211,14 @@ organization_administrator:
   payroll.settings.manage: organization
   payroll.structure.manage: organization
 payroll_officer:
+  payroll.certificate.read: organization
+  payroll.loan.manage: organization
+  payroll.loan.read: organization
   payroll.pay.manage: organization
   payroll.pay.read: organization
   payroll.payslip.read: organization
   payroll.relief.verify: organization
+  payroll.remittance.export: organization
   payroll.run.prepare: organization
   payroll.run.read: organization
   payroll.run.review: organization
@@ -262,11 +281,16 @@ super_administrator:
   org.assignment.manage: organization
   org.structure.manage: organization
   org.structure.read: organization
+  payroll.certificate.read: organization
+  payroll.loan.approve: organization
+  payroll.loan.manage: organization
+  payroll.loan.read: organization
   payroll.pay.manage: organization
   payroll.pay.read: organization
   payroll.payslip.read: organization
   payroll.relief.declare: organization
   payroll.relief.verify: organization
+  payroll.remittance.export: organization
   payroll.run.approve: organization
   payroll.run.pay: organization
   payroll.run.post: organization

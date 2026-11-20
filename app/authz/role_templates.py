@@ -109,6 +109,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.pay.read": SELF,
             "payroll.payslip.read": SELF,  # once the run is paid
             "payroll.relief.declare": SELF,
+            "payroll.loan.read": SELF,
+            "payroll.certificate.read": SELF,  # once December is paid
         },
     ),
     RoleTemplate(
@@ -183,6 +185,10 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.run.review": ORG,  # another officer reviews what one calculated
             "payroll.payslip.read": ORG,
             "payroll.relief.verify": ORG,
+            "payroll.remittance.export": ORG,
+            "payroll.loan.read": ORG,
+            "payroll.loan.manage": ORG,
+            "payroll.certificate.read": ORG,
         },
     ),
     RoleTemplate(
@@ -190,7 +196,13 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "Finance Officer",
         "Day-to-day accounting.",
         requires_mfa=True,
-        grants={"expenses.claim.read": ORG, "payroll.run.read": ORG, "payroll.run.pay": ORG},
+        grants={
+            "expenses.claim.read": ORG,
+            "payroll.run.read": ORG,
+            "payroll.run.pay": ORG,
+            "payroll.remittance.export": ORG,  # uploads the bank file
+            "payroll.loan.read": ORG,
+        },
     ),
     RoleTemplate(
         "finance_manager",
@@ -207,6 +219,10 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.run.approve": ORG,
             "payroll.run.post": ORG,
             "payroll.settings.manage": ORG,
+            "payroll.remittance.export": ORG,
+            "payroll.loan.read": ORG,
+            "payroll.loan.approve": ORG,
+            "payroll.certificate.read": ORG,
         },
     ),
     RoleTemplate(

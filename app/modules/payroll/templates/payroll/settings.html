@@ -13,8 +13,8 @@
 } %}
 
 {% macro set_form(s, bands, is_new) -%}
-{% set errs = errors %}
-{% set v = values %}
+{% set errs = errors if editing in ("", "new", "set") else {} %}
+{% set v = values if editing in ("", "new", "set") else {} %}
 <form method="post" action="/payroll/settings" class="space-y-6" novalidate>
   {{ ui.csrf_field() }}
   {% if s and not is_new %}<input type="hidden" name="set_id" value="{{ s.id }}">{% endif %}
@@ -76,4 +76,57 @@
   {{ set_form(selected, bands, false) }}
   {% endif %}
 </div>
+
+{% set acc_errs = errors if editing == "accounts" else {} %}
+<form id="accounts" method="post" action="/payroll/settings/accounts" class="kx-card mt-8 max-w-4xl space-y-4 p-5" novalidate>
+  {{ ui.csrf_field() }}
+  <div>
+    <h2 class="font-h3 text-h3">Ledger accounts</h2>
+    <p class="text-body-sm text-ink-3">Codes the payroll journals use. Defaults are to confirm against your chart of accounts.</p>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {% for name, label in account_fields %}
+    {{ ui.text_field(name, label, value=(values.get(name) if editing == "accounts" else accounts[name]), errors=acc_errs) }}
+    {% endfor %}
+  </div>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save accounts</button></div>
+</form>
+
+<section id="banks" class="kx-card mt-8 max-w-4xl overflow-hidden" aria-labelledby="h-banks">
+  <div class="p-5">
+    <h2 id="h-banks" class="font-h3 text-h3">Bank codes</h2>
+    <p class="text-body-sm text-ink-3">The bank file needs each bank's CBN code. HR records name the bank in words, so list the other names people use. Codes are to confirm.</p>
+  </div>
+  <ul class="divide-y divide-line border-t border-line">
+    {% for b in banks %}
+    {% set key = "bank:" ~ b.id %}
+    <li x-data="menu">
+      <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3 text-body-sm">
+        <span class="min-w-0"><span class="font-medium">{{ b.name }}</span> <span class="font-mono text-xs text-ink-3">{{ b.code }}</span>{% if b.other_names %}<span class="block truncate text-xs text-ink-3">{{ b.other_names }}</span>{% endif %}</span>
+        <span class="flex items-center gap-2">{% if not b.is_active %}{{ ui.badge("neutral", "Not used") }}{% endif %}<button type="button" class="kx-btn-ghost h-9 px-3 text-xs" x-on:click="toggle" x-bind:aria-expanded="open" aria-controls="bank-{{ b.id }}">Edit</button></span>
+      </div>
+      <form id="bank-{{ b.id }}" method="post" action="/payroll/settings/banks" class="grid gap-3 bg-surface-sunken/40 px-5 py-4 sm:grid-cols-[minmax(0,1fr)_120px]" {% if editing != key %}x-show="open" x-cloak{% endif %} novalidate>
+        {{ ui.csrf_field() }}
+        <input type="hidden" name="bank_id" value="{{ b.id }}">
+        {% set errs = errors if editing == key else {} %}
+        <div><label class="kx-label" for="bn-{{ b.id }}">Name</label><input id="bn-{{ b.id }}" name="bank_name" class="kx-input" value="{{ values.get('bank_name') if editing == key else b.name }}">{{ ui.field_error(errs, "bank_name") }}</div>
+        <div><label class="kx-label" for="bc-{{ b.id }}">CBN code</label><input id="bc-{{ b.id }}" name="bank_code" class="kx-input tnum" inputmode="numeric" value="{{ values.get('bank_code') if editing == key else b.code }}">{{ ui.field_error(errs, "bank_code") }}</div>
+        <div class="sm:col-span-2"><label class="kx-label" for="bo-{{ b.id }}">Other names, separated by commas</label><input id="bo-{{ b.id }}" name="other_names" class="kx-input" value="{{ values.get('other_names') if editing == key else (b.other_names or '') }}"></div>
+        <div class="flex items-center justify-between gap-3 sm:col-span-2">
+          <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if b.is_active %}checked{% endif %}> Used</label>
+          <button type="submit" class="kx-btn-primary">Save</button>
+        </div>
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+  {% set errs = errors if editing == "bank:new" else {} %}
+  <form method="post" action="/payroll/settings/banks" class="grid gap-3 border-t border-line p-5 sm:grid-cols-[minmax(0,1fr)_120px_minmax(0,1fr)_auto] sm:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    <div><label class="kx-label" for="bn-new">Add a bank</label><input id="bn-new" name="bank_name" class="kx-input" placeholder="Name" value="{{ values.get('bank_name') if editing == 'bank:new' else '' }}">{{ ui.field_error(errs, "bank_name") }}</div>
+    <div><label class="kx-label" for="bc-new">CBN code</label><input id="bc-new" name="bank_code" class="kx-input tnum" inputmode="numeric" value="{{ values.get('bank_code') if editing == 'bank:new' else '' }}">{{ ui.field_error(errs, "bank_code") }}</div>
+    <div><label class="kx-label" for="bo-new">Other names</label><input id="bo-new" name="other_names" class="kx-input" placeholder="Optional" value="{{ values.get('other_names') if editing == 'bank:new' else '' }}"></div>
+    <button type="submit" class="kx-btn-secondary">Add</button>
+  </form>
+</section>
 {% endblock %}

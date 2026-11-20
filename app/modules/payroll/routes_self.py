@@ -1,5 +1,5 @@
-"""Payroll self-service (ADR 0021): my payslips once paid, and declaring rent for rent
-relief with proof."""
+"""Payroll self-service (ADR 0021, 0022): my payslips once paid, my loans, my year-end tax
+certificates, and declaring rent for rent relief with proof."""
 
 from decimal import Decimal
 from typing import Annotated, Any
@@ -11,12 +11,12 @@ from sqlalchemy.orm import Session
 from app.authz.declarations import requires, screen
 from app.core import clock
 from app.core.db import get_db
-from app.core.errors import Conflict, PermissionDenied, ValidationFailed
+from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.files import service as files
 from app.files.web import ReceivedUpload, upload_body
 from app.identity.schemas import Actor
 from app.modules.hr import service as people
-from app.modules.payroll import reliefs, service
+from app.modules.payroll import certificates, loans, reliefs, service
 from app.modules.payroll.files import RENT_PROOF
 from app.web.access import require_actor
 from app.web.shell import build_shell
@@ -53,6 +53,9 @@ def _context(db: Session, actor: Actor, selected: str = "", **extra: Any) -> dic
             "pension": sum((s.pension_employee for s in ytd), Decimal(0)),
         },
         "declarations": reliefs.mine(db, actor),
+        "loans": loans.mine(db, actor),
+        "certificate_years": certificates.my_years(db, actor),
+        "loan_tones": {"pending": "warning", "repaying": "info", "cleared": "success"},
         "years": [year, year - 1],
         "tones": DECLARATION_TONES,
         "values": {},
@@ -104,3 +107,20 @@ def declare_rent(request: Request, db: Db, actor: CurrentActor, upload: ProofUpl
         return templates.TemplateResponse(request, "payroll/my.html", context, status_code=422)
     files.request_scan()
     return RedirectResponse("/payslips?notice=1#rent", status_code=303)
+
+
+@router.get("/payslips/certificates/{year:int}/pdf")
+@requires("payroll.certificate.read")
+def my_certificate(db: Db, actor: CurrentActor, year: int) -> Response:
+    employee_id = people.employee_of_user(db, actor.user_id)
+    if employee_id is None:
+        raise NotFound()
+    filename, body = certificates.certificate(db, actor, employee_id, year)
+    return Response(
+        body,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Cache-Control": "no-store",
+        },
+    )

@@ -18,6 +18,7 @@ from app.modules.payroll.models import (
     PayrollRun,
     RentDeclaration,
     SalaryStructure,
+    StaffLoan,
 )
 from tests.conftest import Installed, csrf_token, sign_in
 from tests.web.test_hr_screens import _add_and_invite, _post
@@ -181,3 +182,92 @@ def test_settings_save_unchanged_from_what_the_form_shows(admin: TestClient) -> 
     assert data["band_width"][0] == "800,000.00" and data["band_rate"][5] == "25"
     r = admin.post("/payroll/settings", data=data)
     assert r.status_code == 200 and "Saved." in r.text
+
+
+def test_phase_9b_pages_render(admin: TestClient) -> None:
+    for page in (
+        "/payroll/remittances",
+        "/payroll/loans",
+        "/payroll/loans?tab=repaying",
+        "/payroll/loans?tab=cleared",
+        "/payroll/loans?tab=rejected",
+        "/payroll/certificates",
+    ):
+        assert admin.get(page).status_code == 200, page
+    nav = admin.get("/payroll").text
+    for href in ("/payroll/remittances", "/payroll/loans", "/payroll/certificates"):
+        assert f'href="{href}"' in nav
+    settings = admin.get("/payroll/settings").text
+    assert "Ledger accounts" in settings and "Guaranty Trust Bank" in settings
+
+
+def test_loans_remittances_and_my_payslips(admin: TestClient) -> None:
+    person, amaka = _add_and_invite(admin)
+    nav = amaka.get("/payslips").text
+    assert 'href="/payroll/loans"' not in nav and "Tax certificates" in nav
+    group, structure, codes = _ids()
+    admin.post(
+        f"/payroll/people/{person}/pay",
+        data={
+            "pay_group_id": group,
+            "structure_id": structure,
+            "start_date": "2026-01-01",
+            "reason": "Starting pay",
+            "component_id": [codes["basic"], codes["housing"], codes["transport"]],
+            "amount": ["200,000", "100,000", "50,000"],
+            "csrf_token": csrf_token(admin),
+        },
+    )
+
+    r = _post(admin, "/payroll/loans", employee_id=str(person), kind="loan", amount="")
+    assert r.status_code == 422  # type: ignore[attr-defined]
+    r = _post(
+        admin,
+        "/payroll/loans",
+        employee_id=str(person),
+        kind="loan",
+        amount="120,000",
+        instalment="40,000",
+        first_month=clock.today().strftime("%Y-%m"),
+    )
+    page = html.unescape(r.text)  # type: ignore[attr-defined]
+    assert r.status_code == 200 and "LN-00001" in page and "Amaka Okafor" in page  # type: ignore[attr-defined]
+    with session_scope() as db:
+        loan_id = db.scalars(select(StaffLoan.id)).one()
+    r = _post(admin, f"/payroll/loans/{loan_id}/approve")
+    assert r.status_code == 422  # type: ignore[attr-defined]  (Fatima recorded it)
+    assert "Someone else approves this loan" in html.unescape(r.text)  # type: ignore[attr-defined]
+    assert "LN-00001" in amaka.get("/payslips").text
+
+    r = _post(admin, "/payroll/runs", pay_group_id=group, period="2026-11")
+    run_id = str(r.url).split("?", maxsplit=1)[0].rsplit("/", 1)[1]  # type: ignore[attr-defined]
+    _post(admin, f"/payroll/runs/{run_id}/calculate")
+    assert "No approved runs yet" in admin.get("/payroll/remittances").text
+    with session_scope() as db:
+        run = db.get(PayrollRun, run_id)
+        assert run is not None
+        run.status = "approved"
+    page = html.unescape(admin.get(f"/payroll/remittances?run={run_id}").text)
+    assert "Bank payment file" in page and "1 of 1 people" in page
+    r = admin.get(f"/payroll/remittances/{run_id}/bank.csv")
+    assert r.status_code == 200 and r.headers["content-type"].startswith("text/csv")
+    assert "Amaka" in r.text and ",058," in r.text  # GTBank on her HR record
+    assert r.headers["cache-control"] == "no-store"
+    assert amaka.get(f"/payroll/remittances/{run_id}/bank.csv").status_code == 403
+    r = admin.get(f"/payroll/certificates/2026/{person}/pdf")
+    assert r.status_code == 200 and r.content.startswith(b"%PDF")
+
+
+def test_bank_codes_and_ledger_accounts(admin: TestClient) -> None:
+    r = _post(admin, "/payroll/settings/banks", bank_name="Bank of Nowhere", bank_code="x")
+    assert r.status_code == 422 and "CBN code" in r.text  # type: ignore[attr-defined]
+    r = _post(
+        admin,
+        "/payroll/settings/banks",
+        bank_name="Bank of Nowhere",
+        bank_code="999",
+        other_names="BoN",
+    )
+    assert r.status_code == 200 and "Bank of Nowhere" in r.text  # type: ignore[attr-defined]
+    r = _post(admin, "/payroll/settings/accounts", salaries="6000")
+    assert r.status_code == 422 and "Enter an account code" in r.text  # type: ignore[attr-defined]

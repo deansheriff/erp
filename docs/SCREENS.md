@@ -105,3 +105,6 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Salary structures, components and pay groups** (`payroll.structures`) | `GET /payroll/structures` | payroll.structure.manage | — | Dean Sheriff (2026-11-20) |
 | **Rent relief declarations** (`payroll.reliefs`) | `GET /payroll/reliefs` | payroll.relief.verify | directory, compensation | Dean Sheriff (2026-11-20) |
 | **Payroll settings (statutory rates)** (`payroll.settings`) | `GET /payroll/settings` | payroll.settings.manage | — | Dean Sheriff (2026-11-20) |
+| **Payroll remittances and files** (`payroll.remittances`) | `GET /payroll/remittances` | payroll.run.read | statutory, banking, compensation | Dean Sheriff (2026-11-20) |
+| **Loans and salary advances** (`payroll.loans`) | `GET /payroll/loans` | payroll.loan.read | directory, compensation | Dean Sheriff (2026-11-20) |
+| **Year-end tax certificates** (`payroll.certificates`) | `GET /payroll/certificates` | payroll.certificate.read | directory, statutory, compensation | Dean Sheriff (2026-11-20) |

@@ -117,9 +117,9 @@ IDENTITY_TABLES = (
 )
 
 
-def _payroll_migration() -> ModuleType:
-    path = Path(__file__).parents[1] / "migrations" / "versions" / "0010_payroll.py"
-    spec = importlib.util.spec_from_file_location("migration_0010_payroll", path)
+def _migration(filename: str) -> ModuleType:
+    path = Path(__file__).parents[1] / "migrations" / "versions" / filename
+    spec = importlib.util.spec_from_file_location(f"migration_{path.stem}", path)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -164,9 +164,13 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         )
         # Payroll setup is seeded by its migration; put the defaults back.
         conn.execute(
-            text("TRUNCATE pay_groups, pay_components, salary_structures, statutory_sets CASCADE")
+            text(
+                "TRUNCATE pay_groups, pay_components, salary_structures, statutory_sets, "
+                "payroll_banks, payroll_accounts CASCADE"
+            )
         )
-        _payroll_migration().seed_defaults(conn)
+        _migration("0010_payroll.py").seed_defaults(conn)
+        _migration("0011_payroll_loans_and_remittances.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

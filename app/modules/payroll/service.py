@@ -1,5 +1,6 @@
-"""Payroll runs (ADR 0021): creating and calculating a run for a pay group and month, the
-lifecycle with maker-checker at each step, payslip PDFs at approval, and the views."""
+"""Payroll runs (ADR 0021, 0022): creating and calculating a run for a pay group and month
+(loan instalments included), the lifecycle with maker-checker at each step, payslip PDFs
+at approval, journals queued at posting and payment, and the views."""
 
 import calendar
 import uuid
@@ -21,9 +22,10 @@ from app.identity.models import User
 from app.identity.schemas import Actor
 from app.modules.attendance import service as attendance
 from app.modules.hr import service as people
-from app.modules.payroll import calc, pdf, reliefs, setup, statutory
+from app.modules.payroll import calc, ledger, loans, pdf, reliefs, setup, statutory
 from app.modules.payroll.files import PAYSLIP
 from app.modules.payroll.models import (
+    COUNTED,
     EmployeePay,
     PayComponent,
     PayGroup,
@@ -40,7 +42,6 @@ APPROVE = "payroll.run.approve"
 POST = "payroll.run.post"
 PAY = "payroll.run.pay"
 PAYSLIP_READ = "payroll.payslip.read"
-COUNTED = ("approved", "posted", "paid")  # runs whose PAYE counts for later months
 MIN_NOTE = 5
 MONTHS = (
     "January",
@@ -224,6 +225,7 @@ def calculate(db: Session, actor: Actor, run_id: uuid.UUID) -> int:
     amounts = setup.amounts_of(db, [p.pay.id for p in members])
     overtime = attendance.approved_overtime_minutes(db, ids, first, last)
     deductions = setup.deductions_of(db, ids, first)
+    instalments = loans.due(db, ids, first)
     rents = reliefs.verified_rent(db, ids, run.year)
     ytd = _year_to_date(db, run, ids)
     days = last.day
@@ -254,7 +256,13 @@ def calculate(db: Session, actor: Actor, run_id: uuid.UUID) -> int:
                 components=calc_components,
                 amounts={components[cid].code: amount for cid, amount in own.items()},
                 overtime_minutes=overtime.get(person.employee_id, 0),
-                deductions=deductions.get(person.employee_id, []),
+                deductions=[
+                    *deductions.get(person.employee_id, []),
+                    *(
+                        (loan.number, f"{loans.KIND_LABELS[loan.kind]} repayment", amount)
+                        for loan, amount in instalments.get(person.employee_id, [])
+                    ),
+                ],
                 annual_rent=rents.get(person.employee_id),
                 taxable_before=taxable_before,
                 paye_before=paye_before,
@@ -283,6 +291,7 @@ def calculate(db: Session, actor: Actor, run_id: uuid.UUID) -> int:
         )
         db.add(slip)
         db.flush()
+        own_loans = {loan.number: loan.id for loan, _ in instalments.get(person.employee_id, [])}
         for position, line in enumerate(result.lines, start=1):
             db.add(
                 PayslipLine(
@@ -293,6 +302,7 @@ def calculate(db: Session, actor: Actor, run_id: uuid.UUID) -> int:
                     kind=line.kind,
                     amount=line.amount,
                     detail=line.detail,
+                    loan_id=own_loans.get(line.code) if line.kind == "deduction" else None,
                 )
             )
     before = run.status
@@ -349,6 +359,23 @@ def post(db: Session, actor: Actor, run_id: uuid.UUID) -> None:
     )
     _different(actor, run.created_by, message="You created this run, so someone else must post it.")
     run.status, run.posted_by, run.posted_at = "posted", actor.user_id, clock.now()
+    db.flush()
+    slips = list(db.scalars(select(Payslip).where(Payslip.run_id == run.id)))
+    repayments = dict(
+        db.execute(
+            select(PayslipLine.payslip_id, func.sum(PayslipLine.amount))
+            .where(
+                PayslipLine.payslip_id.in_([s.id for s in slips]),
+                PayslipLine.loan_id.is_not(None),
+            )
+            .group_by(PayslipLine.payslip_id)
+        ).all()
+    )
+    group = db.get(PayGroup, run.pay_group_id)
+    label = f"Payroll {period_label(run.year, run.month)}, {group.name if group else ''}"
+    ledger.queue_accrual(
+        db, run, slips, repayments, when=_bounds(run.year, run.month)[1], memo=label
+    )
     _audit(db, actor, run, "post", "approved")
 
 
@@ -364,6 +391,11 @@ def mark_paid(db: Session, actor: Actor, run_id: uuid.UUID) -> None:
         actor, run.created_by, message="You created this run, so someone else must mark it paid."
     )
     run.status, run.paid_by, run.paid_at = "paid", actor.user_id, clock.now()
+    db.flush()
+    net = db.scalar(select(func.sum(Payslip.net)).where(Payslip.run_id == run.id)) or Decimal(0)
+    group = db.get(PayGroup, run.pay_group_id)
+    label = f"Net pay {period_label(run.year, run.month)}, {group.name if group else ''}"
+    ledger.queue_payment(db, run, net, when=clock.today(), memo=label)
     _audit(db, actor, run, "pay", "posted")
 
 

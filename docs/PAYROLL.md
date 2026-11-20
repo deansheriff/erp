@@ -1,6 +1,6 @@
 # Payroll (Nigeria)
 
-Phase 9a. Decisions are in ADR 0021; permissions in `docs/PERMISSIONS.md`.
+Phase 9. Decisions are in ADR 0021 (9a) and ADR 0022 (9b); permissions in `docs/PERMISSIONS.md`.
 
 ## Tables
 
@@ -14,7 +14,11 @@ Phase 9a. Decisions are in ADR 0021; permissions in `docs/PERMISSIONS.md`.
 | `statutory_sets`, `tax_bands` | Effective-dated statutory rates and the PAYE bands. |
 | `rent_declarations` | Annual rent declared per tax year with proof, and its verification. |
 | `payroll_runs` | One run per pay group and month, with who did each step. |
-| `payslips`, `payslip_lines` | Each person's calculated pay for a run and its component lines. |
+| `payslips`, `payslip_lines` | Each person's calculated pay for a run and its component lines (loan repayments point at their loan). |
+| `staff_loans` | Interest-free loans and salary advances (`LN-00001`), repaid by monthly instalments. |
+| `payroll_banks` | Banks and their CBN codes, with the other names HR records use. |
+| `payroll_accounts` | Ledger account codes for payroll journals (one row). |
+| `payroll_journals`, `payroll_journal_lines` | Balanced journals queued for the ledger: accrual at posting, payment when paid, disbursement when a loan is approved. |
 
 ## Defaults (confirm before go-live)
 
@@ -27,8 +31,39 @@ Phase 9a. Decisions are in ADR 0021; permissions in `docs/PERMISSIONS.md`.
 - Components: Basic, Housing, Transport (taxable, pensionable), Meal allowance
   (taxable), Overtime (taxable), Cooperative and Union dues (deductions).
 - Pay group: Staff.
+- Ledger accounts: 6000 salaries, 6010 employer pension, 6020 employer NSITF, 2110 PAYE,
+  2120 pension, 2130 NHF, 2140 NHIS, 2150 NSITF, 2160 other deductions, 2170 net
+  salaries payable, 1420 staff loans, 1010 bank.
+- Bank codes for the common Nigerian banks and the larger mobile-money banks.
+
+## Remittances (ADR 0022)
+
+From an approved, posted or paid run, as CSV (each download audited, and needing
+`payroll.remittance.export`):
+
+- bank payment file: account name, account number, CBN bank code, bank, net pay,
+  narration. People without a 10-digit account number or a listed bank are left out
+  and named on the page;
+- PAYE per state of residence, with TIN, gross, taxable pay and PAYE;
+- pension per PFA, with RSA PIN and the employee and employer contributions;
+- NHF, with NHF number, basic pay and the deduction.
+
+## Loans and salary advances
+
+Interest-free. A Payroll Officer records the amount, monthly instalment and first
+month; a Finance Manager (not the recorder, not the borrower) approves or rejects it.
+Approved loans are deducted in each run while a balance remains; the last instalment is
+whatever is left. A loan can be withdrawn until it is approved.
+
+## Tax certificates
+
+A PDF per person and tax year with gross pay, pension, NHF and NHIS, taxable pay and
+PAYE by month, and rent relief. Payroll downloads them at any time; employees from My
+payslips once the December run that pays them is paid (or once the year is over, if
+they left before December).
 
 ## Screens
 
-Payroll → Runs (and each run), People's pay, Salary structures, Rent relief, Settings;
-self-service: My payslips.
+Payroll → Runs (and each run), People's pay, Remittances, Loans, Tax certificates,
+Salary structures, Rent relief, Settings (with ledger accounts and bank codes);
+self-service: My payslips (with loans and tax certificates).
