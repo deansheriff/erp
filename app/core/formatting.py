@@ -48,3 +48,19 @@ def format_days(value: Decimal | int | None) -> str:
     if value is None:
         return ""
     return format(Decimal(value).normalize(), "f")
+
+
+def format_clock(value: datetime, tz_name: str) -> str:
+    """`08:05`, the wall-clock time in the organisation's timezone."""
+    if value.tzinfo is None:
+        raise ValueError("Datetimes must be timezone-aware (stored in UTC)")
+    return f"{value.astimezone(ZoneInfo(tz_name)):%H:%M}"
+
+
+def format_minutes(minutes: int | None) -> str:
+    """`7 h 45 m`, `45 m`, `0 m`."""
+    total = max(0, minutes or 0)
+    hours, rest = divmod(total, 60)
+    if not hours:
+        return f"{rest} m"
+    return f"{hours} h" if not rest else f"{hours} h {rest} m"

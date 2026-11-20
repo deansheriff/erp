@@ -77,3 +77,9 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Team leave calendar** (`leave.calendar`) | `GET /leave/calendar` | leave.request.read | directory | Dean Sheriff (2026-11-19) |
 | **Leave balances** (`leave.balances`) | `GET /leave/balances` | leave.balance.read | directory | Dean Sheriff (2026-11-19) |
 | **Leave settings** (`leave.settings`) | `GET /leave/settings` | leave.settings.manage | — | Dean Sheriff (2026-11-19) |
+| **Clock in (self-service)** (`attendance.clock`) | `GET /attendance` | attendance.clock.use | directory, sensitive | Dean Sheriff (2026-11-20) |
+| **Timesheet and corrections** (`attendance.timesheet`) | `GET /attendance/timesheet` | attendance.record.read | directory, sensitive | Dean Sheriff (2026-11-20) |
+| **Team today** (`attendance.team`) | `GET /attendance/team` | attendance.record.read | directory, sensitive | Dean Sheriff (2026-11-20) |
+| **Monthly attendance summary** (`attendance.summary`) | `GET /attendance/summary` | attendance.record.read | directory | Dean Sheriff (2026-11-20) |
+| **Shifts and roster** (`attendance.roster`) | `GET /attendance/roster` | attendance.schedule.manage | directory | Dean Sheriff (2026-11-20) |
+| **Attendance settings** (`attendance.settings`) | `GET /attendance/settings` | attendance.settings.manage | — | Dean Sheriff (2026-11-20) |

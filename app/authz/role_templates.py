@@ -29,8 +29,9 @@ def _read_everything(p: Permission) -> Scope | None:
 
 
 def _hr_everything(p: Permission) -> Scope | None:
-    """HR Manager: every HR and leave permission that applies beyond the person themself."""
-    in_scope = p.module in {"hr", "leave"} and Scope.ORGANIZATION in p.scopes
+    """HR Manager: every HR, leave and attendance permission that applies beyond the person
+    themself."""
+    in_scope = p.module in {"hr", "leave", "attendance"} and Scope.ORGANIZATION in p.scopes
     return Scope.ORGANIZATION if in_scope else None
 
 
@@ -99,6 +100,10 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "leave.request.create": SELF,
             "leave.request.read": SELF,
             "leave.balance.read": SELF,
+            "attendance.clock.use": SELF,
+            "attendance.record.read": SELF,
+            "attendance.correction.request": SELF,
+            "attendance.photo.view": SELF,
         },
     ),
     RoleTemplate(
@@ -110,6 +115,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "leave.request.read": Scope.TEAM,
             "leave.request.approve": Scope.TEAM,
             "leave.balance.read": Scope.TEAM,
+            "attendance.record.read": Scope.TEAM,
+            "attendance.record.approve": Scope.TEAM,
         },
     ),
     RoleTemplate(
@@ -134,6 +141,11 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "leave.request.read": ORG,
             "leave.request.approve_hr": ORG,
             "leave.balance.read": ORG,
+            "attendance.record.read": ORG,
+            "attendance.record.approve": ORG,
+            "attendance.correction.request": ORG,  # recording a correction for someone
+            "attendance.photo.view": ORG,
+            "attendance.schedule.manage": ORG,
         },
     ),
     RoleTemplate(

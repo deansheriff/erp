@@ -1,0 +1,104 @@
+{# Attendance → Team today, with corrections and overtime to approve. Design: design/stitch/exports/attendance.team.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% import "attendance/_days.html" as days_ui with context %}
+
+{% macro decision_form(action, item_id) -%}
+<form method="post" action="{{ action }}/reject" class="mt-3 space-y-2" novalidate>
+  {{ ui.csrf_field() }}
+  {% if failed == item_id|string %}
+    {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+  {% endif %}
+  <label class="sr-only" for="n-{{ item_id }}">Note</label>
+  <input id="n-{{ item_id }}" name="note" class="kx-input h-10" placeholder="Note (needed to reject)" value="{{ note if failed == item_id|string else '' }}">
+  {% if failed == item_id|string %}{{ ui.field_error(errors, "note") }}{% endif %}
+  <div class="flex gap-2">
+    <button type="submit" formaction="{{ action }}/approve" class="kx-btn-primary h-10 flex-1">{{ ui.icon("check", "sm") }} Approve</button>
+    <button type="submit" formaction="{{ action }}/reject" class="kx-btn-ghost h-10 flex-1 text-danger-text">Reject</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Team today", today | date) %}
+  <form method="get" action="/attendance/team" role="search">
+    <label for="f-q" class="sr-only">Search people</label>
+    <input id="f-q" name="q" value="{{ q }}" class="kx-input h-10 w-60" placeholder="Search people">
+  </form>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<section class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6" aria-label="Today in numbers">
+  {{ ui.kpi_tile("In", (counts.get("working", 0) + counts.get("done", 0)), count_to=counts.get("working", 0) + counts.get("done", 0)) }}
+  {{ ui.kpi_tile("Late", late, count_to=late) }}
+  {{ ui.kpi_tile("Not in yet", counts.get("not_in", 0), count_to=counts.get("not_in", 0)) }}
+  {{ ui.kpi_tile("Absent", counts.get("absent", 0), count_to=counts.get("absent", 0)) }}
+  {{ ui.kpi_tile("On leave", counts.get("on_leave", 0), count_to=counts.get("on_leave", 0)) }}
+  {{ ui.kpi_tile("Missing clock-out", counts.get("missing_clock_out", 0), count_to=counts.get("missing_clock_out", 0)) }}
+</section>
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_380px]">
+  <section class="kx-card overflow-hidden" aria-labelledby="h-team">
+    <h2 id="h-team" class="sr-only">People</h2>
+    {% if team %}
+    <ul class="divide-y divide-line">
+      {% for p in team %}
+      {% set d = p.day %}
+      <li class="flex flex-col gap-3 px-4 py-3 transition-colors duration-base hover:bg-surface-sunken/60 sm:flex-row sm:items-center">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-hue/10 text-xs font-bold text-hue">{{ p.name.split()[0][:1] }}{{ p.name.split()[-1][:1] }}</span>
+        <div class="min-w-0 flex-1">
+          <a href="/attendance/timesheet?person={{ d.employee_id }}" class="truncate font-semibold hover:text-iris">{{ p.name }}</a>
+          <p class="truncate text-xs text-ink-3">{{ p.position or "No position" }} · {{ days_ui.shift(d) }}</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-3 sm:justify-end">
+          <span class="text-body-sm">{{ days_ui.times(d) }}</span>
+          {% if d.photo_taken %}<span class="inline-flex items-center gap-1 text-xs text-ink-3">{% if d.photo_file_id and d.employee_id in photo_viewers %}<a href="/files/{{ d.photo_file_id }}" class="inline-flex items-center gap-1 text-iris">{{ ui.icon("camera", "sm") }} Photo</a>{% else %}{{ ui.icon("camera", "sm") }} Photo taken{% endif %}</span>{% endif %}
+          {% if d.in_distance_m is not none %}<span class="inline-flex items-center gap-1 text-xs text-ink-3">{{ ui.icon("map-pin", "sm") }} {{ d.in_distance_m }} m</span>{% endif %}
+          {{ days_ui.day_chips(d, statuses) }}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    {% call ui.empty_state("users", "Nobody scheduled today", "People with a shift today, and anyone who clocks in, appear here.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  <aside id="approvals" class="space-y-6">
+    <section class="kx-card p-5" aria-labelledby="h-corrections">
+      <h2 id="h-corrections" class="font-h3 text-h3">Corrections <span class="text-ink-3">({{ corrections | length }})</span></h2>
+      {% if corrections %}
+      <ul class="mt-3 space-y-4">
+        {% for c in corrections %}
+        <li class="kx-enter rounded-xl border border-line p-3">
+          <div class="flex items-center justify-between gap-2"><span class="font-semibold">{{ c.employee_name }}</span><span class="text-xs text-ink-3">{{ c.work_date | date }}</span></div>
+          <dl class="mt-2 grid grid-cols-2 gap-2 text-xs">
+            <div><dt class="text-ink-3">Asked for</dt><dd class="font-medium tnum">{{ c.clock_in | clock }} – {{ c.clock_out | clock }}</dd></div>
+            <div><dt class="text-ink-3">Recorded</dt><dd class="tnum">{% if c.recorded_in %}{{ c.recorded_in | clock }} – {{ c.recorded_out | clock if c.recorded_out else "no clock-out" }}{% else %}Nothing{% endif %}</dd></div>
+          </dl>
+          <p class="mt-2 rounded-lg bg-surface-sunken px-2.5 py-1.5 text-xs">{{ c.reason }}</p>
+          {{ decision_form("/attendance/corrections/" ~ c.id, c.id) }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}<p class="mt-3 text-body-sm text-ink-3">Nothing to approve.</p>{% endif %}
+    </section>
+
+    <section class="kx-card p-5" aria-labelledby="h-overtime">
+      <h2 id="h-overtime" class="font-h3 text-h3">Overtime <span class="text-ink-3">({{ overtime | length }})</span></h2>
+      <p class="mt-1 text-xs text-ink-3">Time past the end of the shift. Payroll counts it only once approved.</p>
+      {% if overtime %}
+      <ul class="mt-3 space-y-4">
+        {% for o in overtime %}
+        <li class="kx-enter rounded-xl border border-line p-3">
+          <div class="flex items-center justify-between gap-2"><span class="font-semibold">{{ o.employee_name }}</span><span class="text-xs text-ink-3">{{ o.work_date | date }}</span></div>
+          <p class="mt-1 text-body-sm"><span class="font-semibold tnum">{{ o.minutes | minutes }}</span> past {{ o.shift_name }} end {% if o.scheduled_end %}<span class="tnum">{{ o.scheduled_end | clock }}</span>{% endif %}{% if o.clock_out %} · clocked out <span class="tnum">{{ o.clock_out | clock }}</span>{% endif %}</p>
+          {{ decision_form("/attendance/overtime/" ~ o.id, o.id) }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}<p class="mt-3 text-body-sm text-ink-3">Nothing to approve.</p>{% endif %}
+    </section>
+  </aside>
+</div>
+{% endblock %}

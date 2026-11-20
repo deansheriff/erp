@@ -25,6 +25,15 @@ from app.identity.models import (
     UserToken,
 )
 from app.mail.models import MailOutbox, MailSettings
+from app.modules.attendance.models import (
+    AttendanceCorrection,
+    AttendanceLocation,
+    AttendanceRecord,
+    OvertimeEntry,
+    RosterEntry,
+    ShiftAssignment,
+    ShiftPattern,
+)
 from app.modules.hr.models import (
     ChangeRequest,
     Checklist,
@@ -57,6 +66,9 @@ from app.org.models import (
 
 __all__ = [
     "ApiKey",
+    "AttendanceCorrection",
+    "AttendanceLocation",
+    "AttendanceRecord",
     "AuditLog",
     "AuthzState",
     "Branch",
@@ -87,6 +99,7 @@ __all__ = [
     "NumberSequence",
     "OrgState",
     "Organization",
+    "OvertimeEntry",
     "PermissionRow",
     "Position",
     "PositionAssignment",
@@ -94,7 +107,10 @@ __all__ = [
     "Role",
     "RoleAssignment",
     "RoleGrant",
+    "RosterEntry",
     "SecuritySettings",
+    "ShiftAssignment",
+    "ShiftPattern",
     "StorageSettings",
     "StoredFile",
     "User",

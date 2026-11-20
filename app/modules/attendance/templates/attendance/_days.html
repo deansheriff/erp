@@ -1,0 +1,25 @@
+{# Attendance: the chips that describe a day (status, lateness, overtime, corrections). #}
+{% import "components/ui.html" as ui with context %}
+
+{% macro day_chips(d, statuses) -%}
+<span class="flex flex-wrap items-center gap-1.5">
+  {% if d.status == "done" and d.scheduled and not d.late and not d.left_early %}{{ ui.badge("success", "On time") }}
+  {% elif d.status == "done" and not d.scheduled %}{{ ui.badge("neutral", "No shift") }}
+  {% elif d.status not in ("done", "off", "upcoming") %}{{ ui.badge(statuses[d.status][0], statuses[d.status][1] ~ (": " ~ d.leave if d.status == "on_leave" and d.leave else "") ~ (": " ~ d.holiday if d.status == "holiday" else ""), pulse=d.status == "working") }}
+  {% endif %}
+  {% if d.late %}{{ ui.badge("warning", "Late " ~ (d.late_minutes | minutes)) }}{% endif %}
+  {% if d.left_early %}{{ ui.badge("warning", "Left " ~ (d.early_minutes | minutes) ~ " early") }}{% endif %}
+  {% if d.leave and d.leave_part != "full" %}{{ ui.badge("neutral", "Half day: " ~ d.leave) }}{% endif %}
+  {% if d.overtime_minutes %}{{ ui.badge({"pending": "info", "approved": "success", "rejected": "neutral"}[d.overtime_status], "Overtime " ~ (d.overtime_minutes | minutes) ~ " · " ~ {"pending": "waiting", "approved": "approved", "rejected": "not approved"}[d.overtime_status]) }}{% endif %}
+  {% if d.corrected %}<span class="kx-badge-neutral">{{ ui.icon("pencil", "sm") }} Corrected</span>{% endif %}
+  {% if d.pending_correction %}{{ ui.badge("warning", "Correction waiting") }}{% endif %}
+</span>
+{%- endmacro %}
+
+{% macro times(d) -%}
+{% if d.clock_in %}<span class="tnum">{{ d.clock_in | clock }}</span> – {% if d.clock_out %}<span class="tnum">{{ d.clock_out | clock }}</span>{% else %}<span class="text-ink-3">{{ "now" if d.status == "working" else "no clock-out" }}</span>{% endif %}{% else %}<span class="text-ink-3">—</span>{% endif %}
+{%- endmacro %}
+
+{% macro shift(d) -%}
+{% if d.scheduled %}{{ d.shift_name }} <span class="whitespace-nowrap tnum text-ink-3">{{ d.scheduled_start | clock }}–{{ d.scheduled_end | clock }}</span>{% else %}<span class="text-ink-3">Off</span>{% endif %}
+{%- endmacro %}

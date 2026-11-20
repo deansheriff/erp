@@ -1,0 +1,128 @@
+{# Attendance → Shifts & roster: usual shifts and single-day changes. Design: design/stitch/exports/attendance.roster.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro person_select(name, label, selected) -%}
+<div>
+  <label for="f-{{ name }}" class="kx-label">{{ label }}</label>
+  <select id="f-{{ name }}" name="{{ name }}" class="kx-input">
+    <option value="">Choose…</option>
+    {% for pid, pname in people %}<option value="{{ pid }}" {% if selected == pid|string %}selected{% endif %}>{{ pname }}</option>{% endfor %}
+  </select>
+  {{ ui.field_error(errors, name) }}
+</div>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Shifts & roster", "Who works which shift. A roster change replaces the usual shift for one day.") %}
+  <form method="get" action="/attendance/roster" role="search">
+    <input type="hidden" name="week" value="{{ monday.isoformat() }}">
+    <label for="f-q" class="sr-only">Search people</label>
+    <input id="f-q" name="q" value="{{ q }}" class="kx-input h-10 w-56" placeholder="Search people">
+  </form>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 2xl:grid-cols-2">
+  <section id="usual" class="kx-card p-5 md:p-6" aria-labelledby="h-usual">
+    <h2 id="h-usual" class="font-h2 text-h2">Usual shifts</h2>
+    <form method="post" action="/attendance/roster/assignments" class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.3fr_1.3fr_1fr_1fr_auto] lg:items-end" novalidate>
+      {{ ui.csrf_field() }}
+      {{ person_select("employee_id", "Person", values.get("employee_id", "")) }}
+      <div>
+        <label for="f-pattern_id" class="kx-label">Shift</label>
+        <select id="f-pattern_id" name="pattern_id" class="kx-input">
+          <option value="">Choose…</option>
+          {% for pid, plabel in patterns %}<option value="{{ pid }}" {% if values.get("pattern_id") == pid|string %}selected{% endif %}>{{ plabel }}</option>{% endfor %}
+        </select>
+        {{ ui.field_error(errors, "pattern_id") }}
+      </div>
+      {{ ui.text_field("start_date", "From", value=values.get("start_date") or today.isoformat(), type="date", errors=errors) }}
+      {{ ui.text_field("end_date", "To (optional)", value=values.get("end_date"), type="date", errors=errors) }}
+      <button type="submit" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Assign</button>
+    </form>
+    <p class="mt-2 text-xs text-ink-3">A shift they already have ends the day before the new one starts.</p>
+
+    {% if assignments %}
+    <div class="kx-scroll-x mt-5">
+      <table class="w-full min-w-[560px] text-left text-body-sm">
+        <thead class="border-b border-line text-xs text-ink-3"><tr><th class="py-2 pr-3 font-semibold">Person</th><th class="py-2 pr-3 font-semibold">Shift</th><th class="py-2 pr-3 font-semibold">From</th><th class="py-2 pr-3 font-semibold">To</th><th class="py-2"><span class="sr-only">Actions</span></th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for a in assignments %}
+          <tr>
+            <td class="py-2.5 pr-3 font-medium">{{ a.name }}</td>
+            <td class="py-2.5 pr-3"><span class="kx-badge-info">{{ a.pattern }}</span></td>
+            <td class="py-2.5 pr-3 tnum">{{ a.start_date | date }}</td>
+            <td class="py-2.5 pr-3 tnum">{{ a.end_date | date if a.end_date else "Ongoing" }}</td>
+            <td class="py-2.5 text-right">
+              <form method="post" action="/attendance/roster/assignments/{{ a.id }}/end">{{ ui.csrf_field() }}
+                <button type="submit" class="kx-btn-ghost h-9 px-3 text-xs" title="{{ 'Removes it, as it hasn\'t started' if a.start_date > today else 'Ends it today' }}">{{ "Remove" if a.start_date > today else "End" }}</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    {% call ui.empty_state("calendar-clock", "No usual shifts yet", "Give people a shift to start tracking their attendance.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  <section id="roster" class="kx-card p-5 md:p-6" aria-labelledby="h-roster">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <h2 id="h-roster" class="font-h2 text-h2">Week of {{ monday | date }}</h2>
+      <div class="flex items-center gap-2">
+        <a href="/attendance/roster?week={{ prev_week }}&q={{ q }}#roster" class="kx-btn-ghost h-10 w-10 p-0" aria-label="Previous week">{{ ui.icon("chevron-left", "sm") }}</a>
+        <a href="/attendance/roster?q={{ q }}#roster" class="kx-btn-ghost h-10 px-3 text-xs">This week</a>
+        <a href="/attendance/roster?week={{ next_week }}&q={{ q }}#roster" class="kx-btn-ghost h-10 w-10 p-0" aria-label="Next week">{{ ui.icon("chevron-right", "sm") }}</a>
+      </div>
+    </div>
+    {% if roster %}
+    <div class="kx-scroll-x mt-4">
+      <table class="w-full min-w-[640px] text-body-sm">
+        <thead class="text-xs text-ink-3">
+          <tr><th class="py-2 pr-3 text-left font-semibold">Person</th>{% for day in week_days %}<th class="px-1 py-2 text-center font-semibold {{ 'text-iris' if day == today }}">{{ day.strftime("%a") }}<span class="block font-normal tnum">{{ day.day }}</span></th>{% endfor %}</tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {% for row in roster %}
+          <tr>
+            <td class="py-2 pr-3 font-medium">{{ row.name }}</td>
+            {% for cell in row.cells %}
+            <td class="px-1 py-2 text-center">
+              {% if cell.kind == "usual" %}<span class="block truncate rounded-lg bg-surface-sunken px-1.5 py-1 text-xs text-ink-2">{{ cell.label }}</span>
+              {% elif cell.kind == "changed" %}<span class="block truncate rounded-lg bg-iris-tint px-1.5 py-1 text-xs font-semibold text-iris" title="Changed for this day">{{ cell.label }}</span>
+              {% elif cell.kind == "off" %}<span class="block rounded-lg border border-dashed border-line px-1.5 py-1 text-xs text-ink-3" title="Day off (changed)">Off</span>
+              {% else %}<span class="block px-1.5 py-1 text-xs text-ink-3">–</span>{% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="mt-4 text-body-sm text-ink-3">No one has a shift this week.</p>
+    {% endif %}
+
+    <form method="post" action="/attendance/roster/days" class="mt-6 grid gap-3 rounded-2xl border border-line p-4 sm:grid-cols-2" novalidate>
+      {{ ui.csrf_field() }}
+      <h3 class="font-h3 text-h3 sm:col-span-2">Change a day</h3>
+      {{ person_select("roster_employee_id", "Person", values.get("roster_employee_id", "")) }}
+      {{ ui.text_field("day", "Day", value=values.get("day"), type="date", errors=errors) }}
+      <div>
+        <label for="f-choice" class="kx-label">That day</label>
+        <select id="f-choice" name="choice" class="kx-input">
+          <option value="usual">Usual shift</option>
+          <option value="off" {% if values.get("choice") == "off" %}selected{% endif %}>Day off</option>
+          {% for pid, plabel in patterns %}<option value="{{ pid }}" {% if values.get("choice") == pid|string %}selected{% endif %}>{{ plabel }}</option>{% endfor %}
+        </select>
+        {{ ui.field_error(errors, "choice") }}
+      </div>
+      {{ ui.text_field("note", "Note (optional)", value=values.get("note"), errors=errors) }}
+      <div class="sm:col-span-2 sm:text-right"><button type="submit" class="kx-btn-primary">Save</button></div>
+    </form>
+  </section>
+</div>
+{% endblock %}

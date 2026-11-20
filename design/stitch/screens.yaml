@@ -642,3 +642,105 @@ screens:
       save: leave.settings.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-19)
+
+  - id: attendance.clock
+    phase: 7
+    module: attendance
+    title: Clock in (self-service)
+    route: GET /attendance
+    template: app/modules/attendance/templates/attendance/clock.html
+    stitch_screens:
+      mobile: c58aeea4c1c9490cab610eb186312454
+    exports:
+      - design/stitch/exports/attendance.clock.html
+    permission: attendance.clock.use
+    actions:
+      clock: attendance.clock.use
+    field_classes: [directory, sensitive]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: attendance.timesheet
+    phase: 7
+    module: attendance
+    title: Timesheet and corrections
+    route: GET /attendance/timesheet
+    template: app/modules/attendance/templates/attendance/timesheet.html
+    stitch_screens:
+      desktop: d6ee543c440d489a8a2c788691951089
+    exports:
+      - design/stitch/exports/attendance.timesheet.html
+    permission: attendance.record.read
+    actions:
+      request_correction: attendance.correction.request
+      cancel_correction: attendance.correction.request
+      open_photo: attendance.photo.view
+    field_classes: [directory, sensitive]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: attendance.team
+    phase: 7
+    module: attendance
+    title: Team today
+    route: GET /attendance/team
+    template: app/modules/attendance/templates/attendance/team.html
+    stitch_screens:
+      desktop: 9faa7a24b1bf4ef6aa66153b730b6183
+    exports:
+      - design/stitch/exports/attendance.team.html
+    permission: attendance.record.read
+    actions:
+      decide_correction: attendance.record.approve
+      decide_overtime: attendance.record.approve
+      open_photo: attendance.photo.view
+    field_classes: [directory, sensitive]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: attendance.summary
+    phase: 7
+    module: attendance
+    title: Monthly attendance summary
+    route: GET /attendance/summary
+    template: app/modules/attendance/templates/attendance/summary.html
+    stitch_screens:
+      desktop: 4442b83dd2de40b293aa4e00b4f05c5d
+    exports:
+      - design/stitch/exports/attendance.summary.html
+    permission: attendance.record.read
+    actions:
+      download_csv: attendance.record.read
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: attendance.roster
+    phase: 7
+    module: attendance
+    title: Shifts and roster
+    route: GET /attendance/roster
+    template: app/modules/attendance/templates/attendance/roster.html
+    stitch_screens:
+      desktop: 09fc984dec5a4aafbc6517f27478e244
+    exports:
+      - design/stitch/exports/attendance.roster.html
+    permission: attendance.schedule.manage
+    actions:
+      assign: attendance.schedule.manage
+      change_day: attendance.schedule.manage
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: attendance.settings
+    phase: 7
+    module: attendance
+    title: Attendance settings
+    route: GET /attendance/settings
+    template: app/modules/attendance/templates/attendance/settings.html
+    stitch_screens:
+      desktop: 250c0e80f65e4b35935b8c41ba423592
+    exports:
+      - design/stitch/exports/attendance.settings.html
+    permission: attendance.settings.manage
+    actions:
+      save_pattern: attendance.settings.manage
+      save_location: attendance.settings.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-20)

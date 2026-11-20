@@ -70,3 +70,11 @@ def start_of_day(day: date) -> datetime:
 def end_of_day(day: date) -> datetime:
     """The end of `day` (exclusive), so a period ending on the 30th includes the 30th."""
     return start_of_day(day + timedelta(days=1))
+
+
+def parse_clock_time(value: str | None) -> time | None:
+    """An `<input type="time">` value (`08:05`), or None when blank or malformed."""
+    try:
+        return time.fromisoformat(value) if value else None
+    except ValueError:
+        return None

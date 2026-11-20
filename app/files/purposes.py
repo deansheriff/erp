@@ -13,7 +13,12 @@ from sqlalchemy.orm import Session
 from app.authz.engine import Resource
 
 # Imported by name so this core package never imports a business module directly.
-PURPOSE_MODULES = ("app.org.files", "app.modules.hr.files", "app.modules.leave.files")
+PURPOSE_MODULES = (
+    "app.org.files",
+    "app.modules.hr.files",
+    "app.modules.leave.files",
+    "app.modules.attendance.files",
+)
 
 KB = 1024
 MB = 1024 * KB
@@ -37,6 +42,8 @@ class FilePurpose:
     inline: bool  # may be shown in the browser rather than downloaded
     classification: str  # field class (app/authz/fields.py)
     resolve: EntityResolver
+    # Set for files that must not be kept: deleted this long after upload, live or not.
+    expires_after: timedelta | None = None
 
     def entity_uuid(self, entity_id: str) -> uuid.UUID | None:
         try:

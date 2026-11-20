@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"inverse-on-surface":"#f0f0f4","on-secondary":"#ffffff","secondary-fixed":"#c7f24c","on-tertiary":"#ffffff","primary-container":"#5a4bdb","surface-bright":"#f9f9fd","primary-fixed-dim":"#c5c0ff","surface":"#FFFFFF","line-strong":"#8B8BA6","surface-container":"#ededf1","on-surface-variant":"#474554","on-primary-fixed-variant":"#3d28be","iris-tint":"#EEECFD","on-primary":"#ffffff","iris":"#5A4BDB","secondary-fixed-dim":"#acd530","primary-fixed":"#e4dfff","surface-dim":"#d9dade","warning-text":"#8A4B00","surface-container-low":"#f3f3f7","danger-text":"#B4232F","warning-bg":"#FFF1D6","lime":"#C5F04A","error-container":"#ffdad6","surface-tint":"#5646d7","background":"#f9f9fd","on-error":"#ffffff","on-tertiary-fixed-variant":"#743400","ink-2":"#4B4B66","on-tertiary-fixed":"#321300","info-bg":"#DFEBFF","surface-variant":"#e2e2e6","iris-hover":"#4A3CC4","inverse-primary":"#c5c0ff","outline-variant":"#c8c4d7","destructive":"#C42836","surface-raised":"#FFFFFF","tertiary":"#7a3700","on-secondary-fixed-variant":"#3b4d00","on-primary-fixed":"#140067","secondary":"#4f6600","surface-container-highest":"#e2e2e6","tertiary-container":"#9f4a00","error":"#ba1a1a","lime-ink":"#4D7A0A","surface-container-high":"#e8e8ec","on-iris":"#FFFFFF","canvas":"#F6F6FA","on-error-container":"#93000a","on-tertiary-container":"#ffd7c1","success-text":"#0F6B3E","ink":"#16162A","ink-3":"#626280","inverse-surface":"#2e3034","on-background":"#1a1c1f","primary":"#412ec2","on-secondary-container":"#536b00","danger-bg":"#FFE4E6","surface-container-lowest":"#ffffff","on-surface":"#1a1c1f","on-secondary-fixed":"#161f00","on-primary-container":"#e0dbff","surface-sunken":"#EFEFF6","success-bg":"#DDF7E8","info-text":"#1D55B8","outline":"#787586","secondary-container":"#c4ef49","tertiary-fixed-dim":"#ffb68b","line":"#E4E4EE","tertiary-fixed":"#ffdbc8"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xl":"2rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xl":"3rem","gutter":"1.5rem","margin":"2rem","space-lg":"1.5rem","space-3xl":"4rem","space-md":"1rem"},"fontFamily":{"overline":["Inter"],"display":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"],"body-sm":["Inter"],"h3":["Plus Jakarta Sans"],"body":["Inter"],"h2":["Plus Jakarta Sans"],"label":["Inter"],"h1":["Plus Jakarta Sans"]},"fontSize":{"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}]}}}};</script></head><body class="bg-canvas font-body text-body text-ink antialiased min-h-screen"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface z-50 flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between shrink-0"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary font-h3 text-h3">A</div><span class="font-h3 text-h3 text-ink tracking-tight truncate">Adeyemi Holdings Ltd</span></div><button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">unfold_more</span></button></div><div class="px-space-md py-space-xs shrink-0"><div class="w-full flex items-center justify-between px-space-md h-10 rounded-lg bg-surface-sunken text-ink-3 hover:text-ink transition-colors cursor-pointer"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm">Go to...</span></div><kbd class="px-1.5 py-0.5 rounded bg-surface text-ink-2 font-overline text-overline shadow-[0_1px_2px_rgba(22,22,42,0.04)]">Ctrl K</kbd></div></div><nav class="flex-1 px-space-md py-space-sm overflow-y-auto space-y-1" data-active-classes="bg-iris-tint text-primary font-label"><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Home</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="hr-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>HR &amp; People</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span>Leave</span></a><div class="space-y-1"><div class="flex items-center justify-between px-space-md h-10 rounded-lg bg-surface-sunken text-ink font-label text-label cursor-pointer"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px] text-primary">schedule</span><span>Attendance</span></div><span class="material-symbols-outlined text-[18px] text-ink-3">expand_less</span></div><div class="pl-8 pr-space-xs py-1 space-y-1"><a class="flex items-center px-space-md h-8 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-body-sm text-body-sm" data-path="attendance-overview" href="#">Overview</a><a class="flex items-center px-space-md h-8 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-body-sm text-body-sm" data-path="timesheets" href="#">Timesheets</a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="monthly-summary" href="#">Monthly summary</a><a class="flex items-center px-space-md h-8 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-body-sm text-body-sm" data-path="clock-in-out-log" href="#">Clock In / Out log</a><a class="flex items-center px-space-md h-8 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-body-sm text-body-sm" data-path="overtime-approvals" href="#">Overtime approvals</a><a class="flex items-center px-space-md h-8 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-body-sm text-body-sm" data-path="attendance-settings" href="#">Settings</a></div></div><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payroll</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">work_outline</span><span>Projects</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">contact_support</span><span>Support</span></a><a class="flex items-center gap-space-md px-space-md h-10 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all font-label text-label" data-path="settings-administration" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>Settings / Administration</span></a></nav><div class="p-space-md shrink-0 space-y-1"><a class="flex items-center gap-space-md px-space-md h-9 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-body-sm text-body-sm" data-path="documentation" href="#"><span class="material-symbols-outlined text-[18px]">help</span><span>Help &amp; documentation</span></a><a class="flex items-center gap-space-md px-space-md h-9 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-body-sm text-body-sm" data-path="user-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><div class="mt-space-xs p-space-sm rounded-xl bg-surface-sunken flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-label text-label shrink-0">FB</div><div class="min-w-0"><p class="font-label text-label text-ink truncate">Fatima Bello</p><p class="font-overline text-overline text-ink-3 truncate">Finance Manager / HR</p></div></div><button class="text-ink-3 hover:text-ink p-1" type="button"><span class="material-symbols-outlined text-[18px]">more_vert</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 w-full px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm text-ink-3 font-body-sm text-body-sm"><span class="hover:text-ink cursor-pointer transition-colors">Attendance</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="font-label text-label text-ink">Monthly summary</span></div><div class="flex-1 max-w-lg mx-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-10 pr-16 bg-surface-sunken rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:bg-surface transition-all" placeholder="Search employees, records, attendance..." type="text"/><kbd class="absolute right-space-md px-1.5 py-0.5 rounded bg-surface text-ink-3 font-overline text-overline shadow-[0_1px_2px_rgba(22,22,42,0.04)]">Ctrl K</kbd></div></div><div class="flex items-center gap-space-sm"><button class="h-9 px-space-md rounded-full bg-warning-bg text-warning-text font-label text-label flex items-center gap-1.5 hover:opacity-90 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">check_circle</span><span>4 Approvals</span></button><button class="relative w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive"></span></button><button class="w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">light_mode</span></button><div class="flex items-center gap-1 cursor-pointer pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-label text-label">FB</div><span class="material-symbols-outlined text-ink-3 text-[18px]">arrow_drop_down</span></div></div></div></header><main class="w-full pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full pb-16">
+<!-- Top Action & Info Bar -->
+<div class="px-gutter pt-space-xl pb-space-md flex flex-col gap-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-sm mb-1">
+<span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-info-bg text-info-text">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</span>
+<h1 class="font-h1 text-h1 text-ink">Monthly summary</h1>
+</div>
+<p class="font-body text-body text-ink-3">Reconciliation report for October 2026 across all departments.</p>
+</div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<!-- Month Selector -->
+<div class="flex items-center bg-surface rounded-lg p-1 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<button class="w-8 h-8 rounded flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="px-space-md font-label text-label text-ink">Oct 2026</span>
+<button class="w-8 h-8 rounded flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<!-- Secondary Action -->
+<button class="h-10 px-space-md rounded-lg bg-surface text-ink font-label text-label hover:bg-surface-sunken transition-colors flex items-center gap-space-sm shadow-[0_1px_2px_rgba(22,22,42,0.04)]" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Download CSV for payroll</span>
+</button>
+<button class="h-10 px-space-md rounded-lg bg-primary text-on-primary font-label text-label hover:bg-iris-hover transition-colors flex items-center gap-space-sm shadow-[0_1px_2px_rgba(22,22,42,0.04)]" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Finalize October Payroll</span>
+</button>
+</div>
+</div>
+<!-- Info Banner -->
+<div class="p-space-md rounded-xl bg-info-bg text-info-text flex items-start gap-space-md shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<span class="material-symbols-outlined text-[20px] shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>
+<div class="font-body-sm text-body-sm leading-relaxed">
+<strong class="font-label">Payroll Policy Notice:</strong> Overtime counts for payroll only once approved. Days missing a clock-out count no hours until a correction is approved. All timesheets must be reconciled by November 2nd.
+      </div>
+</div>
+<!-- Metrics Bar / Quick Filters -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="bg-surface p-space-md rounded-xl shadow-[0_1px_2px_rgba(22,22,42,0.04)] flex items-center justify-between">
+<div>
+<p class="font-overline text-overline text-ink-3 uppercase">Total Workforce</p>
+<p class="font-stat text-stat text-ink mt-1">86</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-iris-tint text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">group</span>
+</div>
+</div>
+<div class="bg-surface p-space-md rounded-xl shadow-[0_1px_2px_rgba(22,22,42,0.04)] flex items-center justify-between">
+<div>
+<p class="font-overline text-overline text-ink-3 uppercase">Attendance Rate</p>
+<p class="font-stat text-stat text-success-text mt-1">96.4%</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-success-bg text-success-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">trending_up</span>
+</div>
+</div>
+<div class="bg-surface p-space-md rounded-xl shadow-[0_1px_2px_rgba(22,22,42,0.04)] flex items-center justify-between">
+<div>
+<p class="font-overline text-overline text-ink-3 uppercase">Pending Overtime</p>
+<p class="font-stat text-stat text-warning-text mt-1">34.5h</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">schedule</span>
+</div>
+</div>
+<div class="bg-surface p-space-md rounded-xl shadow-[0_1px_2px_rgba(22,22,42,0.04)] flex items-center justify-between">
+<div>
+<p class="font-overline text-overline text-ink-3 uppercase">Unresolved Punches</p>
+<p class="font-stat text-stat text-danger-text mt-1">3</p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-danger-bg text-danger-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">error</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content: Data Table Card -->
+<div class="px-gutter">
+<div class="bg-surface rounded-xl shadow-[0_1px_2px_rgba(22,22,42,0.04)] overflow-hidden">
+<!-- Table Header Bar -->
+<div class="p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-md bg-surface-sunken">
+<div class="flex items-center gap-space-sm">
+<span class="font-h3 text-h3 text-ink">Reconciliation Rows</span>
+<span class="px-2 py-0.5 rounded-full bg-surface text-ink-2 font-overline text-overline">86 employees</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<!-- Filter by Department Dropdown -->
+<button class="h-9 px-space-md rounded-lg bg-surface text-ink-2 hover:text-ink text-body-sm font-body-sm flex items-center gap-space-sm shadow-[0_1px_2px_rgba(22,22,42,0.04)]" type="button">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+<span>All Departments</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<!-- Search in Table -->
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2 text-ink-3 text-[16px]">search</span>
+<input class="h-9 pl-9 pr-space-md bg-surface rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none shadow-[0_1px_2px_rgba(22,22,42,0.04)]" placeholder="Filter employee..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Table Wrapper -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-4 font-semibold">Person</th>
+<th class="py-3 px-3 font-semibold text-right">Sched</th>
+<th class="py-3 px-3 font-semibold text-right">Present</th>
+<th class="py-3 px-3 font-semibold text-right">Absent</th>
+<th class="py-3 px-3 font-semibold text-right">Late</th>
+<th class="py-3 px-3 font-semibold text-right">Left Early</th>
+<th class="py-3 px-3 font-semibold text-center">No Clock-Out</th>
+<th class="py-3 px-3 font-semibold text-right">Leave Days</th>
+<th class="py-3 px-3 font-semibold text-right">Hours</th>
+<th class="py-3 px-3 font-semibold text-right">OT Approved</th>
+<th class="py-3 px-3 font-semibold text-right">OT Waiting</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-sunken font-body-sm text-body-sm text-ink tabular-nums">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center font-label text-label shrink-0">AO</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Amaka Okafor</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00042 • Finance &amp; Accounts</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">21</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1 (15m)</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">1 punch</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1.0 d Annual</td>
+<td class="py-3 px-3 text-right font-medium">168.5h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">4.5h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">1.5h pending</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">CK</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Chinedu Kalu</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00089 • Operations</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">20</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">1 d</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0</td>
+<td class="py-3 px-3 text-right text-ink-3">1</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1.0 d Sick</td>
+<td class="py-3 px-3 text-right font-medium">160.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">8.0h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">0.0h</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">AI</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Aisha Ibrahim</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00104 • Human Resources</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">22</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0.0 d</td>
+<td class="py-3 px-3 text-right font-medium">176.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">2.0h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">3.0h pending</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">OE</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Oluwaseun Ejiro</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00112 • Engineering</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">21</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">3 (45m)</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1.0 d Annual</td>
+<td class="py-3 px-3 text-right font-medium">168.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">12.5h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">0.0h</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">FA</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Fatima Al-Hassan</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00145 • Supply Chain</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">19</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">2 d</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">2 punches</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1.0 d Maternity</td>
+<td class="py-3 px-3 text-right font-medium">142.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">0.0h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">4.0h pending</span>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">DB</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">David Bamidele</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00167 • Legal &amp; Compliance</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">22</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0.0 d</td>
+<td class="py-3 px-3 text-right font-medium">176.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">5.0h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">0.0h</span>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">ZN</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Zainab Nnamdi</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00198 • Marketing</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">21</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1 (10m)</td>
+<td class="py-3 px-3 text-right text-ink-3">1</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1.0 d Annual</td>
+<td class="py-3 px-3 text-right font-medium">167.5h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">1.5h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">2.0h pending</span>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">TM</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Tariq Mensah</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00210 • Product Design</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">22</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0.0 d</td>
+<td class="py-3 px-3 text-right font-medium">176.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">6.0h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">0.0h</span>
+</td>
+</tr>
+<!-- Row 9 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">BK</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Blessing Ken</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00234 • Customer Success</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">20</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">2 (30m)</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">2.0 d Annual</td>
+<td class="py-3 px-3 text-right font-medium">160.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">3.0h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">1.0h pending</span>
+</td>
+</tr>
+<!-- Row 10 -->
+<tr class="hover:bg-surface-sunken/60 transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-ink-2 flex items-center justify-center font-label text-label shrink-0">IE</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Ibrahim Eze</p>
+<p class="font-overline text-overline text-ink-3 truncate">EMP-00255 • Facilities &amp; Admin</p>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">22</td>
+<td class="py-3 px-3 text-right font-medium text-ink">21</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-overline text-overline">0</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">0</td>
+<td class="py-3 px-3 text-right text-ink-3">0</td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">None</span>
+</td>
+<td class="py-3 px-3 text-right text-ink-2">1.0 d Annual</td>
+<td class="py-3 px-3 text-right font-medium">168.0h</td>
+<td class="py-3 px-3 text-right text-success-text font-medium">10.0h</td>
+<td class="py-3 px-3 text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">0.0h</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="p-space-md bg-surface border-t border-surface-sunken flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md text-ink-3 font-body-sm text-body-sm">
+<span>Showing 1-10 of 86 employees</span>
+<div class="flex items-center gap-space-xs">
+<span>Rows per page:</span>
+<select class="bg-surface-sunken text-ink font-label text-label px-2 py-1 rounded focus:outline-none">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+<option>100</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-body-sm text-body-sm text-ink-3">Page 1 of 9</span>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-lg bg-surface-sunken text-ink-3 flex items-center justify-center opacity-50 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-sunken text-ink hover:bg-surface hover:text-primary transition-colors flex items-center justify-center font-label text-label" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

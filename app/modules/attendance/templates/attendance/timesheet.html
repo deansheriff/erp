@@ -1,0 +1,114 @@
+{# Attendance → Timesheet and corrections. Design: design/stitch/exports/attendance.timesheet.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% import "attendance/_days.html" as days_ui with context %}
+{% set who = "&person=" ~ person if person else "" %}
+
+{% block content %}
+{% if linked is defined and not linked %}
+{% call ui.page_header("Timesheet") %}{% endcall %}
+<section class="kx-card mt-6">{% call ui.empty_state("id-card", "No HR record yet", "Your account isn't linked to an HR record, so there's no attendance to show. Ask HR.") %}{% endcall %}</section>
+{% else %}
+{% call ui.page_header("Timesheet", (person_name ~ " · " if not is_me else "") ~ title) %}
+  <div class="flex items-center gap-2">
+    <a href="/attendance/timesheet?month={{ prev }}{{ who }}" class="kx-btn-ghost h-10 w-10 p-0" aria-label="Previous month">{{ ui.icon("chevron-left", "sm") }}</a>
+    <span class="min-w-[120px] text-center text-body-sm font-semibold">{{ title }}</span>
+    <a href="/attendance/timesheet?month={{ next }}{{ who }}" class="kx-btn-ghost h-10 w-10 p-0" aria-label="Next month">{{ ui.icon("chevron-right", "sm") }}</a>
+  </div>
+  {% if people %}
+  <form method="get" action="/attendance/timesheet" class="flex items-center gap-2">
+    <input type="hidden" name="month" value="{{ current }}">
+    <label for="f-person" class="sr-only">Person</label>
+    <select id="f-person" name="person" class="kx-input h-10 w-56">
+      {% for pid, name in people %}<option value="{{ pid }}" {% if pid == employee_id %}selected{% endif %}>{{ name }}</option>{% endfor %}
+    </select>
+    <button type="submit" class="kx-btn-secondary h-10">Show</button>
+  </form>
+  {% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<section class="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4" aria-label="This month">
+  {{ ui.kpi_tile("Days worked", totals.present ~ " of " ~ totals.scheduled) }}
+  {{ ui.kpi_tile("Hours", totals.worked | minutes) }}
+  {{ ui.kpi_tile("Late", totals.late, count_to=totals.late) }}
+  {{ ui.kpi_tile("Overtime approved", totals.overtime | minutes) }}
+</section>
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+  <section class="kx-card overflow-hidden" aria-label="Days">
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[640px] text-left text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3">
+          <tr><th class="px-4 py-3 font-semibold">Day</th><th class="px-4 py-3 font-semibold">Shift</th><th class="px-4 py-3 font-semibold">In – out</th><th class="px-4 py-3 text-right font-semibold">Worked</th><th class="px-4 py-3 font-semibold">Status</th><th class="px-4 py-3"><span class="sr-only">Actions</span></th></tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {% for d in days %}
+          <tr id="d-{{ d.day.isoformat() }}" class="transition-colors duration-base hover:bg-surface-sunken/60 {{ 'bg-surface-sunken/40' if d.day.weekday() >= 5 }} {{ 'bg-iris-tint/40' if d.day == today }}">
+            <td class="whitespace-nowrap px-4 py-3"><span class="font-medium">{{ d.day.strftime("%a") }}</span> <span class="text-ink-3 tnum">{{ d.day.day }}</span></td>
+            <td class="px-4 py-3"><span class="block">{{ d.shift_name if d.scheduled else "" }}</span>{% if d.scheduled %}<span class="block whitespace-nowrap text-xs tnum text-ink-3">{{ d.scheduled_start | clock }}–{{ d.scheduled_end | clock }}</span>{% else %}<span class="text-ink-3">Off</span>{% endif %}</td>
+            <td class="whitespace-nowrap px-4 py-3">{{ days_ui.times(d) }}
+              {% if d.photo_taken %}<span class="ml-1 inline-flex items-center text-ink-3" title="Photo taken">{% if d.photo_file_id and employee_id in photo_viewers %}<a href="/files/{{ d.photo_file_id }}" class="text-iris" aria-label="Open clock-in photo">{{ ui.icon("camera", "sm") }}</a>{% else %}{{ ui.icon("camera", "sm") }}<span class="sr-only">Photo taken</span>{% endif %}</span>{% endif %}
+            </td>
+            <td class="px-4 py-3 text-right tnum">{{ d.worked_minutes | minutes if d.worked_minutes else "—" }}</td>
+            <td class="px-4 py-3">{{ days_ui.day_chips(d, statuses) }}</td>
+            <td class="px-3 py-3 text-right">{% if may_correct and d.day <= today and not d.pending_correction and (d.record_id or d.status in ("absent", "not_in")) %}<a href="/attendance/timesheet?month={{ current }}{{ who }}&correct={{ d.day.isoformat() }}#correction" class="kx-btn-ghost h-9 px-3 text-xs">Correct</a>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <aside class="space-y-6">
+    {% if may_correct %}
+    <form id="correction" method="post" action="/attendance/corrections" class="kx-card kx-enter space-y-4 p-5" novalidate>
+      {{ ui.csrf_field() }}
+      <input type="hidden" name="person" value="{{ person }}">
+      <div>
+        <h2 class="font-h3 text-h3">Ask for a correction</h2>
+        <p class="mt-1 text-body-sm text-ink-3">For a missed or wrong clock-in or clock-out. {{ "Your manager" if is_me else "Their manager" }} approves it; no hours count for a day without a clock-out until then.</p>
+      </div>
+      {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+      {{ ui.text_field("work_date", "Day", value=values.get("work_date"), type="date", errors=errors) }}
+      <div class="grid grid-cols-2 gap-3">
+        {{ ui.text_field("clock_in", "Started", value=values.get("clock_in"), type="time", errors=errors) }}
+        {{ ui.text_field("clock_out", "Finished", value=values.get("clock_out"), type="time", errors=errors) }}
+      </div>
+      <p class="-mt-2 text-xs text-ink-3">A finish earlier than the start means the next day.</p>
+      <div>
+        <label for="f-reason" class="kx-label">What happened</label>
+        <textarea id="f-reason" name="reason" rows="3" class="kx-input h-auto py-2.5" {% if errors.get("reason") %}aria-invalid="true" aria-describedby="reason-error"{% endif %}>{{ values.get("reason", "") }}</textarea>
+        {{ ui.field_error(errors, "reason") }}
+      </div>
+      <button type="submit" class="kx-btn-primary w-full">{{ ui.icon("send", "sm") }} Send for approval</button>
+    </form>
+    {% endif %}
+
+    <section class="kx-card p-5" aria-labelledby="h-corrections">
+      <h2 id="h-corrections" class="kx-overline">Corrections this month</h2>
+      {% if corrections %}
+      <ul class="mt-3 space-y-3">
+        {% for c in corrections %}
+        <li class="space-y-1.5 rounded-xl border border-line p-3">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-body-sm font-semibold">{{ c.work_date | date }}</span>
+            {{ ui.badge(tones[c.status], {"pending": "Waiting", "approved": "Approved", "rejected": "Rejected"}[c.status]) }}
+          </div>
+          <p class="text-xs text-ink-2 tnum">{{ c.clock_in | clock }} – {{ c.clock_out | clock }}</p>
+          <p class="text-xs text-ink-3">{{ c.reason }}</p>
+          {% if c.status == "rejected" and c.decision_note %}<p class="rounded-lg bg-danger-bg px-2.5 py-1.5 text-xs text-danger-text">{{ c.decided_by }}: {{ c.decision_note }}</p>{% endif %}
+          {% if c.can_cancel %}
+          <form method="post" action="/attendance/corrections/{{ c.id }}/cancel">{{ ui.csrf_field() }}<button type="submit" class="text-xs font-semibold text-danger-text">Cancel</button></form>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="mt-3 text-body-sm text-ink-3">None this month.</p>
+      {% endif %}
+    </section>
+  </aside>
+</div>
+{% endif %}
+{% endblock %}

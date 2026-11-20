@@ -314,3 +314,14 @@ def page_in_scope(
         )
     )
     return rows, pages
+
+
+def branches_of(db: Session, employee_ids: list[uuid.UUID]) -> dict[uuid.UUID, uuid.UUID | None]:
+    """Each person's branch (for clocking rules)."""
+    if not employee_ids:
+        return {}
+    return dict(
+        db.execute(
+            select(Employee.id, Employee.branch_id).where(Employee.id.in_(employee_ids))
+        ).all()
+    )

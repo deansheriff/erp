@@ -130,6 +130,8 @@ ignore_imports = [
   "app.modules.hr.routes_process -> app.web.*",
   "app.modules.leave.routes_web -> fastapi",
   "app.modules.leave.routes_web -> app.web.*",
+  "app.modules.attendance.routes_web -> fastapi",
+  "app.modules.attendance.routes_web -> app.web.*",
   "app.files.routes_web -> fastapi",
   "app.files.routes_web -> app.web.*",
   "app.files.web -> fastapi",

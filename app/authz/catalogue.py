@@ -19,6 +19,7 @@ POLICY_MODULES = (
     "app.files.policies",
     "app.modules.hr.policies",
     "app.modules.leave.policies",
+    "app.modules.attendance.policies",
 )
 
 

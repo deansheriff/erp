@@ -166,6 +166,73 @@
       };
     });
 
+    // Attendance: finds the browser's location for the clock-in form and previews the
+    // photo. With data-required="true" (a geofenced branch) the button waits for it.
+    Alpine.data("clockIn", function () {
+      return {
+        state: "idle",
+        accuracy: null,
+        photoUrl: "",
+        required: false,
+        init: function () {
+          this.required = this.$root.getAttribute("data-required") === "true";
+          this.locate();
+        },
+        locate: function () {
+          var self = this;
+          if (!navigator.geolocation) { self.state = "unavailable"; return; }
+          self.state = "locating";
+          navigator.geolocation.getCurrentPosition(function (pos) {
+            self.$refs.lat.value = pos.coords.latitude.toFixed(6);
+            self.$refs.lng.value = pos.coords.longitude.toFixed(6);
+            self.$refs.acc.value = String(Math.round(pos.coords.accuracy));
+            self.accuracy = Math.round(pos.coords.accuracy);
+            self.state = "found";
+          }, function (err) {
+            self.state = err && err.code === 1 ? "denied" : "unavailable";
+          }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+        },
+        pickPhoto: function (e) {
+          var self = this;
+          var file = e.target.files && e.target.files[0];
+          if (!file) { self.photoUrl = ""; return; }
+          // The CSP allows data: images, not blob: URLs.
+          var reader = new FileReader();
+          reader.onload = function () { self.photoUrl = String(reader.result); };
+          reader.readAsDataURL(file);
+        },
+        get locating() { return this.state === "locating" || this.state === "idle"; },
+        get found() { return this.state === "found"; },
+        get denied() { return this.state === "denied"; },
+        get unavailable() { return this.state === "unavailable"; },
+        get blocked() { return this.required && this.state !== "found"; },
+        get foundText() { return this.accuracy ? "Location found (within " + this.accuracy + " m)" : "Location found"; },
+        get hasPhoto() { return this.photoUrl !== ""; },
+        get noPhoto() { return this.photoUrl === ""; },
+        get photoLabel() { return this.photoUrl ? "Photo ready. Tap to retake" : "Take a photo"; },
+      };
+    });
+
+    Alpine.data("liveClock", function () {
+      return {
+        time: "",
+        timer: null,
+        init: function () {
+          var self = this;
+          var tz = this.$el.getAttribute("data-tz") || undefined;
+          self.time = this.$el.textContent.trim();
+          function tick() {
+            try {
+              self.time = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: tz });
+            } catch (e) { /* keep the server's time */ }
+          }
+          tick();
+          self.timer = setInterval(tick, 15000);
+        },
+        destroy: function () { clearInterval(this.timer); },
+      };
+    });
+
     Alpine.data("copyText", function () {
       return {
         copied: false,

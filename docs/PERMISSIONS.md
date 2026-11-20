@@ -6,6 +6,18 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 
 ## Catalogue
 
+### attendance
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `attendance.clock.use` | Clock in and out | Self |  | Clock in and out for yourself. |
+| `attendance.correction.request` | Ask for attendance corrections | Self, Team, Department, Organisation |  | Ask to fix a day's clock-in and clock-out times (for yourself, or others in scope). |
+| `attendance.photo.view` | See clock-in photos | Self, Team, Department, Organisation | yes | Open the photos taken when people clock in. |
+| `attendance.record.approve` | Approve attendance | Self, Team, Department, Organisation |  | Decide correction requests and overtime within scope. |
+| `attendance.record.read` | View attendance | Self, Team, Department, Organisation |  | See timesheets, who is in today and the monthly summary within scope. |
+| `attendance.schedule.manage` | Manage shifts and rosters | Self, Team, Department, Organisation |  | Give people their usual shift and change single days on the roster. |
+| `attendance.settings.manage` | Manage attendance settings | Organisation |  | Shift patterns and branch locations (geofence and photo). |
+
 ### audit
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -98,6 +110,13 @@ Everything, including technical settings. Can't be edited or removed.
 
 | Permission | Scope |
 |---|---|
+| `attendance.clock.use` | O |
+| `attendance.correction.request` | O |
+| `attendance.photo.view` | O |
+| `attendance.record.approve` | O |
+| `attendance.record.read` | O |
+| `attendance.schedule.manage` | O |
+| `attendance.settings.manage` | O |
 | `audit.log.read` | O |
 | `authz.assignment.manage` | O |
 | `authz.delegation.manage` | O |
@@ -147,6 +166,13 @@ Everything except technical settings such as mail, branding and security.
 
 | Permission | Scope |
 |---|---|
+| `attendance.clock.use` | S |
+| `attendance.correction.request` | O |
+| `attendance.photo.view` | O |
+| `attendance.record.approve` | O |
+| `attendance.record.read` | O |
+| `attendance.schedule.manage` | O |
+| `attendance.settings.manage` | O |
 | `audit.log.read` | O |
 | `authz.assignment.manage` | O |
 | `authz.delegation.manage` | O |
@@ -192,6 +218,7 @@ Reads everything, including the audit log. Changes nothing.
 
 | Permission | Scope |
 |---|---|
+| `attendance.record.read` | O |
 | `audit.log.read` | O |
 | `authz.role.read` | O |
 | `hr.employee.banking.read` | O |
@@ -211,6 +238,10 @@ Self-service: their own profile, requests and payslips.
 
 | Permission | Scope |
 |---|---|
+| `attendance.clock.use` | S |
+| `attendance.correction.request` | S |
+| `attendance.photo.view` | S |
+| `attendance.record.read` | S |
 | `hr.employee.banking.read` | S |
 | `hr.employee.compensation.read` | S |
 | `hr.employee.personal.read` | S |
@@ -229,6 +260,8 @@ Approves their team's requests and sees their team.
 
 | Permission | Scope |
 |---|---|
+| `attendance.record.approve` | T |
+| `attendance.record.read` | T |
 | `hr.employee.personal.read` | T |
 | `leave.balance.read` | T |
 | `leave.request.approve` | T |
@@ -240,6 +273,11 @@ Day-to-day HR records and requests.
 
 | Permission | Scope |
 |---|---|
+| `attendance.correction.request` | O |
+| `attendance.photo.view` | O |
+| `attendance.record.approve` | O |
+| `attendance.record.read` | O |
+| `attendance.schedule.manage` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
 | `hr.employee.banking.update` | O |
@@ -264,6 +302,12 @@ All HR records, including sensitive ones.
 
 | Permission | Scope |
 |---|---|
+| `attendance.correction.request` | O |
+| `attendance.photo.view` | O |
+| `attendance.record.approve` | O |
+| `attendance.record.read` | O |
+| `attendance.schedule.manage` | O |
+| `attendance.settings.manage` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -363,5 +407,6 @@ _No grants yet: added by the phase that delivers its module._
 | `leave.no_self_approval` | `leave.request.approve` | owner_is_actor | You can't approve your own leave. |
 | `leave.no_self_hr_approval` | `leave.request.approve_hr` | owner_is_actor | You can't approve your own leave. |
 | `leave.no_self_adjustment` | `leave.balance.adjust` | subject_is_actor | You can't adjust your own leave balance. |
+| `attendance.no_self_approval` | `attendance.record.approve` | owner_is_actor | You can't approve your own attendance. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

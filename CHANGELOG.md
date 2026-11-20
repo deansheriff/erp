@@ -5,6 +5,29 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 7b: Attendance and shifts
+- Shift patterns (start, end — past midnight allowed — break, working days, late and
+  early grace, 15 minutes each by default, to confirm), usual shifts per person with
+  dates, and single-day roster changes (another shift or a day off) (ADR 0019). A Day
+  shift (Monday to Friday, 08:00 to 17:00, an hour's break) is seeded.
+- Clock in and out from the browser, mobile first. Per branch: a geofence (clock-in is
+  refused outside the radius or without a location) and an optional photo at clock-in,
+  kept 90 days (to confirm) and seen only by the person and HR.
+- A day's status worked out from the shift, the clock times, approved leave and public
+  holidays: absent, late, left early, missing clock-out (four hours after the shift,
+  to confirm; no hours count until corrected), on leave, holiday. Only people with a
+  shift are judged.
+- Overtime is time past the shift's end, recorded at clock-out and counted only once a
+  manager (or HR) approves it. Corrections to a day's times go to the same approvers;
+  nobody approves their own.
+- Clock in, timesheet with corrections, Team today with approvals, monthly summary with
+  a CSV for payroll, Shifts & roster, and settings (patterns and branch locations).
+- Files can expire a set time after upload (`FilePurpose.expires_after`).
+- Permissions `attendance.clock.use`, `attendance.record.read|approve`,
+  `attendance.correction.request`, `attendance.photo.view`,
+  `attendance.schedule.manage`, `attendance.settings.manage`; grants for the Employee,
+  Line Manager, HR Officer, HR Manager and Auditor templates.
+
 ### Added — Phase 7a: Leave
 - Leave types with entitlement rules by grade and length of service, yearly or monthly
   accrual, carry-over with a cap and expiry, optional HR final approval and a medical

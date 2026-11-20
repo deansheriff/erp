@@ -1,0 +1,112 @@
+{# Attendance → Settings: shift patterns and branch locations (ADR 0019).
+   Design: design/stitch/exports/attendance.settings.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro pattern_form(p=None) -%}
+{% set key = "pattern:" ~ (p.id if p else "new") %}
+{% set errs = errors if editing == key else {} %}
+{% set v = values if editing == key else {} %}
+{% set chosen = v.get("weekdays") if v else (p.weekdays if p else "01234") %}
+<form method="post" action="/attendance/settings/patterns" class="mt-4 space-y-4" novalidate>
+  {{ ui.csrf_field() }}
+  {% if p %}<input type="hidden" name="pattern_id" value="{{ p.id }}">{% endif %}
+  {% if errs.get("form") %}{{ ui.alert("danger", errs["form"]) }}{% endif %}
+  <div class="grid gap-4 sm:grid-cols-3">
+    {{ ui.text_field("name", "Name", value=v.get("name") or (p.name if p else ""), errors=errs) }}
+    {{ ui.text_field("start_time", "Starts", value=v.get("start_time") or (p.start_time.strftime("%H:%M") if p else "08:00"), type="time", errors=errs) }}
+    {{ ui.text_field("end_time", "Ends", value=v.get("end_time") or (p.end_time.strftime("%H:%M") if p else "17:00"), type="time", errors=errs) }}
+    {{ ui.text_field("break_minutes", "Break (minutes)", value=v.get("break_minutes") or (p.break_minutes if p else 60), errors=errs, inputmode="numeric") }}
+    {{ ui.text_field("late_grace", "Late after (minutes)", value=v.get("late_grace") or (p.late_grace_minutes if p else 15), errors=errs, inputmode="numeric") }}
+    {{ ui.text_field("early_grace", "Early leaving before end (minutes)", value=v.get("early_grace") or (p.early_grace_minutes if p else 15), errors=errs, inputmode="numeric") }}
+  </div>
+  <p class="-mt-2 text-xs text-ink-3">An end earlier than the start means the shift ends the next day. Grace is 15 minutes by default (confirm).</p>
+  <fieldset class="min-w-0">
+    <legend class="kx-label">Working days</legend>
+    <div class="flex flex-wrap gap-2">
+      {% for number, label in weekdays %}
+      <label class="flex min-h-[40px] cursor-pointer items-center rounded-full border border-line px-4 text-body-sm transition-colors duration-base has-[:checked]:border-iris has-[:checked]:bg-iris-tint has-[:checked]:font-semibold has-[:checked]:text-iris">
+        <input type="checkbox" name="weekdays" value="{{ number }}" class="sr-only" {% if number|string in chosen %}checked{% endif %}> {{ label }}
+      </label>
+      {% endfor %}
+    </div>
+    {{ ui.field_error(errs, "weekdays") }}
+  </fieldset>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    {% if p %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if p.is_active %}checked{% endif %}> Active (inactive shifts can't be given to anyone new)</label>{% else %}<span></span>{% endif %}
+    <button type="submit" class="kx-btn-primary">{{ "Save" if p else "Add shift" }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Attendance settings", "Shift patterns, and how people clock in at each branch.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<section id="patterns" class="mt-6 space-y-3" aria-labelledby="h-patterns">
+  <h2 id="h-patterns" class="font-h3 text-h3">Shift patterns</h2>
+  {% for p in patterns %}
+  <details class="kx-card kx-enter p-5" {% if editing == "pattern:" ~ p.id %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3">
+      <span class="min-w-0">
+        <span class="block font-semibold">{{ p.name }} <span class="tnum font-normal text-ink-2">{{ p.start_time.strftime("%H:%M") }}–{{ p.end_time.strftime("%H:%M") }}</span></span>
+        <span class="text-xs text-ink-3">
+          {% for number, label in weekdays if number|string in p.weekdays %}{{ label }}{{ ", " if not loop.last }}{% endfor %} ·
+          {{ p.break_minutes | minutes }} break · late after {{ p.late_grace_minutes }} m · early before {{ p.early_grace_minutes }} m
+        </span>
+      </span>
+      <span class="flex flex-wrap items-center gap-2">
+        {% if p.end_time < p.start_time %}{{ ui.badge("info", "Ends next day") }}{% endif %}
+        {{ ui.badge("success", "Active") if p.is_active else ui.badge("neutral", "Inactive") }}
+      </span>
+    </summary>
+    {{ pattern_form(p) }}
+  </details>
+  {% endfor %}
+  <details class="rounded-2xl border border-dashed border-line p-5" {% if editing == "pattern:new" %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none items-center gap-2 text-label text-iris">{{ ui.icon("plus", "sm") }} New shift pattern</summary>
+    {{ pattern_form() }}
+  </details>
+</section>
+
+<section id="locations" class="mt-8 space-y-3" aria-labelledby="h-locations">
+  <div>
+    <h2 id="h-locations" class="font-h3 text-h3">Branch locations</h2>
+    <p class="text-body-sm text-ink-3">With the geofence on, clocking in is refused outside the radius or when the browser gives no location.</p>
+  </div>
+  {% for loc in locations %}
+  {% set key = "location:" ~ loc.branch_id %}
+  {% set errs = errors if editing == key else {} %}
+  {% set v = values if editing == key else {} %}
+  {% set r = loc.rules %}
+  <form id="branch-{{ loc.branch_id }}" method="post" action="/attendance/settings/locations/{{ loc.branch_id }}" class="kx-card kx-enter space-y-4 p-5" novalidate>
+    {{ ui.csrf_field() }}
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h3 class="font-semibold">{{ loc.branch }}</h3>
+        <p class="text-xs text-ink-3">{{ loc.people }} {{ "person" if loc.people == 1 else "people" }}</p>
+      </div>
+      <span class="flex flex-wrap gap-2">
+        {% if r and r.geofence_enabled %}{{ ui.badge("success", "Geofence on · " ~ r.radius_m ~ " m") }}{% else %}{{ ui.badge("neutral", "No geofence") }}{% endif %}
+        {% if r and r.require_photo %}{{ ui.badge("info", "Photo at clock-in") }}{% endif %}
+      </span>
+    </div>
+    {% if errs.get("form") %}{{ ui.alert("danger", errs["form"]) }}{% endif %}
+    <div class="grid gap-4 sm:grid-cols-3">
+      {{ ui.text_field("latitude", "Latitude", value=v.get("latitude", r.latitude if r and r.latitude is not none else ""), errors=errs, inputmode="decimal", hint="e.g. 6.4281") }}
+      {{ ui.text_field("longitude", "Longitude", value=v.get("longitude", r.longitude if r and r.longitude is not none else ""), errors=errs, inputmode="decimal", hint="e.g. 3.4219") }}
+      {{ ui.text_field("radius_m", "Radius (metres)", value=v.get("radius_m", r.radius_m if r else default_radius), errors=errs, inputmode="numeric", hint="20 to 5,000") }}
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-body-sm">
+        <label class="flex items-center gap-2"><input type="checkbox" name="geofence_enabled" value="1" class="kx-check" {% if v.get("geofence_enabled") or (not v and r and r.geofence_enabled) %}checked{% endif %}> Only allow clocking in on site</label>
+        <label class="flex items-center gap-2"><input type="checkbox" name="require_photo" value="1" class="kx-check" {% if v.get("require_photo") or (not v and r and r.require_photo) %}checked{% endif %}> Require a photo at clock-in</label>
+      </div>
+      <button type="submit" class="kx-btn-secondary">Save</button>
+    </div>
+  </form>
+  {% else %}
+  <div class="kx-card">{% call ui.empty_state("map-pin", "No branches yet", "Add branches under HR → Structure setup, then set how people clock in there.") %}{% endcall %}</div>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,73 @@
+{# Attendance → Monthly summary for HR and payroll. Design: design/stitch/exports/attendance.summary.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Monthly summary", title) %}
+  <div class="flex items-center gap-2">
+    <a href="/attendance/summary?month={{ prev }}&q={{ q }}" class="kx-btn-ghost h-10 w-10 p-0" aria-label="Previous month">{{ ui.icon("chevron-left", "sm") }}</a>
+    <span class="min-w-[120px] text-center text-body-sm font-semibold">{{ title }}</span>
+    <a href="/attendance/summary?month={{ next }}&q={{ q }}" class="kx-btn-ghost h-10 w-10 p-0" aria-label="Next month">{{ ui.icon("chevron-right", "sm") }}</a>
+  </div>
+  <form method="get" action="/attendance/summary" role="search">
+    <input type="hidden" name="month" value="{{ current }}">
+    <label for="f-q" class="sr-only">Search people</label>
+    <input id="f-q" name="q" value="{{ q }}" class="kx-input h-10 w-56" placeholder="Search people">
+  </form>
+  <a href="/attendance/summary.csv?month={{ current }}" class="kx-btn-secondary" hx-boost="false" download>{{ ui.icon("download", "sm") }} Download CSV for payroll</a>
+{% endcall %}
+
+<p class="mt-5 flex items-start gap-2 text-body-sm text-ink-3">{{ ui.icon("info", "sm", "mt-0.5") }} Overtime counts for payroll only once approved. Days missing a clock-out count no hours until a correction is approved.</p>
+
+<section class="kx-card mt-4 overflow-hidden">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[980px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3">
+        <tr>
+          <th class="px-4 py-3 text-left font-semibold">Person</th>
+          <th class="px-3 py-3 text-right font-semibold">Scheduled</th>
+          <th class="px-3 py-3 text-right font-semibold">Present</th>
+          <th class="px-3 py-3 text-right font-semibold">Absent</th>
+          <th class="px-3 py-3 text-right font-semibold">Late</th>
+          <th class="px-3 py-3 text-right font-semibold">Left early</th>
+          <th class="px-3 py-3 text-right font-semibold">No clock-out</th>
+          <th class="px-3 py-3 text-right font-semibold">Leave days</th>
+          <th class="px-3 py-3 text-right font-semibold">Hours</th>
+          <th class="px-3 py-3 text-right font-semibold">Overtime approved</th>
+          <th class="px-4 py-3 text-right font-semibold">Overtime waiting</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-line tnum">
+        {% for r in rows %}
+        <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+          <td class="px-4 py-3 text-left"><a href="/attendance/timesheet?month={{ current }}&person={{ r.employee_id }}" class="font-semibold hover:text-iris">{{ r.name }}</a>{% if r.employee_number %}<span class="block text-xs text-ink-3">{{ r.employee_number }}</span>{% endif %}</td>
+          <td class="px-3 py-3 text-right">{{ r.scheduled }}</td>
+          <td class="px-3 py-3 text-right">{{ r.present }}</td>
+          <td class="px-3 py-3 text-right {{ 'font-semibold text-danger-text' if r.absent }}">{{ r.absent }}</td>
+          <td class="px-3 py-3 text-right {{ 'text-warning-text' if r.late }}">{{ r.late }}</td>
+          <td class="px-3 py-3 text-right {{ 'text-warning-text' if r.left_early }}">{{ r.left_early }}</td>
+          <td class="px-3 py-3 text-right">{% if r.missing_clock_out %}{{ ui.badge("danger", r.missing_clock_out) }}{% else %}0{% endif %}</td>
+          <td class="px-3 py-3 text-right">{{ r.leave_days | days }}</td>
+          <td class="px-3 py-3 text-right">{{ r.worked_minutes | minutes }}</td>
+          <td class="px-3 py-3 text-right">{{ r.overtime_approved | minutes }}</td>
+          <td class="px-4 py-3 text-right {{ 'text-warning-text' if r.overtime_pending }}">{{ r.overtime_pending | minutes }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if pages > 1 %}
+  <nav class="flex items-center justify-between border-t border-line px-4 py-3 text-body-sm" aria-label="Pages">
+    <span class="text-ink-3">Page {{ page }} of {{ pages }}</span>
+    <span class="flex gap-2">
+      {% if page > 1 %}<a class="kx-btn-ghost h-9 px-3" href="/attendance/summary?month={{ current }}&q={{ q }}&page={{ page - 1 }}">Previous</a>{% endif %}
+      {% if page < pages %}<a class="kx-btn-ghost h-9 px-3" href="/attendance/summary?month={{ current }}&q={{ q }}&page={{ page + 1 }}">Next</a>{% endif %}
+    </span>
+  </nav>
+  {% endif %}
+  {% else %}
+  {% call ui.empty_state("calendar-clock", "No one to show", "People appear here once they have a shift or clock in during the month.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

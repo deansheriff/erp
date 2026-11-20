@@ -68,7 +68,28 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Settings", "/leave/settings", permission="leave.settings.manage"),
         ),
     ),
-    NavModule("attendance", "Attendance", "clock", "/attendance"),
+    NavModule(
+        "attendance",
+        "Attendance",
+        "clock",
+        "/attendance",
+        (
+            NavSection("Clock in", "/attendance", permission="attendance.clock.use"),
+            NavSection("Timesheet", "/attendance/timesheet", permission="attendance.record.read"),
+            NavSection(
+                "Team today",
+                "/attendance/team",
+                permission="attendance.record.approve",
+            ),
+            NavSection(
+                "Monthly summary", "/attendance/summary", permission="attendance.record.read"
+            ),
+            NavSection(
+                "Shifts & roster", "/attendance/roster", permission="attendance.schedule.manage"
+            ),
+            NavSection("Settings", "/attendance/settings", permission="attendance.settings.manage"),
+        ),
+    ),
     NavModule("expenses", "Expenses", "receipt", "/expenses"),
     NavModule("payroll", "Payroll", "banknote", "/payroll"),
     NavModule("finance", "Finance", "chart-line", "/finance"),

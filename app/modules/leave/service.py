@@ -515,3 +515,41 @@ def calendar(
         ),
         key=lambda row: row.name,
     )
+
+
+# ------------------------------------------------------------------ for other modules
+
+
+def holidays(db: Session, start: date, end: date) -> dict[date, str]:
+    """Public holidays between two dates (inclusive), by day."""
+    return days.holidays_between(db, start, end)
+
+
+def approved_days(
+    db: Session, employee_ids: list[uuid.UUID], start: date, end: date
+) -> dict[tuple[uuid.UUID, date], tuple[str, str]]:
+    """Approved leave by (person, day) between two dates: the type's name and the part of
+    the day taken ("full", "afternoon" when it starts after midday, "morning" when it
+    ends at midday). Weekends and holidays inside a request are included."""
+    if not employee_ids:
+        return {}
+    names = dict(db.execute(select(LeaveType.id, LeaveType.name)).all())
+    found: dict[tuple[uuid.UUID, date], tuple[str, str]] = {}
+    for r in db.scalars(
+        select(LeaveRequest).where(
+            LeaveRequest.employee_id.in_(employee_ids),
+            LeaveRequest.status == "approved",
+            LeaveRequest.start_date <= end,
+            LeaveRequest.end_date >= start,
+        )
+    ):
+        day = max(r.start_date, start)
+        while day <= min(r.end_date, end):
+            part = "full"
+            if day == r.start_date and r.start_half:
+                part = "afternoon"
+            elif day == r.end_date and r.end_half:
+                part = "morning"
+            found[(r.employee_id, day)] = (names.get(r.leave_type_id, ""), part)
+            day = date.fromordinal(day.toordinal() + 1)
+    return found

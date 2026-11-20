@@ -192,6 +192,7 @@ def upload(
         uploaded_by=actor.user_id,
         version_group_id=group_id,
         version=version,
+        retention_until=clock.now() + purpose.expires_after if purpose.expires_after else None,
     )
     db.add(row)
     db.flush()
