@@ -20,6 +20,7 @@ from app.identity import routes_api as identity_api
 from app.identity import routes_web as identity_web
 from app.identity import service as identity
 from app.modules.attendance import routes_web as attendance_web
+from app.modules.expenses import routes_web as expenses_web
 from app.modules.hr import routes_people as hr_people_web
 from app.modules.hr import routes_process as hr_process_web
 from app.modules.hr import routes_self as hr_self_web
@@ -86,6 +87,7 @@ def routers(settings: Settings) -> list[APIRouter]:
         hr_self_web.router,
         leave_web.router,
         attendance_web.router,
+        expenses_web.router,
         files_web.router,
     ]
     if settings.dev_routes_enabled:

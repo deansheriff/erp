@@ -213,6 +213,17 @@
       };
     });
 
+    // Sends a form as soon as a file is chosen (e.g. a receipt), so one tap is enough.
+    Alpine.data("autoSubmit", function () {
+      return {
+        send: function () {
+          var form = this.$root;
+          if (form.requestSubmit) form.requestSubmit();
+          else form.submit();
+        },
+      };
+    });
+
     Alpine.data("liveClock", function () {
       return {
         time: "",

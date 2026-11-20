@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP - All claims</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-raised": "#FFFFFF",
+            "danger-text": "#B4232F",
+            "primary": "#412ec2",
+            "background": "#f9f9fd",
+            "on-secondary-fixed": "#161f00",
+            "surface-container-high": "#e8e8ec",
+            "iris-tint": "#EEECFD",
+            "on-secondary": "#ffffff",
+            "warning-text": "#8A4B00",
+            "success-bg": "#DDF7E8",
+            "iris": "#5A4BDB",
+            "on-error-container": "#93000a",
+            "inverse-on-surface": "#f0f0f4",
+            "error-container": "#ffdad6",
+            "line": "#E4E4EE",
+            "destructive": "#C42836",
+            "tertiary-fixed-dim": "#ffb68b",
+            "primary-fixed-dim": "#c5c0ff",
+            "tertiary-container": "#9f4a00",
+            "on-iris": "#FFFFFF",
+            "error": "#ba1a1a",
+            "danger-bg": "#FFE4E6",
+            "secondary-fixed": "#c7f24c",
+            "secondary-container": "#c4ef49",
+            "info-bg": "#DFEBFF",
+            "secondary-fixed-dim": "#acd530",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#c5c0ff",
+            "on-background": "#1a1c1f",
+            "warning-bg": "#FFF1D6",
+            "on-surface-variant": "#474554",
+            "on-tertiary": "#ffffff",
+            "iris-hover": "#4A3CC4",
+            "tertiary-fixed": "#ffdbc8",
+            "secondary": "#4f6600",
+            "surface-tint": "#5646d7",
+            "surface-bright": "#f9f9fd",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#140067",
+            "surface-container-low": "#f3f3f7",
+            "ink-2": "#4B4B66",
+            "on-tertiary-fixed": "#321300",
+            "ink-3": "#626280",
+            "info-text": "#1D55B8",
+            "surface-container-highest": "#e2e2e6",
+            "surface-dim": "#d9dade",
+            "on-surface": "#1a1c1f",
+            "outline": "#787586",
+            "tertiary": "#7a3700",
+            "lime": "#C5F04A",
+            "on-tertiary-fixed-variant": "#743400",
+            "surface-variant": "#e2e2e6",
+            "on-tertiary-container": "#ffd7c1",
+            "lime-ink": "#4D7A0A",
+            "surface-container": "#ededf1",
+            "line-strong": "#8B8BA6",
+            "primary-container": "#5a4bdb",
+            "success-text": "#0F6B3E",
+            "surface-sunken": "#EFEFF6",
+            "ink": "#16162A",
+            "surface": "#FFFFFF",
+            "on-error": "#ffffff",
+            "on-secondary-container": "#536b00",
+            "on-primary-container": "#e0dbff",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "outline-variant": "#c8c4d7",
+            "canvas": "#F6F6FA",
+            "inverse-surface": "#2e3034",
+            "primary-fixed": "#e4dfff",
+            "on-primary-fixed-variant": "#3d28be",
+            "tangerine": "#C2410C",
+            "tangerine-tint": "#FFF7ED"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "body": ["Inter"],
+            "h2": ["Plus Jakarta Sans"],
+            "label": ["Inter"],
+            "h1": ["Plus Jakarta Sans"],
+            "overline": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "h3": ["Plus Jakarta Sans"],
+            "stat": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          },
+          "boxShadow": {
+            "card": "0 1px 2px rgba(22, 22, 42, 0.04)",
+            "raised": "0 8px 24px -6px rgba(22, 22, 42, 0.12)"
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-1 {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .animate-shimmer {
+      background: linear-gradient(90deg, #EFEFF6 25%, #F6F6FA 50%, #EFEFF6 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite ease-in-out;
+    }
+
+    /* Custom scrollbar styling for sidebar */
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: #E4E4EE;
+      border-radius: 9999px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+      background: #8B8BA6;
+    }
+  </style>
+<meta content="web_dashboard" name="shell-type"/></head>
+<body class="bg-canvas text-ink antialiased min-h-screen overflow-x-hidden selection:bg-iris selection:text-white">
+<!-- ========================================================================= -->
+<!-- 1. LEFT SIDEBAR COMPONENT (Fixed 272px)                                   -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-[272px] z-30 flex flex-col justify-between p-4 bg-surface border-r border-line shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Top Block: Brand Header & Combobox -->
+<div class="flex-shrink-0">
+<!-- Organization Brand Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div aria-label="Adeyemi Holdings Ltd Corporate Crest" class="w-9 h-9 rounded-xl bg-ink text-white font-h2 text-label font-bold flex items-center justify-center shadow-sm tracking-tight">
+            AH
+          </div>
+<div class="flex flex-col">
+<span class="font-h2 text-label font-bold text-ink leading-tight">Adeyemi Holdings Ltd</span>
+<span class="font-overline text-[11px] text-ink-3 uppercase tracking-wider">Enterprise Hub</span>
+</div>
+</div>
+<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+</div>
+<!-- Quick Nav Combobox -->
+<button aria-label="Quick Navigation" class="w-full bg-surface-sunken hover:bg-surface-container-low text-ink-3 hover:text-ink rounded-lg px-3 py-2 text-label font-label flex items-center justify-between border border-line mt-3 mb-4 transition-all duration-150 active:scale-[0.99] group" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-ink-3 group-hover:text-ink">search</span>
+<span class="font-body-sm text-body-sm">Go to…</span>
+</div>
+<kbd class="font-label text-[11px] bg-surface text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-sm font-semibold">Ctrl K</kbd>
+</button>
+</div>
+<!-- Navigation Modules Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto sidebar-scroll pr-1 -mr-1">
+<div class="font-overline text-[11px] font-semibold text-ink-3 tracking-wider uppercase mb-2 px-2">
+        MODULES
+      </div>
+<nav aria-label="Enterprise Modules" class="space-y-0.5">
+<!-- Home -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#3F3F5A]/[0.12] text-[#3F3F5A] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">home</span>
+</div>
+<span class="truncate">Home</span>
+</a>
+<!-- HR -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#7C3AED]/[0.12] text-[#7C3AED] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<span class="truncate">HR</span>
+</a>
+<!-- Leave -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0369A1]/[0.12] text-[#0369A1] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</div>
+<span class="truncate">Leave</span>
+</a>
+<!-- Attendance -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0E7490]/[0.12] text-[#0E7490] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+<span class="truncate">Attendance</span>
+</a>
+<!-- ACTIVE MODULE: Expenses -->
+<div class="pt-0.5 pb-1">
+<div class="h-11 flex items-center justify-between px-2 rounded-lg bg-tangerine/[0.08] text-ink font-semibold">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-tangerine/[0.16] text-tangerine flex-shrink-0">
+<span class="material-symbols-outlined text-[20px] fill-1">payments</span>
+</div>
+<span class="font-h3 text-label text-ink">Expenses</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-tangerine mr-1"></span>
+</div>
+<!-- Indented Sub-sections under Expenses -->
+<div class="ml-6 pl-4 border-l border-line mt-1 space-y-0.5">
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              My claims
+            </a>
+<a class="flex items-center justify-between py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+<span>Approvals</span>
+<span class="bg-surface-sunken border border-line text-ink-2 text-[11px] font-semibold px-2 py-0.5 rounded-full">4</span>
+</a>
+<!-- ACTIVE SUB-ITEM: All claims -->
+<a class="relative flex items-center py-1.5 pl-3 pr-2.5 text-label font-medium bg-iris-tint text-iris-hover rounded-md transition-colors duration-150 shadow-sm" href="#">
+<span class="absolute left-0 top-1 bottom-1 w-[3px] bg-tangerine rounded-full"></span>
+<span class="font-semibold text-iris-hover">All claims</span>
+</a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              Cash advances
+            </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              Categories
+            </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" href="#">
+              Reports
+            </a>
+</div>
+</div>
+<!-- Payroll -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#047857]/[0.12] text-[#047857] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+<span class="truncate">Payroll</span>
+</a>
+<!-- Finance -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#1D4ED8]/[0.12] text-[#1D4ED8] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">query_stats</span>
+</div>
+<span class="truncate">Finance</span>
+</a>
+<!-- Inventory -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#92400E]/[0.12] text-[#92400E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<span class="truncate">Inventory</span>
+</a>
+<!-- Projects -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0F766E]/[0.12] text-[#0F766E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">work</span>
+</div>
+<span class="truncate">Projects</span>
+</a>
+<!-- Support -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#BE185D]/[0.12] text-[#BE185D] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+</div>
+<span class="truncate">Support</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Bottom: Secondary Navigation & User Mini-Card -->
+<div class="flex-shrink-0 pt-3 border-t border-line mt-2 space-y-1">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span>Help &amp; documentation</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Settings</span>
+</a>
+<!-- User Mini-Card -->
+<div class="rounded-xl p-2.5 bg-surface-sunken/60 hover:bg-surface-sunken border border-line flex items-center justify-between mt-2 cursor-pointer transition-colors duration-150 group">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center flex-shrink-0 shadow-sm">
+            FB
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink truncate leading-snug">Fatima Bello</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-snug">Finance Manager</span>
+</div>
+</div>
+<button aria-label="Account options" class="w-7 h-7 rounded-md flex items-center justify-center text-ink-3 group-hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- 2. TOP BAR COMPONENT (Sticky 64px, ML 272px)                              -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 ml-[272px] h-16 bg-surface/80 backdrop-blur-md border-b border-line flex items-center justify-between px-8 z-20 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">
+<!-- Left: Breadcrumb Trail -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2">
+<span class="font-label text-body-sm text-ink-2">Expenses</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">All claims</span>
+</nav>
+<!-- Centre: Global Search Field -->
+<div class="max-w-md w-full mx-6">
+<div class="relative flex items-center bg-surface-sunken rounded-[10px] px-3.5 py-2 border border-transparent focus-within:border-iris focus-within:bg-white transition-all shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-ink-3 mr-2.5">search</span>
+<input class="w-full bg-transparent border-0 p-0 text-body-sm text-ink placeholder:text-ink-3 focus:ring-0 focus:outline-none" placeholder="Search people, claims, invoices…" type="text"/>
+<kbd class="font-label text-[11px] bg-white text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-xs font-semibold ml-2 select-none">
+          Ctrl K
+        </kbd>
+</div>
+</div>
+<!-- Right: 44x44 Touch Target Action Cluster -->
+<div class="flex items-center gap-2">
+<!-- Approvals Inbox Button -->
+<button aria-label="Approvals inbox" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">inbox</span>
+<span class="absolute top-2 right-2 bg-iris text-white font-label text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center leading-none ring-2 ring-surface">
+          7
+        </span>
+</button>
+<!-- Notifications Bell Button -->
+<button aria-label="Notifications" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span>
+</button>
+<!-- Theme Toggle Button -->
+<button aria-label="Toggle theme" class="w-11 h-11 rounded-[10px] flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">light_mode</span>
+</button>
+<!-- User Profile Avatar Mini-Pill -->
+<button aria-label="User profile menu" class="h-11 pl-1.5 pr-2.5 rounded-[10px] hover:bg-surface-sunken flex items-center gap-2 border border-transparent hover:border-line transition-all duration-150 ml-1" type="button">
+<div class="w-8 h-8 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center shadow-xs">
+          FB
+        </div>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Bottom Loading Bar: Simulating HTMX 60% loading state in Tangerine -->
+<div class="absolute bottom-0 left-0 w-3/5 h-[2px] bg-tangerine transition-all duration-300"></div>
+</header>
+<!-- ========================================================================= -->
+<!-- 3. MAIN CONTENT AREA (ML 272px, Min H calc(100vh - 64px))                 -->
+<!-- ========================================================================= -->
+<main class="ml-[272px] min-h-[calc(100vh-64px)] bg-canvas p-8 relative overflow-hidden"><div class="flex flex-col w-full">
+<!-- Top Command Bar: Title, Subtitle & Primary Meta -->
+<div class="flex flex-col gap-6 mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tertiary-fixed text-tertiary font-overline text-overline uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            Expenses Workflow
+          </span>
+<span class="font-overline text-overline text-ink-3">Tier-2 Financial Controls</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Expense approvals</h1>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">Claims and advances waiting for you. Nobody approves their own.</p>
+</div>
+<!-- Secondary Search / Sort Cluster -->
+<div class="flex items-center gap-3">
+<div class="relative flex items-center bg-surface rounded-xl px-3.5 py-2 shadow-card min-w-[240px]">
+<span class="material-symbols-outlined text-ink-3 text-[18px] mr-2">tune</span>
+<span class="font-body-sm text-body-sm text-ink-2">Sort:</span>
+<span class="font-label text-label text-ink ml-1.5 font-medium">Highest priority</span>
+<span class="material-symbols-outlined text-ink-3 text-[16px] ml-auto">expand_more</span>
+</div>
+<button class="h-11 px-4 rounded-xl bg-surface hover:bg-surface-container-low text-ink font-label text-label flex items-center gap-2 shadow-card transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">download</span>
+          Export batch
+        </button>
+</div>
+</div>
+<!-- Navigation Tabs Bar -->
+<div class="flex items-center justify-between border-b-0">
+<div class="inline-flex p-1 bg-surface-sunken rounded-xl shadow-card">
+<button class="relative px-4 py-2 rounded-lg bg-surface text-ink font-label text-label font-semibold shadow-card flex items-center gap-2 transition-all" type="button">
+<span>Waiting for me</span>
+<span class="px-2 py-0.5 rounded-full bg-primary text-on-primary font-overline text-[11px] font-bold">3</span>
+</button>
+<button class="px-4 py-2 rounded-lg text-ink-2 hover:text-ink font-label text-label font-medium transition-colors flex items-center gap-2" type="button">
+<span>Decided by me</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container-high text-ink-3 font-overline text-[11px]">48</span>
+</button>
+</div>
+<!-- Live Audit Indicator -->
+<div class="hidden lg:flex items-center gap-2 text-ink-3 font-overline text-overline uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim animate-pulse"></span>
+        Policy Ruleset v3.2 Active · Auto-audit enabled
+      </div>
+</div>
+</div>
+<!-- Master-Detail 2-Column Split Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- ================================================================= -->
+<!-- LEFT COLUMN: MASTER QUEUE (4 Cols on LG)                          -->
+<!-- ================================================================= -->
+<div class="lg:col-span-4 flex flex-col gap-3">
+<div class="flex items-center justify-between px-1 mb-1">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Assigned Queue (3)</span>
+<span class="font-body-sm text-body-sm text-ink-3">Total: ₦317,000.00</span>
+</div>
+<!-- Item 1: Active Selected Card (Amaka Okafor) -->
+<div class="group relative rounded-2xl bg-surface p-4 shadow-raised transition-all cursor-pointer overflow-hidden ring-2 ring-primary/20">
+<!-- Active Accent Rail (Tangerine ERP Signature) -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary"></div>
+<div class="flex items-start justify-between gap-3 pl-2">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-iris text-on-iris font-h2 text-label font-bold flex items-center justify-center shrink-0 shadow-card">
+              AO
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-label font-semibold text-ink truncate leading-tight">Amaka Okafor</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Sr. Accountant · Finance</span>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-iris-tint text-primary font-overline text-[11px] font-semibold">
+            Second level
+          </span>
+</div>
+<div class="mt-3.5 pl-2">
+<div class="font-h3 text-body-sm font-semibold text-ink leading-snug line-clamp-1">
+            Claim · Client visit, Abuja
+          </div>
+<div class="flex items-center justify-between mt-2 pt-2 bg-surface-sunken/60 -mx-2 px-2.5 py-1.5 rounded-lg">
+<span class="font-overline text-[11px] text-ink-3">4 items · 3 receipts</span>
+<span class="font-stat text-h2 font-bold text-ink tabular-nums">₦92,500.00</span>
+</div>
+<div class="flex items-center gap-1.5 mt-2.5 text-ink-3 font-body-sm text-[11px]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>18 Nov 2026, 09:30 WAT</span>
+<span class="w-1 h-1 rounded-full bg-ink-3/40"></span>
+<span class="text-tertiary font-medium">Cap review</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Pending Card (Chinedu Eze) -->
+<div class="group rounded-2xl bg-surface hover:bg-surface-bright p-4 shadow-card hover:shadow-raised transition-all cursor-pointer">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken text-ink-2 font-h2 text-label font-bold flex items-center justify-center shrink-0">
+              CE
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-label font-semibold text-ink truncate leading-tight">Chinedu Eze</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Systems Eng. · Fleet Logistics</span>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-ink-2 font-overline text-[11px] font-semibold">
+            Second level
+          </span>
+</div>
+<div class="mt-3.5">
+<div class="font-h3 text-body-sm font-semibold text-ink leading-snug line-clamp-1">
+            Claim · Data Centre Hardware &amp; Emergency Repairs
+          </div>
+<div class="flex items-center justify-between mt-2 pt-2 bg-surface-sunken/40 px-2.5 py-1.5 rounded-lg">
+<span class="font-overline text-[11px] text-ink-3">3 items · 2 receipts</span>
+<span class="font-stat text-h2 font-bold text-ink tabular-nums">₦84,500.00</span>
+</div>
+<div class="flex items-center gap-1.5 mt-2.5 text-ink-3 font-body-sm text-[11px]">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Submitted yesterday · Pending manager signoff</span>
+</div>
+</div>
+</div>
+<!-- Item 3: Advance Request Card (Segun Afolabi) -->
+<div class="group rounded-2xl bg-surface hover:bg-surface-bright p-4 shadow-card hover:shadow-raised transition-all cursor-pointer">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken text-ink-2 font-h2 text-label font-bold flex items-center justify-center shrink-0">
+              SA
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-label font-semibold text-ink truncate leading-tight">Segun Afolabi</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Fleet Supervisor · Operations</span>
+</div>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-secondary-fixed/50 text-secondary font-overline text-[11px] font-semibold">
+            Finance
+          </span>
+</div>
+<div class="mt-3.5">
+<div class="font-h3 text-body-sm font-semibold text-ink leading-snug line-clamp-1">
+            Advance · Haulage Fuel &amp; Interstate Toll Logistics
+          </div>
+<div class="flex items-center justify-between mt-2 pt-2 bg-surface-sunken/40 px-2.5 py-1.5 rounded-lg">
+<span class="font-overline text-[11px] text-ink-3">Advance requisition</span>
+<span class="font-stat text-h2 font-bold text-ink tabular-nums">₦140,000.00</span>
+</div>
+<div class="flex items-center gap-1.5 mt-2.5 text-tertiary font-body-sm text-[11px] font-medium">
+<span class="material-symbols-outlined text-[14px]">event</span>
+<span>Disbursement requested by Friday</span>
+</div>
+</div>
+</div>
+<!-- Helpful Process Footnote -->
+<div class="rounded-xl bg-surface-sunken p-3.5 mt-2 text-ink-3 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-ink-2 mt-0.5">verified_user</span>
+<p class="font-body-sm text-[12px] leading-relaxed">
+          Approvals follow strict segregation of duties. Delegation tokens expire automatically in 24 hours.
+        </p>
+</div>
+</div>
+<!-- ================================================================= -->
+<!-- RIGHT COLUMN: CLAIM DETAIL VIEW (8 Cols on LG)                    -->
+<!-- ================================================================= -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Primary Detail Container Card -->
+<div class="rounded-2xl bg-surface p-6 lg:p-8 shadow-card flex flex-col gap-6 relative">
+<!-- Header Section: Claim ID, Title, Avatar Meta & Big Total -->
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 bg-surface-sunken/30 -mx-6 -mt-6 p-6 rounded-t-2xl">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2.5 flex-wrap">
+<span class="font-mono text-overline uppercase tracking-wider bg-surface px-2.5 py-1 rounded-md text-ink-2 shadow-card font-bold">
+                EXP-00042
+              </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-iris-tint text-primary font-overline text-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                In Review
+              </span>
+<span class="font-body-sm text-[12px] text-ink-3">· Lagos HQ Fiscal Cycle Nov-26</span>
+</div>
+<h2 class="font-h1 text-display text-ink mt-1">Client visit, Abuja</h2>
+<!-- Requester Metadata Bar -->
+<div class="flex items-center gap-3 mt-1">
+<div class="w-9 h-9 rounded-full bg-iris text-on-iris font-h2 text-body-sm font-bold flex items-center justify-center shadow-card">
+                AO
+              </div>
+<div class="flex flex-col">
+<div class="font-h3 text-label font-bold text-ink">Amaka Okafor</div>
+<div class="font-body-sm text-[12px] text-ink-3 flex items-center gap-2 flex-wrap">
+<span>Senior Accountant</span>
+<span>•</span>
+<span>Finance &amp; Accounts</span>
+<span>•</span>
+<span class="bg-surface px-1.5 py-0.2 rounded text-ink-2">Grade GL-10</span>
+<span>•</span>
+<span class="bg-surface px-1.5 py-0.2 rounded text-ink-2">Cost Centre CC-200</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Total Approved Figure Widget -->
+<div class="flex flex-col md:items-end justify-center bg-surface p-4 rounded-xl shadow-card shrink-0">
+<span class="font-overline text-overline uppercase text-ink-3 tracking-wider">Net Payable</span>
+<div class="font-stat text-stat text-ink font-bold tabular-nums tracking-tight mt-0.5">
+              ₦92,500.00
+            </div>
+<div class="flex items-center gap-1.5 mt-1 text-danger-text font-body-sm text-[12px]">
+<span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
+<span>-₦4,500.00 policy cap adjusted</span>
+</div>
+</div>
+</div>
+<!-- Approval Step Trail (Linear Progress Pipeline) -->
+<div class="flex flex-col gap-2.5">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Approval Pathway</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- Step 1: Completed -->
+<div class="rounded-xl bg-success-bg/40 p-3 flex items-center gap-3">
+<div class="w-7 h-7 rounded-full bg-success-bg text-success-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-[13px] font-bold text-success-text">Manager Review</span>
+<span class="font-body-sm text-[12px] text-ink-2 truncate">Gbenga Adeyemi · Signed</span>
+</div>
+</div>
+<!-- Step 2: Active / Current Stage -->
+<div class="rounded-xl bg-iris-tint/60 p-3 flex items-center gap-3 shadow-card ring-1 ring-primary/20">
+<div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 font-label text-body-sm font-bold animate-pulse">
+                2
+              </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-[13px] font-bold text-primary">Second Level Review</span>
+<span class="font-body-sm text-[12px] text-ink font-semibold truncate">Bola Tinubu-Davies (You)</span>
+</div>
+</div>
+<!-- Step 3: Pending Queue -->
+<div class="rounded-xl bg-surface-sunken p-3 flex items-center gap-3 opacity-70">
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-ink-3 flex items-center justify-center shrink-0 font-label text-body-sm font-semibold">
+                3
+              </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-[13px] font-semibold text-ink-2">Disbursement</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Fatima Bello · Queued</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Policy Limit Warning Alert -->
+<div class="rounded-xl bg-warning-bg p-4 text-warning-text flex items-start gap-3.5 shadow-card">
+<div class="w-8 h-8 rounded-lg bg-surface flex items-center justify-center shrink-0 shadow-card">
+<span class="material-symbols-outlined text-[20px] text-warning-text">warning</span>
+</div>
+<div class="flex flex-col">
+<span class="font-h3 text-label font-bold text-ink">Per-Diem Meal Cap Exceeded</span>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5 leading-relaxed">
+              Meals category claimed at <strong class="text-ink font-semibold">₦24,500.00</strong> exceeds the corporate standard cap of <strong class="text-ink font-semibold">₦20,000.00</strong> per claim. Adjusted automatically down by ₦4,500.00; approval will log a formal manager sign-off on policy exception v3.2.
+            </p>
+</div>
+</div>
+<!-- Expense Lines Breakdown Table -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Itemised Breakdown (4 Lines)</span>
+<span class="font-body-sm text-[12px] text-ink-3">All invoices verified via OCR</span>
+</div>
+<!-- Structured Table Wrapper -->
+<div class="overflow-x-auto rounded-xl shadow-card bg-surface">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-4">Date</th>
+<th class="py-3 px-4">Category &amp; Description</th>
+<th class="py-3 px-4 text-center">Receipt</th>
+<th class="py-3 px-4 text-right">Claimed / Approved</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent font-body-sm text-body-sm">
+<!-- Row 1: Flight -->
+<tr class="hover:bg-surface-sunken/30 transition-colors">
+<td class="py-3.5 px-4 font-mono text-ink-2 whitespace-nowrap text-[13px]">15 Nov 2026</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken font-label text-[11px] font-bold text-ink-2">FLIGHT</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">Air Peace Lagos ⇄ Abuja return ticket</span>
+</div>
+<span class="text-[12px] text-ink-3">Booking Ref: APK-99214A · E-ticket confirmed</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-primary font-label text-[12px] font-semibold transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                      Open
+                      <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</button>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center justify-end">
+<span class="text-ink-3 font-label text-[12px] mr-1.5">₦</span>
+<input class="w-28 text-right font-stat text-body font-bold text-ink bg-surface-sunken rounded-lg px-2.5 py-1 focus:bg-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-inner" type="text" value="42,000.00"/>
+</div>
+</td>
+</tr>
+<!-- Row 2: Meals (Over cap) -->
+<tr class="bg-warning-bg/15 hover:bg-warning-bg/25 transition-colors">
+<td class="py-3.5 px-4 font-mono text-ink-2 whitespace-nowrap text-[13px]">16 Nov 2026</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-warning-bg text-warning-text font-label text-[11px] font-bold">MEALS</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">Transcorp Hilton client dinner</span>
+</div>
+<div class="flex items-center gap-1.5 mt-0.5 text-danger-text text-[12px] font-medium">
+<span class="material-symbols-outlined text-[14px]">info</span>
+<span>Exceeds single claim limit of ₦20,000.00</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface hover:bg-surface-container-high text-primary font-label text-[12px] font-semibold shadow-card transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                      Open
+                      <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</button>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="inline-flex items-center justify-end">
+<span class="text-ink-3 font-label text-[12px] mr-1.5">₦</span>
+<input class="w-28 text-right font-stat text-body font-bold text-ink bg-surface rounded-lg px-2.5 py-1 focus:bg-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-card ring-1 ring-warning-text/30" type="text" value="20,000.00"/>
+</div>
+<span class="text-[11px] text-ink-3 line-through tabular-nums mt-0.5">claimed ₦24,500.00</span>
+</div>
+</td>
+</tr>
+<!-- Row 3: Hotel Accommodation -->
+<tr class="hover:bg-surface-sunken/30 transition-colors">
+<td class="py-3.5 px-4 font-mono text-ink-2 whitespace-nowrap text-[13px]">16 Nov 2026</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken font-label text-[11px] font-bold text-ink-2">LODGING</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">Nordic Hotel Abuja · 1 night</span>
+</div>
+<span class="text-[12px] text-ink-3">Standard corporate negotiated rate</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-primary font-label text-[12px] font-semibold transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                      Open
+                      <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</button>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center justify-end">
+<span class="text-ink-3 font-label text-[12px] mr-1.5">₦</span>
+<input class="w-28 text-right font-stat text-body font-bold text-ink bg-surface-sunken rounded-lg px-2.5 py-1 focus:bg-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-inner" type="text" value="25,000.00"/>
+</div>
+</td>
+</tr>
+<!-- Row 4: Local Taxi -->
+<tr class="hover:bg-surface-sunken/30 transition-colors">
+<td class="py-3.5 px-4 font-mono text-ink-2 whitespace-nowrap text-[13px]">17 Nov 2026</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-sunken font-label text-[11px] font-bold text-ink-2">TRANSIT</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">Uber &amp; airport taxi transit</span>
+</div>
+<span class="text-[12px] text-ink-3">Nnamdi Azikiwe Airport ⇄ Central Business District</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-primary font-label text-[12px] font-semibold transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                      Open
+                      <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+</button>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center justify-end">
+<span class="text-ink-3 font-label text-[12px] mr-1.5">₦</span>
+<input class="w-28 text-right font-stat text-body font-bold text-ink bg-surface-sunken rounded-lg px-2.5 py-1 focus:bg-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-inner" type="text" value="5,500.00"/>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Financial Reconciliation Sub-Panel -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-surface-sunken p-4 rounded-xl gap-4">
+<div class="flex items-center gap-4 text-ink-2 text-body-sm">
+<div>
+<span class="text-ink-3 font-body-sm text-[12px] block">Gross Claimed:</span>
+<span class="font-h3 font-bold text-ink tabular-nums">₦97,000.00</span>
+</div>
+<span class="text-ink-3">|</span>
+<div>
+<span class="text-ink-3 font-body-sm text-[12px] block">Policy Reductions:</span>
+<span class="font-h3 font-bold text-danger-text tabular-nums">-₦4,500.00</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Authorized Net:</span>
+<span class="font-stat text-h1 font-bold text-ink tabular-nums">₦92,500.00</span>
+</div>
+</div>
+</div>
+<!-- Decision Note / Feedback Input Section -->
+<div class="flex flex-col gap-2 pt-2">
+<label class="font-label text-label font-semibold text-ink flex items-center justify-between" for="decision-notes">
+<span>Decision note (needed to return or reject)</span>
+<span class="text-ink-3 font-body-sm text-[12px] font-normal">Visible to requester &amp; finance auditors</span>
+</label>
+<div class="relative">
+<textarea class="w-full bg-surface-sunken rounded-xl p-3.5 text-body-sm text-ink placeholder:text-ink-3 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary shadow-inner resize-none transition-all" id="decision-notes" placeholder="Add endorsement note or detail necessary policy changes before returning..." rows="3"></textarea>
+<div class="absolute right-3 bottom-3 text-ink-3 font-mono text-[11px]">
+              Markdown supported
+            </div>
+</div>
+</div>
+<!-- Sticky Action Buttons Bar -->
+<div class="pt-4 border-t-0 flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<button class="w-full sm:w-auto h-11 px-4 rounded-xl bg-danger-bg hover:bg-danger-bg/80 text-danger-text font-label text-label font-semibold transition-all active:scale-[0.98] flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+              Reject claim
+            </button>
+<button class="w-full sm:w-auto h-11 px-4 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-label font-semibold transition-all active:scale-[0.98] flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">undo</span>
+              Return for changes
+            </button>
+</div>
+<button class="w-full sm:w-auto h-11 px-6 rounded-xl bg-primary hover:bg-iris-hover text-on-primary font-label text-label font-bold shadow-card transition-all active:scale-[0.98] flex items-center justify-center gap-2.5" type="button">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+            Approve ₦92,500.00
+          </button>
+</div>
+</div>
+<!-- Quick Context Summary Strip (Auditing & Document Vault) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="rounded-xl bg-surface p-4 shadow-card flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-sunken flex items-center justify-center text-ink shrink-0">
+<span class="material-symbols-outlined text-[20px]">account_balance</span>
+</div>
+<div>
+<div class="font-h3 text-body-sm font-bold text-ink">Department Budget Status</div>
+<div class="font-body-sm text-[12px] text-ink-3 mt-0.5">Finance Q4 Discretionary Travel: 62% consumed (₦1,850,000 remaining).</div>
+</div>
+</div>
+<div class="rounded-xl bg-surface p-4 shadow-card flex items-start gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-sunken flex items-center justify-center text-ink shrink-0">
+<span class="material-symbols-outlined text-[20px]">folder_shared</span>
+</div>
+<div>
+<div class="font-h3 text-body-sm font-bold text-ink">Supporting Artifacts</div>
+<div class="font-body-sm text-[12px] text-ink-3 mt-0.5">3 PDFs attached · Tax invoice validity checked via FIRS compliance gateway.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main>
+</body></html>

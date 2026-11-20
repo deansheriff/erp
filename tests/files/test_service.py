@@ -128,7 +128,7 @@ def test_unsafe_svgs_are_refused_and_safe_ones_accepted(admin: Actor) -> None:
 
 def test_unregistered_purposes_are_refused(admin: Actor) -> None:
     with pytest.raises(ValidationFailed, match="can't be attached"):
-        _upload(admin, png(), purpose="expense_receipt")
+        _upload(admin, png(), purpose="not_a_registered_purpose")
 
 
 def test_attaching_to_another_entity_is_not_found(admin: Actor) -> None:

@@ -325,3 +325,25 @@ def branches_of(db: Session, employee_ids: list[uuid.UUID]) -> dict[uuid.UUID, u
             select(Employee.id, Employee.branch_id).where(Employee.id.in_(employee_ids))
         ).all()
     )
+
+
+def accounts_of(db: Session, employee_ids: set[uuid.UUID]) -> dict[uuid.UUID, uuid.UUID]:
+    """The sign-in account of each person who has one."""
+    if not employee_ids:
+        return {}
+    rows = db.execute(
+        select(Employee.id, Employee.user_id).where(
+            Employee.id.in_(employee_ids), Employee.user_id.is_not(None)
+        )
+    ).all()
+    return {employee_id: user_id for employee_id, user_id in rows if user_id is not None}
+
+
+def employees_of_users(db: Session, user_ids: set[uuid.UUID]) -> dict[uuid.UUID, uuid.UUID]:
+    """The person record of each account that has one, by account."""
+    if not user_ids:
+        return {}
+    rows = db.execute(
+        select(Employee.user_id, Employee.id).where(Employee.user_id.in_(user_ids))
+    ).all()
+    return {user_id: employee_id for user_id, employee_id in rows if user_id is not None}

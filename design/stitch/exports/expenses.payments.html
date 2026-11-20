@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"secondary-fixed":"#c7f24c","iris-tint":"#EEECFD","info-bg":"#DFEBFF","on-iris":"#FFFFFF","on-background":"#1a1c1f","on-secondary-fixed-variant":"#3b4d00","on-tertiary-container":"#ffd7c1","surface-bright":"#f9f9fd","success-text":"#0F6B3E","on-tertiary-fixed-variant":"#743400","error":"#ba1a1a","surface-sunken":"#EFEFF6","outline":"#787586","primary":"#412ec2","inverse-primary":"#c5c0ff","secondary-fixed-dim":"#acd530","surface-tint":"#5646d7","lime":"#C5F04A","tertiary-fixed-dim":"#ffb68b","inverse-surface":"#2e3034","on-tertiary":"#ffffff","on-tertiary-fixed":"#321300","on-surface-variant":"#474554","on-primary":"#ffffff","surface-container-low":"#f3f3f7","tertiary-fixed":"#ffdbc8","ink-3":"#626280","surface-variant":"#e2e2e6","warning-text":"#8A4B00","destructive":"#C42836","on-primary-fixed":"#140067","secondary-container":"#c4ef49","surface":"#FFFFFF","surface-container-highest":"#e2e2e6","surface-dim":"#d9dade","success-bg":"#DDF7E8","line":"#E4E4EE","error-container":"#ffdad6","surface-raised":"#FFFFFF","iris-hover":"#4A3CC4","on-primary-fixed-variant":"#3d28be","canvas":"#F6F6FA","primary-fixed-dim":"#c5c0ff","on-error-container":"#93000a","on-secondary":"#ffffff","surface-container-lowest":"#ffffff","tertiary":"#7a3700","secondary":"#4f6600","primary-fixed":"#e4dfff","ink-2":"#4B4B66","inverse-on-surface":"#f0f0f4","danger-text":"#B4232F","surface-container":"#ededf1","primary-container":"#5a4bdb","background":"#f9f9fd","line-strong":"#8B8BA6","outline-variant":"#c8c4d7","warning-bg":"#FFF1D6","on-secondary-fixed":"#161f00","danger-bg":"#FFE4E6","tertiary-container":"#9f4a00","on-error":"#ffffff","iris":"#5A4BDB","surface-container-high":"#e8e8ec","info-text":"#1D55B8","on-secondary-container":"#536b00","on-surface":"#1a1c1f","lime-ink":"#4D7A0A","on-primary-container":"#e0dbff","ink":"#16162A"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","space-md":"1rem","space-3xl":"4rem","space-2xl":"3rem","space-xl":"2rem","gutter":"1.5rem","space-sm":"0.5rem","margin":"2rem","space-xs":"0.25rem"},"fontFamily":{"label":["Inter"],"h3":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"body":["Inter"],"body-sm":["Inter"],"overline":["Inter"],"h2":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"]},"fontSize":{"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}]}}}}</script></head><body class="bg-canvas font-body text-body text-ink antialiased selection:bg-iris-tint selection:text-iris"><aside class="fixed left-0 top-0 h-screen w-[272px] bg-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col min-h-0 flex-1"><div class="h-16 px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-8 h-8 rounded-lg bg-iris flex items-center justify-center flex-shrink-0 text-on-iris font-h2 text-h2 font-bold">K</div><span class="font-h2 text-h2 text-ink font-semibold truncate">Adeyemi Holdings Ltd</span></div><button aria-label="Collapse navigation sidebar" class="w-8 h-8 flex items-center justify-center rounded-lg text-ink-3 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">first_page</span></button></div><div class="px-space-md pb-space-sm"><div class="flex items-center justify-between w-full h-9 px-space-sm bg-surface-sunken rounded-lg cursor-pointer hover:bg-surface-variant transition-colors"><div class="flex items-center gap-space-xs text-ink-3"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm">Go to...</span></div><kbd class="font-overline text-overline px-1.5 py-0.5 rounded bg-surface text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">Ctrl K</kbd></div></div><nav class="flex-1 px-space-sm overflow-y-auto space-y-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="home" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-surface-variant text-ink-2"><span class="material-symbols-outlined text-[16px]">home</span></span><span class="font-label text-label">Home</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="hr" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-info-bg text-info-text"><span class="material-symbols-outlined text-[16px]">groups</span></span><span class="font-label text-label">HR</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="leave" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-success-bg text-success-text"><span class="material-symbols-outlined text-[16px]">event_available</span></span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="attendance" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-primary-fixed text-primary"><span class="material-symbols-outlined text-[16px]">schedule</span></span><span class="font-label text-label">Attendance</span></a><div class="pt-0.5 pb-1"><div class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-[#FFF7ED] text-[#C2410C]"><div class="flex items-center gap-space-sm"><span class="w-5 h-5 rounded flex items-center justify-center bg-[#C2410C] text-surface"><span class="material-symbols-outlined text-[16px]">receipt_long</span></span><span class="font-label text-label font-semibold text-[#C2410C]">Expenses</span></div><span class="material-symbols-outlined text-[18px] text-[#C2410C]">expand_more</span></div><div class="ml-4 pl-3 mt-1 space-y-0.5"><a class="block px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="my-claims" href="#">My claims</a><a class="flex items-center justify-between px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="approvals" href="#"><span>Approvals</span><span class="px-1.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline font-semibold">4</span></a><a class="block px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="all-claims" href="#">All claims</a><a class="block px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="cash-advances" href="#">Cash advances</a><a aria-current="page" class="block px-space-sm py-1.5 transition-colors bg-iris-tint text-iris font-semibold rounded-lg" data-path="payments" href="#">Payments</a><a class="block px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="categories" href="#">Categories</a><a class="block px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="reports" href="#">Reports</a><a class="block px-space-sm py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="expense-settings" href="#">Settings</a></div></div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="payroll" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-secondary-fixed text-secondary"><span class="material-symbols-outlined text-[16px]">payments</span></span><span class="font-label text-label">Payroll</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="finance" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-tertiary-fixed text-tertiary"><span class="material-symbols-outlined text-[16px]">account_balance</span></span><span class="font-label text-label">Finance</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="inventory" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-surface-variant text-ink-2"><span class="material-symbols-outlined text-[16px]">inventory_2</span></span><span class="font-label text-label">Inventory</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="projects" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-info-bg text-info-text"><span class="material-symbols-outlined text-[16px]">assignment</span></span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="support" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-success-bg text-success-text"><span class="material-symbols-outlined text-[16px]">contact_support</span></span><span class="font-label text-label">Support</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="settings-administration" href="#"><span class="w-5 h-5 rounded flex items-center justify-center bg-surface-variant text-ink-2"><span class="material-symbols-outlined text-[16px]">admin_panel_settings</span></span><span class="font-label text-label">Settings / Administration</span></a></nav></div><div class="p-space-sm space-y-1 bg-surface-bright"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[18px] text-ink-3">help</span><span class="font-label text-label">Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="user-settings" href="#"><span class="material-symbols-outlined text-[18px] text-ink-3">settings</span><span class="font-label text-label">Settings</span></a><div class="flex items-center gap-space-sm p-space-sm rounded-xl bg-surface-sunken"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 text-on-primary font-h3 text-h3 font-semibold">FB</div><div class="min-w-0 flex-1"><div class="font-label text-label text-ink font-semibold truncate">Fatima Bello</div><div class="font-overline text-overline text-ink-3 truncate">Finance Manager</div></div><button aria-label="Account options" class="text-ink-3 hover:text-ink" type="button"><span class="material-symbols-outlined text-[18px]">more_vert</span></button></div></div></aside><div class="pl-[272px]"><header class="fixed top-0 left-[272px] right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-gutter shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex items-center gap-space-sm"><span class="font-body-sm text-body-sm text-ink-3">Expenses</span><span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span><span class="font-label text-label text-ink font-semibold">Payments</span></div><div class="w-[420px] max-w-lg relative"><div class="flex items-center w-full h-10 px-space-sm bg-surface-sunken rounded-lg hover:bg-surface-variant transition-colors"><span class="material-symbols-outlined text-[18px] text-ink-3 mr-space-xs">search</span><input class="w-full bg-transparent border-0 p-0 text-ink placeholder:text-ink-3 font-body-sm text-body-sm focus:outline-none" placeholder="Search people, claims, invoices..." type="text"/><kbd class="font-overline text-overline px-1.5 py-0.5 rounded bg-surface text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.04)] flex-shrink-0 ml-space-xs">Ctrl K</kbd></div></div><div class="flex items-center gap-space-md"><a class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-lg bg-warning-bg hover:bg-warning-bg/80 text-warning-text transition-colors" data-path="approvals" href="#"><span class="material-symbols-outlined text-[18px]">pending_actions</span><span class="font-label text-label font-semibold">Approvals (7)</span></a><button aria-label="Notifications" class="relative w-9 h-9 flex items-center justify-center rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive"></span></button><button aria-label="Toggle theme" class="w-9 h-9 flex items-center justify-center rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0 text-on-primary font-h3 text-h3 font-semibold">FB</div></div></header><main class="w-full pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full">
+<!-- Subtle Tangerine Top Accent Glow (Expenses Module Signature) -->
+<div class="h-1.5 w-full bg-gradient-to-r from-[#C2410C] via-[#EA580C] to-transparent opacity-90"></div>
+<div class="p-gutter max-w-[1440px] mx-auto w-full space-y-6">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Payments</h1>
+<p class="font-body-sm text-body-sm text-ink-2 mt-1">
+          Pay approved claims and advances. You can't pay a claim you made or approved.
+        </p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">
+<span class="w-2 h-2 rounded-full bg-success-text animate-pulse"></span>
+          Batch status: Zenith Corporate Direct · 14:05 WAT
+        </span>
+<button class="inline-flex items-center gap-2 h-11 px-4 rounded-xl bg-surface hover:bg-surface-sunken text-ink font-label text-label shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">download</span>
+          Export payment schedule (CSV)
+        </button>
+</div>
+</div>
+<!-- Segregation of Duties (SoD) Information Banner -->
+<div class="rounded-xl bg-info-bg/70 p-4 shadow-sm flex items-start gap-3.5">
+<div class="p-1.5 rounded-lg bg-surface text-info-text shrink-0">
+<span class="material-symbols-outlined text-[20px]">shield_lock</span>
+</div>
+<div class="text-ink">
+<span class="font-label text-label font-semibold text-info-text">Segregation of Duties (SoD) Enforced · Policy FIN-EXP-04:</span>
+<span class="font-body-sm text-body-sm text-ink-2 ml-1">
+          You cannot disburse a claim that you authorized. Claims approved by Fatima Bello are locked and must be processed by secondary authorized disbursers (e.g. Finance Director or Treasury Officer).
+        </span>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1">
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-iris text-on-iris font-label text-label font-semibold shadow-sm transition-all" type="button">
+<span>Claims to pay</span>
+<span class="px-2 py-0.5 rounded-full bg-white/20 text-on-iris text-xs font-bold">6</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+<span>Advances to pay</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 text-xs">2</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+<span>Repayments due</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 text-xs">1</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink font-label text-label transition-colors" type="button">
+<span>Paid archive / Paid</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 text-xs">128</span>
+</button>
+</div>
+<!-- KPI / Summary Metrics Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-5 rounded-2xl bg-surface shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-ink-3 mb-2">
+<span class="font-label text-label text-ink-3">Ready to disburse</span>
+<span class="material-symbols-outlined text-[20px] text-ink-3">pending_actions</span>
+</div>
+<div class="font-stat text-stat text-ink font-bold tracking-tight">₦642,800.00</div>
+<div class="font-body-sm text-body-sm text-ink-3 mt-1">6 approved employee vouchers</div>
+</div>
+<div class="p-5 rounded-2xl bg-surface shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-iris mb-2">
+<span class="font-label text-label text-iris font-semibold">Selected for payout</span>
+<span class="material-symbols-outlined text-[20px] text-iris">check_circle</span>
+</div>
+<div class="font-stat text-stat text-iris font-bold tracking-tight">₦214,500.00</div>
+<div class="font-body-sm text-body-sm text-ink-2 mt-1 font-medium">3 claims selected to trigger batch</div>
+</div>
+<div class="p-5 rounded-2xl bg-surface shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-warning-text mb-2">
+<span class="font-label text-label text-warning-text">Queued for Friday run</span>
+<span class="material-symbols-outlined text-[20px] text-warning-text">hourglass_top</span>
+</div>
+<div class="font-stat text-stat text-ink font-bold tracking-tight">₦428,300.00</div>
+<div class="font-body-sm text-body-sm text-ink-3 mt-1">3 claims pending secondary sign-off</div>
+</div>
+<div class="p-5 rounded-2xl bg-surface shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-success-text mb-2">
+<span class="font-label text-label text-ink-3">Corporate Treasury Liquidity</span>
+<span class="material-symbols-outlined text-[20px] text-success-text">account_balance</span>
+</div>
+<div class="font-stat text-stat text-ink font-bold tracking-tight">₦44,820,400.00</div>
+<div class="font-body-sm text-body-sm text-ink-3 mt-1">Zenith Operating Account</div>
+</div>
+</div>
+<!-- Main Table Container -->
+<div class="rounded-2xl bg-surface shadow-sm overflow-hidden">
+<!-- Search and Filter Bar -->
+<div class="p-4 bg-surface flex flex-col md:flex-row items-center justify-between gap-3">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-11 pl-10 pr-4 bg-surface-sunken rounded-xl text-ink placeholder:text-ink-3 font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" placeholder="Search claim number, employee, or bank account..." type="text"/>
+</div>
+<div class="flex items-center gap-2.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+<div class="inline-flex items-center gap-2 h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm cursor-pointer hover:bg-surface-variant transition-colors whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px] text-ink-3">location_city</span>
+<span>All branches (4)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span>
+</div>
+<div class="inline-flex items-center gap-2 h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm cursor-pointer hover:bg-surface-variant transition-colors whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px] text-ink-3">account_balance</span>
+<span>Bank: All banks</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span>
+</div>
+<div class="inline-flex items-center gap-2 h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm cursor-pointer hover:bg-surface-variant transition-colors whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px] text-ink-3">tune</span>
+<span>Amount range</span>
+</div>
+</div>
+</div>
+<!-- Table View -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-2 font-label text-label">
+<th class="py-3 px-4 w-12 text-center">
+<input checked="" class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-4 font-semibold text-ink">Claim ID</th>
+<th class="py-3 px-4 font-semibold text-ink">Employee</th>
+<th class="py-3 px-4 font-semibold text-ink">What for / Description</th>
+<th class="py-3 px-4 font-semibold text-ink">Approval details</th>
+<th class="py-3 px-4 font-semibold text-ink text-right">Amount</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-sunken text-ink">
+<!-- Row 1 (Checked) -->
+<tr class="hover:bg-surface-bright/70 transition-colors bg-iris-tint/20">
+<td class="py-4 px-4 text-center">
+<input checked="" class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="font-mono text-sm font-semibold text-iris hover:underline cursor-pointer">EXP-2026-000142</div>
+<div class="font-overline text-overline text-ink-3">Lagos HQ</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-info-bg text-info-text font-bold text-xs flex items-center justify-center">AO</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">Adaeze Okafor</div>
+<div class="font-body-sm text-body-sm text-ink-3">Marketing Lead</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 max-w-xs">
+<div class="font-body-sm text-body-sm text-ink font-medium">Abuja Depot Brand Refresh</div>
+<div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded bg-warning-bg text-warning-text font-overline text-overline font-semibold">
+<span class="material-symbols-outlined text-[13px]">info</span>
+                  Uses ADV-00007 first (₦50,000 deducted)
+                </div>
+</td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm text-ink">Approved by Tunde Bakare</div>
+<div class="font-overline text-overline text-ink-3">17 Nov 2026 · 09:24</div>
+</td>
+<td class="py-4 px-4 text-right font-mono font-bold text-base text-ink">
+                ₦214,500.00
+              </td>
+</tr>
+<!-- Row 2 (Checked) -->
+<tr class="hover:bg-surface-bright/70 transition-colors bg-iris-tint/20">
+<td class="py-4 px-4 text-center">
+<input checked="" class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="font-mono text-sm font-semibold text-iris hover:underline cursor-pointer">EXP-2026-000139</div>
+<div class="font-overline text-overline text-ink-3">Victoria Island</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-secondary font-bold text-xs flex items-center justify-center">BA</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">Babatunde Adeyemi</div>
+<div class="font-body-sm text-body-sm text-ink-3">Sales Director</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 max-w-xs">
+<div class="font-body-sm text-body-sm text-ink font-medium">Client Strategy Dinner · Meals &amp; Ent (1 Receipt)</div>
+<div class="font-overline text-overline text-ink-3">Victoria Island Branch</div>
+</td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm text-ink">Approved by Tunde Bakare</div>
+<div class="font-overline text-overline text-ink-3">16 Nov 2026 · 14:10</div>
+</td>
+<td class="py-4 px-4 text-right font-mono font-bold text-base text-ink">
+                ₦48,500.00
+              </td>
+</tr>
+<!-- Row 3 (Checked) -->
+<tr class="hover:bg-surface-bright/70 transition-colors bg-iris-tint/20">
+<td class="py-4 px-4 text-center">
+<input checked="" class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="font-mono text-sm font-semibold text-iris hover:underline cursor-pointer">EXP-2026-000135</div>
+<div class="font-overline text-overline text-ink-3">Ikeja Hub</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-primary font-bold text-xs flex items-center justify-center">IM</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">Ibrahim Musa</div>
+<div class="font-body-sm text-body-sm text-ink-3">Network Ops Eng</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 max-w-xs">
+<div class="font-body-sm text-body-sm text-ink font-medium">Backup Router Battery replacement · IT Maint</div>
+<div class="font-overline text-overline text-ink-3">Critical infra incident #402</div>
+</td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm text-ink">Approved by Tunde Bakare</div>
+<div class="font-overline text-overline text-ink-3">15 Nov 2026 · 18:45</div>
+</td>
+<td class="py-4 px-4 text-right font-mono font-bold text-base text-ink">
+                ₦16,000.00
+              </td>
+</tr>
+<!-- Row 4 (Locked Row: Self Authorization) -->
+<tr class="bg-surface-sunken/40 text-ink-2">
+<td class="py-4 px-4 text-center">
+<div class="w-6 h-6 mx-auto flex items-center justify-center rounded bg-surface-variant text-ink-3" title="Locked by SoD Enforcement">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+</div>
+</td>
+<td class="py-4 px-4 opacity-75">
+<div class="font-mono text-sm font-semibold text-ink-2">EXP-2026-000128</div>
+<div class="font-overline text-overline text-ink-3">Port Harcourt</div>
+</td>
+<td class="py-4 px-4 opacity-75">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-ink-2 font-bold text-xs flex items-center justify-center">AM</div>
+<div>
+<div class="font-label text-label font-semibold text-ink-2">Aisha Mohammed</div>
+<div class="font-body-sm text-body-sm text-ink-3">Regional HR Specialist</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 max-w-xs">
+<div class="font-body-sm text-body-sm text-ink-2 font-medium">Annual Recertification Seminar · Staff Training</div>
+<div class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded bg-surface-variant text-ink-3 font-overline text-overline">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+                  Approved by you (Fatima Bello)
+                </div>
+</td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm text-warning-text font-medium">• by Fatima Bello (Locked for self-disbursement)</div>
+<div class="font-overline text-overline text-ink-3">15 Nov 2026 · Requires secondary approver</div>
+</td>
+<td class="py-4 px-4 text-right font-mono font-bold text-base text-ink-2 opacity-75">
+                ₦95,000.00
+              </td>
+</tr>
+<!-- Row 5 (Unchecked) -->
+<tr class="hover:bg-surface-bright/70 transition-colors">
+<td class="py-4 px-4 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="font-mono text-sm font-semibold text-ink hover:underline cursor-pointer">EXP-2026-000121</div>
+<div class="font-overline text-overline text-ink-3">Abuja FCT</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-ink-2 font-bold text-xs flex items-center justify-center">CE</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">Chinedu Eze</div>
+<div class="font-body-sm text-body-sm text-ink-3">Supply Fleet Mgr</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 max-w-xs">
+<div class="font-body-sm text-body-sm text-ink font-medium">Interstate Haulage Tolls &amp; Diesel · Fleet</div>
+<div class="font-overline text-overline text-ink-3">Logistics run Abuja - Kaduna</div>
+</td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm text-ink">Approved by Tunde Bakare</div>
+<div class="font-overline text-overline text-ink-3">14 Nov 2026 · 11:32</div>
+</td>
+<td class="py-4 px-4 text-right font-mono font-bold text-base text-ink">
+                ₦183,000.00
+              </td>
+</tr>
+<!-- Row 6 (Unchecked) -->
+<tr class="hover:bg-surface-bright/70 transition-colors">
+<td class="py-4 px-4 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4">
+<div class="font-mono text-sm font-semibold text-ink hover:underline cursor-pointer">EXP-2026-000118</div>
+<div class="font-overline text-overline text-ink-3">Kano Hub</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-ink-2 font-bold text-xs flex items-center justify-center">FO</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">Folake Ogunlesi</div>
+<div class="font-body-sm text-body-sm text-ink-3">Store Supervisor</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 max-w-xs">
+<div class="font-body-sm text-body-sm text-ink font-medium">Packaging Tape &amp; Box Strapping · Warehouse</div>
+<div class="font-overline text-overline text-ink-3">Northern Distribution Hub</div>
+</td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm text-ink">Approved by Tunde Bakare</div>
+<div class="font-overline text-overline text-ink-3">13 Nov 2026 · 17:01</div>
+</td>
+<td class="py-4 px-4 text-right font-mono font-bold text-base text-ink">
+                ₦85,800.00
+              </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination Notice -->
+<div class="px-6 py-4 bg-surface-sunken/40 flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>Showing 6 approved vouchers (1 locked under SoD policy)</span>
+<div class="flex items-center gap-2">
+<span>Page 1 of 1</span>
+</div>
+</div>
+</div>
+<!-- Below the Table: Payment Execution Action Card -->
+<div class="rounded-2xl bg-surface p-6 shadow-sm space-y-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+<div>
+<h2 class="font-h2 text-h2 text-ink">Payout Details &amp; Authorization</h2>
+<p class="font-body-sm text-body-sm text-ink-2">Complete disbursement settlement for the selected payment batch.</p>
+</div>
+<div class="px-3.5 py-1.5 rounded-xl bg-iris-tint text-iris font-semibold text-sm self-start md:self-auto">
+          3 claims selected · ₦214,500.00 Total
+        </div>
+</div>
+<!-- Horizontal Input Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Date Picker -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink block">Paid on date</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 pl-10 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" type="text" value="18/11/2026"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">calendar_today</span>
+</div>
+</div>
+<!-- Payment Method -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink block">Method select</label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-8 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-iris/20 cursor-pointer">
+<option selected="">Bank transfer (Direct NIBSS)</option>
+<option>Cash (Petty Cash Float)</option>
+<option>Cheque (Zenith Bank)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Reference / Session ID -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink block">Reference / Session ID</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 font-mono text-sm rounded-xl bg-surface-sunken text-ink font-semibold focus:outline-none focus:ring-2 focus:ring-iris/20" type="text" value="ZEN-DISB-882916"/>
+</div>
+</div>
+<!-- Debit Account -->
+<div class="space-y-1.5">
+<label class="font-label text-label text-ink block">Debit Account</label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-8 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-iris/20 cursor-pointer">
+<option selected="">Zenith Corporate Direct (••4012) · Available ₦44.8M</option>
+<option>Access Treasury Reserve (••8810)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons Row -->
+<div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2">
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-surface-sunken hover:bg-surface-variant text-ink font-label text-label font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">picture_as_pdf</span>
+          Voucher preview (PDF)
+        </button>
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-md transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+          Mark as paid (₦214,500.00)
+        </button>
+</div>
+</div>
+<!-- Ledger & Journals Section / Card -->
+<div class="rounded-2xl bg-surface p-6 shadow-sm space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-xl bg-iris-tint text-iris">
+<span class="material-symbols-outlined text-[22px]">auto_stories</span>
+</div>
+<div>
+<div class="flex items-center gap-2.5">
+<h2 class="font-h2 text-h2 text-ink">Journals for the ledger</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline font-semibold">
+                Waiting for Finance (Phase 10)
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+              Automated double-entry journals staged upon payment marking, awaiting automated posting to GL.
+            </p>
+</div>
+</div>
+</div>
+<!-- Journal Entry Lines -->
+<div class="space-y-2 font-mono text-sm pt-2">
+<div class="p-3.5 rounded-xl bg-surface-sunken flex flex-col md:flex-row md:items-center justify-between gap-2 text-ink">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface text-ink-2 text-xs font-semibold">GL #1</span>
+<span>6100 Dr ₦15,000.50 · 1010 Cr ₦15,000.50</span>
+</div>
+<span class="text-ink-3 font-body text-xs md:text-sm font-normal">
+            (Staff Subsistence / Transcorp Dinner)
+          </span>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-sunken flex flex-col md:flex-row md:items-center justify-between gap-2 text-ink">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface text-ink-2 text-xs font-semibold">GL #2</span>
+<span>6210 Dr ₦48,500.00 · 1010 Cr ₦48,500.00</span>
+</div>
+<span class="text-ink-3 font-body text-xs md:text-sm font-normal">
+            (Vehicle Running &amp; Fuel)
+          </span>
+</div>
+<div class="p-3.5 rounded-xl bg-surface-sunken flex flex-col md:flex-row md:items-center justify-between gap-2 text-ink">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface text-ink-2 text-xs font-semibold">GL #3</span>
+<span>2100 Dr ₦150,000.00 · ADV-00007 Cr ₦50,000.00 · 1010 Cr ₦100,000.00</span>
+</div>
+<span class="text-ink-3 font-body text-xs md:text-sm font-normal">
+            (Settlement of travel advance)
+          </span>
+</div>
+</div>
+<!-- Bottom Micro-copy -->
+<div class="flex items-center gap-2 pt-2 text-ink-3 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-iris">sync</span>
+<span>Automated reconciliation with NIBSS electronic bank statement scheduled at 23:59 WAT.</span>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

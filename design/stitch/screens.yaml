@@ -744,3 +744,91 @@ screens:
       save_location: attendance.settings.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-20)
+
+  - id: expenses.my
+    phase: 8
+    module: expenses
+    title: My expenses (self-service)
+    route: GET /expenses
+    template: app/modules/expenses/templates/expenses/my.html
+    stitch_screens:
+      mobile: 7ab39e1e9e994f539bce5e748fe9989f
+    exports:
+      - design/stitch/exports/expenses.my.html
+    permission: expenses.claim.create
+    actions:
+      new_claim: expenses.claim.create
+      ask_for_advance: expenses.claim.create
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: expenses.document
+    phase: 8
+    module: expenses
+    title: Expense claim or cash advance
+    route: GET /expenses/{document_id}
+    template: app/modules/expenses/templates/expenses/document.html
+    preview_template: app/modules/expenses/templates/expenses/new.html
+    stitch_screens:
+      desktop: ba0b889fe70847e8944ebab8fa1f32be
+    exports:
+      - design/stitch/exports/expenses.document.html
+    permission: login
+    actions:
+      edit_and_submit: expenses.claim.create
+      open_receipt: expenses.claim.read
+      cancel: expenses.claim.create
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: expenses.approvals
+    phase: 8
+    module: expenses
+    title: Expense approvals
+    route: GET /expenses/approvals
+    template: app/modules/expenses/templates/expenses/approvals.html
+    stitch_screens:
+      desktop: 36b36ac37faf4b8b8cf0225068ed08d5
+    exports:
+      - design/stitch/exports/expenses.approvals.html
+    permission: login
+    actions:
+      decide_named_step: expenses.claim.approve
+      step_in: expenses.claim.approve_any
+      decide_finance_step: expenses.claim.approve_finance
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: expenses.payments
+    phase: 8
+    module: expenses
+    title: Expense payments
+    route: GET /expenses/payments
+    template: app/modules/expenses/templates/expenses/payments.html
+    stitch_screens:
+      desktop: 24ae52b1dcef49599aed89a19fd843cb
+    exports:
+      - design/stitch/exports/expenses.payments.html
+    permission: expenses.claim.reimburse
+    actions:
+      pay: expenses.claim.reimburse
+      pay_what_you_approved: expenses.claim.reimburse_override
+      record_repayment: expenses.claim.reimburse
+    field_classes: [directory]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: expenses.settings
+    phase: 8
+    module: expenses
+    title: Expense settings
+    route: GET /expenses/settings
+    template: app/modules/expenses/templates/expenses/settings.html
+    stitch_screens:
+      desktop: eec3b25c151b4f98be80c51ca6d7c71e
+    exports:
+      - design/stitch/exports/expenses.settings.html
+    permission: expenses.settings.manage
+    actions:
+      save: expenses.settings.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-20)

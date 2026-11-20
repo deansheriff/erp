@@ -83,3 +83,13 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Monthly attendance summary** (`attendance.summary`) | `GET /attendance/summary` | attendance.record.read | directory | Dean Sheriff (2026-11-20) |
 | **Shifts and roster** (`attendance.roster`) | `GET /attendance/roster` | attendance.schedule.manage | directory | Dean Sheriff (2026-11-20) |
 | **Attendance settings** (`attendance.settings`) | `GET /attendance/settings` | attendance.settings.manage | — | Dean Sheriff (2026-11-20) |
+
+## Phase 8
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **My expenses (self-service)** (`expenses.my`) | `GET /expenses` | expenses.claim.create | directory | Dean Sheriff (2026-11-20) |
+| **Expense claim or cash advance** (`expenses.document`) | `GET /expenses/{document_id}` | login | directory | Dean Sheriff (2026-11-20) |
+| **Expense approvals** (`expenses.approvals`) | `GET /expenses/approvals` | login | directory | Dean Sheriff (2026-11-20) |
+| **Expense payments** (`expenses.payments`) | `GET /expenses/payments` | expenses.claim.reimburse | directory | Dean Sheriff (2026-11-20) |
+| **Expense settings** (`expenses.settings`) | `GET /expenses/settings` | expenses.settings.manage | — | Dean Sheriff (2026-11-20) |

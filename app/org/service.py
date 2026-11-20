@@ -930,3 +930,25 @@ def positions_held(
     for eid, title, kind in sorted(rows, key=lambda r: resolver.KIND_ORDER[r.kind]):
         result[eid].append((title, kind))
     return dict(result)
+
+
+def approval_chain(db: Session, employee_id: uuid.UUID, levels: int) -> list[uuid.UUID]:
+    """Today's managers above an employee, nearest first."""
+    return resolver.approval_chain(db, employee_id, clock.today(), levels=levels)
+
+
+def cost_centre_of(db: Session, employee_id: uuid.UUID) -> uuid.UUID | None:
+    """The cost centre of the department of the employee's best current position."""
+    held = primary_position(db, employee_id)
+    if held is None:
+        return None
+    return db.scalar(select(Department.cost_centre_id).where(Department.id == held[1]))
+
+
+def cost_centre_choices(db: Session) -> list[tuple[uuid.UUID, str]]:
+    return [
+        (c.id, f"{c.code} · {c.name}")
+        for c in db.scalars(
+            select(CostCentre).where(CostCentre.is_active).order_by(CostCentre.code)
+        )
+    ]

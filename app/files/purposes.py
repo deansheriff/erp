@@ -18,6 +18,7 @@ PURPOSE_MODULES = (
     "app.modules.hr.files",
     "app.modules.leave.files",
     "app.modules.attendance.files",
+    "app.modules.expenses.files",
 )
 
 KB = 1024

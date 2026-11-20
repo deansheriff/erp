@@ -5,6 +5,26 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 8: Expenses
+- Expense categories with a ledger account code, an optional limit per claim and a
+  "receipt needed above" amount; claims with dated lines, receipts through the files
+  service (`expense_receipt`) and cost-centre tags (ADR 0020). Naira only for now.
+- Approval chain from the org chart, tiered by amount: line manager, then the next
+  manager up above ₦100,000, then Finance above ₦500,000 (to confirm). Named approvers,
+  their delegates, or organisation-wide approvers decide; nobody approves their own.
+  Approvers can correct line amounts (the original is kept and logged), return a claim
+  for changes, or reject it.
+- Over a category limit or a weekly or monthly spending limit (defaults ₦50,000 and
+  ₦150,000, per-person overrides), claims still go but approvers see a warning.
+- Payments by the Reimburser, several at once, with date, method and reference; the
+  approver can't pay a claim they approved without the override permission.
+- Cash advances: approved and paid like claims, used up first by later claims, and the
+  rest repaid and recorded by Finance.
+- Every payment and repayment queues a balanced journal for the ledger (Phase 10).
+- Permissions `expenses.claim.*` and `expenses.settings.manage`; grants for the
+  Employee, Line Manager, Expense Approver, Reimburser, Finance Officer, Finance
+  Manager and Auditor templates. Numbers `EXP-00001` and `ADV-00001`.
+
 ### Added — Phase 7b: Attendance and shifts
 - Shift patterns (start, end — past midnight allowed — break, working days, late and
   early grace, 15 minutes each by default, to confirm), usual shifts per person with

@@ -1,0 +1,89 @@
+{# Expenses → Settings: categories, approval amounts, spending limits and ledger accounts
+   (ADR 0020). Design: design/stitch/exports/expenses.settings.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro category_form(c=None) -%}
+{% set key = "category:" ~ (c.id if c else "new") %}
+{% set errs = errors if editing == key else {} %}
+{% set v = values if editing == key else {} %}
+<form method="post" action="/expenses/settings/categories" class="mt-4 grid gap-4 sm:grid-cols-4" novalidate>
+  {{ ui.csrf_field() }}
+  {% if c %}<input type="hidden" name="category_id" value="{{ c.id }}">{% endif %}
+  {% if errs.get("form") %}<div class="sm:col-span-4">{{ ui.alert("danger", errs["form"]) }}</div>{% endif %}
+  {{ ui.text_field("name", "Name", value=v.get("name") or (c.name if c else ""), errors=errs) }}
+  {{ ui.text_field("gl_account", "Ledger account", value=v.get("gl_account") or (c.gl_account if c else ""), errors=errs) }}
+  {{ ui.text_field("claim_limit", "Limit per claim (₦)", value=v.get("claim_limit") or (c.claim_limit if c and c.claim_limit else ""), errors=errs, inputmode="decimal") }}
+  {{ ui.text_field("receipt_above", "Receipt needed above (₦)", value=v.get("receipt_above") or (c.receipt_above if c else "0"), errors=errs, inputmode="decimal") }}
+  <div class="flex flex-wrap items-center justify-between gap-3 sm:col-span-4">
+    {% if c %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if c.is_active %}checked{% endif %}> Active</label>{% else %}<span class="text-xs text-ink-3">Leave the limit blank for none. A receipt amount of 0 means always.</span>{% endif %}
+    <button type="submit" class="kx-btn-primary">{{ "Save" if c else "Add category" }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Expense settings", "Categories, who approves what, spending limits and ledger accounts.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<section id="categories" class="mt-6 space-y-3" aria-labelledby="h-categories">
+  <h2 id="h-categories" class="font-h3 text-h3">Categories</h2>
+  {% for c in categories %}
+  <details class="kx-card kx-enter p-5" {% if editing == "category:" ~ c.id %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3">
+      <span class="min-w-0"><span class="block font-semibold">{{ c.name }}</span><span class="text-xs text-ink-3">Account {{ c.gl_account }} · {% if c.claim_limit %}limit {{ c.claim_limit | money }} per claim{% else %}no limit{% endif %} · receipt {% if c.receipt_above > 0 %}above {{ c.receipt_above | money }}{% else %}always{% endif %}</span></span>
+      {{ ui.badge("success", "Active") if c.is_active else ui.badge("neutral", "Inactive") }}
+    </summary>
+    {{ category_form(c) }}
+  </details>
+  {% endfor %}
+  <details class="rounded-2xl border border-dashed border-line p-5" {% if editing == "category:new" %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none items-center gap-2 text-label text-iris">{{ ui.icon("plus", "sm") }} New category</summary>
+    {{ category_form() }}
+  </details>
+</section>
+
+{% set errs = errors if editing == "rules" else {} %}
+{% set v = values if editing == "rules" else {} %}
+<form id="rules" method="post" action="/expenses/settings" class="kx-card kx-enter mt-8 space-y-5 p-5 md:p-6" novalidate>
+  {{ ui.csrf_field() }}
+  <div>
+    <h2 class="font-h3 text-h3">Approval and limits</h2>
+    <p class="text-body-sm text-ink-3">The line manager approves everything. Amounts are defaults to confirm.</p>
+  </div>
+  {% if errs.get("form") %}{{ ui.alert("danger", errs["form"]) }}{% endif %}
+  <div class="grid gap-4 sm:grid-cols-2">
+    {{ ui.text_field("second_level_above", "Next manager up also approves above (₦)", value=v.get("second_level_above") or config.second_level_above, errors=errs, inputmode="decimal") }}
+    {{ ui.text_field("finance_above", "Finance also approves above (₦)", value=v.get("finance_above") or config.finance_above, errors=errs, inputmode="decimal") }}
+    {{ ui.text_field("weekly_limit", "Weekly spending limit per person (₦)", value=v.get("weekly_limit") if v else (config.weekly_limit or ""), errors=errs, inputmode="decimal") }}
+    {{ ui.text_field("monthly_limit", "Monthly spending limit per person (₦)", value=v.get("monthly_limit") if v else (config.monthly_limit or ""), errors=errs, inputmode="decimal") }}
+    {{ ui.text_field("advances_account", "Employee advances account", value=v.get("advances_account") or config.advances_account, errors=errs) }}
+    {{ ui.text_field("bank_account", "Bank account paid from", value=v.get("bank_account") or config.bank_account, errors=errs) }}
+  </div>
+  <p class="text-xs text-ink-3">Over a limit, claims can still be sent; approvers see a warning. Ledger codes are placeholders until the chart of accounts arrives.</p>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save</button></div>
+</form>
+
+<section id="limits" class="kx-card kx-enter mt-8 p-5 md:p-6" aria-labelledby="h-limits">
+  <h2 id="h-limits" class="font-h3 text-h3">Limits for one person</h2>
+  <p class="text-body-sm text-ink-3">Replace the weekly or monthly limit for someone. Leave both blank to go back to the defaults.</p>
+  {% if limits %}
+  <ul class="mt-3 divide-y divide-line text-body-sm">
+    {% for eid, name, weekly, monthly in limits %}<li class="flex justify-between gap-3 py-2"><span>{{ name }}</span><span class="tnum text-ink-2">{{ (weekly | money) if weekly else "default" }} a week · {{ (monthly | money) if monthly else "default" }} a month</span></li>{% endfor %}
+  </ul>
+  {% endif %}
+  {% set errs = errors if editing == "limits" else {} %}
+  {% set v = values if editing == "limits" else {} %}
+  <form method="post" action="/expenses/settings/limits" class="mt-4 grid gap-4 sm:grid-cols-4 sm:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    <div>
+      <label for="f-limit_employee_id" class="kx-label">Person</label>
+      <select id="f-limit_employee_id" name="limit_employee_id" class="kx-input"><option value="">Choose…</option>{% for pid, pname in people %}<option value="{{ pid }}" {% if v.get("limit_employee_id") == pid|string %}selected{% endif %}>{{ pname }}</option>{% endfor %}</select>
+      {{ ui.field_error(errs, "limit_employee_id") }}
+    </div>
+    {{ ui.text_field("person_weekly", "Weekly (₦)", value=v.get("person_weekly"), errors=errs, inputmode="decimal") }}
+    {{ ui.text_field("person_monthly", "Monthly (₦)", value=v.get("person_monthly"), errors=errs, inputmode="decimal") }}
+    <button type="submit" class="kx-btn-secondary">Save</button>
+  </form>
+</section>
+{% endblock %}

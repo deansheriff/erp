@@ -34,6 +34,17 @@ from app.modules.attendance.models import (
     ShiftAssignment,
     ShiftPattern,
 )
+from app.modules.expenses.models import (
+    AdvanceRepayment,
+    ExpenseCategory,
+    ExpenseDocument,
+    ExpenseJournal,
+    ExpenseJournalLine,
+    ExpenseLine,
+    ExpenseSettings,
+    ExpenseStep,
+    PersonLimit,
+)
 from app.modules.hr.models import (
     ChangeRequest,
     Checklist,
@@ -65,6 +76,7 @@ from app.org.models import (
 )
 
 __all__ = [
+    "AdvanceRepayment",
     "ApiKey",
     "AttendanceCorrection",
     "AttendanceLocation",
@@ -85,6 +97,13 @@ __all__ = [
     "EmployeeDocument",
     "EmployeeExit",
     "EntitlementRule",
+    "ExpenseCategory",
+    "ExpenseDocument",
+    "ExpenseJournal",
+    "ExpenseJournalLine",
+    "ExpenseLine",
+    "ExpenseSettings",
+    "ExpenseStep",
     "FileLink",
     "Grade",
     "Installation",
@@ -101,6 +120,7 @@ __all__ = [
     "Organization",
     "OvertimeEntry",
     "PermissionRow",
+    "PersonLimit",
     "Position",
     "PositionAssignment",
     "PublicHoliday",

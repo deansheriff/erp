@@ -90,7 +90,26 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Settings", "/attendance/settings", permission="attendance.settings.manage"),
         ),
     ),
-    NavModule("expenses", "Expenses", "receipt", "/expenses"),
+    NavModule(
+        "expenses",
+        "Expenses",
+        "receipt",
+        "/expenses",
+        (
+            NavSection("My expenses", "/expenses", permission="expenses.claim.create"),
+            NavSection(
+                "Approvals",
+                "/expenses/approvals",
+                permission=(
+                    "expenses.claim.approve",
+                    "expenses.claim.approve_any",
+                    "expenses.claim.approve_finance",
+                ),
+            ),
+            NavSection("Payments", "/expenses/payments", permission="expenses.claim.reimburse"),
+            NavSection("Settings", "/expenses/settings", permission="expenses.settings.manage"),
+        ),
+    ),
     NavModule("payroll", "Payroll", "banknote", "/payroll"),
     NavModule("finance", "Finance", "chart-line", "/finance"),
     NavModule("inventory", "Inventory", "package", "/inventory"),

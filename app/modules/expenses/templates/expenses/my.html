@@ -1,0 +1,63 @@
+{# Expenses → My expenses (self-service, mobile-first). Design: design/stitch/exports/expenses.my.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("My expenses", "Claims for money you spent, and cash advances.") %}
+  {% if linked %}
+  <a href="/expenses/new?kind=advance" class="kx-btn-secondary">{{ ui.icon("wallet", "sm") }} Ask for an advance</a>
+  <a href="/expenses/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New claim</a>
+  {% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+{% if not linked %}
+<section class="kx-card mt-6">{% call ui.empty_state("id-card", "No HR record yet", "Your account isn't linked to an HR record, so you can't claim expenses yet. Ask HR.") %}{% endcall %}</section>
+{% else %}
+<section class="kx-scroll-x -mx-4 mt-6 flex gap-3 px-4 pb-1 sm:mx-0 sm:grid sm:grid-cols-3 sm:px-0" aria-label="Totals">
+  {% for label, amount in (("Waiting for approval", waiting), ("Approved, to be paid", to_be_paid), ("Advance left to use or repay", advance_left)) %}
+  <div class="w-56 shrink-0 sm:w-auto">{{ ui.kpi_tile(label, amount | money) }}</div>
+  {% endfor %}
+</section>
+
+<nav class="kx-segment mt-6" aria-label="Show">
+  {% for key, label in (("claims", "Claims"), ("advances", "Advances")) %}
+  <a href="/expenses?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</nav>
+
+{% if rows %}
+<ul class="mt-4 grid gap-3 lg:grid-cols-2">
+  {% for d in rows %}
+  <li>
+    <a href="/expenses/{{ d.id }}" class="kx-card kx-enter flex flex-col gap-2 p-4 transition-shadow duration-base hover:shadow-raised">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <p class="font-mono text-xs text-ink-3">{{ d.number }}</p>
+          <p class="truncate font-semibold">{{ d.title }}</p>
+        </div>
+        {{ ui.badge(statuses[d.status][0], statuses[d.status][1]) }}
+      </div>
+      <div class="flex items-end justify-between gap-3">
+        <p class="text-xs text-ink-3">{{ (d.submitted_at or d.created_at) | datetime }}</p>
+        <p class="font-stat text-h2 tnum">{{ d.total | money }}</p>
+      </div>
+      {% if d.is_advance and d.status == "reimbursed" %}
+      <p class="text-xs {{ 'text-success-text' if d.settled else 'text-warning-text' }}">{% if d.settled %}Settled{% else %}{{ d.outstanding | money }} left to use on claims or repay{% endif %}</p>
+      {% endif %}
+      {% if d.status == "reimbursed" and d.paid_at %}<p class="text-xs text-ink-3">Paid {{ d.paid_at | date }}{% if d.advance_applied %} · {{ d.advance_applied | money }} from {{ d.advance_number }}{% endif %}</p>{% endif %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<section class="kx-card mt-4">
+  {% if tab == "advances" %}
+  {% call ui.empty_state("wallet", "No advances", "Ask for a cash advance before a trip; settle it later with your claims.") %}{% endcall %}
+  {% else %}
+  {% call ui.empty_state("receipt", "No claims yet", "Start a claim, add a line for each expense with its receipt, then send it for approval.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}

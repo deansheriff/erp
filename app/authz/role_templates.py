@@ -104,6 +104,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "attendance.record.read": SELF,
             "attendance.correction.request": SELF,
             "attendance.photo.view": SELF,
+            "expenses.claim.create": SELF,
+            "expenses.claim.read": SELF,
         },
     ),
     RoleTemplate(
@@ -117,6 +119,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "leave.balance.read": Scope.TEAM,
             "attendance.record.read": Scope.TEAM,
             "attendance.record.approve": Scope.TEAM,
+            "expenses.claim.read": Scope.TEAM,
+            "expenses.claim.approve": Scope.TEAM,
         },
     ),
     RoleTemplate(
@@ -162,15 +166,37 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         grants={"hr.employee.read": ORG, "hr.checklist.it": ORG},
     ),
     RoleTemplate("payroll_officer", "Payroll Officer", "Prepares payroll runs.", requires_mfa=True),
-    RoleTemplate("finance_officer", "Finance Officer", "Day-to-day accounting.", requires_mfa=True),
+    RoleTemplate(
+        "finance_officer",
+        "Finance Officer",
+        "Day-to-day accounting.",
+        requires_mfa=True,
+        grants={"expenses.claim.read": ORG},
+    ),
     RoleTemplate(
         "finance_manager",
         "Finance Manager",
         "Approves and posts finance documents.",
         requires_mfa=True,
+        grants={
+            "expenses.claim.read": ORG,
+            "expenses.claim.approve_any": ORG,  # steps in when a manager can't
+            "expenses.claim.approve_finance": ORG,
+            "expenses.settings.manage": ORG,
+        },
     ),
-    RoleTemplate("expense_approver", "Expense Approver", "Approves expense claims."),
-    RoleTemplate("reimburser", "Reimburser", "Pays out approved expense claims."),
+    RoleTemplate(
+        "expense_approver",
+        "Expense Approver",
+        "Approves expense claims.",
+        grants={"expenses.claim.read": Scope.TEAM, "expenses.claim.approve": Scope.TEAM},
+    ),
+    RoleTemplate(
+        "reimburser",
+        "Reimburser",
+        "Pays out approved expense claims.",
+        grants={"expenses.claim.read": ORG, "expenses.claim.reimburse": ORG},
+    ),
     RoleTemplate("inventory_clerk", "Inventory Clerk", "Receives, issues and counts stock."),
     RoleTemplate(
         "procurement_officer", "Procurement Officer", "Requisitions, RFQs and purchase orders."

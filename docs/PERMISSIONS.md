@@ -33,6 +33,19 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `authz.role.manage` | Manage roles | Organisation | yes | Create, edit and delete roles. |
 | `authz.role.read` | View roles | Organisation |  | See roles and their permissions. |
 
+### expenses
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `expenses.claim.approve` | Approve expense claims | Self, Team, Department, Organisation |  | Decide the approval steps you are named on (as a manager, or by delegation). |
+| `expenses.claim.approve_any` | Step in on expense approvals | Organisation |  | Decide any manager step, e.g. when the manager is away or there is none. |
+| `expenses.claim.approve_finance` | Give Finance approval for expenses | Organisation |  | Decide the Finance step of claims and advances above the Finance amount. |
+| `expenses.claim.create` | Make expense claims | Self, Team, Department, Organisation |  | Write and submit claims and cash advance requests. |
+| `expenses.claim.read` | View expense claims | Self, Team, Department, Organisation |  | See claims, advances and their receipts within scope. |
+| `expenses.claim.reimburse` | Pay expense claims | Organisation |  | Mark approved claims and advances paid, and record advance repayments. |
+| `expenses.claim.reimburse_override` | Pay claims you approved | Organisation | yes | Allows paying a claim or advance you approved yourself. |
+| `expenses.settings.manage` | Manage expense settings | Organisation |  | Categories, approval amounts, spending limits and ledger accounts. |
+
 ### files
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -122,6 +135,14 @@ Everything, including technical settings. Can't be edited or removed.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `expenses.claim.approve` | O |
+| `expenses.claim.approve_any` | O |
+| `expenses.claim.approve_finance` | O |
+| `expenses.claim.create` | O |
+| `expenses.claim.read` | O |
+| `expenses.claim.reimburse` | O |
+| `expenses.claim.reimburse_override` | O |
+| `expenses.settings.manage` | O |
 | `files.file.manage` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
@@ -178,6 +199,14 @@ Everything except technical settings such as mail, branding and security.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `expenses.claim.approve` | O |
+| `expenses.claim.approve_any` | O |
+| `expenses.claim.approve_finance` | O |
+| `expenses.claim.create` | O |
+| `expenses.claim.read` | O |
+| `expenses.claim.reimburse` | O |
+| `expenses.claim.reimburse_override` | O |
+| `expenses.settings.manage` | O |
 | `files.file.manage` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
@@ -221,6 +250,7 @@ Reads everything, including the audit log. Changes nothing.
 | `attendance.record.read` | O |
 | `audit.log.read` | O |
 | `authz.role.read` | O |
+| `expenses.claim.read` | O |
 | `hr.employee.banking.read` | O |
 | `hr.employee.compensation.read` | O |
 | `hr.employee.personal.read` | O |
@@ -242,6 +272,8 @@ Self-service: their own profile, requests and payslips.
 | `attendance.correction.request` | S |
 | `attendance.photo.view` | S |
 | `attendance.record.read` | S |
+| `expenses.claim.create` | S |
+| `expenses.claim.read` | S |
 | `hr.employee.banking.read` | S |
 | `hr.employee.compensation.read` | S |
 | `hr.employee.personal.read` | S |
@@ -262,6 +294,8 @@ Approves their team's requests and sees their team.
 |---|---|
 | `attendance.record.approve` | T |
 | `attendance.record.read` | T |
+| `expenses.claim.approve` | T |
+| `expenses.claim.read` | T |
 | `hr.employee.personal.read` | T |
 | `leave.balance.read` | T |
 | `leave.request.approve` | T |
@@ -355,25 +389,38 @@ _No grants yet: added by the phase that delivers its module._
 
 Day-to-day accounting.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `expenses.claim.read` | O |
 
 ### Finance Manager (two-step required)
 
 Approves and posts finance documents.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `expenses.claim.approve_any` | O |
+| `expenses.claim.approve_finance` | O |
+| `expenses.claim.read` | O |
+| `expenses.settings.manage` | O |
 
 ### Expense Approver
 
 Approves expense claims.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `expenses.claim.approve` | T |
+| `expenses.claim.read` | T |
 
 ### Reimburser
 
 Pays out approved expense claims.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `expenses.claim.read` | O |
+| `expenses.claim.reimburse` | O |
 
 ### Inventory Clerk
 
@@ -408,5 +455,9 @@ _No grants yet: added by the phase that delivers its module._
 | `leave.no_self_hr_approval` | `leave.request.approve_hr` | owner_is_actor | You can't approve your own leave. |
 | `leave.no_self_adjustment` | `leave.balance.adjust` | subject_is_actor | You can't adjust your own leave balance. |
 | `attendance.no_self_approval` | `attendance.record.approve` | owner_is_actor | You can't approve your own attendance. |
+| `expenses.no_self_approve` | `expenses.claim.approve` | owner_is_actor | You can't approve your own claim. |
+| `expenses.no_self_approve_any` | `expenses.claim.approve_any` | owner_is_actor | You can't approve your own claim. |
+| `expenses.no_self_approve_finance` | `expenses.claim.approve_finance` | owner_is_actor | You can't approve your own claim. |
+| `expenses.no_self_reimburse` | `expenses.claim.reimburse` | owner_is_actor | You can't pay your own claim. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

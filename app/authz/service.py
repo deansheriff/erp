@@ -957,3 +957,20 @@ def user_access(db: Session, actor: Actor, user_id: uuid.UUID) -> UserAccess:
         requires_mfa=grants.requires_mfa,
         roles_assignable=assignable,
     )
+
+
+def delegators(db: Session, to_user_id: uuid.UUID, permission: str) -> set[uuid.UUID]:
+    """Users who have delegated `permission` to this user, right now (e.g. to decide
+    approval steps named on them)."""
+    now = clock.now()
+    return set(
+        db.scalars(
+            select(Delegation.from_user_id).where(
+                Delegation.to_user_id == to_user_id,
+                Delegation.permission_key == permission,
+                Delegation.starts_at <= now,
+                Delegation.ends_at > now,
+                Delegation.revoked_at.is_(None),
+            )
+        )
+    )

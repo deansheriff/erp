@@ -1,0 +1,30 @@
+{# Expenses → start a claim or ask for a cash advance. Design: design/stitch/exports/expenses.document.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header(page_title, "You can add lines and receipts after this step." if kind == "claim" else "Your manager approves it; it's paid like a claim and settled by your later claims.") %}{% endcall %}
+
+<form method="post" action="/expenses/new" class="kx-card kx-enter mx-auto mt-6 max-w-xl space-y-5 p-5 md:p-6" novalidate>
+  {{ ui.csrf_field() }}
+  <input type="hidden" name="kind" value="{{ kind }}">
+  {% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}
+  {{ ui.text_field("title", "What is it for?" if kind == "claim" else "Purpose", value=values.get("title"), errors=errors, hint="e.g. Client visit, Abuja") }}
+  {% if kind == "advance" %}
+  {{ ui.text_field("amount", "Amount (₦)", value=values.get("amount"), errors=errors, inputmode="decimal") }}
+  {% elif advances %}
+  <div>
+    <label for="f-advance_id" class="kx-label">Settle against an advance <span class="font-normal text-ink-3">(optional)</span></label>
+    <select id="f-advance_id" name="advance_id" class="kx-input">
+      <option value="">No advance</option>
+      {% for a in advances %}<option value="{{ a.id }}" {% if values.get("advance_id") == a.id|string %}selected{% endif %}>{{ a.number }} · {{ a.title }}</option>{% endfor %}
+    </select>
+    {{ ui.field_error(errors, "advance_id") }}
+  </div>
+  {% endif %}
+  <div class="flex justify-end gap-3">
+    <a href="/expenses" class="kx-btn-ghost">Cancel</a>
+    <button type="submit" class="kx-btn-primary">{{ "Start claim" if kind == "claim" else "Continue" }}</button>
+  </div>
+</form>
+{% endblock %}

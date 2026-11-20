@@ -131,8 +131,15 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         conn.execute(text("UPDATE authz_state SET version = version + 1"))
         conn.execute(text("UPDATE org_state SET version = version + 1"))
         conn.execute(text("UPDATE storage_settings SET used_bytes = 0, quota_bytes = 53687091200"))
+        conn.execute(text("UPDATE number_sequences SET next_value = 1"))
         conn.execute(
-            text("UPDATE number_sequences SET prefix = 'EMP-', padding = 5, next_value = 1")
+            text("UPDATE number_sequences SET prefix = 'EMP-', padding = 5 WHERE key = 'employee'")
+        )
+        conn.execute(
+            text(
+                "UPDATE expense_settings SET second_level_above = 100000, finance_above = 500000, "
+                "weekly_limit = 50000, monthly_limit = 150000"
+            )
         )
         # Truncating grades cascades to entitlement rules; restore the seeded defaults.
         conn.execute(

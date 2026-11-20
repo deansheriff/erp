@@ -1,0 +1,165 @@
+{# Expenses → one claim or advance: the editor while it's a draft (or returned), the record
+   afterwards. Design: design/stitch/exports/expenses.document.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro line_form(line=None) -%}
+{% set key = line.id|string if line else "new" %}
+{% set errs = errors if editing_line == key else {} %}
+{% set v = values if editing_line == key else {} %}
+<form method="post" action="/expenses/{{ doc.id }}/lines" class="grid gap-3 rounded-2xl border border-line bg-surface-sunken/40 p-4 sm:grid-cols-2 lg:grid-cols-4" novalidate>
+  {{ ui.csrf_field() }}
+  {% if line %}<input type="hidden" name="line_id" value="{{ line.id }}">{% endif %}
+  <div>{{ ui.text_field("day", "Date", value=v.get("day") or (line.day.isoformat() if line else today.isoformat()), type="date", errors=errs) }}</div>
+  <div>
+    <label class="kx-label" for="cat-{{ key }}">Category</label>
+    <select id="cat-{{ key }}" name="category_id" class="kx-input">
+      <option value="">Choose…</option>
+      {% for c in categories %}<option value="{{ c.id }}" {% if (v.get("category_id") or (line.category_id|string if line else "")) == c.id|string %}selected{% endif %}>{{ c.name }}</option>{% endfor %}
+    </select>
+    {{ ui.field_error(errs, "category_id") }}
+  </div>
+  <div class="sm:col-span-2 lg:col-span-2">{{ ui.text_field("description", "What was it?", value=v.get("description") or (line.description if line else ""), errors=errs) }}</div>
+  <div>
+    <label class="kx-label" for="cc-{{ key }}">Cost centre</label>
+    {% set chosen_cc = v.get("cost_centre_id") or (line.cost_centre_id|string if line and line.cost_centre_id else (default_cost_centre|string if default_cost_centre else "")) %}
+    <select id="cc-{{ key }}" name="cost_centre_id" class="kx-input">
+      <option value="">None</option>
+      {% for cid, cname in cost_centres %}<option value="{{ cid }}" {% if chosen_cc == cid|string %}selected{% endif %}>{{ cname }}</option>{% endfor %}
+    </select>
+    {{ ui.field_error(errs, "cost_centre_id") }}
+  </div>
+  <div>{{ ui.text_field("amount", "Amount (₦)", value=v.get("amount") or (line.amount if line else ""), errors=errs, inputmode="decimal") }}</div>
+  <div class="sm:col-span-2">{{ ui.text_field("no_receipt_reason", "No receipt? Say why", value=v.get("no_receipt_reason") or (line.no_receipt_reason if line and line.no_receipt_reason else ""), errors=errs) }}</div>
+  <div class="flex items-end justify-end gap-2 sm:col-span-2">
+    {% if line %}<a href="/expenses/{{ doc.id }}#lines" class="kx-btn-ghost">Cancel</a>{% endif %}
+    <button type="submit" class="kx-btn-primary">{{ "Save line" if line else "Add line" }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header(doc.number ~ " · " ~ doc.title, ("Cash advance for " if doc.is_advance else "Claim by ") ~ doc.employee_name, statuses[doc.status][0], statuses[doc.status][1]) %}
+  {% if doc.can_cancel %}
+  <form method="post" action="/expenses/{{ doc.id }}/cancel">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-danger-text">Cancel {{ "advance" if doc.is_advance else "claim" }}</button></form>
+  {% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% for s in doc.steps if s.status in ("returned", "rejected") and s.note %}
+<div class="mt-5">{{ ui.alert("warning" if s.status == "returned" else "danger", (s.decided_by or "Approver") ~ ": " ~ s.note) }}</div>
+{% endfor %}
+{% for f in doc.flags %}<div class="mt-3">{{ ui.alert("warning", f ~ (" Your approver will see this." if mine else "")) }}</div>{% endfor %}
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+  <div class="space-y-6">
+    {% if doc.can_edit %}
+    <form method="post" action="/expenses/{{ doc.id }}/header" class="kx-card grid gap-4 p-5 sm:grid-cols-2" novalidate>
+      {{ ui.csrf_field() }}
+      {{ ui.text_field("title", "Purpose" if doc.is_advance else "What is it for?", value=values.get("title") or doc.title, errors=errors) }}
+      {% if doc.is_advance %}
+      {{ ui.text_field("amount", "Amount (₦)", value=values.get("amount") or doc.total, errors=errors, inputmode="decimal") }}
+      {% else %}
+      <div>
+        <label for="f-advance_id" class="kx-label">Settle against an advance</label>
+        <select id="f-advance_id" name="advance_id" class="kx-input">
+          <option value="">No advance</option>
+          {% for a in advances %}<option value="{{ a.id }}" {% if doc.advance_id == a.id %}selected{% endif %}>{{ a.number }} · {{ a.title }}</option>{% endfor %}
+        </select>
+        {{ ui.field_error(errors, "advance_id") }}
+      </div>
+      {% endif %}
+      <div class="sm:col-span-2 flex justify-end"><button type="submit" class="kx-btn-secondary">Save</button></div>
+    </form>
+    {% endif %}
+
+    {% if not doc.is_advance %}
+    <section id="lines" class="kx-card overflow-hidden" aria-labelledby="h-lines">
+      <h2 id="h-lines" class="px-5 pt-5 font-h3 text-h3">Lines</h2>
+      {% if doc.lines %}
+      <div class="kx-scroll-x mt-3">
+        <table class="w-full min-w-[600px] text-left text-body-sm">
+          <thead class="border-y border-line bg-surface-sunken text-xs text-ink-3">
+            <tr><th class="px-4 py-2.5 font-semibold">Date</th><th class="px-4 py-2.5 font-semibold">What</th><th class="px-4 py-2.5 text-right font-semibold">Amount</th><th class="px-4 py-2.5 font-semibold">Receipt</th>{% if doc.can_edit %}<th class="px-4 py-2.5"><span class="sr-only">Actions</span></th>{% endif %}</tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            {% for l in doc.lines %}
+            <tr class="align-top">
+              <td class="whitespace-nowrap px-4 py-3 tnum">{{ l.day | date }}</td>
+              <td class="px-4 py-3"><span class="font-medium">{{ l.category }}</span> · {{ l.description }}{% if l.cost_centre %}<span class="block text-xs text-ink-3">{{ l.cost_centre }}</span>{% endif %}</td>
+              <td class="whitespace-nowrap px-4 py-3 text-right tnum">{{ l.amount | money }}{% if l.original_amount %}<span class="block text-xs text-warning-text">changed from {{ l.original_amount | money }}</span>{% endif %}</td>
+              <td class="px-4 py-3">
+                {% if l.receipt_file_id %}
+                  {% if can_view_receipts or mine %}<a href="/files/{{ l.receipt_file_id }}" class="inline-flex items-center gap-1 text-iris" target="_blank" rel="noopener">{{ ui.icon("paperclip", "sm") }} {{ l.receipt_name or "Receipt" }}</a>{% else %}{{ ui.icon("paperclip", "sm") }} Receipt{% endif %}
+                {% elif l.no_receipt_reason %}<span class="text-xs text-ink-3">No receipt: {{ l.no_receipt_reason }}</span>
+                {% elif l.receipt_needed %}<span class="text-xs text-warning-text">Receipt needed</span>
+                {% else %}<span class="text-xs text-ink-3">Not needed</span>{% endif %}
+                {% if doc.can_edit %}
+                <form method="post" action="/expenses/lines/{{ l.id }}/receipt" enctype="multipart/form-data" class="mt-1.5" x-data="autoSubmit">
+                  {{ ui.csrf_field() }}
+                  <label class="inline-flex cursor-pointer items-center gap-1 text-xs font-semibold text-iris hover:underline">{{ ui.icon("upload", "sm") }} {{ "Replace" if l.receipt_file_id else "Upload receipt" }}
+                    <input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp" class="sr-only" x-on:change="send" aria-label="Receipt for {{ l.description }}">
+                  </label>
+                  <noscript><button type="submit" class="kx-btn-secondary h-8 px-2 text-xs">Upload</button></noscript>
+                </form>
+                {% endif %}
+              </td>
+              {% if doc.can_edit %}
+              <td class="whitespace-nowrap px-4 py-3 text-right">
+                <a href="/expenses/{{ doc.id }}?edit={{ l.id }}#line-form" class="kx-btn-ghost h-9 px-3 text-xs">Edit</a>
+                <form method="post" action="/expenses/lines/{{ l.id }}/delete" class="inline">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-icon h-9 w-9 text-ink-3 hover:text-danger-text" aria-label="Remove {{ l.description }}">{{ ui.icon("trash-2", "sm") }}</button></form>
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="px-5 pb-2 pt-2 text-body-sm text-ink-3">No lines yet.</p>
+      {% endif %}
+      {% if doc.can_edit %}
+      <div id="line-form" class="p-5">
+        {% for l in doc.lines if l.id|string == editing_line %}{{ line_form(l) }}{% else %}{{ line_form() }}{% endfor %}
+      </div>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if doc.steps %}
+    <section class="kx-card p-5" aria-labelledby="h-steps">
+      <h2 id="h-steps" class="font-h3 text-h3">Approval</h2>
+      <ol class="mt-3 space-y-2">
+        {% for s in doc.steps %}
+        <li class="flex flex-wrap items-center justify-between gap-2 text-body-sm">
+          <span class="flex items-center gap-2">{{ ui.icon("user-check" if s.status == "approved" else "clock", "sm") }} {{ step_labels[s.kind] }}{% if s.approver %} · {{ s.approver }}{% elif s.kind != "finance" %} · any approver{% endif %}</span>
+          <span class="flex items-center gap-2">{{ ui.badge(step_tones[s.status], s.status | capitalize) }}{% if s.decided_by %}<span class="text-xs text-ink-3">{{ s.decided_by }}, {{ s.decided_at | datetime }}</span>{% endif %}</span>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endif %}
+  </div>
+
+  <aside class="space-y-4">
+    <section class="kx-card p-5" aria-label="Totals">
+      <dl class="space-y-2 text-body-sm">
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">{{ "Amount" if doc.is_advance else "Lines total" }}</dt><dd class="font-semibold tnum">{{ doc.total | money }}</dd></div>
+        {% if doc.advance_number %}<div class="flex justify-between gap-3"><dt class="text-ink-3">Settles against</dt><dd class="font-mono text-xs">{{ doc.advance_number }}</dd></div>{% endif %}
+        {% if doc.status == "reimbursed" %}
+        {% if doc.advance_applied %}<div class="flex justify-between gap-3"><dt class="text-ink-3">From the advance</dt><dd class="tnum">{{ doc.advance_applied | money }}</dd></div>{% endif %}
+        <div class="flex justify-between gap-3 border-t border-line pt-2"><dt class="text-ink-3">Paid {{ doc.paid_at | date }}</dt><dd class="font-semibold tnum">{{ doc.paid_amount | money }}</dd></div>
+        <div class="text-xs text-ink-3">{{ "Bank transfer" if doc.payment_method == "transfer" else "Cash" }}{% if doc.payment_reference %} · {{ doc.payment_reference }}{% endif %}</div>
+        {% if doc.is_advance %}<div class="flex justify-between gap-3"><dt class="text-ink-3">Left to use or repay</dt><dd class="font-semibold tnum {{ 'text-success-text' if doc.settled else 'text-warning-text' }}">{{ doc.outstanding | money }}</dd></div>{% endif %}
+        {% endif %}
+      </dl>
+      {% if doc.can_edit %}
+      <p class="mt-4 text-xs text-ink-3">Goes to {{ route | join(", then ") if route else "an organisation-wide approver (you have no manager on the org chart)" }}{% if doc.total > config.second_level_above %} (second level above {{ config.second_level_above | money }}){% endif %}{% if doc.total > config.finance_above %}, then Finance{% endif %}.</p>
+      <form method="post" action="/expenses/{{ doc.id }}/submit" class="mt-4">{{ ui.csrf_field() }}
+        <button type="submit" class="kx-btn-primary w-full">{{ ui.icon("send", "sm") }} {{ "Send again" if doc.status == "returned" else "Send for approval" }}</button>
+      </form>
+      {% endif %}
+    </section>
+  </aside>
+</div>
+{% endblock %}

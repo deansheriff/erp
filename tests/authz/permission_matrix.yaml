@@ -4,6 +4,7 @@ auditor:
   attendance.record.read: organization
   audit.log.read: organization
   authz.role.read: organization
+  expenses.claim.read: organization
   hr.employee.banking.read: organization
   hr.employee.compensation.read: organization
   hr.employee.personal.read: organization
@@ -19,6 +20,8 @@ employee:
   attendance.correction.request: self
   attendance.photo.view: self
   attendance.record.read: self
+  expenses.claim.create: self
+  expenses.claim.read: self
   hr.employee.banking.read: self
   hr.employee.compensation.read: self
   hr.employee.personal.read: self
@@ -30,9 +33,16 @@ employee:
   leave.balance.read: self
   leave.request.create: self
   leave.request.read: self
-expense_approver: {}
-finance_manager: {}
-finance_officer: {}
+expense_approver:
+  expenses.claim.approve: team
+  expenses.claim.read: team
+finance_manager:
+  expenses.claim.approve_any: organization
+  expenses.claim.approve_finance: organization
+  expenses.claim.read: organization
+  expenses.settings.manage: organization
+finance_officer:
+  expenses.claim.read: organization
 fleet_manager: {}
 hr_manager:
   attendance.correction.request: organization
@@ -98,6 +108,8 @@ it_support:
 line_manager:
   attendance.record.approve: team
   attendance.record.read: team
+  expenses.claim.approve: team
+  expenses.claim.read: team
   hr.employee.personal.read: team
   leave.balance.read: team
   leave.request.approve: team
@@ -115,6 +127,14 @@ organization_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  expenses.claim.approve: organization
+  expenses.claim.approve_any: organization
+  expenses.claim.approve_finance: organization
+  expenses.claim.create: organization
+  expenses.claim.read: organization
+  expenses.claim.reimburse: organization
+  expenses.claim.reimburse_override: organization
+  expenses.settings.manage: organization
   files.file.manage: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
@@ -150,7 +170,9 @@ organization_administrator:
   org.structure.read: organization
 payroll_officer: {}
 procurement_officer: {}
-reimburser: {}
+reimburser:
+  expenses.claim.read: organization
+  expenses.claim.reimburse: organization
 super_administrator:
   attendance.clock.use: organization
   attendance.correction.request: organization
@@ -164,6 +186,14 @@ super_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  expenses.claim.approve: organization
+  expenses.claim.approve_any: organization
+  expenses.claim.approve_finance: organization
+  expenses.claim.create: organization
+  expenses.claim.read: organization
+  expenses.claim.reimburse: organization
+  expenses.claim.reimburse_override: organization
+  expenses.settings.manage: organization
   files.file.manage: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization

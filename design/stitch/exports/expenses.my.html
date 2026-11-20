@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-background": "#1a1c1f", "surface-variant": "#e2e2e6", "on-tertiary-fixed-variant": "#743400", "lime-ink": "#4D7A0A", "ink-3": "#626280", "ink-2": "#4B4B66", "on-error-container": "#93000a", "inverse-surface": "#2e3034", "danger-bg": "#FFE4E6", "outline": "#787586", "surface-container-high": "#e8e8ec", "on-secondary-container": "#536b00", "destructive": "#C42836", "lime": "#C5F04A", "surface-dim": "#d9dade", "info-bg": "#DFEBFF", "on-tertiary-container": "#ffd7c1", "on-error": "#ffffff", "on-surface-variant": "#474554", "primary-fixed": "#e4dfff", "tertiary-fixed-dim": "#ffb68b", "surface-tint": "#5646d7", "tertiary-container": "#9f4a00", "inverse-primary": "#c5c0ff", "on-secondary-fixed-variant": "#3b4d00", "warning-text": "#8A4B00", "surface-bright": "#f9f9fd", "surface-raised": "#FFFFFF", "on-secondary": "#ffffff", "tertiary-fixed": "#ffdbc8", "surface-container-highest": "#e2e2e6", "on-primary": "#ffffff", "surface": "#FFFFFF", "surface-container": "#ededf1", "on-primary-fixed": "#140067", "ink": "#16162A", "on-primary-fixed-variant": "#3d28be", "iris-hover": "#4A3CC4", "warning-bg": "#FFF1D6", "tertiary": "#7a3700", "canvas": "#F6F6FA", "error-container": "#ffdad6", "on-secondary-fixed": "#161f00", "info-text": "#1D55B8", "danger-text": "#B4232F", "secondary-container": "#c4ef49", "primary": "#412ec2", "on-tertiary": "#ffffff", "primary-fixed-dim": "#c5c0ff", "surface-sunken": "#EFEFF6", "success-text": "#0F6B3E", "success-bg": "#DDF7E8", "on-tertiary-fixed": "#321300", "inverse-on-surface": "#f0f0f4", "iris-tint": "#EEECFD", "iris": "#5A4BDB", "line-strong": "#8B8BA6", "on-iris": "#FFFFFF", "secondary-fixed": "#c7f24c", "on-primary-container": "#e0dbff", "outline-variant": "#c8c4d7", "on-surface": "#1a1c1f", "error": "#ba1a1a", "background": "#f9f9fd", "primary-container": "#5a4bdb", "line": "#E4E4EE", "secondary-fixed-dim": "#acd530", "surface-container-low": "#f3f3f7", "secondary": "#4f6600", "surface-container-lowest": "#ffffff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter": "1.5rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-2xl": "3rem", "space-lg": "1.5rem", "margin": "2rem", "space-3xl": "4rem", "space-xl": "2rem" }, fontFamily: { "body-sm": ["Inter"], "body": ["Inter"], "h1": ["Plus Jakarta Sans"], "stat": ["Plus Jakarta Sans"], "h3": ["Plus Jakarta Sans"], "overline": ["Inter"], "h2": ["Plus Jakarta Sans"], "label": ["Inter"], "display": ["Plus Jakarta Sans"] }, fontSize: { "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }], "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-canvas font-body text-body text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-iris-tint flex items-center justify-center"><span class="material-symbols-outlined text-iris text-[22px]">receipt_long</span></div><div class="flex flex-col"><span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Kxmeleon ERP</span><h1 class="font-h2 text-h2 text-ink">Expenses Home</h1></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="w-11 h-11 rounded-full flex items-center justify-center text-ink-2 hover:bg-surface-container transition-colors relative"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-iris"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-canvas"><div class="flex flex-col w-full pb-8">
+<!-- Interactive Top Action Area -->
+<section class="px-gutter pt-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-overline text-overline text-ink-3 tracking-wide">SELF SERVICE · EXPENSE HUB</p>
+<h2 class="font-h1 text-h1 text-ink tracking-tight">My expenses</h2>
+</div>
+<div class="w-10 h-10 rounded-full bg-iris-tint flex items-center justify-center text-iris shadow-sm">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="h-11 px-space-md bg-iris text-on-iris rounded-xl font-label text-label font-medium shadow-md shadow-iris/20 active:scale-[0.98] transition-transform flex items-center justify-center gap-space-xs touch-manipulation">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New claim</span>
+</button>
+<button class="h-11 px-space-md bg-surface text-ink rounded-xl font-label text-label font-medium shadow-sm hover:bg-surface-sunken active:scale-[0.98] transition-transform flex items-center justify-center gap-space-xs touch-manipulation">
+<span class="material-symbols-outlined text-ink-2 text-[19px]">payments</span>
+<span>Ask advance</span>
+</button>
+</div>
+</section>
+<!-- Metric Strip (Horizontal Scroll Carousel) -->
+<section class="mt-space-md">
+<div class="flex items-center justify-between px-gutter mb-space-xs">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Live balance preview</span>
+<span class="text-overline text-ink-3 flex items-center gap-1 font-body-sm text-[12px]">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        Fiscal Q4 · NGN
+      </span>
+</div>
+<div class="flex gap-space-sm overflow-x-auto px-gutter no-scrollbar py-1">
+<!-- Metric 1: Waiting -->
+<div class="min-w-[170px] flex-shrink-0 bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label text-body-sm text-ink-3">Waiting</span>
+<span class="w-2.5 h-2.5 rounded-full bg-warning-text/70"></span>
+</div>
+<div class="mt-space-sm">
+<p class="font-stat text-[22px] leading-7 font-bold text-ink tracking-tight font-mono">₦86,500<span class="text-[14px] text-ink-3 font-normal">.00</span></p>
+<p class="font-overline text-overline text-ink-3 mt-1">1 active claim pending</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-warning-bg"></div>
+</div>
+<!-- Metric 2: To be paid -->
+<div class="min-w-[170px] flex-shrink-0 bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label text-body-sm text-ink-3">To be paid</span>
+<span class="w-2.5 h-2.5 rounded-full bg-success-text"></span>
+</div>
+<div class="mt-space-sm">
+<p class="font-stat text-[22px] leading-7 font-bold text-success-text tracking-tight font-mono">₦42,000<span class="text-[14px] text-success-text/80 font-normal">.00</span></p>
+<p class="font-overline text-overline text-success-text mt-1">Queued for Friday</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-success-bg"></div>
+</div>
+<!-- Metric 3: Advance outstanding -->
+<div class="min-w-[170px] flex-shrink-0 bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label text-body-sm text-ink-3">Advance out</span>
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary-container"></span>
+</div>
+<div class="mt-space-sm">
+<p class="font-stat text-[22px] leading-7 font-bold text-ink tracking-tight font-mono">₦50,000<span class="text-[14px] text-ink-3 font-normal">.00</span></p>
+<p class="font-overline text-overline text-ink-3 mt-1">₦18,000 left to retire</p>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-tertiary-fixed"></div>
+</div>
+</div>
+</section>
+<!-- Segmented Control -->
+<section class="px-gutter mt-space-lg">
+<div class="bg-surface-sunken p-1 rounded-xl flex items-center shadow-inner" role="tablist">
+<button aria-selected="true" class="flex-1 py-2 px-space-md rounded-lg font-label text-label font-semibold text-ink bg-surface shadow-sm transition-all duration-200 flex items-center justify-center gap-1.5" id="tab-claims" onclick="switchTab('claims')" role="tab">
+<span>Claims</span>
+<span class="px-1.5 py-0.5 rounded-full text-overline bg-iris-tint text-iris font-mono font-bold">5</span>
+</button>
+<button aria-selected="false" class="flex-1 py-2 px-space-md rounded-lg font-label text-label font-medium text-ink-3 hover:text-ink transition-all duration-200 flex items-center justify-center gap-1.5" id="tab-advances" onclick="switchTab('advances')" role="tab">
+<span>Advances</span>
+<span class="px-1.5 py-0.5 rounded-full text-overline bg-surface-variant text-ink-2 font-mono">1</span>
+</button>
+</div>
+</section>
+<!-- CLAIMS TAB CONTENT -->
+<section class="px-gutter mt-space-md flex flex-col gap-space-md" id="panel-claims">
+<!-- Item 1: EXP-00042 (Submitted) -->
+<article class="bg-surface rounded-2xl p-space-md shadow-sm transition-shadow active:shadow-md">
+<div class="flex items-start justify-between gap-space-sm pb-2">
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-overline text-ink-3 tracking-wider uppercase font-semibold">EXP-00042</span>
+<span class="text-ink-3 text-overline">·</span>
+<span class="font-body-sm text-overline text-ink-3">17 Nov 2026</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-info-bg text-info-text text-overline font-semibold tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+          Submitted
+        </span>
+</div>
+<div class="mt-1 flex items-baseline justify-between gap-space-xs">
+<h3 class="font-h3 text-h3 text-ink font-semibold leading-snug">Client visit, Abuja</h3>
+<p class="font-stat text-[18px] leading-6 font-bold text-ink font-mono text-right flex-shrink-0">₦86,500.00</p>
+</div>
+<div class="mt-3 pt-3 flex items-center justify-between text-ink-3 text-body-sm bg-surface-sunken/60 rounded-lg px-space-sm py-1.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-ink-3">flight_takeoff</span>
+<span class="text-overline font-medium text-ink-2">Flights &amp; Lodging</span>
+</div>
+<span class="text-overline font-medium text-ink-3 flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">attach_file</span>
+          3 receipts
+        </span>
+</div>
+</article>
+<!-- Item 2: EXP-00039 (Approved) -->
+<article class="bg-surface rounded-2xl p-space-md shadow-sm transition-shadow">
+<div class="flex items-start justify-between gap-space-sm pb-2">
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-overline text-ink-3 tracking-wider uppercase font-semibold">EXP-00039</span>
+<span class="text-ink-3 text-overline">·</span>
+<span class="font-body-sm text-overline text-ink-3">12 Nov 2026</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text text-overline font-semibold tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+          Approved
+        </span>
+</div>
+<div class="mt-1 flex items-baseline justify-between gap-space-xs">
+<h3 class="font-h3 text-h3 text-ink font-semibold leading-snug">Port Harcourt Depot inspection</h3>
+<p class="font-stat text-[18px] leading-6 font-bold text-ink font-mono text-right flex-shrink-0">₦42,000.00</p>
+</div>
+<div class="mt-3 p-space-sm rounded-xl bg-surface-sunken flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-success-text text-[18px] flex-shrink-0">check_circle</span>
+<p class="text-body-sm text-ink-2 text-[13px] leading-tight">Approved by <strong class="text-ink font-medium">Tunde Bakare</strong> · Queued for Friday disbursement</p>
+</div>
+</article>
+<!-- Item 3: EXP-00036 (Returned with alert note) -->
+<article class="bg-surface rounded-2xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm pb-2">
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-overline text-ink-3 tracking-wider uppercase font-semibold">EXP-00036</span>
+<span class="text-ink-3 text-overline">·</span>
+<span class="font-body-sm text-overline text-ink-3">04 Nov 2026</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text text-overline font-semibold tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+          Returned
+        </span>
+</div>
+<div class="mt-1 flex items-baseline justify-between gap-space-xs">
+<h3 class="font-h3 text-h3 text-ink font-semibold leading-snug">Lagos Island team working dinner</h3>
+<p class="font-stat text-[18px] leading-6 font-bold text-ink font-mono text-right flex-shrink-0">₦28,400.00</p>
+</div>
+<!-- Approver callout note -->
+<div class="mt-3 p-space-sm rounded-xl bg-warning-bg/60 flex flex-col gap-2">
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-warning-text text-[18px] flex-shrink-0 mt-0.5">announcement</span>
+<div class="text-[13px] leading-relaxed text-ink">
+<span class="font-semibold text-warning-text">Fatima Bello:</span>
+<span class="text-ink-2"> “Missing itemised fiscal receipt from Terra Kulture, only card POS slip was attached. Please re-upload.”</span>
+</div>
+</div>
+<div class="flex justify-end">
+<button class="h-9 px-3 rounded-lg bg-surface text-ink font-label text-body-sm font-semibold shadow-sm hover:bg-surface-sunken flex items-center gap-1.5 active:scale-95 transition-transform touch-manipulation">
+<span class="material-symbols-outlined text-[16px] text-iris">cloud_upload</span>
+<span>Update receipts</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Item 4: EXP-00028 (Reimbursed) -->
+<article class="bg-surface rounded-2xl p-space-md shadow-sm transition-shadow">
+<div class="flex items-start justify-between gap-space-sm pb-2">
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-overline text-ink-3 tracking-wider uppercase font-semibold">EXP-00028</span>
+<span class="text-ink-3 text-overline">·</span>
+<span class="font-body-sm text-overline text-ink-3">22 Oct 2026</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text text-overline font-semibold tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+          Reimbursed
+        </span>
+</div>
+<div class="mt-1 flex items-baseline justify-between gap-space-xs">
+<h3 class="font-h3 text-h3 text-ink font-semibold leading-snug">Offsite internet router &amp; backup battery</h3>
+<p class="font-stat text-[18px] leading-6 font-bold text-ink font-mono text-right flex-shrink-0">₦155,000.00</p>
+</div>
+<div class="mt-3 p-space-sm rounded-xl bg-surface-sunken flex items-center justify-between text-ink-3 text-[13px]">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-ink-3">receipt</span>
+<span class="truncate">Paid 28 Oct · Zenith Bank</span>
+</div>
+<span class="font-mono text-[11px] text-ink-3 uppercase font-medium bg-surface px-1.5 py-0.5 rounded">PAY-88219</span>
+</div>
+</article>
+<!-- Item 5: EXP-00045 (Draft) -->
+<article class="bg-surface/90 rounded-2xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm pb-2">
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-overline text-ink-3 tracking-wider uppercase font-semibold">EXP-00045</span>
+<span class="text-ink-3 text-overline">·</span>
+<span class="font-body-sm text-overline text-ink-3">Today, 19 Nov</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-sunken text-ink-2 text-overline font-medium tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3"></span>
+          Draft
+        </span>
+</div>
+<div class="mt-1 flex items-baseline justify-between gap-space-xs">
+<h3 class="font-h3 text-h3 text-ink font-semibold leading-snug">Fuel &amp; toll vouchers (Lekki-Epe expressway)</h3>
+<p class="font-stat text-[18px] leading-6 font-bold text-ink font-mono text-right flex-shrink-0">₦14,200.00</p>
+</div>
+<div class="mt-3 pt-2 flex items-center justify-between">
+<span class="text-body-sm text-ink-3 text-[13px]">Unsubmitted expense</span>
+<button class="h-9 px-3 text-iris font-label text-body-sm font-semibold flex items-center gap-1 hover:bg-iris-tint/50 rounded-lg active:scale-95 transition-transform touch-manipulation">
+<span>Resume draft</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- Item 6: EXP-00021 (Rejected) -->
+<article class="bg-surface rounded-2xl p-space-md shadow-sm opacity-90">
+<div class="flex items-start justify-between gap-space-sm pb-2">
+<div class="flex items-center gap-space-xs">
+<span class="font-mono text-overline text-ink-3 tracking-wider uppercase font-semibold">EXP-00021</span>
+<span class="text-ink-3 text-overline">·</span>
+<span class="font-body-sm text-overline text-ink-3">15 Oct 2026</span>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text text-overline font-semibold tracking-wide">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span>
+          Rejected
+        </span>
+</div>
+<div class="mt-1 flex items-baseline justify-between gap-space-xs">
+<h3 class="font-h3 text-h3 text-ink font-semibold leading-snug">Airport VIP lounge access</h3>
+<p class="font-stat text-[18px] leading-6 font-bold text-ink font-mono text-right flex-shrink-0 text-ink-3 line-through">₦22,000.00</p>
+</div>
+<div class="mt-3 p-space-sm rounded-xl bg-danger-bg/40 flex items-center gap-space-xs text-danger-text text-[12px] leading-tight">
+<span class="material-symbols-outlined text-[16px] flex-shrink-0">info</span>
+<span>Policy non-compliant (Grade GL-08 threshold exceeded)</span>
+</div>
+</article>
+</section>
+<!-- ADVANCES TAB CONTENT (Controlled by tab JS, hidden initially or switchable) -->
+<section class="px-gutter mt-space-md hidden flex-col gap-space-md" id="panel-advances">
+<!-- Active Advance Card -->
+<div class="bg-surface rounded-2xl p-space-md shadow-md relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-mono text-overline font-bold uppercase">ADV-00007</span>
+<span class="text-overline text-ink-3">· Active Float</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text text-overline font-semibold">
+          Due in 6 days
+        </span>
+</div>
+<div class="mt-3">
+<h3 class="font-h2 text-h2 text-ink font-bold">Site trip float</h3>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-stat text-[26px] font-bold text-ink font-mono">₦50,000.00</span>
+<span class="text-body-sm text-ink-3">Total advance grant</span>
+</div>
+</div>
+<!-- Visual Breakdown Progress Bar -->
+<div class="mt- space-md bg-surface-sunken p-space-md rounded-xl">
+<div class="flex justify-between items-center text-body-sm mb-2 font-mono">
+<span class="text-ink font-semibold flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-iris"></span>
+            ₦32,000.00 spent (64%)
+          </span>
+<span class="text-warning-text font-semibold flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-warning-text"></span>
+            ₦18,000.00 to repay
+          </span>
+</div>
+<div class="w-full h-3 rounded-full bg-surface-variant overflow-hidden flex">
+<div class="h-full bg-iris rounded-l-full transition-all duration-500" style="width: 64%;"></div>
+<div class="h-full bg-warning-text/80 rounded-r-full" style="width: 36%;"></div>
+</div>
+<div class="mt-3 flex items-center justify-between text-overline text-ink-3">
+<span>Issued 10 Nov 2026</span>
+<span class="font-semibold text-ink-2">Maturity: 25 Nov 2026</span>
+</div>
+</div>
+<!-- Action Buttons for Advance -->
+<div class="mt-space-md grid grid-cols-2 gap-space-sm">
+<button class="h-11 px-space-sm bg-iris text-on-iris font-label text-label font-semibold rounded-xl shadow-sm hover:bg-iris-hover flex items-center justify-center gap-1.5 active:scale-95 transition-transform touch-manipulation">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>Reconcile</span>
+</button>
+<button class="h-11 px-space-sm bg-surface-sunken text-ink font-label text-label font-semibold rounded-xl hover:bg-surface-variant flex items-center justify-center gap-1.5 active:scale-95 transition-transform touch-manipulation">
+<span class="material-symbols-outlined text-[18px] text-ink-2">credit_score</span>
+<span>Repay balance</span>
+</button>
+</div>
+</div>
+<!-- Delightful Helper / Explainer Card -->
+<div class="bg-iris-tint/60 rounded-2xl p-space-md flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-iris text-on-iris flex items-center justify-center flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">lightbulb</span>
+</div>
+<div class="flex-1">
+<h4 class="font-h3 text-h3 text-ink font-semibold">How floats work</h4>
+<p class="font-body-sm text-body-sm text-ink-2 text-[13px] leading-snug mt-0.5">Attach remaining receipts before 25 Nov. Any unused funds can be remitted via bank transfer.</p>
+</div>
+</div>
+</section>
+<!-- Interactive script for delightful tab switching -->
+<script>
+    function switchTab(tab) {
+      const claimsTab = document.getElementById('tab-claims');
+      const advancesTab = document.getElementById('tab-advances');
+      const claimsPanel = document.getElementById('panel-claims');
+      const advancesPanel = document.getElementById('panel-advances');
+
+      if (tab === 'claims') {
+        claimsTab.classList.add('bg-surface', 'shadow-sm', 'text-ink', 'font-semibold');
+        claimsTab.classList.remove('text-ink-3', 'font-medium');
+        claimsTab.setAttribute('aria-selected', 'true');
+
+        advancesTab.classList.remove('bg-surface', 'shadow-sm', 'text-ink', 'font-semibold');
+        advancesTab.classList.add('text-ink-3', 'font-medium');
+        advancesTab.setAttribute('aria-selected', 'false');
+
+        claimsPanel.classList.remove('hidden');
+        claimsPanel.classList.add('flex');
+        advancesPanel.classList.add('hidden');
+        advancesPanel.classList.remove('flex');
+      } else {
+        advancesTab.classList.add('bg-surface', 'shadow-sm', 'text-ink', 'font-semibold');
+        advancesTab.classList.remove('text-ink-3', 'font-medium');
+        advancesTab.setAttribute('aria-selected', 'true');
+
+        claimsTab.classList.remove('bg-surface', 'shadow-sm', 'text-ink', 'font-semibold');
+        claimsTab.classList.add('text-ink-3', 'font-medium');
+        claimsTab.setAttribute('aria-selected', 'false');
+
+        advancesPanel.classList.remove('hidden');
+        advancesPanel.classList.add('flex');
+        claimsPanel.classList.add('hidden');
+        claimsPanel.classList.remove('flex');
+      }
+    }
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-iris font-semibold"><div class="relative flex justify-around items-center h-20 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center gap-space-xs w-16 h-12 transition-colors text-iris font-semibold" data-path="expenses-home" href="#"><span class="material-symbols-outlined text-[24px]">dashboard</span><span class="font-overline text-overline">Home</span></a><a class="flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-ink-3 hover:text-ink transition-colors" data-path="approvals-inbox" href="#"><span class="material-symbols-outlined text-[24px]">task_alt</span><span class="font-overline text-overline">Approvals</span></a><div class="relative -top-5 flex flex-col items-center"><a aria-label="New expense request" class="w-14 h-14 rounded-full bg-iris text-on-iris shadow-[0_8px_24px_-6px_rgb(22_22_42_/_0.12)] flex items-center justify-center hover:bg-iris-hover transition-colors" data-path="new-expense-request" href="#"><span class="material-symbols-outlined text-[28px]">add</span></a><span class="font-overline text-overline text-ink-3 mt-1">New</span></div><a class="flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-ink-3 hover:text-ink transition-colors" data-path="payslips-records" href="#"><span class="material-symbols-outlined text-[24px]">payments</span><span class="font-overline text-overline">Payslips</span></a><a class="flex flex-col items-center justify-center gap-space-xs w-16 h-12 text-ink-3 hover:text-ink transition-colors" data-path="more-options" href="#"><span class="material-symbols-outlined text-[24px]">menu</span><span class="font-overline text-overline">More</span></a></div></nav></body></html>
