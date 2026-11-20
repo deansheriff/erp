@@ -1,0 +1,87 @@
+{# Payroll → My payslips (self-service): payslips once paid, and rent relief declarations.
+   Design: design/stitch/exports/payroll.my.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% from "payroll/_tiles.html" import money_tile %}
+
+{% block content %}
+{% call ui.page_header("My payslips", "Each month's payslip appears here once it has been paid.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+{% if not linked %}
+<section class="kx-card mt-6">{% call ui.empty_state("user-round", "No employee record", "Your sign-in isn't linked to an employee record yet. Ask HR to link it.") %}{% endcall %}</section>
+{% else %}
+
+<section class="mt-6 grid gap-3 sm:grid-cols-3" aria-label="This year so far">
+  {{ money_tile("Gross this year", ytd.gross) }}
+  {{ money_tile("PAYE this year", ytd.paye) }}
+  {{ money_tile("Pension this year", ytd.pension) }}
+</section>
+
+{% if slips %}
+<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
+  <ul class="kx-card self-start divide-y divide-line" aria-label="Payslips">
+    {% for s in slips %}
+    <li>
+      <a href="/payslips?selected={{ s.id }}" class="flex items-center justify-between gap-3 px-4 py-3 transition-colors duration-base hover:bg-surface-sunken/60 {{ 'bg-iris-tint/50' if selected and selected.id == s.id }}" {% if selected and selected.id == s.id %}aria-current="page"{% endif %}>
+        <span class="font-medium">{{ s.period }}</span><span class="text-body-sm tnum">{{ s.net | money }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% set s = selected %}
+  <section class="kx-card kx-enter p-5 md:p-6" aria-labelledby="h-slip">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <h2 id="h-slip" class="font-h2 text-h2">{{ s.period }}</h2>
+        <p class="text-body-sm text-ink-3">{% if s.paid_at %}Paid {{ s.paid_at | date }}{% endif %}{% if s.days_paid != s.days_in_month %} · {{ s.days_paid }} of {{ s.days_in_month }} days{% endif %}</p>
+      </div>
+      <p class="text-right"><span class="block text-xs text-ink-3">Net pay</span><span class="font-stat text-h1 tnum">{{ s.net | money }}</span></p>
+    </div>
+    <dl class="mt-5 space-y-1.5 text-body-sm">
+      {% for l in s.lines %}
+      <div class="flex justify-between gap-6 {{ 'border-t border-line pt-1.5' if loop.previtem and loop.previtem.kind != l.kind }}"><dt class="text-ink-2">{{ l.name }}{% if l.detail %} <span class="text-xs text-ink-3">· {{ l.detail }}</span>{% endif %}</dt><dd class="tnum {{ 'text-danger-text' if l.kind == 'deduction' }}">{{ '−' if l.kind == 'deduction' }}{{ l.amount | money }}</dd></div>
+      {% endfor %}
+      <div class="flex justify-between gap-6 border-t border-line pt-2 font-semibold"><dt>Net pay</dt><dd class="tnum">{{ s.net | money }}</dd></div>
+    </dl>
+    {% if s.rent_relief %}<p class="mt-3 text-xs text-ink-3">Includes rent relief of {{ s.rent_relief | money }} a year in the PAYE calculation.</p>{% endif %}
+    {% if s.file_id %}<a href="/files/{{ s.file_id }}" target="_blank" rel="noopener" class="kx-btn-secondary mt-5">{{ ui.icon("download", "sm") }} Download PDF</a>{% endif %}
+  </section>
+</div>
+{% else %}
+<section class="kx-card mt-6">{% call ui.empty_state("file-text", "No payslips yet", "Your payslip appears here once the month's payroll has been paid.") %}{% endcall %}</section>
+{% endif %}
+
+<section id="rent" class="kx-card mt-8 p-5 md:p-6" aria-labelledby="h-rent">
+  <h2 id="h-rent" class="font-h3 text-h3">Rent relief</h2>
+  <p class="text-body-sm text-ink-3">Declare the rent you pay for the year with proof such as a tenancy agreement or receipt. It reduces your PAYE once HR or Payroll verifies it.</p>
+  {% if declarations %}
+  <ul class="mt-4 divide-y divide-line text-body-sm">
+    {% for d in declarations %}
+    <li class="flex flex-wrap items-center justify-between gap-3 py-2.5">
+      <span><span class="font-medium">{{ d.tax_year }}</span> · <span class="tnum">{{ d.annual_rent | money }}</span>{% if d.note %} <span class="text-xs text-ink-3">· {{ d.note }}</span>{% endif %}</span>
+      {{ ui.badge(tones[d.status], d.status | capitalize) }}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <form method="post" action="/payslips/rent" enctype="multipart/form-data" class="mt-4 grid gap-4 rounded-2xl border border-line bg-surface-sunken/40 p-4 sm:grid-cols-3 sm:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    {% if errors.get("form") %}<div class="sm:col-span-3">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+    <div>
+      <label for="f-tax_year" class="kx-label">Tax year</label>
+      <select id="f-tax_year" name="tax_year" class="kx-input">{% for y in years %}<option value="{{ y }}" {% if values.get("tax_year") == y|string %}selected{% endif %}>{{ y }}</option>{% endfor %}</select>
+      {{ ui.field_error(errors, "tax_year") }}
+    </div>
+    {{ ui.text_field("annual_rent", "Rent for the year (₦)", value=values.get("annual_rent"), errors=errors, inputmode="decimal") }}
+    <div>
+      <label for="f-file" class="kx-label">Proof</label>
+      <input id="f-file" name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp" class="kx-input py-2">
+      {{ ui.field_error(errors, "file") }}
+    </div>
+    <div class="flex justify-end sm:col-span-3"><button type="submit" class="kx-btn-primary">Declare rent</button></div>
+  </form>
+</section>
+{% endif %}
+{% endblock %}

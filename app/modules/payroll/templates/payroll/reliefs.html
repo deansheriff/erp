@@ -1,0 +1,49 @@
+{# Payroll → Rent relief declarations to verify (ADR 0021).
+   Design: design/stitch/exports/payroll.reliefs.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Rent relief", "Only verified declarations reduce PAYE. Nobody verifies their own.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<nav class="kx-segment mt-6" aria-label="Declarations">
+  {% for key, label in (("pending", "Waiting to verify"), ("verified", "Verified"), ("rejected", "Rejected")) %}
+  <a href="/payroll/reliefs?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}{% if key == "pending" and waiting %} ({{ waiting }}){% endif %}</a>
+  {% endfor %}
+</nav>
+
+{% if rows %}
+<ul class="mt-5 space-y-3">
+  {% for d in rows %}
+  <li class="kx-card kx-enter p-5">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <p class="font-semibold">{{ d.employee_name }}</p>
+        <p class="text-body-sm text-ink-2">Tax year {{ d.tax_year }} · rent <span class="tnum">{{ d.annual_rent | money }}</span> · declared {{ d.created_at | datetime }}</p>
+        {% if d.proof_file_id %}<a href="/files/{{ d.proof_file_id }}" class="mt-1 inline-flex items-center gap-1 text-body-sm font-semibold text-iris">{{ ui.icon("paperclip", "sm") }} Proof</a>{% endif %}
+        {% if d.note %}<p class="mt-1 text-xs text-ink-3">{{ d.decided_by }}: {{ d.note }}</p>{% endif %}
+      </div>
+      {% if tab != "pending" %}{{ ui.badge("success" if d.status == "verified" else "danger", d.status | capitalize) }}{% endif %}
+    </div>
+    {% if d.can_decide %}
+    <form method="post" action="/payroll/reliefs/{{ d.id }}/reject" class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-start" novalidate>
+      {{ ui.csrf_field() }}
+      <div class="flex-1">
+        <label class="sr-only" for="n-{{ d.id }}">Note</label>
+        <input id="n-{{ d.id }}" name="note" class="kx-input" placeholder="Note (needed to reject)" value="{{ note if failed == d.id|string else '' }}">
+        {% if failed == d.id|string %}{{ ui.field_error(errors, "note") }}{% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}{% endif %}
+      </div>
+      <button type="submit" formaction="/payroll/reliefs/{{ d.id }}/reject" class="kx-btn-ghost text-danger-text">Reject</button>
+      <button type="submit" formaction="/payroll/reliefs/{{ d.id }}/verify" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Verify</button>
+    </form>
+    {% elif tab == "pending" %}
+    <p class="mt-3 text-xs text-ink-3">This is your own declaration; someone else verifies it.</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<section class="kx-card mt-5">{% call ui.empty_state("house", "Nothing here", "Rent declarations from employees appear here.") %}{% endcall %}</section>
+{% endif %}
+{% endblock %}

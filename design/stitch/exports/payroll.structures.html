@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error":"#ba1a1a","canvas":"#F6F6FA","warning-text":"#8A4B00","on-surface":"#1a1c1f","ink-3":"#626280","surface-container-lowest":"#ffffff","success-text":"#0F6B3E","surface-container":"#ededf1","on-iris":"#FFFFFF","secondary-container":"#c4ef49","info-text":"#1D55B8","iris-tint":"#EEECFD","outline":"#787586","lime-ink":"#4D7A0A","destructive":"#C42836","surface-container-high":"#e8e8ec","surface":"#FFFFFF","on-primary-fixed-variant":"#3d28be","ink-2":"#4B4B66","warning-bg":"#FFF1D6","on-background":"#1a1c1f","on-tertiary-fixed-variant":"#743400","on-secondary-fixed":"#161f00","iris-hover":"#4A3CC4","danger-bg":"#FFE4E6","on-tertiary-container":"#ffd7c1","tertiary-fixed-dim":"#ffb68b","background":"#f9f9fd","primary":"#412ec2","primary-fixed":"#e4dfff","on-primary-container":"#e0dbff","on-error":"#ffffff","error-container":"#ffdad6","on-tertiary-fixed":"#321300","surface-container-highest":"#e2e2e6","inverse-primary":"#c5c0ff","success-bg":"#DDF7E8","lime":"#C5F04A","inverse-on-surface":"#f0f0f4","line-strong":"#8B8BA6","surface-container-low":"#f3f3f7","surface-variant":"#e2e2e6","on-primary-fixed":"#140067","secondary-fixed":"#c7f24c","on-primary":"#ffffff","tertiary":"#7a3700","secondary":"#4f6600","surface-tint":"#5646d7","on-surface-variant":"#474554","surface-sunken":"#EFEFF6","surface-dim":"#d9dade","inverse-surface":"#2e3034","on-secondary-fixed-variant":"#3b4d00","danger-text":"#B4232F","line":"#E4E4EE","ink":"#16162A","surface-raised":"#FFFFFF","iris":"#5A4BDB","primary-fixed-dim":"#c5c0ff","surface-bright":"#f9f9fd","on-tertiary":"#ffffff","primary-container":"#5a4bdb","on-error-container":"#93000a","outline-variant":"#c8c4d7","tertiary-container":"#9f4a00","on-secondary-container":"#536b00","tertiary-fixed":"#ffdbc8","info-bg":"#DFEBFF","secondary-fixed-dim":"#acd530","on-secondary":"#ffffff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","space-3xl":"4rem","space-xl":"2rem","space-md":"1rem","space-xs":"0.25rem","space-2xl":"3rem","space-sm":"0.5rem","gutter":"1.5rem","margin":"2rem"},fontFamily:{"label":["Inter"],"body":["Inter"],"h2":["Plus Jakarta Sans"],"body-sm":["Inter"],"stat":["Plus Jakarta Sans"],"h3":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"overline":["Inter"]},fontSize:{"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-on-primary font-h3 text-h3">A</div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink leading-tight">Adeyemi Ltd</span><span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Kxmeleon ERP</span></div></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-ink transition-colors">unfold_more</span></div></div><div class="px-space-md py-space-xs"><div class="flex items-center justify-between px-space-sm py-1.5 rounded-lg bg-surface-sunken text-ink-3 cursor-pointer hover:bg-surface-container transition-colors"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm text-ink-3">Go to...</span></div><kbd class="px-1.5 py-0.5 rounded bg-surface-raised font-overline text-overline text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">Ctrl K</kbd></div></div><nav class="flex-1 overflow-y-auto px-space-sm py-space-xs space-y-0.5" data-active-classes="bg-primary-container text-on-primary-container font-semibold"><div class="px-space-sm pt-space-xs pb-1 font-overline text-overline text-ink-3 uppercase">Workspace</div><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Home</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="hr-and-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>HR &amp; People</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span>Leave</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><div class="pt-1"><div class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-surface-container text-ink font-body-sm text-body-sm"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-success-text">payments</span><span class="font-medium">Payroll</span></div><span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span></div><div class="ml-4 pl-3 my-1 space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="payroll-runs" href="#">Runs</a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="peoples-pay" href="#">People's pay</a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="salary-structures" href="#">Salary structures</a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="payroll-reliefs" href="#">Reliefs</a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="payroll-settings" href="#">Settings</a></div></div><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder</span><span>Projects</span></a><div class="px-space-sm pt-space-sm pb-1 font-overline text-overline text-ink-3 uppercase">System</div><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">headset_mic</span><span>Support</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></a></nav><div class="px-space-sm py-space-xs space-y-0.5 bg-surface-container-lowest"><a class="flex items-center gap-3 px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[18px]">help</span><span>Help &amp; docs</span></a><a class="flex items-center gap-3 px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="global-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><div class="p-space-xs mt-1 rounded-xl bg-surface-sunken flex items-center justify-between"><div class="flex items-center gap-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary font-label text-label">FB</div><div class="flex flex-col"><span class="font-label text-label text-ink leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3">HR Lead</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-ink">more_vert</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-ink-3 text-[20px]">layers</span><div class="flex items-center gap-space-xs font-body-sm text-body-sm"><span class="text-ink-3 hover:text-ink cursor-pointer">Payroll</span><span class="material-symbols-outlined text-ink-3 text-[16px]">chevron_right</span><span class="text-ink font-semibold">Salary structures</span></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex items-center gap-space-xs px-3 py-1.5 rounded-lg bg-surface-sunken text-ink-3 w-64 hover:bg-surface-container transition-colors cursor-pointer"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm flex-1 text-ink-3">Search ERP...</span><kbd class="px-1.5 py-0.5 rounded bg-surface-raised font-overline text-overline text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.04)]">Ctrl K</kbd></div><div class="flex items-center gap-space-xs"><button class="relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container transition-colors text-ink-2 font-label text-label"><span class="material-symbols-outlined text-[18px]">task_alt</span><span>Approvals</span><span class="px-1.5 py-0.2 rounded-full bg-warning-bg text-warning-text font-overline text-overline font-semibold">4</span></button><button class="relative p-2 rounded-lg hover:bg-surface-container transition-colors text-ink-2"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button class="p-2 rounded-lg hover:bg-surface-container transition-colors text-ink-2"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden lg:flex flex-col text-left"><span class="font-label text-label text-ink leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3">Finance / HR Lead</span></div></div></div></header><main class="relative pt-16 bg-background w-full px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Subtle Emerald Ambient Glow for Active Payroll Module -->
+<div class="relative w-full">
+<div class="absolute -top-10 left-12 w-96 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-20 right-24 w-80 h-32 bg-iris/5 rounded-full blur-2xl pointer-events-none -z-10"></div>
+<!-- Page Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-xl">
+<div class="flex flex-col max-w-3xl">
+<div class="flex items-center gap-2 mb-1.5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-overline font-overline font-semibold tracking-wider uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+            PAYROLL MODULE • ACTIVE CYCLE
+          </span>
+<span class="text-ink-3 text-overline font-overline">ISO 27001 COMPLIANT</span>
+</div>
+<h1 class="text-h1 font-h1 text-ink tracking-tight">Salary structures and components</h1>
+<p class="text-body-sm font-body-sm text-ink-2 mt-1">
+          Configure standard salary components, calculation rules, and hierarchical salary structures across corporate pay groups.
+        </p>
+</div>
+<!-- Header Actions -->
+<div class="flex items-center gap-space-sm self-start md:self-auto shrink-0">
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/20 min-h-[44px]" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">download</span>
+<span>Export schedule (CSV)</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-iris/40 min-h-[44px]" id="btnOpenNewComponent" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New component</span>
+</button>
+</div>
+</div>
+<!-- Quick Stat Pill Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-overline font-overline text-ink-3 uppercase tracking-wider">Active Components</span>
+<span class="text-h2 font-h2 text-ink mt-0.5">8 Standard</span>
+<span class="text-overline font-overline text-emerald-700 font-semibold mt-1">5 Earnings • 3 Deductions</span>
+</div>
+<div class="w-11 h-11 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-overline font-overline text-ink-3 uppercase tracking-wider">Salary Structures</span>
+<span class="text-h2 font-h2 text-ink mt-0.5">3 Bands</span>
+<span class="text-overline font-overline text-ink-3 mt-1">86 Total enrolled staff</span>
+</div>
+<div class="w-11 h-11 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">stacked_line_chart</span>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-overline font-overline text-ink-3 uppercase tracking-wider">Gross Run (Monthly)</span>
+<span class="text-h2 font-h2 text-ink mt-0.5 font-mono">₦41,980,000</span>
+<span class="text-overline font-overline text-ink-3 mt-1">Next pay: 26th Nov 2024</span>
+</div>
+<div class="w-11 h-11 rounded-lg bg-surface-sunken text-ink-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-overline font-overline text-ink-3 uppercase tracking-wider">Statutory Deductions</span>
+<span class="text-h2 font-h2 text-ink mt-0.5">PRA 2014 &amp; PAYE</span>
+<span class="text-overline font-overline text-emerald-700 font-semibold mt-1">100% Tax Compliant</span>
+</div>
+<div class="w-11 h-11 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</div>
+</div>
+</div>
+<!-- CARD 1: PAY COMPONENTS (Data Table) -->
+<div class="bg-surface rounded-xl shadow-sm mb-space-2xl overflow-hidden">
+<!-- Section Header with Filter Controls -->
+<div class="p-space-lg flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-h2 font-h2 text-ink">Pay Components</h2>
+<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-overline font-overline font-semibold">8 Active</span>
+</div>
+<p class="text-body-sm font-body-sm text-ink-3">Master list of remuneration elements, formulas, and statutory compliance tags.</p>
+</div>
+</div>
+<!-- Filter Controls -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Type Filter Tabs -->
+<div class="flex items-center p-1 rounded-lg bg-surface-sunken text-ink-2" role="group">
+<button class="filter-kind-btn active px-3 py-1 text-label font-label rounded-md bg-surface text-ink shadow-sm transition-all text-xs" data-filter="all" type="button">All</button>
+<button class="filter-kind-btn px-3 py-1 text-label font-label rounded-md text-ink-3 hover:text-ink transition-all text-xs" data-filter="earning" type="button">Earnings</button>
+<button class="filter-kind-btn px-3 py-1 text-label font-label rounded-md text-ink-3 hover:text-ink transition-all text-xs" data-filter="deduction" type="button">Deductions</button>
+</div>
+<!-- Search Input -->
+<div class="relative min-w-[220px]">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-ink-3 text-[18px]">search</span>
+<input class="w-full pl-9 pr-3 py-2 text-body-sm font-body-sm bg-surface-sunken rounded-lg text-ink placeholder:text-ink-3 focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all min-h-[38px]" id="componentSearch" placeholder="Filter component..." type="text"/>
+</div>
+<!-- Add component inline button -->
+<button class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors min-h-[38px]" id="btnOpenDrawerAdd" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span class="text-xs">Add component</span>
+</button>
+</div>
+</div>
+<!-- High Density Enterprise Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left" id="componentsTable">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 text-overline font-overline uppercase tracking-wider">
+<th class="py-3 px-space-md font-semibold" scope="col">Component Name</th>
+<th class="py-3 px-space-md font-semibold" scope="col">Kind / Type</th>
+<th class="py-3 px-space-md font-semibold" scope="col">Calculation Rule</th>
+<th class="py-3 px-space-md text-center font-semibold" scope="col">Taxable (PAYE)</th>
+<th class="py-3 px-space-md text-center font-semibold" scope="col">Pensionable (PRA)</th>
+<th class="py-3 px-space-md font-semibold" scope="col">Status</th>
+<th class="py-3 px-space-md text-right font-semibold" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-body-sm font-body-sm text-ink" id="componentTableBody">
+<!-- Row 1: Basic Salary -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group" data-kind="earning">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div>
+<div class="font-medium text-ink">Basic Salary</div>
+<div class="text-overline font-overline text-ink-3">Core contracted baseline pay component</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Earning
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Fixed baseline / 50% of Grade</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Basic Salary" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Basic Salary" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Housing Allowance -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group bg-surface-bright" data-kind="earning">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">home_work</span>
+</div>
+<div>
+<div class="font-medium text-ink">Housing Allowance</div>
+<div class="text-overline font-overline text-ink-3">Statutory housing subsidy stipend</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Earning
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Formula: 50% of Basic</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Housing Allowance" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Housing Allowance" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Transport Allowance -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group" data-kind="earning">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">commute</span>
+</div>
+<div>
+<div class="font-medium text-ink">Transport Allowance</div>
+<div class="text-overline font-overline text-ink-3">Daily transit and mobility subvention</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Earning
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Fixed amount</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Transport Allowance" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Transport Allowance" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Meal Allowance -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group bg-surface-bright" data-kind="earning">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+</div>
+<div>
+<div class="font-medium text-ink">Meal Allowance</div>
+<div class="text-overline font-overline text-ink-3">Daily office subsistence benefit</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Earning
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Fixed amount</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Meal Allowance" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Meal Allowance" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Overtime -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group" data-kind="earning">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">more_time</span>
+</div>
+<div>
+<div class="font-medium text-ink">Overtime</div>
+<div class="text-overline font-overline text-ink-3">Extra duty rate calculation (1.5x factor)</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  Earning
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Formula: 1.5x hourly rate</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Overtime" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Overtime" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Cooperative Deduction -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group bg-surface-bright" data-kind="deduction">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-danger-bg text-danger-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+</div>
+<div>
+<div class="font-medium text-ink">Cooperative Deduction</div>
+<div class="text-overline font-overline text-ink-3">Staff credit society monthly contribution</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-danger-bg text-danger-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-destructive"></span>
+                  Deduction
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Fixed amount / Employee elected</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Cooperative Deduction" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Cooperative Deduction" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: Union Dues -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group" data-kind="deduction">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-danger-bg text-danger-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</div>
+<div>
+<div class="font-medium text-ink">Union Dues</div>
+<div class="text-overline font-overline text-ink-3">Labor union checkoff subscription</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-danger-bg text-danger-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-destructive"></span>
+                  Deduction
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Fixed percentage: 2.0% of Basic</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Union Dues" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Union Dues" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 8: Loan Repayment -->
+<tr class="component-row hover:bg-surface-container-low transition-colors group bg-surface-bright" data-kind="deduction">
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-danger-bg text-danger-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">credit_card</span>
+</div>
+<div>
+<div class="font-medium text-ink">Loan Repayment</div>
+<div class="text-overline font-overline text-ink-3">Amortized staff facility deduction</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-danger-bg text-danger-text text-overline font-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-destructive"></span>
+                  Deduction
+                </span>
+</td>
+<td class="py-3.5 px-space-md text-ink-2 font-mono text-xs">Amortized schedule / Ledger link</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md text-center text-ink-3 font-semibold">—</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-overline font-overline font-medium bg-emerald-50 text-emerald-700">Active</span>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<div class="inline-flex items-center gap-1 justify-end">
+<button aria-label="Edit Loan Repayment" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-iris hover:bg-iris-tint transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button aria-label="Duplicate Loan Repayment" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination / Summary Footer -->
+<div class="p-space-md bg-surface-sunken flex flex-col sm:flex-row items-center justify-between text-body-sm font-body-sm text-ink-3 gap-2">
+<span class="text-overline font-overline">Showing 8 of 8 standard items • Base currency: NGN (₦)</span>
+<div class="flex items-center gap-2">
+<span class="text-xs">Sort: Default hierarchy</span>
+<span class="material-symbols-outlined text-[16px] text-ink-2">unfold_more</span>
+</div>
+</div>
+</div>
+<!-- CARD 2: CONFIGURED SALARY STRUCTURES -->
+<div class="flex flex-col w-full mb-space-xl">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-h2 font-h2 text-ink">Configured Salary Structures</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-iris-tint text-iris text-overline font-overline font-semibold">3 Active Bands</span>
+</div>
+<p class="text-body-sm font-body-sm text-ink-3 mt-1">Hierarchical pay grading models with component weighting and statutory deductions.</p>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface text-ink-2 text-overline font-overline shadow-sm self-start md:self-auto">
+<span class="material-symbols-outlined text-emerald-700 text-[18px]">pin_drop</span>
+<span>CURRENCY: NGN (₦) • LAGOS STATE INTERNAL REVENUE SERVICE (LIRS)</span>
+</div>
+</div>
+<!-- 3 Structures Responsive Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+<!-- Card A: Junior Staff -->
+<div class="bg-surface rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden">
+<div class="p-space-lg bg-surface">
+<div class="flex items-start justify-between">
+<div>
+<span class="text-overline font-overline text-ink-3 uppercase tracking-wider">Band 01 • 24 Enrolled</span>
+<h3 class="text-h2 font-h2 text-ink mt-0.5">Junior Staff</h3>
+<span class="inline-block mt-1 text-xs px-2 py-0.5 rounded bg-surface-sunken text-ink-2 font-medium">Contract &amp; Logistics</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-sunken text-ink-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+</div>
+<!-- Pay Metrics Split -->
+<div class="grid grid-cols-2 gap-3 mt-5 p-3 rounded-lg bg-surface-sunken">
+<div>
+<div class="text-overline font-overline text-ink-3">GROSS / MO</div>
+<div class="text-body font-body font-bold text-ink font-mono mt-0.5">₦180,000.00</div>
+</div>
+<div>
+<div class="text-overline font-overline text-emerald-700 font-semibold">NET TAKE-HOME</div>
+<div class="text-body font-body font-bold text-emerald-700 font-mono mt-0.5">₦158,400.00</div>
+</div>
+</div>
+</div>
+<!-- Component Breakdown Stack -->
+<div class="px-space-lg py-space-md flex-1 flex flex-col justify-between bg-surface-bright">
+<div class="space-y-2.5">
+<div class="text-overline font-overline text-ink-3 uppercase tracking-wider mb-2">Component Weights</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-600"></span>Basic Salary (50%)</span>
+<span class="font-mono text-ink font-medium">₦90,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Housing (25% Basic)</span>
+<span class="font-mono text-ink font-medium">₦45,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Transport (Fixed)</span>
+<span class="font-mono text-ink font-medium">₦30,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Meal (Fixed)</span>
+<span class="font-mono text-ink font-medium">₦15,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1">
+<span class="text-ink-3 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-destructive"></span>Union Dues (2%)</span>
+<span class="font-mono text-danger-text">-₦3,600.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-3 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-destructive"></span>Pension Employee (8%)</span>
+<span class="font-mono text-danger-text">-₦10,800.00</span>
+</div>
+</div>
+<!-- Card Bottom Action -->
+<div class="pt-6 mt-4">
+<button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-colors shadow-sm min-h-[44px]" onclick="openStructureDrawer('Junior Staff', 'Contract &amp; Logistics', '180,000.00')" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Edit structure</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card B: Officer (Core) - HIGHLIGHTED -->
+<div class="bg-surface rounded-xl shadow-md hover:shadow-lg transition-shadow flex flex-col overflow-hidden relative">
+<div class="h-1.5 w-full bg-iris"></div>
+<div class="p-space-lg bg-surface">
+<div class="flex items-start justify-between">
+<div>
+<span class="text-overline font-overline text-iris uppercase tracking-wider font-semibold">Band 02 • 48 Enrolled</span>
+<h3 class="text-h2 font-h2 text-ink mt-0.5">Officer (Core)</h3>
+<span class="inline-block mt-1 text-xs px-2 py-0.5 rounded bg-iris-tint text-iris font-medium">Staff (Core Operations)</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-iris text-on-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">corporate_fare</span>
+</div>
+</div>
+<!-- Pay Metrics Split -->
+<div class="grid grid-cols-2 gap-3 mt-5 p-3 rounded-lg bg-surface-sunken">
+<div>
+<div class="text-overline font-overline text-ink-3">GROSS / MO</div>
+<div class="text-body font-body font-bold text-ink font-mono mt-0.5">₦420,000.00</div>
+</div>
+<div>
+<div class="text-overline font-overline text-emerald-700 font-semibold">NET TAKE-HOME</div>
+<div class="text-body font-body font-bold text-emerald-700 font-mono mt-0.5">₦321,400.00</div>
+</div>
+</div>
+</div>
+<!-- Component Breakdown Stack -->
+<div class="px-space-lg py-space-md flex-1 flex flex-col justify-between bg-surface-bright">
+<div class="space-y-2.5">
+<div class="text-overline font-overline text-ink-3 uppercase tracking-wider mb-2">Component Weights</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-600"></span>Basic Salary (50%)</span>
+<span class="font-mono text-ink font-medium">₦210,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Housing (50% Basic)</span>
+<span class="font-mono text-ink font-medium">₦105,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Transport Allowance</span>
+<span class="font-mono text-ink font-medium">₦65,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Meal Allowance</span>
+<span class="font-mono text-ink font-medium">₦40,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1">
+<span class="text-ink-3 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-destructive"></span>Cooperative Deduction</span>
+<span class="font-mono text-danger-text">-₦25,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-3 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-destructive"></span>Pension (Employee 8%)</span>
+<span class="font-mono text-danger-text">-₦25,200.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-3 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-destructive"></span>Tax (PAYE Estimate)</span>
+<span class="font-mono text-danger-text">-₦38,400.00</span>
+</div>
+</div>
+<!-- Card Bottom Action -->
+<div class="pt-6 mt-4">
+<button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-colors shadow-sm min-h-[44px]" onclick="openStructureDrawer('Officer (Core)', 'Staff (Core Operations)', '420,000.00')" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Edit structure</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card C: Manager -->
+<div class="bg-surface rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden">
+<div class="p-space-lg bg-surface">
+<div class="flex items-start justify-between">
+<div>
+<span class="text-overline font-overline text-ink-3 uppercase tracking-wider">Band 03 • 14 Enrolled</span>
+<h3 class="text-h2 font-h2 text-ink mt-0.5">Manager</h3>
+<span class="inline-block mt-1 text-xs px-2 py-0.5 rounded bg-surface-sunken text-ink-2 font-medium">Executive &amp; Senior Mgmt</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-sunken text-ink-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">stars</span>
+</div>
+</div>
+<!-- Pay Metrics Split -->
+<div class="grid grid-cols-2 gap-3 mt-5 p-3 rounded-lg bg-surface-sunken">
+<div>
+<div class="text-overline font-overline text-ink-3">GROSS / MO</div>
+<div class="text-body font-body font-bold text-ink font-mono mt-0.5">₦1,250,000.00</div>
+</div>
+<div>
+<div class="text-overline font-overline text-emerald-700 font-semibold">NET TAKE-HOME</div>
+<div class="text-body font-body font-bold text-emerald-700 font-mono mt-0.5">₦932,500.00</div>
+</div>
+</div>
+</div>
+<!-- Component Breakdown Stack -->
+<div class="px-space-lg py-space-md flex-1 flex flex-col justify-between bg-surface-bright">
+<div class="space-y-2.5">
+<div class="text-overline font-overline text-ink-3 uppercase tracking-wider mb-2">Component Weights</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-600"></span>Basic Salary (50%)</span>
+<span class="font-mono text-ink font-medium">₦625,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Housing (50% Basic)</span>
+<span class="font-mono text-ink font-medium">₦312,500.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Transport (30% Basic)</span>
+<span class="font-mono text-ink font-medium">₦187,500.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span>Meal &amp; Subsistence</span>
+<span class="font-mono text-ink font-medium">₦75,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-2 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary-container"></span>Health Benefit (Exempt)</span>
+<span class="font-mono text-ink font-medium">₦50,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1">
+<span class="text-ink-3 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-destructive"></span>Pension (Employee 8%)</span>
+<span class="font-mono text-danger-text">-₦75,000.00</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-ink-3 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-destructive"></span>PAYE Tax (Progressive)</span>
+<span class="font-mono text-danger-text">-₦192,500.00</span>
+</div>
+</div>
+<!-- Card Bottom Action -->
+<div class="pt-6 mt-4">
+<button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-colors shadow-sm min-h-[44px]" onclick="openStructureDrawer('Manager', 'Executive &amp; Senior Mgmt', '1,250,000.00')" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Edit structure</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- DRAWER 1: NEW SALARY COMPONENT MODAL/DRAWER -->
+<div aria-labelledby="drawerComponentTitle" aria-modal="true" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300 opacity-0 invisible" id="newComponentDrawer" role="dialog">
+<!-- Backdrop Scrim -->
+<div class="absolute inset-0 bg-[#0B0B12]/45 backdrop-blur-[4px] pointer-events-auto transition-opacity" id="componentScrim"></div>
+<!-- Sliding Panel -->
+<div class="absolute inset-y-0 right-0 max-w-lg w-full bg-surface shadow-2xl pointer-events-auto flex flex-col transform translate-x-full transition-transform duration-300 ease-out" id="componentPanel">
+<!-- Drawer Header -->
+<div class="p-space-lg bg-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">add_box</span>
+</div>
+<div>
+<h3 class="text-h2 font-h2 text-ink" id="drawerComponentTitle">New Pay Component</h3>
+<p class="text-overline font-overline text-ink-3">Add earning element or recurring payroll deduction</p>
+</div>
+</div>
+<button class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" id="btnCloseNewComponent" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Form Body -->
+<form class="flex-1 overflow-y-auto p-space-lg space-y-space-md" id="newComponentForm">
+<!-- Component Name -->
+<div>
+<label class="block text-label font-label text-ink mb-1" for="compName">Component Name <span class="text-destructive">*</span></label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-sunken text-ink text-body-sm font-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all min-h-[44px]" id="compName" placeholder="e.g. Utility Allowance, Hazard Bonus" required="" type="text"/>
+</div>
+<!-- Component Type / Kind Toggle -->
+<div>
+<label class="block text-label font-label text-ink mb-1.5">Component Classification <span class="text-destructive">*</span></label>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex items-center gap-3 p-3 rounded-lg bg-surface-sunken cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:bg-emerald-50 has-[:checked]:text-emerald-900">
+<input checked="" class="accent-emerald-700 w-4 h-4" name="compClassification" type="radio" value="earning"/>
+<div>
+<div class="font-label text-label">Earning (+)</div>
+<div class="text-overline font-overline text-ink-3">Augments employee gross</div>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg bg-surface-sunken cursor-pointer hover:bg-surface-container transition-colors has-[:checked]:bg-danger-bg has-[:checked]:text-danger-text">
+<input class="accent-destructive w-4 h-4" name="compClassification" type="radio" value="deduction"/>
+<div>
+<div class="font-label text-label">Deduction (−)</div>
+<div class="text-overline font-overline text-ink-3">Reduces net take-home</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Calculation Rule Selector -->
+<div>
+<label class="block text-label font-label text-ink mb-1" for="compCalcRule">Calculation Method <span class="text-destructive">*</span></label>
+<div class="relative">
+<select class="w-full appearance-none px-3.5 py-2.5 rounded-lg bg-surface-sunken text-ink text-body-sm font-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all min-h-[44px]" id="compCalcRule">
+<option value="fixed">Fixed Flat Amount</option>
+<option value="percent_basic">Percentage of Basic Salary</option>
+<option value="percent_gross">Percentage of Monthly Gross</option>
+<option value="formula">Custom Mathematical Formula</option>
+<option value="amortized">Amortized Schedule / Ledger Linked</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-ink-3 pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Formula Expression / Value Input -->
+<div class="p-3.5 rounded-lg bg-surface-sunken space-y-2" id="formulaBuilderSection">
+<div class="flex items-center justify-between">
+<label class="text-label font-label text-ink text-xs uppercase tracking-wider" for="formulaInput">Formula / Rate Parameter</label>
+<span class="text-overline font-overline text-iris font-semibold">TOKEN BUILDER</span>
+</div>
+<div class="flex items-center gap-2">
+<input class="flex-1 px-3 py-2 rounded-md bg-surface text-ink text-body-sm font-mono focus:outline-none focus:ring-2 focus:ring-iris/30 min-h-[38px]" id="formulaInput" type="text" value="50.00"/>
+<span class="text-body-sm font-body-sm text-ink-2 font-medium">%</span>
+</div>
+<div class="flex flex-wrap gap-1.5 pt-1">
+<button class="px-2 py-0.5 rounded bg-surface text-ink-3 hover:text-ink text-overline font-overline" type="button">+ [BASIC]</button>
+<button class="px-2 py-0.5 rounded bg-surface text-ink-3 hover:text-ink text-overline font-overline" type="button">+ [GROSS]</button>
+<button class="px-2 py-0.5 rounded bg-surface text-ink-3 hover:text-ink text-overline font-overline" type="button">+ [HOURLY_RATE]</button>
+</div>
+</div>
+<!-- Statutory Compliance Checkboxes -->
+<div class="space-y-3 pt-2">
+<div class="text-overline font-overline text-ink-3 uppercase tracking-wider">Statutory Tax &amp; Pension Applicability</div>
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-sunken cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="mt-0.5 accent-iris w-4 h-4 rounded" id="taxableCheck" type="checkbox"/>
+<div>
+<div class="font-label text-label text-ink">Subject to PAYE Income Tax</div>
+<div class="text-overline font-overline text-ink-3">Item will be incorporated into the Consolidated Relief Allowance (CRA) computation.</div>
+</div>
+</label>
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-sunken cursor-pointer hover:bg-surface-container transition-colors">
+<input checked="" class="mt-0.5 accent-iris w-4 h-4 rounded" id="pensionableCheck" type="checkbox"/>
+<div>
+<div class="font-label text-label text-ink">Pensionable Emolument (PRA 2014)</div>
+<div class="text-overline font-overline text-ink-3">Tied to the mandatory 8% employee and 10% employer statutory pension deduction base.</div>
+</div>
+</label>
+</div>
+<!-- Description -->
+<div>
+<label class="block text-label font-label text-ink mb-1" for="compDesc">Description / Payroll Footnote</label>
+<textarea class="w-full px-3.5 py-2 rounded-lg bg-surface-sunken text-ink text-body-sm font-body-sm focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="compDesc" placeholder="Enter payroll slip explanation or legal reference notes..." rows="3"></textarea>
+</div>
+</form>
+<!-- Drawer Actions Footer -->
+<div class="p-space-lg bg-surface-sunken flex items-center justify-end gap-space-sm">
+<button class="px-4 py-2.5 rounded-lg bg-surface hover:bg-surface-container text-ink font-label text-label transition-colors min-h-[44px]" id="btnCancelComponent" type="button">
+          Cancel
+        </button>
+<button class="px-5 py-2.5 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-colors shadow-sm min-h-[44px]" id="btnSaveComponent" type="button">
+          Save component
+        </button>
+</div>
+</div>
+</div>
+<!-- DRAWER 2: EDIT SALARY STRUCTURE SLIDE-OVER -->
+<div aria-labelledby="drawerStructureTitle" aria-modal="true" class="fixed inset-0 z-50 pointer-events-none transition-all duration-300 opacity-0 invisible" id="structureDrawer" role="dialog">
+<!-- Backdrop Scrim -->
+<div class="absolute inset-0 bg-[#0B0B12]/45 backdrop-blur-[4px] pointer-events-auto transition-opacity" id="structureScrim"></div>
+<!-- Sliding Panel -->
+<div class="absolute inset-y-0 right-0 max-w-xl w-full bg-surface shadow-2xl pointer-events-auto flex flex-col transform translate-x-full transition-transform duration-300 ease-out" id="structurePanel">
+<!-- Drawer Header -->
+<div class="p-space-lg bg-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">tune</span>
+</div>
+<div>
+<h3 class="text-h2 font-h2 text-ink" id="drawerStructureTitle">Edit Structure • Officer (Core)</h3>
+<p class="text-overline font-overline text-ink-3" id="drawerStructureSubtitle">Pay Group: Staff (Core Operations)</p>
+</div>
+</div>
+<button class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors" id="btnCloseStructure" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Body -->
+<div class="flex-1 overflow-y-auto p-space-lg space-y-space-md">
+<!-- Baseline Gross Input -->
+<div class="p-4 rounded-xl bg-surface-sunken">
+<label class="block text-overline font-overline text-ink-3 uppercase tracking-wider mb-1" for="structGrossInput">Baseline Monthly Gross (NGN)</label>
+<div class="relative">
+<span class="absolute left-3.5 top-2.5 text-body font-body font-bold text-ink">₦</span>
+<input class="w-full pl-9 pr-3.5 py-2.5 rounded-lg bg-surface font-mono text-h2 font-h2 text-ink focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" id="structGrossInput" type="text" value="420,000.00"/>
+</div>
+<div class="text-overline font-overline text-ink-3 mt-1.5 flex items-center justify-between">
+<span>Enrolled Employees: 48 members</span>
+<span class="text-emerald-700 font-semibold">Annual Gross: ₦5,040,000.00</span>
+</div>
+</div>
+<!-- Editable Component Weight Sliders -->
+<div class="space-y-4 pt-1">
+<div class="flex items-center justify-between">
+<span class="text-label font-label text-ink font-semibold">Configured Component Weights</span>
+<span class="text-overline font-overline text-ink-3">Live Simulation</span>
+</div>
+<!-- Basic Salary Slider -->
+<div class="p-3.5 rounded-lg bg-surface-bright space-y-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium text-ink">Basic Salary</span>
+<span class="font-mono text-ink font-bold" id="basicDisplay">₦210,000.00 (50%)</span>
+</div>
+<input class="w-full accent-iris cursor-pointer" max="70" min="30" oninput="updateStructureLive(this.value, 'basic')" type="range" value="50"/>
+<div class="flex justify-between text-overline font-overline text-ink-3">
+<span>Min: 30%</span>
+<span>Recommended: 50%</span>
+<span>Max: 70%</span>
+</div>
+</div>
+<!-- Housing Allowance Slider -->
+<div class="p-3.5 rounded-lg bg-surface-bright space-y-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-medium text-ink">Housing Allowance (of Basic)</span>
+<span class="font-mono text-ink font-bold" id="housingDisplay">₦105,000.00 (50%)</span>
+</div>
+<input class="w-full accent-iris cursor-pointer" max="60" min="20" oninput="updateStructureLive(this.value, 'housing')" type="range" value="50"/>
+<div class="flex justify-between text-overline font-overline text-ink-3">
+<span>Min: 20%</span>
+<span>Policy Cap: 50%</span>
+<span>Max: 60%</span>
+</div>
+</div>
+<!-- Transport Fixed Input -->
+<div class="p-3.5 rounded-lg bg-surface-bright flex items-center justify-between">
+<div>
+<div class="font-medium text-ink text-body-sm font-body-sm">Transport Allowance</div>
+<div class="text-overline font-overline text-ink-3">Fixed rate allowance</div>
+</div>
+<div class="w-36">
+<input class="w-full px-2.5 py-1.5 rounded-md bg-surface text-right font-mono text-body-sm font-medium text-ink focus:outline-none focus:ring-1 focus:ring-iris/30" type="text" value="65,000.00"/>
+</div>
+</div>
+<!-- Meal Allowance Fixed Input -->
+<div class="p-3.5 rounded-lg bg-surface-bright flex items-center justify-between">
+<div>
+<div class="font-medium text-ink text-body-sm font-body-sm">Meal Subsidy</div>
+<div class="text-overline font-overline text-ink-3">Fixed canteen stipend</div>
+</div>
+<div class="w-36">
+<input class="w-full px-2.5 py-1.5 rounded-md bg-surface text-right font-mono text-body-sm font-medium text-ink focus:outline-none focus:ring-1 focus:ring-iris/30" type="text" value="40,000.00"/>
+</div>
+</div>
+</div>
+<!-- Summary Net Preview Box -->
+<div class="p-4 rounded-xl bg-emerald-50 text-emerald-950 space-y-2">
+<div class="text-overline font-overline uppercase tracking-wider text-emerald-800">Calculated Structure Outcome</div>
+<div class="flex items-center justify-between">
+<span class="text-body-sm font-body-sm">Estimated Net Pay:</span>
+<span class="text-h2 font-h2 font-mono text-emerald-800 font-bold" id="netPreviewText">₦321,400.00</span>
+</div>
+<div class="text-overline font-overline text-emerald-700">
+            Complies with PRA 2014 • Lagos Consolidated Tax Relief Schedule 2024
+          </div>
+</div>
+</div>
+<!-- Drawer Actions Footer -->
+<div class="p-space-lg bg-surface-sunken flex items-center justify-end gap-space-sm">
+<button class="px-4 py-2.5 rounded-lg bg-surface hover:bg-surface-container text-ink font-label text-label transition-colors min-h-[44px]" id="btnCancelStructure" type="button">
+          Dismiss
+        </button>
+<button class="px-5 py-2.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-label text-label transition-colors shadow-sm min-h-[44px]" id="btnSaveStructure" type="button">
+          Commit structure changes
+        </button>
+</div>
+</div>
+</div>
+<!-- Live Interaction Vanilla JavaScript -->
+<script>
+    (function initSalaryStructures() {
+      // 1. Table Kind Filtering
+      const filterButtons = document.querySelectorAll('.filter-kind-btn');
+      const tableRows = document.querySelectorAll('.component-row');
+      const searchInput = document.getElementById('componentSearch');
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => {
+            b.classList.remove('active', 'bg-surface', 'text-ink', 'shadow-sm');
+            b.classList.add('text-ink-3');
+          });
+          btn.classList.add('active', 'bg-surface', 'text-ink', 'shadow-sm');
+          btn.classList.remove('text-ink-3');
+          applyFilters();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+      }
+
+      function applyFilters() {
+        const activeKindBtn = document.querySelector('.filter-kind-btn.active');
+        const filterKind = activeKindBtn ? activeKindBtn.dataset.filter : 'all';
+        const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+        tableRows.forEach(row => {
+          const rowKind = row.dataset.kind;
+          const text = row.innerText.toLowerCase();
+
+          const matchesKind = (filterKind === 'all') || (rowKind === filterKind);
+          const matchesSearch = text.includes(searchQuery);
+
+          if (matchesKind && matchesSearch) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      }
+
+      // 2. New Component Drawer Logic
+      const newCompDrawer = document.getElementById('newComponentDrawer');
+      const compPanel = document.getElementById('componentPanel');
+      const compScrim = document.getElementById('componentScrim');
+      const btnOpenNew = document.getElementById('btnOpenNewComponent');
+      const btnOpenAdd = document.getElementById('btnOpenDrawerAdd');
+      const btnCloseNew = document.getElementById('btnCloseNewComponent');
+      const btnCancelNew = document.getElementById('btnCancelComponent');
+      const btnSaveNew = document.getElementById('btnSaveComponent');
+
+      function openNewCompDrawer() {
+        newCompDrawer.classList.remove('opacity-0', 'invisible');
+        compPanel.classList.remove('translate-x-full');
+      }
+
+      function closeNewCompDrawer() {
+        compPanel.classList.add('translate-x-full');
+        setTimeout(() => {
+          newCompDrawer.classList.add('opacity-0', 'invisible');
+        }, 200);
+      }
+
+      if (btnOpenNew) btnOpenNew.addEventListener('click', openNewCompDrawer);
+      if (btnOpenAdd) btnOpenAdd.addEventListener('click', openNewCompDrawer);
+      if (btnCloseNew) btnCloseNew.addEventListener('click', closeNewCompDrawer);
+      if (btnCancelNew) btnCancelNew.addEventListener('click', closeNewCompDrawer);
+      if (compScrim) compScrim.addEventListener('click', closeNewCompDrawer);
+
+      if (btnSaveNew) {
+        btnSaveNew.addEventListener('click', () => {
+          const compName = document.getElementById('compName').value;
+          if (!compName) {
+            alert('Please enter a component name.');
+            return;
+          }
+          closeNewCompDrawer();
+        });
+      }
+
+      // 3. Edit Structure Drawer Logic
+      const structDrawer = document.getElementById('structureDrawer');
+      const structPanel = document.getElementById('structurePanel');
+      const structScrim = document.getElementById('structureScrim');
+      const btnCloseStruct = document.getElementById('btnCloseStructure');
+      const btnCancelStruct = document.getElementById('btnCancelStructure');
+      const btnSaveStruct = document.getElementById('btnSaveStructure');
+
+      window.openStructureDrawer = function(bandName, payGroup, gross) {
+        document.getElementById('drawerStructureTitle').textContent = 'Edit Structure • ' + bandName;
+        document.getElementById('drawerStructureSubtitle').textContent = 'Pay Group: ' + payGroup;
+        document.getElementById('structGrossInput').value = gross;
+
+        structDrawer.classList.remove('opacity-0', 'invisible');
+        structPanel.classList.remove('translate-x-full');
+      };
+
+      function closeStructDrawer() {
+        structPanel.classList.add('translate-x-full');
+        setTimeout(() => {
+          structDrawer.classList.add('opacity-0', 'invisible');
+        }, 200);
+      }
+
+      if (btnCloseStruct) btnCloseStruct.addEventListener('click', closeStructDrawer);
+      if (btnCancelStruct) btnCancelStruct.addEventListener('click', closeStructDrawer);
+      if (structScrim) structScrim.addEventListener('click', closeStructDrawer);
+
+      if (btnSaveStruct) {
+        btnSaveStruct.addEventListener('click', () => {
+          closeStructDrawer();
+        });
+      }
+
+      // Live Slider calculation demo
+      window.updateStructureLive = function(value, type) {
+        if (type === 'basic') {
+          const basicAmt = (420000 * (value / 100)).toLocaleString('en-US', { minimumFractionDigits: 2 });
+          document.getElementById('basicDisplay').textContent = '₦' + basicAmt + ' (' + value + '%)';
+        } else if (type === 'housing') {
+          const houseAmt = (210000 * (value / 100)).toLocaleString('en-US', { minimumFractionDigits: 2 });
+          document.getElementById('housingDisplay').textContent = '₦' + houseAmt + ' (' + value + '%)';
+        }
+      };
+    })();
+  </script>
+</div></main></div></body></html>

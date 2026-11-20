@@ -21,6 +21,7 @@ POLICY_MODULES = (
     "app.modules.leave.policies",
     "app.modules.attendance.policies",
     "app.modules.expenses.policies",
+    "app.modules.payroll.policies",
 )
 
 

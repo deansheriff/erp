@@ -14,8 +14,8 @@ from app.core import numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.models import User
 from app.identity.schemas import Actor
-from app.modules.hr.models import EMPLOYEE_STATUSES, Employee
-from app.modules.hr.schemas import PersonInput, PersonRow
+from app.modules.hr.models import EMPLOYEE_STATUSES, Employee, EmployeeExit
+from app.modules.hr.schemas import PayrollFacts, PersonInput, PersonRow
 from app.org import service as org
 from app.org.models import Branch
 
@@ -347,3 +347,31 @@ def employees_of_users(db: Session, user_ids: set[uuid.UUID]) -> dict[uuid.UUID,
         select(Employee.user_id, Employee.id).where(Employee.user_id.in_(user_ids))
     ).all()
     return {user_id: employee_id for user_id, employee_id in rows if user_id is not None}
+
+
+def payroll_facts(db: Session, employee_ids: list[uuid.UUID]) -> dict[uuid.UUID, PayrollFacts]:
+    """What payroll needs about each person: name and number for the payslip, the dates
+    their employment starts and ends (for proration), and their PFA."""
+    if not employee_ids:
+        return {}
+    leaving = dict(
+        db.execute(
+            select(EmployeeExit.employee_id, func.min(EmployeeExit.last_working_day))
+            .where(
+                EmployeeExit.employee_id.in_(employee_ids),
+                EmployeeExit.status != "cancelled",
+            )
+            .group_by(EmployeeExit.employee_id)
+        ).all()
+    )
+    return {
+        e.id: PayrollFacts(
+            name=e.full_name,
+            number=e.employee_number,
+            hire_date=e.hire_date,
+            last_day=leaving.get(e.id),
+            pfa=e.pension_pfa,
+            state=e.state_of_residence,
+        )
+        for e in db.scalars(select(Employee).where(Employee.id.in_(employee_ids)))
+    }

@@ -106,6 +106,9 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "attendance.photo.view": SELF,
             "expenses.claim.create": SELF,
             "expenses.claim.read": SELF,
+            "payroll.pay.read": SELF,
+            "payroll.payslip.read": SELF,  # once the run is paid
+            "payroll.relief.declare": SELF,
         },
     ),
     RoleTemplate(
@@ -150,6 +153,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "attendance.correction.request": ORG,  # recording a correction for someone
             "attendance.photo.view": ORG,
             "attendance.schedule.manage": ORG,
+            "payroll.relief.verify": ORG,
         },
     ),
     RoleTemplate(
@@ -165,13 +169,28 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "Completes the IT tasks on onboarding and offboarding checklists.",
         grants={"hr.employee.read": ORG, "hr.checklist.it": ORG},
     ),
-    RoleTemplate("payroll_officer", "Payroll Officer", "Prepares payroll runs.", requires_mfa=True),
+    RoleTemplate(
+        "payroll_officer",
+        "Payroll Officer",
+        "Prepares payroll runs.",
+        requires_mfa=True,
+        grants={
+            "payroll.pay.read": ORG,
+            "payroll.pay.manage": ORG,
+            "payroll.structure.manage": ORG,
+            "payroll.run.read": ORG,
+            "payroll.run.prepare": ORG,
+            "payroll.run.review": ORG,  # another officer reviews what one calculated
+            "payroll.payslip.read": ORG,
+            "payroll.relief.verify": ORG,
+        },
+    ),
     RoleTemplate(
         "finance_officer",
         "Finance Officer",
         "Day-to-day accounting.",
         requires_mfa=True,
-        grants={"expenses.claim.read": ORG},
+        grants={"expenses.claim.read": ORG, "payroll.run.read": ORG, "payroll.run.pay": ORG},
     ),
     RoleTemplate(
         "finance_manager",
@@ -183,6 +202,11 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "expenses.claim.approve_any": ORG,  # steps in when a manager can't
             "expenses.claim.approve_finance": ORG,
             "expenses.settings.manage": ORG,
+            "payroll.run.read": ORG,
+            "payroll.run.review": ORG,
+            "payroll.run.approve": ORG,
+            "payroll.run.post": ORG,
+            "payroll.settings.manage": ORG,
         },
     ),
     RoleTemplate(

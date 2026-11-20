@@ -110,7 +110,22 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Settings", "/expenses/settings", permission="expenses.settings.manage"),
         ),
     ),
-    NavModule("payroll", "Payroll", "banknote", "/payroll"),
+    NavModule(
+        "payroll",
+        "Payroll",
+        "banknote",
+        "/payroll",
+        (
+            NavSection("My payslips", "/payslips", permission="payroll.payslip.read"),
+            NavSection("Runs", "/payroll", permission="payroll.run.read"),
+            NavSection("People's pay", "/payroll/people", permission="payroll.pay.manage"),
+            NavSection(
+                "Salary structures", "/payroll/structures", permission="payroll.structure.manage"
+            ),
+            NavSection("Rent relief", "/payroll/reliefs", permission="payroll.relief.verify"),
+            NavSection("Settings", "/payroll/settings", permission="payroll.settings.manage"),
+        ),
+    ),
     NavModule("finance", "Finance", "chart-line", "/finance"),
     NavModule("inventory", "Inventory", "package", "/inventory"),
     NavModule("procurement", "Procurement", "shopping-cart", "/procurement"),

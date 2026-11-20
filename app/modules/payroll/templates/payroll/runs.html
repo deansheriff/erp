@@ -1,0 +1,54 @@
+{# Payroll → Runs (ADR 0021). Design: design/stitch/exports/payroll.runs.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Payroll runs", "One run per pay group and month. Each step is done by a different person.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+{% if can_prepare %}
+<form method="post" action="/payroll/runs" class="kx-card kx-enter mt-6 grid gap-4 p-5 sm:grid-cols-[1fr_1fr_auto] sm:items-end" novalidate>
+  {{ ui.csrf_field() }}
+  {% if errors.get("form") %}<div class="sm:col-span-3">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+  {{ ui.text_field("period", "Month", value=values.get("period") or default_period, type="month", errors=errors) }}
+  <div>
+    <label for="f-pay_group_id" class="kx-label">Pay group</label>
+    <select id="f-pay_group_id" name="pay_group_id" class="kx-input">
+      {% for g in groups %}<option value="{{ g.id }}" {% if values.get("pay_group_id") == g.id|string %}selected{% endif %}>{{ g.name }}</option>{% endfor %}
+    </select>
+    {{ ui.field_error(errors, "pay_group_id") }}
+  </div>
+  <button type="submit" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New run</button>
+</form>
+{% endif %}
+
+<p class="mt-6 flex flex-wrap items-center gap-2 text-xs text-ink-3" aria-label="Run steps">
+  {% for step in ("Draft", "Calculated", "Reviewed", "Approved", "Posted", "Paid") %}<span class="rounded-full bg-surface-sunken px-2.5 py-1 font-medium text-ink-2">{{ step }}</span>{% if not loop.last %}<span>→</span>{% endif %}{% endfor %}
+</p>
+
+<section class="kx-card mt-4 overflow-hidden">
+  {% if runs %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[760px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3">
+        <tr><th class="px-4 py-3 text-left font-semibold">Period</th><th class="px-4 py-3 text-left font-semibold">Pay group</th><th class="px-4 py-3 text-right font-semibold">People</th><th class="px-4 py-3 text-right font-semibold">Gross</th><th class="px-4 py-3 text-right font-semibold">Net</th><th class="px-4 py-3 text-left font-semibold">Status</th></tr>
+      </thead>
+      <tbody class="divide-y divide-line">
+        {% for r in runs %}
+        <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+          <td class="px-4 py-3"><a href="/payroll/runs/{{ r.id }}" class="font-semibold hover:text-iris">{{ r.period }}</a></td>
+          <td class="px-4 py-3">{{ r.pay_group }}</td>
+          <td class="px-4 py-3 text-right tnum">{{ r.people }}</td>
+          <td class="px-4 py-3 text-right tnum">{{ r.gross | money }}</td>
+          <td class="px-4 py-3 text-right tnum">{{ r.net | money }}</td>
+          <td class="px-4 py-3">{{ ui.badge(tones[r.status], r.status | capitalize) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("banknote", "No runs yet", "Start a run for a month and pay group, then calculate it.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

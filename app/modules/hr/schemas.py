@@ -253,3 +253,13 @@ class DirectoryEntry:
     department: str | None
     branch: str | None
     work_email: str | None
+
+
+@dataclass(frozen=True, slots=True)
+class PayrollFacts:
+    name: str
+    number: str | None
+    hire_date: date | None
+    last_day: date | None  # last working day of a scheduled or completed exit
+    pfa: str | None
+    state: str | None

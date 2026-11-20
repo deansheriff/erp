@@ -104,6 +104,24 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `org.structure.manage` | Manage the organisation structure | Organisation |  | Create and change departments, positions, branches, cost centres and grades. |
 | `org.structure.read` | View the organisation chart | Organisation |  | Departments, positions, branches, cost centres, grades and who holds each position. |
 
+### payroll
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `payroll.pay.manage` | Manage people's pay | Organisation | yes | Set people's pay group, salary structure, amounts and recurring deductions. |
+| `payroll.pay.read` | View people's pay | Self, Team, Department, Organisation | yes | See pay records, components and amounts within scope. |
+| `payroll.payslip.read` | View payslips | Self, Team, Department, Organisation | yes | See payslips within scope (your own once the run is paid). |
+| `payroll.relief.declare` | Declare rent for tax relief | Self, Team, Department, Organisation |  | Declare annual rent with proof, for PAYE rent relief. |
+| `payroll.relief.verify` | Verify rent relief | Organisation | yes | Verify or reject rent declarations. |
+| `payroll.run.approve` | Approve payroll runs | Organisation | yes | Approve a reviewed run (payslips are generated), or send it back. |
+| `payroll.run.pay` | Mark payroll runs paid | Organisation | yes | Mark a posted run paid; employees then see their payslips. |
+| `payroll.run.post` | Post payroll runs | Organisation | yes | Post an approved run. |
+| `payroll.run.prepare` | Prepare payroll runs | Organisation | yes | Create runs and calculate them. |
+| `payroll.run.read` | View payroll runs | Organisation | yes | See runs and everyone's calculated pay in them. |
+| `payroll.run.review` | Review payroll runs | Organisation | yes | Mark a calculated run reviewed, or send it back. |
+| `payroll.settings.manage` | Manage statutory settings | Organisation |  | PAYE bands, reliefs, pension, NHF and other statutory rates. |
+| `payroll.structure.manage` | Manage salary structures | Organisation |  | Pay components, salary structures and pay groups. |
+
 ### system
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -176,6 +194,19 @@ Everything, including technical settings. Can't be edited or removed.
 | `org.assignment.manage` | O |
 | `org.structure.manage` | O |
 | `org.structure.read` | O |
+| `payroll.pay.manage` | O |
+| `payroll.pay.read` | O |
+| `payroll.payslip.read` | O |
+| `payroll.relief.declare` | O |
+| `payroll.relief.verify` | O |
+| `payroll.run.approve` | O |
+| `payroll.run.pay` | O |
+| `payroll.run.post` | O |
+| `payroll.run.prepare` | O |
+| `payroll.run.read` | O |
+| `payroll.run.review` | O |
+| `payroll.settings.manage` | O |
+| `payroll.structure.manage` | O |
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
@@ -240,6 +271,19 @@ Everything except technical settings such as mail, branding and security.
 | `org.assignment.manage` | O |
 | `org.structure.manage` | O |
 | `org.structure.read` | O |
+| `payroll.pay.manage` | O |
+| `payroll.pay.read` | O |
+| `payroll.payslip.read` | O |
+| `payroll.relief.declare` | O |
+| `payroll.relief.verify` | O |
+| `payroll.run.approve` | O |
+| `payroll.run.pay` | O |
+| `payroll.run.post` | O |
+| `payroll.run.prepare` | O |
+| `payroll.run.read` | O |
+| `payroll.run.review` | O |
+| `payroll.settings.manage` | O |
+| `payroll.structure.manage` | O |
 
 ### Auditor
 
@@ -261,6 +305,9 @@ Reads everything, including the audit log. Changes nothing.
 | `leave.balance.read` | O |
 | `leave.request.read` | O |
 | `org.structure.read` | O |
+| `payroll.pay.read` | O |
+| `payroll.payslip.read` | O |
+| `payroll.run.read` | O |
 
 ### Employee
 
@@ -285,6 +332,9 @@ Self-service: their own profile, requests and payslips.
 | `leave.balance.read` | S |
 | `leave.request.create` | S |
 | `leave.request.read` | S |
+| `payroll.pay.read` | S |
+| `payroll.payslip.read` | S |
+| `payroll.relief.declare` | S |
 
 ### Line Manager
 
@@ -329,6 +379,7 @@ Day-to-day HR records and requests.
 | `leave.request.create` | O |
 | `leave.request.read` | O |
 | `org.structure.read` | O |
+| `payroll.relief.verify` | O |
 
 ### HR Manager
 
@@ -383,7 +434,16 @@ Completes the IT tasks on onboarding and offboarding checklists.
 
 Prepares payroll runs.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `payroll.pay.manage` | O |
+| `payroll.pay.read` | O |
+| `payroll.payslip.read` | O |
+| `payroll.relief.verify` | O |
+| `payroll.run.prepare` | O |
+| `payroll.run.read` | O |
+| `payroll.run.review` | O |
+| `payroll.structure.manage` | O |
 
 ### Finance Officer (two-step required)
 
@@ -392,6 +452,8 @@ Day-to-day accounting.
 | Permission | Scope |
 |---|---|
 | `expenses.claim.read` | O |
+| `payroll.run.pay` | O |
+| `payroll.run.read` | O |
 
 ### Finance Manager (two-step required)
 
@@ -403,6 +465,11 @@ Approves and posts finance documents.
 | `expenses.claim.approve_finance` | O |
 | `expenses.claim.read` | O |
 | `expenses.settings.manage` | O |
+| `payroll.run.approve` | O |
+| `payroll.run.post` | O |
+| `payroll.run.read` | O |
+| `payroll.run.review` | O |
+| `payroll.settings.manage` | O |
 
 ### Expense Approver
 
@@ -459,5 +526,7 @@ _No grants yet: added by the phase that delivers its module._
 | `expenses.no_self_approve_any` | `expenses.claim.approve_any` | owner_is_actor | You can't approve your own claim. |
 | `expenses.no_self_approve_finance` | `expenses.claim.approve_finance` | owner_is_actor | You can't approve your own claim. |
 | `expenses.no_self_reimburse` | `expenses.claim.reimburse` | owner_is_actor | You can't pay your own claim. |
+| `payroll.no_self_pay_change` | `payroll.pay.manage` | subject_is_actor | You can't change your own pay. |
+| `payroll.no_self_relief` | `payroll.relief.verify` | owner_is_actor | You can't verify your own rent declaration. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

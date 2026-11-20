@@ -1,0 +1,7 @@
+{# Money totals: one line each on phones (amounts can run to millions), tiles from sm up. #}
+{% macro money_tile(label, value) -%}
+<div class="kx-card flex items-baseline justify-between gap-3 p-4 sm:flex-col sm:items-start sm:justify-start md:p-5">
+  <span class="kx-overline">{{ label }}</span>
+  <span class="font-stat text-h3 tnum sm:mt-1 sm:text-stat">{{ value | money }}</span>
+</div>
+{%- endmacro %}

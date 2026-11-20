@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-secondary-fixed-variant": "#3b4d00", "tertiary-fixed": "#ffdbc8", "line-strong": "#8B8BA6", "lime": "#C5F04A", "danger-text": "#B4232F", "inverse-primary": "#c5c0ff", "info-text": "#1D55B8", "primary-fixed": "#e4dfff", "on-primary-fixed-variant": "#3d28be", "background": "#f9f9fd", "surface-container-highest": "#e2e2e6", "warning-bg": "#FFF1D6", "secondary-fixed": "#c7f24c", "surface-raised": "#FFFFFF", "on-surface-variant": "#474554", "tertiary-fixed-dim": "#ffb68b", "on-secondary": "#ffffff", "line": "#E4E4EE", "surface-bright": "#f9f9fd", "surface-variant": "#e2e2e6", "on-tertiary-fixed": "#321300", "error-container": "#ffdad6", "inverse-surface": "#2e3034", "surface-sunken": "#EFEFF6", "on-tertiary-fixed-variant": "#743400", "secondary": "#4f6600", "danger-bg": "#FFE4E6", "on-primary-container": "#e0dbff", "on-surface": "#1a1c1f", "ink-2": "#4B4B66", "on-primary-fixed": "#140067", "iris": "#5A4BDB", "success-text": "#0F6B3E", "ink": "#16162A", "surface-container-low": "#f3f3f7", "primary-fixed-dim": "#c5c0ff", "outline-variant": "#c8c4d7", "surface": "#FFFFFF", "lime-ink": "#4D7A0A", "canvas": "#F6F6FA", "primary-container": "#5a4bdb", "surface-container": "#ededf1", "on-background": "#1a1c1f", "on-secondary-container": "#536b00", "surface-container-high": "#e8e8ec", "on-error": "#ffffff", "ink-3": "#626280", "secondary-container": "#c4ef49", "tertiary-container": "#9f4a00", "on-secondary-fixed": "#161f00", "primary": "#412ec2", "outline": "#787586", "on-primary": "#ffffff", "iris-tint": "#EEECFD", "warning-text": "#8A4B00", "on-tertiary-container": "#ffd7c1", "surface-dim": "#d9dade", "inverse-on-surface": "#f0f0f4", "destructive": "#C42836", "error": "#ba1a1a", "tertiary": "#7a3700", "surface-tint": "#5646d7", "iris-hover": "#4A3CC4", "secondary-fixed-dim": "#acd530", "info-bg": "#DFEBFF", "on-tertiary": "#ffffff", "on-iris": "#FFFFFF", "on-error-container": "#93000a", "success-bg": "#DDF7E8", "surface-container-lowest": "#ffffff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "space-xl": "2rem", "space-md": "1rem", "margin": "2rem", "gutter": "1.5rem", "space-3xl": "4rem", "space-sm": "0.5rem", "space-2xl": "3rem", "space-xs": "0.25rem" }, fontFamily: { "h1": ["Plus Jakarta Sans"], "h3": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "body": ["Inter"], "h2": ["Plus Jakarta Sans"], "label": ["Inter"], "overline": ["Inter"], "display": ["Plus Jakarta Sans"], "stat": ["Plus Jakarta Sans"] }, fontSize: { "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;background-color:#F6F6FA;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-canvas text-on-surface font-body text-body min-h-screen flex flex-col antialiased"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-md flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-iris-tint flex items-center justify-center"><span class="material-symbols-outlined text-iris text-[22px]">dashboard_customize</span></div><h1 class="font-h2 text-h2 text-ink tracking-tight">My Payslips</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-full text-ink-2 hover:bg-surface-sunken transition-colors"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive"></span></button><button aria-label="Profile" class="w-11 h-11 flex items-center justify-center"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 px-space-md bg-canvas"><div class="flex flex-col w-full gap-space-md">
+<!-- Sub-header & Context -->
+<section class="flex flex-col gap-1 px-1">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+<span class="font-overline text-overline uppercase tracking-wider text-iris">Payroll · Self-Service</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">Official monthly salary payment advices and tax records</p>
+</section>
+<!-- Latest Payslip Hero Card (November 2026) -->
+<section class="w-full bg-surface rounded-xl shadow-sm overflow-hidden transition-all duration-300">
+<!-- Card Top Header -->
+<div class="p-space-md flex flex-col gap-space-sm bg-gradient-to-br from-surface via-iris-tint/20 to-surface">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-iris-tint flex items-center justify-center text-iris shadow-sm">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-h2 text-h2 text-ink leading-tight">November 2026</h2>
+<span class="font-overline text-overline text-ink-3">ADVICE REF: PAY-2026-11</span>
+</div>
+</div>
+<div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text animate-pulse"></span>
+<span class="font-label text-label text-xs font-semibold">Paid · 28 Nov</span>
+</div>
+</div>
+<!-- Net Pay Hero Display -->
+<div class="mt-1 flex flex-col gap-1 p-space-sm rounded-xl bg-surface-sunken">
+<span class="font-overline text-overline text-ink-3 tracking-wider">TAKE-HOME NET PAY</span>
+<div class="flex items-baseline gap-1 font-stat text-stat text-ink font-bold tabular-nums">
+<span>₦284,350.00</span>
+</div>
+<div class="flex items-center gap-1.5 text-ink-2 pt-1">
+<span class="material-symbols-outlined text-ink-3 text-[18px]">account_balance</span>
+<span class="font-body-sm text-body-sm text-xs">Disbursed to Zenith Bank PLC (••••3892)</span>
+</div>
+</div>
+<!-- Primary & Secondary Action CTAs -->
+<div class="grid grid-cols-4 gap-2 pt-1">
+<button class="col-span-3 min-h-[44px] px-space-md rounded-xl bg-iris hover:bg-iris-hover active:scale-[0.98] text-on-iris font-label text-label font-semibold flex items-center justify-center gap-2 shadow-[0_4px_14px_rgba(90,75,219,0.3)] transition-all" id="downloadPdfBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Download PDF</span>
+</button>
+<button aria-label="Share payslip summary" class="col-span-1 min-h-[44px] rounded-xl bg-surface-sunken hover:bg-surface-container active:scale-95 text-ink flex items-center justify-center transition-colors" id="shareSlipBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+</div>
+<!-- Toggle Detailed Pay Breakdown -->
+<button aria-expanded="false" class="w-full min-h-[44px] mt-1 px-space-sm flex items-center justify-between text-ink-2 hover:text-ink rounded-lg hover:bg-surface-sunken/60 transition-colors" id="toggleBreakdownBtn" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-iris text-[20px]">receipt_long</span>
+<span class="font-label text-label font-semibold">View Itemized Breakdown</span>
+</div>
+<span class="material-symbols-outlined text-[20px] transition-transform duration-200" id="accordionChevron">expand_more</span>
+</button>
+</div>
+<!-- Collapsible Pay Breakdown Details -->
+<div class="hidden px-space-md pb-space-md flex-col gap-space-md" id="breakdownDrawer">
+<!-- Earnings Section -->
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between py-1 bg-surface-sunken px-2.5 rounded-lg">
+<span class="font-label text-label font-bold text-ink">Gross Earnings</span>
+<span class="font-label text-label font-bold text-ink tabular-nums">₦362,500.00</span>
+</div>
+<div class="flex flex-col gap-2 px-1">
+<div class="flex items-center justify-between text-ink-2">
+<span class="font-body-sm text-body-sm">Basic Salary</span>
+<span class="font-body-sm text-body-sm text-ink tabular-nums">₦200,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2">
+<span class="font-body-sm text-body-sm">Housing Allowance</span>
+<span class="font-body-sm text-body-sm text-ink tabular-nums">₦100,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2">
+<span class="font-body-sm text-body-sm">Transport Allowance</span>
+<span class="font-body-sm text-body-sm text-ink tabular-nums">₦50,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2">
+<div class="flex items-center gap-1.5">
+<span class="font-body-sm text-body-sm">Overtime Allowance</span>
+<span class="font-overline text-[10px] px-1.5 py-0.5 rounded bg-iris-tint text-iris">Approved</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink tabular-nums">₦12,500.00</span>
+</div>
+</div>
+</div>
+<!-- Deductions Section -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between py-1 bg-danger-bg/60 px-2.5 rounded-lg text-danger-text">
+<span class="font-label text-label font-bold">Total Deductions</span>
+<span class="font-label text-label font-bold tabular-nums">-₦78,150.00</span>
+</div>
+<div class="flex flex-col gap-2 px-1">
+<div class="flex items-center justify-between text-ink-2">
+<span class="font-body-sm text-body-sm">PAYE Tax (LIRS)</span>
+<span class="font-body-sm text-body-sm text-danger-text tabular-nums">₦38,900.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2">
+<span class="font-body-sm text-body-sm">Pension (8% Employee RSA)</span>
+<span class="font-body-sm text-body-sm text-danger-text tabular-nums">₦28,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2">
+<span class="font-body-sm text-body-sm">National Housing Fund (NHF 2.5%)</span>
+<span class="font-body-sm text-body-sm text-danger-text tabular-nums">₦5,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2">
+<span class="font-body-sm text-body-sm">Adeyemi Cooperative Society</span>
+<span class="font-body-sm text-body-sm text-danger-text tabular-nums">₦6,250.00</span>
+</div>
+</div>
+</div>
+<!-- Formula Summary Strip -->
+<div class="p-space-sm rounded-xl bg-iris-tint/50 flex flex-col gap-1.5">
+<div class="flex items-center justify-between font-label text-label text-ink-2 text-xs">
+<span>Gross: <strong class="text-ink tabular-nums font-semibold">₦362,500.00</strong></span>
+<span>Deductions: <strong class="text-danger-text tabular-nums font-semibold">-₦78,150.00</strong></span>
+</div>
+<div class="flex items-center justify-between pt-1 border-t-0 font-h3 text-h3 text-iris">
+<span>Net Take-Home</span>
+<span class="tabular-nums">₦284,350.00</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2026 Year to Date Summary Strip -->
+<section class="w-full bg-surface rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-iris text-[20px]">calendar_today</span>
+<h3 class="font-h3 text-h3 text-ink">2026 Year to Date Summary</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-label text-xs">Jan – Nov</span>
+</div>
+<!-- Data metric rows -->
+<div class="grid grid-cols-1 gap-2.5 pt-1">
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-sunken">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-info-text"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Gross Pay YTD</span>
+</div>
+<span class="font-label text-label font-bold text-ink tabular-nums">₦3,987,500.00</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-sunken">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-warning-text"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Tax Remitted (PAYE)</span>
+</div>
+<span class="font-label text-label font-bold text-ink tabular-nums">₦427,900.00</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-sunken">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-success-text"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Pension Saved (RSA)</span>
+</div>
+<span class="font-label text-label font-bold text-ink tabular-nums">₦308,000.00</span>
+</div>
+</div>
+<!-- Compliance / Trust note -->
+<div class="flex items-start gap-2 pt-1 text-ink-3">
+<span class="material-symbols-outlined text-[18px] text-iris shrink-0 mt-0.5">verified_user</span>
+<p class="font-body-sm text-body-sm text-xs leading-relaxed">
+        Statutory deductions remitted to Lagos State Internal Revenue Service (LIRS) &amp; Stanbic IBTC Pension.
+      </p>
+</div>
+</section>
+<!-- Rent Relief Card -->
+<section class="w-full bg-surface rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-secondary-container/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">home_work</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-h3 text-h3 text-ink leading-snug">Rent relief</h3>
+<span class="font-body-sm text-body-sm text-xs text-ink-3">Consolidated Relief Allowance (CRA)</span>
+</div>
+</div>
+<div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[14px]">check</span>
+<span class="font-label text-label text-xs font-semibold">Verified</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 p-2.5 rounded-lg bg-surface-sunken">
+<span class="font-overline text-overline text-ink-3 tracking-wider">DECLARED ANNUAL RENT</span>
+<span class="font-h2 text-h2 text-ink font-bold tabular-nums">₦1,800,000.00</span>
+<p class="font-body-sm text-body-sm text-xs text-ink-2 leading-relaxed">
+        Submitted tenancy agreement applied to 2026 PAYE tax relief computation (up to ₦500,000.00 annual cap).
+      </p>
+</div>
+<button class="w-full min-h-[44px] rounded-xl bg-surface-sunken hover:bg-surface-container active:scale-[0.98] text-ink font-label text-label font-medium flex items-center justify-center gap-2 transition-colors" id="declareRentBtn" type="button">
+<span class="material-symbols-outlined text-[20px] text-iris">cloud_upload</span>
+<span>Declare rent / Upload proof</span>
+</button>
+</section>
+<!-- Earlier Payslips History -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<h3 class="font-h3 text-h3 text-ink">Earlier payslips</h3>
+<span class="font-overline text-[11px] px-2 py-0.5 rounded-full bg-surface-container text-ink-2 font-medium">2026 FY</span>
+</div>
+<button class="font-label text-label text-xs text-iris font-semibold hover:underline min-h-[44px] flex items-center" type="button">
+        Filter Year
+      </button>
+</div>
+<!-- List of previous months -->
+<div class="flex flex-col gap-2">
+<!-- October 2026 -->
+<article class="w-full bg-surface rounded-xl p-space-sm shadow-sm flex items-center justify-between transition-colors hover:bg-surface-sunken/40">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h4 class="font-label text-label font-bold text-ink">October 2026</h4>
+<span class="font-overline text-[10px] text-success-text bg-success-bg px-1.5 py-0.2 rounded">Completed</span>
+</div>
+<span class="font-body-sm text-body-sm text-xs text-ink-3">Disbursed 28 Oct · <strong class="text-ink font-semibold tabular-nums">₦284,350.00</strong></span>
+</div>
+</div>
+<button aria-label="Download October 2026 payslip" class="w-11 h-11 rounded-xl flex items-center justify-center text-ink-2 hover:text-iris hover:bg-iris-tint active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[22px]">download</span>
+</button>
+</article>
+<!-- September 2026 -->
+<article class="w-full bg-surface rounded-xl p-space-sm shadow-sm flex items-center justify-between transition-colors hover:bg-surface-sunken/40">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h4 class="font-label text-label font-bold text-ink">September 2026</h4>
+<span class="font-overline text-[10px] text-success-text bg-success-bg px-1.5 py-0.2 rounded">Completed</span>
+</div>
+<span class="font-body-sm text-body-sm text-xs text-ink-3">Disbursed 28 Sep · <strong class="text-ink font-semibold tabular-nums">₦278,100.00</strong></span>
+</div>
+</div>
+<button aria-label="Download September 2026 payslip" class="w-11 h-11 rounded-xl flex items-center justify-center text-ink-2 hover:text-iris hover:bg-iris-tint active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[22px]">download</span>
+</button>
+</article>
+<!-- August 2026 -->
+<article class="w-full bg-surface rounded-xl p-space-sm shadow-sm flex items-center justify-between transition-colors hover:bg-surface-sunken/40">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h4 class="font-label text-label font-bold text-ink">August 2026</h4>
+<span class="font-overline text-[10px] text-success-text bg-success-bg px-1.5 py-0.2 rounded">Completed</span>
+</div>
+<span class="font-body-sm text-body-sm text-xs text-ink-3">Disbursed 28 Aug · <strong class="text-ink font-semibold tabular-nums">₦278,100.00</strong></span>
+</div>
+</div>
+<button aria-label="Download August 2026 payslip" class="w-11 h-11 rounded-xl flex items-center justify-center text-ink-2 hover:text-iris hover:bg-iris-tint active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[22px]">download</span>
+</button>
+</article>
+<!-- July 2026 -->
+<article class="w-full bg-surface rounded-xl p-space-sm shadow-sm flex items-center justify-between transition-colors hover:bg-surface-sunken/40">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-sunken flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h4 class="font-label text-label font-bold text-ink">July 2026</h4>
+<span class="font-overline text-[10px] text-success-text bg-success-bg px-1.5 py-0.2 rounded">Completed</span>
+</div>
+<span class="font-body-sm text-body-sm text-xs text-ink-3">Disbursed 28 Jul · <strong class="text-ink font-semibold tabular-nums">₦278,100.00</strong></span>
+</div>
+</div>
+<button aria-label="Download July 2026 payslip" class="w-11 h-11 rounded-xl flex items-center justify-center text-ink-2 hover:text-iris hover:bg-iris-tint active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[22px]">download</span>
+</button>
+</article>
+</div>
+</section>
+<!-- Support Footer Help Link -->
+<footer class="pt-2 pb-4 text-center">
+<div class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-surface text-ink-2 shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-iris">help_outline</span>
+<span class="font-body-sm text-body-sm text-xs">Questions regarding your tax or deductions?</span>
+<a class="font-label text-label text-xs font-semibold text-iris hover:underline" href="#payroll-help">HR Payroll Desk</a>
+</div>
+</footer>
+<!-- Temporary Feedback Toast (Hidden by default) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-ink text-surface font-label text-xs py-2 px-4 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center gap-2" id="toastMessage">
+<span class="material-symbols-outlined text-[18px] text-lime">check_circle</span>
+<span id="toastContent">Action completed</span>
+</div>
+</div>
+<script>
+  (function () {
+    const toggleBtn = document.getElementById('toggleBreakdownBtn');
+    const breakdownDrawer = document.getElementById('breakdownDrawer');
+    const chevron = document.getElementById('accordionChevron');
+    const toast = document.getElementById('toastMessage');
+    const toastContent = document.getElementById('toastContent');
+
+    function showToast(msg) {
+      if (!toast) return;
+      toastContent.textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    if (toggleBtn && breakdownDrawer && chevron) {
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = !breakdownDrawer.classList.contains('hidden');
+        if (isOpen) {
+          breakdownDrawer.classList.add('hidden');
+          chevron.style.transform = 'rotate(0deg)';
+          toggleBtn.setAttribute('aria-expanded', 'false');
+        } else {
+          breakdownDrawer.classList.remove('hidden');
+          chevron.style.transform = 'rotate(180deg)';
+          toggleBtn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
+
+    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+    if (downloadPdfBtn) {
+      downloadPdfBtn.addEventListener('click', () => {
+        showToast('Preparing PDF advice: PAY-2026-11...');
+      });
+    }
+
+    const shareSlipBtn = document.getElementById('shareSlipBtn');
+    if (shareSlipBtn) {
+      shareSlipBtn.addEventListener('click', () => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Kxmeleon Payslip - Nov 2026',
+            text: 'Official monthly salary payment advice: PAY-2026-11'
+          }).catch(() => {});
+        } else {
+          showToast('Payment advice reference copied');
+        }
+      });
+    }
+
+    const declareRentBtn = document.getElementById('declareRentBtn');
+    if (declareRentBtn) {
+      declareRentBtn.addEventListener('click', () => {
+        showToast('Opening tenancy upload dialog...');
+      });
+    }
+
+    // Attach listener to individual download buttons
+    document.querySelectorAll('[aria-label^="Download"]').forEach((btn) => {
+      if (btn.id !== 'downloadPdfBtn') {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showToast('Downloading archived payment advice...');
+        });
+      }
+    });
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(22,22,42,0.05)]" data-active-classes="text-iris bg-iris-tint"><div class="flex justify-between items-center h-20 px-space-xs"><a class="flex-1 flex flex-col items-center justify-center py-1 gap-1 text-ink-3 transition-colors rounded-xl min-h-[44px]" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-overline text-overline text-[10px] leading-tight">Home</span></a><a class="flex-1 flex flex-col items-center justify-center py-1 gap-1 text-ink-3 transition-colors rounded-xl min-h-[44px] relative" data-path="approvals" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">check_circle</span><span class="absolute -top-1 -right-2 min-w-[16px] h-4 px-1 rounded-full bg-destructive text-surface font-label text-[10px] flex items-center justify-center">3</span></div><span class="font-overline text-overline text-[10px] leading-tight">Approvals</span></a><div class="flex items-center justify-center px-1"><a aria-label="Create new request" class="w-12 h-12 rounded-full bg-iris text-on-iris flex items-center justify-center shadow-[0_8px_20px_-4px_rgba(90,75,219,0.4)] hover:bg-iris-hover transition-transform active:scale-95" data-path="new-request" href="#"><span class="material-symbols-outlined text-[26px]">add</span></a></div><a aria-current="page" class="flex-1 flex flex-col items-center justify-center py-1 gap-1 transition-colors rounded-xl min-h-[44px] text-iris bg-iris-tint" data-path="my-payslips" href="#"><span class="material-symbols-outlined text-[22px]">receipt_long</span><span class="font-overline text-overline text-[10px] leading-tight">Payslips</span></a><a class="flex-1 flex flex-col items-center justify-center py-1 gap-1 text-ink-3 transition-colors rounded-xl min-h-[44px]" data-path="more-menu" href="#"><span class="material-symbols-outlined text-[22px]">more_horiz</span><span class="font-overline text-overline text-[10px] leading-tight">More</span></a></div></nav></body></html>

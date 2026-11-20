@@ -17,6 +17,7 @@ from app.authz.engine import Resource
 from app.core import clock
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.core.formatting import format_money
+from app.core.money import parse_money
 from app.core.numbering import next_number
 from app.files import service as files
 from app.identity.models import User
@@ -124,7 +125,7 @@ def create(
     title = _title(title)
     total = ZERO
     if kind == "advance":
-        total = config.parse_money(amount, "amount") or ZERO
+        total = parse_money(amount, "amount") or ZERO
         if total <= 0:
             raise ValidationFailed(field_errors={"amount": "Enter an amount above zero."})
         advance_id = None
@@ -179,7 +180,7 @@ def update_header(
     before = {"title": doc.title, "total": str(doc.total), "advance": str(doc.advance_id)}
     doc.title = _title(title)
     if doc.kind == "advance":
-        total = config.parse_money(amount, "amount") or ZERO
+        total = parse_money(amount, "amount") or ZERO
         if total <= 0:
             raise ValidationFailed(field_errors={"amount": "Enter an amount above zero."})
         doc.total = total
@@ -241,7 +242,7 @@ def save_line(
         errors["cost_centre_id"] = "Choose a cost centre."
     if errors:
         raise ValidationFailed(field_errors=errors)
-    value = config.parse_money(amount, "amount") or ZERO
+    value = parse_money(amount, "amount") or ZERO
     if value <= 0:
         raise ValidationFailed(field_errors={"amount": "Enter an amount above zero."})
     assert day is not None and category is not None  # noqa: S101
@@ -495,7 +496,7 @@ def _apply_corrections(
         line = lines.get(line_id)
         if line is None or not text.strip():
             continue
-        value = config.parse_money(text, f"amount_{line_id}") or ZERO
+        value = parse_money(text, f"amount_{line_id}") or ZERO
         if value <= 0:
             raise ValidationFailed(
                 field_errors={f"amount_{line_id}": "Enter an amount above zero."}
@@ -750,7 +751,7 @@ def _check_repayment(
     db: Session, advance: ExpenseDocument, amount: str, received_on: date | None, method: str
 ) -> Decimal:
     left = outstanding(db, advance)
-    value = config.parse_money(amount, "repay_amount") or ZERO
+    value = parse_money(amount, "repay_amount") or ZERO
     errors = {}
     if value <= 0:
         errors["repay_amount"] = "Enter an amount above zero."

@@ -23,6 +23,7 @@ dependencies = [
     "pyyaml>=6.0",
     "qrcode>=8.0",
     "redis>=5.2",
+    "reportlab>=4.2",
     "sqlalchemy>=2.0.36",
     "uvicorn[standard]>=0.32",
 ]
@@ -86,7 +87,7 @@ plugins = ["pydantic.mypy"]
 warn_unreachable = true
 
 [[tool.mypy.overrides]]
-module = ["celery.*", "kombu.*", "qrcode.*", "filetype.*"]
+module = ["celery.*", "kombu.*", "qrcode.*", "filetype.*", "reportlab.*"]
 ignore_missing_imports = true
 
 # ---------------------------------------------------------------- pytest
@@ -134,6 +135,10 @@ ignore_imports = [
   "app.modules.attendance.routes_web -> app.web.*",
   "app.modules.expenses.routes_web -> fastapi",
   "app.modules.expenses.routes_web -> app.web.*",
+  "app.modules.payroll.routes_web -> fastapi",
+  "app.modules.payroll.routes_web -> app.web.*",
+  "app.modules.payroll.routes_self -> fastapi",
+  "app.modules.payroll.routes_self -> app.web.*",
   "app.files.routes_web -> fastapi",
   "app.files.routes_web -> app.web.*",
   "app.files.web -> fastapi",

@@ -1,0 +1,134 @@
+{# Payroll → People's pay: pay records and recurring deductions (compensation class).
+   Design: design/stitch/exports/payroll.people.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("People's pay", "Salary data is seen only by payroll and the person.") %}
+  <form method="get" action="/payroll/people" role="search">
+    <label for="f-q" class="sr-only">Search people</label>
+    <input id="f-q" name="q" value="{{ q }}" class="kx-input h-10 w-56" placeholder="Search people">
+  </form>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)]">
+  <ul class="kx-card max-h-[70vh] self-start divide-y divide-line overflow-y-auto" aria-label="People">
+    {% for p in rows %}
+    {% set info = summary.get(p.id) %}
+    <li>
+      <a href="/payroll/people?selected={{ p.id }}&q={{ q }}" class="flex items-center gap-3 px-4 py-3 transition-colors duration-base hover:bg-surface-sunken/60 {{ 'bg-iris-tint/50' if selected and selected.id == p.id }}">
+        <span class="min-w-0 flex-1"><span class="block truncate font-medium">{{ p.full_name }}</span><span class="block text-xs text-ink-3">{{ info[0] if info else "No pay set" }}</span></span>
+        {% if info %}<span class="text-body-sm tnum">{{ info[1] | money }}</span>{% endif %}
+      </a>
+    </li>
+    {% else %}
+    <li class="px-4 py-6 text-body-sm text-ink-3">No one found.</li>
+    {% endfor %}
+  </ul>
+
+  {% if selected %}
+  <div class="space-y-6">
+    <section class="kx-card kx-enter p-5 md:p-6" aria-labelledby="h-person">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div><h2 id="h-person" class="font-h2 text-h2">{{ selected.full_name }}</h2><p class="text-body-sm text-ink-3">{{ selected.employee_number or "" }}</p></div>
+        {% if history %}<p class="text-right"><span class="block text-xs text-ink-3">Monthly gross now</span><span class="font-stat text-h1 tnum">{{ history[0].monthly_gross | money }}</span></p>{% endif %}
+      </div>
+      {% if history %}
+      <ol class="mt-5 space-y-3">
+        {% for h in history %}
+        <li class="rounded-2xl border border-line p-4 {{ 'bg-surface-sunken/40' if h.end_date }}">
+          <p class="flex flex-wrap items-center justify-between gap-2 text-body-sm"><span class="font-semibold">{{ h.pay_group }}{% if h.structure %} · {{ h.structure }}{% endif %}</span><span class="text-xs text-ink-3">From {{ h.start_date | date }}{% if h.end_date %} to {{ h.end_date | date }}{% else %} · current{% endif %}</span></p>
+          <dl class="mt-2 grid gap-x-6 gap-y-1 text-body-sm sm:grid-cols-2">
+            {% for cid, name, calc, amount in h.amounts %}<div class="flex justify-between gap-3"><dt class="text-ink-2">{{ name }}</dt><dd class="tnum">{{ amount | money }}</dd></div>{% endfor %}
+          </dl>
+          {% if h.reason %}<p class="mt-2 text-xs text-ink-3">{{ h.reason }}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+      {% else %}
+      <p class="mt-4 text-body-sm text-ink-3">No pay set yet, so they aren't in any payroll run.</p>
+      {% endif %}
+    </section>
+
+    {% if can_manage %}
+    {% set errs = errors if editing == "pay" else {} %}
+    {% set v = values if editing == "pay" else {} %}
+    {% set current = history[0] if history else none %}
+    <form method="post" action="/payroll/people/{{ selected.id }}/pay" class="kx-card space-y-4 p-5 md:p-6" novalidate>
+      {{ ui.csrf_field() }}
+      <h2 class="font-h3 text-h3">{{ "Change pay" if current else "Set pay" }}</h2>
+      {% if errs.get("form") %}{{ ui.alert("danger", errs["form"]) }}{% endif %}
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div>
+          <label for="f-pay_group_id" class="kx-label">Pay group</label>
+          <select id="f-pay_group_id" name="pay_group_id" class="kx-input">{% for g in groups %}<option value="{{ g.id }}" {% if (v.get("pay_group_id") or (current.pay_group_id|string if current else "")) == g.id|string %}selected{% endif %}>{{ g.name }}</option>{% endfor %}</select>
+          {{ ui.field_error(errs, "pay_group_id") }}
+        </div>
+        <div>
+          <label for="f-structure_id" class="kx-label">Salary structure</label>
+          <select id="f-structure_id" name="structure_id" class="kx-input"><option value="">None</option>{% for s in structures %}<option value="{{ s.id }}" {% if (v.get("structure_id") or (current.structure_id|string if current and current.structure_id else "")) == s.id|string %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</select>
+        </div>
+        {{ ui.text_field("start_date", "From", value=v.get("start_date") or today.isoformat(), type="date", errors=errs) }}
+      </div>
+      <fieldset class="min-w-0">
+        <legend class="kx-label">Monthly amounts</legend>
+        <div class="grid gap-3 sm:grid-cols-2">
+          {% for c in earnings %}
+          {% set existing = (current.amounts | selectattr(0, "equalto", c.id) | list) if current else [] %}
+          <div class="grid grid-cols-[minmax(0,1fr)_150px] items-center gap-3">
+            <label for="amt-{{ c.id }}" class="text-body-sm">{{ c.name }}{% if c.calculation == "percent" %} <span class="text-xs text-ink-3">({{ (c.percent * 100) | round(2) }}% of base)</span>{% endif %}</label>
+            <input type="hidden" name="component_id" value="{{ c.id }}">
+            {% if c.calculation == "percent" %}
+            <select id="amt-{{ c.id }}" name="amount" class="kx-input"><option value="">Not paid</option><option value="on" {% if existing %}selected{% endif %}>Paid</option></select>
+            {% else %}
+            <input id="amt-{{ c.id }}" name="amount" value="{{ v.amounts.get(c.id|string, '') if v else (existing[0][3] if existing else '') }}" inputmode="decimal" class="kx-input text-right tnum" placeholder="0.00">
+            {% endif %}
+          </div>
+          {% if errs.get("amount_" ~ c.id) %}<p class="kx-field-error sm:col-span-2">{{ errs["amount_" ~ c.id] }}</p>{% endif %}
+          {% endfor %}
+        </div>
+      </fieldset>
+      {{ ui.text_field("reason", "Reason", value=v.get("reason"), errors=errs, hint="e.g. Annual review, promotion") }}
+      <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save pay</button></div>
+    </form>
+    {% endif %}
+
+    <section id="deductions" class="kx-card p-5 md:p-6" aria-labelledby="h-deductions">
+      <h2 id="h-deductions" class="font-h3 text-h3">Recurring deductions</h2>
+      {% if deductions %}
+      <ul class="mt-3 divide-y divide-line text-body-sm">
+        {% for d, name in deductions %}
+        <li class="flex flex-wrap items-center justify-between gap-3 py-2.5">
+          <span><span class="font-medium">{{ name }}</span> <span class="tnum">{{ d.amount | money }}</span> a month <span class="text-xs text-ink-3">· {{ d.start_month.strftime("%b %Y") }} to {{ d.end_month.strftime("%b %Y") if d.end_month else "ongoing" }}{% if d.note %} · {{ d.note }}{% endif %}</span></span>
+          {% if can_manage and (not d.end_month or d.end_month >= today.replace(day=1)) %}
+          <form method="post" action="/payroll/deductions/{{ d.id }}/end">{{ ui.csrf_field() }}<input type="hidden" name="employee_id" value="{{ selected.id }}"><button type="submit" class="kx-btn-ghost h-9 px-3 text-xs">End this month</button></form>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}<p class="mt-3 text-body-sm text-ink-3">None.</p>{% endif %}
+      {% if can_manage %}
+      {% set errs = errors if editing == "deduction" else {} %}
+      {% set v = values if editing == "deduction" else {} %}
+      <form method="post" action="/payroll/people/{{ selected.id }}/deductions" class="mt-4 grid gap-3 rounded-2xl border border-line bg-surface-sunken/40 p-4 sm:grid-cols-2 xl:grid-cols-4 xl:items-end" novalidate>
+        {{ ui.csrf_field() }}
+        <div>
+          <label for="f-deduction_component_id" class="kx-label">Deduction</label>
+          <select id="f-deduction_component_id" name="deduction_component_id" class="kx-input"><option value="">Choose…</option>{% for c in deduction_types %}<option value="{{ c.id }}" {% if v.get("deduction_component_id") == c.id|string %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select>
+          {{ ui.field_error(errs, "deduction_component_id") }}
+        </div>
+        {{ ui.text_field("deduction_amount", "Monthly (₦)", value=v.get("deduction_amount"), errors=errs, inputmode="decimal") }}
+        {{ ui.text_field("start_month", "From", value=v.get("start_month") or today.strftime("%Y-%m"), type="month", errors=errs) }}
+        {{ ui.text_field("end_month", "Until (optional)", value=v.get("end_month"), type="month", errors=errs) }}
+        <div class="sm:col-span-2 xl:col-span-3">{{ ui.text_field("deduction_note", "Note (optional)", value=v.get("deduction_note"), errors=errs) }}</div>
+        <button type="submit" class="kx-btn-secondary self-end">Add deduction</button>
+      </form>
+      {% endif %}
+    </section>
+  </div>
+  {% else %}
+  <section class="kx-card">{% call ui.empty_state("users", "No one to show", "People you may see appear here.") %}{% endcall %}</section>
+  {% endif %}
+</div>
+{% endblock %}

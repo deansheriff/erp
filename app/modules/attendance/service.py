@@ -7,7 +7,7 @@ from dataclasses import replace
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.audit.service import record_by
@@ -910,3 +910,25 @@ def overtime_waiting(db: Session, actor: Actor) -> list[OvertimeView]:
 
 def waiting_count(db: Session, actor: Actor) -> int:
     return len(corrections_waiting(db, actor)) + len(overtime_waiting(db, actor))
+
+
+# ------------------------------------------------------------------ for payroll
+
+
+def approved_overtime_minutes(
+    db: Session, employee_ids: list[uuid.UUID], start: date, end: date
+) -> dict[uuid.UUID, int]:
+    """Approved overtime per person for work dates between two dates (inclusive)."""
+    if not employee_ids:
+        return {}
+    rows = db.execute(
+        select(OvertimeEntry.employee_id, func.sum(OvertimeEntry.minutes))
+        .where(
+            OvertimeEntry.employee_id.in_(employee_ids),
+            OvertimeEntry.status == "approved",
+            OvertimeEntry.work_date >= start,
+            OvertimeEntry.work_date <= end,
+        )
+        .group_by(OvertimeEntry.employee_id)
+    ).all()
+    return {employee_id: int(minutes or 0) for employee_id, minutes in rows}

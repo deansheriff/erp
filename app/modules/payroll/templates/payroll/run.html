@@ -1,0 +1,103 @@
+{# Payroll → one run: totals, warnings, everyone's pay and the next step.
+   Design: design/stitch/exports/payroll.run.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% from "payroll/_tiles.html" import money_tile %}
+
+{% macro action(name, label, style="kx-btn-primary", icon_name="check") -%}
+<form method="post" action="/payroll/runs/{{ run.id }}/{{ name }}">{{ ui.csrf_field() }}<button type="submit" class="{{ style }}">{{ ui.icon(icon_name, "sm") }} {{ label }}</button></form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header(run.period ~ " · " ~ run.pay_group, run.people ~ (" person" if run.people == 1 else " people"), tones[run.status], run.status | capitalize) %}
+  {% if run.can.delete %}{{ action("delete", "Delete run", "kx-btn-ghost text-danger-text", "trash-2") }}{% endif %}
+  {% if run.can.calculate %}{{ action("calculate", "Recalculate" if run.status == "calculated" else "Calculate", "kx-btn-secondary" if run.status == "calculated" else "kx-btn-primary", "calculator") }}{% endif %}
+  {% if run.can.review %}{{ action("review", "Mark reviewed") }}{% endif %}
+  {% if run.can.approve %}{{ action("approve", "Approve") }}{% endif %}
+  {% if run.can.post %}{{ action("post", "Post") }}{% endif %}
+  {% if run.can.pay %}{{ action("pay", "Mark paid", icon_name="banknote") }}{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% for reason in run.blocked.values() %}<div class="mt-3">{{ ui.alert("info", reason) }}</div>{% endfor %}
+{% if run.returned_note and run.status == "draft" %}<div class="mt-3">{{ ui.alert("warning", "Sent back: " ~ run.returned_note) }}</div>{% endif %}
+
+<ol class="kx-card mt-6 grid grid-cols-2 gap-3 p-4 sm:grid-cols-3 lg:grid-cols-6" aria-label="Steps">
+  {% for label, by, at in run.steps %}
+  <li class="flex items-start gap-2 text-body-sm">
+    <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold {{ 'bg-success-bg text-success-text' if by else 'bg-surface-sunken text-ink-3' }}">{% if by %}{{ ui.icon("check", "sm") }}{% else %}{{ loop.index }}{% endif %}</span>
+    <span class="min-w-0"><span class="block font-semibold {{ 'text-ink-3' if not by }}">{{ label }}</span>{% if by %}<span class="block truncate text-xs text-ink-3">{{ by }}{% if at %}, {{ at | datetime }}{% endif %}</span>{% endif %}</span>
+  </li>
+  {% endfor %}
+</ol>
+
+<section class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label="Totals">
+  {{ money_tile("Gross", run.gross) }}
+  {{ money_tile("PAYE", run.paye) }}
+  {{ money_tile("Pension (employee)", run.pension_employee) }}
+  {{ money_tile("NHF", run.nhf) }}
+  {{ money_tile("Net pay", run.net) }}
+  {{ money_tile("Employer cost", run.employer_cost) }}
+</section>
+
+{% if run.warnings %}
+<section class="kx-card mt-6 p-5" aria-labelledby="h-warn">
+  <h2 id="h-warn" class="flex items-center gap-2 font-h3 text-h3 text-warning-text">{{ ui.icon("circle-alert", "sm") }} Check before the next step ({{ run.warnings | length }})</h2>
+  <ul class="mt-3 list-disc space-y-1 pl-5 text-body-sm text-ink-2">{% for w in run.warnings %}<li>{{ w }}</li>{% endfor %}</ul>
+</section>
+{% endif %}
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Everyone's pay">
+  {% if run.payslips %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[900px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3">
+        <tr><th class="px-4 py-3 text-left font-semibold">Person</th><th class="px-3 py-3 text-right font-semibold">Days</th><th class="px-3 py-3 text-right font-semibold">Gross</th><th class="px-3 py-3 text-right font-semibold">Taxable</th><th class="px-3 py-3 text-right font-semibold">PAYE</th><th class="px-3 py-3 text-right font-semibold">Pension</th><th class="px-3 py-3 text-right font-semibold">NHF</th><th class="px-3 py-3 text-right font-semibold">Other</th><th class="px-4 py-3 text-right font-semibold">Net</th></tr>
+      </thead>
+      {% for s in run.payslips %}
+      <tbody class="border-b border-line" x-data="menu">
+        <tr class="align-top">
+          <td class="px-4 py-3">
+            <button type="button" class="flex items-center gap-1.5 text-left font-semibold [&[aria-expanded=true]_svg:first-child]:rotate-90" x-on:click="toggle" x-bind:aria-expanded="open" aria-controls="slip-{{ s.id }}">{{ ui.icon("chevron-right", "sm", "transition-transform") }} {{ s.name }}{% if s.warnings %} {{ ui.icon("circle-alert", "sm", "text-warning-text") }}{% endif %}</button>
+            {% if s.number %}<span class="block pl-6 text-xs text-ink-3">{{ s.number }}</span>{% endif %}
+          </td>
+          <td class="px-3 py-3 text-right tnum">{{ s.days_paid }}{% if s.days_paid != s.days_in_month %}<span class="text-ink-3">/{{ s.days_in_month }}</span>{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum">{{ s.gross | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ s.taxable | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ s.paye | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ s.pension_employee | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ s.nhf | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ s.other_deductions | money }}</td>
+          <td class="px-4 py-3 text-right font-semibold tnum">{{ s.net | money }}</td>
+        </tr>
+        <tr id="slip-{{ s.id }}" x-show="open" x-cloak>
+          <td colspan="9" class="bg-surface-sunken/40 px-4 pb-4 pt-1">
+            <div class="grid gap-x-10 gap-y-1 pl-6 text-xs text-ink-2 md:grid-cols-2">
+              {% for l in s.lines %}<p class="flex justify-between gap-6"><span>{{ l.name }}{% if l.detail %} <span class="text-ink-3">· {{ l.detail }}</span>{% endif %}</span><span class="tnum {{ 'text-danger-text' if l.kind == 'deduction' }}">{{ '−' if l.kind == 'deduction' }}{{ l.amount | money }}</span></p>{% endfor %}
+            </div>
+            {% for w in s.warnings %}<p class="mt-2 pl-6 text-xs text-warning-text">{{ w }}</p>{% endfor %}
+            {% if s.file_id %}<a href="/files/{{ s.file_id }}" target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1 pl-6 text-xs font-semibold text-iris">{{ ui.icon("file-text", "sm") }} Payslip PDF</a>{% endif %}
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("calculator", "Not calculated yet", "Calculate the run to see everyone's pay. People are included when their pay is in this group.") %}{% endcall %}
+  {% endif %}
+</section>
+
+{% if run.can.send_back %}
+<form method="post" action="/payroll/runs/{{ run.id }}/send_back" class="kx-card mt-6 space-y-3 p-5" novalidate>
+  {{ ui.csrf_field() }}
+  <h2 class="font-h3 text-h3">Send back to draft</h2>
+  <div>
+    <label for="f-note" class="kx-label">What needs changing</label>
+    <textarea id="f-note" name="note" rows="2" class="kx-input h-auto py-2.5">{{ note }}</textarea>
+    {{ ui.field_error(errors, "note") }}
+  </div>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-secondary">{{ ui.icon("undo-2", "sm") }} Send back</button></div>
+</form>
+{% endif %}
+{% endblock %}

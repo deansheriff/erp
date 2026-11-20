@@ -15,6 +15,9 @@ auditor:
   leave.balance.read: organization
   leave.request.read: organization
   org.structure.read: organization
+  payroll.pay.read: organization
+  payroll.payslip.read: organization
+  payroll.run.read: organization
 employee:
   attendance.clock.use: self
   attendance.correction.request: self
@@ -33,6 +36,9 @@ employee:
   leave.balance.read: self
   leave.request.create: self
   leave.request.read: self
+  payroll.pay.read: self
+  payroll.payslip.read: self
+  payroll.relief.declare: self
 expense_approver:
   expenses.claim.approve: team
   expenses.claim.read: team
@@ -41,8 +47,15 @@ finance_manager:
   expenses.claim.approve_finance: organization
   expenses.claim.read: organization
   expenses.settings.manage: organization
+  payroll.run.approve: organization
+  payroll.run.post: organization
+  payroll.run.read: organization
+  payroll.run.review: organization
+  payroll.settings.manage: organization
 finance_officer:
   expenses.claim.read: organization
+  payroll.run.pay: organization
+  payroll.run.read: organization
 fleet_manager: {}
 hr_manager:
   attendance.correction.request: organization
@@ -101,6 +114,7 @@ hr_officer:
   leave.request.create: organization
   leave.request.read: organization
   org.structure.read: organization
+  payroll.relief.verify: organization
 inventory_clerk: {}
 it_support:
   hr.checklist.it: organization
@@ -168,7 +182,28 @@ organization_administrator:
   org.assignment.manage: organization
   org.structure.manage: organization
   org.structure.read: organization
-payroll_officer: {}
+  payroll.pay.manage: organization
+  payroll.pay.read: organization
+  payroll.payslip.read: organization
+  payroll.relief.declare: organization
+  payroll.relief.verify: organization
+  payroll.run.approve: organization
+  payroll.run.pay: organization
+  payroll.run.post: organization
+  payroll.run.prepare: organization
+  payroll.run.read: organization
+  payroll.run.review: organization
+  payroll.settings.manage: organization
+  payroll.structure.manage: organization
+payroll_officer:
+  payroll.pay.manage: organization
+  payroll.pay.read: organization
+  payroll.payslip.read: organization
+  payroll.relief.verify: organization
+  payroll.run.prepare: organization
+  payroll.run.read: organization
+  payroll.run.review: organization
+  payroll.structure.manage: organization
 procurement_officer: {}
 reimburser:
   expenses.claim.read: organization
@@ -227,6 +262,19 @@ super_administrator:
   org.assignment.manage: organization
   org.structure.manage: organization
   org.structure.read: organization
+  payroll.pay.manage: organization
+  payroll.pay.read: organization
+  payroll.payslip.read: organization
+  payroll.relief.declare: organization
+  payroll.relief.verify: organization
+  payroll.run.approve: organization
+  payroll.run.pay: organization
+  payroll.run.post: organization
+  payroll.run.prepare: organization
+  payroll.run.read: organization
+  payroll.run.review: organization
+  payroll.settings.manage: organization
+  payroll.structure.manage: organization
   system.branding.manage: organization
   system.mail.manage: organization
   system.security.manage: organization

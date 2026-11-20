@@ -5,8 +5,11 @@ Set KX_TEST_DATABASE_URL and KX_TEST_MIGRATOR_DATABASE_URL (see .env.example). I
 missing database is a failure; locally, database tests are skipped with a clear reason.
 """
 
+import importlib.util
 import os
 from collections.abc import Iterator
+from pathlib import Path
+from types import ModuleType
 
 import pytest
 
@@ -114,6 +117,15 @@ IDENTITY_TABLES = (
 )
 
 
+def _payroll_migration() -> ModuleType:
+    path = Path(__file__).parents[1] / "migrations" / "versions" / "0010_payroll.py"
+    spec = importlib.util.spec_from_file_location("migration_0010_payroll", path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 @pytest.fixture()
 def clean_db(migrated_db: None) -> Iterator[None]:
     """Empty identity data and mark the installation as not set up. Uses the migrator
@@ -150,6 +162,11 @@ def clean_db(migrated_db: None) -> Iterator[None]:
                 "AS r(c, m, d) ON r.c = t.code"
             )
         )
+        # Payroll setup is seeded by its migration; put the defaults back.
+        conn.execute(
+            text("TRUNCATE pay_groups, pay_components, salary_structures, statutory_sets CASCADE")
+        )
+        _payroll_migration().seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

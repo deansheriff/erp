@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-dim": "#d9dade",
+        "on-secondary-container": "#536b00",
+        "primary-container": "#5a4bdb",
+        "error": "#ba1a1a",
+        "lime-ink": "#4D7A0A",
+        "on-error": "#ffffff",
+        "error-container": "#ffdad6",
+        "ink-2": "#4B4B66",
+        "secondary": "#4f6600",
+        "secondary-container": "#c4ef49",
+        "danger-text": "#B4232F",
+        "canvas": "#F6F6FA",
+        "warning-text": "#8A4B00",
+        "tertiary-fixed-dim": "#ffb68b",
+        "warning-bg": "#FFF1D6",
+        "tertiary": "#7a3700",
+        "iris-hover": "#4A3CC4",
+        "outline": "#787586",
+        "outline-variant": "#c8c4d7",
+        "line": "#E4E4EE",
+        "surface-container-lowest": "#ffffff",
+        "danger-bg": "#FFE4E6",
+        "ink": "#16162A",
+        "lime": "#C5F04A",
+        "on-primary-fixed": "#140067",
+        "on-background": "#1a1c1f",
+        "surface-tint": "#5646d7",
+        "on-tertiary-container": "#ffd7c1",
+        "on-secondary-fixed-variant": "#3b4d00",
+        "inverse-on-surface": "#f0f0f4",
+        "primary": "#412ec2",
+        "on-iris": "#FFFFFF",
+        "background": "#f9f9fd",
+        "primary-fixed-dim": "#c5c0ff",
+        "line-strong": "#8B8BA6",
+        "on-tertiary-fixed": "#321300",
+        "primary-fixed": "#e4dfff",
+        "iris": "#5A4BDB",
+        "on-primary-fixed-variant": "#3d28be",
+        "success-text": "#0F6B3E",
+        "surface-variant": "#e2e2e6",
+        "surface": "#FFFFFF",
+        "surface-raised": "#FFFFFF",
+        "info-bg": "#DFEBFF",
+        "on-secondary": "#ffffff",
+        "on-tertiary": "#ffffff",
+        "secondary-fixed": "#c7f24c",
+        "info-text": "#1D55B8",
+        "surface-container-high": "#e8e8ec",
+        "surface-sunken": "#EFEFF6",
+        "surface-container-highest": "#e2e2e6",
+        "success-bg": "#DDF7E8",
+        "tertiary-container": "#9f4a00",
+        "on-surface-variant": "#474554",
+        "destructive": "#C42836",
+        "on-tertiary-fixed-variant": "#743400",
+        "surface-container-low": "#f3f3f7",
+        "inverse-primary": "#c5c0ff",
+        "on-secondary-fixed": "#161f00",
+        "surface-bright": "#f9f9fd",
+        "on-error-container": "#93000a",
+        "on-primary": "#ffffff",
+        "surface-container": "#ededf1",
+        "on-surface": "#1a1c1f",
+        "on-primary-container": "#e0dbff",
+        "tertiary-fixed": "#ffdbc8",
+        "secondary-fixed-dim": "#acd530",
+        "ink-3": "#626280",
+        "inverse-surface": "#2e3034",
+        "iris-tint": "#EEECFD"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-2xl": "3rem",
+        "margin": "2rem",
+        "space-xl": "2rem",
+        "space-sm": "0.5rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "space-lg": "1.5rem",
+        "space-3xl": "4rem",
+        "space-md": "1rem"
+      },
+      "fontFamily": {
+        "label": ["Inter"],
+        "body-sm": ["Inter"],
+        "stat": ["Plus Jakarta Sans"],
+        "display": ["Plus Jakarta Sans"],
+        "overline": ["Inter"],
+        "h3": ["Plus Jakarta Sans"],
+        "h1": ["Plus Jakarta Sans"],
+        "h2": ["Plus Jakarta Sans"],
+        "body": ["Inter"]
+      },
+      "fontSize": {
+        "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "stat": ["30px", {"lineHeight": "36px", "fontWeight": "700"}],
+        "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+        "overline": ["12px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600"}],
+        "h3": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+        "h2": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-canvas font-body text-body text-ink antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-space-md shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col gap-space-lg"><div class="px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-[#047857] flex items-center justify-center text-on-primary shadow-[0_0_12px_rgba(4,120,87,0.35)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink leading-tight tracking-tight">Kxmeleon</span><span class="font-overline text-overline text-ink-3 tracking-wider uppercase">Adeyemi Holdings Ltd</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-ink transition-colors">unfold_more</span></div><div class="px-space-md"><div class="p-space-sm rounded-xl bg-[#047857]/[0.12] flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-[#047857] shadow-[0_0_8px_#047857]"></div><div class="flex flex-col"><span class="font-label text-label text-ink font-semibold">Payroll Suite</span><span class="font-overline text-overline text-[#047857] font-semibold">Enterprise Active</span></div></div><span class="material-symbols-outlined text-[#047857] text-[18px]">payments</span></div></div><div class="px-space-md"><span class="px-space-sm font-overline text-overline text-ink-3 tracking-wider uppercase">Adeyemi Holdings Ltd</span><nav class="flex flex-col gap-space-xs mt-space-xs" data-active-classes="bg-iris-tint text-iris font-semibold"><a aria-current="page" class="group relative flex items-center gap-space-sm px-space-md py-space-sm rounded-xl transition-all bg-iris-tint text-iris font-semibold" data-path="peoples-pay" href="#"><span class="absolute left-1.5 w-1.5 h-5 rounded-full bg-[#047857]"></span><span class="material-symbols-outlined text-[20px] ml-1 text-ink-2 group-hover:text-ink">group</span><span class="font-label text-label">People's pay</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="payroll-runs" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">autorenew</span><span class="font-label text-label">Payroll runs</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="payslips" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">receipt_long</span><span class="font-label text-label">Payslips</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="salary-structures" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">account_tree</span><span class="font-label text-label">Salary structures</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="tax-and-statutory" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">account_balance</span><span class="font-label text-label">Tax &amp; statutory</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">settings</span><span class="font-label text-label">Settings</span></a></nav></div></div><div class="px-space-md flex flex-col gap-space-xs"><div class="p-space-sm rounded-xl bg-surface-sunken flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-ink-3 text-[18px]">cloud_done</span><span class="font-overline text-overline text-ink-2 uppercase">Auto-Sync Active</span></div><span class="font-overline text-overline text-lime-ink font-semibold">NGN Ledger</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex items-center gap-space-sm"><span class="font-label text-label text-ink-3">Payroll</span><span class="material-symbols-outlined text-ink-3 text-[16px]">chevron_right</span><span class="font-label text-label text-ink font-semibold">People's pay</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-ink-3 text-[18px]">search</span><input class="w-80 h-11 pl-10 pr-16 bg-surface-sunken rounded-xl text-body-sm font-body-sm text-ink placeholder-ink-3 focus:outline-none focus:bg-surface transition-all" placeholder="Search people, claims, invoices..." type="text"/><kbd class="absolute right-space-sm px-space-xs py-0.5 rounded bg-surface text-ink-3 font-overline text-overline font-semibold shadow-[0_1px_2px_rgba(22,22,42,0.08)]">Ctrl K</kbd></div><div class="flex items-center gap-space-xs"><button class="h-11 px-space-md rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink flex items-center gap-space-xs transition-colors" type="button"><span class="font-label text-label text-ink-2">Approvals</span><span class="px-1.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-overline font-semibold leading-none">3</span></button><button class="relative w-11 h-11 rounded-xl bg-surface-sunken hover:bg-surface-container-high flex items-center justify-center text-ink-2 transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span></button><button class="w-11 h-11 rounded-xl bg-surface-sunken hover:bg-surface-container-high flex items-center justify-center text-ink-2 transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center gap-space-sm pl-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col"><span class="font-label text-label text-ink font-semibold leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3">Finance &amp; Payroll Admin</span></div></div></div></header><main class="w-full pt-16 px-space-xl bg-canvas min-h-screen"><div class="flex flex-col w-full pb-space-3xl gap-space-lg">
+<!-- Confidentiality / Security Banner -->
+<div class="w-full bg-surface-container-low rounded-xl px-space-md py-space-sm flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-7 h-7 rounded-lg bg-iris-tint flex items-center justify-center text-iris">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-2"><strong class="text-ink font-semibold">Strictly Confidential:</strong> Salary data is visible only to payroll and the person. (ISO 27001 &amp; NDPR compliant)</span>
+</div>
+<div class="flex items-center gap-space-xs text-ink-3 font-overline text-overline uppercase tracking-wider">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-lime-ink"></span>
+      SIEM Audited Session
+    </div>
+</div>
+<!-- Page Header Row -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-h1 text-h1 text-ink">People's pay</h1>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold uppercase">
+          Live Cycle
+        </span>
+</div>
+<p class="font-body text-body text-ink-3">
+        Manage employee remuneration packages, component breakdown, and statutory configurations.
+      </p>
+</div>
+<!-- Header Actions -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="h-11 px-space-md rounded-xl bg-surface-raised text-ink hover:bg-surface-sunken flex items-center gap-space-xs shadow-sm transition-all text-label font-label" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">history</span>
+<span>Audit log</span>
+</button>
+<button class="h-11 px-space-md rounded-xl bg-surface-raised text-ink hover:bg-surface-sunken flex items-center gap-space-xs shadow-sm transition-all text-label font-label" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">download</span>
+<span>Export salary register (CSV)</span>
+</button>
+<button class="h-11 px-space-md rounded-xl bg-iris-tint hover:bg-iris-tint/80 text-iris flex items-center gap-space-xs shadow-sm transition-all text-label font-label font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">rule_folder</span>
+<span>Bulk structure update</span>
+</button>
+</div>
+</div>
+<!-- Main 2-Column Split Workspace -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Searchable Directory (approx 380px -> xl:col-span-4) -->
+<aside class="xl:col-span-4 flex flex-col gap-space-md bg-surface-raised p-space-md rounded-xl shadow-sm">
+<div class="flex flex-col gap-space-sm">
+<!-- Search bar -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-ink-3 text-[20px]">search</span>
+<input class="w-full h-11 pl-11 pr-space-md rounded-xl bg-surface-sunken text-ink text-body-sm font-body-sm placeholder:text-ink-3 focus:outline-none focus:bg-surface transition-all" placeholder="Search by name, ID, or department..." type="text"/>
+</div>
+<!-- Filter Chips / Controls -->
+<div class="flex items-center gap-space-xs overflow-x-auto py-1">
+<button class="px-space-sm py-1 rounded-lg bg-ink text-on-primary font-label text-overline font-semibold whitespace-nowrap" type="button">
+            All (86)
+          </button>
+<button class="px-space-sm py-1 rounded-lg bg-surface-sunken text-ink-2 hover:bg-surface-container-high font-label text-overline whitespace-nowrap" type="button">
+            Staff (62)
+          </button>
+<button class="px-space-sm py-1 rounded-lg bg-surface-sunken text-ink-2 hover:bg-surface-container-high font-label text-overline whitespace-nowrap" type="button">
+            Executive (8)
+          </button>
+<button class="px-space-sm py-1 rounded-lg bg-surface-sunken text-ink-2 hover:bg-surface-container-high font-label text-overline whitespace-nowrap" type="button">
+            Contract (16)
+          </button>
+</div>
+</div>
+<!-- Employee List Container -->
+<div class="flex flex-col gap-1.5 max-h-[calc(100vh-270px)] overflow-y-auto pr-0.5">
+<!-- 1. Amaka Okafor (Active Item) -->
+<div class="p-space-sm rounded-xl bg-iris-tint/70 text-ink cursor-pointer relative shadow-sm transition-all">
+<div class="absolute left-1.5 top-3 bottom-3 w-1 bg-iris rounded-full"></div>
+<div class="pl-2 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-h3 text-h3 text-ink font-semibold">Amaka Okafor</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-medium">Staff</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00012 · Finance &amp; Accounts</span>
+<span class="font-semibold text-ink [font-variant-numeric:tabular-nums]">₦370,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>Senior Accountant</span>
+<span>•</span>
+<span class="text-lime-ink font-semibold">GL-10</span>
+</div>
+</div>
+</div>
+<!-- 2. Babatunde Adeyemi -->
+<div class="p-space-sm rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink cursor-pointer transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Babatunde Adeyemi</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Executive</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00003 · Executive Suite</span>
+<span class="font-semibold text-ink-2 [font-variant-numeric:tabular-nums]">₦1,450,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>VP Operations</span>
+<span>•</span>
+<span>GL-15</span>
+</div>
+</div>
+</div>
+<!-- 3. Chinedu Eze -->
+<div class="p-space-sm rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink cursor-pointer transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Chinedu Eze</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Staff</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00017 · Information Tech</span>
+<span class="font-semibold text-ink-2 [font-variant-numeric:tabular-nums]">₦420,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>Systems Engineer</span>
+<span>•</span>
+<span>GL-11</span>
+</div>
+</div>
+</div>
+<!-- 4. Fatima Bello -->
+<div class="p-space-sm rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink cursor-pointer transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Fatima Bello</span>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">Management</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00008 · Finance &amp; Admin</span>
+<span class="font-semibold text-ink-2 [font-variant-numeric:tabular-nums]">₦750,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>Finance Manager</span>
+<span>•</span>
+<span>GL-13</span>
+</div>
+</div>
+</div>
+<!-- 5. Segun Afolabi -->
+<div class="p-space-sm rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink cursor-pointer transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Segun Afolabi</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Staff</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00088 · Operations</span>
+<span class="font-semibold text-ink-2 [font-variant-numeric:tabular-nums]">₦280,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>Fleet Supervisor</span>
+<span>•</span>
+<span>GL-08</span>
+</div>
+</div>
+</div>
+<!-- 6. Halima Sani -->
+<div class="p-space-sm rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink cursor-pointer transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Halima Sani</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Staff</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00215 · Supply Chain</span>
+<span class="font-semibold text-ink-2 [font-variant-numeric:tabular-nums]">₦310,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>Procurement Officer</span>
+<span>•</span>
+<span>GL-09</span>
+</div>
+</div>
+</div>
+<!-- 7. Kelechi Obi -->
+<div class="p-space-sm rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink cursor-pointer transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Kelechi Obi</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Staff</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00064 · Treasury &amp; Risk</span>
+<span class="font-semibold text-ink-2 [font-variant-numeric:tabular-nums]">₦490,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>Treasury Lead</span>
+<span>•</span>
+<span>GL-11</span>
+</div>
+</div>
+</div>
+<!-- 8. Aisha Lawal -->
+<div class="p-space-sm rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 hover:text-ink cursor-pointer transition-all">
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Aisha Lawal</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Staff</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>EMP-00104 · Human Resources</span>
+<span class="font-semibold text-ink-2 [font-variant-numeric:tabular-nums]">₦385,000.00</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline text-ink-3">
+<span>HR Business Partner</span>
+<span>•</span>
+<span>GL-10</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination / Footer Count -->
+<div class="pt-space-sm flex items-center justify-between text-ink-3 font-overline text-overline uppercase tracking-wider">Adeyemi Holdings Ltd</div>
+</aside>
+<!-- RIGHT COLUMN: Detailed Pay Card & Sub-modules (xl:col-span-8) -->
+<section class="xl:col-span-8 flex flex-col gap-space-lg">
+<!-- Top Card: Selected Person & Overview KPIs -->
+<div class="bg-surface-raised rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-16 h-16 rounded-2xl bg-iris text-on-iris flex items-center justify-center font-display text-h1 font-bold shadow-md shadow-iris/20">
+              AO
+            </div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-h1 text-h1 text-ink">Amaka Okafor</h2>
+<span class="px-2 py-0.5 rounded-md bg-surface-sunken text-ink-2 font-overline text-overline font-semibold uppercase">
+                  EMP-00012
+                </span>
+<span class="px-2 py-0.5 rounded-md bg-lime text-lime-ink font-overline text-overline font-bold uppercase">
+                  GL-10
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+                Senior Accountant · Finance &amp; Accounts Division · Full-time Regular
+              </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-start md:self-auto">
+<button class="h-10 px-space-md rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink flex items-center gap-1 text-label font-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span>Profile</span>
+</button>
+<button class="h-10 px-space-md rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink flex items-center gap-1 text-label font-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+<span>Past Payslips</span>
+</button>
+</div>
+</div>
+<!-- Remuneration KPI Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Monthly Gross -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex flex-col gap-1 relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Monthly Gross Pay</span>
+<span class="material-symbols-outlined text-iris text-[18px]">payments</span>
+</div>
+<span class="font-stat text-stat text-ink font-bold [font-variant-numeric:tabular-nums]">₦370,000.00</span>
+<span class="font-overline text-overline text-success-text font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +₦45,000 vs. last cycle
+            </span>
+</div>
+<!-- Annualized Base -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Annualized Package</span>
+<span class="material-symbols-outlined text-ink-3 text-[18px]">calendar_month</span>
+</div>
+<span class="font-stat text-stat text-ink font-bold [font-variant-numeric:tabular-nums]">₦4,440,000.00</span>
+<span class="font-overline text-overline text-ink-3">Inclusive of guaranteed statutory 13th</span>
+</div>
+<!-- Estimated Net -->
+<div class="p-space-md rounded-xl bg-surface-sunken flex flex-col gap-1 relative">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Estimated Net Pay</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-raised font-overline text-[10px] font-semibold text-ink-2">Post-Tax/PEN</span>
+</div>
+<span class="font-stat text-stat text-lime-ink font-bold [font-variant-numeric:tabular-nums]">₦312,450.00</span>
+<span class="font-overline text-overline text-ink-3 [font-variant-numeric:tabular-nums]">Est. Deductions: ~₦57,550.00</span>
+</div>
+</div>
+</div>
+<!-- Settings & Tier Configurations Form Card -->
+<div class="bg-surface-raised rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-iris text-[20px]">tune</span>
+<h3 class="font-h2 text-h2 text-ink">Pay Group &amp; Salary Structure Settings</h3>
+</div>
+<span class="font-overline text-overline text-lime-ink font-semibold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-lime-ink"></span> Synchronized with HR master
+          </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Field 1: Pay Group -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label text-label text-ink-2">Pay Group</label>
+<div class="relative">
+<select class="w-full h-11 px-space-md rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm appearance-none focus:outline-none focus:bg-surface transition-all cursor-pointer">
+<option selected="" value="Staff">Staff (Standard 40h/wk)</option>
+<option value="Management">Management</option>
+<option value="Executive">Executive</option>
+<option value="Intern">Intern / NYSC Trainee</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-md top-1/2 -translate-y-1/2 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Field 2: Salary Structure -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label text-label text-ink-2">Salary Structure Scale</label>
+<div class="relative">
+<select class="w-full h-11 px-space-md rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm appearance-none focus:outline-none focus:bg-surface transition-all cursor-pointer">
+<option selected="" value="Officer">Officer grade (GL 08–10)</option>
+<option value="Executive">Executive Grade (GL 14 - GL 17)</option>
+<option value="Management">Management Grade (GL 12 - GL 13)</option>
+<option value="Entry">Entry Level (GL 05 - GL 07)</option>
+</select>
+<span class="material-symbols-outlined absolute right-space-md top-1/2 -translate-y-1/2 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Field 3: Effective From Date -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label text-label text-ink-2">Effective From Date</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-ink-3 text-[18px]">calendar_today</span>
+<input class="w-full h-11 pl-11 pr-space-md rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface transition-all" type="text" value="01 Nov 2026"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Remuneration Component Amounts Table -->
+<div class="bg-surface-raised rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-iris text-[20px]">table_chart</span>
+<h3 class="font-h2 text-h2 text-ink">Remuneration Component Amounts</h3>
+</div>
+<button class="h-9 px-space-sm rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink-2 hover:text-ink flex items-center gap-1 font-label text-overline uppercase font-semibold transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add Custom Component</span>
+</button>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto rounded-xl">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<tr>
+<th class="py-space-sm px-space-md font-semibold">Component</th>
+<th class="py-space-sm px-space-md font-semibold">Type</th>
+<th class="py-space-sm px-space-md font-semibold">Calculation Rule</th>
+<th class="py-space-sm px-space-md font-semibold text-right">Monthly Amount (₦)</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-ink">
+<!-- Basic Salary -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-ink">
+                  Basic Salary
+                  <div class="text-[12px] font-normal text-ink-3">Statutory taxable base</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Fixed</span>
+</td>
+<td class="py-space-sm px-space-md text-ink-2">Baseline earnings GL-10 step 3</td>
+<td class="py-space-sm px-space-md text-right font-semibold [font-variant-numeric:tabular-nums]">₦200,000.00</td>
+</tr>
+<!-- Housing Allowance -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-ink">
+                  Housing Allowance
+                  <div class="text-[12px] font-normal text-ink-3">Standard accommodation grant</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Fixed</span>
+</td>
+<td class="py-space-sm px-space-md text-ink-2">50% of Basic baseline</td>
+<td class="py-space-sm px-space-md text-right font-semibold [font-variant-numeric:tabular-nums]">₦100,000.00</td>
+</tr>
+<!-- Transport Allowance -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-ink">
+                  Transport Allowance
+                  <div class="text-[12px] font-normal text-ink-3">Commuter subsidy</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Fixed</span>
+</td>
+<td class="py-space-sm px-space-md text-ink-2">Standard monthly transit stipend</td>
+<td class="py-space-sm px-space-md text-right font-semibold [font-variant-numeric:tabular-nums]">₦50,000.00</td>
+</tr>
+<!-- Meal Allowance -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-ink">
+                  Meal Allowance
+                  <div class="text-[12px] font-normal text-ink-3">Subsistence subsidy</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-overline">Formula</span>
+</td>
+<td class="py-space-sm px-space-md text-ink-2">10% of Basic Salary (0.10 × ₦200,000)</td>
+<td class="py-space-sm px-space-md text-right font-semibold [font-variant-numeric:tabular-nums]">₦20,000.00</td>
+</tr>
+<!-- Utility Subsidy -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-space-sm px-space-md font-semibold text-ink">
+                  Utility Subsidy
+                  <div class="text-[12px] font-normal text-ink-3">Power &amp; remote broadband</div>
+</td>
+<td class="py-space-sm px-space-md">
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline">Optional</span>
+</td>
+<td class="py-space-sm px-space-md text-ink-3 italic">Discretionary allowance (Grade restricted)</td>
+<td class="py-space-sm px-space-md text-right text-ink-3 [font-variant-numeric:tabular-nums]">₦0.00</td>
+</tr>
+</tbody>
+<!-- Table Footer -->
+<tfoot class="bg-surface-sunken font-label text-label">
+<tr>
+<td class="py-space-md px-space-md font-bold text-ink uppercase tracking-wider" colspan="3">
+                  Total Monthly Gross Earnings
+                </td>
+<td class="py-space-md px-space-md text-right font-bold text-ink text-h2 [font-variant-numeric:tabular-nums]">
+                  ₦370,000.00
+                </td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Two Sub-Cards: Recurring Deductions + Statutory Details -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Recurring Deductions Card -->
+<div class="bg-surface-raised rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-warning-text text-[20px]">account_balance_wallet</span>
+<h3 class="font-h3 text-h3 text-ink">Recurring Deductions</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline font-semibold">1 Active</span>
+</div>
+<!-- Single Active Item -->
+<div class="p-space-sm rounded-xl bg-surface-sunken flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-semibold text-ink">Adeyemi Staff Cooperative Society</span>
+<span class="font-semibold text-ink [font-variant-numeric:tabular-nums]">₦6,250.00 / mo</span>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-body-sm text-body-sm">
+<span>Internal savings recovery</span>
+<span class="text-ink-2 font-medium">Until Mar 2027</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-overline text-overline text-ink-3">5 cycles remaining</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-medium">
+                  Active deduction
+                </span>
+</div>
+</div>
+</div>
+<button class="w-full h-10 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink flex items-center justify-center gap-1 font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ Add recurring deduction</span>
+</button>
+</div>
+<!-- Statutory & Pension Details Card -->
+<div class="bg-surface-raised rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-iris text-[20px]">assured_workload</span>
+<h3 class="font-h3 text-h3 text-ink">Statutory &amp; Pension Setup</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold uppercase">
+              PenCom Valid
+            </span>
+</div>
+<div class="flex flex-col gap-space-sm font-body-sm text-body-sm">
+<div class="flex items-center justify-between py-1">
+<span class="text-ink-3">Pension Admin (PFA)</span>
+<span class="text-ink font-semibold">Stanbic IBTC Pension Managers (023)</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-ink-3">RSA PIN</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-ink font-mono font-medium" id="rsa-pin-val">PEN •••••••• 8829</span>
+<button class="p-1 rounded-md bg-surface-sunken hover:bg-surface-container-high text-ink-3 hover:text-ink transition-colors" onclick="const el=document.getElementById('rsa-pin-val'); el.textContent = el.textContent.includes('•') ? 'PEN 100482918829' : 'PEN •••••••• 8829';" title="Unmask RSA PIN (Logged to SIEM)" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-ink-3">Voluntary Pension (AVC)</span>
+<span class="text-ink font-semibold [font-variant-numeric:tabular-nums]">₦0.00 / month</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-ink-3">Tax Identification (TIN)</span>
+<div class="flex items-center gap-1">
+<span class="text-ink font-mono font-semibold">23456789-0001</span>
+<span class="material-symbols-outlined text-success-text text-[16px]" title="FIRS Verified">verified</span>
+</div>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-ink-3">NHF Status</span>
+<span class="text-ink font-medium">Active (NHF-8492019-LAG)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- History of Pay Changes Timeline Card -->
+<div class="bg-surface-raised rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-iris text-[20px]">timeline</span>
+<h3 class="font-h2 text-h2 text-ink">Remuneration Revision History</h3>
+</div>
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">3 logged revisions</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Item 1: 01 Nov 2026 -->
+<div class="flex items-start gap-space-md">
+<div class="w-8 h-8 rounded-full bg-success-bg text-success-text flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">upgrade</span>
+</div>
+<div class="flex flex-col gap-0.5 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-bold text-ink">Annual Increment &amp; Promotion to GL-10</span>
+<span class="font-overline text-overline text-ink-3">01 Nov 2026</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+                Officer grade re-benchmarking (+₦45,000.00 to ₦370,000.00 gross).
+              </p>
+<div class="flex items-center gap-space-xs text-[12px] text-ink-3 mt-1">
+<span>Approved by: <strong class="text-ink font-medium">Babatunde Adeyemi (VP Operations)</strong></span>
+<span>•</span>
+<span>Approval Ref: #REV-2026-8819</span>
+</div>
+</div>
+</div>
+<!-- Item 2: 15 Jan 2026 -->
+<div class="flex items-start gap-space-md">
+<div class="w-8 h-8 rounded-full bg-iris-tint text-iris flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="flex flex-col gap-0.5 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-bold text-ink">Confirmation Salary Adjustment</span>
+<span class="font-overline text-overline text-ink-3">15 Jan 2026</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+                Probation exit bump (+₦25,000.00 to ₦325,000.00 gross).
+              </p>
+<div class="flex items-center gap-space-xs text-[12px] text-ink-3 mt-1">
+<span>Approved by: <strong class="text-ink font-medium">Fatima Bello (Finance Manager)</strong></span>
+<span>•</span>
+<span>Approval Ref: #REV-2026-1042</span>
+</div>
+</div>
+</div>
+<!-- Item 3: 03 Feb 2025 -->
+<div class="flex items-start gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-sunken text-ink-3 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</div>
+<div class="flex flex-col gap-0.5 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-label font-bold text-ink">Initial Employment Remuneration Established</span>
+<span class="font-overline text-overline text-ink-3">03 Feb 2025</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+                Baseline contract package at ₦300,000.00 monthly gross on GL-09 Step 1.
+              </p>
+<div class="flex items-center gap-space-xs text-[12px] text-ink-3 mt-1">
+<span>Authorized by: <strong class="text-ink font-medium">Adeyemi Holdings People Operations</strong></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Sticky/Footer Bar -->
+<div class="bg-surface-raised rounded-xl p-space-md shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md w-full sm:w-auto justify-between sm:justify-start">
+<button class="font-label text-label text-ink-3 hover:text-ink transition-colors" type="button">
+            Discard changes
+          </button>
+<button class="font-label text-label text-iris hover:text-iris-hover flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">history_edu</span>
+<span>View full remuneration audit trail</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="h-11 px-space-md rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-label transition-colors" type="button">
+            Preview payslip calculation
+          </button>
+<button class="h-11 px-space-lg rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-md shadow-iris/25 flex items-center gap-1 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save changes</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div></main></div></body></html>

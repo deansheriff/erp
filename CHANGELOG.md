@@ -5,6 +5,31 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 9a: Payroll runs and payslips
+- Pay components (earnings and deductions; a fixed amount per person or a percentage
+  of another earning; taxable and pensionable flags), salary structures that group
+  them, and monthly pay groups (ADR 0021). Basic, housing, transport, meal,
+  cooperative and union dues are seeded with a Standard structure and a Staff group.
+- Pay per person, effective-dated with a reason; changes end the previous record.
+  Nobody changes their own pay. Recurring deductions by month, with an end month.
+- Statutory rates as effective-dated sets, editable by the Finance Manager: PAYE bands
+  (NTA 2025 defaults), rent relief 20% capped at ₦500,000, pension 8% and 10%, NHF
+  2.5%, NHIS, NSITF 1%, ITF 1%, a minimum wage warning at ₦70,000 and overtime at 1.5x
+  hourly basic over 173 hours. All to confirm before go-live.
+- PAYE worked out cumulatively over the year to date. Pay prorated by calendar day for
+  joiners and leavers; approved attendance overtime paid. Warnings for pay under the
+  minimum wage, negative net pay, missing basic and earlier unapproved runs.
+- Runs go draft, calculated, reviewed, approved, posted, paid, each step by a different
+  person; whoever created the run can't post it or mark it paid. Runs can be sent back
+  to draft with a note. Payslip PDFs are made at approval and employees see their
+  payslips once the run is paid.
+- Rent relief: employees declare the year's rent with proof; HR or Payroll verifies it
+  (not their own) before it reduces PAYE.
+- Permissions `payroll.pay.*`, `payroll.structure.manage`, `payroll.settings.manage`,
+  `payroll.run.*`, `payroll.payslip.read` and `payroll.relief.*`; grants for the
+  Employee, HR Officer, Payroll Officer, Finance Officer, Finance Manager and Auditor
+  templates.
+
 ### Added — Phase 8: Expenses
 - Expense categories with a ledger account code, an optional limit per claim and a
   "receipt needed above" amount; claims with dated lines, receipts through the files

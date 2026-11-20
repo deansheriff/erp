@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-dim": "#d9dade",
+        "on-secondary-container": "#536b00",
+        "primary-container": "#5a4bdb",
+        "error": "#ba1a1a",
+        "lime-ink": "#4D7A0A",
+        "on-error": "#ffffff",
+        "error-container": "#ffdad6",
+        "ink-2": "#4B4B66",
+        "secondary": "#4f6600",
+        "secondary-container": "#c4ef49",
+        "danger-text": "#B4232F",
+        "canvas": "#F6F6FA",
+        "warning-text": "#8A4B00",
+        "tertiary-fixed-dim": "#ffb68b",
+        "warning-bg": "#FFF1D6",
+        "tertiary": "#7a3700",
+        "iris-hover": "#4A3CC4",
+        "outline": "#787586",
+        "outline-variant": "#c8c4d7",
+        "line": "#E4E4EE",
+        "surface-container-lowest": "#ffffff",
+        "danger-bg": "#FFE4E6",
+        "ink": "#16162A",
+        "lime": "#C5F04A",
+        "on-primary-fixed": "#140067",
+        "on-background": "#1a1c1f",
+        "surface-tint": "#5646d7",
+        "on-tertiary-container": "#ffd7c1",
+        "on-secondary-fixed-variant": "#3b4d00",
+        "inverse-on-surface": "#f0f0f4",
+        "primary": "#412ec2",
+        "on-iris": "#FFFFFF",
+        "background": "#f9f9fd",
+        "primary-fixed-dim": "#c5c0ff",
+        "line-strong": "#8B8BA6",
+        "on-tertiary-fixed": "#321300",
+        "primary-fixed": "#e4dfff",
+        "iris": "#5A4BDB",
+        "on-primary-fixed-variant": "#3d28be",
+        "success-text": "#0F6B3E",
+        "surface-variant": "#e2e2e6",
+        "surface": "#FFFFFF",
+        "surface-raised": "#FFFFFF",
+        "info-bg": "#DFEBFF",
+        "on-secondary": "#ffffff",
+        "on-tertiary": "#ffffff",
+        "secondary-fixed": "#c7f24c",
+        "info-text": "#1D55B8",
+        "surface-container-high": "#e8e8ec",
+        "surface-sunken": "#EFEFF6",
+        "surface-container-highest": "#e2e2e6",
+        "success-bg": "#DDF7E8",
+        "tertiary-container": "#9f4a00",
+        "on-surface-variant": "#474554",
+        "destructive": "#C42836",
+        "on-tertiary-fixed-variant": "#743400",
+        "surface-container-low": "#f3f3f7",
+        "inverse-primary": "#c5c0ff",
+        "on-secondary-fixed": "#161f00",
+        "surface-bright": "#f9f9fd",
+        "on-error-container": "#93000a",
+        "on-primary": "#ffffff",
+        "surface-container": "#ededf1",
+        "on-surface": "#1a1c1f",
+        "on-primary-container": "#e0dbff",
+        "tertiary-fixed": "#ffdbc8",
+        "secondary-fixed-dim": "#acd530",
+        "ink-3": "#626280",
+        "inverse-surface": "#2e3034",
+        "iris-tint": "#EEECFD"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-2xl": "3rem",
+        "margin": "2rem",
+        "space-xl": "2rem",
+        "space-sm": "0.5rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "space-lg": "1.5rem",
+        "space-3xl": "4rem",
+        "space-md": "1rem"
+      },
+      "fontFamily": {
+        "label": ["Inter"],
+        "body-sm": ["Inter"],
+        "stat": ["Plus Jakarta Sans"],
+        "display": ["Plus Jakarta Sans"],
+        "overline": ["Inter"],
+        "h3": ["Plus Jakarta Sans"],
+        "h1": ["Plus Jakarta Sans"],
+        "h2": ["Plus Jakarta Sans"],
+        "body": ["Inter"]
+      },
+      "fontSize": {
+        "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "stat": ["30px", {"lineHeight": "36px", "fontWeight": "700"}],
+        "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+        "overline": ["12px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600"}],
+        "h3": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+        "h2": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-canvas font-body text-body text-ink antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-space-md shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col gap-space-lg"><div class="px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-[#047857] flex items-center justify-center text-on-primary shadow-[0_0_12px_rgba(4,120,87,0.35)]"><span class="material-symbols-outlined text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink leading-tight tracking-tight">Kxmeleon</span><span class="font-overline text-overline text-ink-3 tracking-wider uppercase">Adeyemi Holdings Ltd</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-ink transition-colors">unfold_more</span></div><div class="px-space-md"><div class="p-space-sm rounded-xl bg-[#047857]/[0.12] flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-[#047857] shadow-[0_0_8px_#047857]"></div><div class="flex flex-col"><span class="font-label text-label text-ink font-semibold">Payroll Suite</span><span class="font-overline text-overline text-[#047857] font-semibold">Enterprise Active</span></div></div><span class="material-symbols-outlined text-[#047857] text-[18px]">payments</span></div></div><div class="px-space-md"><span class="px-space-sm font-overline text-overline text-ink-3 tracking-wider uppercase">Adeyemi Holdings Ltd</span><nav class="flex flex-col gap-space-xs mt-space-xs" data-active-classes="bg-iris-tint text-iris font-semibold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="peoples-pay" href="#"><span class="absolute left-1.5 w-1.5 h-5 rounded-full bg-[#047857]"></span><span class="material-symbols-outlined text-[20px] ml-1 text-ink-2 group-hover:text-ink">group</span><span class="font-label text-label">People's pay</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="payroll-runs" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">autorenew</span><span class="font-label text-label">Payroll runs</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="payslips" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">receipt_long</span><span class="font-label text-label">Payslips</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="salary-structures" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">account_tree</span><span class="font-label text-label">Salary structures</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="tax-and-statutory" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">account_balance</span><span class="font-label text-label">Tax &amp; statutory</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-xl text-ink-2 hover:bg-surface hover:text-ink transition-all" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px] text-ink-2">settings</span><span class="font-label text-label">Settings</span></a></nav></div></div><div class="px-space-md flex flex-col gap-space-xs"><div class="p-space-sm rounded-xl bg-surface-sunken flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-ink-3 text-[18px]">cloud_done</span><span class="font-overline text-overline text-ink-2 uppercase">Auto-Sync Active</span></div><span class="font-overline text-overline text-lime-ink font-semibold">NGN Ledger</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex items-center gap-space-sm"><span class="font-label text-label text-ink-3">Payroll</span><span class="material-symbols-outlined text-ink-3 text-[16px]">chevron_right</span><span class="font-label text-label text-ink font-semibold">People's pay</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-md text-ink-3 text-[18px]">search</span><input class="w-80 h-11 pl-10 pr-16 bg-surface-sunken rounded-xl text-body-sm font-body-sm text-ink placeholder-ink-3 focus:outline-none focus:bg-surface transition-all" placeholder="Search people, claims, invoices..." type="text"/><kbd class="absolute right-space-sm px-space-xs py-0.5 rounded bg-surface text-ink-3 font-overline text-overline font-semibold shadow-[0_1px_2px_rgba(22,22,42,0.08)]">Ctrl K</kbd></div><div class="flex items-center gap-space-xs"><button class="h-11 px-space-md rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink flex items-center gap-space-xs transition-colors" type="button"><span class="font-label text-label text-ink-2">Approvals</span><span class="px-1.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label text-overline font-semibold leading-none">3</span></button><button class="relative w-11 h-11 rounded-xl bg-surface-sunken hover:bg-surface-container-high flex items-center justify-center text-ink-2 transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span></button><button class="w-11 h-11 rounded-xl bg-surface-sunken hover:bg-surface-container-high flex items-center justify-center text-ink-2 transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center gap-space-sm pl-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col"><span class="font-label text-label text-ink font-semibold leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3">Finance &amp; Payroll Admin</span></div></div></div></header><main class="w-full pt-16 px-space-xl bg-canvas min-h-screen"><div class="flex flex-col w-full pb-space-3xl">
+<!-- Top Context Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm mb-space-xs">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#047857]/[0.12] text-[#047857] font-overline text-overline font-semibold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-[#047857]"></span>
+          Statutory Payroll Housing Deductions
+        </span>
+<span class="text-ink-3 font-overline text-overline">PITA Section 33</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Rent relief declarations</h1>
+<p class="font-body text-body-sm text-ink-3 mt-1">Review statutory Consolidated Relief Allowance (CRA) housing deduction claims for PAYE payroll tax relief computation.</p>
+</div>
+<!-- Quick Reviewer Identity & Actions -->
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-2.5 bg-surface rounded-xl px-space-md py-2 shadow-sm">
+<div class="w-7 h-7 rounded-full bg-[#047857] text-on-primary flex items-center justify-center font-label text-overline font-semibold">FB</div>
+<div class="flex flex-col">
+<span class="font-label text-label text-ink leading-tight">Fatima Bello</span>
+<span class="font-overline text-overline text-ink-3">GL-12 · Reviewer Sign-off</span>
+</div>
+</div>
+<button class="h-11 px-space-md bg-surface hover:bg-surface-sunken text-ink-2 font-label text-label rounded-xl flex items-center gap-space-xs transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">history_edu</span>
+<span>Audit Log</span>
+</button>
+<button class="h-11 px-space-md bg-[#047857] hover:bg-[#035f45] text-on-primary font-label text-label rounded-xl flex items-center gap-space-xs shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Run Batch Check</span>
+</button>
+</div>
+</div>
+<!-- Compliance Dual-Control Notice Banner -->
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-r from-surface to-surface-sunken p-space-lg mb-space-xl shadow-sm">
+<div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-[#047857]/5 pointer-events-none"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md relative z-10">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-[#047857] text-on-primary flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(4,120,87,0.3)]">
+<span class="material-symbols-outlined text-[22px]">policy</span>
+</div>
+<div class="flex flex-col">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="font-h3 text-h3 text-ink">Only verified declarations reduce PAYE. Nobody verifies their own.</span>
+<span class="px-2 py-0.5 rounded bg-warning-bg text-warning-text font-overline text-overline font-semibold">Dual-Control L1 Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-1 max-w-4xl">
+            CRA verification dual-control policy is active. Statutory rent relief is calculated at <strong class="text-ink font-semibold">20% of verified declared rent</strong>, strictly capped at <strong class="text-ink font-semibold">₦500,000.00</strong> per tax year under the Nigerian Finance Act / PITA regulations. Unverified amounts remain non-deductible in the current cycle.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 self-end lg:self-center">
+<a class="inline-flex items-center gap-1 text-ink-2 hover:text-ink font-label text-label font-medium transition-colors" href="#cra-rules">
+<span>Read statutory guidance</span>
+<span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Key Stat / KPI Metric Grid (4 Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<!-- Stat 1 -->
+<div class="bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Waiting to verify</span>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+          Action Required
+        </span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-stat text-stat text-ink" style="font-variant-numeric: tabular-nums;">3</span>
+<span class="font-label text-label text-ink-3">claims</span>
+</div>
+<div class="font-label text-label text-ink font-semibold mt-1" style="font-variant-numeric: tabular-nums;">
+          ₦1,240,000.00 <span class="font-body-sm text-body-sm text-ink-3 font-normal">relief pending</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-1.5 text-warning-text font-overline text-overline">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Payroll Cutoff: 24 Nov 2026 · 6 days remaining</span>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Verified YTD (2026)</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+          Active
+        </span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-stat text-stat text-ink" style="font-variant-numeric: tabular-nums;">41</span>
+<span class="font-label text-label text-ink-3">declarations</span>
+</div>
+<div class="font-label text-label text-ink font-semibold mt-1" style="font-variant-numeric: tabular-nums;">
+          ₦18,450,000.00 <span class="font-body-sm text-body-sm text-ink-3 font-normal">applied</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-1.5 text-success-text font-overline text-overline">
+<span class="material-symbols-outlined text-[16px]">cloud_sync</span>
+<span>November Payroll Run: Synchronized</span>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Average Rent Declared</span>
+<span class="material-symbols-outlined text-ink-3 text-[18px]">home_work</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-stat text-stat text-ink" style="font-variant-numeric: tabular-nums;">₦2.15m</span>
+<span class="font-label text-label text-ink-3">/ annum</span>
+</div>
+<div class="font-body-sm text-body-sm text-ink-2 mt-1">
+          Median cap engagement: <span class="font-semibold text-ink">74% at ceiling</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-1.5 text-ink-3 font-overline text-overline">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Max Cap Threshold: ₦500,000.00 / yr</span>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">PAYE Tax Savings</span>
+<span class="px-2 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline font-semibold">Direct Relief</span>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-stat text-stat text-ink" style="font-variant-numeric: tabular-nums;">₦4,120,400</span>
+<span class="font-label text-label text-ink-3">net</span>
+</div>
+<div class="font-body-sm text-body-sm text-ink-2 mt-1">
+          Statutory compliance: <span class="font-semibold text-ink">Lagos LIRS &amp; FCT IRS</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center gap-1.5 text-ink-3 font-overline text-overline">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>Audit Readiness: 100% Stamped</span>
+</div>
+</div>
+</div>
+<!-- Primary Workspace Card -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden mb-space-xl">
+<!-- Workspace Header & Tabs -->
+<div class="px-space-lg pt-space-lg pb-space-md flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- Tabs -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 lg:pb-0" id="tabs-container">
+<button class="px-space-md py-2.5 rounded-xl bg-iris-tint text-iris font-label text-label font-semibold flex items-center gap-2 shrink-0 transition-all" type="button">
+<span>Waiting to verify</span>
+<span class="px-1.5 py-0.5 rounded-full bg-iris text-on-iris font-overline text-overline font-bold leading-none">3</span>
+</button>
+<button class="px-space-md py-2.5 rounded-xl text-ink-2 hover:bg-surface-sunken hover:text-ink font-label text-label font-medium flex items-center gap-2 shrink-0 transition-all" type="button">
+<span>Verified</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline font-semibold leading-none">41</span>
+</button>
+<button class="px-space-md py-2.5 rounded-xl text-ink-2 hover:bg-surface-sunken hover:text-ink font-label text-label font-medium flex items-center gap-2 shrink-0 transition-all" type="button">
+<span>Rejected</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-overline font-semibold leading-none">5</span>
+</button>
+<button class="px-space-md py-2.5 rounded-xl text-ink-2 hover:bg-surface-sunken hover:text-ink font-label text-label font-medium shrink-0 transition-all" type="button">
+<span>All declarations</span>
+<span class="text-ink-3 font-overline text-overline ml-1">(49)</span>
+</button>
+</div>
+<!-- Quick Filter Bar -->
+<div class="flex flex-wrap items-center gap-space-xs">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span>
+<input class="h-10 pl-9 pr-3 bg-surface-sunken rounded-lg text-body-sm font-body-sm text-ink placeholder-ink-3 focus:outline-none focus:bg-surface-container transition-all w-52 sm:w-64" placeholder="Filter employee or ID..." type="text"/>
+</div>
+<select class="h-10 px-3 bg-surface-sunken rounded-lg text-body-sm font-body-sm text-ink-2 focus:outline-none cursor-pointer">
+<option>All Departments</option>
+<option>Finance &amp; Accounts</option>
+<option>Tech &amp; IT</option>
+<option>Operations &amp; Logistics</option>
+</select>
+<select class="h-10 px-3 bg-surface-sunken rounded-lg text-body-sm font-body-sm text-ink-2 focus:outline-none cursor-pointer">
+<option>Tax Year: 2026 FY</option>
+<option>Tax Year: 2025 FY</option>
+</select>
+<button class="w-10 h-10 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 flex items-center justify-center transition-colors" title="Export CSV list" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<!-- Declarations Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<tr>
+<th class="py-3.5 px-space-lg font-semibold" scope="col">Person</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Tax Year</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Annual Rent Declared</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Relief Computation &amp; PAYE Offset</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Tenancy Proof Document</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Declared Date</th>
+<th class="py-3.5 px-space-lg font-semibold text-right" scope="col">Verification &amp; Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-body-sm">
+<!-- Row 1: Amaka Okafor -->
+<tr class="hover:bg-surface-sunken/40 transition-colors group">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-iris-tint text-iris flex items-center justify-center font-stat text-h3 font-semibold shrink-0">
+                  AO
+                </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-h3 text-h3 text-ink truncate">Amaka Okafor</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2 font-overline text-overline font-semibold">GL-10</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3">Senior Accountant</span>
+<span class="font-overline text-overline text-ink-3">Finance &amp; Accounts · EMP-00042</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label text-label font-medium text-ink">
+<span class="w-2 h-2 rounded-full bg-[#047857]"></span>
+                2026 FY
+              </span>
+<span class="block font-overline text-overline text-ink-3">Active Assessment</span>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="font-h3 text-h3 text-ink" style="font-variant-numeric: tabular-nums;">₦1,800,000.00</div>
+<div class="font-overline text-overline text-ink-3 mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">pin_drop</span>
+<span class="truncate max-w-[170px]" title="14 Admiralty Way, Lekki, Lagos">14 Admiralty Way, Lekki</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-baseline gap-1.5">
+<span class="font-h3 text-h3 text-[#047857]" style="font-variant-numeric: tabular-nums;">₦360,000.00</span>
+<span class="font-overline text-overline text-ink-3">/ yr relief</span>
+</div>
+<div class="font-overline text-overline text-[#047857] font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>20% of ₦1.80m (Within ₦500k cap)</span>
+</div>
+<div class="mt-1 font-body-sm text-body-sm text-ink-2" style="font-variant-numeric: tabular-nums;">
+                  Monthly PAYE Offset: <strong class="text-ink">₦30,000.00 / mo</strong>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-sunken hover:bg-surface-container cursor-pointer transition-colors w-fit">
+<span class="material-symbols-outlined text-danger-text text-[20px]">picture_as_pdf</span>
+<div class="flex flex-col pr-2">
+<span class="font-label text-label text-ink font-medium leading-none">tenancy_agreement.pdf</span>
+<span class="font-overline text-overline text-ink-3 mt-1">1.8 MB · View</span>
+</div>
+<span class="material-symbols-outlined text-ink-3 text-[18px]">visibility</span>
+</div>
+<span class="font-overline text-overline text-success-text mt-1 inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">verified</span> Valid Tenancy Stamp
+              </span>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<span class="font-label text-label text-ink">16 Nov 2026</span>
+<span class="block font-overline text-overline text-ink-3">11:40 WAT</span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right">
+<div class="flex flex-col items-end gap-2">
+<div class="w-full max-w-[280px]">
+<input class="w-full h-9 px-3 bg-surface-sunken text-body-sm font-body-sm text-ink rounded-lg placeholder-ink-3 focus:outline-none focus:bg-surface-container transition-all" placeholder="Add verification note or audit reference..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-9 px-3 rounded-lg text-danger-text hover:bg-danger-bg font-label text-label font-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>Reject</span>
+</button>
+<button class="h-9 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-sm transition-all flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>Verify Claim</span>
+</button>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 2: Chinedu Eze (Hit Cap) -->
+<tr class="hover:bg-surface-sunken/40 transition-colors group bg-surface-sunken/10">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-stat text-h3 font-semibold shrink-0">
+                  CE
+                </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-h3 text-h3 text-ink truncate">Chinedu Eze</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2 font-overline text-overline font-semibold">GL-09</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3">Systems Engineer</span>
+<span class="font-overline text-overline text-ink-3">Tech &amp; IT · EMP-00109</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label text-label font-medium text-ink">
+<span class="w-2 h-2 rounded-full bg-[#047857]"></span>
+                2026 FY
+              </span>
+<span class="block font-overline text-overline text-ink-3">Active Assessment</span>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="font-h3 text-h3 text-ink" style="font-variant-numeric: tabular-nums;">₦3,200,000.00</div>
+<div class="font-overline text-overline text-ink-3 mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">pin_drop</span>
+<span class="truncate max-w-[170px]" title="Victoria Island, Lagos">Victoria Island, Lagos</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-baseline gap-1.5">
+<span class="font-stat text-h2 text-ink" style="font-variant-numeric: tabular-nums;">₦500,000.00</span>
+<span class="font-overline text-overline text-warning-text font-bold">MAX CAP</span>
+</div>
+<div class="font-overline text-overline text-warning-text font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>₦640k computed → Cap at ₦500k</span>
+</div>
+<div class="mt-1 font-body-sm text-body-sm text-ink-2" style="font-variant-numeric: tabular-nums;">
+                  Monthly PAYE Offset: <strong class="text-ink">₦41,666.67 / mo</strong>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-sunken hover:bg-surface-container cursor-pointer transition-colors w-fit">
+<span class="material-symbols-outlined text-danger-text text-[20px]">picture_as_pdf</span>
+<div class="flex flex-col pr-2">
+<span class="font-label text-label text-ink font-medium leading-none">tenancy_agreement.pdf</span>
+<span class="font-overline text-overline text-ink-3 mt-1">2.4 MB · View</span>
+</div>
+<span class="material-symbols-outlined text-ink-3 text-[18px]">visibility</span>
+</div>
+<span class="font-overline text-overline text-info-text mt-1 inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">receipt</span> With 2026 Bank Proof
+              </span>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<span class="font-label text-label text-ink">17 Nov 2026</span>
+<span class="block font-overline text-overline text-ink-3">09:15 WAT</span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right">
+<div class="flex flex-col items-end gap-2">
+<div class="w-full max-w-[280px]">
+<input class="w-full h-9 px-3 bg-surface-sunken text-body-sm font-body-sm text-ink rounded-lg placeholder-ink-3 focus:outline-none focus:bg-surface-container transition-all" placeholder="Add verification note or audit reference..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-9 px-3 rounded-lg text-danger-text hover:bg-danger-bg font-label text-label font-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>Reject</span>
+</button>
+<button class="h-9 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-sm transition-all flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>Verify Claim</span>
+</button>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 3: Segun Afolabi -->
+<tr class="hover:bg-surface-sunken/40 transition-colors group">
+<td class="py-space-md px-space-lg align-top">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center font-stat text-h3 font-semibold shrink-0">
+                  SA
+                </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-h3 text-h3 text-ink truncate">Segun Afolabi</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2 font-overline text-overline font-semibold">GL-07</span>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3">Fleet Supervisor</span>
+<span class="font-overline text-overline text-ink-3">Operations &amp; Logistics · EMP-00088</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<span class="inline-flex items-center gap-1 font-label text-label font-medium text-ink">
+<span class="w-2 h-2 rounded-full bg-[#047857]"></span>
+                2026 FY
+              </span>
+<span class="block font-overline text-overline text-ink-3">Active Assessment</span>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="font-h3 text-h3 text-ink" style="font-variant-numeric: tabular-nums;">₦1,200,000.00</div>
+<div class="font-overline text-overline text-ink-3 mt-0.5 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">pin_drop</span>
+<span class="truncate max-w-[170px]" title="Ikeja GRA, Lagos">Ikeja GRA, Lagos</span>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-baseline gap-1.5">
+<span class="font-h3 text-h3 text-[#047857]" style="font-variant-numeric: tabular-nums;">₦240,000.00</span>
+<span class="font-overline text-overline text-ink-3">/ yr relief</span>
+</div>
+<div class="font-overline text-overline text-[#047857] font-semibold flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>20% of ₦1.20m (Within ₦500k cap)</span>
+</div>
+<div class="mt-1 font-body-sm text-body-sm text-ink-2" style="font-variant-numeric: tabular-nums;">
+                  Monthly PAYE Offset: <strong class="text-ink">₦20,000.00 / mo</strong>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-sunken hover:bg-surface-container cursor-pointer transition-colors w-fit">
+<span class="material-symbols-outlined text-danger-text text-[20px]">picture_as_pdf</span>
+<div class="flex flex-col pr-2">
+<span class="font-label text-label text-ink font-medium leading-none">tenancy_agreement.pdf</span>
+<span class="font-overline text-overline text-ink-3 mt-1">650 KB · View</span>
+</div>
+<span class="material-symbols-outlined text-ink-3 text-[18px]">visibility</span>
+</div>
+<span class="font-overline text-overline text-ink-3 mt-1 inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">attach_file</span> Landlord Receipt Incl.
+              </span>
+</td>
+<td class="py-space-md px-space-md align-top whitespace-nowrap">
+<span class="font-label text-label text-ink">18 Nov 2026</span>
+<span class="block font-overline text-overline text-ink-3">14:02 WAT</span>
+</td>
+<td class="py-space-md px-space-lg align-top text-right">
+<div class="flex flex-col items-end gap-2">
+<div class="w-full max-w-[280px]">
+<input class="w-full h-9 px-3 bg-surface-sunken text-body-sm font-body-sm text-ink rounded-lg placeholder-ink-3 focus:outline-none focus:bg-surface-container transition-all" placeholder="Add verification note or audit reference..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-9 px-3 rounded-lg text-danger-text hover:bg-danger-bg font-label text-label font-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>Reject</span>
+</button>
+<button class="h-9 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-sm transition-all flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>Verify Claim</span>
+</button>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="px-space-lg py-space-md bg-surface-sunken/40 flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<span class="font-body-sm text-body-sm text-ink-3">
+        Showing <strong class="text-ink">3</strong> of 3 claims awaiting verification
+      </span>
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline text-ink-3 uppercase">Cutoff cycle lock: 24 Nov 2026</span>
+<button class="px-3 py-1.5 rounded-lg bg-surface hover:bg-surface-container text-ink-2 font-label text-label font-medium shadow-sm transition-colors" type="button">
+          Print Declarations Summary
+        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Policy, Segregation of Duties & Statutory Math -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md" id="cra-rules">
+<!-- Card 1: CRA Formula Reference -->
+<div class="bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex flex-col">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">functions</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Statutory Rule Book</span>
+</div>
+<h2 class="font-h2 text-h2 text-ink">CRA Housing Formula</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1">
+          Under Section 33 of PITA (Amended), statutory housing allowance relief is determined dynamically per employee:
+        </p>
+<div class="bg-surface-sunken rounded-xl p-space-md mt-space-md space-y-2 font-mono text-body-sm">
+<div class="text-ink font-semibold">Max Relief Allowed =</div>
+<div class="text-iris font-bold text-label">MIN(20% × Declared Rent, ₦500,000.00)</div>
+<div class="font-sans text-overline text-ink-3">
+            Integrated automatically into overall CRA along with Base Allowance (Higher of ₦200,000 or 1% of Gross Income).
+          </div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3">Tax Jurisdiction</span>
+<span class="font-overline text-overline text-[#047857] font-semibold">FIRS / LIRS Harmonized</span>
+</div>
+</div>
+<!-- Card 2: Immutable Audit Trail -->
+<div class="bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex flex-col">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="w-8 h-8 rounded-lg bg-success-bg text-success-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Real-time Trail</span>
+</div>
+<h2 class="font-h2 text-h2 text-ink">Immutable Audit Trail</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1">
+          Recent dual-control sign-offs recorded on Adeyemi Holdings ledger:
+        </p>
+<div class="space-y-3 mt-space-md">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-success-text text-[16px] mt-0.5">check_circle</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1 font-label text-label text-ink">
+<span class="font-semibold truncate">Babatunde Lawal</span>
+<span class="text-ink-3 font-normal">verified for</span>
+<span class="font-semibold" style="font-variant-numeric: tabular-nums;">₦450k</span>
+</div>
+<span class="font-overline text-overline text-ink-3">15 Nov 2026, 16:22 WAT · Sign-off: FB-GL12</span>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-success-text text-[16px] mt-0.5">check_circle</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1 font-label text-label text-ink">
+<span class="font-semibold truncate">Chioma Obi</span>
+<span class="text-ink-3 font-normal">verified for</span>
+<span class="font-semibold" style="font-variant-numeric: tabular-nums;">₦500k cap</span>
+</div>
+<span class="font-overline text-overline text-ink-3">14 Nov 2026, 11:05 WAT · Sign-off: FB-GL12</span>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-danger-text text-[16px] mt-0.5">cancel</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1 font-label text-label text-ink">
+<span class="font-semibold truncate">Kayode Cole</span>
+<span class="text-danger-text font-normal">rejected</span>
+</div>
+<span class="font-overline text-overline text-ink-3">Expired tenancy agreement · 12 Nov 2026</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3">Ledger Hash</span>
+<span class="font-mono text-overline text-ink-3 truncate max-w-[150px]">0x7F9B...8842</span>
+</div>
+</div>
+<!-- Card 3: Segregation of Duties -->
+<div class="bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex flex-col">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="w-8 h-8 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">security</span>
+</div>
+<span class="font-overline text-overline text-warning-text font-bold uppercase">Policy SEC-FIN-04</span>
+</div>
+<h2 class="font-h2 text-h2 text-ink">Segregation of Duties</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1">
+          Active administrative review session under strict governance:
+        </p>
+<div class="bg-surface-sunken rounded-xl p-space-md mt-space-md flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-[#047857] text-on-primary flex items-center justify-center font-stat text-overline font-semibold">
+              FB
+            </div>
+<div class="flex flex-col">
+<span class="font-label text-label text-ink font-semibold">Fatima Bello</span>
+<span class="font-overline text-overline text-ink-3">Finance &amp; Payroll Admin (GL-12)</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+            Finance and HR personnel are <strong class="text-ink">strictly barred</strong> from verifying their own personal tenancy claims. Fatima Bello’s personal claim is routed automatically to Lead Auditor, <span class="font-medium text-ink">Segun Adeleke</span>.
+          </p>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3">Dual-Check Rule</span>
+<span class="font-overline text-overline text-[#047857] font-semibold">ISO 27001 Stamped</span>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-raised": "#FFFFFF", "lime-ink": "#4D7A0A", "outline-variant": "#c8c4d7", "info-text": "#1D55B8", "primary-container": "#5a4bdb", "primary-fixed-dim": "#c5c0ff", "error-container": "#ffdad6", "on-iris": "#FFFFFF", "surface-container-high": "#e8e8ec", "on-surface": "#1a1c1f", "on-secondary-container": "#536b00", "secondary": "#4f6600", "background": "#f9f9fd", "secondary-container": "#c4ef49", "iris-hover": "#4A3CC4", "on-primary-fixed-variant": "#3d28be", "warning-text": "#8A4B00", "iris-tint": "#EEECFD", "on-primary-fixed": "#140067", "primary": "#412ec2", "on-tertiary-fixed": "#321300", "inverse-surface": "#2e3034", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f3f7", "surface-bright": "#f9f9fd", "inverse-on-surface": "#f0f0f4", "danger-text": "#B4232F", "canvas": "#F6F6FA", "on-tertiary-fixed-variant": "#743400", "ink-3": "#626280", "tertiary": "#7a3700", "on-surface-variant": "#474554", "surface": "#FFFFFF", "surface-sunken": "#EFEFF6", "primary-fixed": "#e4dfff", "secondary-fixed": "#c7f24c", "lime": "#C5F04A", "surface-tint": "#5646d7", "on-primary-container": "#e0dbff", "on-primary": "#ffffff", "error": "#ba1a1a", "on-tertiary-container": "#ffd7c1", "warning-bg": "#FFF1D6", "outline": "#787586", "destructive": "#C42836", "on-secondary": "#ffffff", "line-strong": "#8B8BA6", "on-tertiary": "#ffffff", "on-error": "#ffffff", "secondary-fixed-dim": "#acd530", "surface-container": "#ededf1", "danger-bg": "#FFE4E6", "tertiary-fixed-dim": "#ffb68b", "ink-2": "#4B4B66", "on-secondary-fixed": "#161f00", "on-error-container": "#93000a", "ink": "#16162A", "on-secondary-fixed-variant": "#3b4d00", "success-bg": "#DDF7E8", "inverse-primary": "#c5c0ff", "info-bg": "#DFEBFF", "surface-dim": "#d9dade", "surface-variant": "#e2e2e6", "line": "#E4E4EE", "tertiary-fixed": "#ffdbc8", "surface-container-highest": "#e2e2e6", "tertiary-container": "#9f4a00", "on-background": "#1a1c1f", "success-text": "#0F6B3E", "iris": "#5A4BDB" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "space-3xl": "4rem", "margin": "2rem", "gutter": "1.5rem", "space-xs": "0.25rem", "space-lg": "1.5rem", "space-2xl": "3rem", "space-xl": "2rem", "space-sm": "0.5rem" }, "fontFamily": { "overline": [ "Inter" ], "h3": [ "Plus Jakarta Sans" ], "body": [ "Inter" ], "h2": [ "Plus Jakarta Sans" ], "stat": [ "Plus Jakarta Sans" ], "h1": [ "Plus Jakarta Sans" ], "body-sm": [ "Inter" ], "label": [ "Inter" ], "display": [ "Plus Jakarta Sans" ] }, "fontSize": { "overline": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" } ], "h3": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "body": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "h2": [ "18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "stat": [ "30px", { "lineHeight": "36px", "fontWeight": "700" } ], "h1": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" } ], "body-sm": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label": [ "14px", { "lineHeight": "20px", "fontWeight": "500" } ], "display": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-background font-body text-body text-on-surface min-h-screen"><aside class="fixed left-0 top-0 h-full w-[272px] bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex flex-col min-h-0 flex-1"><div class="h-16 px-space-md flex items-center justify-between"><div class="flex items-center min-w-0 pr-space-xs"><span class="font-h2 text-h2 text-ink truncate select-none">Adeyemi Holdings Ltd</span></div><button aria-label="Collapse sidebar" class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">menu_open</span></button></div><div class="px-space-md pb-space-sm"><div class="h-11 px-space-sm bg-surface-sunken rounded-lg flex items-center justify-between text-on-surface-variant"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-label text-label text-ink-3">Go to...</span></div><kbd class="px-1.5 py-0.5 rounded bg-surface-raised font-overline text-[10px] text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.06)]">⌘K</kbd></div></div><nav class="flex-1 overflow-y-auto px-space-sm space-y-0.5" data-active-classes="bg-iris-tint text-iris font-semibold"><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Home</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="hr-and-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>HR &amp; People</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span>Leave</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><div class="rounded-xl bg-success-bg p-1"><a class="flex items-center justify-between h-10 px-space-sm rounded-lg text-success-text font-label text-label" data-path="payroll-overview" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-success-text">payments</span><span class="font-semibold">Payroll</span></div><span class="material-symbols-outlined text-[18px]">expand_more</span></a><div class="mt-1 ml-4 pl-space-xs space-y-0.5"><a aria-current="page" class="flex items-center h-9 px-space-sm rounded-lg bg-iris-tint text-iris font-semibold" data-path="payroll-runs" href="#"><span class="w-1.5 h-1.5 rounded-full bg-iris mr-2"></span><span>Runs</span></a><a class="flex items-center h-9 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="peoples-pay" href="#"><span>People's pay</span></a><a class="flex items-center h-9 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="salary-structures" href="#"><span>Salary structures</span></a><a class="flex items-center h-9 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="reliefs" href="#"><span>Reliefs</span></a><a class="flex items-center h-9 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="payroll-settings" href="#"><span>Settings</span></a></div></div><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder</span><span>Projects</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span><span>Support</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></a></nav></div><div class="p-space-sm space-y-1 bg-surface-container-lowest"><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span>Help &amp; documentation</span></a><a class="flex items-center gap-space-sm h-11 px-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="global-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Settings</span></a><div class="h-12 px-space-sm rounded-xl bg-surface-sunken flex items-center justify-between gap-space-xs"><div class="flex items-center gap-space-xs min-w-0"><div class="w-8 h-8 rounded-full bg-iris text-on-iris font-overline text-overline flex items-center justify-center shrink-0">FB</div><div class="flex flex-col min-w-0 leading-tight"><span class="font-label text-body-sm font-semibold text-ink truncate">Fatima Bello</span><span class="font-label text-[11px] text-ink-3 truncate">Finance Manager / HR Lead</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] shrink-0">expand_more</span></div></div></aside><div class="pl-[272px]"><header class="fixed top-0 left-[272px] right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 px-gutter flex items-center justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><nav aria-label="Breadcrumb" class="flex items-center gap-space-xs font-label text-body-sm text-ink-3"><a class="hover:text-ink transition-colors" data-path="payroll-overview" href="#">Payroll</a><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="font-semibold text-ink">Runs</span></nav><div class="w-96 max-w-md h-11 px-space-sm bg-surface-sunken rounded-lg flex items-center justify-between text-on-surface-variant"><div class="flex items-center gap-space-xs min-w-0 flex-1"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm text-ink-3 truncate">Search people, runs, vouchers...</span></div><kbd class="px-1.5 py-0.5 rounded bg-surface-raised font-overline text-[10px] text-ink-2 shadow-[0_1px_2px_rgba(22,22,42,0.06)] shrink-0">Ctrl K</kbd></div><div class="flex items-center gap-space-xs"><button aria-label="Approvals" class="relative w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">rule</span><span class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full bg-warning-bg text-warning-text font-overline text-[10px] font-bold">4</span></button><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive ring-2 ring-surface"></span></button><button aria-label="Toggle theme" class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-background px-gutter"><div class="flex flex-col w-full pb-16">
+<!-- Subtle Chameleon Emerald Radial Ambience -->
+<div class="relative w-full overflow-hidden">
+<div class="pointer-events-none absolute -top-24 -left-20 w-[580px] h-[360px] bg-gradient-to-br from-success-bg/60 via-lime/10 to-transparent blur-3xl opacity-70"></div>
+<div class="pointer-events-none absolute top-4 right-10 w-96 h-64 bg-gradient-to-bl from-iris-tint/40 via-transparent to-transparent blur-2xl"></div>
+<!-- Header Section -->
+<div class="relative pt-6 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col max-w-2xl">
+<div class="flex items-center gap-space-xs mb-1.5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text animate-pulse"></span>
+            Payroll Engine • FY 2026
+          </span>
+<span class="font-overline text-overline text-ink-3 uppercase">· Cycle 11/12</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Payroll runs</h1>
+<p class="font-body-sm text-body-sm text-ink-2 mt-1">
+          Generate, review, and authorise scheduled corporate payroll batches across operational entities.
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="h-11 px-4 rounded-xl bg-surface-raised text-ink font-label text-label hover:bg-surface-container transition-all duration-150 flex items-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/40" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">download</span>
+<span>Export schedule (CSV)</span>
+</button>
+<button class="h-11 px-5 rounded-xl bg-iris text-on-iris font-label text-label font-semibold hover:bg-iris-hover transition-all duration-150 flex items-center gap-2 shadow-[0_2px_10px_rgba(90,75,219,0.28)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-iris" id="toggle-new-run-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New run</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Collapsible "Initiate Payroll Run" Quick Configuration Card -->
+<section class="w-full mb-space-lg transition-all duration-300" id="new-run-drawer">
+<div class="bg-surface-raised rounded-2xl p-6 shadow-sm relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-iris via-primary-container to-lime"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-iris"></span>
+<h2 class="font-h2 text-h2 text-ink">Initiate Payroll Run</h2>
+<span class="px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-overline font-semibold uppercase">Batch Setup</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Select run cycle period, legal operational entity, and target employee group for automated calculation.</p>
+</div>
+<span class="font-overline text-overline text-ink-3 bg-surface-sunken px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-iris">verified_user</span>
+          Four-Eyes Audit Governance Active
+        </span>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md items-end pt-2">
+<!-- Period Picker -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-semibold flex items-center gap-1" for="run-period">
+<span>Period</span>
+<span class="text-destructive">*</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[18px] text-ink-3 pointer-events-none">calendar_month</span>
+<input class="w-full h-11 pl-10 pr-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/40 transition-colors" id="run-period" type="text" value="November 2026"/>
+</div>
+</div>
+<!-- Pay Group Selection -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-semibold flex items-center gap-1" for="pay-group-select">
+<span>Pay Group</span>
+<span class="text-destructive">*</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[18px] text-ink-3 pointer-events-none">groups</span>
+<select class="w-full h-11 pl-10 pr-9 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/40 appearance-none transition-colors" id="pay-group-select">
+<option selected="">Staff (Core Operations)</option>
+<option>Executive &amp; Directors</option>
+<option>Contract &amp; Ad-hoc</option>
+<option>Expatriates</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-ink-3 pointer-events-none">unfold_more</span>
+</div>
+</div>
+<!-- Cut-off Date -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-semibold flex items-center justify-between" for="cutoff-date">
+<span>Cut-off Date</span>
+<span class="font-overline text-overline text-ink-3">Auto</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[18px] text-ink-3 pointer-events-none">alarm</span>
+<input class="w-full h-11 pl-10 pr-3 rounded-xl bg-surface-sunken/70 text-ink-2 font-body-sm text-body-sm cursor-not-allowed select-none" id="cutoff-date" readonly="" type="text" value="25 Nov 2026, 17:00 WAT"/>
+</div>
+</div>
+<!-- Trigger Buttons -->
+<div class="flex items-center gap-space-xs">
+<button class="flex-1 h-11 px-4 rounded-xl bg-iris text-on-iris font-label text-label font-semibold hover:bg-iris-hover transition-all duration-150 flex items-center justify-center gap-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-iris" type="button">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span>Calculate Draft Run</span>
+</button>
+<button class="h-11 px-4 rounded-xl text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors font-label text-label" id="cancel-new-run-btn" type="button">
+            Cancel
+          </button>
+</div>
+</form>
+</div>
+</section>
+<!-- Metric / KPI Summary Tiles -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-lg">
+<!-- Tile 1 -->
+<div class="bg-surface-raised rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Active Run (Nov 2026)</span>
+<div class="font-stat text-stat text-ink font-bold tracking-tight mt-1">₦14,212,350.00</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-success-bg text-success-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-sunken/40 -mx-5 -mb-5 px-5 py-3 flex items-center justify-between text-body-sm">
+<span class="text-ink-2 font-body-sm">48 employees in Staff pay group</span>
+<span class="font-overline text-overline text-success-text font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+          Due 27 Nov
+        </span>
+</div>
+</div>
+<!-- Tile 2 -->
+<div class="bg-surface-raised rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Total Gross Commitment</span>
+<div class="font-stat text-stat text-ink font-bold tracking-tight mt-1">₦18,450,000.00</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">pie_chart</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-sunken/40 -mx-5 -mb-5 px-5 py-3 flex items-center justify-between text-body-sm">
+<span class="text-ink-2 font-body-sm truncate">Includes PAYE, Pension, NHF &amp; allowances</span>
+<span class="font-overline text-overline text-ink-3 shrink-0">100% committed</span>
+</div>
+</div>
+<!-- Tile 3 -->
+<div class="bg-surface-raised rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Statutory Remittances</span>
+<div class="font-stat text-stat text-ink font-bold tracking-tight mt-1">₦4,237,650.00</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-info-bg text-info-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">assured_workload</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-sunken/40 -mx-5 -mb-5 px-5 py-3 flex items-center justify-between text-body-sm">
+<span class="text-ink-2 font-body-sm truncate">FIRS PAYE + PenCom RSA staging</span>
+<span class="font-overline text-overline text-info-text font-semibold shrink-0">Automated</span>
+</div>
+</div>
+<!-- Tile 4 -->
+<div class="bg-surface-raised rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Lifecycle Status</span>
+<div class="font-stat text-stat text-ink font-bold tracking-tight mt-1">Ready for Approval</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-warning-bg text-warning-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[22px]">gavel</span>
+</div>
+</div>
+<div class="mt-4 pt-3 bg-surface-sunken/40 -mx-5 -mb-5 px-5 py-3 flex items-center justify-between text-body-sm">
+<span class="text-ink-2 font-body-sm">3 of 5 verification stages cleared</span>
+<div class="w-16 h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="bg-warning-text h-full rounded-full" style="width: 60%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Governance & Lifecycle Stepper Banner -->
+<section class="bg-surface-raised rounded-2xl p-6 shadow-sm mb-space-lg relative overflow-hidden">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-ink leading-tight">Segregation of Duties (SoD) &amp; Four-Eyes Protocol</h3>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Each lifecycle milestone must be authorised by a distinct certified actor. Self-approval is strictly locked.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-sunken font-overline text-overline text-ink-2 font-semibold">
+          1 Draft
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-info-bg font-overline text-overline text-info-text font-semibold">
+          1 In Review
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warning-bg font-overline text-overline text-warning-text font-semibold">
+          1 Approved (Ready)
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-bg font-overline text-overline text-success-text font-semibold">
+          8 Paid (Archived)
+        </span>
+</div>
+</div>
+<!-- Stepper Flow -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
+<!-- Step 1 -->
+<div class="p-3.5 rounded-xl bg-surface-sunken flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Stage 01</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">edit_document</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-[12px] font-semibold text-ink-2">Draft</span>
+</div>
+<p class="text-[12px] text-ink-3 leading-tight mt-1">HR Operations generates headcount &amp; adjustments</p>
+</div>
+<!-- Step 2 -->
+<div class="p-3.5 rounded-xl bg-info-bg/30 flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-info-text">Stage 02</span>
+<span class="material-symbols-outlined text-[16px] text-info-text">calculate</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-info-bg font-label text-[12px] font-semibold text-info-text">Calculated</span>
+</div>
+<p class="text-[12px] text-ink-3 leading-tight mt-1">Automated tax, pension &amp; relief logic executed</p>
+</div>
+<!-- Step 3 -->
+<div class="p-3.5 rounded-xl bg-info-bg/40 flex flex-col gap-2 relative ring-1 ring-info-text/20">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-info-text">Stage 03</span>
+<span class="material-symbols-outlined text-[16px] text-info-text">rate_review</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-info-bg font-label text-[12px] font-semibold text-info-text">Reviewed</span>
+</div>
+<p class="text-[12px] text-ink-3 leading-tight mt-1">HR Lead / Auditor verifies variance report</p>
+</div>
+<!-- Step 4 -->
+<div class="p-3.5 rounded-xl bg-warning-bg/40 flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-warning-text">Stage 04</span>
+<span class="material-symbols-outlined text-[16px] text-warning-text">check_circle</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-warning-bg font-label text-[12px] font-semibold text-warning-text">Approved</span>
+</div>
+<p class="text-[12px] text-ink-3 leading-tight mt-1">Managing Director / CFO sign-off authorised</p>
+</div>
+<!-- Step 5 -->
+<div class="p-3.5 rounded-xl bg-surface-sunken flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Stage 05</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">account_balance</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-label text-[12px] font-semibold text-ink-2">Posted</span>
+</div>
+<p class="text-[12px] text-ink-3 leading-tight mt-1">Journal vouchers committed to General Ledger</p>
+</div>
+<!-- Step 6 -->
+<div class="p-3.5 rounded-xl bg-success-bg/30 flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-success-text">Stage 06</span>
+<span class="material-symbols-outlined text-[16px] text-success-text">task_alt</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-success-bg font-label text-[12px] font-semibold text-success-text">Paid</span>
+</div>
+<p class="text-[12px] text-ink-3 leading-tight mt-1">Bank payment gateway dispatches net salaries</p>
+</div>
+</div>
+</section>
+<!-- Data Table Card Container -->
+<section class="bg-surface-raised rounded-2xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Toolbar -->
+<div class="p-5 pb-4 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+<!-- Search Input -->
+<div class="relative w-full xl:w-96">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[18px] text-ink-3 pointer-events-none">search</span>
+<input class="w-full h-11 pl-10 pr-4 rounded-xl bg-surface-sunken font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" placeholder="Search by period, batch ID, or creator..." type="text"/>
+</div>
+<!-- Filter Chips & Selectors -->
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Pay Group Filter -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-xl bg-surface-sunken text-ink font-label text-[13px] font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-iris/30 cursor-pointer">
+<option>All pay groups</option>
+<option>Staff (Core Operations)</option>
+<option>Executive &amp; Directors</option>
+<option>Contract &amp; Logistics</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+<!-- Status Filter -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-xl bg-surface-sunken text-ink font-label text-[13px] font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-iris/30 cursor-pointer">
+<option>All statuses</option>
+<option>Draft</option>
+<option>Calculated</option>
+<option>Reviewed</option>
+<option>Approved</option>
+<option>Posted</option>
+<option>Paid</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+<!-- Financial Year Filter -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-xl bg-surface-sunken text-ink font-label text-[13px] font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-iris/30 cursor-pointer">
+<option>FY 2026</option>
+<option>FY 2025</option>
+<option>FY 2024</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+<!-- Density / Column View Actions -->
+<div class="h-6 w-px bg-surface-container mx-1 hidden sm:block"></div>
+<button aria-label="Table density" class="w-10 h-10 rounded-xl bg-surface-sunken hover:bg-surface-container text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">density_medium</span>
+</button>
+<button aria-label="Select columns" class="w-10 h-10 rounded-xl bg-surface-sunken hover:bg-surface-container text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">view_column</span>
+</button>
+</div>
+</div>
+<!-- Enterprise Dense Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken font-label text-[12px] font-semibold text-ink-3 uppercase tracking-wider select-none">
+<th class="py-3 px-5 whitespace-nowrap">Run ID / Code</th>
+<th class="py-3 px-4 whitespace-nowrap">Period</th>
+<th class="py-3 px-4 whitespace-nowrap">Pay Group</th>
+<th class="py-3 px-4 whitespace-nowrap text-center">Headcount</th>
+<th class="py-3 px-4 whitespace-nowrap text-right">Gross Salary (₦)</th>
+<th class="py-3 px-4 whitespace-nowrap text-right">Net Payable (₦)</th>
+<th class="py-3 px-4 whitespace-nowrap">Status</th>
+<th class="py-3 px-4 whitespace-nowrap">Created by</th>
+<th class="py-3 px-4 whitespace-nowrap">Last Action by</th>
+<th class="py-3 px-5 text-right whitespace-nowrap">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm text-ink">
+<!-- Row 1: Reviewed -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-5 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-iris">receipt_long</span>
+<span class="font-mono text-[13px] font-semibold text-iris tracking-tight">PAY-2026-11-STF</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap font-medium text-ink">November 2026</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken font-label text-[12px] text-ink-2">
+                Staff
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap text-center font-mono font-medium">48</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono text-ink-2">18,450,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono font-bold text-ink">14,212,350.00</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-info-bg text-info-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+                Reviewed
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">CE</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Chinedu Eze</span>
+<span class="text-[11px] text-ink-3">18 Nov 2026, 09:14</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-iris-tint text-iris font-label text-[11px] font-bold flex items-center justify-center">FB</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Fatima Bello</span>
+<span class="text-[11px] text-info-text font-medium">Reviewed · 19 Nov 2026, 11:30</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-5 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button aria-label="Review batch" class="h-9 px-3 rounded-lg bg-iris-tint text-iris hover:bg-iris hover:text-on-iris transition-colors font-label text-[12px] font-semibold flex items-center gap-1" type="button">
+<span>Sign-off</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+<button aria-label="More actions" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Calculated -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-5 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-ink-3">receipt_long</span>
+<span class="font-mono text-[13px] font-semibold text-ink tracking-tight">PAY-2026-11-EXEC</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap font-medium text-ink">November 2026</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-warning-bg/50 font-label text-[12px] text-warning-text font-medium">
+                Executive &amp; Directors
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap text-center font-mono font-medium">8</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono text-ink-2">12,800,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono font-bold text-ink">9,450,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-info-bg text-info-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+                Calculated
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">CE</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Chinedu Eze</span>
+<span class="text-[11px] text-ink-3">18 Nov 2026, 10:45</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-3 font-label text-[11px] font-bold flex items-center justify-center">SYS</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">System Daemon</span>
+<span class="text-[11px] text-ink-3">Calculated · 18 Nov 2026, 10:46</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-5 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button aria-label="Review batch" class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-ink font-label text-[12px] font-medium transition-colors" type="button">
+                  Review
+                </button>
+<button aria-label="More actions" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Draft -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-5 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-ink-3">receipt_long</span>
+<span class="font-mono text-[13px] font-semibold text-ink tracking-tight">PAY-2026-11-CON</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap font-medium text-ink">November 2026</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken font-label text-[12px] text-ink-2">
+                Contract &amp; Logistics
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap text-center font-mono font-medium">24</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono text-ink-2">5,640,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono font-bold text-ink">4,820,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-sunken text-ink-2 font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3"></span>
+                Draft
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">NN</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Ngozi Nnamdi</span>
+<span class="text-[11px] text-ink-3">19 Nov 2026, 08:30</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">NN</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Ngozi Nnamdi</span>
+<span class="text-[11px] text-ink-3">Draft setup · 19 Nov 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-5 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button aria-label="Calculate batch" class="h-9 px-3 rounded-lg hover:bg-surface-sunken text-iris font-label text-[12px] font-semibold transition-colors" type="button">
+                  Calculate
+                </button>
+<button aria-label="More actions" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Paid -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-5 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-success-text">verified</span>
+<span class="font-mono text-[13px] font-semibold text-ink tracking-tight">PAY-2026-10-STF</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap font-medium text-ink">October 2026</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken font-label text-[12px] text-ink-2">
+                Staff
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap text-center font-mono font-medium">48</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono text-ink-2">18,200,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono font-bold text-ink">14,018,400.00</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Paid
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">CE</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Chinedu Eze</span>
+<span class="text-[11px] text-ink-3">20 Oct 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-success-bg text-success-text font-label text-[11px] font-bold flex items-center justify-center">TB</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Tunde Bakare</span>
+<span class="text-[11px] text-success-text font-medium">Disbursed (Zenith) · 25 Oct 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-5 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button aria-label="Download payroll package" class="h-9 px-2.5 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink transition-colors flex items-center gap-1 font-label text-[12px]" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+<span>Slips</span>
+</button>
+<button aria-label="More actions" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Paid -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-5 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-success-text">verified</span>
+<span class="font-mono text-[13px] font-semibold text-ink tracking-tight">PAY-2026-10-EXEC</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap font-medium text-ink">October 2026</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-warning-bg/50 font-label text-[12px] text-warning-text font-medium">
+                Executive &amp; Directors
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap text-center font-mono font-medium">8</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono text-ink-2">12,800,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono font-bold text-ink">9,450,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Paid
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">CE</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Chinedu Eze</span>
+<span class="text-[11px] text-ink-3">20 Oct 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-success-bg text-success-text font-label text-[11px] font-bold flex items-center justify-center">TB</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Tunde Bakare</span>
+<span class="text-[11px] text-success-text font-medium">Disbursed · 25 Oct 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-5 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button aria-label="Download payroll package" class="h-9 px-2.5 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink transition-colors flex items-center gap-1 font-label text-[12px]" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+<span>Slips</span>
+</button>
+<button aria-label="More actions" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Paid -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-5 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-success-text">verified</span>
+<span class="font-mono text-[13px] font-semibold text-ink tracking-tight">PAY-2026-10-CON</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap font-medium text-ink">October 2026</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken font-label text-[12px] text-ink-2">
+                Contract &amp; Logistics
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap text-center font-mono font-medium">22</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono text-ink-2">5,120,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono font-bold text-ink">4,390,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Paid
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">NN</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Ngozi Nnamdi</span>
+<span class="text-[11px] text-ink-3">21 Oct 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-success-bg text-success-text font-label text-[11px] font-bold flex items-center justify-center">TB</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Tunde Bakare</span>
+<span class="text-[11px] text-success-text font-medium">Disbursed · 25 Oct 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-5 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button aria-label="Download payroll package" class="h-9 px-2.5 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink transition-colors flex items-center gap-1 font-label text-[12px]" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+<span>Slips</span>
+</button>
+<button aria-label="More actions" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: Paid -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="py-4 px-5 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-success-text">verified</span>
+<span class="font-mono text-[13px] font-semibold text-ink tracking-tight">PAY-2026-09-STF</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap font-medium text-ink">September 2026</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken font-label text-[12px] text-ink-2">
+                Staff
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap text-center font-mono font-medium">47</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono text-ink-2">17,850,000.00</td>
+<td class="py-4 px-4 whitespace-nowrap text-right font-mono font-bold text-ink">13,760,200.00</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-[12px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Paid
+              </span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-surface-sunken text-ink-2 font-label text-[11px] font-bold flex items-center justify-center">CE</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Chinedu Eze</span>
+<span class="text-[11px] text-ink-3">19 Sep 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-success-bg text-success-text font-label text-[11px] font-bold flex items-center justify-center">TB</div>
+<div class="flex flex-col leading-tight">
+<span class="font-medium text-ink text-[13px]">Tunde Bakare</span>
+<span class="text-[11px] text-success-text font-medium">Disbursed · 25 Sep 2026</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-5 whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button aria-label="Download payroll package" class="h-9 px-2.5 rounded-lg hover:bg-surface-sunken text-ink-2 hover:text-ink transition-colors flex items-center gap-1 font-label text-[12px]" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt</span>
+<span>Slips</span>
+</button>
+<button aria-label="More actions" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Active Batch Aggregate Summary Bar -->
+<div class="bg-surface-sunken/60 px-5 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 text-body-sm text-ink-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-iris"></span>
+<span class="font-label text-label font-semibold text-ink">Active Batch Totals (Current Cycle):</span>
+<span class="font-mono text-ink-2">Gross ₦36,890,000.00</span>
+<span class="text-ink-3">|</span>
+<span class="font-mono font-bold text-ink">Net ₦28,482,350.00</span>
+</div>
+<div class="font-overline text-overline text-ink-3 uppercase">
+        Statutory Staging: ₦8,407,650.00 (FIRS + RSA)
+      </div>
+</div>
+<!-- Table Pagination Footer -->
+<div class="p-4 px-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3 font-body-sm text-body-sm text-ink-3">
+<span>Showing <strong class="text-ink">1–7</strong> of <strong class="text-ink">24</strong> runs</span>
+<span class="text-surface-container">|</span>
+<div class="flex items-center gap-1.5">
+<span>Rows per page:</span>
+<select aria-label="Rows per page" class="h-8 px-2 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none cursor-pointer">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+</div>
+<!-- Pagination Buttons -->
+<div class="flex items-center gap-1">
+<button aria-label="First page" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 opacity-40 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">first_page</span>
+</button>
+<button aria-label="Previous page" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 opacity-40 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 rounded-lg bg-iris text-on-iris font-label text-[13px] font-semibold flex items-center justify-center shadow-sm" type="button">
+          1
+        </button>
+<button class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink font-label text-[13px] font-medium flex items-center justify-center transition-colors" type="button">
+          2
+        </button>
+<button class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink font-label text-[13px] font-medium flex items-center justify-center transition-colors" type="button">
+          3
+        </button>
+<button class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink font-label text-[13px] font-medium flex items-center justify-center transition-colors" type="button">
+          4
+        </button>
+<button aria-label="Next page" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+<button aria-label="Last page" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">last_page</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Interactive JavaScript for Inline Form Toggle -->
+<script>
+    (function() {
+      const toggleBtn = document.getElementById('toggle-new-run-btn');
+      const cancelBtn = document.getElementById('cancel-new-run-btn');
+      const drawer = document.getElementById('new-run-drawer');
+
+      if (toggleBtn && drawer && cancelBtn) {
+        toggleBtn.addEventListener('click', () => {
+          drawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const periodInput = document.getElementById('run-period');
+          if (periodInput) periodInput.focus();
+        });
+
+        cancelBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>

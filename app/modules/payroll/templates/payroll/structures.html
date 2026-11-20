@@ -1,0 +1,136 @@
+{# Payroll → Salary structures: components, structures and pay groups (ADR 0021).
+   Design: design/stitch/exports/payroll.structures.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{# Forms repeat on this page, so ids carry the form's key. #}
+{% macro field(name, label, key, value="", errs={}, placeholder="", inputmode=None, readonly=false) -%}
+{% set fid = name ~ "-" ~ key | replace(":", "-") %}
+<div>
+  <label class="kx-label" for="{{ fid }}">{{ label }}</label>
+  <input id="{{ fid }}" name="{{ name }}" value="{{ value or '' }}" class="kx-input{{ ' bg-surface-sunken' if readonly }}" {% if placeholder %}placeholder="{{ placeholder }}"{% endif %} {% if inputmode %}inputmode="{{ inputmode }}"{% endif %} {% if readonly %}readonly{% endif %} {% if errs.get(name) %}aria-invalid="true" aria-describedby="{{ fid }}-error"{% endif %}>
+  {% if errs.get(name) %}<p class="kx-field-error" id="{{ fid }}-error">{{ ui.icon("circle-alert", "sm") }} {{ errs[name] }}</p>{% endif %}
+</div>
+{%- endmacro %}
+
+{% macro component_form(c=None) -%}
+{% set key = "component:" ~ (c.id if c else "new") %}
+{% set errs = errors if editing == key else {} %}
+{% set v = values if editing == key else {} %}
+<form method="post" action="/payroll/structures/components" class="mt-4 grid gap-4 sm:grid-cols-3" novalidate>
+  {{ ui.csrf_field() }}
+  {% if c %}<input type="hidden" name="component_id" value="{{ c.id }}">{% endif %}
+  {% if errs.get("form") %}<div class="sm:col-span-3">{{ ui.alert("danger", errs["form"]) }}</div>{% endif %}
+  {{ field("name", "Name", key, v.get("name") or (c.name if c else ""), errs) }}
+  {{ field("code", "Code", key, v.get("code") or (c.code if c else ""), errs, placeholder="Lower case, e.g. housing", readonly=c is not none and c.system) }}
+  <div>
+    <label class="kx-label" for="kind-{{ key }}">Kind</label>
+    <select id="kind-{{ key }}" name="kind" class="kx-input" {% if c and c.system %}disabled{% endif %}>
+      <option value="earning" {% if not c or c.kind == "earning" %}selected{% endif %}>Earning</option>
+      <option value="deduction" {% if c and c.kind == "deduction" %}selected{% endif %}>Deduction</option>
+    </select>
+    {% if c and c.system %}<input type="hidden" name="kind" value="{{ c.kind }}">{% endif %}
+    {{ ui.field_error(errs, "kind") }}
+  </div>
+  <div>
+    <label class="kx-label" for="calc-{{ key }}">Amount</label>
+    <select id="calc-{{ key }}" name="calculation" class="kx-input">
+      <option value="fixed" {% if not c or c.calculation == "fixed" %}selected{% endif %}>Fixed amount per person</option>
+      <option value="percent" {% if c and c.calculation == "percent" %}selected{% endif %}>Percentage of another earning</option>
+    </select>
+    {{ ui.field_error(errs, "calculation") }}
+  </div>
+  {{ field("percent", "Percentage", key, v.get("percent") or ((c.percent * 100) | round(4) if c and c.percent else ""), errs, placeholder="Only for a percentage", inputmode="decimal") }}
+  <div>
+    <label class="kx-label" for="base-{{ key }}">Of</label>
+    <select id="base-{{ key }}" name="base_component_id" class="kx-input"><option value="">—</option>{% for b in fixed_earnings %}<option value="{{ b.id }}" {% if c and c.base_component_id == b.id %}selected{% endif %}>{{ b.name }}</option>{% endfor %}</select>
+    {{ ui.field_error(errs, "base_component_id") }}
+  </div>
+  <div class="flex flex-wrap items-center justify-between gap-3 sm:col-span-3">
+    <div class="flex flex-wrap gap-x-6 gap-y-2 text-body-sm">
+      <label class="flex items-center gap-2"><input type="checkbox" name="taxable" value="1" class="kx-check" {% if not c or c.taxable %}checked{% endif %}> Taxable</label>
+      <label class="flex items-center gap-2"><input type="checkbox" name="pensionable" value="1" class="kx-check" {% if c and c.pensionable %}checked{% endif %}> Pensionable</label>
+      {% if c and not c.system %}<label class="flex items-center gap-2"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if c.is_active %}checked{% endif %}> Active</label>{% endif %}
+    </div>
+    {{ ui.field_error(errs, "pensionable") }}
+    <button type="submit" class="kx-btn-primary">{{ "Save" if c else "Add component" }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% macro structure_form(s=None) -%}
+{% set key = "structure:" ~ (s.id if s else "new") %}
+{% set errs = errors if editing == key else {} %}
+{% set chosen = {} %}
+{% if s %}{% for cid, name, amount in s.lines %}{% set _ = chosen.update({cid: amount}) %}{% endfor %}{% endif %}
+<form method="post" action="/payroll/structures/structures" class="mt-4 space-y-4" novalidate>
+  {{ ui.csrf_field() }}
+  {% if s %}<input type="hidden" name="structure_id" value="{{ s.id }}">{% endif %}
+  {{ field("structure_name", "Name", key, s.name if s else "", errs) }}
+  <div class="space-y-2">
+    {% for c in components if c.kind == "earning" and c.is_active %}
+    <div class="grid grid-cols-[minmax(0,1fr)_160px] items-center gap-3">
+      <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="included" value="{{ c.id }}" class="kx-check" {% if c.id in chosen or (not s and c.code == "basic") %}checked{% endif %}> {{ c.name }}</label>
+      <input type="hidden" name="component_id" value="{{ c.id }}">
+      {% if c.calculation == "fixed" %}<input name="default_amount" value="{{ chosen.get(c.id) or '' }}" inputmode="decimal" class="kx-input text-right tnum" placeholder="Default (optional)" aria-label="Default amount for {{ c.name }}">{% else %}<input type="hidden" name="default_amount" value=""><span class="text-xs text-ink-3">{{ (c.percent * 100) | round(2) }}% of {{ names.get(c.base_component_id, "") }}</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  <div class="flex items-center justify-between gap-3">
+    {% if s %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if s.is_active %}checked{% endif %}> Active</label>{% else %}<span></span>{% endif %}
+    <button type="submit" class="kx-btn-primary">{{ "Save" if s else "Add structure" }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Salary structures", "Earnings and deductions, the structures that group them, and pay groups.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<section id="components" class="mt-6 space-y-3" aria-labelledby="h-components">
+  <h2 id="h-components" class="font-h3 text-h3">Components</h2>
+  {% for c in components %}
+  <details class="kx-card p-5" {% if editing == "component:" ~ c.id %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3">
+      <span class="min-w-0"><span class="block font-semibold">{{ c.name }} <span class="font-mono text-xs font-normal text-ink-3">{{ c.code }}</span></span>
+        <span class="text-xs text-ink-3">{% if c.calculation == "percent" %}{{ (c.percent * 100) | round(2) }}% of {{ names.get(c.base_component_id, "") }}{% else %}Fixed amount{% endif %}{% if c.taxable %} · taxable{% endif %}{% if c.pensionable %} · pensionable{% endif %}</span></span>
+      <span class="flex gap-2">{{ ui.badge("success" if c.kind == "earning" else "danger", c.kind | capitalize) }}{% if c.system %}{{ ui.badge("neutral", "Built in") }}{% endif %}{% if not c.is_active %}{{ ui.badge("neutral", "Inactive") }}{% endif %}</span>
+    </summary>
+    {{ component_form(c) }}
+  </details>
+  {% endfor %}
+  <details class="rounded-2xl border border-dashed border-line p-5" {% if editing == "component:new" %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none items-center gap-2 text-label text-iris">{{ ui.icon("plus", "sm") }} New component</summary>
+    {{ component_form() }}
+  </details>
+</section>
+
+<section id="structures" class="mt-8 space-y-3" aria-labelledby="h-structures">
+  <h2 id="h-structures" class="font-h3 text-h3">Salary structures</h2>
+  {% for s in structures %}
+  <details class="kx-card p-5" {% if editing == "structure:" ~ s.id %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3">
+      <span><span class="block font-semibold">{{ s.name }}</span><span class="text-xs text-ink-3">{% for cid, name, amount in s.lines %}{{ name }}{% if amount %} {{ amount | money }}{% endif %}{{ ", " if not loop.last }}{% endfor %}</span></span>
+      {{ ui.badge("success", "Active") if s.is_active else ui.badge("neutral", "Inactive") }}
+    </summary>
+    {{ structure_form(s) }}
+  </details>
+  {% endfor %}
+  <details class="rounded-2xl border border-dashed border-line p-5" {% if editing == "structure:new" %}open{% endif %}>
+    <summary class="flex cursor-pointer list-none items-center gap-2 text-label text-iris">{{ ui.icon("plus", "sm") }} New structure</summary>
+    {{ structure_form() }}
+  </details>
+</section>
+
+<section id="groups" class="kx-card mt-8 p-5" aria-labelledby="h-groups">
+  <h2 id="h-groups" class="font-h3 text-h3">Pay groups</h2>
+  <p class="text-body-sm text-ink-3">All paid monthly; each group has its own runs.</p>
+  <ul class="mt-3 flex flex-wrap gap-2">{% for g in groups %}<li>{{ ui.badge("info" if g.is_active else "neutral", g.name) }}</li>{% endfor %}</ul>
+  {% set errs = errors if editing == "group" else {} %}
+  <form method="post" action="/payroll/structures/groups" class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    <div class="flex-1">{{ field("group_name", "New pay group", "group", "", errs) }}</div>
+    <button type="submit" class="kx-btn-secondary">Add</button>
+  </form>
+</section>
+{% endblock %}

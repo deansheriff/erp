@@ -832,3 +832,126 @@ screens:
       save: expenses.settings.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.runs
+    phase: 9
+    module: payroll
+    title: Payroll runs
+    route: GET /payroll
+    template: app/modules/payroll/templates/payroll/runs.html
+    stitch_screens:
+      desktop: fea21cdf7d0f42ea9bf9da81db580fb1
+    exports:
+      - design/stitch/exports/payroll.runs.html
+    permission: payroll.run.read
+    actions:
+      new_run: payroll.run.prepare
+    field_classes: [directory, compensation]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.run
+    phase: 9
+    module: payroll
+    title: Payroll run
+    route: GET /payroll/runs/{run_id}
+    template: app/modules/payroll/templates/payroll/run.html
+    stitch_screens:
+      desktop: 5edf0db286554652ae1ae33f6a5c2d72
+    exports:
+      - design/stitch/exports/payroll.run.html
+    permission: payroll.run.read
+    actions:
+      calculate: payroll.run.prepare
+      delete: payroll.run.prepare
+      review: payroll.run.review
+      approve: payroll.run.approve
+      post: payroll.run.post
+      mark_paid: payroll.run.pay
+      send_back: payroll.run.review or payroll.run.approve
+    field_classes: [directory, compensation]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.my
+    phase: 9
+    module: payroll
+    title: My payslips (self-service)
+    route: GET /payslips
+    template: app/modules/payroll/templates/payroll/my.html
+    stitch_screens:
+      mobile: b73f21040d79436abbcae6235416d4e0
+    exports:
+      - design/stitch/exports/payroll.my.html
+    permission: payroll.payslip.read
+    actions:
+      declare_rent: payroll.relief.declare
+    field_classes: [compensation]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.people
+    phase: 9
+    module: payroll
+    title: People's pay
+    route: GET /payroll/people
+    template: app/modules/payroll/templates/payroll/people.html
+    stitch_screens:
+      desktop: ff32c062704a4470a601b2bbee4d2836
+    exports:
+      - design/stitch/exports/payroll.people.html
+    permission: payroll.pay.read
+    actions:
+      set_pay: payroll.pay.manage
+      add_deduction: payroll.pay.manage
+      end_deduction: payroll.pay.manage
+    field_classes: [directory, compensation]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.structures
+    phase: 9
+    module: payroll
+    title: Salary structures, components and pay groups
+    route: GET /payroll/structures
+    template: app/modules/payroll/templates/payroll/structures.html
+    stitch_screens:
+      desktop: 31307b117c4e44eea8f54e9aafe19a0a
+    exports:
+      - design/stitch/exports/payroll.structures.html
+    permission: payroll.structure.manage
+    actions:
+      save_component: payroll.structure.manage
+      save_structure: payroll.structure.manage
+      add_pay_group: payroll.structure.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.reliefs
+    phase: 9
+    module: payroll
+    title: Rent relief declarations
+    route: GET /payroll/reliefs
+    template: app/modules/payroll/templates/payroll/reliefs.html
+    stitch_screens:
+      desktop: 432362aabf8b4a929cb52e0f55f9dfcf
+    exports:
+      - design/stitch/exports/payroll.reliefs.html
+    permission: payroll.relief.verify
+    actions:
+      verify: payroll.relief.verify
+      reject: payroll.relief.verify
+    field_classes: [directory, compensation]
+    approved_by: Dean Sheriff (2026-11-20)
+
+  - id: payroll.settings
+    phase: 9
+    module: payroll
+    title: Payroll settings (statutory rates)
+    route: GET /payroll/settings
+    template: app/modules/payroll/templates/payroll/settings.html
+    stitch_screens:
+      desktop: f00d80bb35e74ca6b84b41af13f867c6
+    exports:
+      - design/stitch/exports/payroll.settings.html
+    permission: payroll.settings.manage
+    actions:
+      save: payroll.settings.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-20)

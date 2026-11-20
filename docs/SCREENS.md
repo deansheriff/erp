@@ -93,3 +93,15 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Expense approvals** (`expenses.approvals`) | `GET /expenses/approvals` | login | directory | Dean Sheriff (2026-11-20) |
 | **Expense payments** (`expenses.payments`) | `GET /expenses/payments` | expenses.claim.reimburse | directory | Dean Sheriff (2026-11-20) |
 | **Expense settings** (`expenses.settings`) | `GET /expenses/settings` | expenses.settings.manage | — | Dean Sheriff (2026-11-20) |
+
+## Phase 9
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Payroll runs** (`payroll.runs`) | `GET /payroll` | payroll.run.read | directory, compensation | Dean Sheriff (2026-11-20) |
+| **Payroll run** (`payroll.run`) | `GET /payroll/runs/{run_id}` | payroll.run.read | directory, compensation | Dean Sheriff (2026-11-20) |
+| **My payslips (self-service)** (`payroll.my`) | `GET /payslips` | payroll.payslip.read | compensation | Dean Sheriff (2026-11-20) |
+| **People's pay** (`payroll.people`) | `GET /payroll/people` | payroll.pay.read | directory, compensation | Dean Sheriff (2026-11-20) |
+| **Salary structures, components and pay groups** (`payroll.structures`) | `GET /payroll/structures` | payroll.structure.manage | — | Dean Sheriff (2026-11-20) |
+| **Rent relief declarations** (`payroll.reliefs`) | `GET /payroll/reliefs` | payroll.relief.verify | directory, compensation | Dean Sheriff (2026-11-20) |
+| **Payroll settings (statutory rates)** (`payroll.settings`) | `GET /payroll/settings` | payroll.settings.manage | — | Dean Sheriff (2026-11-20) |
