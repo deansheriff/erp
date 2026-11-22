@@ -127,3 +127,10 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Receivables aging** (`finance.aging`) | `GET /finance/aging` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
 | **Tax settings** (`finance.tax`) | `GET /finance/tax` | finance.tax.read | — | Dean Sheriff (2026-11-22) |
 | **Tax returns** (`finance.tax_returns`) | `GET /finance/tax/returns` | finance.tax.read | — | Dean Sheriff (2026-11-22) |
+| **Suppliers** (`finance.suppliers`) | `GET /finance/suppliers` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
+| **One supplier (owed, aging, bills, orders, bank details)** (`finance.supplier`) | `GET /finance/suppliers/{supplier_id}` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
+| **Purchases (bills, purchase orders, debit notes, payments)** (`finance.purchases`) | `GET /finance/purchases` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Purchase order and goods received** (`finance.purchase_order`) | `GET /finance/purchase-orders/{order_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Supplier bill or debit note, with the three-way match** (`finance.bill`) | `GET /finance/bills/{bill_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Prepare or view a supplier payment** (`finance.payment`) | `GET /finance/payments/{payment_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Payables aging** (`finance.payables_aging`) | `GET /finance/payables-aging` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |

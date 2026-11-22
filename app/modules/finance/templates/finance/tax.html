@@ -94,7 +94,7 @@
 </section>
 
 <section id="settings" class="kx-card mt-6 p-5" aria-labelledby="settings-title">
-  <h2 id="settings-title" class="font-h3 text-h3">Receivables settings <span class="text-body-sm font-normal text-ink-3">(confirm)</span></h2>
+  <h2 id="settings-title" class="font-h3 text-h3">Receivables and payables settings <span class="text-body-sm font-normal text-ink-3">(confirm)</span></h2>
   {% set e = errors if form == "settings" else {} %}
   {% set sv = v if form == "settings" else {} %}
   <form method="post" action="/finance/tax/settings" class="mt-4 space-y-6" novalidate>
@@ -106,11 +106,12 @@
       {% endfor %}
     </fieldset>
     <fieldset class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" {% if not can_manage %}disabled{% endif %}>
-      <legend class="mb-2 text-body-sm font-semibold">Terms, reminders and returns</legend>
+      <legend class="mb-2 text-body-sm font-semibold">Terms, reminders, returns and matching</legend>
       {{ ui.text_field("default_terms_days", "Default payment terms (days)", value=sv.get("default_terms_days") or s.default_terms_days, inputmode="numeric", errors=e) }}
       {{ ui.text_field("remind_before_days", "Remind this many days before due", value=sv.get("remind_before_days") if sv else s.remind_before_days, inputmode="numeric", errors=e, hint="0 for no early reminder.") }}
       {{ ui.text_field("remind_every_days", "Then every N days overdue", value=sv.get("remind_every_days") or s.remind_every_days, inputmode="numeric", errors=e) }}
       {{ ui.text_field("return_due_day", "Returns due on this day of the next month", value=sv.get("return_due_day") or s.return_due_day, inputmode="numeric", errors=e) }}
+      {{ ui.text_field("price_tolerance", "Bill price tolerance against the PO (%)", value=sv.get("price_tolerance") or (s.price_tolerance | plain), inputmode="decimal", errors=e) }}
       <label class="flex items-center gap-2 text-body-sm sm:col-span-2"><input type="checkbox" name="remind_on_due" value="1" class="kx-check" {% if (sv.get("remind_on_due") if sv else s.remind_on_due) %}checked{% endif %}> Also remind on the due date</label>
     </fieldset>
     {% if can_manage %}<div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save settings</button></div>{% endif %}

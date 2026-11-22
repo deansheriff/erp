@@ -8,8 +8,10 @@ auditor:
   finance.account.read: organization
   finance.customer.read: organization
   finance.journal.read: organization
+  finance.purchase.read: organization
   finance.report.read: organization
   finance.sales.read: organization
+  finance.supplier.read: organization
   finance.tax.read: organization
   hr.employee.banking.read: organization
   hr.employee.compensation.read: organization
@@ -59,18 +61,26 @@ finance_manager:
   expenses.settings.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.bill.override: organization
   finance.credit_note.issue: organization
   finance.customer.manage: organization
   finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.post: organization
   finance.journal.read: organization
+  finance.payment.approve: organization
+  finance.payment.create: organization
   finance.period.manage: organization
+  finance.purchase.approve: organization
+  finance.purchase.create: organization
+  finance.purchase.read: organization
   finance.receipt.create: organization
   finance.receipt.reverse: organization
   finance.report.read: organization
   finance.sales.create: organization
   finance.sales.read: organization
+  finance.supplier.manage: organization
+  finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
   payroll.certificate.read: organization
@@ -89,10 +99,15 @@ finance_officer:
   finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.read: organization
+  finance.payment.create: organization
+  finance.purchase.create: organization
+  finance.purchase.read: organization
   finance.receipt.create: organization
   finance.report.read: organization
   finance.sales.create: organization
   finance.sales.read: organization
+  finance.supplier.manage: organization
+  finance.supplier.read: organization
   finance.tax.read: organization
   payroll.loan.read: organization
   payroll.remittance.export: organization
@@ -194,18 +209,26 @@ organization_administrator:
   files.file.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.bill.override: organization
   finance.credit_note.issue: organization
   finance.customer.manage: organization
   finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.post: organization
   finance.journal.read: organization
+  finance.payment.approve: organization
+  finance.payment.create: organization
   finance.period.manage: organization
+  finance.purchase.approve: organization
+  finance.purchase.create: organization
+  finance.purchase.read: organization
   finance.receipt.create: organization
   finance.receipt.reverse: organization
   finance.report.read: organization
   finance.sales.create: organization
   finance.sales.read: organization
+  finance.supplier.manage: organization
+  finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
   hr.checklist.it: organization
@@ -299,18 +322,26 @@ super_administrator:
   files.file.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.bill.override: organization
   finance.credit_note.issue: organization
   finance.customer.manage: organization
   finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.post: organization
   finance.journal.read: organization
+  finance.payment.approve: organization
+  finance.payment.create: organization
   finance.period.manage: organization
+  finance.purchase.approve: organization
+  finance.purchase.create: organization
+  finance.purchase.read: organization
   finance.receipt.create: organization
   finance.receipt.reverse: organization
   finance.report.read: organization
   finance.sales.create: organization
   finance.sales.read: organization
+  finance.supplier.manage: organization
+  finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
   hr.checklist.it: organization

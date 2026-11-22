@@ -169,7 +169,8 @@ def clean_db(migrated_db: None) -> Iterator[None]:
                 "payroll_banks, payroll_accounts, finance_accounts, finance_settings, "
                 "fiscal_years, journals, recurring_journals, customers, sales_documents, "
                 "receipts, sales_allocations, vat_rates, wht_types, stamp_duty_types, "
-                "tax_returns CASCADE"
+                "tax_returns, suppliers, purchase_orders, goods_receipts, bills, "
+                "supplier_payments CASCADE"
             )
         )
         _migration("0010_payroll.py").seed_defaults(conn)

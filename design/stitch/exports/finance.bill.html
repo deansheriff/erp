@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"error-container":"#ffdad6","info-text":"#1D55B8","surface-variant":"#e2e2e6","surface-container-highest":"#e2e2e6","secondary-fixed-dim":"#acd530","ink":"#16162A","secondary-fixed":"#c7f24c","on-secondary-fixed-variant":"#3b4d00","line-strong":"#8B8BA6","ink-3":"#626280","on-surface-variant":"#474554","on-secondary-container":"#536b00","tertiary-fixed-dim":"#ffb68b","on-secondary":"#ffffff","on-secondary-fixed":"#161f00","destructive":"#C42836","primary":"#412ec2","danger-text":"#B4232F","iris-hover":"#4A3CC4","warning-bg":"#FFF1D6","outline-variant":"#c8c4d7","success-bg":"#DDF7E8","iris-tint":"#EEECFD","surface-bright":"#f9f9fd","inverse-primary":"#c5c0ff","warning-text":"#8A4B00","surface-container-lowest":"#ffffff","on-primary-fixed":"#140067","inverse-on-surface":"#f0f0f4","on-surface":"#1a1c1f","info-bg":"#DFEBFF","outline":"#787586","surface":"#FFFFFF","on-background":"#1a1c1f","tertiary-fixed":"#ffdbc8","danger-bg":"#FFE4E6","on-error-container":"#93000a","on-primary-fixed-variant":"#3d28be","success-text":"#0F6B3E","surface-dim":"#d9dade","secondary-container":"#c4ef49","on-primary":"#ffffff","lime-ink":"#4D7A0A","on-primary-container":"#e0dbff","on-iris":"#FFFFFF","iris":"#5A4BDB","surface-sunken":"#EFEFF6","lime":"#C5F04A","error":"#ba1a1a","surface-container-high":"#e8e8ec","primary-fixed-dim":"#c5c0ff","inverse-surface":"#2e3034","on-tertiary-container":"#ffd7c1","primary-container":"#5a4bdb","secondary":"#4f6600","surface-container-low":"#f3f3f7","primary-fixed":"#e4dfff","on-tertiary-fixed":"#321300","surface-tint":"#5646d7","surface-container":"#ededf1","surface-raised":"#FFFFFF","background":"#f9f9fd","tertiary":"#7a3700","on-tertiary-fixed-variant":"#743400","canvas":"#F6F6FA","tertiary-container":"#9f4a00","on-error":"#ffffff","line":"#E4E4EE","on-tertiary":"#ffffff","ink-2":"#4B4B66"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"2rem","space-2xl":"3rem","space-sm":"0.5rem","space-xs":"0.25rem","gutter":"1.5rem","space-md":"1rem","space-lg":"1.5rem","space-3xl":"4rem","space-xl":"2rem"},"fontFamily":{"body-sm":["Inter"],"h1":["Plus Jakarta Sans"],"label":["Inter"],"stat":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"],"overline":["Inter"],"display":["Plus Jakarta Sans"],"h3":["Plus Jakarta Sans"],"body":["Inter"]},"fontSize":{"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center gap-space-sm bg-surface"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-on-primary font-h3 text-h3">K</div><div class="flex flex-col min-w-0 flex-1"><span class="font-h3 text-h3 text-ink truncate leading-tight">Kxmeleon ERP</span><span class="font-overline text-overline text-ink-3 uppercase tracking-wider truncate">Adeyemi Holdings Ltd</span></div></div><div class="px-space-md py-space-sm"><div class="flex items-center gap-space-xs px-space-sm py-1.5 bg-surface rounded-lg text-ink-3"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-body-sm text-body-sm text-ink-3">Quick navigation...</span></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-xs"><div class="mb-space-sm"><span class="font-overline text-overline text-ink-3 px-space-sm uppercase tracking-wider">Core Modules</span></div><nav class="space-y-1" data-active-classes="bg-iris-tint text-primary font-semibold"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="executive-dashboard" href="#"><span class="material-symbols-outlined text-[20px]">space_dashboard</span><span class="font-label text-label">Overview</span></a><div class="space-y-1"><div class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-surface text-ink font-label text-label"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-primary">account_balance</span><span>Finance</span></div><span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span></div><div class="pl-space-lg space-y-1 pt-0.5"><div class="space-y-1"><div class="flex items-center justify-between px-space-sm py-1.5 rounded-lg text-ink font-label text-label"><span class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span>Payables</span><span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span></div><div class="pl-space-md space-y-1"><a aria-current="page" class="flex items-center justify-between px-space-sm py-1.5 rounded-lg transition-colors bg-iris-tint text-primary font-semibold" data-path="vendor-bills" href="#"><span class="font-body-sm text-body-sm">Bills</span><span class="font-overline text-overline px-1.5 py-0.5 rounded-full bg-warning-bg text-warning-text">12</span></a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="purchase-orders" href="#"><span class="font-body-sm text-body-sm">Purchase Orders</span></a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payment-vouchers" href="#"><span class="font-body-sm text-body-sm">Payment Vouchers</span></a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="vendor-directory" href="#"><span class="font-body-sm text-body-sm">Vendors</span></a></div></div><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="general-ledger" href="#"><span class="font-body-sm text-body-sm">General Ledger</span></a><a class="flex items-center px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cash-bank" href="#"><span class="font-body-sm text-body-sm">Cash &amp; Bank</span></a></div></div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="procurement" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label text-label">Procurement</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="human-resources" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-label text-label">HR &amp; Payroll</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="analytics-reports" href="#"><span class="material-symbols-outlined text-[20px]">query_stats</span><span class="font-label text-label">Reports</span></a></nav></div><div class="p-space-md bg-surface-container-lowest shadow-[0_-1px_6px_rgba(22,22,42,0.03)]"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label text-label">Settings &amp; Audit</span></a></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 px-space-xl flex items-center justify-between shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="flex items-center gap-space-sm"><nav aria-label="Breadcrumb" class="flex items-center gap-space-xs font-body-sm text-body-sm"><a class="text-ink-3 hover:text-ink transition-colors" href="#">Finance</a><span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span><a class="text-ink-3 hover:text-ink transition-colors" href="#">Payables</a><span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span><span class="font-label text-label text-ink">BILL-00031</span></nav></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined text-ink-3 absolute left-3 text-[18px]">search</span><input class="w-80 h-10 pl-9 pr-14 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Search bills, POs, vendors..." type="text"/><div class="absolute right-2.5 px-1.5 py-0.5 rounded bg-surface shadow-[0_1px_2px_rgba(22,22,42,0.06)] font-overline text-overline text-ink-3">Ctrl K</div></div><div class="flex items-center gap-space-xs"><button aria-label="Pending Approvals" class="flex items-center gap-1.5 h-10 px-space-sm rounded-lg hover:bg-surface-container-high text-ink-2 hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">task_alt</span><span class="h-5 px-1.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline flex items-center justify-center font-bold">5</span></button><button aria-label="Notifications" class="relative w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive"></span></button><button aria-label="Toggle Light/Dark Theme" class="w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="h-6 w-px bg-line-strong/20"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="text-right leading-tight hidden xl:block"><span class="block font-label text-label text-ink font-semibold">Fatima Bello</span><span class="block font-overline text-overline text-ink-3">Finance Manager</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-space-xl pb-space-2xl bg-canvas flex-1"><div class="flex flex-col w-full">
+<!-- Top Command & Status Bar -->
+<div class="w-full bg-surface shadow-sm rounded-xl p-space-lg mb-space-lg">
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<div class="space-y-1">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="font-h1 text-h1 text-ink tracking-tight font-['Plus_Jakarta_Sans']">BILL-00031</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-overline text-overline font-semibold uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-destructive animate-pulse"></span>
+            Held — match failed
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider font-medium">
+            Net 30
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 max-w-3xl">
+          Vendor invoice submitted against PO-00014 with 3-way match variances requiring authorised managerial disposition under statutory internal controls.
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="h-10 px-3.5 rounded-lg text-danger-text hover:bg-danger-bg font-label text-label transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>Delete draft</span>
+</button>
+<button class="h-10 px-4 rounded-lg bg-surface-sunken text-ink hover:bg-surface-container-high font-label text-label transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>View PO-00014</span>
+</button>
+<button class="h-10 px-4 rounded-lg bg-surface-sunken text-ink hover:bg-surface-container-high font-label text-label transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+<span>Download PDF</span>
+</button>
+<button class="h-10 px-5 rounded-lg bg-primary hover:bg-iris-hover text-on-primary font-label text-label transition-colors flex items-center gap-2 shadow-sm shadow-primary/20" type="button">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>Approve with reason</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 3-Way Match Exception Alert Banner -->
+<div class="w-full bg-warning-bg rounded-xl p-space-md mb-space-lg shadow-sm">
+<div class="flex items-start gap-space-md">
+<div class="w-9 h-9 rounded-lg bg-warning-text/10 text-warning-text flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[22px]">warning</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<h2 class="font-h3 text-h3 text-warning-text font-bold">
+            3-Way Match Exceptions Detected (2 items out of tolerance)
+          </h2>
+<span class="font-overline text-overline px-2 py-0.5 rounded bg-warning-text/15 text-warning-text font-semibold uppercase tracking-wider">
+            Governance Rule FIN-AP-04
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-warning-text/90 mt-1 leading-relaxed">
+          Invoice line items deviate from authorised Purchase Order <span class="font-semibold text-ink underline decoration-warning-text/40 underline-offset-2">PO-00014</span> terms and Goods Received Note <span class="font-semibold text-ink underline decoration-warning-text/40 underline-offset-2">GRN-2026-00088</span>. Corporate policy FIN-AP-04 requires Finance Manager (GL-12+) sign-off with permanent audit justification to override commercial payment holds.
+        </p>
+</div>
+</div>
+</div>
+<!-- Commercial Facts & Vendor Meta Grid -->
+<div class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-lg">
+<!-- Supplier Tile -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Vendor Entity</span>
+<span class="flex items-center gap-1 font-overline text-overline text-success-text bg-success-bg px-2 py-0.5 rounded-full font-semibold">
+<span class="material-symbols-outlined text-[13px]">verified</span> Verified
+        </span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-ink font-bold truncate">Lagos Office Supplies Ltd</h3>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Code: <span class="font-mono text-ink">S-0007</span></p>
+<div class="mt-2 pt-2 bg-surface-sunken/60 rounded px-2.5 py-1.5 flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">TIN (FIRS)</span>
+<span class="font-mono text-ink font-medium text-body-sm">21984710-0001</span>
+</div>
+</div>
+</div>
+<!-- References Tile -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider mb-2">Document Trail</span>
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">Supplier Inv #:</span>
+<span class="font-mono text-body-sm text-ink font-semibold bg-surface-sunken px-2 py-0.5 rounded">LOS/2026/881</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">PO Reference:</span>
+<a class="font-body-sm text-body-sm text-primary hover:text-iris-hover font-medium flex items-center gap-1" href="#">
+<span>PO-00014</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">GRN Receipt:</span>
+<span class="font-body-sm text-body-sm text-ink font-medium">GRN-2026-00088</span>
+</div>
+</div>
+</div>
+<!-- Billing Schedule Tile -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider mb-2">Statutory Dates</span>
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">Bill Date:</span>
+<span class="font-body-sm text-body-sm text-ink font-semibold">18 Nov 2026</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">Due Date:</span>
+<span class="font-body-sm text-body-sm text-danger-text font-semibold flex items-center gap-1">
+<span>18 Dec 2026</span>
+<span class="font-overline text-overline bg-danger-bg px-1.5 py-0.2 rounded font-normal">30d</span>
+</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">Goods Delivered:</span>
+<span class="font-body-sm text-body-sm text-ink">16 Nov 2026</span>
+</div>
+</div>
+</div>
+<!-- Fiscal Classification Tile -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider mb-2">Fiscal &amp; Currency</span>
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">WHT Regime:</span>
+<span class="font-body-sm text-body-sm text-ink font-semibold">Goods (5.0%)</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">VAT Standard:</span>
+<span class="font-body-sm text-body-sm text-ink font-medium">7.5% Nigerian VAT</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-ink-3">Settlement Currency:</span>
+<span class="font-label text-label font-bold text-ink">NGN (₦)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bill Lines Table with 3-Way Match Verification -->
+<div class="w-full bg-surface shadow-sm rounded-xl overflow-hidden mb-space-lg">
+<div class="p-space-md bg-surface flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-2 h-5 bg-primary rounded-full"></div>
+<h2 class="font-h2 text-h2 text-ink font-bold">Line Items &amp; 3-Way Audit Trail</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline font-semibold">
+          3 Items Billed
+        </span>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex items-center gap-1.5 font-overline text-overline text-ink-3">
+<span class="w-2 h-2 rounded-full bg-success-text"></span> Matched: 1
+        </span>
+<span class="text-ink-3/30">•</span>
+<span class="flex items-center gap-1.5 font-overline text-overline text-danger-text font-bold">
+<span class="w-2 h-2 rounded-full bg-destructive"></span> Discrepancy: 2
+        </span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm border-collapse">
+<thead class="bg-surface-sunken text-ink-3 uppercase font-overline text-overline tracking-wider">
+<tr>
+<th class="py-3 pl-space-md pr-2 w-10 text-center">#</th>
+<th class="py-3 px-3 min-w-[240px]">Description &amp; Item Code</th>
+<th class="py-3 px-3 min-w-[170px]">GL Code &amp; Cost Centre</th>
+<th class="py-3 px-3 text-right">Qty Billed</th>
+<th class="py-3 px-3 text-right">Received (GRN)</th>
+<th class="py-3 px-3 text-right">Unit Price (₦)</th>
+<th class="py-3 px-3 text-right">PO Price (₦)</th>
+<th class="py-3 px-3 text-right">VAT (7.5%)</th>
+<th class="py-3 px-3 text-right font-bold text-ink">Net (₦)</th>
+<th class="py-3 pl-3 pr-space-md min-w-[210px]">Match Audit Status</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-ink">
+<!-- Line 1: Fully Matched -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-3.5 pl-space-md pr-2 text-center text-ink-3 font-mono">01</td>
+<td class="py-3.5 px-3">
+<span class="font-label text-label font-semibold text-ink block">Double A Paper A4 80gsm</span>
+<span class="font-overline text-overline text-ink-3 font-mono">Box of 5 reams · SKU: PPR-A4-001</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="block text-ink font-medium">6300 · Office Supplies</span>
+<span class="font-overline text-overline text-ink-3">CC-100 (HQ Admin)</span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-medium">50 boxes</td>
+<td class="py-3.5 px-3 text-right font-mono text-ink">50 boxes</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums">18,500.00</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums text-ink-3">18,500.00</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums text-ink-3">69,375.00</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-ink tabular-nums">925,000.00</td>
+<td class="py-3.5 pl-3 pr-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                Matched
+              </span>
+</td>
+</tr>
+<!-- Line 2: Price Variance -->
+<tr class="bg-danger-bg/20 hover:bg-danger-bg/30 transition-colors">
+<td class="py-3.5 pl-space-md pr-2 text-center text-ink-3 font-mono">02</td>
+<td class="py-3.5 px-3">
+<span class="font-label text-label font-semibold text-ink block">HP LaserJet Pro Toner Cartridge W1106A</span>
+<span class="font-overline text-overline text-ink-3 font-mono">Black Original · SKU: TNR-HP-1106</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="block text-ink font-medium">6300 · Office Supplies</span>
+<span class="font-overline text-overline text-ink-3">CC-200 (Finance)</span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-medium">12 units</td>
+<td class="py-3.5 px-3 text-right font-mono text-ink">12 units</td>
+<td class="py-3.5 px-3 text-right font-mono font-semibold text-danger-text tabular-nums">42,000.00</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums text-ink-3 line-through">40,300.00</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums text-ink-3">37,800.00</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-ink tabular-nums">504,000.00</td>
+<td class="py-3.5 pl-3 pr-space-md">
+<div class="space-y-0.5">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">priority_high</span>
+                  Price 4.2% above PO
+                </span>
+<span class="block font-overline text-overline text-danger-text font-mono">
+                  Diff: +₦20,400.00 total
+                </span>
+</div>
+</td>
+</tr>
+<!-- Line 3: Quantity Shortfall -->
+<tr class="bg-danger-bg/20 hover:bg-danger-bg/30 transition-colors">
+<td class="py-3.5 pl-space-md pr-2 text-center text-ink-3 font-mono">03</td>
+<td class="py-3.5 px-3">
+<span class="font-label text-label font-semibold text-ink block">Heavy Duty Ergonomic Mesh Desk Chairs</span>
+<span class="font-overline text-overline text-ink-3 font-mono">Model ErgoPlus Lumbar · SKU: FUR-CHR-089</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="block text-ink font-medium">1540 · IT &amp; Furniture (Asset)</span>
+<span class="font-overline text-overline text-ink-3">CC-310 (Tech &amp; Ops)</span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-semibold text-danger-text">10 units</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-warning-text">8 units</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums">85,000.00</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums text-ink-3">85,000.00</td>
+<td class="py-3.5 px-3 text-right font-mono tabular-nums text-ink-3">63,750.00</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-ink tabular-nums">850,000.00</td>
+<td class="py-3.5 pl-3 pr-space-md">
+<div class="space-y-0.5">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-overline text-overline font-bold">
+<span class="material-symbols-outlined text-[14px]">cancel</span>
+                  Billed 10, received 8
+                </span>
+<span class="block font-overline text-overline text-ink-3">
+                  2 pending delivery / credit
+                </span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Subtext Footer -->
+<div class="px-space-md py-3 bg-surface-sunken/50 flex flex-wrap items-center justify-between text-ink-3 font-body-sm text-body-sm gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">info</span>
+<span>Corporate purchase policy permits max 2.0% unbudgeted unit price variance. 4.2% triggers automated GL hold.</span>
+</div>
+<div class="flex items-center gap-2 font-overline text-overline uppercase tracking-wider text-ink-2">
+<span>GRN Inspection Sign-off:</span>
+<span class="font-bold text-ink">B. Adebayo (Warehouse QA)</span>
+</div>
+</div>
+</div>
+<!-- Middle Grid: Summary Totals & Operational Controls -->
+<div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-lg">
+<!-- Left Column: Managerial Match Override & Posting Authority -->
+<div class="lg:col-span-7 bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</div>
+<div>
+<h2 class="font-h3 text-h3 text-ink font-bold">Managerial Match Override &amp; Posting Authority</h2>
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Finance Manager Only · Four-Eyes Governance</span>
+</div>
+</div>
+<span class="font-overline text-overline px-2.5 py-1 rounded-full bg-iris-tint text-primary font-bold">
+            Delegation GL-12
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mb-space-md leading-relaxed">
+          Documented justification is mandatory for compliance under CAMA 2020 and FRC statutory audit standards when overriding payables discrepancy tolerances.
+        </p>
+<div class="space-y-space-md">
+<div>
+<label class="block font-label text-label text-ink font-semibold mb-1.5" for="justification-textarea">
+              Statutory Override Business Rationale <span class="text-danger-text">*</span>
+</label>
+<textarea class="w-full rounded-lg bg-surface-sunken p-3 font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none" id="justification-textarea" placeholder="State business rationale for accepting price variance on toners and shortfall receipt on desk chairs (e.g. Supplier invoice matches emergency price update approved by Procurement Head; 2 backordered chairs shipped under consignment note TR-9921)..." rows="3">Supplier price variance of ₦20,400 on toner cartridges accepted per Procurement GM memo dated 15 Nov (currency devaluation adjustment). 2 outstanding ErgoPlus chairs are confirmed in transit under waybill LOS-WB-449. Authorising provisional payment with ₦170,000 retention.</textarea>
+</div>
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-sunken/70 cursor-pointer select-none">
+<input checked="" class="mt-1 h-4 w-4 rounded text-primary focus:ring-primary accent-primary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-ink">
+<strong class="font-semibold text-ink block">Mandatory Auditor Affirmation:</strong>
+              I acknowledge the price variance of ₦20,400.00 and authorise a debit hold on 2 unreceived units (₦170,000.00 + VAT) until GRN physical verification is logged.
+            </span>
+</label>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex flex-wrap items-center justify-between gap-space-sm">
+<button class="h-10 px-4 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-danger-text font-label text-label transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">assignment_return</span>
+<span>Request credit note from vendor</span>
+</button>
+<button class="h-11 px-6 rounded-lg bg-primary hover:bg-iris-hover text-on-primary font-label text-label transition-colors flex items-center gap-2 shadow-md shadow-primary/25" type="button">
+<span class="material-symbols-outlined text-[20px]">lock_open</span>
+<span>Authorise override &amp; post bill</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Statutory Summary & Computation Block -->
+<div class="lg:col-span-5 bg-surface rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 mb-space-md">
+<h2 class="font-h3 text-h3 text-ink font-bold">Tax &amp; Fiscal Settlement Summary</h2>
+<span class="font-overline text-overline px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-mono font-medium">
+            VAT: ACT 1993 / WHT: CAMA
+          </span>
+</div>
+<div class="space-y-3 font-body-sm text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-ink-2">Net Bill Amount (Excl. VAT):</span>
+<span class="font-mono text-ink font-medium tabular-nums">₦2,279,000.00</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-ink-2 flex items-center gap-1">
+<span>Value Added Tax (VAT 7.5%):</span>
+<span class="material-symbols-outlined text-[14px] text-ink-3">help_outline</span>
+</span>
+<span class="font-mono text-ink font-medium tabular-nums">₦170,925.00</span>
+</div>
+<div class="h-px bg-surface-sunken my-1"></div>
+<div class="flex items-center justify-between font-label text-label">
+<span class="text-ink font-semibold">Gross Bill Total:</span>
+<span class="font-mono font-bold text-ink text-h3 tabular-nums">₦2,449,925.00</span>
+</div>
+<div class="p-3 bg-surface-sunken rounded-lg space-y-2 mt-2">
+<div class="flex items-center justify-between text-warning-text font-medium">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">account_balance</span>
+<span>Statutory WHT Deduction (5.0%):</span>
+</span>
+<span class="font-mono font-bold tabular-nums">(₦113,950.00)</span>
+</div>
+<p class="font-overline text-overline text-ink-3">
+              FIRS e-Tax credit certificate to be generated automatically upon approval.
+            </p>
+</div>
+</div>
+</div>
+<!-- Final Net Payable Highlight Tile -->
+<div class="mt-space-md p-space-md rounded-xl bg-iris-tint">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-overline text-overline text-primary font-bold uppercase tracking-wider block">
+              Net Payable to Supplier
+            </span>
+<span class="font-body-sm text-body-sm text-ink-3">After statutory 5% WHT retention</span>
+</div>
+<div class="text-right">
+<span class="font-display text-display text-primary font-bold font-['Plus_Jakarta_Sans'] tabular-nums tracking-tight">
+              ₦2,335,975.00
+            </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Lower Section: Settlement History, Adjustments & Audit Ledger -->
+<div class="w-full bg-surface shadow-sm rounded-xl p-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-space-md mb-space-md">
+<div>
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-info-bg text-info-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+<h2 class="font-h2 text-h2 text-ink font-bold">Payments &amp; Settlement Ledger</h2>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1">
+          Historical disbursements, vendor debit notes, and bank allocations recorded against BILL-00031.
+        </p>
+</div>
+<!-- Balance Due KPI Capsule -->
+<div class="flex flex-wrap items-center gap-space-md bg-surface-sunken p-3 rounded-xl">
+<div class="px-3 border-r-0">
+<span class="font-overline text-overline text-ink-3 block uppercase tracking-wider">Gross Total</span>
+<span class="font-mono text-body-sm text-ink font-semibold tabular-nums">₦2,449,925.00</span>
+</div>
+<div class="px-3 border-r-0">
+<span class="font-overline text-overline text-ink-3 block uppercase tracking-wider">Settled &amp; Debited</span>
+<span class="font-mono text-body-sm text-success-text font-semibold tabular-nums">₦335,000.00</span>
+</div>
+<div class="px-3 bg-surface rounded-lg py-1 shadow-sm">
+<span class="font-overline text-overline text-danger-text block uppercase tracking-wider font-bold">Outstanding Balance</span>
+<span class="font-h2 text-h2 text-ink font-bold font-mono tabular-nums">₦2,114,925.00</span>
+</div>
+</div>
+</div>
+<!-- Settlement History Table -->
+<div class="overflow-x-auto mb-space-md">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-sunken text-ink-3 uppercase font-overline text-overline tracking-wider">
+<tr>
+<th class="py-3 px-3">Transaction Ref</th>
+<th class="py-3 px-3">Date</th>
+<th class="py-3 px-3">Settlement Method / Type</th>
+<th class="py-3 px-3 min-w-[320px]">Allocation Details &amp; Accounting Notes</th>
+<th class="py-3 px-3 text-right">Amount (₦)</th>
+<th class="py-3 px-3 text-center">Ledger Status</th>
+</tr>
+</thead>
+<tbody class="text-ink">
+<!-- Settlement Item 1 -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-3.5 px-3">
+<span class="font-mono text-body-sm text-primary font-semibold">PAY-00009</span>
+</td>
+<td class="py-3.5 px-3 text-ink-2 font-mono">19 Nov 2026</td>
+<td class="py-3.5 px-3">
+<div class="flex items-center gap-1.5 font-medium text-ink">
+<span class="material-symbols-outlined text-[16px] text-ink-3">account_balance</span>
+<span>Direct NIBSS ACH (Zenith Bank)</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="text-ink font-body-sm text-body-sm block">Interim advance payment authorised under requisition AD-881.</span>
+<span class="text-ink-3 font-overline text-overline">Includes ₦15,000.00 WHT statutory deduction (FIRS credit schedule pending).</span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-ink tabular-nums">300,000.00</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold">
+<span class="material-symbols-outlined text-[12px]">done_all</span>
+                Paid &amp; Cleared
+              </span>
+</td>
+</tr>
+<!-- Settlement Item 2 -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-3.5 px-3">
+<span class="font-mono text-body-sm text-info-text font-semibold">DN-00002</span>
+</td>
+<td class="py-3.5 px-3 text-ink-2 font-mono">19 Nov 2026</td>
+<td class="py-3.5 px-3">
+<div class="flex items-center gap-1.5 font-medium text-ink">
+<span class="material-symbols-outlined text-[16px] text-ink-3">remove_shopping_cart</span>
+<span>Debit Note (Vendor Deduction)</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="text-ink font-body-sm text-body-sm block">Restocking fee credit adjustment for damaged packaging on batch A4 paper.</span>
+<span class="text-ink-3 font-overline text-overline">Ref: Damage Incident LOG-QC-4011 approved by Lagos Office Supplies Ltd.</span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono font-bold text-ink tabular-nums">35,000.00</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline font-semibold">
+<span class="material-symbols-outlined text-[12px]">library_add_check</span>
+                Applied to Ledger
+              </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Settlement Footer Actions -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-sm bg-surface-sunken/40 -mx-space-lg -mb-space-lg p-space-md rounded-b-xl">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-warning-text animate-ping"></span>
+<span class="font-body-sm text-body-sm text-ink-2">Current Disposition: <strong class="text-ink">₦2,114,925.00 in dispute / awaiting match resolution</strong></span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-9 px-3.5 rounded-lg bg-surface text-ink hover:bg-surface-container-high font-label text-label transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">remove_circle_outline</span>
+<span>Raise debit note</span>
+</button>
+<button class="h-9 px-4 rounded-lg bg-primary hover:bg-iris-hover text-on-primary font-label text-label transition-colors flex items-center gap-1.5 shadow-sm shadow-primary/20" type="button">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>Record payment</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interaction: Dynamic visual feedback on justification edit
+  const textarea = document.getElementById('justification-textarea');
+  if (textarea) {
+    textarea.addEventListener('focus', () => {
+      textarea.classList.add('bg-surface');
+      textarea.classList.remove('bg-surface-sunken');
+    });
+    textarea.addEventListener('blur', () => {
+      if (!textarea.value.trim()) {
+        textarea.classList.remove('bg-surface');
+        textarea.classList.add('bg-surface-sunken');
+      }
+    });
+  }
+</script></main></div></body></html>

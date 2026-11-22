@@ -1,0 +1,47 @@
+{# Finance → Payables aging (ADR 0025): what is owed to suppliers by days past due.
+   Design: design/stitch/exports/finance.payables_aging.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Payables aging", "Unpaid bills by days past their due date.") %}
+  <form method="get" action="/finance/payables-aging" class="flex items-end gap-2">
+    <div><label for="as_at" class="kx-label">As at</label><input id="as_at" name="as_at" type="date" value="{{ as_at.isoformat() }}" class="kx-input h-10"></div>
+    <button type="submit" class="kx-btn-secondary h-10">Show</button>
+  </form>
+  <a href="/finance/payables-aging.csv?as_at={{ as_at.isoformat() }}" class="kx-btn-ghost h-10">{{ ui.icon("download", "sm") }} CSV</a>
+{% endcall %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+  {% for label in buckets %}{{ ui.kpi_tile(label, report.totals[loop.index0] | money) }}{% endfor %}
+</div>
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Aging by supplier">
+  {% if report.rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[900px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Supplier</th>{% for label in buckets %}<th class="px-3 py-3 text-right font-semibold">{{ label }}</th>{% endfor %}<th class="px-5 py-3 text-right font-semibold">Total</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for row in report.rows %}
+        <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+          <td class="px-5 py-3">
+            <details>
+              <summary class="cursor-pointer"><a href="/finance/suppliers/{{ row.supplier_id }}" class="font-semibold text-iris">{{ row.name }}</a> <span class="font-mono text-xs text-ink-3">{{ row.code }}</span></summary>
+              <ul class="mt-2 space-y-1 text-xs text-ink-2">
+                {% for b in row.bills %}<li><a href="/finance/bills/{{ b.id }}" class="font-mono font-semibold text-iris">{{ b.number }}</a> · {{ b.balance | money }} · {% if b.days_overdue > 0 %}<span class="text-danger-text">{{ b.days_overdue }} days overdue</span>{% else %}due {{ b.due_date | date }}{% endif %}</li>{% endfor %}
+              </ul>
+            </details>
+          </td>
+          {% for amount in row.buckets %}<td class="px-3 py-3 text-right tnum {{ 'text-danger-text' if loop.index0 > 2 and amount > 0 }}">{{ amount | money if amount else "—" }}</td>{% endfor %}
+          <td class="px-5 py-3 text-right font-semibold tnum">{{ row.total | money }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold"><tr><td class="px-5 py-3">Total</td>{% for amount in report.totals %}<td class="px-3 py-3 text-right tnum">{{ amount | money }}</td>{% endfor %}<td class="px-5 py-3 text-right tnum">{{ report.total | money }}</td></tr></tfoot>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("circle-check", "Nothing owed", "No bill was unpaid on this date.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

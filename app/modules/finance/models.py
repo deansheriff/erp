@@ -25,7 +25,16 @@ ACCOUNT_TYPES = ("asset", "liability", "equity", "income", "expense")
 CASH_FLOW_CLASSES = ("cash", "operating", "investing", "financing")
 STATUSES = ("open", "closed")
 JOURNAL_STATUSES = ("draft", "held", "posted")
-SOURCES = ("manual", "recurring", "reversal", "year_end", "payroll", "expenses", "receivable")
+SOURCES = (
+    "manual",
+    "recurring",
+    "reversal",
+    "year_end",
+    "payroll",
+    "expenses",
+    "receivable",
+    "payable",
+)
 
 Money = Numeric(16, 2)
 
@@ -203,6 +212,9 @@ class FinanceSettings(Base):
     remind_on_due: Mapped[bool] = mapped_column(Boolean, server_default="true")
     remind_every_days: Mapped[int] = mapped_column(SmallInteger, server_default="7")
     return_due_day: Mapped[int] = mapped_column(SmallInteger, server_default="21")
+    # Payables (ADR 0025), to confirm.
+    payables_code: Mapped[str] = mapped_column(String(20), server_default="2010")
+    price_tolerance: Mapped[Decimal] = mapped_column(Numeric(5, 2), server_default="2.00")
 
 
 # ------------------------------------------------------------------ receivables and tax (ADR 0024)
@@ -410,3 +422,222 @@ class TaxReturn(IdMixin, Base):
     payment_reference: Mapped[str | None] = mapped_column(String(80))
     paid_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+# ------------------------------------------------------------------ payables (ADR 0025)
+
+SUPPLIER_KINDS = ("company", "individual")
+PO_STATUSES = ("draft", "approved", "closed", "cancelled")
+BILL_KINDS = ("bill", "debit_note")
+BILL_STATUSES = ("draft", "held", "posted")
+PAYMENT_STATUSES = ("draft", "posted", "reversed")
+
+
+class Supplier(IdMixin, Base):
+    __tablename__ = "suppliers"
+    __table_args__ = (
+        CheckConstraint(_in("kind", SUPPLIER_KINDS), name="kind"),
+        CheckConstraint("payment_terms_days BETWEEN 0 AND 365", name="terms"),
+    )
+
+    code: Mapped[str] = mapped_column(String(20), unique=True)
+    name: Mapped[str] = mapped_column(String(200), index=True)
+    kind: Mapped[str] = mapped_column(String(10), server_default="company")
+    email: Mapped[str | None] = mapped_column(String(254))
+    phone: Mapped[str | None] = mapped_column(String(40))
+    address: Mapped[str | None] = mapped_column(Text)
+    tin: Mapped[str | None] = mapped_column(String(30))
+    payment_terms_days: Mapped[int] = mapped_column(SmallInteger)
+    wht_type_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("wht_types.id"))
+    bank_name: Mapped[str | None] = mapped_column(String(120))
+    bank_code: Mapped[str | None] = mapped_column(String(10))
+    account_number: Mapped[str | None] = mapped_column(String(10))
+    account_name: Mapped[str | None] = mapped_column(String(200))
+    is_active: Mapped[bool] = mapped_column(Boolean, server_default="true")
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class PurchaseOrder(IdMixin, Base):
+    __tablename__ = "purchase_orders"
+    __table_args__ = (
+        CheckConstraint(_in("status", PO_STATUSES), name="status"),
+        CheckConstraint("(status = 'draft') = (number IS NULL)", name="numbered"),
+    )
+
+    number: Mapped[str | None] = mapped_column(String(20), unique=True)
+    status: Mapped[str] = mapped_column(String(9), server_default="draft")
+    supplier_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("suppliers.id"), index=True)
+    order_date: Mapped[date]
+    expected_date: Mapped[date | None]
+    reference: Mapped[str | None] = mapped_column(String(80))
+    memo: Mapped[str | None] = mapped_column(String(200))
+    net: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    vat: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    total: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    approved_at: Mapped[datetime | None]
+
+
+class PurchaseLine(IdMixin, Base):
+    __tablename__ = "purchase_lines"
+    __table_args__ = (
+        CheckConstraint(_in("vat_code", VAT_CODES), name="vat_code"),
+        CheckConstraint("quantity > 0 AND unit_price >= 0", name="amounts"),
+    )
+
+    order_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("purchase_orders.id", ondelete="CASCADE"), index=True
+    )
+    position: Mapped[int] = mapped_column(SmallInteger)
+    description: Mapped[str] = mapped_column(String(300))
+    account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("finance_accounts.id"))
+    cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    quantity: Mapped[Decimal] = mapped_column(Numeric(14, 3))
+    unit_price: Mapped[Decimal] = mapped_column(Money)
+    net: Mapped[Decimal] = mapped_column(Money)
+    vat_code: Mapped[str] = mapped_column(String(8))
+    vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
+    vat: Mapped[Decimal] = mapped_column(Money)
+
+
+class GoodsReceipt(IdMixin, Base):
+    """Goods received against a purchase order. Nothing posts (ADR 0025)."""
+
+    __tablename__ = "goods_receipts"
+
+    number: Mapped[str] = mapped_column(String(20), unique=True)
+    order_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("purchase_orders.id"), index=True)
+    received_on: Mapped[date]
+    delivery_note: Mapped[str | None] = mapped_column(String(80))
+    note: Mapped[str | None] = mapped_column(Text)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class GoodsReceiptLine(IdMixin, Base):
+    __tablename__ = "goods_receipt_lines"
+    __table_args__ = (CheckConstraint("quantity > 0", name="quantity"),)
+
+    receipt_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("goods_receipts.id", ondelete="CASCADE"), index=True
+    )
+    line_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("purchase_lines.id"), index=True)
+    quantity: Mapped[Decimal] = mapped_column(Numeric(14, 3))
+
+
+class Bill(IdMixin, Base):
+    """A supplier invoice, or a debit note against one. Posted ones are never edited."""
+
+    __tablename__ = "bills"
+    __table_args__ = (
+        CheckConstraint(_in("kind", BILL_KINDS), name="kind"),
+        CheckConstraint(_in("status", BILL_STATUSES), name="status"),
+        CheckConstraint("(status = 'posted') = (number IS NOT NULL)", name="numbered"),
+        CheckConstraint("net >= 0 AND vat >= 0", name="amounts"),
+    )
+
+    kind: Mapped[str] = mapped_column(String(10), index=True)
+    number: Mapped[str | None] = mapped_column(String(20), unique=True)
+    status: Mapped[str] = mapped_column(String(6), server_default="draft")
+    supplier_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("suppliers.id"), index=True)
+    supplier_reference: Mapped[str | None] = mapped_column(String(80))  # their invoice number
+    order_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("purchase_orders.id"))
+    bill_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("bills.id"))  # a debit note's
+    bill_date: Mapped[date]
+    due_date: Mapped[date | None]
+    wht_type_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("wht_types.id"))
+    memo: Mapped[str | None] = mapped_column(String(200))
+    hold_reason: Mapped[str | None] = mapped_column(Text)
+    override_reason: Mapped[str | None] = mapped_column(Text)
+    net: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    vat: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    total: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    approved_at: Mapped[datetime | None]
+    journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
+
+
+# A supplier's invoice number is recorded once.
+Index(
+    "uq_bill_supplier_reference",
+    Bill.supplier_id,
+    func.lower(Bill.supplier_reference),
+    unique=True,
+    postgresql_where=(Bill.kind == "bill") & Bill.supplier_reference.is_not(None),
+)
+
+
+class BillLine(IdMixin, Base):
+    __tablename__ = "bill_lines"
+    __table_args__ = (
+        CheckConstraint(_in("vat_code", VAT_CODES), name="vat_code"),
+        CheckConstraint("quantity > 0 AND unit_price >= 0", name="amounts"),
+    )
+
+    bill_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("bills.id", ondelete="CASCADE"), index=True
+    )
+    position: Mapped[int] = mapped_column(SmallInteger)
+    description: Mapped[str] = mapped_column(String(300))
+    account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("finance_accounts.id"))
+    cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    order_line_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("purchase_lines.id"), index=True
+    )
+    quantity: Mapped[Decimal] = mapped_column(Numeric(14, 3))
+    unit_price: Mapped[Decimal] = mapped_column(Money)
+    net: Mapped[Decimal] = mapped_column(Money)
+    vat_code: Mapped[str] = mapped_column(String(8))
+    vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
+    vat: Mapped[Decimal] = mapped_column(Money)
+
+
+class SupplierPayment(IdMixin, Base):
+    __tablename__ = "supplier_payments"
+    __table_args__ = (
+        CheckConstraint(_in("status", PAYMENT_STATUSES), name="status"),
+        CheckConstraint("(status = 'draft') = (number IS NULL)", name="numbered"),
+        CheckConstraint("settled > 0 AND wht >= 0 AND cash = settled - wht", name="amounts"),
+    )
+
+    number: Mapped[str | None] = mapped_column(String(20), unique=True)
+    status: Mapped[str] = mapped_column(String(8), server_default="draft")
+    supplier_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("suppliers.id"), index=True)
+    payment_date: Mapped[date]
+    bank_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("finance_accounts.id"))
+    reference: Mapped[str | None] = mapped_column(String(80))
+    settled: Mapped[Decimal] = mapped_column(Money)
+    wht: Mapped[Decimal] = mapped_column(Money)
+    cash: Mapped[Decimal] = mapped_column(Money)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    approved_at: Mapped[datetime | None]
+    journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
+    reversal_journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
+    reversed_on: Mapped[date | None]
+    reversal_reason: Mapped[str | None] = mapped_column(Text)
+    reversed_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+
+
+class SupplierPaymentLine(IdMixin, Base):
+    """What a payment settles on one bill, and the WHT withheld from it."""
+
+    __tablename__ = "supplier_payment_lines"
+    __table_args__ = (
+        UniqueConstraint("payment_id", "bill_id"),
+        CheckConstraint("amount > 0 AND wht >= 0", name="amounts"),
+    )
+
+    payment_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("supplier_payments.id", ondelete="CASCADE"), index=True
+    )
+    bill_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("bills.id"), index=True)
+    amount: Mapped[Decimal] = mapped_column(Money)  # settled, including the WHT
+    wht_type_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("wht_types.id"))
+    wht_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2), server_default="0")
+    wht: Mapped[Decimal] = mapped_column(Money, server_default="0")

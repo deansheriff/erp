@@ -240,11 +240,14 @@ class SettingsInput:
     remind_on_due: bool
     remind_every_days: str
     return_due_day: str
+    payables_code: str = ""  # blank keeps the current one
+    price_tolerance: str = ""
 
 
 # The account each setting needs, and its type.
 SETTING_ACCOUNTS = (
     ("receivables_code", "Trade receivables", "asset"),
+    ("payables_code", "Trade payables", "liability"),
     ("vat_output_code", "VAT output", "liability"),
     ("vat_input_code", "VAT input", "asset"),
     ("wht_receivable_code", "WHT receivable", "asset"),
@@ -266,7 +269,8 @@ def _whole(value: str, key: str, low: int, high: int, errors: dict[str, str]) ->
 def save_settings(db: Session, actor: Actor, data: SettingsInput) -> None:
     _require(db, actor, MANAGE)
     errors: dict[str, str] = {}
-    codes = {key: getattr(data, key).strip() for key, _, _ in SETTING_ACCOUNTS}
+    row = periods.settings(db)
+    codes = {key: getattr(data, key).strip() or getattr(row, key) for key, _, _ in SETTING_ACCOUNTS}
     found = accounts.by_codes(db, set(codes.values()))
     for key, label, kind in SETTING_ACCOUNTS:
         account = found.get(codes[key])
@@ -278,15 +282,20 @@ def save_settings(db: Session, actor: Actor, data: SettingsInput) -> None:
     before_days = _whole(data.remind_before_days, "remind_before_days", 0, MAX_DAYS, errors)
     every = _whole(data.remind_every_days, "remind_every_days", 1, MAX_DAYS, errors)
     due_day = _whole(data.return_due_day, "return_due_day", 1, 28, errors)
+    tolerance = (
+        _rate(data.price_tolerance, "price_tolerance", errors)
+        if data.price_tolerance.strip()
+        else row.price_tolerance
+    )
     if errors:
         raise ValidationFailed(field_errors=errors)
-    row = periods.settings(db)
-    before = {k: getattr(row, k) for k in (*codes, "default_terms_days", "return_due_day")}
+    keys = (*codes, "default_terms_days", "return_due_day", "price_tolerance")
+    before = {k: getattr(row, k) for k in keys}
     for key, code in codes.items():
         setattr(row, key, code)
     row.default_terms_days, row.remind_before_days = terms, before_days
     row.remind_on_due, row.remind_every_days = data.remind_on_due, every
-    row.return_due_day = due_day
+    row.return_due_day, row.price_tolerance = due_day, tolerance  # type: ignore[assignment]
     db.flush()
     after = {k: getattr(row, k) for k in before}
     record_by(

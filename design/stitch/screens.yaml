@@ -1256,3 +1256,131 @@ screens:
       mark_paid: finance.tax.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.suppliers
+    phase: 10
+    module: finance
+    title: Suppliers
+    route: GET /finance/suppliers
+    template: app/modules/finance/templates/finance/suppliers.html
+    stitch_screens:
+      desktop: 3e710ec28bd446af97e4688a09701c44
+    exports:
+      - design/stitch/exports/finance.suppliers.html
+    permission: finance.supplier.read
+    actions:
+      save: finance.supplier.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.supplier
+    phase: 10
+    module: finance
+    title: One supplier (owed, aging, bills, orders, bank details)
+    route: GET /finance/suppliers/{supplier_id}
+    template: app/modules/finance/templates/finance/supplier.html
+    stitch_screens:
+      desktop: 2a552a9c3ce2457d8e031f81a0425151
+    exports:
+      - design/stitch/exports/finance.supplier.html
+    permission: finance.supplier.read
+    actions:
+      new_order: finance.purchase.create
+      new_bill: finance.purchase.create
+      prepare_payment: finance.payment.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.purchases
+    phase: 10
+    module: finance
+    title: Purchases (bills, purchase orders, debit notes, payments)
+    route: GET /finance/purchases
+    template: app/modules/finance/templates/finance/purchases.html
+    stitch_screens:
+      desktop: a6a46c9f7d71480dbbb22900f1c7358b
+    exports:
+      - design/stitch/exports/finance.purchases.html
+    permission: finance.purchase.read
+    actions:
+      new_document: finance.purchase.create
+      prepare_payment: finance.payment.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.purchase_order
+    phase: 10
+    module: finance
+    title: Purchase order and goods received
+    route: GET /finance/purchase-orders/{order_id}
+    template: app/modules/finance/templates/finance/purchase_order.html
+    stitch_screens:
+      desktop: 2e99125cf4c0438e84db76c7652cfa05
+    exports:
+      - design/stitch/exports/finance.purchase_order.html
+    permission: finance.purchase.read
+    actions:
+      save_draft: finance.purchase.create
+      delete_draft: finance.purchase.create
+      approve: finance.purchase.approve
+      cancel: finance.purchase.approve
+      receive: finance.purchase.create
+      make_bill: finance.purchase.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.bill
+    phase: 10
+    module: finance
+    title: Supplier bill or debit note, with the three-way match
+    route: GET /finance/bills/{bill_id}
+    template: app/modules/finance/templates/finance/bill.html
+    stitch_screens:
+      desktop: 11d3d19b37384240804303590554a92c
+    exports:
+      - design/stitch/exports/finance.bill.html
+    permission: finance.purchase.read
+    actions:
+      save_draft: finance.purchase.create
+      delete: finance.purchase.create
+      approve: finance.purchase.approve
+      post_held: finance.bill.override
+      debit_note: finance.purchase.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.payment
+    phase: 10
+    module: finance
+    title: Prepare or view a supplier payment
+    route: GET /finance/payments/{payment_id}
+    template: app/modules/finance/templates/finance/payment.html
+    stitch_screens:
+      desktop: db544fcade774b1bb11769678f095b40
+    exports:
+      - design/stitch/exports/finance.payment.html
+    permission: finance.purchase.read
+    actions:
+      prepare: finance.payment.create
+      delete: finance.payment.create
+      approve: finance.payment.approve
+      bank_file: finance.payment.approve
+      reverse: finance.payment.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.payables_aging
+    phase: 10
+    module: finance
+    title: Payables aging
+    route: GET /finance/payables-aging
+    template: app/modules/finance/templates/finance/payables_aging.html
+    stitch_screens:
+      desktop: ec5fdedfdde540ab9f61c34a24ed6818
+    exports:
+      - design/stitch/exports/finance.payables_aging.html
+    permission: finance.supplier.read
+    actions:
+      download_csv: finance.supplier.read
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)

@@ -143,6 +143,8 @@ ignore_imports = [
   "app.modules.finance.routes_sales -> app.web.*",
   "app.modules.finance.routes_tax -> fastapi",
   "app.modules.finance.routes_tax -> app.web.*",
+  "app.modules.finance.routes_payables -> fastapi",
+  "app.modules.finance.routes_payables -> app.web.*",
   "app.modules.payroll.routes_outputs -> fastapi",
   "app.modules.payroll.routes_outputs -> app.web.*",
   "app.modules.payroll.routes_self -> fastapi",

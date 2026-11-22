@@ -212,6 +212,11 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.sales.create": ORG,
             "finance.receipt.create": ORG,
             "finance.tax.read": ORG,
+            "finance.supplier.read": ORG,
+            "finance.supplier.manage": ORG,
+            "finance.purchase.read": ORG,
+            "finance.purchase.create": ORG,
+            "finance.payment.create": ORG,
         },
     ),
     RoleTemplate(
@@ -249,6 +254,14 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.receipt.reverse": ORG,
             "finance.tax.read": ORG,
             "finance.tax.manage": ORG,
+            "finance.supplier.read": ORG,
+            "finance.supplier.manage": ORG,
+            "finance.purchase.read": ORG,
+            "finance.purchase.create": ORG,
+            "finance.purchase.approve": ORG,  # what someone else drafted
+            "finance.bill.override": ORG,
+            "finance.payment.create": ORG,
+            "finance.payment.approve": ORG,  # what someone else prepared
         },
     ),
     RoleTemplate(

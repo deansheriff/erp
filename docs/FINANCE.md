@@ -1,7 +1,8 @@
 # Finance
 
 Phase 10, in five gates. 10a, the general ledger, is in ADR 0023; 10b, receivables and
-tax, is in ADR 0024; permissions are in `docs/PERMISSIONS.md`.
+tax, is in ADR 0024; 10c, payables, is in ADR 0025; permissions are in
+`docs/PERMISSIONS.md`.
 
 ## Tables
 
@@ -17,6 +18,11 @@ tax, is in ADR 0024; permissions are in `docs/PERMISSIONS.md`.
 | `receipts` | Cash received and WHT deducted, the bank account, the WHT credit note, and any reversal. |
 | `sales_allocations` | Parts of receipts and credit notes set against invoices. |
 | `vat_rates`, `wht_types`, `stamp_duty_types` | Effective-dated VAT, withholding-tax types and rates, stamp duty types. |
+| `suppliers` | Code (`S-0001`), company or individual, TIN, terms, usual WHT type, bank name, CBN code, account number and name. |
+| `purchase_orders`, `purchase_lines` | Purchase orders and their lines (cost account, quantity, price, VAT). |
+| `goods_receipts`, `goods_receipt_lines` | Goods received against PO lines. Nothing posts. |
+| `bills`, `bill_lines` | Supplier bills and debit notes, with the supplier's invoice number and the PO lines they match. |
+| `supplier_payments`, `supplier_payment_lines` | Payments, what each settles on a bill, and the WHT withheld. |
 | `tax_returns` | Filed and paid monthly VAT, WHT and stamp duty returns, with their figures as filed. |
 
 ## How journals get to the ledger
@@ -50,7 +56,7 @@ bank, 1410 staff cash advances, 1420 staff loans, 2110 to 2170 payroll liabiliti
 to 6020 staff costs, 6100 to 6900 expense categories). Retained earnings: 3200.
 Receivables 1100, VAT output 2200, VAT input 1310, WHT receivable 1320, WHT payable 2210,
 stamp duty payable 2220. Payment terms 30 days; reminders 3 days before, on the due date,
-then every 7 days; returns due on the 21st.
+then every 7 days; returns due on the 21st. Trade payables 2010; bill price tolerance 2%.
 
 ## Receivables
 
@@ -82,6 +88,27 @@ then every 7 days; returns due on the 21st.
   the invoices due a reminder. An invoice gets at most one a day. Staff can also email
   one from the customer page.
 
+## Payables
+
+- **Purchase orders** (`PO-`) are drafted by one person and approved by another. Goods
+  received (`GRN-`) are recorded against an approved PO's lines, never more than is still
+  to come; nothing posts until the bill.
+- **Bills** (`BILL-`) come from a PO (its received, unbilled lines) or are direct, against
+  expense or asset accounts. Each records the supplier's invoice number, once per
+  supplier. Every bill is approved by someone other than its drafter. A bill from a PO is
+  matched on approval: quantities billed can't be more than received, and prices can be
+  up to the tolerance (2%) away from the PO. One that fails is **held**; a Finance Manager
+  (`finance.bill.override`) posts it with a reason, or it is corrected and approved again.
+  Posting debits the lines' accounts and VAT input and credits trade payables (2010).
+- **Debit notes** (`DN-`) are raised against a posted bill, issued by someone other than
+  the drafter, and can't be more than the bill's balance.
+- **Payments** (`PAY-`) settle posted bills. WHT is withheld at payment from each bill's
+  WHT type at the supplier's company or individual rate, on the part settled that isn't
+  VAT. A payment is prepared by one person and approved by another; approval posts debit
+  payables, credit the bank and WHT payable (2210). An approved payment downloads as the
+  generic bank CSV payroll uses, and can be reversed with a reason.
+- **Payables aging** by days past the bill's due date, with CSV.
+
 ## Tax
 
 - **VAT** 7.5% from 1 February 2020, effective-dated (confirm). Issued invoices keep their
@@ -107,5 +134,6 @@ general ledger download as CSV.
 ## Screens
 
 Finance → Customers (and each customer), Sales (and each document and receipt), Aging,
+Suppliers (and each supplier), Purchases (and each PO, bill and payment), Payables aging,
 Journals (and each journal), Chart of accounts, Recurring, Periods, Reports, Tax returns,
 Tax settings.

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"secondary-container":"#c4ef49","surface-container-highest":"#e2e2e6","on-secondary-fixed-variant":"#3b4d00","surface":"#FFFFFF","danger-text":"#B4232F","on-error":"#ffffff","on-tertiary":"#ffffff","iris-tint":"#EEECFD","surface-container-low":"#f3f3f7","primary":"#412ec2","ink-3":"#626280","success-bg":"#DDF7E8","on-secondary":"#ffffff","on-error-container":"#93000a","inverse-primary":"#c5c0ff","warning-bg":"#FFF1D6","error":"#ba1a1a","on-primary":"#ffffff","on-iris":"#FFFFFF","ink":"#16162A","on-secondary-container":"#536b00","outline":"#787586","secondary":"#4f6600","background":"#f9f9fd","on-surface-variant":"#474554","error-container":"#ffdad6","surface-container-lowest":"#ffffff","tertiary-fixed-dim":"#ffb68b","warning-text":"#8A4B00","tertiary":"#7a3700","tertiary-fixed":"#ffdbc8","outline-variant":"#c8c4d7","on-background":"#1a1c1f","on-surface":"#1a1c1f","secondary-fixed-dim":"#acd530","surface-container":"#ededf1","info-text":"#1D55B8","inverse-on-surface":"#f0f0f4","surface-container-high":"#e8e8ec","on-secondary-fixed":"#161f00","line-strong":"#8B8BA6","on-tertiary-fixed-variant":"#743400","info-bg":"#DFEBFF","inverse-surface":"#2e3034","tertiary-container":"#9f4a00","on-primary-fixed":"#140067","on-tertiary-fixed":"#321300","primary-fixed-dim":"#c5c0ff","destructive":"#C42836","primary-container":"#5a4bdb","primary-fixed":"#e4dfff","on-primary-container":"#e0dbff","lime-ink":"#4D7A0A","ink-2":"#4B4B66","surface-dim":"#d9dade","canvas":"#F6F6FA","line":"#E4E4EE","surface-variant":"#e2e2e6","secondary-fixed":"#c7f24c","success-text":"#0F6B3E","surface-tint":"#5646d7","lime":"#C5F04A","iris":"#5A4BDB","on-primary-fixed-variant":"#3d28be","surface-bright":"#f9f9fd","iris-hover":"#4A3CC4","surface-raised":"#FFFFFF","surface-sunken":"#EFEFF6","danger-bg":"#FFE4E6","on-tertiary-container":"#ffd7c1"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xl":"2rem","space-lg":"1.5rem","space-2xl":"3rem","space-sm":"0.5rem","space-3xl":"4rem","margin":"2rem","space-md":"1rem","gutter":"1.5rem","space-xs":"0.25rem"},"fontFamily":{"body":["Inter"],"label":["Inter"],"h3":["Plus Jakarta Sans"],"body-sm":["Inter"],"display":["Plus Jakarta Sans"],"overline":["Inter"],"stat":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"]},"fontSize":{"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body text-body text-on-surface"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest flex flex-col z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="p-space-md flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm p-space-xs"><div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">account_balance</span></div><div class="flex flex-col min-w-0"><span class="font-h3 text-h3 text-on-surface truncate">Adeyemi Holdings Ltd</span><span class="font-overline text-overline text-on-surface-variant truncate">Kxmeleon ERP Enterprise</span></div></div><button class="w-full flex items-center justify-between px-space-md py-space-xs rounded-xl bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"><span class="flex items-center gap-space-xs font-label text-label"><span class="material-symbols-outlined text-[18px]">search</span>Go to...</span><kbd class="font-overline text-overline px-1.5 py-0.5 rounded bg-surface text-ink-3 shadow-sm">Ctrl K</kbd></button></div><nav class="flex-1 overflow-y-auto px-space-md space-y-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span>Home</a><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="hr-people" href="#"><span class="material-symbols-outlined text-[20px]">groups</span>HR &amp; People</a><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span>Leave</a><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span>Attendance</a><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Expenses</a><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span>Payroll</a><div class="space-y-1 pt-1"><a class="flex items-center justify-between px-space-md py-space-xs rounded-lg bg-primary-container text-on-primary-container font-label text-label" data-path="finance" href="#"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>Finance</span><span class="material-symbols-outlined text-[16px]">expand_more</span></a><div class="pl-6 pr-1 space-y-1"><a class="flex items-center px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="general-ledger" href="#">General Ledger</a><a class="flex items-center px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="journals" href="#">Journals</a><div class="space-y-1"><a class="flex items-center justify-between px-space-md py-1 rounded-lg font-semibold text-primary font-label text-label" data-path="payables" href="#">Payables<span class="material-symbols-outlined text-[14px]">expand_more</span></a><div class="pl-4 space-y-0.5"><a class="block px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="vendors" href="#">Vendors</a><a class="block px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="bills" href="#">Bills</a><a aria-current="page" class="block px-space-md py-1 bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="purchase-orders" href="#">Purchase Orders</a></div></div><a class="flex items-center px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="receivables" href="#">Receivables</a><a class="flex items-center px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="tax" href="#">Tax</a><a class="flex items-center px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="reports" href="#">Reports</a><a class="flex items-center px-space-md py-1 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="finance-settings" href="#">Settings</a></div></div><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span>Inventory</a><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">tactic</span>Projects</a><a class="flex items-center gap-space-sm px-space-md py-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label text-label" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">tune</span>Administration</a></nav><div class="p-space-md shrink-0"><div class="flex items-center gap-space-sm p-space-xs rounded-xl bg-surface-container-low"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col min-w-0 flex-1"><span class="font-label text-label text-on-surface font-semibold truncate">Fatima Bello</span><span class="font-overline text-overline text-on-surface-variant truncate">Finance Manager</span></div><button class="text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">more_vert</span></button></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-gutter"><div class="flex items-center gap-space-sm min-w-0"><nav class="flex items-center gap-space-xs font-label text-label text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="finance" href="#">Finance</a><span class="material-symbols-outlined text-[16px]">chevron_right</span><a class="hover:text-primary transition-colors" data-path="payables" href="#">Payables</a><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="font-semibold text-on-surface truncate">PO-00014</span></nav></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="h-10 pl-9 pr-4 w-72 rounded-xl bg-surface-container-low font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Search records, invoices, POs... Ctrl K" type="text"/></div><div class="flex items-center gap-space-xs"><button class="relative flex items-center gap-1.5 h-10 px-3 rounded-xl hover:bg-surface-container-low transition-colors text-on-surface-variant hover:text-on-surface font-label text-label"><span class="material-symbols-outlined text-[20px]">verified</span><span>Approvals</span><span class="px-1.5 py-0.5 rounded-full bg-primary text-on-primary font-overline text-overline">4</span></button><button class="relative w-10 h-10 rounded-xl flex items-center justify-center hover:bg-surface-container-low transition-colors text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error"></span></button><button class="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-surface-container-low transition-colors text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 px-gutter bg-background flex-1"><div class="flex flex-col w-full pb-space-3xl">
+<!-- Top Document Header -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg mb-space-xl">
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-sm">
+<h1 class="font-display text-display text-ink tracking-tight flex items-center gap-space-sm">
+          PO-00014
+        </h1>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-bg text-success-text font-overline text-overline uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-success-text"></span>
+<span>Approved</span>
+<span class="text-ink-3">·</span>
+<span class="inline-flex items-center gap-1 text-warning-text font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+            Part Received
+          </span>
+</div>
+<span class="px-2.5 py-0.5 rounded-md bg-surface-container-high text-on-surface-variant font-overline text-overline tracking-wide">
+          FIRS e-Invoicing Ref: NGR-2026-PO-8812
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+        Purchase order for corporate workplace equipment and consumables under Nigerian fiscal compliance (CITA &amp; VAT Act 2020).
+      </p>
+</div>
+<!-- Header Action Controls -->
+<div class="flex flex-wrap items-center gap-space-sm shrink-0">
+<button class="h-11 px-space-md rounded-xl bg-surface shadow-sm text-ink hover:bg-surface-container transition-all flex items-center gap-2 font-label text-label group">
+<span class="material-symbols-outlined text-[18px] text-ink-2 group-hover:text-primary transition-colors">receipt_long</span>
+<span>Make Bill</span>
+</button>
+<button class="h-11 px-space-md rounded-xl bg-surface shadow-sm text-ink hover:bg-surface-container transition-all flex items-center gap-2 font-label text-label group">
+<span class="material-symbols-outlined text-[18px] text-ink-2 group-hover:text-primary transition-colors">print</span>
+<span>Print PO / PDF</span>
+</button>
+<a class="h-11 px-space-lg rounded-xl bg-iris hover:bg-iris-hover text-on-iris shadow-md shadow-iris/20 transition-all flex items-center gap-2 font-label text-label font-semibold" href="#grn-logger">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+<span>Record Goods Received</span>
+</a>
+</div>
+</div>
+<!-- Key Facts Meta Cards (Horizontal KPI Ribbon) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-space-sm mb-space-xl">
+<!-- Supplier -->
+<div class="bg-surface p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-1">
+<span class="font-overline text-overline text-ink-3">SUPPLIER</span>
+<span class="material-symbols-outlined text-[16px] text-primary">domain</span>
+</div>
+<div>
+<p class="font-h3 text-h3 text-ink truncate" title="Office Express Nigeria Ltd">Office Express Nigeria</p>
+<p class="font-overline text-overline text-ink-3 truncate mt-0.5">RC 1048291 · TIN 21984710-0001</p>
+</div>
+</div>
+<!-- Order Date -->
+<div class="bg-surface p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-1">
+<span class="font-overline text-overline text-ink-3">ORDER DATE</span>
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+</div>
+<div>
+<p class="font-h3 text-h3 text-ink">04 Nov 2026</p>
+<p class="font-overline text-overline text-ink-3 mt-0.5">10:42 AM WAT</p>
+</div>
+</div>
+<!-- Expected Delivery -->
+<div class="bg-surface p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-1">
+<span class="font-overline text-overline text-ink-3">EXPECTED BY</span>
+<span class="material-symbols-outlined text-[16px] text-warning-text">local_shipping</span>
+</div>
+<div>
+<div class="flex items-baseline gap-1.5">
+<p class="font-h3 text-h3 text-ink">18 Nov 2026</p>
+</div>
+<p class="font-overline text-overline text-warning-text font-semibold mt-0.5">Due in 4 business days</p>
+</div>
+</div>
+<!-- Drafted By -->
+<div class="bg-surface p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-1">
+<span class="font-overline text-overline text-ink-3">DRAFTED BY</span>
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+</div>
+<div>
+<p class="font-h3 text-h3 text-ink truncate">Fatima Bello</p>
+<p class="font-overline text-overline text-ink-3 mt-0.5 truncate">Finance Manager</p>
+</div>
+</div>
+<!-- Approved By -->
+<div class="bg-surface p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-1">
+<span class="font-overline text-overline text-ink-3">APPROVED BY</span>
+<span class="material-symbols-outlined text-[16px] text-success-text">verified_user</span>
+</div>
+<div>
+<p class="font-h3 text-h3 text-ink truncate">Tunde Bakare</p>
+<p class="font-overline text-overline text-success-text font-semibold mt-0.5">06 Nov 2026 · Auth 2-of-2</p>
+</div>
+</div>
+<!-- Total Gross Value -->
+<div class="bg-primary-container p-space-md rounded-xl shadow-sm flex flex-col justify-between text-on-primary">
+<div class="flex items-center justify-between text-on-primary-container mb-1">
+<span class="font-overline text-overline text-on-primary-container">TOTAL COMMITMENT</span>
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div>
+<p class="font-h2 text-h2 text-on-primary font-bold tracking-tight">₦3,440,000.00</p>
+<p class="font-overline text-overline text-on-primary-container mt-0.5">Gross (incl. 7.5% VAT)</p>
+</div>
+</div>
+</div>
+<!-- Main Lines Table Card -->
+<div class="bg-surface rounded-2xl shadow-sm overflow-hidden mb-space-2xl">
+<div class="px-space-lg py-space-md bg-surface-raised flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-h2 text-h2 text-ink">Committed Order Lines</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-overline text-overline">4 line items</span>
+</div>
+<div class="flex items-center gap-space-md text-ink-3 font-body-sm text-body-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-success-text"></span>
+<span>Fulfillment: <strong class="text-ink font-semibold">63.7%</strong></span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-iris"></span>
+<span>Billed: <strong class="text-ink font-semibold">59.3%</strong></span>
+</div>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left [font-variant-numeric:tabular-nums]">
+<thead>
+<tr class="bg-surface-sunken text-ink-2 font-overline text-overline tracking-wider uppercase">
+<th class="py-space-sm pl-space-lg pr-space-md">Description / Product SKU</th>
+<th class="py-space-sm px-space-md">GL Account</th>
+<th class="py-space-sm px-space-md">Cost Centre</th>
+<th class="py-space-sm px-space-md text-right">Ordered</th>
+<th class="py-space-sm px-space-md text-right">Received</th>
+<th class="py-space-sm px-space-md text-right">Billed</th>
+<th class="py-space-sm px-space-md text-right">Unit Price (₦)</th>
+<th class="py-space-sm px-space-md text-right">VAT (7.5%)</th>
+<th class="py-space-sm pl-space-md pr-space-lg text-right">Net Total (₦)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line font-body-sm text-body-sm text-ink">
+<!-- Line 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 pl-space-lg pr-space-md">
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Ergonomic Mesh Task Chairs</span>
+<span class="font-overline text-overline text-ink-3">Steelcase Series 2 · Charcoal Lumbar · SKU: FUR-SC-081</span>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="px-2 py-1 rounded bg-surface-container font-overline text-overline text-ink-2">6100 · Furniture</span>
+</td>
+<td class="py-4 px-space-md text-ink-2">CC-100 · Lagos HQ</td>
+<td class="py-4 px-space-md text-right font-semibold">20</td>
+<td class="py-4 px-space-md text-right">
+<span class="inline-flex items-center gap-1 font-semibold text-warning-text bg-warning-bg px-2 py-0.5 rounded-full text-[12px]">
+                15 <span class="text-[10px] text-ink-3">(-5)</span>
+</span>
+</td>
+<td class="py-4 px-space-md text-right text-ink-2">10</td>
+<td class="py-4 px-space-md text-right">₦85,000.00</td>
+<td class="py-4 px-space-md text-right text-ink-3">₦127,500.00</td>
+<td class="py-4 pl-space-md pr-space-lg text-right font-semibold text-ink">₦1,700,000.00</td>
+</tr>
+<!-- Line 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 pl-space-lg pr-space-md">
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Executive Conference Desks 1.8m</span>
+<span class="font-overline text-overline text-ink-3">Walnut veneer with pop-up grommets · SKU: FUR-DSK-180</span>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="px-2 py-1 rounded bg-surface-container font-overline text-overline text-ink-2">6100 · Furniture</span>
+</td>
+<td class="py-4 px-space-md text-ink-2">CC-200 · Finance</td>
+<td class="py-4 px-space-md text-right font-semibold">4</td>
+<td class="py-4 px-space-md text-right">
+<span class="inline-flex items-center gap-1 font-semibold text-success-text bg-success-bg px-2 py-0.5 rounded-full text-[12px]">
+<span class="material-symbols-outlined text-[13px]">check</span> 4
+              </span>
+</td>
+<td class="py-4 px-space-md text-right text-ink-2">4</td>
+<td class="py-4 px-space-md text-right">₦240,000.00</td>
+<td class="py-4 px-space-md text-right text-ink-3">₦72,000.00</td>
+<td class="py-4 pl-space-md pr-space-lg text-right font-semibold text-ink">₦960,000.00</td>
+</tr>
+<!-- Line 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 pl-space-lg pr-space-md">
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">A4 Multipurpose Bond Paper (Cartons)</span>
+<span class="font-overline text-overline text-ink-3">Rotatrim 80gsm 5 reams/carton · SKU: STN-A4-BND</span>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="px-2 py-1 rounded bg-surface-container font-overline text-overline text-ink-2">6200 · Consumables</span>
+</td>
+<td class="py-4 px-space-md text-ink-2">CC-100 · Lagos HQ</td>
+<td class="py-4 px-space-md text-right font-semibold">100</td>
+<td class="py-4 px-space-md text-right">
+<span class="inline-flex items-center gap-1 font-semibold text-warning-text bg-warning-bg px-2 py-0.5 rounded-full text-[12px]">
+                60 <span class="text-[10px] text-ink-3">(-40)</span>
+</span>
+</td>
+<td class="py-4 px-space-md text-right text-ink-2">50</td>
+<td class="py-4 px-space-md text-right">₦6,500.00</td>
+<td class="py-4 px-space-md text-right text-ink-3">₦48,750.00</td>
+<td class="py-4 pl-space-md pr-space-lg text-right font-semibold text-ink">₦650,000.00</td>
+</tr>
+<!-- Line 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 pl-space-lg pr-space-md">
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Commercial Shredder Heavy Duty 24-Sheet</span>
+<span class="font-overline text-overline text-ink-3">Fellowes Cross-cut DIN P-4 continuous run · SKU: EQP-SHR-24C</span>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="px-2 py-1 rounded bg-surface-container font-overline text-overline text-ink-2">6150 · Equipment</span>
+</td>
+<td class="py-4 px-space-md text-ink-2">CC-200 · Finance</td>
+<td class="py-4 px-space-md text-right font-semibold">2</td>
+<td class="py-4 px-space-md text-right">
+<span class="inline-flex items-center gap-1 font-semibold text-danger-text bg-danger-bg px-2 py-0.5 rounded-full text-[12px]">
+                0 <span class="text-[10px]">(-2)</span>
+</span>
+</td>
+<td class="py-4 px-space-md text-right text-ink-2">0</td>
+<td class="py-4 px-space-md text-right">₦65,000.00</td>
+<td class="py-4 px-space-md text-right text-ink-3">₦9,750.00</td>
+<td class="py-4 pl-space-md pr-space-lg text-right font-semibold text-ink">₦130,000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Financial Recap Grid -->
+<div class="p-space-lg bg-surface-container-low flex flex-col md:flex-row md:items-start justify-between gap-space-lg">
+<div class="flex flex-col gap-2 max-w-md">
+<span class="font-label text-label font-semibold text-ink">Fulfillment Summary</span>
+<div class="flex flex-wrap items-center gap-space-md text-ink-2 font-body-sm text-body-sm">
+<div>Ordered: <strong class="text-ink">126 units</strong></div>
+<div>Received: <strong class="text-warning-text">79 units</strong></div>
+<div>Billed: <strong class="text-primary font-semibold">64 units</strong></div>
+<div>Pending Delivery: <strong class="text-danger-text">47 units</strong></div>
+</div>
+<p class="font-overline text-overline text-ink-3 mt-1">
+          * VAT applied in accordance with Nigerian Federal Inland Revenue Service (FIRS) 7.5% statutory rate. Withholding Tax (WHT 5%) will be withheld upon Bill payment.
+        </p>
+</div>
+<!-- Financial Totals Block -->
+<div class="w-full md:w-80 flex flex-col gap-2 [font-variant-numeric:tabular-nums]">
+<div class="flex items-center justify-between font-body-sm text-body-sm text-ink-2">
+<span>Subtotal Net</span>
+<span class="font-medium text-ink">₦3,200,000.00</span>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm text-ink-2">
+<span>VAT (7.5% Statutory)</span>
+<span class="font-medium text-ink">₦240,000.00</span>
+</div>
+<div class="flex items-center justify-between pt-2 mt-1 bg-surface-container px-3 py-2 rounded-lg text-ink font-semibold">
+<span class="font-h3 text-h3">Total Gross</span>
+<span class="font-h2 text-h2 text-primary">₦3,440,000.00</span>
+</div>
+<div class="flex items-center justify-between font-overline text-overline text-ink-3 px-1 mt-1">
+<span>Billed to Date</span>
+<span class="text-ink font-semibold">₦2,042,500.00</span>
+</div>
+<div class="flex items-center justify-between font-overline text-overline text-warning-text px-1">
+<span>Outstanding to Bill</span>
+<span class="font-bold">₦1,397,500.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Operational Workflow Section (Two-Column Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-2xl" id="grn-logger">
+<!-- Column A: Record Goods Received Form (7 cols) -->
+<div class="lg:col-span-7 bg-surface rounded-2xl shadow-sm p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-md mb-space-md bg-surface-container-low -mx-space-lg -mt-space-lg p-space-lg rounded-t-2xl">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-iris text-on-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">inventory</span>
+</div>
+<div>
+<h2 class="font-h2 text-h2 text-ink">Record Goods Received</h2>
+<span class="font-overline text-overline text-ink-3">Create GRN against PO-00014</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-warning-bg text-warning-text font-overline text-overline font-semibold uppercase tracking-wider">
+            Draft GRN #2
+          </span>
+</div>
+<!-- Form Top Metadata -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md mb-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink">Delivery Date</label>
+<div class="relative flex items-center">
+<input class="h-11 w-full pl-3 pr-10 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:shadow-md transition-all" type="text" value="14 Nov 2026"/>
+<span class="material-symbols-outlined absolute right-3 text-[18px] text-ink-3 pointer-events-none">calendar_month</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink">Vendor Delivery Note #</label>
+<div class="relative flex items-center">
+<input class="h-11 w-full pl-3 pr-10 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface focus:shadow-md transition-all uppercase" type="text" value="DN-4492"/>
+<span class="material-symbols-outlined absolute right-3 text-[18px] text-ink-3 pointer-events-none">receipt</span>
+</div>
+</div>
+</div>
+<!-- Quantity Received Row by Row -->
+<div class="flex flex-col gap-space-sm mb-space-md">
+<label class="font-label text-label text-ink">Item Quantities Arrived</label>
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low gap-space-sm">
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label text-label text-ink truncate font-medium">Ergonomic Mesh Task Chairs</span>
+<span class="font-overline text-overline text-warning-text">Max outstanding: 5 units</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline text-ink-3">Qty:</span>
+<input class="w-20 h-10 px-3 text-right rounded-lg bg-surface font-label text-label text-ink font-semibold focus:outline-none shadow-sm" max="5" min="0" type="number" value="5"/>
+</div>
+</div>
+<!-- Item 2 (Fully Received) -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low/50 opacity-75 gap-space-sm">
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label text-label text-ink truncate font-medium">Executive Conference Desks 1.8m</span>
+<span class="font-overline text-overline text-success-text">Fully received (0 outstanding)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1.5 rounded-lg bg-success-bg text-success-text font-overline text-overline font-semibold">
+                Completed
+              </span>
+<input class="w-16 h-10 px-3 text-right rounded-lg bg-surface-dim font-label text-label text-ink-3 cursor-not-allowed" disabled="" type="number" value="0"/>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low gap-space-sm">
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label text-label text-ink truncate font-medium">A4 Multipurpose Bond Paper</span>
+<span class="font-overline text-overline text-warning-text">Max outstanding: 40 cartons</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline text-ink-3">Qty:</span>
+<input class="w-20 h-10 px-3 text-right rounded-lg bg-surface font-label text-label text-ink font-semibold focus:outline-none shadow-sm" max="40" min="0" type="number" value="40"/>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low gap-space-sm">
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label text-label text-ink truncate font-medium">Commercial Shredder Heavy Duty</span>
+<span class="font-overline text-overline text-danger-text">Max outstanding: 2 units</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline text-ink-3">Qty:</span>
+<input class="w-20 h-10 px-3 text-right rounded-lg bg-surface font-label text-label text-ink font-semibold focus:outline-none shadow-sm" max="2" min="0" type="number" value="2"/>
+</div>
+</div>
+</div>
+<!-- Receiver Comments / Warehouse Inspection -->
+<div class="flex flex-col gap-1.5 mb-space-lg">
+<label class="font-label text-label text-ink">Receiving Inspection &amp; Gate Pass Notes</label>
+<textarea class="w-full p-3 rounded-xl bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none focus:bg-surface focus:shadow-md transition-all resize-none" rows="3">Consignment inspected at Lagos HQ loading bay by security and logistics supervisor Segun Afolabi. No transit damages noted. Packing slips stamped.</textarea>
+</div>
+</div>
+<!-- Form Actions -->
+<div class="flex items-center justify-end gap-space-sm pt-space-md">
+<button class="h-11 px-space-md rounded-xl bg-surface hover:bg-surface-container text-ink-2 font-label text-label transition-colors" type="button">
+          Discard Draft
+        </button>
+<button class="h-11 px-space-lg rounded-xl bg-iris hover:bg-iris-hover text-on-iris shadow-md shadow-iris/20 font-label text-label font-semibold flex items-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Commit &amp; Post GRN-00022</span>
+</button>
+</div>
+</div>
+<!-- Column B: Goods Received History List (5 cols) -->
+<div class="lg:col-span-5 bg-surface rounded-2xl shadow-sm p-space-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</div>
+<div>
+<h2 class="font-h2 text-h2 text-ink">GRN Audit Trail</h2>
+<span class="font-overline text-overline text-ink-3">Historical Receipts</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold">
+            1 Completed
+          </span>
+</div>
+<!-- History Card -->
+<div class="rounded-xl bg-surface-container-low p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-h3 text-h3 text-ink">GRN-00021</span>
+<span class="px-2 py-0.5 rounded bg-surface font-overline text-overline text-ink font-semibold shadow-xs">DN 4471</span>
+</div>
+<span class="font-overline text-overline text-ink-3">12 Nov 2026</span>
+</div>
+<div class="p- space-xs font-body-sm text-body-sm text-ink-2 bg-surface rounded-lg p-2.5">
+<p class="font-medium text-ink mb-1">Receipt Manifest:</p>
+<ul class="space-y-1 font-overline text-overline text-ink-2 list-disc list-inside">
+<li>15x Ergonomic Mesh Task Chairs</li>
+<li>4x Executive Conference Desks 1.8m</li>
+<li>60x A4 Multipurpose Bond Paper (Cartons)</li>
+</ul>
+</div>
+<div class="flex items-center justify-between text-ink-3 font-overline text-overline pt-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">person</span>
+              Received by: <strong>Chinedu Eze</strong>
+</span>
+<span class="text-success-text font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+              Loading Bay 2
+            </span>
+</div>
+<!-- Attachment Pill -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-[18px] text-danger-text">picture_as_pdf</span>
+<span class="font-label text-label text-ink truncate font-medium">DN_4471_signed_stamped.pdf</span>
+<span class="font-overline text-overline text-ink-3">(420 KB)</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-ink-3 group-hover:text-primary transition-colors">download</span>
+</div>
+<!-- Journal Staging Link -->
+<div class="p-2.5 rounded-lg bg-iris-tint/60 flex items-center gap-2 text-primary font-overline text-overline font-semibold">
+<span class="material-symbols-outlined text-[16px]">account_tree</span>
+<span>Accrual Staging: Pending 3-way bill matching in Payables</span>
+</div>
+</div>
+<!-- Informational timeline note -->
+<div class="mt-space-md p-space-sm rounded-xl bg-surface-bright flex items-center gap-space-sm text-ink-3 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">info</span>
+<p class="font-overline text-overline leading-tight">
+            GRN entries post automatic interim journal debits to <span class="text-ink font-semibold">1420 Inventory Received Not Invoiced</span> and credit accrued liability accounts until final bill reconciliation.
+          </p>
+</div>
+</div>
+<!-- Quick Document Integrity Check -->
+<div class="mt-space-lg pt-space-md flex items-center justify-between font-overline text-overline text-ink-3">
+<span>PO Lifecycle Progress</span>
+<span class="font-semibold text-ink">Step 3 of 4 (Goods Partially Received)</span>
+</div>
+</div>
+</div>
+<!-- Draft State Showcase Section: PO-00015 Sandbox Lifecycle -->
+<div class="bg-surface rounded-2xl shadow-sm p-space-lg">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm pb-space-md mb-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-h2 text-h2 text-ink">Draft PO Mode — PO-00015</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-overline text-overline font-bold uppercase">
+            Pre-Authorization Sandbox
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">Draft lifecycle preview demonstrating enterprise Segregation of Duties (SoD).</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-10 px-space-md rounded-xl bg-surface-container-high hover:bg-surface-container text-ink font-label text-label transition-colors">
+          Save Draft
+        </button>
+<button class="h-10 px-space-md rounded-xl bg-danger-bg hover:bg-error-container text-danger-text font-label text-label transition-colors">
+          Delete Draft
+        </button>
+<button class="h-10 px-space-md rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Submit for Authorization</span>
+</button>
+</div>
+</div>
+<!-- Governance Banner -->
+<div class="mb-space-md p-space-md rounded-xl bg-warning-bg/60 flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-warning-text text-[20px] shrink-0 mt-0.5">policy</span>
+<div class="flex flex-col">
+<span class="font-label text-label font-bold text-warning-text">Segregation of Duties Enforced</span>
+<p class="font-body-sm text-body-sm text-ink">
+          Someone other than the drafter must approve it. Fatima Bello (drafter) cannot self-authorize. Upon submission, workflow routes to <strong>Tunde Bakare (Head of Finance)</strong> for approval threshold over ₦1,000,000.
+        </p>
+</div>
+</div>
+<!-- Editable Mockup Lines -->
+<div class="overflow-x-auto">
+<table class="w-full text-left [font-variant-numeric:tabular-nums]">
+<thead>
+<tr class="bg-surface-sunken text-ink-2 font-overline text-overline tracking-wider uppercase">
+<th class="py-2.5 pl-3 pr-2">Item / Service Details</th>
+<th class="py-2.5 px-2">GL Account</th>
+<th class="py-2.5 px-2">Cost Centre</th>
+<th class="py-2.5 px-2 text-right w-24">Qty</th>
+<th class="py-2.5 px-2 text-right w-36">Est. Unit Price (₦)</th>
+<th class="py-2.5 px-2 text-right w-32">VAT Rate</th>
+<th class="py-2.5 pl-2 pr-3 text-right w-12">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line font-body-sm text-body-sm">
+<tr>
+<td class="py-3 pl-3 pr-2">
+<input class="w-full h-10 px-3 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none focus:bg-surface" type="text" value="Dell Latitude 5540 16GB i7 512GB SSD"/>
+</td>
+<td class="py-3 px-2">
+<select class="w-full h-10 px-2 rounded-lg bg-surface-sunken font-overline text-overline text-ink focus:outline-none">
+<option selected="">1520 · IT Equipment Asset</option>
+<option>6100 · Office Furniture</option>
+</select>
+</td>
+<td class="py-3 px-2">
+<select class="w-full h-10 px-2 rounded-lg bg-surface-sunken font-overline text-overline text-ink focus:outline-none">
+<option selected="">CC-400 · Technology</option>
+<option>CC-100 · Lagos HQ</option>
+</select>
+</td>
+<td class="py-3 px-2 text-right">
+<input class="w-full h-10 px-2 text-right rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none" type="number" value="10"/>
+</td>
+<td class="py-3 px-2 text-right">
+<input class="w-full h-10 px-2 text-right rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none font-semibold" type="text" value="1,150,000.00"/>
+</td>
+<td class="py-3 px-2 text-right">
+<span class="px-2 py-1 rounded bg-surface-container font-overline text-overline font-semibold text-ink-2">7.5% Standard</span>
+</td>
+<td class="py-3 pl-2 pr-3 text-right">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-danger-text hover:bg-danger-bg transition-colors" title="Remove line">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</td>
+</tr>
+<tr>
+<td class="py-3 pl-3 pr-2">
+<input class="w-full h-10 px-3 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none focus:bg-surface" type="text" value="Dell Pro 27-inch 4K Video Conferencing Monitor"/>
+</td>
+<td class="py-3 px-2">
+<select class="w-full h-10 px-2 rounded-lg bg-surface-sunken font-overline text-overline text-ink focus:outline-none">
+<option selected="">1520 · IT Equipment Asset</option>
+<option>6100 · Office Furniture</option>
+</select>
+</td>
+<td class="py-3 px-2">
+<select class="w-full h-10 px-2 rounded-lg bg-surface-sunken font-overline text-overline text-ink focus:outline-none">
+<option selected="">CC-400 · Technology</option>
+<option>CC-100 · Lagos HQ</option>
+</select>
+</td>
+<td class="py-3 px-2 text-right">
+<input class="w-full h-10 px-2 text-right rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none" type="number" value="10"/>
+</td>
+<td class="py-3 px-2 text-right">
+<input class="w-full h-10 px-2 text-right rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none font-semibold" type="text" value="385,000.00"/>
+</td>
+<td class="py-3 px-2 text-right">
+<span class="px-2 py-1 rounded bg-surface-container font-overline text-overline font-semibold text-ink-2">7.5% Standard</span>
+</td>
+<td class="py-3 pl-2 pr-3 text-right">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-danger-text hover:bg-danger-bg transition-colors" title="Remove line">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-space-md flex items-center justify-between">
+<button class="h-10 px-3 rounded-xl bg-surface-container-low hover:bg-surface-container text-primary font-label text-label flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Add PO Line</span>
+</button>
+<div class="flex items-center gap-space-lg text-ink font-label text-label">
+<span class="text-ink-3">Draft Estimate:</span>
+<span class="font-h3 text-h3 text-ink">₦16,501,250.00</span>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

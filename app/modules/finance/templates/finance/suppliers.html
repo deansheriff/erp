@@ -1,0 +1,90 @@
+{# Finance → Suppliers (ADR 0025): the list, with the add or edit form beside it.
+   Design: design/stitch/exports/finance.suppliers.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Suppliers", "Who you buy from, what you owe them, and how they're paid.") %}
+  {% if can_manage %}<a href="/finance/suppliers?edit=new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Add supplier</a>{% endif %}
+{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 {{ 'xl:grid-cols-[minmax(0,1fr)_400px]' if editing }}">
+  <div>
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <nav class="kx-segment" aria-label="Show">
+        {% for key, label in (("active", "Active"), ("overdue", "With overdue"), ("inactive", "Inactive")) %}
+        <a href="/finance/suppliers?show={{ key }}{% if filters.q %}&q={{ filters.q | urlencode }}{% endif %}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if filters.show == key else 'text-ink-2 hover:text-ink' }}" {% if filters.show == key %}aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+      </nav>
+      <form method="get" action="/finance/suppliers" class="flex items-end gap-2" role="search">
+        <input type="hidden" name="show" value="{{ filters.show }}">
+        <label for="q" class="sr-only">Search suppliers</label>
+        <input id="q" name="q" value="{{ filters.q }}" placeholder="Name, code or TIN" class="kx-input h-10 w-64">
+        <button type="submit" class="kx-btn-secondary h-10">Search</button>
+      </form>
+    </div>
+
+    <section class="kx-card mt-4 overflow-hidden" aria-label="Suppliers">
+      {% if rows %}
+      <div class="kx-scroll-x">
+        <table class="w-full min-w-[860px] text-body-sm">
+          <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Supplier</th><th class="px-3 py-3 text-left font-semibold">Type</th><th class="px-3 py-3 text-left font-semibold">TIN</th><th class="px-3 py-3 text-left font-semibold">Terms</th><th class="px-3 py-3 text-left font-semibold">Bank</th><th class="px-3 py-3 text-right font-semibold">Owed</th><th class="px-5 py-3 text-right font-semibold">Overdue</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            {% for s in rows %}
+            <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+              <td class="px-5 py-3"><a href="/finance/suppliers/{{ s.id }}" class="font-semibold text-iris">{{ s.name }}</a><span class="ml-2 font-mono text-xs text-ink-3">{{ s.code }}</span></td>
+              <td class="px-3 py-3">{{ kind_labels[s.kind] }}</td>
+              <td class="px-3 py-3 font-mono text-xs text-ink-2">{{ s.tin or "—" }}</td>
+              <td class="px-3 py-3">{{ s.payment_terms_days }} days</td>
+              <td class="px-3 py-3 text-ink-2">{{ s.bank or "—" }}</td>
+              <td class="px-3 py-3 text-right tnum">{{ s.balance | money }}</td>
+              <td class="px-5 py-3 text-right tnum {{ 'font-semibold text-danger-text' if s.overdue > 0 }}">{{ s.overdue | money if s.overdue > 0 else "—" }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      {% call ui.empty_state("truck", "No suppliers here", "Add your first supplier to raise purchase orders and bills." if filters.show == "active" and not filters.q else "Nothing matches.") %}{% endcall %}
+      {% endif %}
+    </section>
+  </div>
+
+  {% if editing and can_manage %}
+  {% set s = supplier %}
+  {% set v = values %}
+  <aside class="kx-card h-fit p-5" aria-labelledby="supplier-form-title">
+    <h2 id="supplier-form-title" class="font-h3 text-h3">{{ "Edit " ~ s.name if s else "Add supplier" }}</h2>
+    <form method="post" action="/finance/suppliers" class="mt-4 space-y-4" novalidate>
+      {{ ui.csrf_field() }}
+      {% if s %}<input type="hidden" name="supplier_id" value="{{ s.id }}">{% endif %}
+      {{ ui.text_field("name", "Name", value=v.get("name") or (s.name if s else ""), errors=errors) }}
+      <fieldset><legend class="kx-label">Type</legend><div class="flex gap-4 text-body-sm">{% for key, label in kinds %}<label class="flex items-center gap-2"><input type="radio" name="kind" value="{{ key }}" class="kx-check" {% if (v.get("kind") or (s.kind if s else "company")) == key %}checked{% endif %}> {{ label }}</label>{% endfor %}</div><p class="mt-1 text-xs text-ink-3">Picks the company or individual WHT rate.</p></fieldset>
+      {{ ui.text_field("email", "Email", value=v.get("email") or (s.email or "" if s else ""), type="email", errors=errors) }}
+      {{ ui.text_field("phone", "Phone", value=v.get("phone") or (s.phone or "" if s else ""), errors=errors) }}
+      <div><label class="kx-label" for="address">Address</label><textarea id="address" name="address" rows="2" class="kx-input">{{ v.get("address") or (s.address or "" if s else "") }}</textarea></div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {{ ui.text_field("tin", "TIN", value=v.get("tin") or (s.tin or "" if s else ""), errors=errors) }}
+        {{ ui.text_field("payment_terms_days", "Payment terms (days)", value=v.get("payment_terms_days") or (s.payment_terms_days if s else default_terms), inputmode="numeric", errors=errors) }}
+      </div>
+      <div><label class="kx-label" for="wht_type_id">Usual WHT type</label><select id="wht_type_id" name="wht_type_id" class="kx-input"><option value="">None</option>{% for w in wht_types %}<option value="{{ w.id }}" {% if (v.get("wht_type_id") or (s.wht_type_id|string if s and s.wht_type_id else "")) == w.id|string %}selected{% endif %}>{{ w.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "wht_type_id") }}</div>
+      <fieldset class="space-y-4 border-t border-line pt-4">
+        <legend class="text-body-sm font-semibold">Bank details <span class="font-normal text-ink-3">(for the payment file)</span></legend>
+        <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_110px]">
+          {{ ui.text_field("bank_name", "Bank", value=v.get("bank_name") or (s.bank_name or "" if s else ""), errors=errors) }}
+          {{ ui.text_field("bank_code", "CBN code", value=v.get("bank_code") or (s.bank_code or "" if s else ""), inputmode="numeric", errors=errors) }}
+        </div>
+        {{ ui.text_field("account_number", "Account number", value=v.get("account_number") or (s.account_number or "" if s else ""), inputmode="numeric", errors=errors) }}
+        {{ ui.text_field("account_name", "Account name", value=v.get("account_name") or (s.account_name or "" if s else ""), errors=errors) }}
+      </fieldset>
+      {% if s %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if (v.get("is_active") if v else s.is_active) %}checked{% endif %}> Active</label>{% endif %}
+      <div class="flex justify-end gap-3 pt-2">
+        <a href="{{ '/finance/suppliers/' ~ s.id if s else '/finance/suppliers' }}" class="kx-btn-ghost">Cancel</a>
+        <button type="submit" class="kx-btn-primary">Save</button>
+      </div>
+    </form>
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

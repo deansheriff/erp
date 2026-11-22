@@ -222,6 +222,8 @@ def save_receivables_settings(
     remind_on_due: FormStr = "",
     remind_every_days: FormStr = "",
     return_due_day: FormStr = "",
+    payables_code: FormStr = "",
+    price_tolerance: FormStr = "",
 ) -> Response:
     data = tax.SettingsInput(
         receivables_code,
@@ -235,6 +237,8 @@ def save_receivables_settings(
         bool(remind_on_due),
         remind_every_days,
         return_due_day,
+        payables_code,
+        price_tolerance,
     )
     values = {**asdict(data), "remind_on_due": remind_on_due}
     return _settings_action(

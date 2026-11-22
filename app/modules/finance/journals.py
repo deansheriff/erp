@@ -42,9 +42,10 @@ SOURCE_LABELS = {
     "payroll": "Payroll",
     "expenses": "Expenses",
     "receivable": "Receivables",
+    "payable": "Payables",
 }
 # Journals of finance's own documents, reversed from the document, not the Journals screen.
-DOCUMENT_SOURCES = frozenset({"receivable"})
+DOCUMENT_SOURCES = frozenset({"receivable", "payable"})
 TABS = ("draft", "posted", "held")
 
 # (account code, cost centre, debit, credit) as other modules hand them over
@@ -375,7 +376,7 @@ def reverse(db: Session, actor: Actor, journal_id: uuid.UUID, *, on: date | None
     if original.source == "year_end":
         raise Conflict("The year-end closing journal can't be reversed.")
     if original.source in DOCUMENT_SOURCES:
-        raise Conflict("Reverse this from its receipt, or raise a credit note for the invoice.")
+        raise Conflict("Reverse this from its document: a receipt or payment, or raise a note.")
     if on is None:
         raise ValidationFailed(field_errors={"reverse_on": "Choose the reversal date."})
     reversal = _reverse_now(db, original, on, actor.user_id)
@@ -474,12 +475,14 @@ def post_document_journal(
     memo: str,
     lines: list[SystemLine],
     poster: uuid.UUID | None,
+    source: str = "receivable",
 ) -> Journal:
-    """Post the journal of a finance document (an invoice, credit note or receipt) in the
-    caller's transaction, or refuse with the reason: nothing is held (ADR 0024)."""
+    """Post the journal of a finance document (an invoice, credit note, receipt, bill,
+    debit note or supplier payment) in the caller's transaction, or refuse with the
+    reason: nothing is held (ADR 0024, 0025)."""
     journal = _build(
         db,
-        source="receivable",
+        source=source,
         source_id=source_id,
         journal_date=journal_date,
         memo=memo,

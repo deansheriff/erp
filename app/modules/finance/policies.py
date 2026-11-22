@@ -103,6 +103,57 @@ TAX_MANAGE = Permission(
     scopes=ORG_ONLY,
 )
 
+# Payables (ADR 0025)
+SUPPLIER_READ = Permission(
+    "finance.supplier.read",
+    "View suppliers",
+    "See suppliers, their bank details, what is owed to them and the payables aging.",
+    scopes=ORG_ONLY,
+)
+SUPPLIER_MANAGE = Permission(
+    "finance.supplier.manage",
+    "Manage suppliers",
+    "Add and change suppliers, including their bank details.",
+    scopes=ORG_ONLY,
+)
+PURCHASE_READ = Permission(
+    "finance.purchase.read",
+    "View purchases",
+    "See purchase orders, goods received, bills, debit notes and supplier payments.",
+    scopes=ORG_ONLY,
+)
+PURCHASE_CREATE = Permission(
+    "finance.purchase.create",
+    "Raise purchases",
+    "Draft purchase orders, bills and debit notes, and record goods received.",
+    scopes=ORG_ONLY,
+)
+PURCHASE_APPROVE = Permission(
+    "finance.purchase.approve",
+    "Approve purchases",
+    "Approve purchase orders and bills, and issue debit notes, that someone else drafted.",
+    scopes=ORG_ONLY,
+)
+BILL_OVERRIDE = Permission(
+    "finance.bill.override",
+    "Post held bills",
+    "Post a bill that failed the three-way match, with a reason.",
+    scopes=ORG_ONLY,
+)
+PAYMENT_CREATE = Permission(
+    "finance.payment.create",
+    "Prepare supplier payments",
+    "Prepare payments to suppliers for someone else to approve.",
+    scopes=ORG_ONLY,
+)
+PAYMENT_APPROVE = Permission(
+    "finance.payment.approve",
+    "Approve supplier payments",
+    "Approve and post supplier payments someone else prepared, download the bank file, "
+    "and reverse payments.",
+    scopes=ORG_ONLY,
+)
+
 PERMISSIONS = (
     ACCOUNT_READ,
     ACCOUNT_MANAGE,
@@ -120,6 +171,14 @@ PERMISSIONS = (
     RECEIPT_REVERSE,
     TAX_READ,
     TAX_MANAGE,
+    SUPPLIER_READ,
+    SUPPLIER_MANAGE,
+    PURCHASE_READ,
+    PURCHASE_CREATE,
+    PURCHASE_APPROVE,
+    BILL_OVERRIDE,
+    PAYMENT_CREATE,
+    PAYMENT_APPROVE,
 )
 
 SOD_RULES = (
@@ -134,5 +193,17 @@ SOD_RULES = (
         permission=CREDIT_NOTE_ISSUE.key,
         conflict="creator_is_actor",
         message="Someone else issues a credit note you drafted.",
+    ),
+    SodRule(
+        key="finance.purchase_four_eyes",
+        permission=PURCHASE_APPROVE.key,
+        conflict="creator_is_actor",
+        message="Someone else approves a purchase order, bill or debit note you drafted.",
+    ),
+    SodRule(
+        key="finance.payment_four_eyes",
+        permission=PAYMENT_APPROVE.key,
+        conflict="creator_is_actor",
+        message="Someone else approves a supplier payment you prepared.",
     ),
 )

@@ -165,10 +165,14 @@ def _quantity(value: str, key: str, errors: dict[str, str]) -> Decimal:
     return amount
 
 
-def parse_lines(db: Session, lines: list[LineInput]) -> tuple[list[ParsedLine], dict[str, str]]:
-    """Form lines, skipping empty rows. Errors are keyed `line_<n>` by the row's place."""
+def parse_lines(
+    db: Session, lines: list[LineInput], *, allowed: list[Account] | None = None
+) -> tuple[list[ParsedLine], dict[str, str]]:
+    """Form lines, skipping empty rows. Errors are keyed `line_<n>` by the row's place.
+    Accounts are income ones unless `allowed` says otherwise (purchases use expenses)."""
     errors: dict[str, str] = {}
-    known = {a.id: a for a in income_accounts(db)}
+    known = {a.id: a for a in (allowed if allowed is not None else income_accounts(db))}
+    wrong_account = "Choose an income account." if allowed is None else "Choose an account."
     centres = {cid for cid, _ in org.cost_centre_choices(db)}
     parsed = []
     for i, line in enumerate(lines):
@@ -182,9 +186,9 @@ def parse_lines(db: Session, lines: list[LineInput]) -> tuple[list[ParsedLine], 
         account = known.get(_uuid(line.account_id))  # type: ignore[arg-type]
         centre = _uuid(line.cost_centre_id)
         if not line.description.strip():
-            errors[key] = "Describe what's being sold."
+            errors[key] = "Describe the line."
         elif account is None:
-            errors[key] = "Choose an income account."
+            errors[key] = wrong_account
         elif line.vat_code not in VAT_CODES:
             errors[key] = "Choose standard, zero-rated or exempt."
         elif centre is not None and centre not in centres:

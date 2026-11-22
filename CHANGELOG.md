@@ -5,6 +5,23 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 10c: Payables
+- Suppliers (company or individual, for the WHT rate) with terms, a usual WHT type and
+  bank details for the payment file (ADR 0025).
+- Purchase orders approved by someone other than the drafter, and goods received against
+  their lines (nothing posts). Gap-free numbers `PO-`, `GRN-`.
+- Bills (`BILL-`) from a purchase order or direct, approved by a second person, with a
+  three-way match on approval: billed quantities against received, prices within a 2%
+  tolerance (to confirm). Bills that fail are held until a Finance Manager posts them
+  with a reason. Supplier invoice numbers can't be entered twice.
+- Debit notes (`DN-`) against a posted bill, issued by a second person.
+- Supplier payments (`PAY-`) with WHT withheld at payment at the supplier's company or
+  individual rate, approved by a second person, downloadable as the generic bank CSV,
+  and reversible with a reason. VAT input and WHT payable now reach the tax returns.
+- Payables aging with CSV; supplier pages with what is owed and open purchase orders.
+- Permissions `finance.supplier.*`, `finance.purchase.*`, `finance.bill.override` and
+  `finance.payment.*`; grants for the Finance Officer, Finance Manager and Auditor.
+
 ### Added — Phase 10b: Receivables and tax
 - Customers with payment terms (30 days by default, to confirm), TIN and reminders on or
   off (ADR 0024).
