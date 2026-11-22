@@ -1,7 +1,7 @@
 # Finance
 
-Phase 10, in five gates. 10a, the general ledger, is in ADR 0023; permissions are in
-`docs/PERMISSIONS.md`.
+Phase 10, in five gates. 10a, the general ledger, is in ADR 0023; 10b, receivables and
+tax, is in ADR 0024; permissions are in `docs/PERMISSIONS.md`.
 
 ## Tables
 
@@ -11,7 +11,13 @@ Phase 10, in five gates. 10a, the general ledger, is in ADR 0023; permissions ar
 | `fiscal_years`, `fiscal_periods` | Financial years (January to December) and their twelve months, open or closed. |
 | `journals`, `journal_lines` | Drafted, held and posted journals and their lines (account, cost centre, debit, credit, currency). |
 | `recurring_journals`, `recurring_journal_lines` | Templates drafted on their day each month. |
-| `finance_settings` | The retained earnings account (one row). |
+| `finance_settings` | The retained earnings account; the receivables, VAT, WHT and stamp duty accounts; default terms, reminder days and the return due day (one row). |
+| `customers` | Code (`C-0001`), name, email, address, TIN, payment terms, reminders on or off. |
+| `sales_documents`, `sales_lines` | Quotes, sales orders, invoices and credit notes, and their lines (income account, cost centre, quantity, price, VAT code, rate and amount). |
+| `receipts` | Cash received and WHT deducted, the bank account, the WHT credit note, and any reversal. |
+| `sales_allocations` | Parts of receipts and credit notes set against invoices. |
+| `vat_rates`, `wht_types`, `stamp_duty_types` | Effective-dated VAT, withholding-tax types and rates, stamp duty types. |
+| `tax_returns` | Filed and paid monthly VAT, WHT and stamp duty returns, with their figures as filed. |
 
 ## How journals get to the ledger
 
@@ -42,6 +48,53 @@ A Nigerian SME chart, headed 1 Assets, 2 Liabilities, 3 Equity, 4 Income, 5 Cost
 sales and 6 Operating expenses, using the codes payroll and expenses already use (1010
 bank, 1410 staff cash advances, 1420 staff loans, 2110 to 2170 payroll liabilities, 6000
 to 6020 staff costs, 6100 to 6900 expense categories). Retained earnings: 3200.
+Receivables 1100, VAT output 2200, VAT input 1310, WHT receivable 1320, WHT payable 2210,
+stamp duty payable 2220. Payment terms 30 days; reminders 3 days before, on the due date,
+then every 7 days; returns due on the 21st.
+
+## Receivables
+
+- **Customers** get the default payment terms (30 days) unless changed.
+- **Quotes → orders → invoices**, every step optional: converting copies the lines into a
+  new draft. Quotes are sent, then accepted or declined; orders are confirmed, then
+  invoiced or cancelled.
+- **Invoices** are issued by whoever drafts them. Prices exclude VAT; each line is
+  standard-rated, zero-rated or exempt, and VAT is worked out per line at the rate in
+  force on the invoice date. An optional stamp duty type adds a flat amount or a
+  percentage of the net. Issuing posts debit receivables, credit income, VAT output and
+  stamp duty payable. An invoice dated in a closed or unopened month can't be issued.
+- **Credit notes** are drafted by one person and issued by another
+  (`finance.credit_note.issue`), and post the invoice's journal the other way round. One
+  raised against an invoice is allocated to it, and credit notes can't come to more than
+  the invoice.
+- **Receipts** record cash received and any WHT the customer deducted; both settle
+  invoices. They post debit the bank and WHT receivable, credit receivables. What isn't
+  allocated stays as credit, to allocate later from the customer page. A receipt is
+  reversed with a reason (`finance.receipt.reverse`): its journal is reversed and the
+  invoices it settled are open again. The customer's WHT credit note is recorded on the
+  receipt.
+- Receivables journals are never reversed from the Journals screen.
+- **Aging** as at a date: current, 1–30, 31–60, 61–90 and 90+ days past due, by
+  customer, with CSV. **Statements** for a date range, on screen and as a PDF. Invoices,
+  quotes, orders and credit notes download as PDFs, drawn on demand.
+- **Reminders** are emailed by a daily task (08:00 UTC, 09:00 in Lagos) 3 days before the
+  due date, on the due date, and every 7 days while overdue, one email per customer with
+  the invoices due a reminder. An invoice gets at most one a day. Staff can also email
+  one from the customer page.
+
+## Tax
+
+- **VAT** 7.5% from 1 February 2020, effective-dated (confirm). Issued invoices keep their
+  rate.
+- **Withholding tax** types are seeded without rates; Finance enters company and
+  individual rates.
+- **Stamp duty** types are added by Finance, as a flat amount or a percentage.
+- **Returns** are monthly, due on the 21st of the following month (confirm). Figures come
+  from the ledger: VAT output is the net credit on 2200, VAT input the net debit on
+  1310, WHT the net credit on 2210, and stamp duty the net credit on 2220. A return is a
+  draft with live figures, then filed (frozen, with a reference), then paid. A filed
+  return shows if the ledger has moved since. Marking a return paid doesn't post a
+  journal yet; tax payments arrive with banking (10d).
 
 ## Reports
 
@@ -53,4 +106,6 @@ general ledger download as CSV.
 
 ## Screens
 
-Finance → Journals (and each journal), Chart of accounts, Recurring, Periods, Reports.
+Finance → Customers (and each customer), Sales (and each document and receipt), Aging,
+Journals (and each journal), Chart of accounts, Recurring, Periods, Reports, Tax returns,
+Tax settings.

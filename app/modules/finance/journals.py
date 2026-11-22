@@ -41,7 +41,10 @@ SOURCE_LABELS = {
     "year_end": "Year end",
     "payroll": "Payroll",
     "expenses": "Expenses",
+    "receivable": "Receivables",
 }
+# Journals of finance's own documents, reversed from the document, not the Journals screen.
+DOCUMENT_SOURCES = frozenset({"receivable"})
 TABS = ("draft", "posted", "held")
 
 # (account code, cost centre, debit, credit) as other modules hand them over
@@ -113,7 +116,7 @@ def _can(db: Session, actor: Actor, permission: str) -> bool:
 # ------------------------------------------------------------------ drafts
 
 
-def _amount(value: str, key: str, errors: dict[str, str]) -> Decimal:
+def parse_amount(value: str, key: str, errors: dict[str, str]) -> Decimal:
     text = value.strip().replace(",", "").replace("₦", "")
     if not text:
         return ZERO
@@ -148,8 +151,8 @@ def parse_lines(
         if not (line.account_id or line.debit.strip() or line.credit.strip()):
             continue
         key = f"line_{i}"
-        debit = _amount(line.debit, key, errors)
-        credit = _amount(line.credit, key, errors)
+        debit = parse_amount(line.debit, key, errors)
+        credit = parse_amount(line.credit, key, errors)
         account = known.get(_uuid(line.account_id))  # type: ignore[arg-type]
         centre = _uuid(line.cost_centre_id)
         if key in errors:
@@ -371,8 +374,23 @@ def reverse(db: Session, actor: Actor, journal_id: uuid.UUID, *, on: date | None
         raise Conflict("This journal has already been reversed.")
     if original.source == "year_end":
         raise Conflict("The year-end closing journal can't be reversed.")
+    if original.source in DOCUMENT_SOURCES:
+        raise Conflict("Reverse this from its receipt, or raise a credit note for the invoice.")
     if on is None:
         raise ValidationFailed(field_errors={"reverse_on": "Choose the reversal date."})
+    reversal = _reverse_now(db, original, on, actor.user_id)
+    record_by(
+        db,
+        actor,
+        "finance.journal.reverse",
+        entity_type="journal",
+        entity_id=str(original.id),
+        changes={"reversed_by": {"from": None, "to": reversal.number}},
+    )
+    return reversal.id
+
+
+def _reverse_now(db: Session, original: Journal, on: date, actor_id: uuid.UUID | None) -> Journal:
     _, reason = periods.period_for(db, on)
     if reason:
         raise ValidationFailed(field_errors={"reverse_on": reason})
@@ -381,7 +399,7 @@ def reverse(db: Session, actor: Actor, journal_id: uuid.UUID, *, on: date | None
         memo=f"Reversal of {original.number}: {original.memo}"[:200],
         source="reversal",
         status="draft",
-        created_by=actor.user_id,
+        created_by=actor_id,
         reverses_id=original.id,
     )
     db.add(reversal)
@@ -400,21 +418,13 @@ def reverse(db: Session, actor: Actor, journal_id: uuid.UUID, *, on: date | None
             )
         )
     db.flush()
-    _post_now(db, reversal, actor.user_id)
+    _post_now(db, reversal, actor_id)
     original.reversed_by_id = reversal.id
     db.flush()
-    record_by(
-        db,
-        actor,
-        "finance.journal.reverse",
-        entity_type="journal",
-        entity_id=str(original.id),
-        changes={"reversed_by": {"from": None, "to": reversal.number}},
-    )
-    return reversal.id
+    return reversal
 
 
-def post_system_journal(
+def _build(
     db: Session,
     *,
     source: str,
@@ -422,20 +432,16 @@ def post_system_journal(
     journal_date: date,
     memo: str,
     lines: list[SystemLine],
-) -> tuple[uuid.UUID, bool]:
-    """Take a balanced journal from another module, in its transaction. It posts at once,
-    or is held with the reason. Returns (journal id, posted)."""
-    existing = db.scalars(
-        select(Journal).where(Journal.source == source, Journal.source_id == source_id)
-    ).first()
-    if existing is not None:
-        return existing.id, existing.status == "posted"
+    created_by: uuid.UUID | None = None,
+) -> Journal:
+    """A held journal with the lines merged by account and cost centre."""
     journal = Journal(
         journal_date=journal_date,
         memo=memo[:200],
         source=source,
         source_id=source_id,
         status="held",
+        created_by=created_by,
     )
     db.add(journal)
     db.flush()
@@ -457,6 +463,65 @@ def post_system_journal(
                 )
             )
     db.flush()
+    return journal
+
+
+def post_document_journal(
+    db: Session,
+    *,
+    source_id: uuid.UUID,
+    journal_date: date,
+    memo: str,
+    lines: list[SystemLine],
+    poster: uuid.UUID | None,
+) -> Journal:
+    """Post the journal of a finance document (an invoice, credit note or receipt) in the
+    caller's transaction, or refuse with the reason: nothing is held (ADR 0024)."""
+    journal = _build(
+        db,
+        source="receivable",
+        source_id=source_id,
+        journal_date=journal_date,
+        memo=memo,
+        lines=lines,
+        created_by=poster,
+    )
+    problem = _problem(db, journal, _lines(db, journal.id))
+    if problem:
+        raise Conflict(problem)
+    _post_now(db, journal, poster)
+    return journal
+
+
+def reverse_document_journal(
+    db: Session, journal_id: uuid.UUID, *, on: date, actor_id: uuid.UUID | None
+) -> Journal:
+    """Reverse a finance document's journal on a date in an open month."""
+    original = _locked(db, journal_id)
+    if original.status != "posted" or original.reversed_by_id:
+        raise Conflict("This journal can't be reversed.")
+    return _reverse_now(db, original, on, actor_id)
+
+
+def post_system_journal(
+    db: Session,
+    *,
+    source: str,
+    source_id: uuid.UUID,
+    journal_date: date,
+    memo: str,
+    lines: list[SystemLine],
+) -> tuple[uuid.UUID, bool]:
+    """Take a balanced journal from another module, in its transaction. It posts at once,
+    or is held with the reason. Returns (journal id, posted)."""
+    existing = db.scalars(
+        select(Journal).where(Journal.source == source, Journal.source_id == source_id)
+    ).first()
+    if existing is not None:
+        return existing.id, existing.status == "posted"
+    journal = _build(
+        db, source=source, source_id=source_id, journal_date=journal_date, memo=memo, lines=lines
+    )
     problem = _problem(db, journal, _lines(db, journal.id))
     if problem:
         journal.hold_reason = problem
@@ -582,7 +647,7 @@ def counts(db: Session) -> dict[str, int]:
     return dict(db.execute(select(Journal.status, func.count()).group_by(Journal.status)).all())
 
 
-def _names(db: Session, ids: set[uuid.UUID | None]) -> dict[uuid.UUID, str]:
+def user_names(db: Session, ids: set[uuid.UUID | None]) -> dict[uuid.UUID, str]:
     wanted = {i for i in ids if i}
     if not wanted:
         return {}
@@ -624,7 +689,7 @@ def list_journals(
         if rows
         else {}
     )
-    who = _names(db, {u for r in rows for u in (r.created_by, r.posted_by)})
+    who = user_names(db, {u for r in rows for u in (r.created_by, r.posted_by)})
     return [
         JournalView(
             id=r.id,
@@ -655,7 +720,7 @@ def get_journal(db: Session, actor: Actor, journal_id: uuid.UUID) -> JournalView
     lines = _lines(db, r.id)
     found = accounts.by_codes(db, {line.account_code for line in lines})
     centres = dict(org.cost_centre_choices(db))
-    who = _names(db, {r.created_by, r.posted_by})
+    who = user_names(db, {r.created_by, r.posted_by})
     numbers = (
         dict(
             db.execute(

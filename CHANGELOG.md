@@ -5,6 +5,28 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 10b: Receivables and tax
+- Customers with payment terms (30 days by default, to confirm), TIN and reminders on or
+  off (ADR 0024).
+- Quotes, sales orders, invoices and credit notes, every step optional; converting copies
+  the lines into a new draft. Gap-free numbers `QT-`, `SO-`, `INV-`, `CN-`.
+- VAT per line, standard (7.5% from 1 February 2020, to confirm), zero-rated or exempt,
+  with prices excluding VAT; optional stamp duty types. Issuing an invoice or credit note
+  posts its journal in the same transaction; credit notes are issued by someone other
+  than their drafter.
+- Receipts (`RCT-`) with cash and WHT deducted, allocated to invoices, credit left on
+  account to allocate later, WHT credit notes recorded, and reversal with a reason.
+- Aging (current to 90+ days) with CSV, customer statements with PDF, PDFs of each
+  document, emailing a document to the customer, and payment reminders emailed before,
+  on and after the due date (once a day at most).
+- Tax settings: effective-dated VAT rates, withholding-tax types (seeded without rates),
+  stamp duty types, and the receivables accounts, terms and reminder days.
+- Monthly VAT, WHT and stamp duty returns read from the ledger, due the 21st (to
+  confirm), filed and paid with references, flagged if the ledger moves after filing.
+- Permissions `finance.customer.*`, `finance.sales.*`, `finance.credit_note.issue`,
+  `finance.receipt.*` and `finance.tax.*`; grants for the Finance Officer, Finance Manager
+  and Auditor.
+
 ### Added — Phase 10a: General ledger
 - Chart of accounts: hierarchical, typed asset, liability, equity, income or expense, with
   header accounts and a cash-flow class on balance-sheet accounts. A Nigerian SME chart is

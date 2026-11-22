@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"error":"#ba1a1a","inverse-surface":"#2e3034","surface-container-lowest":"#ffffff","surface-sunken":"#EFEFF6","surface-bright":"#f9f9fd","secondary-fixed-dim":"#acd530","on-tertiary-fixed":"#321300","on-error":"#ffffff","success-text":"#0F6B3E","surface":"#FFFFFF","on-iris":"#FFFFFF","on-primary":"#ffffff","lime":"#C5F04A","on-secondary-fixed-variant":"#3b4d00","ink-2":"#4B4B66","primary-fixed":"#e4dfff","tertiary":"#7a3700","on-primary-container":"#e0dbff","primary-fixed-dim":"#c5c0ff","surface-variant":"#e2e2e6","on-secondary-fixed":"#161f00","iris":"#5A4BDB","on-tertiary":"#ffffff","inverse-primary":"#c5c0ff","on-error-container":"#93000a","secondary-fixed":"#c7f24c","surface-tint":"#5646d7","tertiary-fixed":"#ffdbc8","danger-text":"#B4232F","on-primary-fixed-variant":"#3d28be","info-text":"#1D55B8","secondary":"#4f6600","iris-tint":"#EEECFD","inverse-on-surface":"#f0f0f4","on-surface":"#1a1c1f","on-secondary":"#ffffff","warning-text":"#8A4B00","lime-ink":"#4D7A0A","on-tertiary-fixed-variant":"#743400","primary":"#412ec2","on-surface-variant":"#474554","outline-variant":"#c8c4d7","line":"#E4E4EE","surface-raised":"#FFFFFF","surface-container":"#ededf1","info-bg":"#DFEBFF","canvas":"#F6F6FA","ink-3":"#626280","surface-container-low":"#f3f3f7","surface-dim":"#d9dade","line-strong":"#8B8BA6","on-primary-fixed":"#140067","warning-bg":"#FFF1D6","ink":"#16162A","on-background":"#1a1c1f","danger-bg":"#FFE4E6","success-bg":"#DDF7E8","error-container":"#ffdad6","background":"#f9f9fd","on-tertiary-container":"#ffd7c1","on-secondary-container":"#536b00","outline":"#787586","surface-container-high":"#e8e8ec","primary-container":"#5a4bdb","destructive":"#C42836","secondary-container":"#c4ef49","tertiary-fixed-dim":"#ffb68b","iris-hover":"#4A3CC4","surface-container-highest":"#e2e2e6","tertiary-container":"#9f4a00"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"1rem","margin":"2rem","space-3xl":"4rem","space-xs":"0.25rem","gutter":"1.5rem","space-lg":"1.5rem","space-2xl":"3rem","space-sm":"0.5rem","space-xl":"2rem"},"fontFamily":{"overline":["Inter"],"h3":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"],"body":["Inter"],"display":["Plus Jakarta Sans"],"label":["Inter"],"body-sm":["Inter"]},"fontSize":{"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}};</script></head><body class="bg-canvas font-body text-body text-ink antialiased selection:bg-iris-tint selection:text-iris"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-raised shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between bg-surface-raised"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-iris flex items-center justify-center shadow-[0_2px_8px_rgba(90,75,219,0.24)]"><span class="material-symbols-outlined text-on-iris text-[22px]">token</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink tracking-tight leading-tight">Kxmeleon</span><span class="font-overline text-[10px] uppercase tracking-wider text-ink-3">Adeyemi Holdings Ltd</span></div></div><div class="w-2 h-2 rounded-full bg-lime-ink" title="System Active"></div></div><div class="px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="dashboard-home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label text-label">Dashboard / Home</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="hr-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label text-label">HR &amp; People</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-label text-label">Attendance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payroll</span></a><div class="flex flex-col rounded-xl bg-info-bg/40 p-1.5"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-info-bg text-info-text font-semibold transition-colors" data-path="finance" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-info-text">account_balance</span><span class="font-label text-label">Finance</span></div><span class="material-symbols-outlined text-[18px] text-info-text">expand_more</span></a><div class="flex flex-col pl-7 pr-1 pt-1.5 pb-1 gap-1"><a class="px-space-sm py-1.5 rounded text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="general-ledger" href="#">General ledger</a><a class="px-space-sm py-1.5 rounded text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="journals" href="#">Journals</a><a class="px-space-sm py-1.5 rounded text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="accounts-payable" href="#">Accounts payable</a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="receivables" href="#"><span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>Receivables</span><span class="font-overline text-[10px] px-1.5 py-0.5 rounded bg-info-bg text-info-text">ACTIVE</span></a><a class="px-space-sm py-1.5 rounded text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="fixed-assets" href="#">Fixed assets</a><a class="px-space-sm py-1.5 rounded text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="finance-reports" href="#">Reports</a><a class="px-space-sm py-1.5 rounded text-ink-2 hover:text-ink hover:bg-surface-sunken font-label text-body-sm transition-colors" data-path="finance-settings" href="#">Settings</a></div></div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label text-label">Inventory</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder_shared</span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">shield_person</span><span class="font-label text-label">Administration</span></a></nav></div></div><div class="p-space-md flex flex-col gap-space-xs bg-surface-raised"><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span class="font-label text-label">Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label text-label">Settings</span></a><div class="mt-space-xs pt-space-xs flex items-center justify-between p-space-sm rounded-xl bg-surface-sunken/80"><div class="flex items-center gap-space-sm min-w-0"><div class="w-10 h-10 rounded-full bg-iris flex items-center justify-center text-on-iris font-h3 text-h3 flex-shrink-0">FB</div><div class="flex flex-col min-w-0"><span class="font-label text-label text-ink font-semibold truncate leading-tight">Fatima Bello</span><span class="font-body-sm text-[12px] text-ink-3 truncate leading-snug">Finance Manager</span></div></div><button aria-label="User menu" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-raised transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">unfold_more</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-raised/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-md"><nav class="flex items-center gap-2 font-label text-label"><a class="text-ink-3 hover:text-ink transition-colors" data-path="finance" href="#">Finance</a><span class="material-symbols-outlined text-ink-3 text-[16px]">chevron_right</span><span class="text-ink font-semibold">Receivables</span></nav></div><div class="flex items-center gap-space-md"><div class="relative flex items-center w-72"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 rounded-lg bg-surface-sunken text-ink placeholder:text-ink-3 font-body text-body-sm outline-none ring-1 ring-transparent focus:bg-surface-raised focus:ring-iris transition-all" placeholder="Search transactions, invoices..." type="text"/><kbd class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-raised shadow-[0_1px_2px_rgba(22,22,42,0.08)] font-overline text-[10px] text-ink-2">Ctrl K</kbd></div><a class="flex items-center gap-2 h-10 px-3 rounded-lg bg-surface-sunken hover:bg-surface-variant text-ink font-label text-body-sm transition-colors" data-path="approvals" href="#"><span class="material-symbols-outlined text-[18px] text-warning-text">fact_check</span><span class="font-label text-body-sm">Approvals</span><span class="px-1.5 py-0.2 rounded-full bg-warning-bg text-warning-text font-overline text-[11px]">4</span></a><button aria-label="Notifications" class="relative w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-destructive ring-2 ring-surface-raised"></span></button><button aria-label="Toggle theme" class="w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="h-6 w-px bg-surface-sunken mx-1"></div><div class="flex items-center gap-space-sm pl-1"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full">
+<!-- Content Canvas Area -->
+<div class="p-gutter flex flex-col gap-space-lg max-w-[1440px] mx-auto w-full">
+<!-- Screen Title Bar & Action Center -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Tax returns</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text animate-pulse"></span>
+            FIRS LIVE SYNC ACTIVE
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">Figures come directly from the general ledger and are frozen when a return is filed</p>
+</div>
+<!-- Action Controls -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="h-11 px-4 rounded-xl bg-surface hover:bg-surface-sunken text-ink font-label text-label transition-all shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px] text-ink-2">download</span>
+<span>Export schedule (CSV)</span>
+</button>
+<button class="h-11 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-all shadow-md hover:shadow-lg flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Prepare return</span>
+</button>
+</div>
+</div>
+<!-- Segmented Module Tab Bar -->
+<div class="flex items-center justify-between bg-surface p-1.5 rounded-xl shadow-sm">
+<div class="flex items-center gap-1">
+<button class="px-5 py-2.5 rounded-lg bg-iris-tint text-iris font-label text-label flex items-center gap-2 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+<span>VAT (Value Added Tax)</span>
+<span class="px-1.5 py-0.5 rounded-full bg-iris text-on-iris font-overline text-[10px]">11</span>
+</button>
+<button class="px-5 py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink font-label text-label flex items-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+<span>Withholding tax (WHT)</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-sunken text-ink-3 font-overline text-[10px]">3 Awaiting</span>
+</button>
+<button class="px-5 py-2.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink font-label text-label flex items-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">approval</span>
+<span>Stamp duty</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pr-2">
+<span class="font-overline text-overline text-ink-3 uppercase">Statutory Basis:</span>
+<span class="font-label text-body-sm text-ink font-semibold">Nigeria VAT Act (7.5%)</span>
+</div>
+</div>
+<!-- Top KPI Executive Barometer Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Card 1: YTD Net VAT -->
+<div class="p-space-lg rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Net VAT Payable (YTD)</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-stat text-stat text-ink tabular-nums">₦8,420,500.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-info-bg text-info-text flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm">
+<span class="text-ink-3 font-label text-[13px]">FY 2026 Cumulative</span>
+<span class="text-success-text font-semibold flex items-center gap-0.5 text-[12px]">
+<span class="material-symbols-outlined text-[16px]">trending_up</span> +12.4% vs LY
+          </span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-info-text via-iris to-info-bg"></div>
+</div>
+<!-- Card 2: Current Active Period -->
+<div class="p-space-lg rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">October 2026 Return</span>
+<span class="w-2 h-2 rounded-full bg-warning-text animate-ping"></span>
+</div>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-stat text-stat text-ink tabular-nums">₦930,500.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-warning-bg text-warning-text flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">pending_actions</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm">
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-[11px] font-semibold">
+            Filed · Attention needed
+          </span>
+<span class="text-ink-2 font-label text-[12px]">Due in 4 days</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-warning-text"></div>
+</div>
+<!-- Card 3: Output VAT (Oct 2026) -->
+<div class="p-space-lg rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Total Output VAT (Oct)</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-stat text-stat text-ink tabular-nums">₦1,240,500.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-iris-tint text-iris flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">arrow_outward</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm">
+<span class="text-ink-3 font-label text-[13px]">Sales Acct 2200</span>
+<span class="text-ink-2 font-label text-[12px]">4 posted batches</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-iris"></div>
+</div>
+<!-- Card 4: Input VAT (Oct 2026) -->
+<div class="p-space-lg rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col gap-1">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Total Input VAT (Oct)</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-stat text-stat text-ink tabular-nums">₦310,000.00</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-xl bg-success-bg text-success-text flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">arrow_downward</span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between text-body-sm">
+<span class="text-ink-3 font-label text-[13px]">Reclaimable Asset 1310</span>
+<span class="text-success-text font-label text-[12px] font-semibold">100% compliant</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-success-text"></div>
+</div>
+</div>
+<!-- Main Asymmetric 2-Column Split Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT SIDE: Returns Table Panel (~60% = 7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="bg-surface rounded-xl shadow-sm p-space-md flex flex-col">
+<!-- Table Controls Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-md">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-h2 text-h2 text-ink">Monthly statutory returns</h2>
+<!-- Tax Year Select Pill -->
+<div class="flex items-center bg-surface-sunken rounded-lg px-2.5 py-1 text-ink font-label text-body-sm gap-1">
+<span>FY 2026</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span>
+</div>
+</div>
+<!-- Filter Status Chips -->
+<div class="flex items-center gap-1 overflow-x-auto py-1">
+<button class="px-2.5 py-1 rounded-lg bg-ink text-surface font-label text-[12px] font-semibold" type="button">All (11)</button>
+<button class="px-2.5 py-1 rounded-lg bg-surface-sunken hover:bg-surface-variant text-ink-2 font-label text-[12px]" type="button">Draft (1)</button>
+<button class="px-2.5 py-1 rounded-lg bg-surface-sunken hover:bg-surface-variant text-ink-2 font-label text-[12px]" type="button">Filed (8)</button>
+<button class="px-2.5 py-1 rounded-lg bg-surface-sunken hover:bg-surface-variant text-ink-2 font-label text-[12px]" type="button">Overdue (1)</button>
+<button class="px-2.5 py-1 rounded-lg bg-surface-sunken hover:bg-surface-variant text-ink-2 font-label text-[12px]" type="button">Paid (1)</button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto rounded-lg">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-4">Period &amp; Ref</th>
+<th class="py-3 px-3">Statutory Due</th>
+<th class="py-3 px-3 text-right">Output VAT</th>
+<th class="py-3 px-3 text-right">Input VAT</th>
+<th class="py-3 px-3 text-right">Net Payable</th>
+<th class="py-3 px-4 text-center">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-body-sm">
+<!-- October 2026 (Selected / Alert Row) -->
+<tr class="bg-iris-tint/40 hover:bg-iris-tint/60 transition-colors cursor-pointer group shadow-[inset_3px_0_0_0_#5A4BDB]">
+<td class="py-3.5 px-4 font-label">
+<div class="flex flex-col">
+<span class="font-semibold text-ink flex items-center gap-1.5">
+                        October 2026
+                        <span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+</span>
+<span class="font-overline text-[11px] text-ink-3 tracking-normal">FIRS-VAT-2026-10-9142</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="text-ink font-medium">21 Nov 2026</span>
+<span class="text-warning-text font-semibold text-[11px]">4 days left</span>
+</div>
+</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2 font-medium">₦1,240,500.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2 font-medium">₦310,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums font-semibold text-ink">₦930,500.00</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center justify-center gap-1">
+<span class="px-2 py-0.5 rounded-md bg-info-bg text-info-text font-overline text-[11px] font-semibold">
+                        Filed
+                      </span>
+<span class="px-2 py-0.5 rounded-md bg-warning-bg text-warning-text font-overline text-[11px] font-semibold flex items-center gap-1" title="Ledger moved after return was marked as filed">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text animate-pulse"></span>
+                        Changed
+                      </span>
+</div>
+</td>
+</tr>
+<!-- November 2026 (Draft Row) -->
+<tr class="bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label">
+<div class="flex flex-col">
+<span class="font-semibold text-ink">November 2026</span>
+<span class="font-overline text-[11px] text-ink-3 tracking-normal">Period in progress</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="text-ink font-medium">21 Dec 2026</span>
+<span class="text-ink-3 text-[11px]">34 days left</span>
+</div>
+</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦420,100.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦115,200.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums font-semibold text-ink">₦304,900.00</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-md bg-surface-sunken text-ink-2 font-overline text-[11px] font-semibold">
+                      Draft
+                    </span>
+</td>
+</tr>
+<!-- September 2026 -->
+<tr class="bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label">
+<div class="flex flex-col">
+<span class="font-semibold text-ink">September 2026</span>
+<span class="font-overline text-[11px] text-ink-3 tracking-normal">FIRS-VAT-2026-09-8804</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="text-ink-2">21 Oct 2026</span>
+<span class="text-ink-3 text-[11px]">Remitted 19 Oct</span>
+</div>
+</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦1,180,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦295,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums font-semibold text-ink">₦885,000.00</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-md bg-success-bg text-success-text font-overline text-[11px] font-semibold">
+                      Paid
+                    </span>
+</td>
+</tr>
+<!-- August 2026 -->
+<tr class="bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label">
+<div class="flex flex-col">
+<span class="font-semibold text-ink">August 2026</span>
+<span class="font-overline text-[11px] text-ink-3 tracking-normal">FIRS-VAT-2026-08-8120</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="text-ink-2">21 Sep 2026</span>
+<span class="text-ink-3 text-[11px]">Remitted 18 Sep</span>
+</div>
+</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦990,400.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦210,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums font-semibold text-ink">₦780,400.00</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-md bg-success-bg text-success-text font-overline text-[11px] font-semibold">
+                      Paid
+                    </span>
+</td>
+</tr>
+<!-- July 2026 -->
+<tr class="bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label">
+<div class="flex flex-col">
+<span class="font-semibold text-ink">July 2026</span>
+<span class="font-overline text-[11px] text-ink-3 tracking-normal">FIRS-VAT-2026-07-7431</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="text-ink-2">21 Aug 2026</span>
+<span class="text-ink-3 text-[11px]">Remitted 20 Aug</span>
+</div>
+</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦1,340,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦410,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums font-semibold text-ink">₦930,000.00</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-md bg-success-bg text-success-text font-overline text-[11px] font-semibold">
+                      Paid
+                    </span>
+</td>
+</tr>
+<!-- June 2026 -->
+<tr class="bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label">
+<div class="flex flex-col">
+<span class="font-semibold text-ink">June 2026</span>
+<span class="font-overline text-[11px] text-ink-3 tracking-normal">FIRS-VAT-2026-06-6902</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="flex flex-col">
+<span class="text-ink-2">21 Jul 2026</span>
+<span class="text-ink-3 text-[11px]">Remitted 16 Jul</span>
+</div>
+</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦1,050,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums text-ink-2">₦260,000.00</td>
+<td class="py-3.5 px-3 text-right tabular-nums font-semibold text-ink">₦790,000.00</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-md bg-success-bg text-success-text font-overline text-[11px] font-semibold">
+                      Paid
+                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Bottom Micro Status Bar -->
+<div class="mt-4 pt-3 flex items-center justify-between text-ink-3 font-overline text-[11px] bg-surface-sunken/60 px-3 py-2 rounded-lg">
+<span>SHOWING 6 OF 11 STATUTORY MONTHS</span>
+<span class="text-ink font-semibold">ALL LEDGERS RECONCILED AGAINST CBN E-CLEARING</span>
+</div>
+</div>
+<!-- Integrated Customer WHT Credits Notice Section -->
+<div class="bg-surface rounded-xl shadow-sm p-space-md flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-warning-text text-[20px]">assignment_late</span>
+<h3 class="font-h3 text-h3 text-ink">WHT credit notes awaited from customers</h3>
+</div>
+<span class="font-overline text-[11px] px-2 py-0.5 rounded bg-warning-bg text-warning-text font-semibold">
+              3 Pending Credit Certificates
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 leading-relaxed">
+            Withholding tax deducted at source by corporate clients awaiting statutory FIRS/State credit note certificates before allowable tax offset against monthly liability.
+          </p>
+<div class="overflow-x-auto mt-1">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-[10px] uppercase tracking-wider">
+<th class="py-2.5 px-3">Receipt / Client</th>
+<th class="py-2.5 px-3">Invoice &amp; Rate</th>
+<th class="py-2.5 px-3 text-right">Deducted WHT</th>
+<th class="py-2.5 px-3 text-center">Certificate Status</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 font-body-sm text-[13px]">
+<tr class="hover:bg-surface-sunken/40">
+<td class="py-2.5 px-3">
+<span class="font-semibold text-ink">RCT-00017</span>
+<span class="text-ink-3 block text-[12px]">Adebayo Foods Ltd</span>
+</td>
+<td class="py-2.5 px-3 text-ink-2">
+<span>INV-2026-00042</span>
+<span class="text-ink-3 block text-[11px]">Supply of goods (5%)</span>
+</td>
+<td class="py-2.5 px-3 text-right tabular-nums font-semibold text-ink">₦25,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-overline text-[10px]">Awaiting credit note</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-sunken/40">
+<td class="py-2.5 px-3">
+<span class="font-semibold text-ink">RCT-00015</span>
+<span class="text-ink-3 block text-[12px]">Flutterwave Tech Solutions</span>
+</td>
+<td class="py-2.5 px-3 text-ink-2">
+<span>INV-2026-00039</span>
+<span class="text-ink-3 block text-[11px]">Tech services (10%)</span>
+</td>
+<td class="py-2.5 px-3 text-right tabular-nums font-semibold text-ink">₦45,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<span class="px-2 py-0.5 rounded bg-info-bg text-info-text font-overline text-[10px]">Cert uploaded · Verifying</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-sunken/40">
+<td class="py-2.5 px-3">
+<span class="font-semibold text-ink">RCT-00012</span>
+<span class="text-ink-3 block text-[12px]">Dangote Sugar Refinery Plc</span>
+</td>
+<td class="py-2.5 px-3 text-ink-2">
+<span>INV-2026-00035</span>
+<span class="text-ink-3 block text-[11px]">Logistics haulage (5%)</span>
+</td>
+<td class="py-2.5 px-3 text-right tabular-nums font-semibold text-ink">₦80,000.00</td>
+<td class="py-2.5 px-3 text-center">
+<span class="px-2 py-0.5 rounded bg-success-bg text-success-text font-overline text-[10px]">Remittance confirmed</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- RIGHT SIDE: Detailed Inspection & Filing Panel (~40% = 5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<div class="bg-surface rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md relative overflow-hidden">
+<!-- Inspection Panel Header -->
+<div class="flex items-start justify-between pb-space-sm border-b border-surface-sunken">
+<div class="flex flex-col gap-1">
+<span class="font-overline text-overline text-iris uppercase tracking-wider font-semibold">Active Period Inspector</span>
+<h2 class="font-h2 text-h2 text-ink">VAT return · October 2026</h2>
+<span class="font-body-sm text-body-sm text-ink-3">Due: 21 Nov 2026 (4 days left)</span>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2.5 py-1 rounded-full bg-info-bg text-info-text font-overline text-[11px] font-semibold">Filed</span>
+<span class="px-2.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-[10px] font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text animate-pulse"></span>
+                Variance Detected
+              </span>
+</div>
+</div>
+<!-- High-Priority Post-Filing Variance Callout -->
+<div class="rounded-xl bg-warning-bg/60 p-space-md flex flex-col gap-2.5 relative">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-warning-text text-[22px] flex-shrink-0 mt-0.5">warning</span>
+<div class="flex flex-col gap-1">
+<span class="font-label text-label text-ink font-semibold">The ledger has moved by ₦75,000.00 since this return was filed</span>
+<p class="font-body-sm text-[13px] text-ink-2 leading-snug">
+                  A backdated sales invoice (<strong class="text-ink">INV-2026-00049</strong> for ₦75,000.00 VAT) was posted to period 10 after initial filing submission on 17 Nov 2026. Review or file an amendment.
+                </p>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 pt-1">
+<button class="h-9 px-3.5 rounded-lg bg-surface text-ink hover:bg-surface-sunken font-label text-[13px] font-medium shadow-sm transition-all flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px] text-ink-2">open_in_new</span>
+                Review modified transaction
+              </button>
+</div>
+</div>
+<!-- VAT Calculation Breakdown Accordions -->
+<div class="flex flex-col gap-3">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Statutory Breakdown</span>
+<!-- Output VAT Section -->
+<div class="rounded-xl bg-surface-sunken p-space-md flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-iris"></span>
+<span class="font-label text-label text-ink font-semibold">1. Total Output VAT</span>
+<span class="font-overline text-[11px] text-ink-3">(Acct 2200 · Sales)</span>
+</div>
+<span class="font-label text-body-sm tabular-nums font-bold text-ink">₦1,240,500.00</span>
+</div>
+<!-- Collapsible Journal Items -->
+<div class="flex flex-col gap-2 pt-1 font-body-sm text-[13px]">
+<div class="flex items-center justify-between text-ink-2 bg-surface p-2 rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-medium text-ink truncate">Adebayo Foods Ltd</span>
+<span class="font-overline text-[10px] text-ink-3">JV-00133 · INV-2026-00042</span>
+</div>
+<span class="tabular-nums font-medium text-ink">₦75,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2 bg-surface p-2 rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-medium text-ink truncate">Dangote Cement Plc</span>
+<span class="font-overline text-[10px] text-ink-3">JV-00129 · INV-2026-00041</span>
+</div>
+<span class="tabular-nums font-medium text-ink">₦525,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2 bg-surface p-2 rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-medium text-ink truncate">MainOne Cable Ltd</span>
+<span class="font-overline text-[10px] text-ink-3">JV-00128 · INV-2026-00040</span>
+</div>
+<span class="tabular-nums font-medium text-ink">₦385,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2 bg-surface p-2 rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-medium text-ink truncate">Zenith Bank PLC</span>
+<span class="font-overline text-[10px] text-ink-3">JV-00124 · INV-2026-00037</span>
+</div>
+<span class="tabular-nums font-medium text-ink">₦255,500.00</span>
+</div>
+</div>
+</div>
+<!-- Input VAT Section -->
+<div class="rounded-xl bg-surface-sunken p-space-md flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-success-text"></span>
+<span class="font-label text-label text-ink font-semibold">2. Total Input VAT</span>
+<span class="font-overline text-[11px] text-ink-3">(Acct 1310 · Reclaimable)</span>
+</div>
+<span class="font-label text-body-sm tabular-nums font-bold text-ink">₦310,000.00</span>
+</div>
+<!-- Input Journals List -->
+<div class="flex flex-col gap-2 pt-1 font-body-sm text-[13px]">
+<div class="flex items-center justify-between text-ink-2 bg-surface p-2 rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-medium text-ink truncate">AWS / Cloud Services</span>
+<span class="font-overline text-[10px] text-ink-3">EXP-2026-00038</span>
+</div>
+<span class="tabular-nums font-medium text-ink">₦145,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2 bg-surface p-2 rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-medium text-ink truncate">Logistics &amp; Transport</span>
+<span class="font-overline text-[10px] text-ink-3">EXP-2026-00042</span>
+</div>
+<span class="tabular-nums font-medium text-ink">₦95,000.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2 bg-surface p-2 rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-medium text-ink truncate">Office Equipment Supplies</span>
+<span class="font-overline text-[10px] text-ink-3">INV-PUR-0089</span>
+</div>
+<span class="tabular-nums font-medium text-ink">₦70,000.00</span>
+</div>
+</div>
+</div>
+<!-- Net Payable Result Banner -->
+<div class="rounded-xl bg-iris-tint p-space-md flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-overline text-[11px] text-iris uppercase font-semibold">3. Net Statutory Payable</span>
+<span class="font-body-sm text-[12px] text-ink-2">Output ₦1,240,500.00 − Input ₦310,000.00</span>
+</div>
+<span class="font-stat text-[24px] text-iris tabular-nums font-bold">₦930,500.00</span>
+</div>
+</div>
+<!-- Mark As Filed / Remittance Data Form -->
+<div class="flex flex-col gap-3 pt-2">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Filing &amp; Remittance Meta</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label text-[12px] text-ink-2 font-medium">Filed Date</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3 bg-surface-sunken rounded-lg text-ink font-body-sm text-[13px] outline-none focus:bg-surface focus:ring-2 focus:ring-iris transition-all" type="text" value="17/11/2026"/>
+<span class="material-symbols-outlined absolute right-2.5 text-[18px] text-ink-3">calendar_today</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label text-[12px] text-ink-2 font-medium">FIRS Return Ref</label>
+<input class="w-full h-11 px-3 bg-surface-sunken rounded-lg text-ink font-body-sm text-[13px] outline-none focus:bg-surface focus:ring-2 focus:ring-iris transition-all" type="text" value="FIRS-VAT-2026-10-9142"/>
+</div>
+<div class="flex flex-col gap-1 sm:col-span-2">
+<label class="font-label text-[12px] text-ink-2 font-medium">Remittance Reference (RRR / e-Tranzact)</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3 pr-20 bg-surface-sunken rounded-lg text-ink font-body-sm text-[13px] font-mono outline-none focus:bg-surface focus:ring-2 focus:ring-iris transition-all" type="text" value="REMITA-RRR-2026-991203"/>
+<span class="absolute right-2 px-1.5 py-0.5 rounded bg-success-bg text-success-text font-overline text-[10px]">VERIFIED</span>
+</div>
+</div>
+</div>
+<!-- Panel Actions Footer -->
+<div class="flex flex-col gap-2 pt-2">
+<button class="w-full h-11 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-md flex items-center justify-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Mark as paid &amp; generate journal</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="h-10 px-3 rounded-xl bg-surface-sunken hover:bg-surface-variant text-ink font-label text-body-sm transition-all flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">sync</span>
+<span>Update filing record</span>
+</button>
+<button class="h-10 px-3 rounded-xl bg-surface-sunken hover:bg-surface-variant text-ink font-label text-body-sm transition-all flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">picture_as_pdf</span>
+<span>Download Form 002</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

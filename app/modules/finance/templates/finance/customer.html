@@ -1,0 +1,134 @@
+{# Finance → one customer (ADR 0024): what they owe and how old it is, open invoices,
+   credit to allocate, a statement and reminders.
+   Design: design/stitch/exports/finance.customer.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set c = customer %}
+{% call ui.page_header(c.name, c.code, "success" if c.is_active else "neutral", "Active" if c.is_active else "Inactive") %}
+  {% if can_manage %}<a href="/finance/customers?edit={{ c.id }}" class="kx-btn-ghost">{{ ui.icon("pencil", "sm") }} Edit</a>{% endif %}
+  {% if can_receive %}<a href="/finance/receipts/new?customer={{ c.id }}" class="kx-btn-secondary">{{ ui.icon("banknote", "sm") }} Record receipt</a>{% endif %}
+  {% if can_sell and c.is_active %}<a href="/finance/sales/new?kind=invoice&customer={{ c.id }}" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New invoice</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  {{ ui.kpi_tile("Balance", summary.balance | money) }}
+  {{ ui.kpi_tile("Overdue", summary.overdue | money) }}
+  {{ ui.kpi_tile("Unallocated credit", summary.unallocated | money) }}
+  {{ ui.kpi_tile("WHT awaiting credit notes", summary.wht_awaiting | money) }}
+</div>
+
+<section class="kx-card mt-6 grid grid-cols-2 divide-line p-0 sm:grid-cols-5 sm:divide-x" aria-label="Aging">
+  {% for label in buckets %}
+  <div class="p-4"><p class="text-xs text-ink-3">{{ label }}</p><p class="mt-1 font-semibold tnum {{ 'text-danger-text' if loop.index0 > 0 and summary.buckets[loop.index0] > 0 }}">{{ summary.buckets[loop.index0] | money }}</p></div>
+  {% endfor %}
+</section>
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+  <div class="space-y-6">
+    <section class="kx-card overflow-hidden" aria-labelledby="open-title">
+      <h2 id="open-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Open invoices</h2>
+      {% if open_invoices %}
+      <div class="kx-scroll-x">
+        <table class="w-full min-w-[680px] text-body-sm">
+          <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Invoice</th><th class="px-3 py-2.5 text-left font-semibold">Date</th><th class="px-3 py-2.5 text-left font-semibold">Due</th><th class="px-3 py-2.5 text-right font-semibold">Total</th><th class="px-3 py-2.5 text-right font-semibold">Paid</th><th class="px-3 py-2.5 text-right font-semibold">Balance</th><th class="px-5 py-2.5 text-left font-semibold">Status</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            {% for inv in open_invoices %}
+            <tr>
+              <td class="px-5 py-2.5"><a href="/finance/sales/{{ inv.id }}" class="font-mono text-xs font-semibold text-iris">{{ inv.number }}</a></td>
+              <td class="px-3 py-2.5">{{ inv.doc_date | date }}</td>
+              <td class="px-3 py-2.5">{{ inv.due_date | date }}</td>
+              <td class="px-3 py-2.5 text-right tnum">{{ inv.total | money }}</td>
+              <td class="px-3 py-2.5 text-right tnum">{{ inv.paid | money if inv.paid else "—" }}</td>
+              <td class="px-3 py-2.5 text-right font-semibold tnum">{{ inv.balance | money }}</td>
+              <td class="px-5 py-2.5">{% if inv.days_overdue > 0 %}{{ ui.badge("danger", "Overdue " ~ inv.days_overdue ~ (" day" if inv.days_overdue == 1 else " days")) }}{% elif inv.days_overdue == 0 %}{{ ui.badge("warning", "Due today") }}{% else %}{{ ui.badge("info", "Due in " ~ (-inv.days_overdue) ~ (" day" if inv.days_overdue == -1 else " days")) }}{% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="px-5 py-6 text-body-sm text-ink-3">Nothing is owed right now.</p>
+      {% endif %}
+    </section>
+
+    <section class="kx-card overflow-hidden" aria-labelledby="statement-title">
+      <div class="flex flex-wrap items-end justify-between gap-3 border-b border-line px-5 py-4">
+        <h2 id="statement-title" class="font-h3 text-h3">Statement</h2>
+        <form method="get" action="/finance/customers/{{ c.id }}" class="flex flex-wrap items-end gap-2">
+          <div><label for="s-start" class="kx-label">From</label><input id="s-start" name="start" type="date" value="{{ start.isoformat() }}" class="kx-input h-10"></div>
+          <div><label for="s-end" class="kx-label">To</label><input id="s-end" name="end" type="date" value="{{ end.isoformat() }}" class="kx-input h-10"></div>
+          <button type="submit" class="kx-btn-secondary h-10">View</button>
+          <a href="/finance/customers/{{ c.id }}/statement.pdf?start={{ start.isoformat() }}&end={{ end.isoformat() }}" class="kx-btn-ghost h-10">{{ ui.icon("download", "sm") }} PDF</a>
+        </form>
+      </div>
+      <div class="kx-scroll-x">
+        <table class="w-full min-w-[720px] text-body-sm">
+          <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Date</th><th class="px-3 py-2.5 text-left font-semibold">Number</th><th class="px-3 py-2.5 text-left font-semibold">Details</th><th class="px-3 py-2.5 text-right font-semibold">Debit</th><th class="px-3 py-2.5 text-right font-semibold">Credit</th><th class="px-5 py-2.5 text-right font-semibold">Balance</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            <tr class="bg-surface-sunken/40"><td class="px-5 py-2.5" colspan="5">Opening balance on {{ start | date }}</td><td class="px-5 py-2.5 text-right tnum">{{ statement.opening | money }}</td></tr>
+            {% for line in statement.lines %}
+            <tr>
+              <td class="whitespace-nowrap px-5 py-2.5">{{ line.day | date }}</td>
+              <td class="px-3 py-2.5"><a href="{{ '/finance/receipts/' if line.kind in ('receipt', 'reversal') else '/finance/sales/' }}{{ line.ref_id }}" class="font-mono text-xs font-semibold text-iris">{{ line.number }}</a></td>
+              <td class="px-3 py-2.5 text-ink-2">{{ line.description }}</td>
+              <td class="px-3 py-2.5 text-right tnum">{{ line.debit | money if line.debit else "" }}</td>
+              <td class="px-3 py-2.5 text-right tnum">{{ line.credit | money if line.credit else "" }}</td>
+              <td class="px-5 py-2.5 text-right tnum">{{ line.balance | money }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold"><tr><td class="px-5 py-3" colspan="5">Closing balance on {{ end | date }}</td><td class="px-5 py-3 text-right tnum">{{ statement.closing | money }}</td></tr></tfoot>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="space-y-6">
+    <section class="kx-card p-5" aria-labelledby="credit-title">
+      <h2 id="credit-title" class="font-h3 text-h3">Unallocated credit</h2>
+      {% if credits %}
+      <ul class="mt-3 divide-y divide-line text-body-sm">
+        {% for cr in credits %}
+        <li class="flex justify-between py-2"><a href="{{ '/finance/receipts/' if cr.kind == 'receipt' else '/finance/sales/' }}{{ cr.id }}" class="font-mono text-xs font-semibold text-iris">{{ cr.number }}</a><span class="tnum">{{ cr.remaining | money }}</span></li>
+        {% endfor %}
+      </ul>
+      {% if can_receive and open_invoices %}
+      <form method="post" action="/finance/customers/{{ c.id }}/allocate" class="mt-4 space-y-3 border-t border-line pt-4" novalidate>
+        {{ ui.csrf_field() }}
+        <div><label class="kx-label" for="credit">From</label><select id="credit" name="credit" class="kx-input">{% for cr in credits %}<option value="{{ cr.kind }}:{{ cr.id }}" {% if values.get("credit") == cr.kind ~ ":" ~ cr.id %}selected{% endif %}>{{ cr.number }} · {{ cr.remaining | money }}</option>{% endfor %}</select>{{ ui.field_error(errors, "credit") }}</div>
+        <div><label class="kx-label" for="invoice_id">To invoice</label><select id="invoice_id" name="invoice_id" class="kx-input">{% for inv in open_invoices %}<option value="{{ inv.id }}" {% if values.get("invoice_id") == inv.id|string %}selected{% endif %}>{{ inv.number }} · {{ inv.balance | money }} left</option>{% endfor %}</select>{{ ui.field_error(errors, "invoice_id") }}</div>
+        {{ ui.text_field("amount", "Amount", value=values.get("amount"), inputmode="decimal", errors=errors) }}
+        <button type="submit" class="kx-btn-secondary w-full">Allocate</button>
+      </form>
+      {% endif %}
+      {% else %}
+      <p class="mt-2 text-body-sm text-ink-3">No credit waiting to be allocated.</p>
+      {% endif %}
+    </section>
+
+    <section class="kx-card p-5" aria-labelledby="remind-title">
+      <h2 id="remind-title" class="font-h3 text-h3">Reminders</h2>
+      <p class="mt-2 text-body-sm text-ink-3">Automatic reminders are {{ "on" if c.reminders else "off" }}.{% if c.last_reminder_on %} The last one from this page went on {{ c.last_reminder_on | date }}.{% endif %}</p>
+      {% if can_manage %}
+      <form method="post" action="/finance/customers/{{ c.id }}/remind" class="mt-3">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-secondary w-full" {% if not c.email or not open_invoices or c.last_reminder_on == today %}disabled{% endif %}>{{ ui.icon("mail", "sm") }} Email a reminder now</button></form>
+      {% if not c.email %}<p class="mt-2 text-xs text-ink-3">Add an email address to send reminders.</p>{% endif %}
+      {% endif %}
+    </section>
+
+    <section class="kx-card p-5" aria-labelledby="details-title">
+      <h2 id="details-title" class="font-h3 text-h3">Details</h2>
+      <dl class="mt-3 space-y-2 text-body-sm">
+        <div><dt class="text-xs text-ink-3">Email</dt><dd>{{ c.email or "—" }}</dd></div>
+        <div><dt class="text-xs text-ink-3">Phone</dt><dd>{{ c.phone or "—" }}</dd></div>
+        <div><dt class="text-xs text-ink-3">Address</dt><dd class="whitespace-pre-line">{{ c.address or "—" }}</dd></div>
+        <div><dt class="text-xs text-ink-3">TIN</dt><dd class="font-mono text-xs">{{ c.tin or "—" }}</dd></div>
+        <div><dt class="text-xs text-ink-3">Payment terms</dt><dd>{{ c.payment_terms_days }} days</dd></div>
+      </dl>
+    </section>
+  </div>
+</div>
+{% endblock %}

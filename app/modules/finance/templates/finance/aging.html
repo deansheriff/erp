@@ -1,0 +1,53 @@
+{# Finance → Aging (ADR 0024): what customers owe by days past the due date.
+   Design: design/stitch/exports/finance.aging.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Aging", "Open invoices by days past their due date.") %}
+  <form method="get" action="/finance/aging" class="flex items-end gap-2">
+    <div><label for="as_at" class="kx-label">As at</label><input id="as_at" name="as_at" type="date" value="{{ as_at.isoformat() }}" class="kx-input h-10"></div>
+    <button type="submit" class="kx-btn-secondary h-10">Show</button>
+  </form>
+  <a href="/finance/aging.csv?as_at={{ as_at.isoformat() }}" class="kx-btn-ghost h-10">{{ ui.icon("download", "sm") }} CSV</a>
+{% endcall %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+  {% for label in buckets %}{{ ui.kpi_tile(label, report.totals[loop.index0] | money) }}{% endfor %}
+</div>
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Aging by customer">
+  {% if report.rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[980px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Customer</th>{% for label in buckets %}<th class="px-3 py-3 text-right font-semibold">{{ label }}</th>{% endfor %}<th class="px-3 py-3 text-right font-semibold">Unallocated credit</th><th class="px-3 py-3 text-right font-semibold">Total</th><th class="px-5 py-3 text-left font-semibold">Last reminder</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for row in report.rows %}
+        <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+          <td class="px-5 py-3">
+            <details>
+              <summary class="cursor-pointer"><a href="/finance/customers/{{ row.customer_id }}" class="font-semibold text-iris">{{ row.name }}</a> <span class="font-mono text-xs text-ink-3">{{ row.code }}</span></summary>
+              {% if row.invoices %}
+              <ul class="mt-2 space-y-1 text-xs text-ink-2">
+                {% for inv in row.invoices %}<li><a href="/finance/sales/{{ inv.id }}" class="font-mono font-semibold text-iris">{{ inv.number }}</a> · {{ inv.balance | money }} · {% if inv.days_overdue > 0 %}<span class="text-danger-text">{{ inv.days_overdue }} days overdue</span>{% else %}due {{ inv.due_date | date }}{% endif %}</li>{% endfor %}
+              </ul>
+              {% endif %}
+            </details>
+          </td>
+          {% for amount in row.buckets %}<td class="px-3 py-3 text-right tnum {{ 'text-danger-text' if loop.index0 > 2 and amount > 0 }}">{{ amount | money if amount else "—" }}</td>{% endfor %}
+          <td class="px-3 py-3 text-right tnum">{{ ("(" ~ (row.credit | money) ~ ")") if row.credit else "—" }}</td>
+          <td class="px-3 py-3 text-right font-semibold tnum">{{ row.total | money }}</td>
+          <td class="px-5 py-3 text-ink-2">{{ row.last_reminder | date if row.last_reminder else "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold"><tr><td class="px-5 py-3">Total</td>{% for amount in report.totals %}<td class="px-3 py-3 text-right tnum">{{ amount | money }}</td>{% endfor %}<td class="px-3 py-3 text-right tnum">{{ ("(" ~ (report.credit | money) ~ ")") if report.credit else "—" }}</td><td class="px-3 py-3 text-right tnum">{{ report.total | money }}</td><td></td></tr></tfoot>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("circle-check", "Nothing owed", "No customer had an open invoice on this date.") %}{% endcall %}
+  {% endif %}
+</section>
+
+<p class="mt-4 text-body-sm text-ink-3">Reminders go {% if settings.remind_before_days %}{{ settings.remind_before_days }} days before the due date, {% endif %}{% if settings.remind_on_due %}on the due date, {% endif %}then every {{ settings.remind_every_days }} days while overdue, to customers with reminders on.{% if can_settings %} <a href="/finance/tax#settings" class="font-semibold text-iris">Change in Tax settings</a>{% endif %}</p>
+{% endblock %}

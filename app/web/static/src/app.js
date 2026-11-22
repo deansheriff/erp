@@ -256,6 +256,42 @@
       };
     });
 
+    // Sales document lines (ADR 0024): net per row and VAT at the standard rate, rounded
+    // per line to the kobo as the server does. The server's figures are the ones that count.
+    Alpine.data("salesTotals", function () {
+      function num(el) {
+        var value = parseFloat(((el && el.value) || "").replace(/[,\s₦]/g, ""));
+        return isNaN(value) ? 0 : value;
+      }
+      function naira(k) {
+        return "₦" + (k / 100).toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+      return {
+        net: "₦0.00",
+        vat: "₦0.00",
+        total: "₦0.00",
+        init: function () { this.recalc(); },
+        recalc: function () {
+          var rate = parseFloat(this.$root.getAttribute("data-vat-rate") || "0") || 0;
+          var net = 0;
+          var vat = 0;
+          this.$root.querySelectorAll("[data-line]").forEach(function (row) {
+            var qtyEl = row.querySelector('input[name="quantity"]');
+            var qty = qtyEl && qtyEl.value.trim() === "" ? 1 : num(qtyEl);
+            var line = Math.round(qty * num(row.querySelector('input[name="unit_price"]')) * 100);
+            var code = row.querySelector('select[name="vat_code"]');
+            net += line;
+            if (code && code.value === "standard") vat += Math.round((line * rate) / 100);
+            var cell = row.querySelector("[data-line-net]");
+            if (cell) cell.textContent = line ? naira(line) : "";
+          });
+          this.net = naira(net);
+          this.vat = naira(vat);
+          this.total = naira(net + vat);
+        },
+      };
+    });
+
     Alpine.data("liveClock", function () {
       return {
         time: "",

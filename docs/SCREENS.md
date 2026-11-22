@@ -119,3 +119,11 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Recurring journals** (`finance.recurring`) | `GET /finance/recurring` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
 | **Financial years and periods** (`finance.periods`) | `GET /finance/periods` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
 | **Financial reports** (`finance.reports`) | `GET /finance/reports` | finance.report.read | — | Dean Sheriff (2026-11-22) |
+| **Customers** (`finance.customers`) | `GET /finance/customers` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
+| **One customer (balance, aging, statement, credit, reminders)** (`finance.customer`) | `GET /finance/customers/{customer_id}` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
+| **Sales (invoices, quotes, orders, credit notes, receipts)** (`finance.sales`) | `GET /finance/sales` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
+| **Quote, order, invoice or credit note** (`finance.sales_document`) | `GET /finance/sales/{document_id}` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
+| **Record or view a receipt** (`finance.receipt`) | `GET /finance/receipts/{receipt_id}` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
+| **Receivables aging** (`finance.aging`) | `GET /finance/aging` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
+| **Tax settings** (`finance.tax`) | `GET /finance/tax` | finance.tax.read | — | Dean Sheriff (2026-11-22) |
+| **Tax returns** (`finance.tax_returns`) | `GET /finance/tax/returns` | finance.tax.read | — | Dean Sheriff (2026-11-22) |

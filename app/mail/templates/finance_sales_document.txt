@@ -1,0 +1,14 @@
+Hello {{ customer }},
+
+{{ organisation }} has sent you {{ kind_article }} {{ kind }}: {{ number }}, dated {{ date }}.
+{% if due %}Due: {{ due }}
+{% endif %}
+{% for line in lines %}- {{ line.description }}: {{ line.amount }}
+{% endfor %}
+Net: {{ net }}
+VAT: {{ vat }}
+{% if stamp_duty %}Stamp duty: {{ stamp_duty }}
+{% endif %}Total: {{ total }}
+{% if reference %}
+Your reference: {{ reference }}
+{% endif %}

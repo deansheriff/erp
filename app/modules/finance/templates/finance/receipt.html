@@ -1,0 +1,130 @@
+{# Finance → record a customer receipt, or view one (ADR 0024): cash received plus any WHT
+   the customer deducted, allocated to their open invoices.
+   Design: design/stitch/exports/finance.receipt.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set r = receipt %}
+{% set v = values %}
+{% if r %}
+{% call ui.page_header(r.number, r.customer, "neutral" if r.status == "reversed" else "success", "Reversed" if r.status == "reversed" else "Posted") %}
+  <a href="/finance/customers/{{ r.customer_id }}" class="kx-btn-ghost">{{ ui.icon("user", "sm") }} Customer</a>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<dl class="kx-card mt-6 grid gap-4 p-5 text-body-sm sm:grid-cols-2 lg:grid-cols-4">
+  <div><dt class="text-xs text-ink-3">Received</dt><dd class="font-semibold">{{ r.receipt_date | date }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Paid into</dt><dd>{{ r.bank_account }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Reference</dt><dd>{{ r.reference or "—" }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Journal</dt><dd>{% if r.journal %}<a href="/finance/journals/{{ r.journal[0] }}" class="font-mono text-xs font-semibold text-iris">{{ r.journal[1] }}</a>{% else %}—{% endif %}</dd></div>
+  <div><dt class="text-xs text-ink-3">Cash received</dt><dd class="tnum">{{ r.cash | money }}</dd></div>
+  <div><dt class="text-xs text-ink-3">WHT deducted</dt><dd class="tnum">{{ r.wht | money }}{% if r.wht_type %} <span class="text-xs text-ink-3">({{ r.wht_type }})</span>{% endif %}</dd></div>
+  <div><dt class="text-xs text-ink-3">Total settled</dt><dd class="font-semibold tnum">{{ r.total | money }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Recorded by</dt><dd>{{ r.created_by or "—" }}, {{ r.created_at | datetime }}</dd></div>
+  {% if r.status == "reversed" %}
+  <div class="sm:col-span-2"><dt class="text-xs text-ink-3">Reversed on {{ r.reversed_on | date }}</dt><dd>{{ r.reversal_reason }}{% if r.reversal %} · <a href="/finance/journals/{{ r.reversal[0] }}" class="font-mono text-xs font-semibold text-iris">{{ r.reversal[1] }}</a>{% endif %}</dd></div>
+  {% endif %}
+</dl>
+
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+  <section class="kx-card overflow-hidden" aria-labelledby="alloc-title">
+    <h2 id="alloc-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Allocated to</h2>
+    {% if r.allocations %}
+    <ul class="divide-y divide-line text-body-sm">
+      {% for iid, number, amount in r.allocations %}
+      <li class="flex justify-between px-5 py-3"><a href="/finance/sales/{{ iid }}" class="font-mono text-xs font-semibold text-iris">{{ number }}</a><span class="tnum">{{ amount | money }}</span></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <p class="border-t border-line px-5 py-3 text-body-sm text-ink-3">{% if r.status == "reversed" %}Its allocations were removed when it was reversed.{% elif r.total > r.allocated %}{{ (r.total - r.allocated) | money }} is left as credit on the account, to allocate from the customer page.{% else %}Fully allocated.{% endif %}</p>
+  </section>
+
+  <div class="space-y-6">
+    {% if r.wht %}
+    <section class="kx-card p-5" aria-labelledby="wht-title">
+      <div class="flex items-center justify-between gap-3"><h2 id="wht-title" class="font-h3 text-h3">WHT credit note</h2>{% if r.certificate_number %}{{ ui.badge("success", "Received") }}{% elif r.status == "posted" %}{{ ui.badge("warning", "Awaiting") }}{% endif %}</div>
+      {% if r.certificate_number %}
+      <p class="mt-2 text-body-sm">{{ r.certificate_number }}, received {{ r.certificate_date | date }}.</p>
+      {% elif r.can_record %}
+      <p class="mt-2 text-body-sm text-ink-3">The customer deducted {{ r.wht | money }}. Record their credit note when it arrives.</p>
+      <form method="post" action="/finance/receipts/{{ r.id }}/certificate" class="mt-3 grid gap-3 sm:grid-cols-[minmax(0,1fr)_180px_auto] sm:items-end" novalidate>
+        {{ ui.csrf_field() }}
+        {{ ui.text_field("certificate_number", "Credit note number", value=v.get("certificate_number"), errors=errors) }}
+        {{ ui.text_field("certificate_date", "Received on", value=v.get("certificate_date") or today.isoformat(), type="date", errors=errors) }}
+        <button type="submit" class="kx-btn-secondary">Record</button>
+      </form>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if r.can_reverse %}
+    <section class="kx-card p-5" aria-labelledby="rev-title">
+      <h2 id="rev-title" class="font-h3 text-h3">Reverse this receipt</h2>
+      <p class="mt-1 text-body-sm text-ink-3">For a bounced cheque or money that wasn't this customer's. The journal is reversed and the invoices it settled are open again.</p>
+      <form method="post" action="/finance/receipts/{{ r.id }}/reverse" class="mt-3 grid gap-3 sm:grid-cols-[180px_minmax(0,1fr)_auto] sm:items-end" novalidate>
+        {{ ui.csrf_field() }}
+        {{ ui.text_field("reverse_on", "Reversal date", value=v.get("reverse_on") or today.isoformat(), type="date", errors=errors) }}
+        {{ ui.text_field("reason", "Why", value=v.get("reason"), errors=errors) }}
+        <button type="submit" class="kx-btn-secondary">{{ ui.icon("undo-2", "sm") }} Reverse</button>
+      </form>
+    </section>
+    {% endif %}
+  </div>
+</div>
+
+{% else %}
+{% call ui.page_header("Record receipt", "Money a customer paid, with any withholding tax they deducted.") %}{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<form method="post" action="/finance/receipts" class="mt-6 space-y-6" novalidate>
+  {{ ui.csrf_field() }}
+  <section class="kx-card grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-4" aria-label="Receipt">
+    <div class="sm:col-span-2">
+      <label class="kx-label" for="customer_id">Customer</label>
+      <div class="flex gap-2">
+        <select id="customer_id" name="customer_id" class="kx-input"><option value="">Choose a customer</option>{% for cid, label in customers %}<option value="{{ cid }}" {% if v.get("customer_id") == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+        <button type="submit" name="step" value="customer" class="kx-btn-ghost shrink-0">Show invoices</button>
+      </div>
+      {{ ui.field_error(errors, "customer_id") }}
+    </div>
+    {{ ui.text_field("receipt_date", "Date received", value=v.get("receipt_date") or today.isoformat(), type="date", errors=errors) }}
+    <div><label class="kx-label" for="bank_account_id">Paid into</label><select id="bank_account_id" name="bank_account_id" class="kx-input">{% for b in banks %}<option value="{{ b.id }}" {% if v.get("bank_account_id") == b.id|string %}selected{% endif %}>{{ b.code }} {{ b.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "bank_account_id") }}</div>
+    {{ ui.text_field("reference", "Reference (transfer or cheque number)", value=v.get("reference"), errors=errors) }}
+    {{ ui.text_field("cash", "Cash received", value=v.get("cash"), inputmode="decimal", errors=errors) }}
+    {{ ui.text_field("wht", "WHT deducted by the customer", value=v.get("wht"), inputmode="decimal", errors=errors) }}
+    <div><label class="kx-label" for="wht_type_id">WHT type</label><select id="wht_type_id" name="wht_type_id" class="kx-input"><option value="">None deducted</option>{% for w in wht_types %}<option value="{{ w.id }}" {% if v.get("wht_type_id") == w.id|string %}selected{% endif %}>{{ w.name }}{% if w.company_rate is not none %} ({{ (w.company_rate | plain) }}%){% endif %}</option>{% endfor %}</select>{{ ui.field_error(errors, "wht_type_id") }}</div>
+  </section>
+
+  <section class="kx-card overflow-hidden" aria-labelledby="alloc-new-title">
+    <h2 id="alloc-new-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Allocate to invoices</h2>
+    {% if open_invoices %}
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[640px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Invoice</th><th class="px-3 py-2.5 text-left font-semibold">Date</th><th class="px-3 py-2.5 text-left font-semibold">Due</th><th class="px-3 py-2.5 text-right font-semibold">Balance</th><th class="w-44 px-5 py-2.5 text-right font-semibold">Allocate</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for inv in open_invoices %}
+          <tr>
+            <td class="px-5 py-2.5 font-mono text-xs font-semibold">{{ inv.number }}<input type="hidden" name="invoice_id" value="{{ inv.id }}"></td>
+            <td class="px-3 py-2.5">{{ inv.doc_date | date }}</td>
+            <td class="px-3 py-2.5 {{ 'text-danger-text' if inv.days_overdue > 0 }}">{{ inv.due_date | date }}</td>
+            <td class="px-3 py-2.5 text-right tnum">{{ inv.balance | money }}</td>
+            <td class="px-5 py-2"><label class="sr-only" for="al-{{ loop.index0 }}">Allocate to {{ inv.number }}</label><input id="al-{{ loop.index0 }}" name="allocate" value="{{ allocations.get(inv.id|string, '') }}" inputmode="decimal" placeholder="0.00" class="kx-input h-10 text-right tnum">{{ ui.field_error(errors, "alloc_" ~ inv.id) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="border-t border-line px-5 py-3 text-xs text-ink-3">Anything not allocated stays as credit on the customer's account.</p>
+    {% elif v.get("customer_id") %}
+    <p class="px-5 py-6 text-body-sm text-ink-3">This customer has no open invoices. The receipt will be held as credit on their account.</p>
+    {% else %}
+    <p class="px-5 py-6 text-body-sm text-ink-3">Choose the customer to see their open invoices.</p>
+    {% endif %}
+  </section>
+
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Record receipt</button></div>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,552 @@
+"""Finance (second gate): customers, quotes, sales orders, invoices, credit notes,
+receipts and allocations; VAT rates, withholding-tax and stamp duty types; tax returns;
+and the receivables settings (ADR 0024).
+
+Revision ID: 0013
+Revises: 0012
+Create Date: 2026-11-22 08:32:40.637471
+"""
+
+from collections.abc import Sequence
+
+import sqlalchemy as sa
+from alembic import op
+from migrations.helpers import add_permissions, bump_authz_version
+
+revision: str = "0013"
+down_revision: str | None = "0012"
+branch_labels: str | Sequence[str] | None = None
+depends_on: str | Sequence[str] | None = None
+
+ORG = "organization"
+# Frozen copy of the Phase 10b catalogue additions: (key, sensitive, widest scope).
+PERMISSIONS = [
+    ("finance.customer.read", False, ORG),
+    ("finance.customer.manage", False, ORG),
+    ("finance.sales.read", False, ORG),
+    ("finance.sales.create", False, ORG),
+    ("finance.credit_note.issue", False, ORG),
+    ("finance.receipt.create", False, ORG),
+    ("finance.receipt.reverse", False, ORG),
+    ("finance.tax.read", False, ORG),
+    ("finance.tax.manage", False, ORG),
+]
+TEMPLATE_GRANTS = {
+    "organization_administrator": {key: ORG for key, _, _ in PERMISSIONS},
+    "finance_officer": {
+        "finance.customer.read": ORG,
+        "finance.customer.manage": ORG,
+        "finance.sales.read": ORG,
+        "finance.sales.create": ORG,
+        "finance.receipt.create": ORG,
+        "finance.tax.read": ORG,
+    },
+    "finance_manager": {key: ORG for key, _, _ in PERMISSIONS},
+    "auditor": {
+        "finance.customer.read": ORG,
+        "finance.sales.read": ORG,
+        "finance.tax.read": ORG,
+    },
+}
+SEQUENCES = [
+    ("customer", "C-", 4),
+    ("quote", "QT-", 5),
+    ("sales_order", "SO-", 5),
+    ("invoice", "INV-", 5),
+    ("credit_note", "CN-", 5),
+    ("receipt", "RCT-", 5),
+]
+SOURCES_BEFORE = "'manual', 'recurring', 'reversal', 'year_end', 'payroll', 'expenses'"
+SOURCES_AFTER = SOURCES_BEFORE + ", 'receivable'"
+# VAT at 7.5% from 1 February 2020 (Finance Act 2019) (confirm).
+VAT_RATES = [("2020-02-01", "7.50")]
+# Withholding-tax types with no rates: Finance enters current ones before use (ADR 0024).
+WHT_TYPES = [
+    ("supply_of_goods", "Supply of goods"),
+    ("contracts", "Contracts and agency"),
+    ("consultancy", "Consultancy and professional services"),
+    ("management", "Management and technical services"),
+    ("rent", "Rent"),
+    ("commission", "Commission"),
+    ("dividends", "Dividends"),
+    ("interest", "Interest"),
+    ("royalties", "Royalties"),
+    ("directors_fees", "Directors' fees"),
+]
+
+
+def _seed() -> None:
+    conn = op.get_bind()
+    add_permissions([(k, s) for k, s, _ in PERMISSIONS])
+    for template_key, grants in TEMPLATE_GRANTS.items():
+        for key, scope in grants.items():
+            conn.execute(
+                sa.text(
+                    "INSERT INTO role_grants (role_id, permission_key, scope) "
+                    "SELECT id, :k, :s FROM roles WHERE template_key = :t ON CONFLICT DO NOTHING"
+                ),
+                {"k": key, "s": scope, "t": template_key},
+            )
+    bump_authz_version()
+    for key, prefix, padding in SEQUENCES:
+        conn.execute(
+            sa.text(
+                "INSERT INTO number_sequences (key, prefix, padding, next_value) "
+                "VALUES (:k, :p, :w, 1)"
+            ),
+            {"k": key, "p": prefix, "w": padding},
+        )
+    seed_defaults(conn)
+
+
+def seed_defaults(conn: sa.Connection) -> None:
+    """The editable defaults. Tests call this to restore them after a reset."""
+    for effective, rate in VAT_RATES:
+        conn.execute(
+            sa.text(
+                "INSERT INTO vat_rates (id, effective_from, rate) "
+                "VALUES (gen_random_uuid(), CAST(:d AS date), :r)"
+            ),
+            {"d": effective, "r": rate},
+        )
+    for position, (key, name) in enumerate(WHT_TYPES, start=1):
+        conn.execute(
+            sa.text(
+                "INSERT INTO wht_types (id, key, name, position) "
+                "VALUES (gen_random_uuid(), :k, :n, :p)"
+            ),
+            {"k": key, "n": name, "p": position},
+        )
+
+
+def _unseed() -> None:
+    keys = [k for k, _, _ in PERMISSIONS]
+    op.execute(
+        sa.text("DELETE FROM delegations WHERE permission_key = ANY(:keys)").bindparams(keys=keys)
+    )
+    op.execute(sa.text("DELETE FROM permissions WHERE key = ANY(:keys)").bindparams(keys=keys))
+    op.execute(
+        sa.text("DELETE FROM number_sequences WHERE key = ANY(:keys)").bindparams(
+            keys=[k for k, _, _ in SEQUENCES]
+        )
+    )
+    bump_authz_version()
+
+
+def _sources(values: str) -> None:
+    op.drop_constraint(op.f("ck_journals_source"), "journals", type_="check")
+    op.create_check_constraint(op.f("ck_journals_source"), "journals", f"source IN ({values})")
+
+
+def upgrade() -> None:
+    # ### commands auto generated by Alembic - please adjust! ###
+    op.create_table(
+        "customers",
+        sa.Column("code", sa.String(length=20), nullable=False),
+        sa.Column("name", sa.String(length=200), nullable=False),
+        sa.Column("email", sa.String(length=254), nullable=True),
+        sa.Column("phone", sa.String(length=40), nullable=True),
+        sa.Column("address", sa.Text(), nullable=True),
+        sa.Column("tin", sa.String(length=30), nullable=True),
+        sa.Column("payment_terms_days", sa.SmallInteger(), nullable=False),
+        sa.Column("reminders", sa.Boolean(), server_default="true", nullable=False),
+        sa.Column("is_active", sa.Boolean(), server_default="true", nullable=False),
+        sa.Column("last_reminder_on", sa.Date(), nullable=True),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint("payment_terms_days BETWEEN 0 AND 365", name=op.f("ck_customers_terms")),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_customers")),
+        sa.UniqueConstraint("code", name=op.f("uq_customers_code")),
+    )
+    op.create_index(op.f("ix_customers_name"), "customers", ["name"], unique=False)
+    op.create_table(
+        "stamp_duty_types",
+        sa.Column("name", sa.String(length=120), nullable=False),
+        sa.Column("basis", sa.String(length=7), nullable=False),
+        sa.Column("value", sa.Numeric(precision=16, scale=4), nullable=False),
+        sa.Column("is_active", sa.Boolean(), server_default="true", nullable=False),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint("basis IN ('flat', 'percent')", name=op.f("ck_stamp_duty_types_basis")),
+        sa.CheckConstraint("value >= 0", name=op.f("ck_stamp_duty_types_value")),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_stamp_duty_types")),
+        sa.UniqueConstraint("name", name=op.f("uq_stamp_duty_types_name")),
+    )
+    op.create_table(
+        "vat_rates",
+        sa.Column("effective_from", sa.Date(), nullable=False),
+        sa.Column("rate", sa.Numeric(precision=5, scale=2), nullable=False),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint("rate >= 0 AND rate < 100", name=op.f("ck_vat_rates_rate")),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_vat_rates")),
+        sa.UniqueConstraint("effective_from", name=op.f("uq_vat_rates_effective_from")),
+    )
+    op.create_table(
+        "wht_types",
+        sa.Column("key", sa.String(length=40), nullable=False),
+        sa.Column("name", sa.String(length=120), nullable=False),
+        sa.Column("company_rate", sa.Numeric(precision=5, scale=2), nullable=True),
+        sa.Column("individual_rate", sa.Numeric(precision=5, scale=2), nullable=True),
+        sa.Column("position", sa.SmallInteger(), nullable=False),
+        sa.Column("is_active", sa.Boolean(), server_default="true", nullable=False),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint(
+            "(company_rate IS NULL OR company_rate BETWEEN 0 AND 100) AND (individual_rate IS NULL OR individual_rate BETWEEN 0 AND 100)",
+            name=op.f("ck_wht_types_rates"),
+        ),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_wht_types")),
+        sa.UniqueConstraint("key", name=op.f("uq_wht_types_key")),
+    )
+    op.create_table(
+        "tax_returns",
+        sa.Column("tax", sa.String(length=5), nullable=False),
+        sa.Column("period_start", sa.Date(), nullable=False),
+        sa.Column("status", sa.String(length=5), server_default="filed", nullable=False),
+        sa.Column("output_amount", sa.Numeric(precision=16, scale=2), nullable=True),
+        sa.Column("input_amount", sa.Numeric(precision=16, scale=2), nullable=True),
+        sa.Column("filed_on", sa.Date(), nullable=True),
+        sa.Column("filing_reference", sa.String(length=80), nullable=True),
+        sa.Column("filed_by", sa.Uuid(), nullable=True),
+        sa.Column("paid_on", sa.Date(), nullable=True),
+        sa.Column("payment_reference", sa.String(length=80), nullable=True),
+        sa.Column("paid_by", sa.Uuid(), nullable=True),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint("status IN ('filed', 'paid')", name=op.f("ck_tax_returns_status")),
+        sa.CheckConstraint("tax IN ('vat', 'wht', 'stamp')", name=op.f("ck_tax_returns_tax")),
+        sa.ForeignKeyConstraint(
+            ["filed_by"], ["users.id"], name=op.f("fk_tax_returns_filed_by_users")
+        ),
+        sa.ForeignKeyConstraint(
+            ["paid_by"], ["users.id"], name=op.f("fk_tax_returns_paid_by_users")
+        ),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_tax_returns")),
+        sa.UniqueConstraint("tax", "period_start", name=op.f("uq_tax_returns_tax_period_start")),
+    )
+    op.create_table(
+        "receipts",
+        sa.Column("number", sa.String(length=20), nullable=False),
+        sa.Column("status", sa.String(length=8), server_default="posted", nullable=False),
+        sa.Column("customer_id", sa.Uuid(), nullable=False),
+        sa.Column("receipt_date", sa.Date(), nullable=False),
+        sa.Column("bank_account_id", sa.Uuid(), nullable=False),
+        sa.Column("reference", sa.String(length=80), nullable=True),
+        sa.Column("cash", sa.Numeric(precision=16, scale=2), nullable=False),
+        sa.Column("wht", sa.Numeric(precision=16, scale=2), server_default="0", nullable=False),
+        sa.Column("wht_type_id", sa.Uuid(), nullable=True),
+        sa.Column("wht_certificate_number", sa.String(length=60), nullable=True),
+        sa.Column("wht_certificate_date", sa.Date(), nullable=True),
+        sa.Column("journal_id", sa.Uuid(), nullable=True),
+        sa.Column("reversal_journal_id", sa.Uuid(), nullable=True),
+        sa.Column("reversed_on", sa.Date(), nullable=True),
+        sa.Column("reversal_reason", sa.Text(), nullable=True),
+        sa.Column("reversed_by", sa.Uuid(), nullable=True),
+        sa.Column("created_by", sa.Uuid(), nullable=True),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint("status IN ('posted', 'reversed')", name=op.f("ck_receipts_status")),
+        sa.CheckConstraint(
+            "cash >= 0 AND wht >= 0 AND cash + wht > 0", name=op.f("ck_receipts_amounts")
+        ),
+        sa.ForeignKeyConstraint(
+            ["bank_account_id"],
+            ["finance_accounts.id"],
+            name=op.f("fk_receipts_bank_account_id_finance_accounts"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["created_by"], ["users.id"], name=op.f("fk_receipts_created_by_users")
+        ),
+        sa.ForeignKeyConstraint(
+            ["customer_id"], ["customers.id"], name=op.f("fk_receipts_customer_id_customers")
+        ),
+        sa.ForeignKeyConstraint(
+            ["journal_id"], ["journals.id"], name=op.f("fk_receipts_journal_id_journals")
+        ),
+        sa.ForeignKeyConstraint(
+            ["reversal_journal_id"],
+            ["journals.id"],
+            name=op.f("fk_receipts_reversal_journal_id_journals"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["reversed_by"], ["users.id"], name=op.f("fk_receipts_reversed_by_users")
+        ),
+        sa.ForeignKeyConstraint(
+            ["wht_type_id"], ["wht_types.id"], name=op.f("fk_receipts_wht_type_id_wht_types")
+        ),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_receipts")),
+        sa.UniqueConstraint("number", name=op.f("uq_receipts_number")),
+    )
+    op.create_index(op.f("ix_receipts_customer_id"), "receipts", ["customer_id"], unique=False)
+    op.create_table(
+        "sales_documents",
+        sa.Column("kind", sa.String(length=11), nullable=False),
+        sa.Column("number", sa.String(length=20), nullable=True),
+        sa.Column("status", sa.String(length=9), server_default="draft", nullable=False),
+        sa.Column("customer_id", sa.Uuid(), nullable=False),
+        sa.Column("doc_date", sa.Date(), nullable=False),
+        sa.Column("due_date", sa.Date(), nullable=True),
+        sa.Column("valid_until", sa.Date(), nullable=True),
+        sa.Column("reference", sa.String(length=80), nullable=True),
+        sa.Column("memo", sa.String(length=200), nullable=True),
+        sa.Column("source_document_id", sa.Uuid(), nullable=True),
+        sa.Column("invoice_id", sa.Uuid(), nullable=True),
+        sa.Column("stamp_duty_type_id", sa.Uuid(), nullable=True),
+        sa.Column("net", sa.Numeric(precision=16, scale=2), server_default="0", nullable=False),
+        sa.Column("vat", sa.Numeric(precision=16, scale=2), server_default="0", nullable=False),
+        sa.Column(
+            "stamp_duty", sa.Numeric(precision=16, scale=2), server_default="0", nullable=False
+        ),
+        sa.Column("total", sa.Numeric(precision=16, scale=2), server_default="0", nullable=False),
+        sa.Column("created_by", sa.Uuid(), nullable=True),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column("issued_by", sa.Uuid(), nullable=True),
+        sa.Column("issued_at", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("journal_id", sa.Uuid(), nullable=True),
+        sa.Column("last_reminder_on", sa.Date(), nullable=True),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint(
+            "(status = 'draft') = (number IS NULL)", name=op.f("ck_sales_documents_numbered")
+        ),
+        sa.CheckConstraint(
+            "kind IN ('quote', 'order', 'invoice', 'credit_note')",
+            name=op.f("ck_sales_documents_kind"),
+        ),
+        sa.CheckConstraint(
+            "status IN ('draft', 'sent', 'accepted', 'declined', 'converted', 'confirmed', 'invoiced', 'cancelled', 'issued')",
+            name=op.f("ck_sales_documents_status"),
+        ),
+        sa.CheckConstraint(
+            "net >= 0 AND vat >= 0 AND stamp_duty >= 0", name=op.f("ck_sales_documents_amounts")
+        ),
+        sa.ForeignKeyConstraint(
+            ["created_by"], ["users.id"], name=op.f("fk_sales_documents_created_by_users")
+        ),
+        sa.ForeignKeyConstraint(
+            ["customer_id"], ["customers.id"], name=op.f("fk_sales_documents_customer_id_customers")
+        ),
+        sa.ForeignKeyConstraint(
+            ["invoice_id"],
+            ["sales_documents.id"],
+            name=op.f("fk_sales_documents_invoice_id_sales_documents"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["issued_by"], ["users.id"], name=op.f("fk_sales_documents_issued_by_users")
+        ),
+        sa.ForeignKeyConstraint(
+            ["journal_id"], ["journals.id"], name=op.f("fk_sales_documents_journal_id_journals")
+        ),
+        sa.ForeignKeyConstraint(
+            ["source_document_id"],
+            ["sales_documents.id"],
+            name=op.f("fk_sales_documents_source_document_id_sales_documents"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["stamp_duty_type_id"],
+            ["stamp_duty_types.id"],
+            name=op.f("fk_sales_documents_stamp_duty_type_id_stamp_duty_types"),
+        ),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_sales_documents")),
+        sa.UniqueConstraint("number", name=op.f("uq_sales_documents_number")),
+    )
+    op.create_index(
+        op.f("ix_sales_documents_customer_id"), "sales_documents", ["customer_id"], unique=False
+    )
+    op.create_index(op.f("ix_sales_documents_kind"), "sales_documents", ["kind"], unique=False)
+    op.create_table(
+        "sales_allocations",
+        sa.Column("invoice_id", sa.Uuid(), nullable=False),
+        sa.Column("receipt_id", sa.Uuid(), nullable=True),
+        sa.Column("credit_note_id", sa.Uuid(), nullable=True),
+        sa.Column("amount", sa.Numeric(precision=16, scale=2), nullable=False),
+        sa.Column("allocated_on", sa.Date(), nullable=False),
+        sa.Column("created_by", sa.Uuid(), nullable=True),
+        sa.Column(
+            "created_at",
+            sa.DateTime(timezone=True),
+            server_default=sa.text("now()"),
+            nullable=False,
+        ),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint(
+            "(receipt_id IS NULL) <> (credit_note_id IS NULL)",
+            name=op.f("ck_sales_allocations_one_source"),
+        ),
+        sa.CheckConstraint("amount > 0", name=op.f("ck_sales_allocations_amount")),
+        sa.ForeignKeyConstraint(
+            ["created_by"], ["users.id"], name=op.f("fk_sales_allocations_created_by_users")
+        ),
+        sa.ForeignKeyConstraint(
+            ["credit_note_id"],
+            ["sales_documents.id"],
+            name=op.f("fk_sales_allocations_credit_note_id_sales_documents"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["invoice_id"],
+            ["sales_documents.id"],
+            name=op.f("fk_sales_allocations_invoice_id_sales_documents"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["receipt_id"], ["receipts.id"], name=op.f("fk_sales_allocations_receipt_id_receipts")
+        ),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_sales_allocations")),
+    )
+    op.create_index(
+        op.f("ix_sales_allocations_credit_note_id"),
+        "sales_allocations",
+        ["credit_note_id"],
+        unique=False,
+    )
+    op.create_index(
+        op.f("ix_sales_allocations_invoice_id"), "sales_allocations", ["invoice_id"], unique=False
+    )
+    op.create_index(
+        op.f("ix_sales_allocations_receipt_id"), "sales_allocations", ["receipt_id"], unique=False
+    )
+    op.create_table(
+        "sales_lines",
+        sa.Column("document_id", sa.Uuid(), nullable=False),
+        sa.Column("position", sa.SmallInteger(), nullable=False),
+        sa.Column("description", sa.String(length=300), nullable=False),
+        sa.Column("account_id", sa.Uuid(), nullable=False),
+        sa.Column("cost_centre_id", sa.Uuid(), nullable=True),
+        sa.Column("quantity", sa.Numeric(precision=14, scale=3), nullable=False),
+        sa.Column("unit_price", sa.Numeric(precision=16, scale=2), nullable=False),
+        sa.Column("net", sa.Numeric(precision=16, scale=2), nullable=False),
+        sa.Column("vat_code", sa.String(length=8), nullable=False),
+        sa.Column("vat_rate", sa.Numeric(precision=5, scale=2), nullable=False),
+        sa.Column("vat", sa.Numeric(precision=16, scale=2), nullable=False),
+        sa.Column("id", sa.Uuid(), nullable=False),
+        sa.CheckConstraint(
+            "vat_code IN ('standard', 'zero', 'exempt')", name=op.f("ck_sales_lines_vat_code")
+        ),
+        sa.CheckConstraint("quantity > 0 AND unit_price >= 0", name=op.f("ck_sales_lines_amounts")),
+        sa.ForeignKeyConstraint(
+            ["account_id"],
+            ["finance_accounts.id"],
+            name=op.f("fk_sales_lines_account_id_finance_accounts"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["cost_centre_id"],
+            ["cost_centres.id"],
+            name=op.f("fk_sales_lines_cost_centre_id_cost_centres"),
+        ),
+        sa.ForeignKeyConstraint(
+            ["document_id"],
+            ["sales_documents.id"],
+            name=op.f("fk_sales_lines_document_id_sales_documents"),
+            ondelete="CASCADE",
+        ),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_sales_lines")),
+    )
+    op.create_index(
+        op.f("ix_sales_lines_document_id"), "sales_lines", ["document_id"], unique=False
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("receivables_code", sa.String(length=20), server_default="1100", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("vat_output_code", sa.String(length=20), server_default="2200", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("vat_input_code", sa.String(length=20), server_default="1310", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column(
+            "wht_receivable_code", sa.String(length=20), server_default="1320", nullable=False
+        ),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("wht_payable_code", sa.String(length=20), server_default="2210", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("stamp_duty_code", sa.String(length=20), server_default="2220", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("default_terms_days", sa.SmallInteger(), server_default="30", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("remind_before_days", sa.SmallInteger(), server_default="3", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("remind_on_due", sa.Boolean(), server_default="true", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("remind_every_days", sa.SmallInteger(), server_default="7", nullable=False),
+    )
+    op.add_column(
+        "finance_settings",
+        sa.Column("return_due_day", sa.SmallInteger(), server_default="21", nullable=False),
+    )
+    # ### end Alembic commands ###
+    _sources(SOURCES_AFTER)
+    _seed()
+
+
+def downgrade() -> None:
+    _unseed()
+    # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_column("finance_settings", "return_due_day")
+    op.drop_column("finance_settings", "remind_every_days")
+    op.drop_column("finance_settings", "remind_on_due")
+    op.drop_column("finance_settings", "remind_before_days")
+    op.drop_column("finance_settings", "default_terms_days")
+    op.drop_column("finance_settings", "stamp_duty_code")
+    op.drop_column("finance_settings", "wht_payable_code")
+    op.drop_column("finance_settings", "wht_receivable_code")
+    op.drop_column("finance_settings", "vat_input_code")
+    op.drop_column("finance_settings", "vat_output_code")
+    op.drop_column("finance_settings", "receivables_code")
+    op.drop_index(op.f("ix_sales_lines_document_id"), table_name="sales_lines")
+    op.drop_table("sales_lines")
+    op.drop_index(op.f("ix_sales_allocations_receipt_id"), table_name="sales_allocations")
+    op.drop_index(op.f("ix_sales_allocations_invoice_id"), table_name="sales_allocations")
+    op.drop_index(op.f("ix_sales_allocations_credit_note_id"), table_name="sales_allocations")
+    op.drop_table("sales_allocations")
+    op.drop_index(op.f("ix_sales_documents_kind"), table_name="sales_documents")
+    op.drop_index(op.f("ix_sales_documents_customer_id"), table_name="sales_documents")
+    op.drop_table("sales_documents")
+    op.drop_index(op.f("ix_receipts_customer_id"), table_name="receipts")
+    op.drop_table("receipts")
+    op.drop_table("tax_returns")
+    op.drop_table("wht_types")
+    op.drop_table("vat_rates")
+    op.drop_table("stamp_duty_types")
+    op.drop_index(op.f("ix_customers_name"), table_name="customers")
+    op.drop_table("customers")
+    # ### end Alembic commands ###
+    op.execute("UPDATE journals SET reversed_by_id = NULL WHERE source = 'receivable'")
+    op.execute(
+        "DELETE FROM journals WHERE reverses_id IN "
+        "(SELECT id FROM journals WHERE source = 'receivable')"
+    )
+    op.execute("DELETE FROM journals WHERE source = 'receivable'")
+    _sources(SOURCES_BEFORE)

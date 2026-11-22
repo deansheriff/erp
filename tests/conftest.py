@@ -167,12 +167,15 @@ def clean_db(migrated_db: None) -> Iterator[None]:
             text(
                 "TRUNCATE pay_groups, pay_components, salary_structures, statutory_sets, "
                 "payroll_banks, payroll_accounts, finance_accounts, finance_settings, "
-                "fiscal_years, journals, recurring_journals CASCADE"
+                "fiscal_years, journals, recurring_journals, customers, sales_documents, "
+                "receipts, sales_allocations, vat_rates, wht_types, stamp_duty_types, "
+                "tax_returns CASCADE"
             )
         )
         _migration("0010_payroll.py").seed_defaults(conn)
         _migration("0011_payroll_loans_and_remittances.py").seed_defaults(conn)
         _migration("0012_finance_ledger.py").seed_defaults(conn)
+        _migration("0013_finance_receivables_and_tax.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

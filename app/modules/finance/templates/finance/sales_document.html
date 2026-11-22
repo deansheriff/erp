@@ -1,0 +1,161 @@
+{# Finance → a quote, sales order, invoice or credit note (ADR 0024): the draft editor, or
+   the issued document with what can be done next.
+   Design: design/stitch/exports/finance.sales_document.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set issue_labels = {"quote": "Mark as sent", "order": "Confirm order", "invoice": "Issue invoice", "credit_note": "Issue credit note"} %}
+{% set d = doc %}
+{% set editing = not d or d.can_edit %}
+{% set v = values %}
+{% if d %}
+{% set shown = d.shown_status %}
+{% call ui.page_header(d.number or ("Draft " ~ kind_label | lower), d.customer, tones[shown], status_labels[shown] ~ (" · " ~ d.days_overdue ~ " days" if shown == "overdue" else "")) %}
+  {% if d.status == "draft" %}
+    {% if d.can_edit %}<form method="post" action="/finance/sales/{{ d.id }}/delete">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-danger-text">{{ ui.icon("trash-2", "sm") }} Delete draft</button></form>{% endif %}
+    <form method="post" action="/finance/sales/{{ d.id }}/issue">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary" {% if not d.can_issue %}disabled aria-describedby="issue-blocked"{% endif %}>{{ ui.icon("check", "sm") }} {{ issue_labels[d.kind] }}</button></form>
+  {% else %}
+    <a href="/finance/sales/{{ d.id }}/pdf" class="kx-btn-ghost">{{ ui.icon("download", "sm") }} PDF</a>
+    {% if d.can_act %}
+      {% if d.customer_email %}<form method="post" action="/finance/sales/{{ d.id }}/email">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">{{ ui.icon("mail", "sm") }} Email to customer</button></form>{% endif %}
+      {% if d.kind == "quote" and d.status == "sent" %}
+      <form method="post" action="/finance/sales/{{ d.id }}/status">{{ ui.csrf_field() }}<input type="hidden" name="action" value="accept"><button type="submit" class="kx-btn-secondary">Accepted</button></form>
+      {% endif %}
+      {% if d.kind == "quote" and d.status in ("sent", "accepted") %}
+      <form method="post" action="/finance/sales/{{ d.id }}/status">{{ ui.csrf_field() }}<input type="hidden" name="action" value="decline"><button type="submit" class="kx-btn-ghost">Declined</button></form>
+      {% endif %}
+      {% if d.kind == "order" and d.status == "confirmed" %}
+      <form method="post" action="/finance/sales/{{ d.id }}/status">{{ ui.csrf_field() }}<input type="hidden" name="action" value="cancel"><button type="submit" class="kx-btn-ghost">Cancel order</button></form>
+      {% endif %}
+      {% for to in d.conversions %}
+      <form method="post" action="/finance/sales/{{ d.id }}/convert">{{ ui.csrf_field() }}<input type="hidden" name="to" value="{{ to }}"><button type="submit" class="{{ 'kx-btn-primary' if loop.last else 'kx-btn-secondary' }}">{{ ui.icon("arrow-right", "sm") }} Make {{ kind_labels[to] | lower }}</button></form>
+      {% endfor %}
+      {% if d.kind == "invoice" and d.status == "issued" %}
+      <form method="post" action="/finance/sales/{{ d.id }}/credit-note">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">{{ ui.icon("undo-2", "sm") }} Raise credit note</button></form>
+      {% if d.balance > 0 %}<a href="/finance/receipts/new?customer={{ d.customer_id }}" class="kx-btn-primary">{{ ui.icon("banknote", "sm") }} Record receipt</a>{% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endcall %}
+{% else %}
+{% call ui.page_header("New " ~ kind_label | lower, "Prices exclude VAT. Save a draft, then issue it." if kind in ("invoice", "credit_note") else "Prices exclude VAT. Save a draft, then send it.") %}{% endcall %}
+{% endif %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if d and d.issue_blocked %}<div class="mt-5" id="issue-blocked">{{ ui.alert("info", d.issue_blocked) }}</div>{% endif %}
+{% if kind == "credit_note" and d and d.status == "draft" and not errors %}<div class="mt-3">{{ ui.alert("info", "Someone other than the person who last saved this draft issues it.") }}</div>{% endif %}
+
+{% if d and d.status != "draft" %}
+<dl class="kx-card mt-6 grid gap-4 p-5 text-body-sm sm:grid-cols-2 lg:grid-cols-4">
+  <div><dt class="text-xs text-ink-3">Customer</dt><dd><a href="/finance/customers/{{ d.customer_id }}" class="font-semibold text-iris">{{ d.customer }}</a></dd></div>
+  <div><dt class="text-xs text-ink-3">Date</dt><dd>{{ d.doc_date | date }}</dd></div>
+  {% if d.due_date %}<div><dt class="text-xs text-ink-3">Due</dt><dd>{{ d.due_date | date }}</dd></div>{% endif %}
+  {% if d.valid_until %}<div><dt class="text-xs text-ink-3">Valid until</dt><dd>{{ d.valid_until | date }}</dd></div>{% endif %}
+  {% if d.reference %}<div><dt class="text-xs text-ink-3">Customer reference</dt><dd>{{ d.reference }}</dd></div>{% endif %}
+  {% if d.source %}<div><dt class="text-xs text-ink-3">Converted from</dt><dd><a href="/finance/sales/{{ d.source[0] }}" class="font-mono text-xs font-semibold text-iris">{{ d.source[2] }}</a></dd></div>{% endif %}
+  {% if d.invoice %}<div><dt class="text-xs text-ink-3">Against invoice</dt><dd><a href="/finance/sales/{{ d.invoice[0] }}" class="font-mono text-xs font-semibold text-iris">{{ d.invoice[1] }}</a></dd></div>{% endif %}
+  {% if d.journal %}<div><dt class="text-xs text-ink-3">Journal</dt><dd><a href="/finance/journals/{{ d.journal[0] }}" class="font-mono text-xs font-semibold text-iris">{{ d.journal[1] }}</a></dd></div>{% endif %}
+  <div><dt class="text-xs text-ink-3">Issued</dt><dd>{{ d.issued_by or "—" }}{% if d.issued_at %}, {{ d.issued_at | datetime }}{% endif %}</dd></div>
+  {% if d.derived %}<div class="sm:col-span-2"><dt class="text-xs text-ink-3">Led to</dt><dd class="flex flex-wrap gap-2">{% for did, dkind, dnum, dstatus in d.derived %}<a href="/finance/sales/{{ did }}" class="font-mono text-xs font-semibold text-iris">{{ dnum or ("Draft " ~ kind_labels[dkind] | lower) }}</a>{% endfor %}</dd></div>{% endif %}
+  {% if d.memo %}<div class="sm:col-span-2 lg:col-span-4"><dt class="text-xs text-ink-3">Memo</dt><dd>{{ d.memo }}</dd></div>{% endif %}
+</dl>
+{% endif %}
+
+{% if editing %}
+<form method="post" action="/finance/sales" class="kx-card mt-6 overflow-hidden" x-data="salesTotals" x-on:input="recalc" x-on:change="recalc" data-vat-rate="{{ vat_rate or 0 }}" novalidate>
+  {{ ui.csrf_field() }}
+  {% if d %}<input type="hidden" name="document_id" value="{{ d.id }}">{% endif %}
+  <input type="hidden" name="kind" value="{{ kind }}">
+  <div class="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="sm:col-span-2"><label class="kx-label" for="customer_id">Customer</label><select id="customer_id" name="customer_id" class="kx-input" {% if d and d.invoice %}disabled{% endif %}><option value="">Choose a customer</option>{% for cid, label in customers %}<option value="{{ cid }}" {% if (v.get("customer_id") or (d.customer_id|string if d else "")) == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% if d and d.invoice %}<input type="hidden" name="customer_id" value="{{ d.customer_id }}">{% endif %}{{ ui.field_error(errors, "customer_id") }}</div>
+    {{ ui.text_field("doc_date", "Date", value=v.get("doc_date") or (d.doc_date.isoformat() if d else today.isoformat()), type="date", errors=errors) }}
+    {% if kind == "invoice" %}
+    {{ ui.text_field("due_date", "Due date", value=v.get("due_date") or (d.due_date.isoformat() if d and d.due_date else ""), type="date", errors=errors, hint="Blank uses the customer's terms.") }}
+    {% elif kind == "quote" %}
+    {{ ui.text_field("valid_until", "Valid until", value=v.get("valid_until") or (d.valid_until.isoformat() if d and d.valid_until else ""), type="date", errors=errors) }}
+    {% else %}<div></div>{% endif %}
+    {{ ui.text_field("reference", "Customer reference or PO number", value=v.get("reference") or (d.reference or "" if d else ""), errors=errors) }}
+    <div class="sm:col-span-2 {{ 'lg:col-span-2' if kind != 'quote' else 'lg:col-span-3' }}">{{ ui.text_field("memo", "Memo", value=v.get("memo") or (d.memo or "" if d else ""), errors=errors) }}</div>
+    {% if kind != "quote" %}
+    <div><label class="kx-label" for="stamp_duty_type_id">Stamp duty</label><select id="stamp_duty_type_id" name="stamp_duty_type_id" class="kx-input"><option value="">None</option>{% for t in stamp_types %}<option value="{{ t.id }}" {% if (v.get("stamp_duty_type_id") or (d.stamp_duty_type_id|string if d and d.stamp_duty_type_id else "")) == t.id|string %}selected{% endif %}>{{ t.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "stamp_duty_type_id") }}</div>
+    {% endif %}
+  </div>
+  {% if d and d.invoice %}<p class="px-5 pb-3 text-body-sm text-ink-3">Against invoice <a href="/finance/sales/{{ d.invoice[0] }}" class="font-mono text-xs font-semibold text-iris">{{ d.invoice[1] }}</a>. Trim the lines to what's being credited.</p>{% endif %}
+  <div class="kx-scroll-x border-t border-line">
+    <table class="w-full min-w-[1000px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="w-56 px-3 py-2.5 text-left font-semibold">Income account</th><th class="w-44 px-3 py-2.5 text-left font-semibold">Cost centre</th><th class="w-20 px-3 py-2.5 text-right font-semibold">Qty</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Unit price</th><th class="w-36 px-3 py-2.5 text-left font-semibold">VAT</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Net</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in rows %}
+        {% set i = loop.index0 %}
+        <tr class="align-top" data-line>
+          <td class="px-3 py-2"><label class="sr-only" for="ds-{{ i }}">Description, line {{ i + 1 }}</label><input id="ds-{{ i }}" name="description" value="{{ line.description }}" class="kx-input h-10">{% if errors.get("line_" ~ i) %}<p class="kx-field-error">{{ ui.icon("circle-alert", "sm") }} {{ errors["line_" ~ i] }}</p>{% endif %}</td>
+          <td class="px-3 py-2"><label class="sr-only" for="ac-{{ i }}">Income account, line {{ i + 1 }}</label><select id="ac-{{ i }}" name="account_id" class="kx-input h-10"><option value="">—</option>{% for a in income_accounts %}<option value="{{ a.id }}" {% if line.account_id == a.id|string or (not line.account_id and loop.first and line.description) %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select></td>
+          <td class="px-3 py-2"><label class="sr-only" for="cc-{{ i }}">Cost centre, line {{ i + 1 }}</label><select id="cc-{{ i }}" name="cost_centre_id" class="kx-input h-10"><option value="">—</option>{% for cid, label in cost_centres %}<option value="{{ cid }}" {% if line.cost_centre_id == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></td>
+          <td class="px-3 py-2"><label class="sr-only" for="qt-{{ i }}">Quantity, line {{ i + 1 }}</label><input id="qt-{{ i }}" name="quantity" value="{{ line.quantity }}" inputmode="decimal" placeholder="1" class="kx-input h-10 text-right tnum"></td>
+          <td class="px-3 py-2"><label class="sr-only" for="up-{{ i }}">Unit price, line {{ i + 1 }}</label><input id="up-{{ i }}" name="unit_price" value="{{ line.unit_price }}" inputmode="decimal" placeholder="0.00" class="kx-input h-10 text-right tnum"></td>
+          <td class="px-3 py-2"><label class="sr-only" for="vc-{{ i }}">VAT, line {{ i + 1 }}</label><select id="vc-{{ i }}" name="vat_code" class="kx-input h-10">{% for code, label in vat_codes %}<option value="{{ code }}" {% if line.vat_code == code %}selected{% endif %}>{{ label }}{% if code == "standard" and vat_rate %} {{ (vat_rate | plain) }}%{% endif %}</option>{% endfor %}</select></td>
+          <td class="px-3 py-2 pt-4 text-right tnum text-ink-2" data-line-net></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex flex-col gap-4 border-t border-line p-5 sm:flex-row sm:items-end sm:justify-between">
+    <p class="text-xs text-ink-3">Need more lines? Save, and more empty rows appear. VAT is worked out again at the rate on the document date when it's issued.</p>
+    <dl class="w-full max-w-xs space-y-1 text-body-sm" aria-live="polite">
+      <div class="flex justify-between"><dt class="text-ink-3">Net</dt><dd class="tnum" x-text="net"></dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">VAT</dt><dd class="tnum" x-text="vat"></dd></div>
+      <div class="flex justify-between border-t border-line pt-1 font-semibold"><dt>Total before stamp duty</dt><dd class="tnum" x-text="total"></dd></div>
+    </dl>
+  </div>
+  {% if not vat_rate %}<div class="px-5 pb-4">{{ ui.alert("warning", "No VAT rate is in force today. Add one in Tax settings before issuing standard-rated lines.") }}</div>{% endif %}
+  <div class="flex justify-end gap-3 border-t border-line p-5"><button type="submit" class="kx-btn-primary">Save draft</button></div>
+</form>
+{% else %}
+<section class="kx-card mt-6 overflow-hidden" aria-label="Lines">
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[860px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Description</th><th class="px-3 py-2.5 text-left font-semibold">Account</th><th class="px-3 py-2.5 text-right font-semibold">Qty</th><th class="px-3 py-2.5 text-right font-semibold">Unit price</th><th class="px-3 py-2.5 text-left font-semibold">VAT</th><th class="px-3 py-2.5 text-right font-semibold">Net</th><th class="px-5 py-2.5 text-right font-semibold">VAT amount</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in d.lines %}
+        <tr><td class="px-5 py-2.5">{{ line.description }}{% if line.cost_centre %}<span class="block text-xs text-ink-3">{{ line.cost_centre }}</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.account }}</td><td class="px-3 py-2.5 text-right tnum">{{ (line.quantity | plain) }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.unit_price | money }}</td><td class="px-3 py-2.5">{{ line.vat_label }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.net | money }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.vat | money }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex justify-end border-t border-line p-5">
+    <dl class="w-full max-w-xs space-y-1 text-body-sm">
+      <div class="flex justify-between"><dt class="text-ink-3">Net</dt><dd class="tnum">{{ d.net | money }}</dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">VAT</dt><dd class="tnum">{{ d.vat | money }}</dd></div>
+      {% if d.stamp_duty %}<div class="flex justify-between"><dt class="text-ink-3">Stamp duty ({{ d.stamp_duty_name }})</dt><dd class="tnum">{{ d.stamp_duty | money }}</dd></div>{% endif %}
+      <div class="flex justify-between border-t border-line pt-1 font-semibold"><dt>Total</dt><dd class="tnum">{{ d.total | money }}</dd></div>
+      {% if d.kind == "invoice" %}
+      <div class="flex justify-between"><dt class="text-ink-3">Paid or credited</dt><dd class="tnum">{{ d.paid | money }}</dd></div>
+      <div class="flex justify-between font-semibold {{ 'text-danger-text' if shown == 'overdue' }}"><dt>Balance due</dt><dd class="tnum">{{ d.balance | money }}</dd></div>
+      {% elif d.kind == "credit_note" %}
+      <div class="flex justify-between"><dt class="text-ink-3">Allocated to invoices</dt><dd class="tnum">{{ d.paid | money }}</dd></div>
+      {% endif %}
+    </dl>
+  </div>
+</section>
+
+{% if d.kind == "invoice" %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="paid-title">
+  <h2 id="paid-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Payments and credits</h2>
+  {% if d.settlements %}
+  <ul class="divide-y divide-line text-body-sm">
+    {% for s in d.settlements %}
+    <li class="flex flex-wrap items-center justify-between gap-2 px-5 py-3">
+      <span><a href="{{ '/finance/receipts/' if s.kind == 'receipt' else '/finance/sales/' }}{{ s.id }}" class="font-mono text-xs font-semibold text-iris">{{ s.number }}</a> <span class="text-ink-3">· {{ s.day | date }}</span>{% if s.wht %} <span class="text-xs text-ink-3">(the receipt includes {{ s.wht | money }} WHT deducted)</span>{% endif %}</span>
+      <span class="tnum">{{ s.amount | money }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="px-5 py-6 text-body-sm text-ink-3">Nothing paid or credited yet.</p>
+  {% endif %}
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,119 @@
+{# Finance → Tax settings (ADR 0024): VAT rates, withholding-tax types, stamp duty types,
+   and the receivables settings (ledger accounts, terms, reminders, return due day).
+   Design: design/stitch/exports/finance.tax.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set s = settings %}
+{% set v = values %}
+{% call ui.page_header("Tax settings", "Rates and settings marked (confirm) are starting defaults to check before go-live.", view_only=not can_manage) %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 xl:grid-cols-2">
+  <section id="vat" class="kx-card overflow-hidden" aria-labelledby="vat-title">
+    <div class="flex items-center justify-between border-b border-line px-5 py-4"><h2 id="vat-title" class="font-h3 text-h3">VAT rates</h2>{% if current_rate is not none %}{{ ui.badge("info", "Today: " ~ (current_rate | plain) ~ "%") }}{% else %}{{ ui.badge("warning", "No rate in force") }}{% endif %}</div>
+    <table class="w-full text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">From</th><th class="px-5 py-2.5 text-right font-semibold">Standard rate</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in vat_rates %}<tr><td class="px-5 py-2.5">{{ r.effective_from | date }}</td><td class="px-5 py-2.5 text-right tnum">{{ (r.rate | plain) }}%{% if loop.last %} <span class="text-xs text-ink-3">(confirm)</span>{% endif %}</td></tr>{% endfor %}
+      </tbody>
+    </table>
+    {% if can_manage %}
+    <form method="post" action="/finance/tax/vat" class="grid gap-3 border-t border-line p-5 sm:grid-cols-[1fr_1fr_auto] sm:items-end" novalidate>
+      {{ ui.csrf_field() }}
+      {% set e = errors if form == "vat" else {} %}
+      {{ ui.text_field("effective_from", "New rate from", value=v.get("effective_from") if form == "vat" else "", type="date", errors=e) }}
+      {{ ui.text_field("rate", "Rate (%)", value=v.get("rate") if form == "vat" else "", inputmode="decimal", errors=e) }}
+      <button type="submit" class="kx-btn-secondary">Add rate</button>
+    </form>
+    <p class="px-5 pb-4 text-xs text-ink-3">Issued invoices keep the rate they were issued at.</p>
+    {% endif %}
+  </section>
+
+  <section id="stamp" class="kx-card overflow-hidden" aria-labelledby="stamp-title">
+    <h2 id="stamp-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Stamp duty types</h2>
+    {% if stamp_types %}
+    <table class="w-full text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Name</th><th class="px-3 py-2.5 text-left font-semibold">Basis</th><th class="px-3 py-2.5 text-right font-semibold">Value</th><th class="px-5 py-2.5 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for t in stamp_types %}
+        <tr><td class="px-5 py-2.5">{% if can_manage %}<a href="/finance/tax?stamp={{ t.id }}#stamp" class="font-semibold text-iris">{{ t.name }}</a>{% else %}{{ t.name }}{% endif %}</td><td class="px-3 py-2.5">{{ basis_labels[t.basis] }}</td><td class="px-3 py-2.5 text-right tnum">{{ (t.value | money) if t.basis == "flat" else ((t.value | plain) ~ "%") }}</td><td class="px-5 py-2.5">{{ ui.badge("success" if t.is_active else "neutral", "Active" if t.is_active else "Inactive") }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="px-5 py-4 text-body-sm text-ink-3">None yet. Add the types that apply to your invoices.</p>
+    {% endif %}
+    {% if can_manage %}
+    {% set e = errors if form == "stamp" else {} %}
+    {% set sv = v if form == "stamp" else {} %}
+    {% set current = namespace(row=none) %}
+    {% for t in stamp_types %}{% if t.id|string == editing_stamp %}{% set current.row = t %}{% endif %}{% endfor %}
+    {% set t = current.row %}
+    <form method="post" action="/finance/tax/stamp" class="grid gap-3 border-t border-line p-5 sm:grid-cols-2" novalidate>
+      {{ ui.csrf_field() }}
+      {% if t %}<input type="hidden" name="stamp_id" value="{{ t.id }}">{% endif %}
+      <h3 class="font-semibold sm:col-span-2">{{ "Edit " ~ t.name if t else "Add a type" }}</h3>
+      <div class="sm:col-span-2">{{ ui.text_field("stamp_name", "Name", value=sv.get("stamp_name") or (t.name if t else ""), errors=e) }}</div>
+      <div><label class="kx-label" for="basis">Basis</label><select id="basis" name="basis" class="kx-input">{% for key, label in basis_labels.items() %}<option value="{{ key }}" {% if (sv.get("basis") or (t.basis if t else "flat")) == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(e, "basis") }}</div>
+      {{ ui.text_field("value", "Amount (₦) or percentage", value=sv.get("value") or (("%.2f" | format(t.value)) if t else ""), inputmode="decimal", errors=e) }}
+      {% if t %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if (sv.get("is_active") if sv else t.is_active) %}checked{% endif %}> Active</label>{% endif %}
+      <div class="flex justify-end gap-3 sm:col-span-2">{% if t %}<a href="/finance/tax#stamp" class="kx-btn-ghost">Cancel</a>{% endif %}<button type="submit" class="kx-btn-secondary">Save type</button></div>
+    </form>
+    {% endif %}
+  </section>
+</div>
+
+<section id="wht" class="kx-card mt-6 overflow-hidden" aria-labelledby="wht-title">
+  <div class="border-b border-line px-5 py-4"><h2 id="wht-title" class="font-h3 text-h3">Withholding tax types</h2><p class="mt-1 text-body-sm text-ink-3">The types come seeded without rates. Enter the current rates before recording WHT.</p></div>
+  {% set e = errors if form == "wht" else {} %}
+  <form method="post" action="/finance/tax/wht" novalidate>
+    {{ ui.csrf_field() }}
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[720px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Type</th><th class="w-44 px-3 py-2.5 text-right font-semibold">Companies (%)</th><th class="w-44 px-3 py-2.5 text-right font-semibold">Individuals (%)</th><th class="px-5 py-2.5 text-left font-semibold">Active</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for w in wht_types %}
+          <tr class="align-top">
+            <td class="px-5 py-2.5">{{ w.name }}{% if w.company_rate is none and w.individual_rate is none %} <span class="ml-1">{{ ui.badge("warning", "Rate not set") }}</span>{% endif %}<input type="hidden" name="wht_type_id" value="{{ w.id }}"></td>
+            {% for kind in ("company", "individual") %}
+            {% set key = kind ~ "_" ~ w.id %}
+            {% set stored = w.company_rate if kind == "company" else w.individual_rate %}
+            <td class="px-3 py-2"><label class="sr-only" for="{{ key }}">{{ w.name }}, {{ kind }} rate</label><input id="{{ key }}" name="{{ kind }}_rate" value="{{ v.get(key) if form == 'wht' else ((stored | plain) if stored is not none else '') }}" inputmode="decimal" class="kx-input h-10 text-right tnum" {% if not can_manage %}readonly{% endif %}>{{ ui.field_error(e, key) }}</td>
+            {% endfor %}
+            <td class="px-5 py-2.5"><label class="flex items-center gap-2"><input type="checkbox" name="active" value="{{ w.id }}" class="kx-check" {% if w.is_active %}checked{% endif %} {% if not can_manage %}disabled{% endif %}><span class="sr-only">{{ w.name }} active</span></label></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if can_manage %}<div class="flex justify-end border-t border-line p-5"><button type="submit" class="kx-btn-secondary">Save rates</button></div>{% endif %}
+  </form>
+</section>
+
+<section id="settings" class="kx-card mt-6 p-5" aria-labelledby="settings-title">
+  <h2 id="settings-title" class="font-h3 text-h3">Receivables settings <span class="text-body-sm font-normal text-ink-3">(confirm)</span></h2>
+  {% set e = errors if form == "settings" else {} %}
+  {% set sv = v if form == "settings" else {} %}
+  <form method="post" action="/finance/tax/settings" class="mt-4 space-y-6" novalidate>
+    {{ ui.csrf_field() }}
+    <fieldset class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" {% if not can_manage %}disabled{% endif %}>
+      <legend class="mb-2 text-body-sm font-semibold">Ledger accounts</legend>
+      {% for key, label, kind in setting_accounts %}
+      <div><label class="kx-label" for="{{ key }}">{{ label }}</label><select id="{{ key }}" name="{{ key }}" class="kx-input">{% for a in postable if a.type == kind %}<option value="{{ a.code }}" {% if (sv.get(key) or s[key]) == a.code %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>{{ ui.field_error(e, key) }}</div>
+      {% endfor %}
+    </fieldset>
+    <fieldset class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" {% if not can_manage %}disabled{% endif %}>
+      <legend class="mb-2 text-body-sm font-semibold">Terms, reminders and returns</legend>
+      {{ ui.text_field("default_terms_days", "Default payment terms (days)", value=sv.get("default_terms_days") or s.default_terms_days, inputmode="numeric", errors=e) }}
+      {{ ui.text_field("remind_before_days", "Remind this many days before due", value=sv.get("remind_before_days") if sv else s.remind_before_days, inputmode="numeric", errors=e, hint="0 for no early reminder.") }}
+      {{ ui.text_field("remind_every_days", "Then every N days overdue", value=sv.get("remind_every_days") or s.remind_every_days, inputmode="numeric", errors=e) }}
+      {{ ui.text_field("return_due_day", "Returns due on this day of the next month", value=sv.get("return_due_day") or s.return_due_day, inputmode="numeric", errors=e) }}
+      <label class="flex items-center gap-2 text-body-sm sm:col-span-2"><input type="checkbox" name="remind_on_due" value="1" class="kx-check" {% if (sv.get("remind_on_due") if sv else s.remind_on_due) %}checked{% endif %}> Also remind on the due date</label>
+    </fieldset>
+    {% if can_manage %}<div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save settings</button></div>{% endif %}
+  </form>
+</section>
+{% endblock %}

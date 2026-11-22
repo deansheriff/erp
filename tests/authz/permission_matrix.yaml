@@ -6,8 +6,11 @@ auditor:
   authz.role.read: organization
   expenses.claim.read: organization
   finance.account.read: organization
+  finance.customer.read: organization
   finance.journal.read: organization
   finance.report.read: organization
+  finance.sales.read: organization
+  finance.tax.read: organization
   hr.employee.banking.read: organization
   hr.employee.compensation.read: organization
   hr.employee.personal.read: organization
@@ -56,11 +59,20 @@ finance_manager:
   expenses.settings.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.credit_note.issue: organization
+  finance.customer.manage: organization
+  finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.post: organization
   finance.journal.read: organization
   finance.period.manage: organization
+  finance.receipt.create: organization
+  finance.receipt.reverse: organization
   finance.report.read: organization
+  finance.sales.create: organization
+  finance.sales.read: organization
+  finance.tax.manage: organization
+  finance.tax.read: organization
   payroll.certificate.read: organization
   payroll.loan.approve: organization
   payroll.loan.read: organization
@@ -73,9 +85,15 @@ finance_manager:
 finance_officer:
   expenses.claim.read: organization
   finance.account.read: organization
+  finance.customer.manage: organization
+  finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.read: organization
+  finance.receipt.create: organization
   finance.report.read: organization
+  finance.sales.create: organization
+  finance.sales.read: organization
+  finance.tax.read: organization
   payroll.loan.read: organization
   payroll.remittance.export: organization
   payroll.run.pay: organization
@@ -176,11 +194,20 @@ organization_administrator:
   files.file.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.credit_note.issue: organization
+  finance.customer.manage: organization
+  finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.post: organization
   finance.journal.read: organization
   finance.period.manage: organization
+  finance.receipt.create: organization
+  finance.receipt.reverse: organization
   finance.report.read: organization
+  finance.sales.create: organization
+  finance.sales.read: organization
+  finance.tax.manage: organization
+  finance.tax.read: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization
@@ -272,11 +299,20 @@ super_administrator:
   files.file.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.credit_note.issue: organization
+  finance.customer.manage: organization
+  finance.customer.read: organization
   finance.journal.create: organization
   finance.journal.post: organization
   finance.journal.read: organization
   finance.period.manage: organization
+  finance.receipt.create: organization
+  finance.receipt.reverse: organization
   finance.report.read: organization
+  finance.sales.create: organization
+  finance.sales.read: organization
+  finance.tax.manage: organization
+  finance.tax.read: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization

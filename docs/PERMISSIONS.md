@@ -58,11 +58,20 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 |---|---|---|---|---|
 | `finance.account.manage` | Manage the chart of accounts | Organisation |  | Add accounts, rename them, and deactivate ones no longer used. |
 | `finance.account.read` | View the chart of accounts | Organisation |  | See accounts and their balances. |
+| `finance.credit_note.issue` | Issue credit notes | Organisation |  | Issue a credit note someone else drafted. |
+| `finance.customer.manage` | Manage customers | Organisation |  | Add and change customers, and email them payment reminders. |
+| `finance.customer.read` | View customers | Organisation |  | See customers, their balances, aging and statements. |
 | `finance.journal.create` | Draft journals | Organisation |  | Draft manual journals and set up recurring ones. |
 | `finance.journal.post` | Post journals | Organisation |  | Post drafted and held journals, and reverse posted ones. |
 | `finance.journal.read` | View journals | Organisation |  | See drafted, held and posted journals and their lines. |
 | `finance.period.manage` | Manage financial periods | Organisation |  | Open financial years, close and reopen months, and close the year. |
+| `finance.receipt.create` | Record receipts | Organisation |  | Record customer receipts, allocate credit to invoices, and record WHT credit notes. |
+| `finance.receipt.reverse` | Reverse receipts | Organisation |  | Reverse a recorded receipt, for example a bounced cheque. |
 | `finance.report.read` | View financial reports | Organisation |  | Trial balance, profit and loss, balance sheet, cash flow and the general ledger. |
+| `finance.sales.create` | Raise sales documents | Organisation |  | Draft and issue quotes, sales orders and invoices, and draft credit notes. |
+| `finance.sales.read` | View sales documents | Organisation |  | See quotes, sales orders, invoices, credit notes and receipts. |
+| `finance.tax.manage` | Manage tax | Organisation |  | Change tax rates, types and receivables settings, and file returns. |
+| `finance.tax.read` | View tax returns | Organisation |  | See VAT, withholding tax and stamp duty returns and the tax settings. |
 
 ### hr
 
@@ -181,11 +190,20 @@ Everything, including technical settings. Can't be edited or removed.
 | `files.file.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.credit_note.issue` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
 | `finance.journal.create` | O |
 | `finance.journal.post` | O |
 | `finance.journal.read` | O |
 | `finance.period.manage` | O |
+| `finance.receipt.create` | O |
+| `finance.receipt.reverse` | O |
 | `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.tax.manage` | O |
+| `finance.tax.read` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -270,11 +288,20 @@ Everything except technical settings such as mail, branding and security.
 | `files.file.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.credit_note.issue` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
 | `finance.journal.create` | O |
 | `finance.journal.post` | O |
 | `finance.journal.read` | O |
 | `finance.period.manage` | O |
+| `finance.receipt.create` | O |
+| `finance.receipt.reverse` | O |
 | `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.tax.manage` | O |
+| `finance.tax.read` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -337,8 +364,11 @@ Reads everything, including the audit log. Changes nothing.
 | `authz.role.read` | O |
 | `expenses.claim.read` | O |
 | `finance.account.read` | O |
+| `finance.customer.read` | O |
 | `finance.journal.read` | O |
 | `finance.report.read` | O |
+| `finance.sales.read` | O |
+| `finance.tax.read` | O |
 | `hr.employee.banking.read` | O |
 | `hr.employee.compensation.read` | O |
 | `hr.employee.personal.read` | O |
@@ -505,9 +535,15 @@ Day-to-day accounting.
 |---|---|
 | `expenses.claim.read` | O |
 | `finance.account.read` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
 | `finance.journal.create` | O |
 | `finance.journal.read` | O |
+| `finance.receipt.create` | O |
 | `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.tax.read` | O |
 | `payroll.loan.read` | O |
 | `payroll.remittance.export` | O |
 | `payroll.run.pay` | O |
@@ -525,11 +561,20 @@ Approves and posts finance documents.
 | `expenses.settings.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.credit_note.issue` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
 | `finance.journal.create` | O |
 | `finance.journal.post` | O |
 | `finance.journal.read` | O |
 | `finance.period.manage` | O |
+| `finance.receipt.create` | O |
+| `finance.receipt.reverse` | O |
 | `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.tax.manage` | O |
+| `finance.tax.read` | O |
 | `payroll.certificate.read` | O |
 | `payroll.loan.approve` | O |
 | `payroll.loan.read` | O |
@@ -600,5 +645,6 @@ _No grants yet: added by the phase that delivers its module._
 | `payroll.no_self_loan` | `payroll.loan.approve` | owner_is_actor | You can't approve your own loan. |
 | `payroll.loan_four_eyes` | `payroll.loan.approve` | creator_is_actor | Someone else approves a loan you recorded. |
 | `finance.journal_four_eyes` | `finance.journal.post` | creator_is_actor | Someone else posts a journal you drafted. |
+| `finance.credit_note_four_eyes` | `finance.credit_note.issue` | creator_is_actor | Someone else issues a credit note you drafted. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

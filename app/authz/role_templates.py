@@ -206,6 +206,12 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.journal.read": ORG,
             "finance.journal.create": ORG,
             "finance.report.read": ORG,
+            "finance.customer.read": ORG,
+            "finance.customer.manage": ORG,
+            "finance.sales.read": ORG,
+            "finance.sales.create": ORG,
+            "finance.receipt.create": ORG,
+            "finance.tax.read": ORG,
         },
     ),
     RoleTemplate(
@@ -234,6 +240,15 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.journal.post": ORG,
             "finance.period.manage": ORG,
             "finance.report.read": ORG,
+            "finance.customer.read": ORG,
+            "finance.customer.manage": ORG,
+            "finance.sales.read": ORG,
+            "finance.sales.create": ORG,
+            "finance.credit_note.issue": ORG,  # a credit note someone else drafted
+            "finance.receipt.create": ORG,
+            "finance.receipt.reverse": ORG,
+            "finance.tax.read": ORG,
+            "finance.tax.manage": ORG,
         },
     ),
     RoleTemplate(

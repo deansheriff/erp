@@ -47,6 +47,62 @@ REPORT_READ = Permission(
     scopes=ORG_ONLY,
 )
 
+# Receivables and tax (ADR 0024)
+CUSTOMER_READ = Permission(
+    "finance.customer.read",
+    "View customers",
+    "See customers, their balances, aging and statements.",
+    scopes=ORG_ONLY,
+)
+CUSTOMER_MANAGE = Permission(
+    "finance.customer.manage",
+    "Manage customers",
+    "Add and change customers, and email them payment reminders.",
+    scopes=ORG_ONLY,
+)
+SALES_READ = Permission(
+    "finance.sales.read",
+    "View sales documents",
+    "See quotes, sales orders, invoices, credit notes and receipts.",
+    scopes=ORG_ONLY,
+)
+SALES_CREATE = Permission(
+    "finance.sales.create",
+    "Raise sales documents",
+    "Draft and issue quotes, sales orders and invoices, and draft credit notes.",
+    scopes=ORG_ONLY,
+)
+CREDIT_NOTE_ISSUE = Permission(
+    "finance.credit_note.issue",
+    "Issue credit notes",
+    "Issue a credit note someone else drafted.",
+    scopes=ORG_ONLY,
+)
+RECEIPT_CREATE = Permission(
+    "finance.receipt.create",
+    "Record receipts",
+    "Record customer receipts, allocate credit to invoices, and record WHT credit notes.",
+    scopes=ORG_ONLY,
+)
+RECEIPT_REVERSE = Permission(
+    "finance.receipt.reverse",
+    "Reverse receipts",
+    "Reverse a recorded receipt, for example a bounced cheque.",
+    scopes=ORG_ONLY,
+)
+TAX_READ = Permission(
+    "finance.tax.read",
+    "View tax returns",
+    "See VAT, withholding tax and stamp duty returns and the tax settings.",
+    scopes=ORG_ONLY,
+)
+TAX_MANAGE = Permission(
+    "finance.tax.manage",
+    "Manage tax",
+    "Change tax rates, types and receivables settings, and file returns.",
+    scopes=ORG_ONLY,
+)
+
 PERMISSIONS = (
     ACCOUNT_READ,
     ACCOUNT_MANAGE,
@@ -55,6 +111,15 @@ PERMISSIONS = (
     JOURNAL_POST,
     PERIOD_MANAGE,
     REPORT_READ,
+    CUSTOMER_READ,
+    CUSTOMER_MANAGE,
+    SALES_READ,
+    SALES_CREATE,
+    CREDIT_NOTE_ISSUE,
+    RECEIPT_CREATE,
+    RECEIPT_REVERSE,
+    TAX_READ,
+    TAX_MANAGE,
 )
 
 SOD_RULES = (
@@ -63,5 +128,11 @@ SOD_RULES = (
         permission=JOURNAL_POST.key,
         conflict="creator_is_actor",
         message="Someone else posts a journal you drafted.",
+    ),
+    SodRule(
+        key="finance.credit_note_four_eyes",
+        permission=CREDIT_NOTE_ISSUE.key,
+        conflict="creator_is_actor",
+        message="Someone else issues a credit note you drafted.",
     ),
 )
