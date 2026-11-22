@@ -1,0 +1,84 @@
+{# Finance → one journal: the draft editor, or a posted or held journal with its actions.
+   Design: design/stitch/exports/finance.journal.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% from "finance/_lines.html" import line_editor with context %}
+
+{% block content %}
+{% set j = journal %}
+{% set editing = not j or j.can_edit %}
+{% if j %}
+{% call ui.page_header(j.number or ("Held journal" if j.status == "held" else "Draft journal"), j.memo, tones[j.status], j.status | capitalize) %}
+  {% if j.status == "draft" and j.can_edit %}
+  <form method="post" action="/finance/journals/{{ j.id }}/delete">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-danger-text">{{ ui.icon("trash-2", "sm") }} Delete draft</button></form>
+  {% endif %}
+  {% if j.status in ("draft", "held") %}
+  <form method="post" action="/finance/journals/{{ j.id }}/post">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary" {% if not j.can_post %}disabled aria-describedby="post-blocked"{% endif %}>{{ ui.icon("check", "sm") }} Post</button></form>
+  {% endif %}
+{% endcall %}
+{% else %}
+{% call ui.page_header("New journal", "Draft it here; someone else posts it.") %}{% endcall %}
+{% endif %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if j and j.post_blocked and j.post_blocked != j.hold_reason %}<div class="mt-5" id="post-blocked">{{ ui.alert("info", j.post_blocked) }}</div>{% endif %}
+{% if j and j.status == "held" and j.hold_reason %}<div class="mt-3">{{ ui.alert("warning", "Held: " ~ j.hold_reason) }}</div>{% endif %}
+
+{% if j %}
+<dl class="kx-card mt-6 grid gap-4 p-5 text-body-sm sm:grid-cols-2 lg:grid-cols-4">
+  <div><dt class="text-xs text-ink-3">Date</dt><dd class="font-semibold">{{ j.journal_date | date }}{% if j.original_date %} <span class="font-normal text-ink-3">(was {{ j.original_date | date }})</span>{% endif %}</dd></div>
+  <div><dt class="text-xs text-ink-3">Source</dt><dd>{{ ui.badge("neutral", j.source_label) }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Drafted by</dt><dd>{{ j.created_by or ("Payroll or expenses" if j.source in ("payroll", "expenses") else "—") }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Posted</dt><dd>{% if j.posted_at %}{{ j.posted_by or "Automatically" }}, {{ j.posted_at | datetime }}{% else %}Not yet{% endif %}</dd></div>
+  {% if j.redate_reason %}<div class="sm:col-span-2 lg:col-span-4"><dt class="text-xs text-ink-3">Re-dated because</dt><dd>{{ j.redate_reason }}</dd></div>{% endif %}
+  {% if j.reverses %}<div><dt class="text-xs text-ink-3">Reverses</dt><dd><a href="/finance/journals/{{ j.reverses[0] }}" class="font-semibold text-iris">{{ j.reverses[1] }}</a></dd></div>{% endif %}
+  {% if j.reversed_by %}<div><dt class="text-xs text-ink-3">Reversed by</dt><dd><a href="/finance/journals/{{ j.reversed_by[0] }}" class="font-semibold text-iris">{{ j.reversed_by[1] }}</a></dd></div>{% endif %}
+</dl>
+{% endif %}
+
+{% if editing %}
+<form method="post" action="/finance/journals" class="kx-card mt-6 overflow-hidden" x-data="journalTotals" x-on:input="recalc" novalidate>
+  {{ ui.csrf_field() }}
+  {% if j %}<input type="hidden" name="journal_id" value="{{ j.id }}">{% endif %}
+  <div class="grid gap-4 p-5 sm:grid-cols-[200px_minmax(0,1fr)]">
+    {{ ui.text_field("journal_date", "Date", value=values.get("journal_date") or (j.journal_date.isoformat() if j else today.isoformat()), type="date", errors=errors) }}
+    {{ ui.text_field("memo", "Memo", value=values.get("memo") or (j.memo if j else ""), errors=errors) }}
+  </div>
+  {{ line_editor(rows, postable, cost_centres, errors) }}
+  <div class="flex justify-end gap-3 border-t border-line p-5"><button type="submit" class="kx-btn-primary">Save draft</button></div>
+</form>
+{% else %}
+<section class="kx-card mt-6 overflow-hidden" aria-label="Lines">
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[720px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Account</th><th class="px-3 py-2.5 text-left font-semibold">Cost centre</th><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="px-3 py-2.5 text-right font-semibold">Debit</th><th class="px-5 py-2.5 text-right font-semibold">Credit</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in j.lines %}
+        <tr><td class="px-5 py-2.5"><span class="font-mono text-xs">{{ line.account_code }}</span> {% if line.account_name %}{{ line.account_name }}{% else %}<span class="text-warning-text">not in the chart</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.cost_centre or "" }}</td><td class="px-3 py-2.5 text-ink-2">{{ line.description or "" }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.debit | money if line.debit else "" }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.credit | money if line.credit else "" }}</td></tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold"><tr><td class="px-5 py-3" colspan="3">Total</td><td class="px-3 py-3 text-right tnum">{{ j.debit | money }}</td><td class="px-5 py-3 text-right tnum">{{ j.credit | money }}</td></tr></tfoot>
+    </table>
+  </div>
+</section>
+{% endif %}
+
+{% if j and j.status == "held" %}
+<form method="post" action="/finance/journals/{{ j.id }}/redate" class="kx-card mt-6 grid gap-4 p-5 sm:grid-cols-[200px_minmax(0,1fr)_auto] sm:items-end" novalidate>
+  {{ ui.csrf_field() }}
+  <h2 class="font-h3 text-h3 sm:col-span-3">Re-date into an open month and post</h2>
+  {{ ui.text_field("new_date", "New date", value=values.get("new_date"), type="date", errors=errors) }}
+  {{ ui.text_field("reason", "Why", value=values.get("reason"), errors=errors) }}
+  <button type="submit" class="kx-btn-secondary">Re-date and post</button>
+</form>
+{% endif %}
+
+{% if j and j.can_reverse %}
+<form method="post" action="/finance/journals/{{ j.id }}/reverse" class="kx-card mt-6 flex flex-col gap-4 p-5 sm:flex-row sm:items-end" novalidate>
+  {{ ui.csrf_field() }}
+  <div class="flex-1"><h2 class="font-h3 text-h3">Reverse this journal</h2><p class="text-body-sm text-ink-3">Posted journals are never edited. A reversal posts the same lines the other way round.</p></div>
+  <div class="w-full sm:w-52">{{ ui.text_field("reverse_on", "Reversal date", value=values.get("reverse_on") or today.isoformat(), type="date", errors=errors) }}</div>
+  <button type="submit" class="kx-btn-secondary">{{ ui.icon("undo-2", "sm") }} Reverse</button>
+</form>
+{% endif %}
+{% endblock %}

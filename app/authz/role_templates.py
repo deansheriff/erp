@@ -202,6 +202,10 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.run.pay": ORG,
             "payroll.remittance.export": ORG,  # uploads the bank file
             "payroll.loan.read": ORG,
+            "finance.account.read": ORG,
+            "finance.journal.read": ORG,
+            "finance.journal.create": ORG,
+            "finance.report.read": ORG,
         },
     ),
     RoleTemplate(
@@ -223,6 +227,13 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.loan.read": ORG,
             "payroll.loan.approve": ORG,
             "payroll.certificate.read": ORG,
+            "finance.account.read": ORG,
+            "finance.account.manage": ORG,
+            "finance.journal.read": ORG,
+            "finance.journal.create": ORG,
+            "finance.journal.post": ORG,
+            "finance.period.manage": ORG,
+            "finance.report.read": ORG,
         },
     ),
     RoleTemplate(

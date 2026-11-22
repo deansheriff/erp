@@ -224,6 +224,38 @@
       };
     });
 
+    // Journal line editors: live debit and credit totals, and whether they balance.
+    Alpine.data("journalTotals", function () {
+      function kobo(root, name) {
+        var total = 0;
+        root.querySelectorAll('input[name="' + name + '"]').forEach(function (el) {
+          var value = parseFloat((el.value || "").replace(/[,\s₦]/g, ""));
+          if (!isNaN(value)) total += Math.round(value * 100);
+        });
+        return total;
+      }
+      function naira(k) {
+        return "₦" + (k / 100).toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+      return {
+        debit: "₦0.00",
+        credit: "₦0.00",
+        difference: "",
+        balanced: false,
+        unbalanced: false,
+        init: function () { this.recalc(); },
+        recalc: function () {
+          var d = kobo(this.$root, "debit");
+          var c = kobo(this.$root, "credit");
+          this.debit = naira(d);
+          this.credit = naira(c);
+          this.balanced = d === c && d > 0;
+          this.unbalanced = d !== c;
+          this.difference = d === c ? "" : "Out by " + naira(Math.abs(d - c));
+        },
+      };
+    });
+
     Alpine.data("liveClock", function () {
       return {
         time: "",

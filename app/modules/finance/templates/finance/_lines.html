@@ -1,0 +1,44 @@
+{# Journal line rows shared by journals and recurring templates: account, cost centre,
+   description, debit, credit, with live totals from the journalTotals component. #}
+{% import "components/ui.html" as ui with context %}
+{% macro line_editor(rows, postable, cost_centres, errors) -%}
+<div class="kx-scroll-x">
+  <table class="w-full min-w-[820px] text-body-sm">
+    <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3">
+      <tr><th class="w-[30%] px-3 py-2.5 text-left font-semibold">Account</th><th class="w-48 px-3 py-2.5 text-left font-semibold">Cost centre</th><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="w-36 px-3 py-2.5 text-right font-semibold">Debit</th><th class="w-36 px-3 py-2.5 text-right font-semibold">Credit</th></tr>
+    </thead>
+    <tbody class="divide-y divide-line">
+      {% for line in rows %}
+      {% set i = loop.index0 %}
+      <tr class="align-top">
+        <td class="px-3 py-2">
+          <label class="sr-only" for="acc-{{ i }}">Account, line {{ i + 1 }}</label>
+          <select id="acc-{{ i }}" name="account_id" class="kx-input h-10"><option value="">—</option>{% for a in postable %}<option value="{{ a.id }}" {% if line.account_id == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>
+          {% if errors.get("line_" ~ i) %}<p class="kx-field-error">{{ ui.icon("circle-alert", "sm") }} {{ errors["line_" ~ i] }}</p>{% endif %}
+        </td>
+        <td class="px-3 py-2">
+          <label class="sr-only" for="cc-{{ i }}">Cost centre, line {{ i + 1 }}</label>
+          <select id="cc-{{ i }}" name="cost_centre_id" class="kx-input h-10"><option value="">—</option>{% for cid, label in cost_centres %}<option value="{{ cid }}" {% if line.cost_centre_id == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+        </td>
+        <td class="px-3 py-2"><label class="sr-only" for="ds-{{ i }}">Description, line {{ i + 1 }}</label><input id="ds-{{ i }}" name="description" value="{{ line.description }}" class="kx-input h-10"></td>
+        <td class="px-3 py-2"><label class="sr-only" for="dr-{{ i }}">Debit, line {{ i + 1 }}</label><input id="dr-{{ i }}" name="debit" value="{{ line.debit }}" inputmode="decimal" class="kx-input h-10 text-right tnum" placeholder="0.00"></td>
+        <td class="px-3 py-2"><label class="sr-only" for="cr-{{ i }}">Credit, line {{ i + 1 }}</label><input id="cr-{{ i }}" name="credit" value="{{ line.credit }}" inputmode="decimal" class="kx-input h-10 text-right tnum" placeholder="0.00"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold">
+      <tr>
+        <td class="px-3 py-3" colspan="3">
+          <span class="inline-flex items-center gap-2" aria-live="polite">
+            <span x-show="balanced" x-cloak>{{ ui.badge("success", "Balanced") }}</span>
+            <span x-show="unbalanced" x-cloak class="text-danger-text" x-text="difference"></span>
+          </span>
+        </td>
+        <td class="px-3 py-3 text-right tnum" x-text="debit"></td>
+        <td class="px-3 py-3 text-right tnum" x-text="credit"></td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<p class="px-1 pt-2 text-xs text-ink-3">Need more lines? Save, and more empty rows appear.</p>
+{%- endmacro %}

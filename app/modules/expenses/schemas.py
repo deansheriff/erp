@@ -78,5 +78,6 @@ class JournalView:
     id: uuid.UUID
     journal_date: date
     memo: str
-    status: str
+    status: str  # posted or held in the ledger
     lines: list[tuple[str, Decimal, Decimal]]  # (account, debit, credit)
+    number: str | None = None  # the ledger's journal number once posted

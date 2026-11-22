@@ -5,6 +5,9 @@ auditor:
   audit.log.read: organization
   authz.role.read: organization
   expenses.claim.read: organization
+  finance.account.read: organization
+  finance.journal.read: organization
+  finance.report.read: organization
   hr.employee.banking.read: organization
   hr.employee.compensation.read: organization
   hr.employee.personal.read: organization
@@ -51,6 +54,13 @@ finance_manager:
   expenses.claim.approve_finance: organization
   expenses.claim.read: organization
   expenses.settings.manage: organization
+  finance.account.manage: organization
+  finance.account.read: organization
+  finance.journal.create: organization
+  finance.journal.post: organization
+  finance.journal.read: organization
+  finance.period.manage: organization
+  finance.report.read: organization
   payroll.certificate.read: organization
   payroll.loan.approve: organization
   payroll.loan.read: organization
@@ -62,6 +72,10 @@ finance_manager:
   payroll.settings.manage: organization
 finance_officer:
   expenses.claim.read: organization
+  finance.account.read: organization
+  finance.journal.create: organization
+  finance.journal.read: organization
+  finance.report.read: organization
   payroll.loan.read: organization
   payroll.remittance.export: organization
   payroll.run.pay: organization
@@ -160,6 +174,13 @@ organization_administrator:
   expenses.claim.reimburse_override: organization
   expenses.settings.manage: organization
   files.file.manage: organization
+  finance.account.manage: organization
+  finance.account.read: organization
+  finance.journal.create: organization
+  finance.journal.post: organization
+  finance.journal.read: organization
+  finance.period.manage: organization
+  finance.report.read: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization
@@ -249,6 +270,13 @@ super_administrator:
   expenses.claim.reimburse_override: organization
   expenses.settings.manage: organization
   files.file.manage: organization
+  finance.account.manage: organization
+  finance.account.read: organization
+  finance.journal.create: organization
+  finance.journal.post: organization
+  finance.journal.read: organization
+  finance.period.manage: organization
+  finance.report.read: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization

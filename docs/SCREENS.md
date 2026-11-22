@@ -108,3 +108,14 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Payroll remittances and files** (`payroll.remittances`) | `GET /payroll/remittances` | payroll.run.read | statutory, banking, compensation | Dean Sheriff (2026-11-20) |
 | **Loans and salary advances** (`payroll.loans`) | `GET /payroll/loans` | payroll.loan.read | directory, compensation | Dean Sheriff (2026-11-20) |
 | **Year-end tax certificates** (`payroll.certificates`) | `GET /payroll/certificates` | payroll.certificate.read | directory, statutory, compensation | Dean Sheriff (2026-11-20) |
+
+## Phase 10
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Journals** (`finance.journals`) | `GET /finance/journals` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Journal (draft editor, held or posted)** (`finance.journal`) | `GET /finance/journals/{journal_id}` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Chart of accounts** (`finance.accounts`) | `GET /finance/accounts` | finance.account.read | — | Dean Sheriff (2026-11-22) |
+| **Recurring journals** (`finance.recurring`) | `GET /finance/recurring` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Financial years and periods** (`finance.periods`) | `GET /finance/periods` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Financial reports** (`finance.reports`) | `GET /finance/reports` | finance.report.read | — | Dean Sheriff (2026-11-22) |

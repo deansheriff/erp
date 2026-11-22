@@ -1,0 +1,69 @@
+{# Finance → Financial years and their months (ADR 0023).
+   Design: design/stitch/exports/finance.periods.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Periods", "Financial years run January to December. Journals post only into open months.") %}
+  {% if can_manage %}
+  <form method="post" action="/finance/periods/years">{{ ui.csrf_field() }}<input type="hidden" name="year" value="{{ next_year }}"><button type="submit" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Open financial year {{ next_year }}</button></form>
+  {% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") and failed in ("year", "settings") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{% for y in years %}
+<section class="kx-card mt-6 p-5" aria-labelledby="h-{{ y.year }}">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h2 id="h-{{ y.year }}" class="flex items-center gap-2 font-h2 text-h2">{{ y.year }} {{ ui.badge("success" if y.status == "open" else "neutral", y.status | capitalize) }}</h2>
+  </div>
+  {% if errors.get("form") and failed == y.id|string %}<div class="mt-4">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+  <ol class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    {% for p in y.periods %}
+    <li class="rounded-2xl border border-line p-4 {{ 'bg-surface-sunken/50' if p.status == 'closed' }}" x-data="menu">
+      <p class="flex items-center justify-between gap-2"><span class="font-semibold">{{ p.name }}</span>{{ ui.badge("success" if p.status == "open" else "neutral", p.status | capitalize) }}</p>
+      <p class="mt-1 text-xs text-ink-3">{{ p.posted }} posted{% if p.drafts %} · <span class="text-warning-text">{{ p.drafts }} draft{{ "s" if p.drafts != 1 }}</span>{% endif %}</p>
+      {% if p.status == "closed" and p.closed_by %}<p class="mt-1 text-xs text-ink-3">Closed by {{ p.closed_by }}{% if p.closed_at %}, {{ p.closed_at | date }}{% endif %}</p>{% endif %}
+      {% if p.reopen_reason and p.status == "open" %}<p class="mt-1 text-xs text-ink-3">Reopened: {{ p.reopen_reason }}</p>{% endif %}
+      {% if errors and failed == p.id|string %}<div class="mt-2">{% if errors.get("form") %}{{ ui.alert("danger", errors["form"]) }}{% endif %}{{ ui.field_error(errors, "reason") }}</div>{% endif %}
+      {% if can_manage and y.status == "open" %}
+      <div class="mt-3">
+        {% if p.status == "open" %}
+        <form method="post" action="/finance/periods/{{ p.id }}/close">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-secondary h-9 w-full px-3 text-xs">Close {{ p.name }}</button></form>
+        {% else %}
+        <button type="button" class="kx-btn-ghost h-9 w-full px-3 text-xs" x-on:click="toggle" x-bind:aria-expanded="open" aria-controls="reopen-{{ p.id }}">Reopen…</button>
+        <form id="reopen-{{ p.id }}" method="post" action="/finance/periods/{{ p.id }}/reopen" class="mt-2 space-y-2" {% if failed != p.id|string %}x-show="open" x-cloak{% endif %} novalidate>
+          {{ ui.csrf_field() }}
+          <label for="r-{{ p.id }}" class="sr-only">Why reopen {{ p.name }}</label>
+          <input id="r-{{ p.id }}" name="reason" class="kx-input h-9 text-xs" placeholder="Why it needs reopening" value="{{ values.get('reason') if failed == p.id|string else '' }}">
+          <button type="submit" class="kx-btn-secondary h-9 w-full px-3 text-xs">Reopen {{ p.name }}</button>
+        </form>
+        {% endif %}
+      </div>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% if can_manage and y.status == "open" %}
+  <div class="mt-5 flex flex-col gap-3 rounded-2xl border border-dashed border-line p-4 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-body-sm text-ink-2">Closing the year posts its income and expenses to {{ retained }} retained earnings. A closed year can't be reopened.</p>
+    <form method="post" action="/finance/periods/{{ y.id }}/close_year">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-secondary" {% if not y.all_closed %}disabled title="Close all twelve months first"{% endif %}>Close the year</button></form>
+  </div>
+  {% endif %}
+</section>
+{% else %}
+<section class="kx-card mt-6">{% call ui.empty_state("calendar-range", "No financial year yet", "Open the first financial year to start posting journals.") %}{% endcall %}</section>
+{% endfor %}
+
+{% if can_manage %}
+<form method="post" action="/finance/periods/settings" class="kx-card mt-8 flex max-w-2xl flex-col gap-3 p-5 sm:flex-row sm:items-end" novalidate>
+  {{ ui.csrf_field() }}
+  <div class="flex-1">
+    <label for="f-retained_earnings_code" class="kx-label">Retained earnings account</label>
+    <select id="f-retained_earnings_code" name="retained_earnings_code" class="kx-input">{% for a in equity_accounts %}<option value="{{ a.code }}" {% if a.code == retained %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>
+    {{ ui.field_error(errors if failed == "settings" else {}, "retained_earnings_code") }}
+  </div>
+  <button type="submit" class="kx-btn-secondary">Save</button>
+</form>
+{% endif %}
+{% endblock %}

@@ -104,7 +104,7 @@ def test_claim_from_draft_to_paid(admin: TestClient) -> None:
     )
     assert r.status_code == 200 and "Marked as paid" in r.text
     paid = admin.get("/expenses/payments?tab=paid").text
-    assert "GTB-98765" in paid and "Waiting for Finance" in paid
+    assert "GTB-98765" in paid and "Held in Finance" in paid  # no financial year open
     mine = amaka.get("/expenses").text
     assert "Paid" in mine and "15,000.00" in mine
     detail = amaka.get(f"/expenses/{claim_id}").text

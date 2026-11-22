@@ -1009,3 +1009,106 @@ screens:
       download_pdf: payroll.certificate.read
     field_classes: [directory, statutory, compensation]
     approved_by: Dean Sheriff (2026-11-20)
+
+  - id: finance.journals
+    phase: 10
+    module: finance
+    title: Journals
+    route: GET /finance/journals
+    template: app/modules/finance/templates/finance/journals.html
+    stitch_screens:
+      desktop: 2fc73a21c1984a25b6fa18c164d59254
+    exports:
+      - design/stitch/exports/finance.journals.html
+    permission: finance.journal.read
+    actions:
+      new_journal: finance.journal.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.journal
+    phase: 10
+    module: finance
+    title: Journal (draft editor, held or posted)
+    route: GET /finance/journals/{journal_id}
+    template: app/modules/finance/templates/finance/journal.html
+    stitch_screens:
+      desktop: a14c59371d2e4e89be650827ef550a8b
+    exports:
+      - design/stitch/exports/finance.journal.html
+    permission: finance.journal.read
+    actions:
+      save_draft: finance.journal.create
+      delete_draft: finance.journal.create
+      post: finance.journal.post
+      redate_held: finance.journal.post
+      reverse: finance.journal.post
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.accounts
+    phase: 10
+    module: finance
+    title: Chart of accounts
+    route: GET /finance/accounts
+    template: app/modules/finance/templates/finance/accounts.html
+    stitch_screens:
+      desktop: b0efd1899e3f40368e872dbe00327d40
+    exports:
+      - design/stitch/exports/finance.accounts.html
+    permission: finance.account.read
+    actions:
+      save: finance.account.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.recurring
+    phase: 10
+    module: finance
+    title: Recurring journals
+    route: GET /finance/recurring
+    template: app/modules/finance/templates/finance/recurring.html
+    stitch_screens:
+      desktop: 0030d240ff6b42c2935d1155b499704b
+    exports:
+      - design/stitch/exports/finance.recurring.html
+    permission: finance.journal.read
+    actions:
+      save: finance.journal.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.periods
+    phase: 10
+    module: finance
+    title: Financial years and periods
+    route: GET /finance/periods
+    template: app/modules/finance/templates/finance/periods.html
+    stitch_screens:
+      desktop: 5e3ec1b99bbb45b382ba037b389b23cb
+    exports:
+      - design/stitch/exports/finance.periods.html
+    permission: finance.journal.read
+    actions:
+      open_year: finance.period.manage
+      close_month: finance.period.manage
+      reopen_month: finance.period.manage
+      close_year: finance.period.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.reports
+    phase: 10
+    module: finance
+    title: Financial reports
+    route: GET /finance/reports
+    template: app/modules/finance/templates/finance/reports.html
+    stitch_screens:
+      desktop: 28d96eb9c95644539e506414dbeff7e9
+    exports:
+      - design/stitch/exports/finance.reports.html
+    permission: finance.report.read
+    actions:
+      download_csv: finance.report.read
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)

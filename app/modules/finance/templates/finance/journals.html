@@ -1,0 +1,55 @@
+{# Finance → Journals: drafts, posted and held (ADR 0023).
+   Design: design/stitch/exports/finance.journals.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Journals", "Manual journals are drafted by one person and posted by another.") %}
+  {% if can_create %}<a href="/finance/journals/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New journal</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<div class="mt-6 flex flex-wrap items-end justify-between gap-4">
+  <nav class="kx-segment" aria-label="Journals">
+    {% for key, label in (("draft", "Drafts"), ("posted", "Posted"), ("held", "Held")) %}
+    <a href="/finance/journals?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }} {{ 'text-warning-text' if key == 'held' and counts.get('held') and tab != key }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}{% if key != "posted" and counts.get(key) %} ({{ counts.get(key) }}){% endif %}</a>
+    {% endfor %}
+  </nav>
+  <form method="get" action="/finance/journals" class="flex flex-wrap items-end gap-2">
+    <input type="hidden" name="tab" value="{{ tab }}">
+    <div><label for="f-source" class="kx-label">Source</label><select id="f-source" name="source" class="kx-input h-10"><option value="">All</option>{% for key, label in sources %}<option value="{{ key }}" {% if filters.source == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div><label for="f-start" class="kx-label">From</label><input id="f-start" name="start" type="date" value="{{ filters.start }}" class="kx-input h-10"></div>
+    <div><label for="f-end" class="kx-label">To</label><input id="f-end" name="end" type="date" value="{{ filters.end }}" class="kx-input h-10"></div>
+    <button type="submit" class="kx-btn-secondary h-10">Filter</button>
+  </form>
+</div>
+
+{% if tab == "held" and rows %}
+<div class="mt-5">{{ ui.alert("warning", "Held journals came from payroll or expenses dated in a closed or unopened month, or using an account not in the chart. Open the month, or re-date them, then post.") }}</div>
+{% endif %}
+
+<section class="kx-card mt-5 overflow-hidden" aria-label="Journals">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[860px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Journal</th><th class="px-3 py-3 text-left font-semibold">Date</th><th class="px-3 py-3 text-left font-semibold">Memo</th><th class="px-3 py-3 text-left font-semibold">Source</th><th class="px-3 py-3 text-right font-semibold">Total</th><th class="px-3 py-3 text-left font-semibold">Drafted by</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for j in rows %}
+        <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+          <td class="px-5 py-3"><a href="/finance/journals/{{ j.id }}" class="font-mono text-xs font-semibold text-iris">{{ j.number or ("Held" if j.status == "held" else "Draft") }}</a></td>
+          <td class="whitespace-nowrap px-3 py-3">{{ j.journal_date | date }}</td>
+          <td class="max-w-[320px] truncate px-3 py-3">{{ j.memo }}</td>
+          <td class="px-3 py-3">{{ ui.badge("neutral", j.source_label) }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ j.total | money }}</td>
+          <td class="px-3 py-3 text-ink-2">{{ j.created_by or "—" }}</td>
+          <td class="px-5 py-3">{{ ui.badge(tones[j.status], j.status | capitalize) }}{% if j.hold_reason %}<span class="mt-1 block text-xs text-warning-text">{{ j.hold_reason }}</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("book-open", "Nothing here", "Journals appear here as they are drafted, held or posted.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

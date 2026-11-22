@@ -5,6 +5,27 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 10a: General ledger
+- Chart of accounts: hierarchical, typed asset, liability, equity, income or expense, with
+  header accounts and a cash-flow class on balance-sheet accounts. A Nigerian SME chart is
+  seeded using the codes payroll and expenses already use (to confirm) (ADR 0023).
+- Financial years January to December with twelve months; a Finance Manager closes
+  months (not while drafts are dated in them), reopens one with a reason, and closes the
+  year to retained earnings for good.
+- Journals: drafted by one person and posted by another; at least two lines that balance,
+  active accounts, an open month; gap-free numbers `JV-00001`; posted journals reversed,
+  never edited. Live debit and credit totals while editing.
+- Payroll and expenses now post their journals into the ledger in the same transaction.
+  Journals dated in a closed or unopened month, or using an unknown account, are held for
+  Finance to post or re-date with a reason. Payroll remittances and expense payments show
+  each journal's ledger number or that it is held.
+- Recurring journals drafted on their day each month by a daily task; someone other than
+  the template's author posts them.
+- Reports: trial balance, profit and loss (by cost centre), balance sheet, cash flow
+  (indirect) and the general ledger, with CSV for the trial balance and ledger.
+- Permissions `finance.account.*`, `finance.journal.*`, `finance.period.manage` and
+  `finance.report.read`; grants for the Finance Officer, Finance Manager and Auditor.
+
 ### Added — Phase 9b: Payroll remittances, loans and tax certificates
 - Remittances from an approved run as CSV: the bank payment file (CBN bank codes, with
   anyone who can't be paid listed), PAYE per state of residence, pension per PFA and

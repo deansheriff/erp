@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-tertiary-fixed": "#321300",
+          "primary": "#412ec2",
+          "tertiary-container": "#9f4a00",
+          "surface-dim": "#d9dade",
+          "surface-bright": "#f9f9fd",
+          "primary-container": "#5a4bdb",
+          "danger-bg": "#FFE4E6",
+          "surface-sunken": "#EFEFF6",
+          "tertiary-fixed-dim": "#ffb68b",
+          "primary-fixed": "#e4dfff",
+          "surface-container-low": "#f3f3f7",
+          "canvas": "#F6F6FA",
+          "danger-text": "#B4232F",
+          "surface-container-highest": "#e2e2e6",
+          "lime-ink": "#4D7A0A",
+          "on-secondary-fixed": "#161f00",
+          "on-primary-container": "#e0dbff",
+          "iris": "#5A4BDB",
+          "on-primary-fixed": "#140067",
+          "secondary": "#4f6600",
+          "on-secondary-fixed-variant": "#3b4d00",
+          "surface-container": "#ededf1",
+          "inverse-on-surface": "#f0f0f4",
+          "tertiary-fixed": "#ffdbc8",
+          "background": "#f9f9fd",
+          "line": "#E4E4EE",
+          "primary-fixed-dim": "#c5c0ff",
+          "error-container": "#ffdad6",
+          "on-iris": "#FFFFFF",
+          "info-text": "#1D55B8",
+          "iris-tint": "#EEECFD",
+          "ink-2": "#4B4B66",
+          "warning-text": "#8A4B00",
+          "surface-container-lowest": "#ffffff",
+          "on-tertiary-fixed-variant": "#743400",
+          "secondary-fixed-dim": "#acd530",
+          "ink": "#16162A",
+          "tertiary": "#7a3700",
+          "on-surface-variant": "#474554",
+          "on-primary-fixed-variant": "#3d28be",
+          "destructive": "#C42836",
+          "success-text": "#0F6B3E",
+          "iris-hover": "#4A3CC4",
+          "on-primary": "#ffffff",
+          "inverse-surface": "#2e3034",
+          "on-background": "#1a1c1f",
+          "on-secondary-container": "#536b00",
+          "success-bg": "#DDF7E8",
+          "inverse-primary": "#c5c0ff",
+          "secondary-fixed": "#c7f24c",
+          "line-strong": "#8B8BA6",
+          "ink-3": "#626280",
+          "surface-tint": "#5646d7",
+          "on-tertiary-container": "#ffd7c1",
+          "warning-bg": "#FFF1D6",
+          "surface-raised": "#FFFFFF",
+          "outline-variant": "#c8c4d7",
+          "on-error": "#ffffff",
+          "surface-variant": "#e2e2e6",
+          "on-error-container": "#93000a",
+          "surface": "#FFFFFF",
+          "info-bg": "#DFEBFF",
+          "on-surface": "#1a1c1f",
+          "outline": "#787586",
+          "surface-container-high": "#e8e8ec",
+          "secondary-container": "#c4ef49",
+          "error": "#ba1a1a",
+          "on-tertiary": "#ffffff",
+          "lime": "#C5F04A",
+          "on-secondary": "#ffffff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-md": "1rem",
+          "space-sm": "0.5rem",
+          "space-2xl": "3rem",
+          "gutter": "1.5rem",
+          "space-lg": "1.5rem",
+          "space-xl": "2rem",
+          "space-3xl": "4rem",
+          "space-xs": "0.25rem",
+          "margin": "2rem"
+        },
+        "fontFamily": {
+          "h3": [
+            "Plus Jakarta Sans"
+          ],
+          "h1": [
+            "Plus Jakarta Sans"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "overline": [
+            "Inter"
+          ],
+          "h2": [
+            "Plus Jakarta Sans"
+          ],
+          "label": [
+            "Inter"
+          ],
+          "body": [
+            "Inter"
+          ],
+          "display": [
+            "Plus Jakarta Sans"
+          ],
+          "stat": [
+            "Plus Jakarta Sans"
+          ]
+        },
+        "fontSize": {
+          "h3": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "h1": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "body-sm": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "400"
+            }
+          ],
+          "overline": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.06em",
+              "fontWeight": "600"
+            }
+          ],
+          "h2": [
+            "18px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "label": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "fontWeight": "500"
+            }
+          ],
+          "body": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "400"
+            }
+          ],
+          "display": [
+            "32px",
+            {
+              "lineHeight": "40px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "stat": [
+            "30px",
+            {
+              "lineHeight": "36px",
+              "fontWeight": "700"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-canvas font-body text-body text-ink antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface flex flex-col z-50 shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="px-space-lg pt-space-lg pb-space-sm flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center shrink-0 shadow-[0_4px_12px_rgba(65,46,194,0.25)]"><span class="material-symbols-outlined text-on-primary text-[22px]">account_balance</span></div><div class="flex-1 min-w-0"><h1 class="font-h3 text-h3 text-ink truncate tracking-tight">Adeyemi Holdings Ltd</h1></div></div><div class="px-space-lg py-space-sm"><button class="w-full flex items-center justify-between px-space-sm py-2 rounded-lg bg-surface-sunken hover:bg-surface-container transition-colors text-ink-3 hover:text-ink" type="button"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-label text-label">Go to...</span></div><kbd class="px-1.5 py-0.5 rounded bg-surface font-overline text-overline text-ink-2 shadow-sm">Ctrl K</kbd></button></div><div class="flex-1 overflow-y-auto px-space-md py-space-xs space-y-space-xs"><div class="px-space-sm py-1"><span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Modules</span></div><nav class="space-y-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">grid_view</span><span class="font-label text-label">Dashboard / Home</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="hr-people" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">groups</span><span class="font-label text-label">HR &amp; People</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">event_available</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">schedule</span><span class="font-label text-label">Attendance</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">receipt_long</span><span class="font-label text-label">Expenses</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">payments</span><span class="font-label text-label">Payroll</span></a><div class="pt-0.5 pb-1"><a class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-info-bg text-info-text font-semibold transition-colors" data-path="finance" href="#"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded-md bg-[#1D4ED8] flex items-center justify-center text-white shadow-sm"><span class="material-symbols-outlined text-[18px]">account_balance_wallet</span></div><span class="font-label text-label">Finance</span></div><span class="material-symbols-outlined text-[18px]">expand_more</span></a><nav class="mt-1 ml-3 pl-3 border-l-2 border-line space-y-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="block px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="general-ledger" href="#">General Ledger</a><a class="block px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="chart-of-accounts" href="#">Chart of Accounts</a><a class="block px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="journals" href="#">Journals</a><a aria-current="page" class="block px-space-sm py-1.5 transition-colors bg-iris-tint text-iris font-semibold rounded-lg" data-path="recurring-journals" href="#">Recurring journals</a><a class="block px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="bank-reconciliation" href="#">Bank Reconciliation</a><a class="block px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="reports" href="#">Reports</a><a class="block px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="finance-settings" href="#">Settings</a></nav></div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">inventory_2</span><span class="font-label text-label">Inventory</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">folder_open</span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">admin_panel_settings</span><span class="font-label text-label">Administration</span></a></nav></div><div class="p-space-md mt-auto space-y-space-xs bg-surface"><nav class="space-y-0.5" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="help-documentation" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">help_outline</span>Help &amp; documentation</a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded-lg font-label text-label text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px] text-ink-3">settings</span>Settings</a></nav><div class="pt-space-xs"><div class="flex items-center gap-space-sm p-2 rounded-xl bg-surface-sunken"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex-1 min-w-0"><div class="font-label text-label text-ink truncate leading-tight">Fatima Bello</div><div class="font-overline text-overline text-ink-3 truncate leading-none mt-0.5">Finance Manager / HR</div></div><button class="text-ink-3 hover:text-ink p-1 rounded-lg" type="button"><span class="material-symbols-outlined text-[20px]">unfold_more</span></button></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl shadow-[0_4px_20px_-4px_rgba(29,78,216,0.08)] z-40 px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-2 text-ink-3 min-w-[240px]"><span class="font-body-sm text-body-sm hover:text-ink transition-colors cursor-pointer">Finance</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="font-body-sm text-body-sm hover:text-ink transition-colors cursor-pointer">Journals</span><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="font-label text-label text-ink">Recurring journals</span></div><div class="flex-1 max-w-xl"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-9 pr-16 bg-surface-sunken hover:bg-surface-container rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/20 transition-all" placeholder="Search journals, accounts, vouchers..." type="text"/><kbd class="absolute right-2.5 px-1.5 py-0.5 rounded bg-surface font-overline text-overline text-ink-2 shadow-sm">Ctrl K</kbd></div></div><div class="flex items-center gap-3 shrink-0"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text font-label text-label"><span class="material-symbols-outlined text-[16px]">pending_actions</span><span>4 Approvals</span></div><button class="w-9 h-9 rounded-lg hover:bg-surface-container text-ink-2 hover:text-ink flex items-center justify-center transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive ring-2 ring-surface"></span></button><button class="w-9 h-9 rounded-lg hover:bg-surface-container text-ink-2 hover:text-ink flex items-center justify-center transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 ring-2 ring-iris-tint"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 min-h-screen bg-canvas w-full px-gutter"><div class="flex flex-col w-full">
+<!-- Radial Glow Cobalt Aura for Finance Module Accent -->
+<div class="relative w-full overflow-hidden pb-12">
+<div class="pointer-events-none absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-[#1D4ED8]/10 blur-3xl"></div>
+<div class="pointer-events-none absolute -top-12 right-1/3 h-72 w-72 rounded-full bg-iris/10 blur-3xl"></div>
+<!-- Page Header & Global Actions Bar -->
+<div class="relative z-10 pt-4 pb-6 flex flex-col gap-4">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Recurring journals</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline uppercase tracking-wider shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Segregation of Duties Enforced
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+            Each recurring journal is automatically drafted on its scheduled day; someone other than its author must review and post it.
+          </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="h-11 px-4 rounded-xl bg-surface hover:bg-surface-container-low text-ink font-label text-label transition-colors shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">download</span>
+<span>Export schedules (CSV)</span>
+</button>
+<button class="h-11 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-all shadow-[0_4px_16px_rgba(90,75,219,0.25)] flex items-center gap-2" onclick="document.getElementById('new-template-drawer').classList.remove('translate-x-full')" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New recurring journal</span>
+</button>
+</div>
+</div>
+<!-- Filters & Search Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-1.5 rounded-lg bg-surface font-label text-label text-ink shadow-sm" type="button">
+            All schedules <span class="ml-1 text-ink-3">8</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg hover:bg-surface text-ink-3 hover:text-ink font-label text-label transition-colors" type="button">
+            Active <span class="ml-1 text-success-text font-semibold">6</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg hover:bg-surface text-ink-3 hover:text-ink font-label text-label transition-colors" type="button">
+            Paused <span class="ml-1 text-warning-text font-semibold">1</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg hover:bg-surface text-ink-3 hover:text-ink font-label text-label transition-colors" type="button">
+            Expired <span class="ml-1 text-ink-3 font-semibold">1</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-3 rounded-lg bg-surface font-body-sm text-body-sm text-ink placeholder:text-ink-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/20" placeholder="Filter by memo, account..." type="text"/>
+</div>
+<button class="w-10 h-10 rounded-lg bg-surface hover:bg-surface-container text-ink-2 flex items-center justify-center shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Summary KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<div class="bg-surface rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Active Schedules</span>
+<span class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">event_repeat</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-ink font-bold tracking-tight">8</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">Templates in cycle</p>
+</div>
+<div class="mt-3 pt-3 bg-surface-sunken/60 -mx-5 -mb-5 px-5 py-2 flex items-center justify-between text-ink-3 font-overline text-overline">
+<span>6 Active · 1 Paused · 1 Expired</span>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Next Scheduled Draft</span>
+<span class="w-8 h-8 rounded-lg bg-info-bg text-info-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">today</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-ink font-bold tracking-tight">1 Dec 2026</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">3 templates queued for 06:00 WAT</p>
+</div>
+<div class="mt-3 pt-3 bg-surface-sunken/60 -mx-5 -mb-5 px-5 py-2 flex items-center justify-between text-info-text font-overline text-overline">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-info-text"></span> Batch run auto-triggers</span>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Monthly Recurring Vol.</span>
+<span class="w-8 h-8 rounded-lg bg-success-bg text-success-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-ink font-bold tracking-tight font-mono">₦4,120,000.00</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">Per regular 30-day month</p>
+</div>
+<div class="mt-3 pt-3 bg-surface-sunken/60 -mx-5 -mb-5 px-5 py-2 flex items-center justify-between text-success-text font-overline text-overline">
+<span>100% Balanced debit/credit sets</span>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-5 shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Dual-Control Review</span>
+<span class="w-8 h-8 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</span>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-warning-text font-bold tracking-tight">2 Pending</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">Drafted &amp; awaiting posting</p>
+</div>
+<div class="mt-3 pt-3 bg-surface-sunken/60 -mx-5 -mb-5 px-5 py-2 flex items-center justify-between text-ink-2 font-overline text-overline">
+<span class="hover:text-ink cursor-pointer flex items-center gap-1 font-semibold">Review drafts →</span>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Templates List with rich detail -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+<div class="xl:col-span-8 flex flex-col gap-4">
+<!-- Template 1: Detailed Primary Card -->
+<div class="bg-surface rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex flex-wrap items-start justify-between gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">corporate_fare</span>
+</div>
+<div>
+<div class="flex items-center gap-2.5">
+<h3 class="font-h3 text-h3 text-ink">Office rent accrual</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">Monthly accrual for Victoria Island HQ lease amortization</p>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-4 mt-2 font-overline text-overline text-ink-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> Day 1 of every month
+                  </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">date_range</span> Jan 2026 to Dec 2026
+                  </span>
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2">12 cycles · 11 drafted</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="text-right">
+<div class="font-overline text-overline text-ink-3">TEMPLATE TOTAL</div>
+<div class="font-stat text-h1 text-ink font-mono font-bold">₦850,000.00</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-sunken peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-iris"></div>
+</label>
+<span class="font-overline text-overline text-ink-2">Enabled</span>
+</div>
+</div>
+</div>
+<!-- Lines Preview Sub-table -->
+<div class="mt-5 rounded-lg bg-surface-sunken/60 p-3">
+<div class="font-overline text-overline text-ink-3 mb-2 uppercase flex items-center justify-between">
+<span>Account Line Distribution</span>
+<span class="text-ink-2">Next draft: <strong class="text-ink">1 Dec 2026</strong></span>
+</div>
+<div class="space-y-1.5">
+<div class="flex items-center justify-between font-body-sm text-body-sm py-1 px-2 rounded bg-surface">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken font-mono text-overline text-ink-2">6400</span>
+<span class="font-label text-ink">Rent Expense</span>
+<span class="text-ink-3 text-overline">(HQ Admin · CC-100)</span>
+</div>
+<div class="flex items-center gap-4 font-mono">
+<span class="text-ink font-semibold">Dr ₦850,000.00</span>
+<span class="text-ink-3 w-28 text-right">—</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-body-sm text-body-sm py-1 px-2 rounded bg-surface">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken font-mono text-overline text-ink-2">2020</span>
+<span class="font-label text-ink">Accrued Expenses</span>
+<span class="text-ink-3 text-overline">(Current Liabilities · Balance Sheet)</span>
+</div>
+<div class="flex items-center gap-4 font-mono">
+<span class="text-ink-3">—</span>
+<span class="text-ink font-semibold w-28 text-right">Cr ₦850,000.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Actions Footer -->
+<div class="mt-4 pt-3 flex flex-wrap items-center justify-between gap-3 text-ink-2">
+<div class="flex items-center gap-2 text-overline font-overline text-ink-3">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span>Author: Fatima Bello</span>
+<span>•</span>
+<span>Post reviewer: Tunde Bakare</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span>History (11)</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span>Run draft now</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Template 2 -->
+<div class="bg-surface rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex flex-wrap items-start justify-between gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-info-bg text-info-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">cloud</span>
+</div>
+<div>
+<div class="flex items-center gap-2.5">
+<h3 class="font-h3 text-h3 text-ink">Cloud hosting &amp; SaaS subscription</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">AWS infrastructure &amp; Microsoft 365 licensing standard monthly proration</p>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-4 mt-2 font-overline text-overline text-ink-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> Day 15 of every month
+                  </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">date_range</span> Jan 2026 to Dec 2026
+                  </span>
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2">Next: 15 Dec 2026</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="text-right">
+<div class="font-overline text-overline text-ink-3">TEMPLATE TOTAL</div>
+<div class="font-stat text-h1 text-ink font-mono font-bold">₦1,420,000.00</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-sunken peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-iris"></div>
+</label>
+<span class="font-overline text-overline text-ink-2">Enabled</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 flex flex-wrap items-center justify-between gap-3 text-ink-2">
+<div class="font-body-sm text-body-sm text-ink-3">
+<span class="font-mono text-ink">6220</span> IT &amp; Cloud Hosting (Dr) → <span class="font-mono text-ink">2100</span> Accounts Payable (Cr)
+            </div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+                Run draft now
+              </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</div>
+</div>
+</div>
+<!-- Template 3 -->
+<div class="bg-surface rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex flex-wrap items-start justify-between gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-surface-sunken text-ink-2 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">local_shipping</span>
+</div>
+<div>
+<div class="flex items-center gap-2.5">
+<h3 class="font-h3 text-h3 text-ink">Vehicle fleet depreciation</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">Monthly straight-line depreciation for 8 logistics vans</p>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-4 mt-2 font-overline text-overline text-ink-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> Day 28 of every month
+                  </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">all_inclusive</span> Jan 2026 — Indefinite
+                  </span>
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2">Next: 28 Nov 2026</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="text-right">
+<div class="font-overline text-overline text-ink-3">TEMPLATE TOTAL</div>
+<div class="font-stat text-h1 text-ink font-mono font-bold">₦650,000.00</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-sunken peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-iris"></div>
+</label>
+<span class="font-overline text-overline text-ink-2">Enabled</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 flex flex-wrap items-center justify-between gap-3 text-ink-2">
+<div class="font-body-sm text-body-sm text-ink-3">
+<span class="font-mono text-ink">6710</span> Depreciation Expense (Dr) → <span class="font-mono text-ink">1590</span> Accumulated Depreciation (Cr)
+            </div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+                Run draft now
+              </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</div>
+</div>
+</div>
+<!-- Template 4 -->
+<div class="bg-surface rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="flex flex-wrap items-start justify-between gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-11 h-11 rounded-xl bg-success-bg text-success-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">health_and_safety</span>
+</div>
+<div>
+<div class="flex items-center gap-2.5">
+<h3 class="font-h3 text-h3 text-ink">Staff medical insurance amortization</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-overline font-overline bg-success-bg text-success-text">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">Quarterly prepaid HMO premium monthly recognition</p>
+<div class="flex flex-wrap items-center gap-y-1 gap-x-4 mt-2 font-overline text-overline text-ink-3">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> Day 5 of every month
+                  </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">date_range</span> Sep 2026 to Aug 2027
+                  </span>
+<span class="px-1.5 py-0.5 rounded bg-surface-sunken text-ink-2">Next: 5 Dec 2026</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<div class="text-right">
+<div class="font-overline text-overline text-ink-3">TEMPLATE TOTAL</div>
+<div class="font-stat text-h1 text-ink font-mono font-bold">₦1,200,000.00</div>
+</div>
+<div class="flex items-center gap-3">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-sunken peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-iris"></div>
+</label>
+<span class="font-overline text-overline text-ink-2">Enabled</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 flex flex-wrap items-center justify-between gap-3 text-ink-2">
+<div class="font-body-sm text-body-sm text-ink-3">
+<span class="font-mono text-ink">6140</span> Staff Welfare &amp; Healthcare (Dr) → <span class="font-mono text-ink">1410</span> Prepaid Expenses (Cr)
+            </div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+                Run draft now
+              </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+                Edit
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Dual Control Status & Fast Insights Card -->
+<div class="xl:col-span-4 flex flex-col gap-4">
+<!-- Dual Control Rules Callout -->
+<div class="bg-surface rounded-xl p-5 shadow-sm">
+<div class="flex items-center gap-2.5 mb-3">
+<div class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+</div>
+<div>
+<h3 class="font-h3 text-h3 text-ink">Statutory Compliance</h3>
+<p class="font-overline text-overline text-ink-3">FRC &amp; CAMA Dual-Auth Standards</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mb-4 leading-relaxed">
+            Recurring templates automatically generate draft journal vouchers in the General Ledger staging table on schedule dates. Under internal controls, automated drafts cannot auto-post directly to ledger ledgers without independent verification.
+          </p>
+<div class="space-y-3 p-3 rounded-lg bg-surface-sunken">
+<div class="flex items-center justify-between font-label text-label">
+<span class="text-ink">Current Author</span>
+<span class="text-ink-2 font-medium">Fatima Bello</span>
+</div>
+<div class="flex items-center justify-between font-label text-label">
+<span class="text-ink">Mandatory Poster</span>
+<span class="text-ink-2 font-medium">Tunde Bakare (Finance Head)</span>
+</div>
+<div class="flex items-center justify-between font-label text-label">
+<span class="text-ink">Next Batch Execution</span>
+<span class="text-ink font-mono font-semibold">1 Dec 2026, 06:00</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between text-overline font-overline text-ink-3">
+<span>Audit Trail Hash ID:</span>
+<span class="font-mono text-ink">SEC-REC-9082X</span>
+</div>
+</div>
+<!-- Upcoming Schedule Mini-Calendar Widget -->
+<div class="bg-surface rounded-xl p-5 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-h3 text-h3 text-ink">Draft Timeline (Q4 2026)</h3>
+<span class="font-overline text-overline text-primary font-semibold">Dec View</span>
+</div>
+<div class="space-y-3">
+<div class="p-3 rounded-lg bg-surface-sunken flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex flex-col items-center justify-center font-bold">
+<span class="text-[10px] leading-tight uppercase font-medium">Dec</span>
+<span class="text-[16px] leading-none">01</span>
+</div>
+<div>
+<div class="font-label text-label text-ink">HQ Office Rent Accrual</div>
+<div class="font-overline text-overline text-ink-3">₦850,000.00 · Regular cycle</div>
+</div>
+</div>
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+</div>
+<div class="p-3 rounded-lg bg-surface-sunken flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface text-ink flex flex-col items-center justify-center font-bold shadow-sm">
+<span class="text-[10px] leading-tight uppercase text-ink-3 font-medium">Dec</span>
+<span class="text-[16px] leading-none">05</span>
+</div>
+<div>
+<div class="font-label text-label text-ink">Staff Medical Amortization</div>
+<div class="font-overline text-overline text-ink-3">₦1,200,000.00 · Monthly</div>
+</div>
+</div>
+<span class="w-2.5 h-2.5 rounded-full bg-line-strong"></span>
+</div>
+<div class="p-3 rounded-lg bg-surface-sunken flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface text-ink flex flex-col items-center justify-center font-bold shadow-sm">
+<span class="text-[10px] leading-tight uppercase text-ink-3 font-medium">Dec</span>
+<span class="text-[16px] leading-none">15</span>
+</div>
+<div>
+<div class="font-label text-label text-ink">Cloud Hosting &amp; SaaS</div>
+<div class="font-overline text-overline text-ink-3">₦1,420,000.00 · Software</div>
+</div>
+</div>
+<span class="w-2.5 h-2.5 rounded-full bg-line-strong"></span>
+</div>
+</div>
+</div>
+<!-- Quick Help Note -->
+<div class="p-4 rounded-xl bg-primary-fixed/30 text-ink">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-primary">lightbulb</span>
+<div class="text-body-sm font-body-sm leading-snug">
+<strong>Need custom schedule frequencies?</strong> Bi-weekly and quarterly journals can be configured via journal series templates in <a class="text-primary font-semibold underline" href="#">Finance Settings</a>.
+            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide-over Drawer: "New recurring journal" Form Section -->
+<!-- Controlled via simple click toggles on '+ New recurring journal' -->
+<div class="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-surface shadow-2xl transition-transform duration-300 transform translate-x-full flex flex-col overflow-hidden" id="new-template-drawer">
+<!-- Drawer Header -->
+<div class="p-6 bg-surface flex items-center justify-between shadow-sm shrink-0">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-iris-tint text-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">add_task</span>
+</div>
+<div>
+<h2 class="font-h2 text-h2 text-ink">New recurring journal</h2>
+<p class="font-body-sm text-body-sm text-ink-3">Automated recurring draft template. Author cannot self-post.</p>
+</div>
+</div>
+<button class="w-10 h-10 rounded-lg hover:bg-surface-sunken text-ink-2 flex items-center justify-center" onclick="document.getElementById('new-template-drawer').classList.add('translate-x-full')" type="button">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<!-- Drawer Body Form -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Template Info -->
+<div class="space-y-4">
+<div>
+<label class="block font-label text-label text-ink mb-1">Journal Template Name <span class="text-destructive">*</span></label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body text-body focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" type="text" value="Equipment maintenance reserve"/>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">Memo / Description</label>
+<textarea class="w-full p-3 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris/30 transition-all" rows="2">Monthly allocation to plant and machinery contingency fund</textarea>
+</div>
+</div>
+<!-- Schedule Rules -->
+<div class="p-4 rounded-xl bg-surface-sunken space-y-4">
+<div class="flex items-center justify-between">
+<span class="font-h3 text-h3 text-ink">Schedule Configuration</span>
+<span class="font-overline text-overline text-ink-3 uppercase">Gregorian Calendar Safe</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block font-label text-label text-ink mb-1">Day of Month (1–28)</label>
+<div class="flex items-center">
+<select class="w-full h-11 px-3 rounded-lg bg-surface font-body-sm text-body-sm text-ink shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/30">
+<option selected="">Day 1 of every month</option>
+<option>Day 5 of every month</option>
+<option>Day 15 of every month</option>
+<option>Day 20 of every month</option>
+<option>Day 28 of every month</option>
+</select>
+</div>
+<p class="font-overline text-overline text-ink-3 mt-1">Runs on days 1–28 to ensure all months including February execute safely.</p>
+</div>
+<div>
+<label class="block font-label text-label text-ink mb-1">First Execution Month</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface text-ink font-body-sm text-body-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-iris/30" type="text" value="Jan 2026"/>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between pt-2">
+<div class="flex items-center gap-2">
+<input checked="" class="w-4 h-4 rounded text-iris focus:ring-iris" id="ongoing-cycle" type="checkbox"/>
+<label class="font-label text-label text-ink" for="ongoing-cycle">Ongoing / No end date (Perpetual schedule)</label>
+</div>
+<span class="text-overline font-overline text-ink-3">or choose specific expiry month</span>
+</div>
+</div>
+<!-- Journal Lines Table Editor -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink font-semibold">Recurring Journal Lines</label>
+<span class="font-overline text-overline text-ink-3">Currency: Nigerian Naira (₦)</span>
+</div>
+<div class="overflow-x-auto rounded-lg shadow-sm bg-surface">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<tr>
+<th class="py-2.5 px-3">Account</th>
+<th class="py-2.5 px-3">Cost Centre</th>
+<th class="py-2.5 px-3 text-right">Debit (₦)</th>
+<th class="py-2.5 px-3 text-right">Credit (₦)</th>
+<th class="py-2.5 px-2 text-center w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-sunken">
+<!-- Line 1: Debit -->
+<tr class="hover:bg-surface-sunken/40">
+<td class="p-2.5">
+<div class="font-label text-ink text-sm">6450 - Plant &amp; Generator Maint.</div>
+<div class="font-overline text-overline text-ink-3">Operating Expense</div>
+</td>
+<td class="p-2.5">
+<span class="px-2 py-0.5 rounded bg-surface-sunken font-mono text-overline text-ink-2">CC-400 (Ops)</span>
+</td>
+<td class="p-2.5 text-right font-mono font-semibold text-ink">
+                  ₦350,000.00
+                </td>
+<td class="p-2.5 text-right font-mono text-ink-3">
+                  —
+                </td>
+<td class="p-2.5 text-center">
+<button class="w-7 h-7 rounded hover:bg-danger-bg hover:text-danger-text text-ink-3 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</td>
+</tr>
+<!-- Line 2: Credit -->
+<tr class="hover:bg-surface-sunken/40">
+<td class="p-2.5">
+<div class="font-label text-ink text-sm">2020 - Accrued Operating Expenses</div>
+<div class="font-overline text-overline text-ink-3">Current Liability</div>
+</td>
+<td class="p-2.5">
+<span class="px-2 py-0.5 rounded bg-surface-sunken font-mono text-overline text-ink-2">CC-100 (HQ)</span>
+</td>
+<td class="p-2.5 text-right font-mono text-ink-3">
+                  —
+                </td>
+<td class="p-2.5 text-right font-mono font-semibold text-ink">
+                  ₦350,000.00
+                </td>
+<td class="p-2.5 text-center">
+<button class="w-7 h-7 rounded hover:bg-danger-bg hover:text-danger-text text-ink-3 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<button class="h-10 px-3.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add journal line</span>
+</button>
+<!-- Balanced Indicator Bar -->
+<div class="p-4 rounded-xl bg-success-bg/40 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-success-text font-label text-label font-bold">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Balanced — Ready to schedule</span>
+</div>
+<div class="flex items-center gap-6 font-mono text-body-sm">
+<div>
+<span class="text-ink-3 font-body text-overline block">TOTAL DEBITS</span>
+<span class="font-semibold text-ink">₦350,000.00</span>
+</div>
+<div>
+<span class="text-ink-3 font-body text-overline block">TOTAL CREDITS</span>
+<span class="font-semibold text-ink">₦350,000.00</span>
+</div>
+<div>
+<span class="text-ink-3 font-body text-overline block">DIFFERENCE</span>
+<span class="font-bold text-success-text">₦0.00</span>
+</div>
+</div>
+</div>
+<!-- Segregation of Duties Governance Callout -->
+<div class="p-3.5 rounded-lg bg-surface-sunken flex items-start gap-2.5 text-ink-2">
+<span class="material-symbols-outlined text-[18px] text-iris shrink-0 mt-0.5">verified_user</span>
+<p class="font-overline text-overline leading-relaxed">
+<strong>Segregation of Duties:</strong> Fatima Bello (Author). On schedule day, this journal will draft in 'Pending Review' for Tunde Bakare (Head of Finance) to verify and post.
+          </p>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-5 bg-surface shadow-md flex items-center justify-between shrink-0">
+<button class="h-11 px-4 rounded-xl hover:bg-surface-sunken text-ink font-label text-label transition-colors" onclick="document.getElementById('new-template-drawer').classList.add('translate-x-full')" type="button">
+        Cancel
+      </button>
+<div class="flex items-center gap-3">
+<button class="h-11 px-4 rounded-xl bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+          Save as draft
+        </button>
+<button class="h-11 px-6 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-[0_4px_16px_rgba(90,75,219,0.25)] transition-all flex items-center gap-2" onclick="document.getElementById('new-template-drawer').classList.add('translate-x-full')" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save template</span>
+</button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

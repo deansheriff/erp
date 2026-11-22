@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"secondary-container":"#c4ef49","warning-bg":"#FFF1D6","danger-bg":"#FFE4E6","surface-sunken":"#EFEFF6","surface-tint":"#5646d7","primary-fixed-dim":"#c5c0ff","tertiary-container":"#9f4a00","on-primary-fixed":"#140067","lime-ink":"#4D7A0A","on-tertiary-fixed":"#321300","success-bg":"#DDF7E8","iris":"#5A4BDB","surface-container-high":"#e8e8ec","outline":"#787586","inverse-on-surface":"#f0f0f4","surface-container-low":"#f3f3f7","surface-container-lowest":"#ffffff","error":"#ba1a1a","lime":"#C5F04A","line":"#E4E4EE","tertiary-fixed-dim":"#ffb68b","on-secondary-fixed-variant":"#3b4d00","danger-text":"#B4232F","line-strong":"#8B8BA6","ink":"#16162A","surface":"#FFFFFF","primary":"#412ec2","tertiary-fixed":"#ffdbc8","on-secondary":"#ffffff","ink-3":"#626280","surface-bright":"#f9f9fd","background":"#f9f9fd","on-primary-fixed-variant":"#3d28be","surface-raised":"#FFFFFF","info-text":"#1D55B8","secondary":"#4f6600","secondary-fixed-dim":"#acd530","on-surface-variant":"#474554","on-error":"#ffffff","on-background":"#1a1c1f","on-tertiary":"#ffffff","on-tertiary-fixed-variant":"#743400","destructive":"#C42836","on-tertiary-container":"#ffd7c1","on-secondary-container":"#536b00","canvas":"#F6F6FA","on-primary-container":"#e0dbff","warning-text":"#8A4B00","on-iris":"#FFFFFF","outline-variant":"#c8c4d7","primary-container":"#5a4bdb","inverse-primary":"#c5c0ff","error-container":"#ffdad6","secondary-fixed":"#c7f24c","on-primary":"#ffffff","on-secondary-fixed":"#161f00","surface-container":"#ededf1","success-text":"#0F6B3E","primary-fixed":"#e4dfff","iris-hover":"#4A3CC4","on-error-container":"#93000a","surface-container-highest":"#e2e2e6","inverse-surface":"#2e3034","iris-tint":"#EEECFD","on-surface":"#1a1c1f","surface-dim":"#d9dade","tertiary":"#7a3700","ink-2":"#4B4B66","info-bg":"#DFEBFF","surface-variant":"#e2e2e6"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter":"1.5rem","space-3xl":"4rem","space-lg":"1.5rem","margin":"2rem","space-md":"1rem","space-xl":"2rem","space-xs":"0.25rem","space-sm":"0.5rem","space-2xl":"3rem"},"fontFamily":{"body":["Inter"],"h3":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"label":["Inter"],"overline":["Inter"],"stat":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"body-sm":["Inter"]},"fontSize":{"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}};</script></head><body class="bg-canvas font-body text-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface z-50 flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.06)] overflow-y-auto"><div class="h-16 flex items-center px-6 gap-3 shrink-0"><div class="w-9 h-9 rounded-lg bg-[#1D4ED8] flex items-center justify-center text-white font-h2 font-bold tracking-tight">K</div><div class="flex flex-col min-w-0"><span class="font-h3 text-h3 text-ink leading-tight truncate">Kxmeleon ERP</span><span class="font-overline text-overline uppercase tracking-wider text-ink-3 truncate">Adeyemi Holdings</span></div></div><div class="px-4 py-2"><nav class="flex flex-col gap-1" data-active-classes="bg-[#1D4ED8] text-white font-medium shadow-sm"><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Home / Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="hr-and-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>HR &amp; People</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">date_range</span><span>Leave</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payroll</span></a><div class="my-1 rounded-xl bg-[#1D4ED8]/[0.06] p-1.5 flex flex-col gap-1"><div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[#1D4ED8] font-label text-label font-semibold"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-[#1D4ED8]">account_balance</span><span>Finance</span></div><span class="material-symbols-outlined text-[18px]">expand_more</span></div><div class="pl-6 pr-1 flex flex-col gap-0.5"><a class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-[#1D4ED8]/10 hover:text-[#1D4ED8] transition-colors font-label text-label" data-path="journals" href="#"><span>Journals</span></a><a aria-current="page" class="flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors bg-[#1D4ED8] text-white font-medium shadow-sm" data-path="chart-of-accounts" href="#"><span>Chart of accounts</span></a><a class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-[#1D4ED8]/10 hover:text-[#1D4ED8] transition-colors font-label text-label" data-path="recurring" href="#"><span>Recurring</span></a><a class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-[#1D4ED8]/10 hover:text-[#1D4ED8] transition-colors font-label text-label" data-path="periods" href="#"><span>Periods</span></a><a class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-[#1D4ED8]/10 hover:text-[#1D4ED8] transition-colors font-label text-label" data-path="reports" href="#"><span>Reports</span></a></div></div><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder_shared</span><span>Projects</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="support" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span>Support</span></a><div class="mt-3 mb-1 px-3"><span class="font-overline text-overline uppercase tracking-wider text-ink-3">Administration</span></div><a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="admin-users" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="admin-roles" href="#"><span class="material-symbols-outlined text-[18px]">security</span><span>Roles</span></a><a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="admin-delegations" href="#"><span class="material-symbols-outlined text-[18px]">assignment_ind</span><span>Delegations</span></a><a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="admin-audit-log" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span>Audit log</span></a><a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="admin-files" href="#"><span class="material-symbols-outlined text-[18px]">attach_file</span><span>Files</span></a><a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors font-label text-label" data-path="admin-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a></nav></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 flex items-center justify-between px-8"><div class="flex items-center gap-2 font-label text-label text-ink-2"><span class="text-ink-3">Finance</span><span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span><span class="font-medium text-ink">Chart of accounts</span></div><div class="flex items-center gap-4"><div class="relative flex items-center w-80"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-full h-9 pl-9 pr-14 bg-surface-sunken rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]/30 transition-all" placeholder="Search accounts, code, journal entries..." type="text"/><kbd class="absolute right-2 px-1.5 py-0.5 bg-surface text-ink-3 font-overline text-overline rounded shadow-xs">Ctrl K</kbd></div><div class="flex items-center gap-2"><button aria-label="Approvals" class="relative p-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">verified</span><span class="absolute top-1 right-1 px-1.5 py-0.2 bg-destructive text-on-error rounded-full font-overline text-[10px] leading-tight font-bold">4</span></button><button aria-label="Notifications" class="p-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button aria-label="Toggle Theme" class="p-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="h-6 w-px bg-line"></div><div class="flex items-center gap-3 pl-2"><div class="flex flex-col text-right"><span class="font-label text-label font-medium text-ink leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3">Finance Manager / HR Lead</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full">
+<!-- Finance Module Indicator Bar -->
+<div class="w-full bg-[#1D4ED8] text-white px-8 py-2.5 flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded bg-white/20 text-white font-mono text-[11px] font-bold">FIN</span>
+<span class="font-label text-label font-medium tracking-wide">Adeyemi Holdings Ltd. • Core Ledger Subsystem</span>
+<span class="w-1.5 h-1.5 rounded-full bg-[#C5F04A]"></span>
+<span class="font-overline text-overline uppercase tracking-wider text-white/90">General Ledger Live Synchronization</span>
+</div>
+<div class="flex items-center gap-6 text-white/90 font-label text-body-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-[#C5F04A]">verified</span>
+<span class="font-medium text-white">Ledger balanced</span>
+<span class="text-white/70 font-mono text-[13px]">(Difference ₦0.00)</span>
+</div>
+<div class="h-3.5 w-px bg-white/30"></div>
+<div class="flex items-center gap-2">
+<span class="text-white/70">Fiscal Period:</span>
+<span class="px-2 py-0.5 rounded bg-white/15 text-white font-mono text-[12px] font-medium tracking-tight">FY 2026 · Q4 (Open)</span>
+</div>
+</div>
+</div>
+<!-- Primary Page Body Container with Master-Detail Split -->
+<div class="relative w-full px-8 py-6 flex gap-6 items-start">
+<!-- Left: Main Chart of Accounts Viewport -->
+<div class="flex-1 min-w-0 flex flex-col gap-5">
+<!-- Top Title & Stats Banner -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface p-6 rounded-xl shadow-sm">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Chart of accounts</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-overline uppercase tracking-wider font-semibold">IFRS Compliant</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">Master accounting ledger structure, hierarchy, and real-time balances for Adeyemi Holdings Ltd.</p>
+</div>
+<!-- Metric Strips -->
+<div class="flex items-center gap-3 shrink-0">
+<div class="px-4 py-2.5 rounded-lg bg-surface-sunken flex flex-col">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Total Accounts</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-stat text-[22px] leading-tight text-ink font-bold">64</span>
+<span class="font-body-sm text-[12px] text-ink-3">(52 leaf active)</span>
+</div>
+</div>
+<div class="px-4 py-2.5 rounded-lg bg-surface-sunken flex flex-col">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Net Asset Base</span>
+<span class="font-stat text-[22px] leading-tight text-ink font-bold font-mono">₦106.74M</span>
+</div>
+<div class="px-4 py-2.5 rounded-lg bg-[#DDF7E8] flex flex-col">
+<span class="font-overline text-overline uppercase tracking-wider text-[#0F6B3E] font-semibold">Trial Balance Status</span>
+<div class="flex items-center gap-1.5 text-[#0F6B3E] font-label text-[13px] font-bold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>100% Reconciled</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Toolbar -->
+<div class="bg-surface p-4 rounded-xl shadow-sm flex flex-col gap-3">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<!-- Search & Filter Controls -->
+<div class="relative flex-1 min-w-[260px] max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-8 bg-surface-sunken rounded-lg font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:bg-surface focus:shadow-xs transition-all" placeholder="Search account code, title, or cash-flow class..." type="text" value=""/>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-ink-3 text-[18px] cursor-pointer hover:text-ink">tune</span>
+</div>
+<!-- Buttons Group -->
+<div class="flex items-center gap-2.5">
+<button class="h-10 px-3.5 rounded-lg bg-surface-sunken text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-body-sm font-medium flex items-center gap-2" id="expandCollapseBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">unfold_more</span>
+<span>Collapse / Expand all</span>
+</button>
+<button class="h-10 px-3.5 rounded-lg bg-surface-sunken text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-body-sm font-medium flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export CSV / PDF</span>
+</button>
+<button class="h-10 px-4 rounded-lg bg-iris text-on-iris hover:bg-iris-hover transition-colors font-label text-body-sm font-semibold flex items-center gap-2 shadow-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>New account</span>
+</button>
+</div>
+</div>
+<!-- Filter Chips Bar -->
+<div class="flex flex-wrap items-center gap-2 pt-2">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3 mr-1">Classification:</span>
+<button class="px-3 py-1.5 rounded-full bg-[#1D4ED8] text-white font-label text-body-sm font-medium shadow-xs" type="button">
+            All (64)
+          </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-sunken text-ink-2 hover:bg-[#EFF6FF] hover:text-[#1D4ED8] font-label text-body-sm font-medium transition-colors" type="button">
+            Asset (22)
+          </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-sunken text-ink-2 hover:bg-warning-bg hover:text-warning-text font-label text-body-sm font-medium transition-colors" type="button">
+            Liability (14)
+          </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-sunken text-ink-2 hover:bg-[#EEECFD] hover:text-iris font-label text-body-sm font-medium transition-colors" type="button">
+            Equity (6)
+          </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-sunken text-ink-2 hover:bg-success-bg hover:text-success-text font-label text-body-sm font-medium transition-colors" type="button">
+            Income (8)
+          </button>
+<button class="px-3 py-1.5 rounded-full bg-surface-sunken text-ink-2 hover:bg-danger-bg hover:text-danger-text font-label text-body-sm font-medium transition-colors" type="button">
+            Expense (14)
+          </button>
+</div>
+</div>
+<!-- Hierarchical Tree Table Card -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Column Header -->
+<div class="grid grid-cols-12 items-center px-4 py-3 bg-surface-sunken font-label text-body-sm font-semibold text-ink-2 tracking-tight">
+<div class="col-span-2 font-mono text-[12px] uppercase tracking-wider">Account Code</div>
+<div class="col-span-4">Account Name &amp; Hierarchy</div>
+<div class="col-span-2">Type</div>
+<div class="col-span-1">Cash-Flow</div>
+<div class="col-span-2 text-right">Balance (₦)</div>
+<div class="col-span-1 text-center">Status</div>
+</div>
+<!-- Tree Rows Container -->
+<div class="divide-y divide-transparent font-body-sm text-body-sm">
+<!-- ================= 1. ASSETS ================= -->
+<!-- Level 1: Root Group Header -->
+<div class="grid grid-cols-12 items-center px-4 py-3 bg-[#F8FAFC] hover:bg-[#F1F5F9] transition-colors cursor-pointer group">
+<div class="col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#1D4ED8] transition-transform duration-150">expand_more</span>
+<span class="font-mono font-bold text-ink text-[14px]">1</span>
+</div>
+<div class="col-span-4 font-h3 text-h3 text-ink font-bold flex items-center gap-2">
+<span>Assets</span>
+<span class="text-xs font-normal text-ink-3 px-1.5 py-0.5 rounded bg-surface">Summary</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px] font-semibold">Asset</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-bold text-ink text-[14px]" style="font-variant-numeric: tabular-nums;">
+              ₦148,920,450.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px] font-semibold">Active</span>
+</div>
+</div>
+<!-- Level 2: Subheader (10 Current assets) -->
+<div class="grid grid-cols-12 items-center px-4 py-2.5 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-4">
+<span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span>
+<span class="font-mono font-semibold text-ink">10</span>
+</div>
+<div class="col-span-4 pl-4 font-label font-semibold text-ink flex items-center gap-2">
+<span>Current assets</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-semibold text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦64,520,450.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1010 Bank - Zenith) -> CURRENT SELECTED ROW (DRAWER ACTIVE) -->
+<div class="grid grid-cols-12 items-center px-4 py-2.5 bg-[#EFF6FF] hover:bg-[#DBEAFE] transition-colors cursor-pointer shadow-xs">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-[#1D4ED8]"></span>
+<span class="font-mono font-semibold text-[#1D4ED8]">1010</span>
+</div>
+<div class="col-span-4 pl-8 font-label text-ink flex items-center gap-2 font-medium">
+<span>Bank — main operating account (Zenith Bank)</span>
+<span class="px-1.5 py-0.5 rounded bg-white text-[#1D4ED8] text-[10px] font-mono font-semibold">EDITING</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-white text-[#1D4ED8] font-label text-[11px] font-medium">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-white text-ink-2 font-label text-[11px]">Cash</span>
+</div>
+<div class="col-span-2 text-right font-mono font-medium text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦12,450,300.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1020 Bank - payroll) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1020</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              Bank — payroll disbursement account
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Cash</span>
+</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦4,820,150.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1050 Petty cash) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1050</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              Petty cash float (Lagos HQ)
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Cash</span>
+</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦350,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1200 Accounts receivable) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1200</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              Accounts receivable / trade debtors
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span>
+</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦38,400,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1300 Prepayments) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1300</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              Prepayments &amp; deferred charges
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span>
+</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦8,500,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 2 Subheader (15 Property, plant and equipment) -->
+<div class="grid grid-cols-12 items-center px-4 py-2.5 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-4">
+<span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span>
+<span class="font-mono font-semibold text-ink">15</span>
+</div>
+<div class="col-span-4 pl-4 font-label font-semibold text-ink flex items-center gap-2">
+<span>Property, plant and equipment</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-semibold text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦84,400,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1510 Office buildings) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1510</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              Office buildings &amp; freehold land
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Investing</span>
+</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦62,000,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1520 Motor vehicles) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1520</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              Motor vehicles &amp; logistics fleet
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Investing</span>
+</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦18,500,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1540 IT equipment) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1540</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              IT equipment &amp; server infrastructure
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Investing</span>
+</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦6,000,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Level 3 Leaf (1590 Accumulated depreciation - Negative) -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">1590</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">
+              Accumulated depreciation
+            </div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] font-label text-[11px]">Asset</span>
+</div>
+<div class="col-span-1">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Investing</span>
+</div>
+<div class="col-span-2 text-right font-mono text-danger-text font-medium" style="font-variant-numeric: tabular-nums;">
+              (₦2,100,000.00)
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- ================= 2. LIABILITIES ================= -->
+<!-- Level 1: Root Group Header -->
+<div class="grid grid-cols-12 items-center px-4 py-3 bg-[#F8FAFC] hover:bg-[#F1F5F9] transition-colors cursor-pointer group">
+<div class="col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-warning-text transition-transform duration-150">expand_more</span>
+<span class="font-mono font-bold text-ink text-[14px]">2</span>
+</div>
+<div class="col-span-4 font-h3 text-h3 text-ink font-bold flex items-center gap-2">
+<span>Liabilities</span>
+<span class="text-xs font-normal text-ink-3 px-1.5 py-0.5 rounded bg-surface">Summary</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px] font-semibold">Liability</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-bold text-ink text-[14px]" style="font-variant-numeric: tabular-nums;">
+              ₦42,180,600.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px] font-semibold">Active</span>
+</div>
+</div>
+<!-- Level 2 Subheader (21 Current liabilities) -->
+<div class="grid grid-cols-12 items-center px-4 py-2.5 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-4">
+<span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span>
+<span class="font-mono font-semibold text-ink">21</span>
+</div>
+<div class="col-span-4 pl-4 font-label font-semibold text-ink flex items-center gap-2">
+<span>Current liabilities</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-semibold text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦28,180,600.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Leaves under 21 -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">2100</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Accounts payable / trade creditors</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦16,420,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">2110</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">PAYE tax payable (LIRS &amp; FIRS)</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦1,912,400.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">2120</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Pension payable (Stanbic &amp; ARM PFAs)</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦2,484,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">2130</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">NHF payable (FMBN)</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦230,625.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">2150</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Staff cooperative savings deductions</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦996,125.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">2160</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Net salaries clearing account</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Operating</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦6,137,450.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<!-- Level 2 Subheader (25 Long-term borrowings) -->
+<div class="grid grid-cols-12 items-center px-4 py-2.5 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-4">
+<span class="material-symbols-outlined text-[16px] text-ink-3">expand_more</span>
+<span class="font-mono font-semibold text-ink">25</span>
+</div>
+<div class="col-span-4 pl-4 font-label font-semibold text-ink flex items-center gap-2">
+<span>Long-term borrowings</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-semibold text-ink" style="font-variant-numeric: tabular-nums;">
+              ₦14,000,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span>
+</div>
+</div>
+<!-- Leaf 2510 -->
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">2510</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Commercial bank term loan (Zenith)</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[11px]">Liability</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Financing</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦14,000,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<!-- ================= 3. EQUITY ================= -->
+<div class="grid grid-cols-12 items-center px-4 py-3 bg-[#F8FAFC] hover:bg-[#F1F5F9] transition-colors cursor-pointer group">
+<div class="col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-iris transition-transform duration-150">expand_more</span>
+<span class="font-mono font-bold text-ink text-[14px]">3</span>
+</div>
+<div class="col-span-4 font-h3 text-h3 text-ink font-bold flex items-center gap-2">
+<span>Equity</span>
+<span class="text-xs font-normal text-ink-3 px-1.5 py-0.5 rounded bg-surface">Summary</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EEECFD] text-iris font-label text-[11px] font-semibold">Equity</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-bold text-ink text-[14px]" style="font-variant-numeric: tabular-nums;">
+              ₦106,739,850.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px] font-semibold">Active</span>
+</div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">3010</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Issued share capital</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EEECFD] text-iris font-label text-[11px]">Equity</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Financing</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦50,000,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">3050</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Retained earnings</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EEECFD] text-iris font-label text-[11px]">Equity</span></div>
+<div class="col-span-1"><span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-3 font-label text-[11px]">Financing</span></div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦56,739,850.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<!-- ================= 4. INCOME ================= -->
+<div class="grid grid-cols-12 items-center px-4 py-3 bg-[#F8FAFC] hover:bg-[#F1F5F9] transition-colors cursor-pointer group">
+<div class="col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-success-text transition-transform duration-150">expand_more</span>
+<span class="font-mono font-bold text-ink text-[14px]">4</span>
+</div>
+<div class="col-span-4 font-h3 text-h3 text-ink font-bold flex items-center gap-2">
+<span>Income</span>
+<span class="text-xs font-normal text-ink-3 px-1.5 py-0.5 rounded bg-surface">Summary</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px] font-semibold">Income</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-bold text-ink text-[14px]" style="font-variant-numeric: tabular-nums;">
+              ₦112,500,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px] font-semibold">Active</span>
+</div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">4010</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Enterprise software licensing revenue</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Income</span></div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦82,500,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">4020</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Implementation &amp; consulting services</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Income</span></div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦30,000,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<!-- ================= 6. EXPENSES ================= -->
+<div class="grid grid-cols-12 items-center px-4 py-3 bg-[#F8FAFC] hover:bg-[#F1F5F9] transition-colors cursor-pointer group">
+<div class="col-span-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-danger-text transition-transform duration-150">expand_more</span>
+<span class="font-mono font-bold text-ink text-[14px]">6</span>
+</div>
+<div class="col-span-4 font-h3 text-h3 text-ink font-bold flex items-center gap-2">
+<span>Expenses</span>
+<span class="text-xs font-normal text-ink-3 px-1.5 py-0.5 rounded bg-surface">Summary</span>
+</div>
+<div class="col-span-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-label text-[11px] font-semibold">Expense</span>
+</div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono font-bold text-ink text-[14px]" style="font-variant-numeric: tabular-nums;">
+              ₦54,320,000.00
+            </div>
+<div class="col-span-1 flex justify-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px] font-semibold">Active</span>
+</div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">6000</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Salaries and wages (Gross remuneration)</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-label text-[11px]">Expense</span></div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦18,450,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">6010</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Employer pension contribution (10%)</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-label text-[11px]">Expense</span></div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦1,380,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">6100</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Travel &amp; regional transport</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-label text-[11px]">Expense</span></div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦4,250,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+<div class="grid grid-cols-12 items-center px-4 py-2 bg-surface hover:bg-surface-sunken/60 transition-colors cursor-pointer">
+<div class="col-span-2 flex items-center gap-2 pl-8">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3/40"></span>
+<span class="font-mono text-ink">6150</span>
+</div>
+<div class="col-span-4 pl-8 font-body-sm text-ink-2">Office accommodation &amp; rent expense</div>
+<div class="col-span-2"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-label text-[11px]">Expense</span></div>
+<div class="col-span-1 text-ink-3">—</div>
+<div class="col-span-2 text-right font-mono text-ink" style="font-variant-numeric: tabular-nums;">₦12,000,000.00</div>
+<div class="col-span-1 flex justify-center"><span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text font-label text-[11px]">Active</span></div>
+</div>
+</div>
+<!-- Table Footer / Summary Bar -->
+<div class="px-6 py-3.5 bg-surface-sunken flex items-center justify-between font-label text-body-sm">
+<span class="text-ink-3">Displaying 21 loaded accounts across 5 major ledger segments</span>
+<div class="flex items-center gap-4 text-ink font-mono font-semibold">
+<span>Assets: ₦148.92M</span>
+<span>•</span>
+<span>Liab + Equity: ₦148.92M</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-success-bg text-success-text text-xs">A = L + E Verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= RIGHT SIDE DRAWER: EDIT ACCOUNT ================= -->
+<div class="w-[430px] shrink-0 bg-surface rounded-xl shadow-xl flex flex-col sticky top-20 overflow-hidden transition-all duration-200" id="editAccountDrawer">
+<!-- Drawer Header -->
+<div class="px-6 py-4.5 bg-surface flex items-center justify-between shadow-xs">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h2 class="font-h2 text-h2 text-ink">Edit account</h2>
+<span class="w-2 h-2 rounded-full bg-[#1D4ED8]"></span>
+</div>
+<span class="font-mono text-body-sm text-ink-3">Account code: 1010</span>
+</div>
+<button aria-label="Close edit drawer" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:bg-surface-sunken hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Warning / Compliance Card -->
+<div class="px-6 pt-4">
+<div class="p-3.5 rounded-lg bg-warning-bg flex items-start gap-3">
+<span class="material-symbols-outlined text-warning-text text-[20px] shrink-0 mt-0.5">lock_clock</span>
+<div class="flex flex-col gap-0.5">
+<span class="font-label text-body-sm font-semibold text-warning-text leading-tight">Has postings: type cannot be changed</span>
+<p class="font-body-sm text-[12px] text-warning-text/90 leading-normal">
+              This account has <strong class="font-semibold">142 posted journal vouchers</strong>. Core ledger classification and parent group are permanently locked for compliance.
+            </p>
+</div>
+</div>
+</div>
+<!-- Drawer Form Body -->
+<form class="p-6 flex flex-col gap-4.5 overflow-y-auto max-h-[calc(100vh-250px)]">
+<!-- Account Code & Currency Row -->
+<div class="grid grid-cols-3 gap-3">
+<div class="col-span-2 flex flex-col gap-1.5">
+<label class="font-label text-body-sm font-medium text-ink flex items-center justify-between">
+<span>Account Code</span>
+<span class="material-symbols-outlined text-[14px] text-ink-3">lock</span>
+</label>
+<div class="relative">
+<input class="w-full h-10 px-3 bg-surface-sunken text-ink font-mono font-medium rounded-lg opacity-85 cursor-not-allowed text-body-sm" disabled="" type="text" value="1010"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm font-medium text-ink">Currency</label>
+<input class="w-full h-10 px-3 bg-surface-sunken text-ink font-mono font-semibold rounded-lg opacity-85 cursor-not-allowed text-body-sm" disabled="" type="text" value="NGN (₦)"/>
+</div>
+</div>
+<!-- Account Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm font-medium text-ink">Account Name</label>
+<input class="w-full h-10 px-3 bg-surface rounded-lg font-body-sm text-body-sm text-ink shadow-xs focus:outline-none focus:bg-surface-bright" type="text" value="Bank — main operating account (Zenith Bank)"/>
+</div>
+<!-- Account Type (Locked) -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm font-medium text-ink flex items-center justify-between">
+<span>Account Type</span>
+<span class="text-xs text-ink-3">Locked</span>
+</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-8 bg-surface-sunken text-ink-2 rounded-lg font-body-sm text-body-sm appearance-none cursor-not-allowed opacity-85" disabled="">
+<option selected="">Asset (Debit balance)</option>
+<option>Liability</option>
+<option>Equity</option>
+<option>Income</option>
+<option>Expense</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-ink-3 text-[18px]">lock</span>
+</div>
+</div>
+<!-- Parent Account -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm font-medium text-ink">Parent Account</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-8 bg-surface text-ink rounded-lg font-body-sm text-body-sm appearance-none shadow-xs focus:outline-none">
+<option selected="">10 — Current assets</option>
+<option>15 — Property, plant and equipment</option>
+<option>1 — Assets</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Header Group Toggle Switch (Disabled) -->
+<div class="p-3 rounded-lg bg-surface-sunken flex items-center justify-between gap-3">
+<div class="flex flex-col">
+<span class="font-label text-body-sm font-medium text-ink leading-tight">Groups other accounts</span>
+<span class="font-body-sm text-[12px] text-ink-3">Disallows direct journal postings</span>
+</div>
+<button class="w-10 h-5 rounded-full bg-line-strong/40 relative cursor-not-allowed p-0.5" disabled="" type="button">
+<span class="w-4 h-4 rounded-full bg-white shadow-xs block"></span>
+</button>
+</div>
+<!-- Cash-Flow Classification -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm font-medium text-ink">Cash-Flow Class (Statement of Cash Flows)</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-8 bg-surface text-ink rounded-lg font-body-sm text-body-sm appearance-none shadow-xs focus:outline-none">
+<option selected="">Cash / Cash equivalent</option>
+<option>Operating activity</option>
+<option>Investing activity</option>
+<option>Financing activity</option>
+<option>Not applicable (—)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Active Status Toggle -->
+<div class="p-3 rounded-lg bg-surface-sunken flex items-center justify-between gap-3">
+<div class="flex flex-col">
+<span class="font-label text-body-sm font-medium text-ink leading-tight">Account is active</span>
+<span class="font-body-sm text-[12px] text-ink-3">Available for manual journals &amp; bank feeds</span>
+</div>
+<button class="w-11 h-6 rounded-full bg-[#0F6B3E] relative cursor-pointer p-0.5 transition-colors" type="button">
+<span class="w-5 h-5 rounded-full bg-white shadow-xs block translate-x-5 transition-transform"></span>
+</button>
+</div>
+<!-- Notes / Ledger Narrative -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm font-medium text-ink">Description &amp; Bank Details</label>
+<textarea class="w-full p-3 bg-surface rounded-lg font-body-sm text-body-sm text-ink shadow-xs focus:outline-none" rows="3">Primary corporate operating liquidity account held with Zenith Bank PLC (Victoria Island branch). Linked to NIBSS direct debit.</textarea>
+</div>
+</form>
+<!-- Drawer Action Footer -->
+<div class="p-6 bg-surface-sunken flex flex-col gap-3 shadow-xs">
+<div class="flex items-center gap-3">
+<button class="flex-1 h-10 px-4 rounded-lg bg-surface text-ink-2 hover:bg-surface-container hover:text-ink transition-colors font-label text-body-sm font-medium shadow-xs" type="button">
+            Cancel
+          </button>
+<button class="flex-1 h-10 px-4 rounded-lg bg-iris text-on-iris hover:bg-iris-hover transition-colors font-label text-body-sm font-semibold shadow-xs flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save changes</span>
+</button>
+</div>
+<div class="text-center">
+<span class="font-overline text-overline text-ink-3">Last modified 14 Nov 2026 by Fatima Bello</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive toggle for demo purposes
+  document.getElementById('expandCollapseBtn')?.addEventListener('click', function() {
+    const expandIcons = document.querySelectorAll('.material-symbols-outlined');
+    expandIcons.forEach(icon => {
+      if (icon.textContent === 'expand_more') {
+        icon.textContent = 'chevron_right';
+      } else if (icon.textContent === 'chevron_right') {
+        icon.textContent = 'expand_more';
+      }
+    });
+  });
+</script></main></div></body></html>

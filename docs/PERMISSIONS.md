@@ -52,6 +52,18 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 |---|---|---|---|---|
 | `files.file.manage` | Manage files | Organisation | yes | See every file's details and scan state, place legal holds and delete files. Doesn't grant access to file contents. |
 
+### finance
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `finance.account.manage` | Manage the chart of accounts | Organisation |  | Add accounts, rename them, and deactivate ones no longer used. |
+| `finance.account.read` | View the chart of accounts | Organisation |  | See accounts and their balances. |
+| `finance.journal.create` | Draft journals | Organisation |  | Draft manual journals and set up recurring ones. |
+| `finance.journal.post` | Post journals | Organisation |  | Post drafted and held journals, and reverse posted ones. |
+| `finance.journal.read` | View journals | Organisation |  | See drafted, held and posted journals and their lines. |
+| `finance.period.manage` | Manage financial periods | Organisation |  | Open financial years, close and reopen months, and close the year. |
+| `finance.report.read` | View financial reports | Organisation |  | Trial balance, profit and loss, balance sheet, cash flow and the general ledger. |
+
 ### hr
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -167,6 +179,13 @@ Everything, including technical settings. Can't be edited or removed.
 | `expenses.claim.reimburse_override` | O |
 | `expenses.settings.manage` | O |
 | `files.file.manage` | O |
+| `finance.account.manage` | O |
+| `finance.account.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.post` | O |
+| `finance.journal.read` | O |
+| `finance.period.manage` | O |
+| `finance.report.read` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -249,6 +268,13 @@ Everything except technical settings such as mail, branding and security.
 | `expenses.claim.reimburse_override` | O |
 | `expenses.settings.manage` | O |
 | `files.file.manage` | O |
+| `finance.account.manage` | O |
+| `finance.account.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.post` | O |
+| `finance.journal.read` | O |
+| `finance.period.manage` | O |
+| `finance.report.read` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -310,6 +336,9 @@ Reads everything, including the audit log. Changes nothing.
 | `audit.log.read` | O |
 | `authz.role.read` | O |
 | `expenses.claim.read` | O |
+| `finance.account.read` | O |
+| `finance.journal.read` | O |
+| `finance.report.read` | O |
 | `hr.employee.banking.read` | O |
 | `hr.employee.compensation.read` | O |
 | `hr.employee.personal.read` | O |
@@ -475,6 +504,10 @@ Day-to-day accounting.
 | Permission | Scope |
 |---|---|
 | `expenses.claim.read` | O |
+| `finance.account.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.read` | O |
+| `finance.report.read` | O |
 | `payroll.loan.read` | O |
 | `payroll.remittance.export` | O |
 | `payroll.run.pay` | O |
@@ -490,6 +523,13 @@ Approves and posts finance documents.
 | `expenses.claim.approve_finance` | O |
 | `expenses.claim.read` | O |
 | `expenses.settings.manage` | O |
+| `finance.account.manage` | O |
+| `finance.account.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.post` | O |
+| `finance.journal.read` | O |
+| `finance.period.manage` | O |
+| `finance.report.read` | O |
 | `payroll.certificate.read` | O |
 | `payroll.loan.approve` | O |
 | `payroll.loan.read` | O |
@@ -559,5 +599,6 @@ _No grants yet: added by the phase that delivers its module._
 | `payroll.no_self_relief` | `payroll.relief.verify` | owner_is_actor | You can't verify your own rent declaration. |
 | `payroll.no_self_loan` | `payroll.loan.approve` | owner_is_actor | You can't approve your own loan. |
 | `payroll.loan_four_eyes` | `payroll.loan.approve` | creator_is_actor | Someone else approves a loan you recorded. |
+| `finance.journal_four_eyes` | `finance.journal.post` | creator_is_actor | Someone else posts a journal you drafted. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

@@ -45,6 +45,16 @@ from app.modules.expenses.models import (
     ExpenseStep,
     PersonLimit,
 )
+from app.modules.finance.models import (
+    Account,
+    FinanceSettings,
+    FiscalPeriod,
+    FiscalYear,
+    Journal,
+    JournalLine,
+    RecurringJournal,
+    RecurringLine,
+)
 from app.modules.hr.models import (
     ChangeRequest,
     Checklist,
@@ -96,6 +106,7 @@ from app.org.models import (
 )
 
 __all__ = [
+    "Account",
     "AdvanceRepayment",
     "ApiKey",
     "AttendanceCorrection",
@@ -128,8 +139,13 @@ __all__ = [
     "ExpenseSettings",
     "ExpenseStep",
     "FileLink",
+    "FinanceSettings",
+    "FiscalPeriod",
+    "FiscalYear",
     "Grade",
     "Installation",
+    "Journal",
+    "JournalLine",
     "LeaveAdjustment",
     "LeaveDecision",
     "LeaveRequest",
@@ -156,6 +172,8 @@ __all__ = [
     "Position",
     "PositionAssignment",
     "PublicHoliday",
+    "RecurringJournal",
+    "RecurringLine",
     "RentDeclaration",
     "Role",
     "RoleAssignment",

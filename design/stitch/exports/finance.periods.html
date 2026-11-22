@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="web_dashboard" name="shell-type"/>
+  <title>Kxmeleon ERP — Financial years and periods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            canvas: "#F6F6FA",
+            surface: "#FFFFFF",
+            "surface-sunken": "#EFEFF6",
+            "surface-bright": "#F9F9FD",
+            line: "#E4E4EE",
+            "line-strong": "#8B8BA6",
+            ink: "#16162A",
+            "ink-2": "#4B4B66",
+            "ink-3": "#626280",
+            iris: "#5A4BDB",
+            "iris-hover": "#4A3CC4",
+            "iris-tint": "#EEECFD",
+            "on-iris": "#FFFFFF",
+            lime: "#C5F04A",
+            "lime-ink": "#4D7A0A",
+            "success-text": "#0F6B3E",
+            "success-bg": "#DDF7E8",
+            "warning-text": "#8A4B00",
+            "warning-bg": "#FFF1D6",
+            "danger-text": "#B4232F",
+            "danger-bg": "#FFE4E6",
+            "info-text": "#1D55B8",
+            "info-bg": "#DFEBFF",
+            // Finance module cobalt hue
+            finance: "#1D4ED8",
+            "finance-tint": "#EFF6FF"
+          },
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            h1: ["Plus Jakarta Sans", "sans-serif"],
+            h2: ["Plus Jakarta Sans", "sans-serif"],
+            h3: ["Plus Jakarta Sans", "sans-serif"],
+            stat: ["Plus Jakarta Sans", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Inter", "sans-serif"],
+            overline: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          },
+          boxShadow: {
+            card: "0 1px 2px rgb(22 22 42 / 0.04), 0 1px 1px rgb(22 22 42 / 0.03)",
+            raised: "0 8px 24px -6px rgb(22 22 42 / 0.12), 0 2px 6px rgb(22 22 42 / 0.06)",
+            overlay: "0 24px 48px -12px rgb(22 22 42 / 0.25)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #F6F6FA;
+        color: #16162A;
+        font-family: 'Inter', sans-serif;
+      }
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Module soft radial glow */
+    .module-glow {
+      background: radial-gradient(circle at 180px -40px, rgba(29, 78, 216, 0.07) 0%, rgba(246, 246, 250, 0) 520px);
+    }
+  </style>
+</head>
+<body class="bg-canvas antialiased min-h-screen text-ink">
+
+  <!-- ==================== SIDEBAR (272px Desktop) ==================== -->
+  <aside class="fixed left-0 top-0 h-full w-[272px] bg-surface z-40 flex flex-col border-r border-line select-none">
+    <!-- Organisation Brand Header -->
+    <div class="h-16 flex items-center justify-between px-6 border-b border-line shrink-0">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-8 h-8 rounded-lg bg-finance flex items-center justify-center text-white font-display font-bold text-sm tracking-tight shrink-0 shadow-sm">
+          K
+        </div>
+        <div class="flex flex-col min-w-0">
+          <span class="font-display font-bold text-[15px] text-ink leading-tight truncate">Adeyemi Holdings Ltd</span>
+        </div>
+      </div>
+      <button type="button" aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-ink hover:bg-surface-sunken transition-colors">
+        <span class="material-symbols-outlined text-[18px]">left_panel_close</span>
+      </button>
+    </div>
+
+    <!-- Quick Switcher / Search (Ctrl K) -->
+    <div class="p-3 border-b border-line/60">
+      <button type="button" class="w-full h-9 px-3 bg-surface-sunken hover:bg-[#EAEAF3] rounded-lg text-ink-3 hover:text-ink flex items-center justify-between transition-colors text-sm">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[17px]">swap_horiz</span>
+          <span class="font-medium text-xs text-ink-2">Go to…</span>
+        </div>
+        <kbd class="px-1.5 py-0.5 bg-surface text-ink-3 font-mono text-[11px] rounded border border-line shadow-xs">Ctrl K</kbd>
+      </button>
+    </div>
+
+    <!-- Navigation Scroll Area -->
+    <div class="flex-1 overflow-y-auto px-3 py-3 space-y-1">
+      <!-- Inactive Modules -->
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#3F3F5A]/10 text-[#3F3F5A] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">grid_view</span>
+        </span>
+        <span>Home</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#7C3AED]/10 text-[#7C3AED] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">group</span>
+        </span>
+        <span>HR &amp; People</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#0369A1]/10 text-[#0369A1] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">date_range</span>
+        </span>
+        <span>Leave</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#0E7490]/10 text-[#0E7490] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">schedule</span>
+        </span>
+        <span>Attendance</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#C2410C]/10 text-[#C2410C] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">receipt_long</span>
+        </span>
+        <span>Expenses</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#047857]/10 text-[#047857] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">payments</span>
+        </span>
+        <span>Payroll</span>
+      </a>
+
+      <!-- ACTIVE MODULE: FINANCE (Cobalt) -->
+      <div class="pt-1 pb-1">
+        <div class="rounded-xl bg-finance/[0.08] p-1 flex flex-col gap-0.5">
+          <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-finance text-sm font-semibold">
+            <div class="flex items-center gap-2.5">
+              <span class="w-7 h-7 rounded-md bg-finance text-white flex items-center justify-center shadow-xs">
+                <span class="material-symbols-outlined text-[17px]">account_balance</span>
+              </span>
+              <span>Finance</span>
+            </div>
+            <span class="material-symbols-outlined text-[18px]">expand_less</span>
+          </div>
+
+          <!-- Finance Sub-sections -->
+          <div class="pl-3 pr-1 py-1 flex flex-col gap-0.5">
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-finance/10 hover:text-finance transition-colors text-sm font-medium">
+              <span>Journals</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-finance/10 hover:text-finance transition-colors text-sm font-medium">
+              <span>Chart of accounts</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-finance/10 hover:text-finance transition-colors text-sm font-medium">
+              <span>Recurring</span>
+            </a>
+            <!-- Active Sub-item: Periods -->
+            <a href="#" aria-current="page" class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-iris text-white font-medium shadow-xs text-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-lime"></span>
+              <span>Periods</span>
+            </a>
+            <a href="#" class="flex items-center gap-2 px-3 py-1.5 rounded-md text-ink-2 hover:bg-finance/10 hover:text-finance transition-colors text-sm font-medium">
+              <span>Reports</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#92400E]/10 text-[#92400E] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">inventory_2</span>
+        </span>
+        <span>Inventory</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#0F766E]/10 text-[#0F766E] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">folder_shared</span>
+        </span>
+        <span>Projects</span>
+      </a>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm font-medium">
+        <span class="w-7 h-7 rounded-md bg-[#BE185D]/10 text-[#BE185D] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[17px]">help_outline</span>
+        </span>
+        <span>Support</span>
+      </a>
+
+      <div class="pt-3 pb-1 px-3">
+        <span class="font-overline text-[11px] uppercase tracking-wider text-ink-3 font-semibold">Administration</span>
+      </div>
+
+      <a href="#" class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm">
+        <span class="material-symbols-outlined text-[17px] text-ink-3">badge</span>
+        <span>Users</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm">
+        <span class="material-symbols-outlined text-[17px] text-ink-3">security</span>
+        <span>Roles</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm">
+        <span class="material-symbols-outlined text-[17px] text-ink-3">history</span>
+        <span>Audit log</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors text-sm">
+        <span class="material-symbols-outlined text-[17px] text-ink-3">settings</span>
+        <span>Settings</span>
+      </a>
+    </div>
+
+    <!-- Sidebar Bottom User Card -->
+    <div class="p-3 border-t border-line bg-surface shrink-0">
+      <div class="flex items-center justify-between p-2 rounded-lg hover:bg-surface-sunken transition-colors">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-full bg-finance text-white font-semibold flex items-center justify-center text-xs shrink-0">
+            FB
+          </div>
+          <div class="flex flex-col min-w-0">
+            <span class="text-sm font-semibold text-ink leading-tight truncate">Fatima Bello</span>
+            <span class="text-[11px] text-ink-3 truncate">Finance Manager</span>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-[18px] text-ink-3">unfold_more</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+  <div class="pl-[272px] min-h-screen flex flex-col">
+
+    <!-- Sticky Top Navigation Bar (64px, Glass) -->
+    <header class="sticky top-0 right-0 h-16 bg-surface/85 backdrop-blur-md border-b border-line z-30 flex items-center justify-between px-8">
+      <!-- Breadcrumbs -->
+      <div class="flex items-center gap-2 text-sm text-ink-2">
+        <span class="text-ink-3 hover:text-ink cursor-pointer">Finance</span>
+        <span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span>
+        <span class="font-medium text-ink">Periods</span>
+      </div>
+
+      <!-- Center Search -->
+      <div class="relative w-80 max-w-sm">
+        <span class="material-symbols-outlined absolute left-3 top-2.5 text-ink-3 text-[18px]">search</span>
+        <input type="text" placeholder="Search accounts, journals, periods..." class="w-full h-9 pl-9 pr-14 bg-surface-sunken border border-transparent focus:border-line-strong rounded-lg text-sm text-ink placeholder:text-ink-3 focus:outline-none focus:bg-surface transition-all"/>
+        <kbd class="absolute right-2 top-2 px-1.5 py-0.5 bg-surface text-ink-3 font-mono text-[10px] rounded border border-line shadow-xs">Ctrl K</kbd>
+      </div>
+
+      <!-- Trailing Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Approvals Inbox -->
+        <button type="button" class="relative h-9 px-3 rounded-lg text-ink-2 hover:bg-surface-sunken flex items-center gap-1.5 text-sm font-medium transition-colors">
+          <span class="material-symbols-outlined text-[19px]">verified</span>
+          <span>Approvals</span>
+          <span class="px-1.5 py-0.2 rounded-full bg-danger-bg text-danger-text text-xs font-semibold">4</span>
+        </button>
+
+        <!-- Notification Bell with Lime Unread Dot -->
+        <button type="button" aria-label="Notifications" class="relative w-9 h-9 rounded-lg text-ink-2 hover:bg-surface-sunken flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button type="button" aria-label="Toggle theme" class="w-9 h-9 rounded-lg text-ink-2 hover:bg-surface-sunken flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-[20px]">light_mode</span>
+        </button>
+
+        <div class="h-6 w-px bg-line mx-1"></div>
+
+        <!-- Profile Avatar Pill -->
+        <button type="button" class="flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg hover:bg-surface-sunken transition-colors">
+          <div class="w-8 h-8 rounded-full bg-iris text-white font-medium flex items-center justify-center text-xs">
+            FB
+          </div>
+          <span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Page Body with Soft Radial Module Hue Glow -->
+    <main class="flex-1 px-8 py-8 module-glow">
+      <div class="max-w-[1240px] mx-auto space-y-7">
+
+        <!-- ================= PAGE HEADER ================= -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-3">
+              <h1 class="font-h1 text-[24px] font-bold text-ink tracking-tight">Periods</h1>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-xs font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                FY 2026 Live
+              </span>
+            </div>
+            <p class="text-sm text-ink-3">Manage monthly accounting sub-periods, locking cadences, year-end closures, and retained earnings rollup.</p>
+          </div>
+
+          <!-- Header Primary Action: Open financial year 2027 -->
+          <div class="flex items-center gap-3">
+            <button type="button" class="h-10 px-4 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-ink text-sm font-medium flex items-center gap-2 transition-colors shadow-xs">
+              <span class="material-symbols-outlined text-[18px] text-ink-2">history</span>
+              <span>Prior periods audit</span>
+            </button>
+            <button type="button" class="h-10 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris text-sm font-semibold flex items-center gap-2 shadow-xs transition-colors active:scale-[0.98]">
+              <span class="material-symbols-outlined text-[18px]">add_circle</span>
+              <span>Open financial year 2027</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= ACTIVE YEAR CARD: 2026 · Open ================= -->
+        <div class="bg-surface rounded-2xl border border-line shadow-card overflow-hidden">
+          
+          <!-- Year Card Top Header Bar -->
+          <div class="px-6 py-5 border-b border-line bg-surface flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-finance-tint text-finance flex items-center justify-center font-display font-bold text-base shadow-xs border border-finance/15">
+                26
+              </div>
+              <div>
+                <div class="flex items-center gap-2.5">
+                  <h2 class="font-h2 text-[18px] font-bold text-ink tracking-tight">2026 · Open</h2>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-success-bg text-success-text text-xs font-semibold">
+                    Current active year
+                  </span>
+                </div>
+                <p class="text-xs text-ink-3 mt-0.5">1 Jan 2026 – 31 Dec 2026 · 10 months closed, 2 open</p>
+              </div>
+            </div>
+
+            <!-- Year Summary Metrics -->
+            <div class="flex items-center gap-6">
+              <div class="text-right">
+                <span class="text-xs text-ink-3 block">Posted vouchers</span>
+                <span class="font-mono text-sm font-semibold text-ink tabular-nums">1,482 journals</span>
+              </div>
+              <div class="h-8 w-px bg-line"></div>
+              <div class="text-right">
+                <span class="text-xs text-ink-3 block">Active drafts</span>
+                <span class="font-mono text-sm font-semibold text-warning-text tabular-nums">2 in October</span>
+              </div>
+              <div class="h-8 w-px bg-line"></div>
+              <div class="text-right">
+                <span class="text-xs text-ink-3 block">Closure progress</span>
+                <span class="text-sm font-semibold text-ink">10 of 12 closed</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 12-Month Grid (3 cols on lg, 2 cols on md, 1 on sm) -->
+          <div class="p-6 bg-canvas/40">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+              <!-- Month 1: January (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">January 2026</span>
+                    <span class="text-xs text-ink-3">Period 01</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">118</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 3 Feb 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 2: February (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">February 2026</span>
+                    <span class="text-xs text-ink-3">Period 02</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">124</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 4 Mar 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 3: March (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">March 2026</span>
+                    <span class="text-xs text-ink-3">Period 03 · Q1 End</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">142</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 5 Apr 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 4: April (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">April 2026</span>
+                    <span class="text-xs text-ink-3">Period 04</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">110</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 3 May 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 5: May (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">May 2026</span>
+                    <span class="text-xs text-ink-3">Period 05</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">136</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 2 Jun 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 6: June (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">June 2026</span>
+                    <span class="text-xs text-ink-3">Period 06 · Q2 End</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">149</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 6 Jul 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 7: July (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">July 2026</span>
+                    <span class="text-xs text-ink-3">Period 07</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">115</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 4 Aug 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 8: August (Closed) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">August 2026</span>
+                    <span class="text-xs text-ink-3">Period 08</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">129</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 3 Sep 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 9: September (Closed) - Exact example from prompt -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">September 2026</span>
+                    <span class="text-xs text-ink-3">Period 09 · Q3 End</span>
+                  </div>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface-sunken text-neutral text-xs font-medium border border-line">
+                    Closed
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">158</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Closed by Fatima Bello, 3 Nov 2026
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock_open</span>
+                  <span>Reopen</span>
+                </button>
+              </div>
+
+              <!-- Month 10: October (Open with Blocked Close Warning Banner) -->
+              <div class="bg-surface rounded-xl border-2 border-warning-text/40 p-4 shadow-sm flex flex-col justify-between gap-3 relative">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">October 2026</span>
+                    <span class="text-xs text-ink-3">Period 10</span>
+                  </div>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-xs font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Open
+                  </span>
+                </div>
+
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">165</span>
+                  </div>
+                  <div class="flex justify-between text-warning-text font-medium">
+                    <span>Drafts pending:</span>
+                    <span class="font-mono font-bold tabular-nums">2 drafts</span>
+                  </div>
+                </div>
+
+                <!-- Explicit Blocked Close Alert required by prompt -->
+                <div class="p-2.5 rounded-lg bg-warning-bg border border-warning-text/20 text-warning-text text-[11.5px] leading-snug flex items-start gap-2">
+                  <span class="material-symbols-outlined text-[16px] shrink-0 mt-0.5">warning</span>
+                  <div>
+                    <strong>Blocked:</strong> 2 draft journals are dated in October; post or delete them first.
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <button type="button" class="flex-1 h-8 rounded-lg bg-surface-sunken text-ink-3 text-xs font-medium cursor-not-allowed border border-line flex items-center justify-center gap-1" title="Resolve pending drafts before closing">
+                    <span class="material-symbols-outlined text-[15px]">lock</span>
+                    <span>Close</span>
+                  </button>
+                  <a href="#" class="h-8 px-2.5 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-ink-2 hover:text-ink text-xs font-medium flex items-center justify-center">
+                    View drafts
+                  </a>
+                </div>
+              </div>
+
+              <!-- Month 11: November (Open - Current Active Cycle) -->
+              <div class="bg-surface rounded-xl border-2 border-finance/40 p-4 shadow-sm flex flex-col justify-between gap-3 ring-4 ring-finance/[0.04]">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="font-display font-bold text-base text-ink block">November 2026</span>
+                      <span class="px-1.5 py-0.2 rounded bg-finance/10 text-finance text-[10px] font-bold">CURRENT</span>
+                    </div>
+                    <span class="text-xs text-ink-3">Period 11 · Active cycle</span>
+                  </div>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-xs font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Open
+                  </span>
+                </div>
+
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">220</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Cut-off scheduled for 30 Nov 2026
+                  </div>
+                </div>
+
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock</span>
+                  <span>Close period</span>
+                </button>
+              </div>
+
+              <!-- Month 12: December (Future / Open) -->
+              <div class="bg-surface rounded-xl border border-line p-4 shadow-xs flex flex-col justify-between gap-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <span class="font-display font-bold text-base text-ink block">December 2026</span>
+                    <span class="text-xs text-ink-3">Period 12 · Year End</span>
+                  </div>
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text text-xs font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0F6B3E]"></span>
+                    Open
+                  </span>
+                </div>
+                <div class="space-y-1 text-xs">
+                  <div class="flex justify-between text-ink-2">
+                    <span>Journals posted:</span>
+                    <span class="font-mono font-medium text-ink tabular-nums">0</span>
+                  </div>
+                  <div class="flex justify-between text-ink-3">
+                    <span>Drafts:</span>
+                    <span class="font-mono tabular-nums">0</span>
+                  </div>
+                  <div class="pt-1.5 border-t border-line/60 text-[11px] text-ink-3">
+                    Final year-end adjustments period
+                  </div>
+                </div>
+                <button type="button" class="w-full h-8 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center justify-center gap-1">
+                  <span class="material-symbols-outlined text-[15px] text-ink-2">lock</span>
+                  <span>Close period</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Year Card Footer: Settings Line & Year-End Close Action -->
+          <div class="px-6 py-5 border-t border-line bg-surface flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            
+            <!-- Settings Line: Retained earnings account select -->
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+              <label for="retainedAccount" class="text-xs font-semibold text-ink-2 whitespace-nowrap flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[17px] text-finance">account_balance_wallet</span>
+                <span>Retained earnings account:</span>
+              </label>
+              <div class="relative min-w-[320px]">
+                <select id="retainedAccount" class="w-full h-10 pl-3 pr-9 bg-surface-sunken border border-line rounded-lg text-xs font-medium text-ink focus:outline-none focus:border-line-strong transition-colors cursor-pointer appearance-none">
+                  <option selected value="3200">3200 — Retained earnings (Equity)</option>
+                  <option value="3050">3050 — General reserves &amp; surpluses</option>
+                  <option value="3100">3100 — Capital redemption reserve fund</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-3 top-2.5 text-ink-3 text-[18px] pointer-events-none">expand_more</span>
+              </div>
+              <span class="text-[11px] text-ink-3">Audited destination for net income rollup</span>
+            </div>
+
+            <!-- "Close the year" Button & Explanation (Disabled State) -->
+            <div class="flex flex-col lg:items-end gap-1.5">
+              <div class="flex items-center gap-3">
+                <div class="text-right hidden sm:block">
+                  <span class="text-xs font-medium text-ink-3 block">Prerequisite: all 12 sub-periods must be closed</span>
+                </div>
+                <!-- Disabled button because Oct, Nov, Dec are open -->
+                <button type="button" disabled class="h-10 px-5 rounded-lg bg-surface-sunken border border-line text-ink-3 font-semibold text-sm cursor-not-allowed flex items-center gap-2 opacity-80" title="Enabled only when all 12 months are closed">
+                  <span class="material-symbols-outlined text-[18px]">lock_clock</span>
+                  <span>Close the year</span>
+                </button>
+              </div>
+              <p class="text-[11.5px] text-ink-3 text-right max-w-md">
+                Posts the year's income and expenses to <strong class="font-semibold text-ink-2">3200 Retained earnings</strong>. A closed year can't be reopened.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ================= REOPEN DIALOG DEMO (Modal Card Overlay / Embedded View) ================= -->
+        <div class="bg-surface rounded-2xl border border-line shadow-card p-6">
+          <div class="flex items-center justify-between pb-4 border-b border-line mb-5">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+                <span class="material-symbols-outlined text-[19px]">lock_open</span>
+              </div>
+              <div>
+                <h3 class="font-h3 text-base font-bold text-ink">Reopen period dialog — Preview</h3>
+                <span class="text-xs text-ink-3">Modal invoked when an authorized manager clicks "Reopen" on a closed month tile</span>
+              </div>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-full bg-info-bg text-info-text text-xs font-semibold">
+              Interactive Dialog Spec
+            </span>
+          </div>
+
+          <div class="max-w-xl mx-auto bg-surface rounded-xl border border-line-strong/30 shadow-raised p-6 space-y-4">
+            <div class="flex items-start justify-between">
+              <div class="space-y-1">
+                <h4 class="font-display font-bold text-base text-ink">Reopen September 2026?</h4>
+                <p class="text-xs text-ink-3">Reopening allows backdated journal entries and corrections. This event is recorded in the immutable audit log.</p>
+              </div>
+              <button type="button" class="w-7 h-7 rounded-md text-ink-3 hover:text-ink hover:bg-surface-sunken flex items-center justify-center">
+                <span class="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+
+            <!-- Warning Callout -->
+            <div class="p-3 rounded-lg bg-warning-bg/70 border border-warning-text/20 flex items-start gap-2.5 text-xs text-warning-text">
+              <span class="material-symbols-outlined text-[18px] shrink-0 mt-0.5">info</span>
+              <div>
+                September was closed on <strong>3 Nov 2026</strong>. If downstream tax returns or trial balances have been generated, they may require re-certification.
+              </div>
+            </div>
+
+            <!-- Reason Field Required by prompt -->
+            <div class="space-y-1.5">
+              <label for="reopenReason" class="text-xs font-semibold text-ink flex items-center justify-between">
+                <span>Reason for reopening <span class="text-danger-text">*</span></span>
+                <span class="text-[11px] text-ink-3">Mandatory audit trail justification</span>
+              </label>
+              <textarea id="reopenReason" rows="3" placeholder="e.g. Backdated vendor credit note CN-2026-089 from MainOne Cable requires posting..." class="w-full p-3 bg-surface border border-line-strong rounded-lg text-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-iris/20 focus:border-iris transition-all font-body"></textarea>
+            </div>
+
+            <div class="pt-2 flex items-center justify-end gap-2.5">
+              <button type="button" class="h-9 px-4 rounded-lg bg-surface border border-line-strong text-ink-2 hover:text-ink hover:bg-surface-sunken text-xs font-medium transition-colors">
+                Cancel
+              </button>
+              <button type="button" class="h-9 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-xs">
+                <span class="material-symbols-outlined text-[16px]">check</span>
+                <span>Confirm &amp; reopen September</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= EARLIER YEAR CARD: 2025 · Closed ================= -->
+        <div class="bg-surface rounded-2xl border border-line shadow-card overflow-hidden opacity-95">
+          <!-- Earlier Year Top Header -->
+          <div class="px-6 py-4.5 bg-surface-sunken/60 border-b border-line flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-surface border border-line text-ink-2 flex items-center justify-center font-display font-bold text-sm">
+                25
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-h3 text-base font-bold text-ink">2025 · Closed</h3>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface text-ink-2 text-xs font-medium border border-line">
+                    Archived financial year
+                  </span>
+                </div>
+                <span class="text-xs text-ink-3">1 Jan 2025 – 31 Dec 2025 · Fully audited &amp; balanced</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 text-xs">
+              <div class="text-right">
+                <span class="text-ink-3">Net Rollup to 3200:</span>
+                <span class="font-mono font-semibold text-ink ml-1 tabular-nums">₦56,739,850.00</span>
+              </div>
+              <div class="h-4 w-px bg-line"></div>
+              <div class="text-right">
+                <span class="text-ink-3">Closed by:</span>
+                <span class="font-medium text-ink-2 ml-1">Fatima Bello (15 Jan 2026)</span>
+              </div>
+              <button type="button" class="h-8 px-3 rounded-lg bg-surface border border-line-strong hover:bg-surface-sunken text-xs font-medium text-ink transition-colors flex items-center gap-1.5 ml-2">
+                <span class="material-symbols-outlined text-[15px] text-ink-2">visibility</span>
+                <span>View period breakdown</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Compact Summary View of the 12 Closed Months -->
+          <div class="p-6">
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Jan 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">112 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Feb 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">104 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Mar 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">130 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Apr 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">98 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">May 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">115 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Jun 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">140 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Jul 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">122 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Aug 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">119 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Sep 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">148 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Oct 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">134 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Nov 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">152 posted · Closed</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-surface-sunken/40 border border-line text-center">
+                <span class="text-xs font-semibold text-ink block">Dec 2025</span>
+                <span class="text-[11px] text-ink-3 font-mono">180 posted · Closed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+</body>
+</html>
