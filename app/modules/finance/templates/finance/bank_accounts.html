@@ -1,0 +1,103 @@
+{# Finance → Banking (ADR 0026): bank accounts with their ledger balances, and the rules
+   that give statement lines entries.
+   Design: design/stitch/exports/finance.bank_accounts.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Banking", "Bank accounts, their statements and reconciliations.") %}
+  {% if can_reconcile %}<a href="/finance/transfers" class="kx-btn-ghost">{{ ui.icon("arrow-right-left", "sm") }} Transfers</a>{% endif %}
+  {% if can_manage %}<a href="/finance/banking?edit=new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Add bank account</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 {{ 'xl:grid-cols-[minmax(0,1fr)_420px]' if editing }}">
+  <div class="grid gap-4 md:grid-cols-2">
+    {% for r in rows %}
+    <section class="kx-card flex flex-col gap-3 p-5" aria-labelledby="bank-{{ r.id }}">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <h2 id="bank-{{ r.id }}" class="font-h3 text-h3"><a href="/finance/banking/{{ r.id }}" class="hover:text-iris">{{ r.name }}</a></h2>
+          <p class="text-xs text-ink-3"><span class="font-mono">{{ r.code }}</span> · {{ r.bank or "Bank details not set" }}</p>
+        </div>
+        {% if not r.is_active %}{{ ui.badge("neutral", "Inactive") }}{% elif r.unmatched %}{{ ui.badge("warning", r.unmatched ~ " unmatched") }}{% endif %}
+      </div>
+      <p class="font-stat text-h2 tnum">{{ r.balance | money }}</p>
+      <p class="text-xs text-ink-3">{% if r.last_reconciled %}Last reconciled to {{ r.last_reconciled[0] }} at {{ r.last_reconciled[1] | money }}{% else %}Not reconciled yet{% endif %}</p>
+      <div class="flex flex-wrap gap-2 pt-1">
+        <a href="/finance/banking/{{ r.id }}" class="kx-btn-secondary">Statements and matching</a>
+        {% if can_manage %}<a href="/finance/banking?edit={{ r.id }}" class="kx-btn-ghost">{{ ui.icon("pencil", "sm") }} Edit</a>{% endif %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+
+  {% if editing and can_manage %}
+  {% set b = bank %}
+  {% set e = errors if form in ("account", "") else {} %}
+  <aside class="kx-card h-fit p-5" aria-labelledby="bank-form-title">
+    <h2 id="bank-form-title" class="font-h3 text-h3">{{ "Edit " ~ ledger_name if b else "Add bank account" }}</h2>
+    {% if not b %}<p class="mt-1 text-body-sm text-ink-3">Its ledger account is created under 10 Cash and bank.</p>{% endif %}
+    <form method="post" action="/finance/banking/accounts" class="mt-4 space-y-4" novalidate>
+      {{ ui.csrf_field() }}
+      {% if b %}<input type="hidden" name="bank_id" value="{{ b.id }}">{% endif %}
+      {{ ui.text_field("name", "Name", value=v.get("name") or ledger_name, errors=e, hint="Like GTBank · Operations") }}
+      <div class="grid gap-4 sm:grid-cols-[minmax(0,1fr)_110px]">
+        {{ ui.text_field("bank_name", "Bank", value=v.get("bank_name") or (b.bank_name or "" if b else ""), errors=e) }}
+        {{ ui.text_field("bank_code", "CBN code", value=v.get("bank_code") or (b.bank_code or "" if b else ""), inputmode="numeric", errors=e) }}
+      </div>
+      {{ ui.text_field("account_number", "Account number", value=v.get("account_number") or (b.account_number or "" if b else ""), inputmode="numeric", errors=e) }}
+      {{ ui.text_field("account_name", "Account name", value=v.get("account_name") or (b.account_name or "" if b else ""), errors=e) }}
+      <fieldset class="space-y-3 border-t border-line pt-4">
+        <legend class="text-body-sm font-semibold">Statement layout <span class="font-normal text-ink-3">(CSV and Excel; a header or a column number)</span></legend>
+        <div class="grid gap-3 sm:grid-cols-2">
+          {% for key, label in (("csv_date", "Date column"), ("csv_description", "Description column"), ("csv_reference", "Reference column"), ("csv_amount", "Signed amount column"), ("csv_money_in", "Money-in column"), ("csv_money_out", "Money-out column"), ("csv_date_format", "Date format"), ("csv_skip_rows", "Rows to skip")) %}
+          {{ ui.text_field(key, label, value=v.get(key) if v else (b[key] if b and b[key] is not none else {"csv_date": "Date", "csv_description": "Description", "csv_money_in": "Credit", "csv_money_out": "Debit", "csv_date_format": "%d/%m/%Y", "csv_skip_rows": "0"}.get(key, "")), errors=e) }}
+          {% endfor %}
+        </div>
+        <p class="text-xs text-ink-3">Give a signed amount column, or money-in and money-out columns. OFX files need no layout.</p>
+      </fieldset>
+      {% if b %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if b.is_active %}checked{% endif %}> Active</label>{% endif %}
+      <div class="flex justify-end gap-3 pt-2"><a href="/finance/banking" class="kx-btn-ghost">Cancel</a><button type="submit" class="kx-btn-primary">Save</button></div>
+    </form>
+  </aside>
+  {% endif %}
+</div>
+
+<section id="rules" class="kx-card mt-6 overflow-hidden" aria-labelledby="rules-title">
+  <div class="border-b border-line px-5 py-4"><h2 id="rules-title" class="font-h3 text-h3">Matching rules</h2><p class="mt-1 text-body-sm text-ink-3">Statement lines that match no ledger entry get an entry from the first rule that fits. Entries post when the reconciliation is approved.</p></div>
+  {% if rules %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[760px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Description contains</th><th class="px-3 py-2.5 text-left font-semibold">Direction</th><th class="px-3 py-2.5 text-left font-semibold">Account</th><th class="px-3 py-2.5 text-left font-semibold">Bank account</th><th class="px-5 py-2.5 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rules %}
+        <tr><td class="px-5 py-2.5">{% if can_manage %}<a href="/finance/banking?rule={{ r.id }}#rules" class="font-semibold text-iris">“{{ r.contains }}”</a>{% else %}“{{ r.contains }}”{% endif %}</td><td class="px-3 py-2.5">{{ direction_labels[r.direction] }}</td><td class="px-3 py-2.5 text-ink-2">{{ codes.get(r.account_id, "") }}</td><td class="px-3 py-2.5 text-ink-2">{{ bank_labels.get(r.bank_account_id, "All") if r.bank_account_id else "All" }}</td><td class="px-5 py-2.5">{{ ui.badge("success" if r.is_active else "neutral", "Active" if r.is_active else "Off") }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="px-5 py-4 text-body-sm text-ink-3">No rules yet. Common ones: “SMS ALERT” and “COMMISSION” to bank charges, “STAMP DUTY” or “EMTL” to stamp duty.</p>
+  {% endif %}
+  {% if can_manage %}
+  {% set rr = editing_rule %}
+  {% set e = errors if form == "rule" else {} %}
+  {% set rv = v if form == "rule" else {} %}
+  <form method="post" action="/finance/banking/rules" class="grid gap-3 border-t border-line p-5 sm:grid-cols-2 lg:grid-cols-6 lg:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    {% if rr %}<input type="hidden" name="rule_id" value="{{ rr.id }}">{% endif %}
+    <h3 class="font-semibold sm:col-span-2 lg:col-span-6">{{ "Edit rule" if rr else "Add a rule" }}</h3>
+    {{ ui.text_field("contains", "Description contains", value=rv.get("contains") or (rr.contains if rr else ""), errors=e) }}
+    <div><label class="kx-label" for="direction">Direction</label><select id="direction" name="direction" class="kx-input">{% for key, label in directions %}<option value="{{ key }}" {% if (rv.get("direction") or (rr.direction if rr else "out")) == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div><label class="kx-label" for="account_id">Account</label><select id="account_id" name="account_id" class="kx-input"><option value="">—</option>{% for a in postable %}<option value="{{ a.id }}" {% if (rv.get("account_id") or (rr.account_id|string if rr else "")) == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>{{ ui.field_error(e, "account_id") }}</div>
+    <div><label class="kx-label" for="cost_centre_id">Cost centre</label><select id="cost_centre_id" name="cost_centre_id" class="kx-input"><option value="">—</option>{% for cid, clabel in cost_centres %}<option value="{{ cid }}" {% if (rv.get("cost_centre_id") or (rr.cost_centre_id|string if rr and rr.cost_centre_id else "")) == cid|string %}selected{% endif %}>{{ clabel }}</option>{% endfor %}</select></div>
+    <div><label class="kx-label" for="bank_account_id">Bank account</label><select id="bank_account_id" name="bank_account_id" class="kx-input"><option value="">All</option>{% for bid, blabel in bank_labels.items() %}<option value="{{ bid }}" {% if (rv.get("bank_account_id") or (rr.bank_account_id|string if rr and rr.bank_account_id else "")) == bid|string %}selected{% endif %}>{{ blabel }}</option>{% endfor %}</select></div>
+    <div class="flex items-center gap-3">{% if rr %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if rr.is_active %}checked{% endif %}> Active</label>{% endif %}<button type="submit" class="kx-btn-secondary">Save rule</button></div>
+    <div class="sm:col-span-2 lg:col-span-6">{{ ui.text_field("description", "Entry description (optional)", value=rv.get("description") or (rr.description or "" if rr else ""), errors=e) }}</div>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

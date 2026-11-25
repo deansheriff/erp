@@ -43,9 +43,11 @@ SOURCE_LABELS = {
     "expenses": "Expenses",
     "receivable": "Receivables",
     "payable": "Payables",
+    "bank": "Banking",
+    "tax": "Tax payment",
 }
 # Journals of finance's own documents, reversed from the document, not the Journals screen.
-DOCUMENT_SOURCES = frozenset({"receivable", "payable"})
+DOCUMENT_SOURCES = frozenset({"receivable", "payable", "bank", "tax"})
 TABS = ("draft", "posted", "held")
 
 # (account code, cost centre, debit, credit) as other modules hand them over

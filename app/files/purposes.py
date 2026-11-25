@@ -20,6 +20,7 @@ PURPOSE_MODULES = (
     "app.modules.attendance.files",
     "app.modules.expenses.files",
     "app.modules.payroll.files",
+    "app.modules.finance.files",
 )
 
 KB = 1024

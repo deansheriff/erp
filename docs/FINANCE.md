@@ -1,7 +1,7 @@
 # Finance
 
 Phase 10, in five gates. 10a, the general ledger, is in ADR 0023; 10b, receivables and
-tax, is in ADR 0024; 10c, payables, is in ADR 0025; permissions are in
+tax, is in ADR 0024; 10c, payables, is in ADR 0025; 10d, banking, is in ADR 0026; permissions are in
 `docs/PERMISSIONS.md`.
 
 ## Tables
@@ -23,7 +23,12 @@ tax, is in ADR 0024; 10c, payables, is in ADR 0025; permissions are in
 | `goods_receipts`, `goods_receipt_lines` | Goods received against PO lines. Nothing posts. |
 | `bills`, `bill_lines` | Supplier bills and debit notes, with the supplier's invoice number and the PO lines they match. |
 | `supplier_payments`, `supplier_payment_lines` | Payments, what each settles on a bill, and the WHT withheld. |
-| `tax_returns` | Filed and paid monthly VAT, WHT and stamp duty returns, with their figures as filed. |
+| `tax_returns` | Filed and paid monthly VAT, WHT and stamp duty returns, with their figures as filed, the bank paid from and the payment journal. |
+| `bank_accounts` | Each bank account's own ledger account (1010, then 1011 to 1099), bank name, CBN code, account number and name, and its CSV or Excel statement layout. |
+| `bank_statements`, `statement_lines` | Imported statement files and their lines (signed amount, a fingerprint so a line imports once, matched journal line or entry, reconciliation). |
+| `bank_rules` | Description-contains rules that give unmatched lines an entry account. |
+| `bank_reconciliations` | One per bank account and statement date: the statement balance, prepared, submitted and approved by. |
+| `bank_transfers` | Transfers between bank accounts, recorded by one person and approved by another. |
 
 ## How journals get to the ledger
 
@@ -57,6 +62,7 @@ to 6020 staff costs, 6100 to 6900 expense categories). Retained earnings: 3200.
 Receivables 1100, VAT output 2200, VAT input 1310, WHT receivable 1320, WHT payable 2210,
 stamp duty payable 2220. Payment terms 30 days; reminders 3 days before, on the due date,
 then every 7 days; returns due on the 21st. Trade payables 2010; bill price tolerance 2%.
+Bank matching within 3 days of the ledger date; statement files kept 6 years.
 
 ## Receivables
 
@@ -109,6 +115,27 @@ then every 7 days; returns due on the 21st. Trade payables 2010; bill price tole
   generic bank CSV payroll uses, and can be reversed with a reason.
 - **Payables aging** by days past the bill's due date, with CSV.
 
+## Banking
+
+- **Bank accounts** each have their own ledger account under 10 Cash and bank; 1010 is the
+  first. Adding one creates the next code from 1011. Balances come from the ledger.
+- **Statements** import from CSV or Excel (the account's layout: a header or column
+  number for date, description, reference and a signed amount or money in and out, the
+  date format and rows to skip) or OFX. The file is kept (6 years, to confirm). A line
+  already imported is skipped by its fingerprint.
+- **Matching:** a line with exactly one unmatched ledger entry on the bank account for the
+  same amount within 3 days (editable) is matched on import. Otherwise the first rule
+  whose text the description contains (and direction fits) gives it an entry account.
+  The rest are matched by hand from suggestions or given an entry. Entries post when the
+  reconciliation is approved.
+- **Reconciliation** to a statement date after the last approved one: the ledger balance
+  at that date, less ledger entries not yet on a statement, plus entries waiting to post,
+  must equal the statement balance with no unmatched lines up to the date. It is
+  submitted by one person and approved by another (`finance.bank_four_eyes`). Approval
+  posts the entries (source `bank`) in an open month and locks the lines.
+- **Transfers** (`TRF-`) between bank accounts are recorded by one person and approved by
+  another; approval debits the receiving account and credits the paying one.
+
 ## Tax
 
 - **VAT** 7.5% from 1 February 2020, effective-dated (confirm). Issued invoices keep their
@@ -120,8 +147,9 @@ then every 7 days; returns due on the 21st. Trade payables 2010; bill price tole
   from the ledger: VAT output is the net credit on 2200, VAT input the net debit on
   1310, WHT the net credit on 2210, and stamp duty the net credit on 2220. A return is a
   draft with live figures, then filed (frozen, with a reference), then paid. A filed
-  return shows if the ledger has moved since. Marking a return paid doesn't post a
-  journal yet; tax payments arrive with banking (10d).
+  return shows if the ledger has moved since. Marking a return paid needs the bank it was
+  paid from and posts the payment (source `tax`): VAT clears output against input and
+  pays the net from the bank; WHT and stamp duty pay their liability.
 
 ## Reports
 
@@ -135,5 +163,6 @@ general ledger download as CSV.
 
 Finance → Customers (and each customer), Sales (and each document and receipt), Aging,
 Suppliers (and each supplier), Purchases (and each PO, bill and payment), Payables aging,
+Banking (and each bank account and reconciliation), Transfers,
 Journals (and each journal), Chart of accounts, Recurring, Periods, Reports, Tax returns,
 Tax settings.

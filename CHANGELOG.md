@@ -5,6 +5,20 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 10d: Banking
+- Bank accounts, each with its own ledger account (1010 first, new ones from 1011), bank
+  details and a statement layout (ADR 0026).
+- Statement import from CSV, Excel or OFX; files kept 6 years (to confirm); lines already
+  imported are skipped.
+- Auto-matching on the exact amount within 3 days (editable), rules that give the rest an
+  entry account, and matching by hand.
+- Reconciliations to a statement date, down to a nil difference, submitted by one person
+  and approved by another; approval posts the rule and hand entries and locks the lines.
+- Transfers between bank accounts (`TRF-`) approved by a second person.
+- Marking a tax return paid now posts the payment from a chosen bank account.
+- Permissions `finance.bank.read`, `.manage`, `.reconcile` and `.approve`; grants for the
+  Finance Officer and Finance Manager.
+
 ### Added — Phase 10c: Payables
 - Suppliers (company or individual, for the WHT rate) with terms, a usual WHT type and
   bank details for the payment file (ADR 0025).

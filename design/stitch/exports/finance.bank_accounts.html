@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP - Bank accounts</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-container": "#c4ef49",
+            "lime-ink": "#4D7A0A",
+            "canvas": "#F6F6FA",
+            "surface-container-high": "#e8e8ec",
+            "line": "#E4E4EE",
+            "ink": "#16162A",
+            "surface-bright": "#f9f9fd",
+            "on-surface-variant": "#474554",
+            "danger-bg": "#FFE4E6",
+            "iris": "#5A4BDB",
+            "outline-variant": "#c8c4d7",
+            "success-text": "#0F6B3E",
+            "inverse-on-surface": "#f0f0f4",
+            "on-tertiary-container": "#ffd7c1",
+            "inverse-surface": "#2e3034",
+            "surface-container": "#ededf1",
+            "on-error-container": "#93000a",
+            "surface": "#FFFFFF",
+            "on-primary-fixed-variant": "#3d28be",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed": "#c7f24c",
+            "on-secondary-container": "#536b00",
+            "ink-3": "#626280",
+            "surface-variant": "#e2e2e6",
+            "error-container": "#ffdad6",
+            "info-bg": "#DFEBFF",
+            "tertiary-fixed-dim": "#ffb68b",
+            "destructive": "#C42836",
+            "iris-tint": "#EEECFD",
+            "inverse-primary": "#c5c0ff",
+            "on-surface": "#1a1c1f",
+            "on-primary-fixed": "#140067",
+            "warning-text": "#8A4B00",
+            "on-secondary": "#ffffff",
+            "background": "#f9f9fd",
+            "ink-2": "#4B4B66",
+            "warning-bg": "#FFF1D6",
+            "lime": "#C5F04A",
+            "on-tertiary": "#ffffff",
+            "surface-container-low": "#f3f3f7",
+            "surface-container-highest": "#e2e2e6",
+            "tertiary-fixed": "#ffdbc8",
+            "on-background": "#1a1c1f",
+            "secondary-fixed-dim": "#acd530",
+            "on-iris": "#FFFFFF",
+            "on-error": "#ffffff",
+            "surface-raised": "#FFFFFF",
+            "error": "#ba1a1a",
+            "success-bg": "#DDF7E8",
+            "tertiary": "#7a3700",
+            "primary-fixed-dim": "#c5c0ff",
+            "surface-dim": "#d9dade",
+            "iris-hover": "#4A3CC4",
+            "surface-sunken": "#EFEFF6",
+            "line-strong": "#8B8BA6",
+            "danger-text": "#B4232F",
+            "tertiary-container": "#9f4a00",
+            "primary-container": "#5a4bdb",
+            "on-primary-container": "#e0dbff",
+            "on-tertiary-fixed-variant": "#743400",
+            "primary": "#412ec2",
+            "on-secondary-fixed-variant": "#3b4d00",
+            "info-text": "#1D55B8",
+            "primary-fixed": "#e4dfff",
+            "on-secondary-fixed": "#161f00",
+            "on-tertiary-fixed": "#321300",
+            "surface-tint": "#5646d7",
+            "on-primary": "#ffffff",
+            "outline": "#787586",
+            "secondary": "#4f6600",
+            "cobalt": "#1D4ED8",
+            "cobalt-tint": "#EFF6FF"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.5rem",
+            "space-xl": "2rem",
+            "margin": "2rem",
+            "space-3xl": "4rem",
+            "space-2xl": "3rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "body": ["Inter"],
+            "stat": ["Plus Jakarta Sans"],
+            "h3": ["Plus Jakarta Sans"],
+            "overline": ["Inter"],
+            "body-sm": ["Inter"],
+            "display": ["Plus Jakarta Sans"],
+            "h2": ["Plus Jakarta Sans"],
+            "label": ["Inter"],
+            "h1": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+            "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+            "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }]
+          },
+          "boxShadow": {
+            "card": "0 1px 2px rgba(22, 22, 42, 0.04)",
+            "raised": "0 8px 24px -6px rgba(22, 22, 42, 0.12)"
+          }
+        }
+      }
+    };
+</script>
+<style>
+    @layer base {
+      html {
+        overscroll-behavior: none;
+      }
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.fill-1 {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background: #E4E4EE;
+      border-radius: 9999px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+      background: #8B8BA6;
+    }
+</style>
+<meta content="web_dashboard" name="shell-type"/>
+</head>
+<body class="bg-canvas text-ink antialiased min-h-screen selection:bg-iris selection:text-white">
+<!-- ========================================================================= -->
+<!-- 1. LEFT SIDEBAR COMPONENT (Fixed 272px)                                   -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-[272px] z-30 flex flex-col justify-between p-space-md bg-surface border-r border-line shadow-card">
+<!-- Top Block: Brand Header & Combobox -->
+<div class="flex-shrink-0">
+<!-- Organization Brand Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div aria-label="Adeyemi Holdings Ltd Corporate Crest" class="w-9 h-9 rounded-xl bg-ink text-white font-h2 text-label font-bold flex items-center justify-center shadow-card tracking-tight">
+          AH
+        </div>
+<div class="flex flex-col">
+<span class="font-h2 text-label font-bold text-ink leading-tight">Adeyemi Holdings Ltd</span>
+</div>
+</div>
+<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+</div>
+<!-- Quick Nav Combobox with compact keycap -->
+<button aria-label="Quick Navigation" class="w-full bg-surface-sunken hover:bg-surface-container-low text-ink-3 hover:text-ink rounded-lg px-space-sm py-2 text-label font-label flex items-center justify-between border border-line mt-space-sm mb-space-md transition-all duration-150 group" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-ink-3 group-hover:text-ink">search</span>
+<span class="font-body-sm text-body-sm">Go to…</span>
+</div>
+<kbd class="font-label text-[11px] leading-none bg-surface text-ink-2 px-1.5 py-1 rounded border border-line shadow-card font-semibold">Ctrl K</kbd>
+</button>
+</div>
+<!-- Navigation Modules Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto sidebar-scroll pr-1 -mr-1">
+<div class="font-overline text-[11px] font-semibold text-ink-3 tracking-wider uppercase mb-space-xs px-2">
+      MODULES
+    </div>
+<nav aria-label="Enterprise Modules" class="space-y-0.5" data-active-classes="bg-cobalt-tint text-cobalt font-semibold">
+<!-- Home -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="home" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#3F3F5A]/[0.12] text-[#3F3F5A] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">home</span>
+</div>
+<span class="truncate">Home</span>
+</a>
+<!-- HR -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="hr" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#7C3AED]/[0.12] text-[#7C3AED] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<span class="truncate">HR</span>
+</a>
+<!-- Leave -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="leave" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0369A1]/[0.12] text-[#0369A1] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</div>
+<span class="truncate">Leave</span>
+</a>
+<!-- Attendance -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="attendance" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0E7490]/[0.12] text-[#0E7490] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+<span class="truncate">Attendance</span>
+</a>
+<!-- Expenses -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="expenses" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#C2410C]/[0.12] text-[#C2410C] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<span class="truncate">Expenses</span>
+</a>
+<!-- Payroll -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="payroll" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#047857]/[0.12] text-[#047857] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+<span class="truncate">Payroll</span>
+</a>
+<!-- ACTIVE MODULE: Finance (Cobalt #1D4ED8) -->
+<div class="pt-0.5 pb-1">
+<div class="h-11 flex items-center justify-between px-2 rounded-lg bg-[#1D4ED8]/[0.08] text-ink font-semibold">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#1D4ED8]/[0.16] text-[#1D4ED8] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px] fill-1">query_stats</span>
+</div>
+<span class="font-h3 text-label text-ink">Finance</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-[#1D4ED8] mr-1"></span>
+</div>
+<!-- Open Sub-sections under Finance -->
+<div class="ml-6 pl-4 border-l border-line mt-1 space-y-0.5" data-active-classes="bg-cobalt-tint text-cobalt font-semibold shadow-card">
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-lg transition-colors duration-150" data-path="general-ledger" href="#">
+            General ledger
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-lg transition-colors duration-150" data-path="accounts-payable" href="#">
+            Accounts payable
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-lg transition-colors duration-150" data-path="accounts-receivable" href="#">
+            Accounts receivable
+          </a>
+<!-- ACTIVE SUB-ITEM: Bank accounts (Under Banking) -->
+<a aria-current="page" class="relative flex items-center py-1.5 pl-3 pr-2.5 rounded-lg transition-colors duration-150 shadow-card bg-cobalt-tint text-cobalt font-semibold" data-path="bank-accounts" href="#">
+<span class="absolute left-0 top-1 bottom-1 w-[3px] bg-[#1D4ED8] rounded-full"></span>
+<span class="font-semibold text-[#1D4ED8]">Bank accounts</span>
+</a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-lg transition-colors duration-150" data-path="bank-reconciliation" href="#">
+            Reconciliation
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-lg transition-colors duration-150" data-path="financial-reports" href="#">
+            Financial reports
+          </a>
+</div>
+</div>
+<!-- Inventory -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="inventory" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#92400E]/[0.12] text-[#92400E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+<span class="truncate">Inventory</span>
+</a>
+<!-- Projects -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="projects" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0F766E]/[0.12] text-[#0F766E] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">work</span>
+</div>
+<span class="truncate">Projects</span>
+</a>
+<!-- Support -->
+<a class="h-11 flex items-center gap-space-sm px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" data-path="support" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#BE185D]/[0.12] text-[#BE185D] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+</div>
+<span class="truncate">Support</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Bottom: Secondary Navigation & User Mini-Card -->
+<div class="flex-shrink-0 pt-space-sm border-t border-line mt-space-xs space-y-1">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span>Help &amp; documentation</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Settings</span>
+</a>
+<!-- User Mini-Card: Fatima Bello (Finance Manager) -->
+<div class="rounded-xl p-2.5 bg-surface-sunken/60 hover:bg-surface-sunken border border-line flex items-center justify-between mt-space-xs cursor-pointer transition-colors duration-150 group">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center flex-shrink-0 shadow-card">
+          FB
+        </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink truncate leading-snug">Fatima Bello</span>
+</div>
+</div>
+<button aria-label="Account options" class="w-7 h-7 rounded-lg flex items-center justify-center text-ink-3 group-hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- 2. TOP BAR COMPONENT (Sticky 64px, ML 272px)                              -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 ml-[272px] h-16 bg-surface/80 backdrop-blur-md border-b border-line flex items-center justify-between px-space-xl z-20 shadow-card">
+<!-- Left: Crisp Breadcrumb Trail (Finance > Banking > Bank accounts) -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2">
+<a class="font-label text-body-sm text-ink-2 hover:text-ink transition-colors" href="#">Finance</a>
+<span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span>
+<span class="font-label text-body-sm text-ink-2">Banking</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span>
+<span class="font-h3 text-body-sm font-semibold text-[#1D4ED8]">Bank accounts</span>
+</nav>
+<!-- Centre: Global Search Field with Compact Keycap -->
+<div class="max-w-md w-full mx-space-lg">
+<div class="relative flex items-center bg-surface-sunken rounded-lg px-3.5 py-2 border border-transparent focus-within:border-iris focus-within:bg-white transition-all shadow-card">
+<span class="material-symbols-outlined text-[20px] text-ink-3 mr-2.5">search</span>
+<input class="w-full bg-transparent border-0 p-0 text-body-sm text-ink placeholder:text-ink-3 focus:ring-0 focus:outline-none" placeholder="Search accounts, ledgers, transactions…" type="text"/>
+<kbd class="font-label text-[11px] leading-none bg-white text-ink-2 px-1.5 py-1 rounded border border-line shadow-card font-semibold ml-2 select-none whitespace-nowrap">
+        Ctrl K
+      </kbd>
+</div>
+</div>
+<!-- Right: 44x44 Touch Target Action Cluster -->
+<div class="flex items-center gap-space-xs">
+<!-- Approvals Inbox Button -->
+<button aria-label="Finance approvals" class="w-11 h-11 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">inbox</span>
+<span class="absolute top-2 right-2 bg-iris text-white font-label text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center leading-none ring-2 ring-surface">
+        3
+      </span>
+</button>
+<!-- Notifications Bell Button -->
+<button aria-label="Notifications" class="w-11 h-11 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span>
+</button>
+<!-- Theme Toggle Button -->
+<button aria-label="Toggle theme" class="w-11 h-11 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">light_mode</span>
+</button>
+<!-- User Profile Avatar Mini-Pill -->
+<button aria-label="User profile menu" class="h-11 pl-1.5 pr-2.5 rounded-lg hover:bg-surface-sunken flex items-center gap-2 border border-transparent hover:border-line transition-all duration-150 ml-1" type="button">
+<div class="w-8 h-8 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center shadow-card">
+        FB
+      </div>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Module Accent Indicator: Cobalt #1D4ED8 Loading/Progress Strip -->
+<div class="absolute bottom-0 left-0 w-2/5 h-[2px] bg-[#1D4ED8] transition-all duration-300"></div>
+</header>
+<!-- ========================================================================= -->
+<!-- 3. MAIN CONTENT AREA (ML 272px, Min H calc(100vh - 64px))                 -->
+<!-- ========================================================================= -->
+<main class="ml-[272px] min-h-[calc(100vh-64px)] bg-canvas p-space-xl relative overflow-hidden"><div class="flex flex-col w-full">
+<!-- Page Header with soft Cobalt glow banner -->
+<div class="relative rounded-2xl bg-gradient-to-r from-blue-50/70 via-indigo-50/40 to-transparent p-space-lg border border-line shadow-card mb-space-xl flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink tracking-tight font-bold">Banking</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-[#1D4ED8]/[0.12] text-[#1D4ED8] font-label text-[12px] font-semibold border border-blue-100">
+          Corporate Treasury
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1 max-w-3xl">
+        Manage corporate treasury bank accounts, automated reconciliation matching rules, and statement parsing schemas.
+      </p>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<button class="h-11 px-4 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label border border-line flex items-center gap-2 shadow-card transition-colors duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">sync_alt</span>
+<span>Transfers</span>
+</button>
+<button class="h-11 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label flex items-center gap-2 shadow-card transition-all duration-150 active:scale-[0.98]" id="btn-open-drawer" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Add bank account</span>
+</button>
+</div>
+</div>
+<!-- Key Financial Metrics Bento Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md mb-space-xl">
+<!-- Stat 1: Total Ledger Cash -->
+<div class="bg-surface rounded-xl p-space-lg border border-line shadow-card flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase font-semibold">Total Ledger Cash</span>
+<div class="w-8 h-8 rounded-lg bg-iris-tint flex items-center justify-center text-iris">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="font-stat text-stat text-ink tabular-nums font-bold tracking-tight">
+          ₦16,814,850.00
+        </div>
+<div class="flex items-center gap-1.5 mt-1 font-body-sm text-body-sm text-ink-2">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span>Across 2 active treasury accounts</span>
+</div>
+</div>
+</div>
+<!-- Stat 2: Unmatched Statement Lines -->
+<div class="bg-surface rounded-xl p-space-lg border border-line shadow-card flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase font-semibold">Pending Ingestion Review</span>
+<span class="px-2.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[12px] font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+          Requires Action
+        </span>
+</div>
+<div class="mt-space-md">
+<div class="flex items-baseline gap-2">
+<span class="font-stat text-stat text-ink tabular-nums font-bold tracking-tight">7 lines</span>
+<span class="font-body-sm text-body-sm text-ink-3">awaiting matching</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 font-body-sm text-body-sm text-ink-2">
+<span class="material-symbols-outlined text-[16px] text-ink-3">rule</span>
+<span>GTBank live transaction feed</span>
+</div>
+</div>
+</div>
+<!-- Stat 3: Last Reconciled Cycle -->
+<div class="bg-surface rounded-xl p-space-lg border border-line shadow-card flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase font-semibold">Audit &amp; Reconciliation</span>
+<div class="w-8 h-8 rounded-lg bg-success-bg flex items-center justify-center text-success-text">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+</div>
+<div class="mt-space-md">
+<div class="font-stat text-stat text-ink tabular-nums font-bold tracking-tight">
+          31 Oct 2026
+        </div>
+<div class="flex items-center gap-1.5 mt-1 font-body-sm text-body-sm text-success-text font-medium">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>100% verified for Oct closing cycle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Corporate Bank Accounts Section (Grid) -->
+<div class="mb-space-2xl">
+<div class="flex items-center justify-between mb-space-md">
+<h2 class="font-h2 text-h2 text-ink font-semibold">Active Treasury Portfolios</h2>
+<span class="font-label text-body-sm text-ink-3">2 configured accounts</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-lg">
+<!-- Card 1: GTBank · Operations -->
+<div class="bg-surface rounded-xl p-space-lg border border-line shadow-card flex flex-col justify-between hover:border-line-strong transition-colors duration-150 ring-1 ring-iris/20">
+<div>
+<!-- Top Row: Badge, Tags & Kebab -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-orange-50 border border-orange-200 text-[#DD4F05] flex items-center justify-center font-bold text-h3 flex-shrink-0 shadow-sm">
+                GT
+              </div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-h3 text-h3 text-ink font-bold">GTBank · Operations</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-mono text-[11px] font-semibold border border-line">
+                    1010
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+                  Guaranty Trust Bank PLC · CBN: <span class="font-mono text-ink-2 font-medium">058</span>
+</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-emerald-50 text-success-text font-label text-[12px] font-semibold border border-emerald-100 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+              Operational Liquidity
+            </span>
+</div>
+<!-- Account Meta & Balance Block -->
+<div class="mt-space-lg p-space-md bg-surface-sunken/70 rounded-xl border border-line">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-ink-3 font-label">NUBAN Account</span>
+<div class="flex items-center gap-1.5 font-mono text-ink font-semibold">
+<span>0123454821</span>
+<button aria-label="Copy account number" class="w-6 h-6 flex items-center justify-center text-ink-3 hover:text-ink rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px]">content_copy</span>
+</button>
+</div>
+</div>
+<div class="mt-space-md pt-space-md border-t border-line/60 flex items-baseline justify-between">
+<div>
+<span class="font-overline text-[11px] text-ink-3 uppercase tracking-wider block font-semibold">GL Ledger Balance</span>
+<span class="font-display text-display text-ink tabular-nums font-bold tracking-tight">₦14,564,850.00</span>
+</div>
+<span class="px-2 py-1 bg-surface rounded text-ink-2 text-overline font-semibold uppercase tracking-wider border border-line">
+                NGN · ₦
+              </span>
+</div>
+</div>
+<!-- Audit & Reconciliation Metadata Pill -->
+<div class="mt-space-md flex flex-wrap items-center justify-between gap-2 text-body-sm">
+<div class="flex items-center gap-1.5 text-ink-2">
+<span class="material-symbols-outlined text-[16px] text-ink-3">history</span>
+<span>Last reconciled to <strong class="text-ink font-semibold">31 Oct 2026</strong> at ₦12,880,000.00</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-[12px] font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+              7 unmatched
+            </span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="mt-space-xl pt-space-md border-t border-line flex items-center justify-end gap-space-sm">
+<button class="h-11 px-4 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label border border-line flex items-center gap-2 transition-colors active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-2">description</span>
+<span>Statements and matching</span>
+</button>
+<button class="h-11 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label flex items-center gap-2 shadow-card transition-all active:scale-[0.98]" id="btn-open-edit-gtbank" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span>Edit</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Zenith · Payroll -->
+<div class="bg-surface rounded-xl p-space-lg border border-line shadow-card flex flex-col justify-between hover:border-line-strong transition-colors duration-150">
+<div>
+<!-- Top Row -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-danger-bg/40 border border-red-200 text-danger-text flex items-center justify-center font-bold text-h3 flex-shrink-0 shadow-sm">
+                ZB
+              </div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-h3 text-h3 text-ink font-bold">Zenith · Payroll</h3>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-mono text-[11px] font-semibold border border-line">
+                    1011
+                  </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+                  Zenith Bank PLC · CBN: <span class="font-mono text-ink-2 font-medium">057</span>
+</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-sunken text-ink-3 font-label text-[12px] font-medium border border-line flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3"></span>
+              Payroll Disbursement
+            </span>
+</div>
+<!-- Account Meta & Balance Block -->
+<div class="mt-space-lg p-space-md bg-surface-sunken/70 rounded-xl border border-line">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-ink-3 font-label">NUBAN Account</span>
+<div class="flex items-center gap-1.5 font-mono text-ink font-semibold">
+<span>1014892305</span>
+<button aria-label="Copy account number" class="w-6 h-6 flex items-center justify-center text-ink-3 hover:text-ink rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px]">content_copy</span>
+</button>
+</div>
+</div>
+<div class="mt-space-md pt-space-md border-t border-line/60 flex items-baseline justify-between">
+<div>
+<span class="font-overline text-[11px] text-ink-3 uppercase tracking-wider block font-semibold">GL Ledger Balance</span>
+<span class="font-display text-display text-ink tabular-nums font-bold tracking-tight">₦2,250,000.00</span>
+</div>
+<span class="px-2 py-1 bg-surface rounded text-ink-2 text-overline font-semibold uppercase tracking-wider border border-line">
+                NGN · ₦
+              </span>
+</div>
+</div>
+<!-- Audit Status & Feed Chip -->
+<div class="mt-space-md flex flex-wrap items-center justify-between gap-2 text-body-sm">
+<div class="flex items-center gap-1.5 text-ink-3">
+<span class="material-symbols-outlined text-[16px] text-ink-3">schedule</span>
+<span class="italic">Not reconciled yet</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-label text-[12px] font-medium border border-line flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-line-strong"></span>
+              Unlinked feed / Manual CSV
+            </span>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-space-xl pt-space-md border-t border-line flex items-center justify-end gap-space-sm">
+<button class="h-11 px-4 rounded-lg bg-surface hover:bg-surface-sunken text-ink font-label text-label border border-line flex items-center gap-2 shadow-card transition-colors active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px] text-iris">settings</span>
+<span>Configure bank details</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Automated Bank Matching Rules Engine -->
+<div class="bg-surface rounded-xl border border-line shadow-card overflow-hidden mb-space-2xl">
+<!-- Header of Section -->
+<div class="p-space-lg border-b border-line flex flex-col md:flex-row md:items-center justify-between gap-space-md bg-surface">
+<div>
+<div class="flex items-center gap-2.5">
+<h2 class="font-h2 text-h2 text-ink font-bold">Matching rules</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-iris-tint text-iris text-[12px] font-bold font-label">
+            3 active rules
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1">
+          Rules applied during statement ingestion to auto-classify recurring transaction lines before manual reconciliation.
+        </p>
+</div>
+</div>
+<!-- Explanatory note banner -->
+<div class="px-space-lg py-3 bg-blue-50/70 border-b border-blue-100 flex items-center gap-3 text-body-sm text-[#1D4ED8]">
+<span class="material-symbols-outlined text-[18px] flex-shrink-0 text-cobalt">info</span>
+<span>Statement lines that match no ledger entry get an entry from the first rule that fits. Entries post when the reconciliation is approved.</span>
+</div>
+<!-- High-density Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-[11px] uppercase tracking-wider border-b border-line">
+<th class="py-3 px-space-lg font-semibold">Description contains</th>
+<th class="py-3 px-space-md font-semibold">Direction</th>
+<th class="py-3 px-space-md font-semibold">Account</th>
+<th class="py-3 px-space-md font-semibold">Bank account</th>
+<th class="py-3 px-space-md font-semibold text-center">Status</th>
+<th class="py-3 px-space-lg font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line text-body-sm">
+<!-- Row 1: SMS ALERT -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-3.5 px-space-lg">
+<code class="px-2 py-1 bg-surface-sunken rounded text-ink font-mono font-bold text-[13px] border border-line">"SMS ALERT"</code>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[12px] font-semibold">
+<span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                Money out (debit)
+              </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="font-medium text-ink">6460 · Bank charges &amp; commissions</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-2 font-label text-[12px] border border-line">
+                All accounts
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-success-text font-label text-[12px] font-semibold border border-emerald-100">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<button aria-label="Edit rule options" class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: EMTL -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-3.5 px-space-lg">
+<code class="px-2 py-1 bg-surface-sunken rounded text-ink font-mono font-bold text-[13px] border border-line">"EMTL"</code>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[12px] font-semibold">
+<span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                Money out (debit)
+              </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="font-medium text-ink">2220 · Stamp duty payable</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-2 font-label text-[12px] border border-line">
+                All accounts
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-success-text font-label text-[12px] font-semibold border border-emerald-100">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<button aria-label="Edit rule options" class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: COMMISSION -->
+<tr class="hover:bg-surface-sunken/40 transition-colors">
+<td class="py-3.5 px-space-lg">
+<code class="px-2 py-1 bg-surface-sunken rounded text-ink font-mono font-bold text-[13px] border border-line">"COMMISSION"</code>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-label text-[12px] font-semibold">
+<span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+                Money out (debit)
+              </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="font-medium text-ink">6460 · Bank charges &amp; commissions</div>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="px-2 py-0.5 rounded bg-surface-sunken text-ink-2 font-label text-[12px] border border-line">
+                All accounts
+              </span>
+</td>
+<td class="py-3.5 px-space-md text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-success-text font-label text-[12px] font-semibold border border-emerald-100">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+                Active
+              </span>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<button aria-label="Edit rule options" class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Inline "Add a rule" Form -->
+<div class="p-space-lg bg-surface-sunken/40 border-t border-line">
+<div class="font-overline text-[11px] font-semibold text-ink-3 uppercase tracking-wider mb-space-sm">
+        Add a matching rule
+      </div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-space-sm items-end">
+<!-- Condition text -->
+<div class="md:col-span-1">
+<label class="block font-label text-[12px] text-ink-2 mb-1">Description contains</label>
+<input class="w-full h-10 bg-surface rounded-lg px-3 text-body-sm font-mono text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none" placeholder="e.g. NIP INFLOW" type="text"/>
+</div>
+<!-- Direction dropdown -->
+<div>
+<label class="block font-label text-[12px] text-ink-2 mb-1">Direction</label>
+<div class="relative">
+<select class="w-full h-10 bg-surface rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none appearance-none pr-8">
+<option value="out">Money out (debit)</option>
+<option value="in">Money in (credit)</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-ink-3 absolute right-2.5 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Account select (GL Code + Name) -->
+<div>
+<label class="block font-label text-[12px] text-ink-2 mb-1">Target GL Account</label>
+<div class="relative">
+<select class="w-full h-10 bg-surface rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none appearance-none pr-8">
+<option value="6460">6460 · Bank charges</option>
+<option value="4100">4100 · Sales revenue</option>
+<option value="2220">2220 · Stamp duty</option>
+<option value="5010">5010 · Vendor payments</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-ink-3 absolute right-2.5 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Bank account select -->
+<div>
+<label class="block font-label text-[12px] text-ink-2 mb-1">Bank account</label>
+<div class="relative">
+<select class="w-full h-10 bg-surface rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none appearance-none pr-8">
+<option value="all">All accounts</option>
+<option value="1010">GTBank · Operations (1010)</option>
+<option value="1011">Zenith · Payroll (1011)</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-ink-3 absolute right-2.5 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Save button -->
+<div>
+<button class="w-full h-10 px-4 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label flex items-center justify-center gap-1.5 shadow-card transition-all duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Save rule</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- Slide-out Side Panel / Drawer: "Edit GTBank · Operations" (Active)       -->
+<!-- ========================================================================= -->
+<!-- Scrim Overlay -->
+<div class="fixed inset-0 bg-[#0B0B12]/45 backdrop-blur-[3px] z-40 transition-opacity duration-200" id="drawer-scrim">
+</div>
+<!-- Drawer Body (~480px width, docked right) -->
+<aside class="fixed top-0 right-0 h-screen w-full max-w-[480px] bg-surface z-50 shadow-raised flex flex-col justify-between transition-transform duration-300 ease-in-out border-l border-line" id="add-account-drawer">
+<!-- Drawer Header -->
+<div class="p-space-lg border-b border-line flex items-center justify-between flex-shrink-0 bg-surface">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-orange-50 border border-orange-200 text-[#DD4F05] flex items-center justify-center font-bold text-body-sm flex-shrink-0">
+          GT
+        </div>
+<div>
+<h2 class="font-h2 text-h2 text-ink font-bold">Edit GTBank · Operations</h2>
+<p class="font-body-sm text-[12px] text-ink-3">
+            NUBAN 0123454821 · GL Code 1010
+          </p>
+</div>
+</div>
+<button aria-label="Close drawer" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors" id="btn-close-drawer" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Scrollable Form Content -->
+<div class="flex-1 overflow-y-auto p-space-lg space-y-space-lg sidebar-scroll">
+<!-- Fieldset 1: Basic Details -->
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-overline text-[11px] font-semibold text-ink-3 uppercase tracking-wider block">
+            1. Basic Account Details
+          </span>
+<span class="px-2 py-0.5 rounded bg-emerald-50 text-success-text text-[11px] font-semibold border border-emerald-100">
+            Connected
+          </span>
+</div>
+<div class="space-y-space-md">
+<!-- Name -->
+<div>
+<label class="block font-label text-[13px] text-ink mb-1">Account Nickname</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none transition-all" type="text" value="GTBank · Operations"/>
+</div>
+<!-- Bank Name -->
+<div>
+<label class="block font-label text-[13px] text-ink mb-1">Commercial Bank</label>
+<div class="relative">
+<select class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none transition-all pr-10 appearance-none font-medium">
+<option selected="">Guaranty Trust Bank PLC</option>
+<option>Zenith Bank PLC</option>
+<option>Access Bank Nigeria</option>
+<option>First Bank of Nigeria</option>
+<option>United Bank for Africa (UBA)</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-ink-3 absolute right-3 top-2.5 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- CBN Code & NUBAN -->
+<div class="grid grid-cols-3 gap-space-sm">
+<div>
+<label class="block font-label text-[13px] text-ink mb-1">CBN Code</label>
+<input class="w-full h-10 bg-surface-container-low rounded-lg px-3 text-body-sm font-mono text-ink-2 border border-line cursor-not-allowed" readonly="" type="text" value="058"/>
+</div>
+<div class="col-span-2">
+<label class="block font-label text-[13px] text-ink mb-1">Account Number (NUBAN)</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm font-mono text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none transition-all" type="text" value="0123454821"/>
+</div>
+</div>
+<!-- Account Name -->
+<div>
+<label class="block font-label text-[13px] text-ink mb-1">Account Name</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none transition-all uppercase" type="text" value="ADEYEMI HOLDINGS LTD - OPERATIONS"/>
+</div>
+</div>
+</div>
+<!-- Fieldset 2: Statement Parsing Schema -->
+<div class="pt-space-md border-t border-line">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-overline text-[11px] font-semibold text-ink-3 uppercase tracking-wider block">
+            2. Statement Parsing Schema
+          </span>
+<span class="font-mono text-[11px] text-ink-3">CSV / XLS Layout</span>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3 mb-space-md">
+          Configure standard column positions mapped to statement upload ingestion for GTBank export files.
+        </p>
+<div class="space-y-space-md">
+<!-- Date & Reference Columns -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label text-[12px] text-ink mb-1">Date column</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none font-mono text-[13px]" type="text" value="Column A (Transaction Date)"/>
+</div>
+<div>
+<label class="block font-label text-[12px] text-ink mb-1">Date format</label>
+<div class="relative">
+<select class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none appearance-none pr-8">
+<option selected="">DD/MM/YYYY</option>
+<option>YYYY-MM-DD</option>
+<option>MM/DD/YYYY</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-ink-3 absolute right-2.5 top-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Description column & Reference column -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label text-[12px] text-ink mb-1">Description column</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none font-mono text-[13px]" type="text" value="Column B (Narration)"/>
+</div>
+<div>
+<label class="block font-label text-[12px] text-ink mb-1">Reference column</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none font-mono text-[13px]" type="text" value="Column C (Value / Session Ref)"/>
+</div>
+</div>
+<!-- Signed amount column -->
+<div>
+<label class="block font-label text-[12px] text-ink mb-1">Signed amount column</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none font-mono text-[13px]" type="text" value="Column D (Signed Amount)"/>
+</div>
+<!-- Money-in & Money-out columns -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label text-[12px] text-ink mb-1">Money-in column</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none font-mono text-[13px]" type="text" value="Column E (Deposit / Credit)"/>
+</div>
+<div>
+<label class="block font-label text-[12px] text-ink mb-1">Money-out column</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none font-mono text-[13px]" type="text" value="Column F (Withdrawal / Debit)"/>
+</div>
+</div>
+<!-- Rows to skip -->
+<div class="w-full">
+<label class="block font-label text-[12px] text-ink mb-1">Rows to skip</label>
+<input class="w-full h-10 bg-surface-sunken rounded-lg px-3 text-body-sm text-ink border border-line focus:border-iris focus:bg-surface focus:outline-none font-mono text-[13px]" type="text" value="1 (Header row)"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-space-lg border-t border-line flex items-center justify-end gap-space-sm bg-surface flex-shrink-0">
+<button class="h-11 px-5 rounded-lg hover:bg-surface-sunken text-ink-2 font-label text-label transition-colors" id="btn-cancel-drawer" type="button">
+        Cancel
+      </button>
+<button class="h-11 px-5 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label shadow-card transition-all active:scale-[0.98]" id="btn-save-drawer" type="button">
+        Save changes
+      </button>
+</div>
+</aside>
+</div></main>
+</body></html>

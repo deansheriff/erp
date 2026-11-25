@@ -153,6 +153,32 @@ PAYMENT_APPROVE = Permission(
     "and reverse payments.",
     scopes=ORG_ONLY,
 )
+# Banking (ADR 0026)
+BANK_READ = Permission(
+    "finance.bank.read",
+    "View banking",
+    "See bank accounts, imported statements, matching, reconciliations and transfers.",
+    scopes=ORG_ONLY,
+)
+BANK_MANAGE = Permission(
+    "finance.bank.manage",
+    "Manage bank accounts",
+    "Add bank accounts, set their statement layouts, and keep the matching rules.",
+    scopes=ORG_ONLY,
+)
+BANK_RECONCILE = Permission(
+    "finance.bank.reconcile",
+    "Reconcile bank accounts",
+    "Import statements, match and give entries to lines, prepare reconciliations, and "
+    "record transfers between accounts.",
+    scopes=ORG_ONLY,
+)
+BANK_APPROVE = Permission(
+    "finance.bank.approve",
+    "Approve reconciliations and transfers",
+    "Approve a reconciliation or a transfer someone else prepared, posting its journals.",
+    scopes=ORG_ONLY,
+)
 
 PERMISSIONS = (
     ACCOUNT_READ,
@@ -179,6 +205,10 @@ PERMISSIONS = (
     BILL_OVERRIDE,
     PAYMENT_CREATE,
     PAYMENT_APPROVE,
+    BANK_READ,
+    BANK_MANAGE,
+    BANK_RECONCILE,
+    BANK_APPROVE,
 )
 
 SOD_RULES = (
@@ -205,5 +235,11 @@ SOD_RULES = (
         permission=PAYMENT_APPROVE.key,
         conflict="creator_is_actor",
         message="Someone else approves a supplier payment you prepared.",
+    ),
+    SodRule(
+        key="finance.bank_four_eyes",
+        permission=BANK_APPROVE.key,
+        conflict="creator_is_actor",
+        message="Someone else approves a reconciliation or transfer you prepared.",
     ),
 )

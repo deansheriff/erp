@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import select
 
 from app.core.db import session_scope
-from app.modules.finance.models import Account, Customer, Receipt, SalesDocument
+from app.modules.finance.models import Account, BankAccount, Customer, Receipt, SalesDocument
 from tests.conftest import csrf_token
 from tests.web.test_finance_screens import admin  # noqa: F401  (fixture)
 from tests.web.test_hr_screens import _post
@@ -174,5 +174,13 @@ def test_tax_settings_and_returns(admin: TestClient) -> None:  # noqa: F811
     assert r.status_code == 422  # type: ignore[attr-defined]
     r = _post(admin, "/finance/tax/returns/vat/2026-01/file", on="2026-02-10", reference="TP-1")
     assert "Marked as filed." in html.unescape(r.text)  # type: ignore[attr-defined]
-    r = _post(admin, "/finance/tax/returns/vat/2026-01/paid", on="2026-02-12", reference="RRR")
+    with session_scope() as db:
+        bank = str(db.scalars(select(BankAccount.id)).one())
+    r = _post(
+        admin,
+        "/finance/tax/returns/vat/2026-01/paid",
+        on="2026-02-12",
+        reference="RRR",
+        paid_from=bank,
+    )
     assert "Marked as paid." in html.unescape(r.text)  # type: ignore[attr-defined]

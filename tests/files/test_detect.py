@@ -12,7 +12,11 @@ def test_types_come_from_the_content_not_the_name() -> None:
     assert detect.detect(png()) == "image/png"
     assert detect.detect(b"%PDF-1.7\n%...") == "application/pdf"
     assert detect.detect(SAFE_SVG) == detect.SVG
-    assert detect.detect(b"just some text pretending to be a png") is None
+    # Plain text (CSV and OFX bank statements) is text, whatever it's called; no image
+    # or document purpose accepts it.
+    assert detect.detect(b"just some text pretending to be a png") == detect.TEXT
+    assert detect.detect(b"Date,Amount\r\n01/11/2026,1000.00\r\n") == detect.TEXT
+    assert detect.detect(b"\x01\x02binary noise\x00") is None
 
 
 def test_a_safe_svg_passes() -> None:

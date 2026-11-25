@@ -14,7 +14,7 @@ from app.audit.service import record_by
 from app.authz import engine
 from app.core.errors import Conflict, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
-from app.modules.finance import accounts, periods
+from app.modules.finance import accounts, banking, journals, periods
 from app.modules.finance.models import (
     STAMP_BASES,
     TAXES,
@@ -515,8 +515,16 @@ def file_return(
 
 
 def mark_paid(
-    db: Session, actor: Actor, tax: str, start: date, *, paid_on: date | None, reference: str
+    db: Session,
+    actor: Actor,
+    tax: str,
+    start: date,
+    *,
+    paid_on: date | None,
+    reference: str,
+    bank_account_id: str = "",
 ) -> None:
+    """Mark a filed return paid and post the payment from the bank (ADR 0026)."""
     _require(db, actor, MANAGE)
     _check_tax(tax)
     row = db.scalars(
@@ -529,9 +537,28 @@ def mark_paid(
     if row.status == "paid":
         raise Conflict("This return is already marked paid.")
     errors = _reference_errors(paid_on, reference, "paid")
+    bank_id = banking.uuid_or_none(bank_account_id)
+    if bank_id not in {b for b, _ in banking.choices(db)}:
+        errors["paid_from"] = "Choose the bank account it's paid from."
     if errors:
         raise ValidationFailed(field_errors=errors)
-    row.status, row.paid_on = "paid", paid_on
+    assert paid_on is not None and bank_id is not None  # noqa: S101  (checked above)
+    _, closed = periods.period_for(db, paid_on)
+    if closed:
+        raise ValidationFailed(field_errors={"paid_on": closed})
+    lines = _payment_lines(db, row, banking.ledger_of(db, bank_id).code)
+    if lines:
+        journal = journals.post_document_journal(
+            db,
+            source_id=row.id,
+            journal_date=paid_on,
+            memo=f"{TAX_LABELS[tax]} return {start:%B %Y} paid ({reference.strip()[:60]})",
+            lines=lines,
+            poster=actor.user_id,
+            source=SETTLEMENT_SOURCE,
+        )
+        row.payment_journal_id = journal.id
+    row.status, row.paid_on, row.paid_from_id = "paid", paid_on, bank_id
     row.payment_reference, row.paid_by = reference.strip()[:80], actor.user_id
     db.flush()
     record_by(
@@ -542,3 +569,25 @@ def mark_paid(
         entity_id=str(row.id),
         changes={"status": {"from": "filed", "to": "paid"}},
     )
+
+
+def _payment_lines(db: Session, row: TaxReturn, bank_code: str) -> list[journals.SystemLine]:
+    """VAT clears output against input and pays the net; WHT and stamp duty pay the
+    liability. When input is more than output, input clears only up to output."""
+    settings = periods.settings(db)
+    out_code, in_code = _codes(settings, row.tax)
+    output, inputs = row.output_amount or ZERO, row.input_amount or ZERO
+    if row.tax != "vat":
+        return (
+            [(out_code, None, output, ZERO), (bank_code, None, ZERO, output)] if output > 0 else []
+        )
+    cash = max(output - inputs, ZERO)
+    cleared = output - cash
+    lines: list[journals.SystemLine] = []
+    if output > 0:
+        lines.append((out_code, None, output, ZERO))
+    if cleared > 0 and in_code:
+        lines.append((in_code, None, ZERO, cleared))
+    if cash > 0:
+        lines.append((bank_code, None, ZERO, cash))
+    return lines

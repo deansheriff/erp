@@ -67,6 +67,9 @@
       <h3 class="font-semibold sm:col-span-2">{{ "Mark as filed" if action == "file" else "Mark as paid" }}</h3>
       {{ ui.text_field("on", "Filed on" if action == "file" else "Paid on", value=values.get("on") or today.isoformat(), type="date", errors=errors) }}
       {{ ui.text_field("reference", "Filing reference" if action == "file" else "Payment reference", value=values.get("reference"), errors=errors) }}
+      {% if action == "paid" %}
+      <div class="sm:col-span-2"><label class="kx-label" for="paid_from">Paid from</label><select id="paid_from" name="paid_from" class="kx-input">{% for bid, blabel in banks %}<option value="{{ bid }}" {% if values.get("paid_from") == bid|string %}selected{% endif %}>{{ blabel }}</option>{% endfor %}</select>{{ ui.field_error(errors, "paid_from") }}<p class="mt-1 text-xs text-ink-3">{{ "Posts output VAT against input VAT and pays the net from this account." if tax == "vat" else "Posts the payment of the liability from this account." }}</p></div>
+      {% endif %}
       <div class="flex justify-end sm:col-span-2"><button type="submit" class="kx-btn-primary">{{ "Mark as filed" if action == "file" else "Mark as paid" }}</button></div>
     </form>
     {% endif %}

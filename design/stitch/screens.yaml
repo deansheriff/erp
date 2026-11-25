@@ -1384,3 +1384,77 @@ screens:
       download_csv: finance.supplier.read
     field_classes: []
     approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.bank_accounts
+    phase: 10
+    module: finance
+    title: Banking (bank accounts and matching rules)
+    route: GET /finance/banking
+    template: app/modules/finance/templates/finance/bank_accounts.html
+    stitch_screens:
+      desktop: cedb92ecc26f4cd2bd0cec399553c9db
+    exports:
+      - design/stitch/exports/finance.bank_accounts.html
+    permission: finance.bank.read
+    actions:
+      save_account: finance.bank.manage
+      save_rule: finance.bank.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.bank_account
+    phase: 10
+    module: finance
+    title: One bank account (statement import and matching)
+    route: GET /finance/banking/{bank_id}
+    template: app/modules/finance/templates/finance/bank_account.html
+    stitch_screens:
+      desktop: 720f0e3684fe4fd4a407c4b0817740d6
+    exports:
+      - design/stitch/exports/finance.bank_account.html
+    permission: finance.bank.read
+    actions:
+      import_statement: finance.bank.reconcile
+      match_again: finance.bank.reconcile
+      match: finance.bank.reconcile
+      unmatch: finance.bank.reconcile
+      give_entry: finance.bank.reconcile
+      start_reconciliation: finance.bank.reconcile
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.reconciliation
+    phase: 10
+    module: finance
+    title: Bank reconciliation
+    route: GET /finance/reconciliations/{rec_id}
+    template: app/modules/finance/templates/finance/reconciliation.html
+    stitch_screens:
+      desktop: c596b491f2954769a667c600acc1f9a9
+    exports:
+      - design/stitch/exports/finance.reconciliation.html
+    permission: finance.bank.read
+    actions:
+      submit: finance.bank.reconcile
+      approve: finance.bank.approve
+      send_back: finance.bank.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.transfers
+    phase: 10
+    module: finance
+    title: Transfers between bank accounts
+    route: GET /finance/transfers
+    template: app/modules/finance/templates/finance/transfers.html
+    stitch_screens:
+      desktop: 1262094b8edb4f6b800f17456014fd0f
+    exports:
+      - design/stitch/exports/finance.transfers.html
+    permission: finance.bank.read
+    actions:
+      record: finance.bank.reconcile
+      delete: finance.bank.reconcile
+      approve: finance.bank.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)

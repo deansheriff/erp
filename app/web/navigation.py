@@ -150,6 +150,8 @@ MODULES: tuple[NavModule, ...] = (
             NavSection(
                 "Payables aging", "/finance/payables-aging", permission="finance.supplier.read"
             ),
+            NavSection("Banking", "/finance/banking", permission="finance.bank.read"),
+            NavSection("Transfers", "/finance/transfers", permission="finance.bank.read"),
             NavSection("Journals", "/finance/journals", permission="finance.journal.read"),
             NavSection("Chart of accounts", "/finance/accounts", permission="finance.account.read"),
             NavSection("Recurring", "/finance/recurring", permission="finance.journal.read"),

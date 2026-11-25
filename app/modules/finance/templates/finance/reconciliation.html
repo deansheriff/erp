@@ -1,0 +1,64 @@
+{# Finance → a bank reconciliation (ADR 0026): the figures down to the difference, what is
+   outstanding, the entries that post on approval, and submit or approve.
+   Design: design/stitch/exports/finance.reconciliation.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set r = rec %}
+{% call ui.page_header("Reconciliation · " ~ (r.statement_date | date), r.bank, tones[r.status], labels[r.status]) %}
+  <a href="/finance/banking/{{ r.bank_account_id }}" class="kx-btn-ghost">Statements and matching</a>
+  {% if r.status == "draft" and r.can_edit %}
+  <form method="post" action="/finance/reconciliations/{{ r.id }}/submit">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary" {% if not f.balanced %}disabled aria-describedby="why-not"{% endif %}>{{ ui.icon("send", "sm") }} Submit for approval</button></form>
+  {% elif r.status == "submitted" %}
+  {% if r.can_approve or r.approve_blocked %}<form method="post" action="/finance/reconciliations/{{ r.id }}/send-back">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">Send back</button></form>{% endif %}
+  <form method="post" action="/finance/reconciliations/{{ r.id }}/approve">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary" {% if not r.can_approve %}disabled aria-describedby="approve-blocked"{% endif %}>{{ ui.icon("check", "sm") }} Approve</button></form>
+  {% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if r.approve_blocked %}<div class="mt-5" id="approve-blocked">{{ ui.alert("info", r.approve_blocked) }}</div>{% endif %}
+{% if r.status == "draft" and not f.balanced %}<div class="mt-5" id="why-not">{{ ui.alert("info", ("Match or give entries to " ~ f.unmatched | length ~ " statement lines up to the date. " if f.unmatched else "") ~ ("The difference must be ₦0.00 to submit." if f.difference else "")) }}</div>{% endif %}
+{% if r.status == "approved" %}<div class="mt-5">{{ ui.alert("success", "Approved by " ~ (r.approved_by or "—") ~ ", " ~ (r.approved_at | datetime) ~ ". The lines up to the date are locked.") }}</div>{% endif %}
+
+<section class="kx-card mt-6 p-5" aria-label="Figures">
+  <dl class="mx-auto max-w-xl space-y-2 text-body-sm">
+    <div class="flex justify-between"><dt>Balance per statement</dt><dd class="font-semibold tnum">{{ r.statement_balance | money }}</dd></div>
+    <div class="flex justify-between border-t border-line pt-2"><dt class="text-ink-2">Ledger balance at {{ r.statement_date | date }}</dt><dd class="tnum">{{ f.ledger | money }}</dd></div>
+    <div class="flex justify-between"><dt class="text-ink-2">Less ledger entries not yet on the statement</dt><dd class="tnum">{{ (-f.outstanding_total) | money }}</dd></div>
+    <div class="flex justify-between"><dt class="text-ink-2">Add entries that post on approval</dt><dd class="tnum">{{ f.pending_total | money }}</dd></div>
+    <div class="flex justify-between border-t border-line pt-2"><dt class="text-ink-2">Adjusted ledger balance</dt><dd class="tnum">{{ f.adjusted | money }}</dd></div>
+    <div class="flex items-center justify-between border-t border-line pt-3"><dt class="font-semibold">Difference</dt><dd class="font-stat text-h2 tnum {{ 'text-success-text' if not f.difference else 'text-danger-text' }}">{{ f.difference | money }}</dd></div>
+  </dl>
+</section>
+
+<div class="mt-6 grid gap-6 lg:grid-cols-2">
+  <section class="kx-card overflow-hidden" aria-labelledby="out-title">
+    <h2 id="out-title" class="border-b border-line px-5 py-4 font-h3 text-h3">In the ledger, not yet on the statement</h2>
+    {% if f.outstanding %}
+    <ul class="divide-y divide-line text-body-sm">
+      {% for o in f.outstanding %}<li class="flex justify-between gap-3 px-5 py-2.5"><span><a href="/finance/journals/{{ o.journal_id }}" class="font-mono text-xs font-semibold text-iris">{{ o.number }}</a> · {{ o.journal_date | date }} · {{ o.memo }}</span><span class="tnum">{{ o.amount | money }}</span></li>{% endfor %}
+    </ul>
+    {% else %}<p class="px-5 py-4 text-body-sm text-ink-3">Nothing outstanding.</p>{% endif %}
+  </section>
+  <section class="kx-card overflow-hidden" aria-labelledby="pend-title">
+    <h2 id="pend-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Entries that post on approval</h2>
+    {% if f.pending %}
+    <ul class="divide-y divide-line text-body-sm">
+      {% for p in f.pending %}<li class="flex justify-between gap-3 px-5 py-2.5"><span>{{ p.line_date | date }} · {{ p.entry_description or p.description }} <span class="text-xs text-ink-3">→ {{ r.entry_accounts.get(p.id, "") }}</span></span><span class="tnum">{{ p.amount | money }}</span></li>{% endfor %}
+    </ul>
+    {% else %}<p class="px-5 py-4 text-body-sm text-ink-3">None.</p>{% endif %}
+  </section>
+</div>
+
+{% if f.unmatched %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="un-title">
+  <h2 id="un-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Statement lines still to match</h2>
+  <ul class="divide-y divide-line text-body-sm">
+    {% for u in f.unmatched %}<li class="flex justify-between gap-3 px-5 py-2.5"><span>{{ u.line_date | date }} · {{ u.description }}</span><span class="tnum">{{ u.amount | money }}</span></li>{% endfor %}
+  </ul>
+  <p class="border-t border-line px-5 py-3"><a href="/finance/banking/{{ r.bank_account_id }}" class="text-body-sm font-semibold text-iris">Match them</a></p>
+</section>
+{% endif %}
+<p class="mt-4 text-xs text-ink-3">Prepared by {{ r.prepared_by or "—" }}{% if r.submitted_at %}, submitted {{ r.submitted_at | datetime }}{% endif %}.</p>
+{% endblock %}

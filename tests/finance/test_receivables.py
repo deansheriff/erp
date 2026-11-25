@@ -12,6 +12,7 @@ from sqlalchemy import select
 from app.core.errors import Conflict, PermissionDenied, ValidationFailed
 from app.mail.models import MailOutbox
 from app.modules.finance import (
+    banking,
     customers,
     journals,
     periods,
@@ -21,7 +22,13 @@ from app.modules.finance import (
     tax,
 )
 from app.modules.finance.customers import CustomerInput
-from app.modules.finance.models import Journal, JournalLine, SalesDocument, WhtType
+from app.modules.finance.models import (
+    Journal,
+    JournalLine,
+    SalesDocument,
+    TaxReturn,
+    WhtType,
+)
 from app.modules.finance.sales import DocumentInput, LineInput
 from tests.finance.conftest import Finance
 
@@ -417,5 +424,23 @@ def test_the_vat_return_reads_the_ledger_and_is_frozen_when_filed(finance: Finan
     row, outputs, _ = tax.return_detail(db, a("Chi"), "vat", date(2026, 10, 1), today=today)
     assert row.status == "filed" and row.net == D("12000.00")  # as filed
     assert row.changed_by == D("750.00") and len(outputs) == 2
-    tax.mark_paid(db, a("Ada"), "vat", date(2026, 10, 1), paid_on=today, reference="RRR-1")
+    bank = str(banking.choices(db)[0][0])  # 1010, the seeded bank account
+    with pytest.raises(ValidationFailed):  # which bank it's paid from
+        tax.mark_paid(db, a("Ada"), "vat", date(2026, 10, 1), paid_on=today, reference="RRR-1")
+    tax.mark_paid(
+        db,
+        a("Ada"),
+        "vat",
+        date(2026, 10, 1),
+        paid_on=today,
+        reference="RRR-1",
+        bank_account_id=bank,
+    )
     assert tax.returns(db, a("Chi"), "vat", today=today)[0].status == "paid"
+    paid = db.scalars(select(TaxReturn).where(TaxReturn.status == "paid")).one()
+    # Output 15,000 cleared against input 3,000; the net 12,000 leaves the bank.
+    assert _journal_lines(finance, paid.payment_journal_id) == {
+        "2200": (D("15000.00"), 0),
+        "1310": (0, D("3000.00")),
+        "1010": (0, D("12000.00")),
+    }

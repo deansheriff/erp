@@ -58,6 +58,10 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 |---|---|---|---|---|
 | `finance.account.manage` | Manage the chart of accounts | Organisation |  | Add accounts, rename them, and deactivate ones no longer used. |
 | `finance.account.read` | View the chart of accounts | Organisation |  | See accounts and their balances. |
+| `finance.bank.approve` | Approve reconciliations and transfers | Organisation |  | Approve a reconciliation or a transfer someone else prepared, posting its journals. |
+| `finance.bank.manage` | Manage bank accounts | Organisation |  | Add bank accounts, set their statement layouts, and keep the matching rules. |
+| `finance.bank.read` | View banking | Organisation |  | See bank accounts, imported statements, matching, reconciliations and transfers. |
+| `finance.bank.reconcile` | Reconcile bank accounts | Organisation |  | Import statements, match and give entries to lines, prepare reconciliations, and record transfers between accounts. |
 | `finance.bill.override` | Post held bills | Organisation |  | Post a bill that failed the three-way match, with a reason. |
 | `finance.credit_note.issue` | Issue credit notes | Organisation |  | Issue a credit note someone else drafted. |
 | `finance.customer.manage` | Manage customers | Organisation |  | Add and change customers, and email them payment reminders. |
@@ -198,6 +202,10 @@ Everything, including technical settings. Can't be edited or removed.
 | `files.file.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.bank.approve` | O |
+| `finance.bank.manage` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
 | `finance.bill.override` | O |
 | `finance.credit_note.issue` | O |
 | `finance.customer.manage` | O |
@@ -304,6 +312,10 @@ Everything except technical settings such as mail, branding and security.
 | `files.file.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.bank.approve` | O |
+| `finance.bank.manage` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
 | `finance.bill.override` | O |
 | `finance.credit_note.issue` | O |
 | `finance.customer.manage` | O |
@@ -388,6 +400,7 @@ Reads everything, including the audit log. Changes nothing.
 | `authz.role.read` | O |
 | `expenses.claim.read` | O |
 | `finance.account.read` | O |
+| `finance.bank.read` | O |
 | `finance.customer.read` | O |
 | `finance.journal.read` | O |
 | `finance.purchase.read` | O |
@@ -561,6 +574,8 @@ Day-to-day accounting.
 |---|---|
 | `expenses.claim.read` | O |
 | `finance.account.read` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
 | `finance.customer.manage` | O |
 | `finance.customer.read` | O |
 | `finance.journal.create` | O |
@@ -592,6 +607,10 @@ Approves and posts finance documents.
 | `expenses.settings.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.bank.approve` | O |
+| `finance.bank.manage` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
 | `finance.bill.override` | O |
 | `finance.credit_note.issue` | O |
 | `finance.customer.manage` | O |
@@ -687,5 +706,6 @@ _No grants yet: added by the phase that delivers its module._
 | `finance.credit_note_four_eyes` | `finance.credit_note.issue` | creator_is_actor | Someone else issues a credit note you drafted. |
 | `finance.purchase_four_eyes` | `finance.purchase.approve` | creator_is_actor | Someone else approves a purchase order, bill or debit note you drafted. |
 | `finance.payment_four_eyes` | `finance.payment.approve` | creator_is_actor | Someone else approves a supplier payment you prepared. |
+| `finance.bank_four_eyes` | `finance.bank.approve` | creator_is_actor | Someone else approves a reconciliation or transfer you prepared. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

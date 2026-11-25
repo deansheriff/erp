@@ -1,0 +1,131 @@
+{# Finance → one bank account (ADR 0026): import statements, match lines to the ledger or
+   give them entries, and start a reconciliation.
+   Design: design/stitch/exports/finance.bank_account.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header(ledger.name, ledger.code ~ (" · " ~ bank.bank_name ~ " ••••" ~ bank.account_number[-4:] if bank.bank_name and bank.account_number else " · bank details not set")) %}
+  {% if can_manage %}<a href="/finance/banking?edit={{ bank.id }}" class="kx-btn-ghost">{{ ui.icon("pencil", "sm") }} Edit</a>{% endif %}
+  {% if open_rec %}<a href="/finance/reconciliations/{{ open_rec.id }}" class="kx-btn-primary">{{ ui.icon("scale", "sm") }} Open reconciliation</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if result %}
+<div class="mt-5">{{ ui.alert("success", "Imported " ~ result.added ~ " lines: " ~ result.matched ~ " matched, " ~ result.ruled ~ " given entries by rules" ~ (", " ~ result.skipped ~ " already imported and skipped" if result.skipped else "") ~ ".") }}</div>
+{% for p in result.problems %}<div class="mt-2">{{ ui.alert("warning", p) }}</div>{% endfor %}
+{% endif %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-3">
+  {{ ui.kpi_tile("Ledger balance", balance | money) }}
+  {{ ui.kpi_tile("Unmatched lines", counts.unmatched) }}
+  {{ ui.kpi_tile("Entries waiting to post", counts.entry) }}
+</div>
+
+<div class="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+  <div class="space-y-6">
+    {% if can_reconcile %}
+    <form method="post" action="/finance/banking/{{ bank.id }}/import" enctype="multipart/form-data" class="kx-card flex flex-col gap-3 p-5 sm:flex-row sm:items-end" novalidate>
+      {{ ui.csrf_field() }}
+      <div class="flex-1">
+        <label class="kx-label" for="file">Import a statement</label>
+        <input id="file" name="file" type="file" accept=".csv,.xlsx,.ofx,text/csv" class="kx-input">
+        {{ ui.field_error(errors, "file") }}
+        <p class="mt-1 text-xs text-ink-3">CSV or Excel with this account's layout, or OFX. Lines already imported are skipped. Lines with one ledger entry for the same amount within {{ match_days }} days are matched.</p>
+      </div>
+      <button type="submit" class="kx-btn-secondary">{{ ui.icon("upload", "sm") }} Import</button>
+    </form>
+    {% endif %}
+
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <nav class="kx-segment" aria-label="Statement lines">
+        {% for key, label in tabs %}
+        <a href="/finance/banking/{{ bank.id }}?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }} ({{ counts[key] }})</a>
+        {% endfor %}
+      </nav>
+      {% if can_reconcile and counts.unmatched %}<form method="post" action="/finance/banking/{{ bank.id }}/rematch">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">{{ ui.icon("refresh-cw", "sm") }} Match again</button></form>{% endif %}
+    </div>
+
+    <section class="kx-card overflow-hidden" aria-label="Lines">
+      {% if lines %}
+      <ul class="divide-y divide-line text-body-sm">
+        {% for line in lines %}
+        <li class="grid gap-3 px-5 py-3 md:grid-cols-[110px_minmax(0,1fr)_150px]">
+          <span class="text-ink-2">{{ line.line_date | date }}</span>
+          <div class="min-w-0">
+            <p class="truncate font-medium">{{ line.description }}</p>
+            {% if line.reference %}<p class="text-xs text-ink-3">{{ line.reference }}</p>{% endif %}
+            {% if tab == "matched" and line.journal %}<p class="mt-1 text-xs">Matched to <a href="/finance/journals/{{ line.journal[0] }}" class="font-mono font-semibold text-iris">{{ line.journal[1] }}</a> {{ line.journal[2] }}</p>{% endif %}
+            {% if tab == "entry" %}<p class="mt-1 text-xs text-ink-2">{{ line.entry_account }}{% if line.rule %} · rule {{ line.rule }}{% endif %}{% if line.journal %} · posted <a href="/finance/journals/{{ line.journal[0] }}" class="font-mono font-semibold text-iris">{{ line.journal[1] }}</a>{% else %} · posts when the reconciliation is approved{% endif %}</p>{% endif %}
+            {% if tab == "unmatched" and can_reconcile %}
+            <div class="mt-2 space-y-2">
+              {% for c in line.suggestions %}
+              <form method="post" action="/finance/banking/lines/{{ line.id }}/match" class="flex flex-wrap items-center gap-2 text-xs">
+                {{ ui.csrf_field() }}<input type="hidden" name="bank_id" value="{{ bank.id }}"><input type="hidden" name="journal_line_id" value="{{ c.journal_line_id }}">
+                <span>Possible match: <span class="font-mono font-semibold">{{ c.number }}</span> · {{ c.journal_date | date }} · {{ c.memo }}</span>
+                <button type="submit" class="kx-btn-ghost h-8 px-2 text-xs">Match</button>
+              </form>
+              {% endfor %}
+              <details>
+                <summary class="cursor-pointer text-xs font-semibold text-iris">Give it an entry</summary>
+                <form method="post" action="/finance/banking/lines/{{ line.id }}/entry" class="mt-2 grid gap-2 sm:grid-cols-3" novalidate>
+                  {{ ui.csrf_field() }}<input type="hidden" name="bank_id" value="{{ bank.id }}">
+                  <label class="sr-only" for="ea-{{ line.id }}">Account</label><select id="ea-{{ line.id }}" name="account_id" class="kx-input h-9"><option value="">Account</option>{% for a in postable %}<option value="{{ a.id }}">{{ a.code }} {{ a.name }}</option>{% endfor %}</select>
+                  <label class="sr-only" for="ec-{{ line.id }}">Cost centre</label><select id="ec-{{ line.id }}" name="cost_centre_id" class="kx-input h-9"><option value="">No cost centre</option>{% for cid, clabel in cost_centres %}<option value="{{ cid }}">{{ clabel }}</option>{% endfor %}</select>
+                  <div class="flex gap-2"><label class="sr-only" for="ed-{{ line.id }}">Description</label><input id="ed-{{ line.id }}" name="description" placeholder="Description" class="kx-input h-9"><button type="submit" class="kx-btn-secondary h-9">Add</button></div>
+                  {{ ui.field_error(errors, "entry_" ~ line.id) }}
+                </form>
+              </details>
+            </div>
+            {% endif %}
+          </div>
+          <div class="flex flex-col items-end gap-1">
+            <span class="font-semibold tnum {{ 'text-success-text' if line.amount > 0 }}">{{ line.amount | money }}</span>
+            <span class="text-xs text-ink-3">{{ "Money in" if line.amount > 0 else "Money out" }}</span>
+            {% if line.locked %}{{ ui.badge("neutral", "Reconciled") }}{% elif tab != "unmatched" and can_reconcile and not (tab == "entry" and line.journal) %}
+            <form method="post" action="/finance/banking/lines/{{ line.id }}/unmatch">{{ ui.csrf_field() }}<input type="hidden" name="bank_id" value="{{ bank.id }}"><input type="hidden" name="tab" value="{{ tab }}"><button type="submit" class="text-xs font-semibold text-iris">{{ "Unmatch" if tab == "matched" else "Clear entry" }}</button></form>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="px-5 py-6 text-body-sm text-ink-3">{{ "Nothing waiting. Import a statement to start." if tab == "unmatched" else "Nothing here yet." }}</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <div class="space-y-6">
+    <section class="kx-card p-5" aria-labelledby="rec-title">
+      <h2 id="rec-title" class="font-h3 text-h3">Reconcile</h2>
+      {% if open_rec %}
+      <p class="mt-2 text-body-sm">To {{ open_rec.statement_date | date }} at {{ open_rec.statement_balance | money }}: {{ ui.badge(rec_tones[open_rec.status], rec_labels[open_rec.status]) }}</p>
+      {% endif %}
+      {% if can_reconcile and (not open_rec or open_rec.status == "draft") %}
+      <form method="post" action="/finance/banking/{{ bank.id }}/reconcile" class="mt-3 space-y-3" novalidate>
+        {{ ui.csrf_field() }}
+        {{ ui.text_field("statement_date", "Statement closing date", value=v.get("statement_date") or (open_rec.statement_date.isoformat() if open_rec else today.isoformat()), type="date", errors=errors) }}
+        {{ ui.text_field("statement_balance", "Closing balance on the statement", value=v.get("statement_balance") or ("%.2f" | format(open_rec.statement_balance) if open_rec else ""), inputmode="decimal", errors=errors) }}
+        <button type="submit" class="kx-btn-primary w-full">{{ "Update and open" if open_rec else "Start reconciliation" }}</button>
+      </form>
+      {% endif %}
+      {% if recs %}
+      <ul class="mt-4 divide-y divide-line border-t border-line text-body-sm">
+        {% for r in recs %}<li class="flex items-center justify-between py-2"><a href="/finance/reconciliations/{{ r.id }}" class="text-iris">{{ r.statement_date | date }}</a>{{ ui.badge(rec_tones[r.status], rec_labels[r.status]) }}</li>{% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+    <section class="kx-card p-5" aria-labelledby="stmts-title">
+      <h2 id="stmts-title" class="font-h3 text-h3">Imported statements</h2>
+      {% if statements %}
+      <ul class="mt-3 space-y-2 text-body-sm">
+        {% for s, by in statements %}<li><span class="font-medium">{{ s.filename }}</span><span class="block text-xs text-ink-3">{% if s.first_date %}{{ s.first_date | date }} to {{ s.last_date | date }} · {% endif %}{{ s.line_count }} lines{% if s.skipped %}, {{ s.skipped }} skipped{% endif %}{% if by %} · {{ by }}{% endif %}{% if s.file_id %} · <a href="/files/{{ s.file_id }}" class="text-iris">file</a>{% endif %}</span></li>{% endfor %}
+      </ul>
+      {% else %}
+      <p class="mt-2 text-body-sm text-ink-3">None yet.</p>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

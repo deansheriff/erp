@@ -34,6 +34,8 @@ SOURCES = (
     "expenses",
     "receivable",
     "payable",
+    "bank",
+    "tax",
 )
 
 Money = Numeric(16, 2)
@@ -215,6 +217,8 @@ class FinanceSettings(Base):
     # Payables (ADR 0025), to confirm.
     payables_code: Mapped[str] = mapped_column(String(20), server_default="2010")
     price_tolerance: Mapped[Decimal] = mapped_column(Numeric(5, 2), server_default="2.00")
+    # Banking (ADR 0026), to confirm.
+    match_days: Mapped[int] = mapped_column(SmallInteger, server_default="3")
 
 
 # ------------------------------------------------------------------ receivables and tax (ADR 0024)
@@ -421,6 +425,8 @@ class TaxReturn(IdMixin, Base):
     paid_on: Mapped[date | None]
     payment_reference: Mapped[str | None] = mapped_column(String(80))
     paid_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    paid_from_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("bank_accounts.id"))
+    payment_journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
 
@@ -641,3 +647,143 @@ class SupplierPaymentLine(IdMixin, Base):
     wht_type_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("wht_types.id"))
     wht_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2), server_default="0")
     wht: Mapped[Decimal] = mapped_column(Money, server_default="0")
+
+
+# ------------------------------------------------------------------ banking (ADR 0026)
+
+LINE_STATUSES = ("unmatched", "matched", "entry")
+RULE_DIRECTIONS = ("in", "out", "any")
+RECONCILIATION_STATUSES = ("draft", "submitted", "approved")
+TRANSFER_STATUSES = ("draft", "posted")
+
+
+class BankAccount(IdMixin, Base):
+    """A bank account and its own ledger account, with the layout its CSV and Excel
+    statements use."""
+
+    __tablename__ = "bank_accounts"
+
+    account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("finance_accounts.id"), unique=True)
+    bank_name: Mapped[str | None] = mapped_column(String(120))
+    bank_code: Mapped[str | None] = mapped_column(String(10))
+    account_number: Mapped[str | None] = mapped_column(String(10))
+    account_name: Mapped[str | None] = mapped_column(String(200))
+    is_active: Mapped[bool] = mapped_column(Boolean, server_default="true")
+    # Statement layout: a column header or a 1-based column number.
+    csv_date: Mapped[str] = mapped_column(String(60), server_default="Date")
+    csv_description: Mapped[str] = mapped_column(String(60), server_default="Description")
+    csv_reference: Mapped[str | None] = mapped_column(String(60))
+    csv_amount: Mapped[str | None] = mapped_column(String(60))  # signed, money in positive
+    csv_money_in: Mapped[str | None] = mapped_column(String(60), server_default="Credit")
+    csv_money_out: Mapped[str | None] = mapped_column(String(60), server_default="Debit")
+    csv_date_format: Mapped[str] = mapped_column(String(20), server_default="%d/%m/%Y")
+    csv_skip_rows: Mapped[int] = mapped_column(SmallInteger, server_default="0")
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class BankStatement(IdMixin, Base):
+    __tablename__ = "bank_statements"
+
+    bank_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("bank_accounts.id"), index=True)
+    file_id: Mapped[uuid.UUID | None]  # the stored file (files service)
+    filename: Mapped[str] = mapped_column(String(255))
+    first_date: Mapped[date | None]
+    last_date: Mapped[date | None]
+    line_count: Mapped[int] = mapped_column(SmallInteger, server_default="0")
+    skipped: Mapped[int] = mapped_column(SmallInteger, server_default="0")
+    imported_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    imported_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class BankRule(IdMixin, Base):
+    __tablename__ = "bank_rules"
+    __table_args__ = (CheckConstraint(_in("direction", RULE_DIRECTIONS), name="direction"),)
+
+    bank_account_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("bank_accounts.id"))
+    contains: Mapped[str] = mapped_column(String(120))
+    direction: Mapped[str] = mapped_column(String(3), server_default="any")
+    account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("finance_accounts.id"))
+    cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    description: Mapped[str | None] = mapped_column(String(200))
+    position: Mapped[int] = mapped_column(SmallInteger)
+    is_active: Mapped[bool] = mapped_column(Boolean, server_default="true")
+
+
+class BankReconciliation(IdMixin, Base):
+    __tablename__ = "bank_reconciliations"
+    __table_args__ = (
+        UniqueConstraint("bank_account_id", "statement_date"),
+        CheckConstraint(_in("status", RECONCILIATION_STATUSES), name="status"),
+    )
+
+    bank_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("bank_accounts.id"), index=True)
+    statement_date: Mapped[date]
+    statement_balance: Mapped[Decimal] = mapped_column(Money)
+    status: Mapped[str] = mapped_column(String(9), server_default="draft")
+    prepared_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    submitted_at: Mapped[datetime | None]
+    approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    approved_at: Mapped[datetime | None]
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class StatementLine(IdMixin, Base):
+    """A line of a bank statement: matched to a ledger entry, or given an entry that
+    posts when its reconciliation is approved."""
+
+    __tablename__ = "bank_statement_lines"
+    __table_args__ = (
+        UniqueConstraint("bank_account_id", "fingerprint"),
+        CheckConstraint(_in("status", LINE_STATUSES), name="status"),
+        CheckConstraint("amount <> 0", name="amount"),
+        CheckConstraint("status <> 'matched' OR journal_line_id IS NOT NULL", name="matched"),
+        CheckConstraint("(status = 'entry') = (entry_account_id IS NOT NULL)", name="entry"),
+    )
+
+    bank_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("bank_accounts.id"), index=True)
+    statement_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("bank_statements.id", ondelete="CASCADE"), index=True
+    )
+    line_date: Mapped[date] = mapped_column(index=True)
+    description: Mapped[str] = mapped_column(String(300))
+    reference: Mapped[str | None] = mapped_column(String(120))
+    amount: Mapped[Decimal] = mapped_column(Money)  # money in positive, money out negative
+    fingerprint: Mapped[str] = mapped_column(String(64))
+    status: Mapped[str] = mapped_column(String(9), server_default="unmatched")
+    # The ledger line it matches; for an entry, the bank side of its journal once posted.
+    journal_line_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("journal_lines.id"), unique=True
+    )
+    rule_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("bank_rules.id", ondelete="SET NULL")
+    )
+    entry_account_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("finance_accounts.id"))
+    entry_cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    entry_description: Mapped[str | None] = mapped_column(String(200))
+    entry_journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
+    reconciliation_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("bank_reconciliations.id"), index=True
+    )  # set when its reconciliation is approved: locked
+
+
+class BankTransfer(IdMixin, Base):
+    __tablename__ = "bank_transfers"
+    __table_args__ = (
+        CheckConstraint(_in("status", TRANSFER_STATUSES), name="status"),
+        CheckConstraint("(status = 'draft') = (number IS NULL)", name="numbered"),
+        CheckConstraint("amount > 0", name="amount"),
+        CheckConstraint("from_account_id <> to_account_id", name="accounts"),
+    )
+
+    number: Mapped[str | None] = mapped_column(String(20), unique=True)
+    status: Mapped[str] = mapped_column(String(6), server_default="draft")
+    from_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("bank_accounts.id"))
+    to_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("bank_accounts.id"))
+    amount: Mapped[Decimal] = mapped_column(Money)
+    transfer_date: Mapped[date]
+    reference: Mapped[str | None] = mapped_column(String(80))
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    approved_at: Mapped[datetime | None]
+    journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))

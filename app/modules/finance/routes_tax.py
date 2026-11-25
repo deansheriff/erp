@@ -16,7 +16,7 @@ from app.core import clock
 from app.core.db import get_db
 from app.core.errors import Conflict, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
-from app.modules.finance import accounts, periods, receipts, tax
+from app.modules.finance import accounts, banking, periods, receipts, tax
 from app.modules.finance.models import TAXES
 from app.web.access import require_actor
 from app.web.forms import parse_day
@@ -279,6 +279,7 @@ def _returns_context(
         if tax_key == "wht"
         else [],
         "can_manage": bool(engine.check(db, actor.user_id, tax.MANAGE)),
+        "banks": banking.choices(db),
         "today": today,
         "values": {},
         "errors": {},
@@ -317,6 +318,7 @@ def update_return(
     action: str,
     on: FormStr = "",
     reference: FormStr = "",
+    paid_from: FormStr = "",
 ) -> Response:
     start = _month(period)
     key = tax_key if tax_key in TAXES else "vat"
@@ -335,7 +337,15 @@ def update_return(
                     today=clock.today(),
                 )
             else:
-                tax.mark_paid(db, actor, key, start, paid_on=parse_day(on), reference=reference)
+                tax.mark_paid(
+                    db,
+                    actor,
+                    key,
+                    start,
+                    paid_on=parse_day(on),
+                    reference=reference,
+                    bank_account_id=paid_from,
+                )
     except (ValidationFailed, Conflict, PermissionDenied) as exc:
         errors = _errors(exc)
         # The forms share two inputs; map the service's keys onto them.
@@ -348,7 +358,7 @@ def update_return(
             actor,
             key,
             start,
-            values={"on": on, "reference": reference, "action": action},
+            values={"on": on, "reference": reference, "action": action, "paid_from": paid_from},
             errors=errors,
         )
         return _render(request, "finance/tax_returns.html", context, 422)

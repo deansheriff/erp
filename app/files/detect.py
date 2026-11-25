@@ -9,6 +9,7 @@ from defusedxml import ElementTree
 from defusedxml.common import DefusedXmlException
 
 SVG = "image/svg+xml"
+TEXT = "text/plain"
 _SVG_NS = "{http://www.w3.org/2000/svg}"
 _XLINK_HREF = "{http://www.w3.org/1999/xlink}href"
 _FORBIDDEN_TAGS = {"script", "foreignobject", "iframe", "embed", "object", "handler", "listener"}
@@ -31,7 +32,22 @@ def detect(data: bytes) -> str | None:
         return str(kind.mime)
     if _looks_like_svg(data):
         return SVG
+    if _looks_like_text(data):
+        return TEXT
     return None
+
+
+def _looks_like_text(data: bytes) -> bool:
+    """UTF-8 (or Latin-1 for older bank exports) with no control characters other than
+    tabs and line breaks: CSV and OFX bank statements (ADR 0026)."""
+    sample = data[:65536]
+    if not sample.strip() or b"\x00" in sample:
+        return False
+    try:
+        text = sample.decode("utf-8")
+    except UnicodeDecodeError:
+        text = sample.decode("latin-1")
+    return all(ch >= " " or ch in "\t\r\n" for ch in text.lstrip("﻿"))
 
 
 def _looks_like_svg(data: bytes) -> bool:

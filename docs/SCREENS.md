@@ -134,3 +134,7 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Supplier bill or debit note, with the three-way match** (`finance.bill`) | `GET /finance/bills/{bill_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
 | **Prepare or view a supplier payment** (`finance.payment`) | `GET /finance/payments/{payment_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
 | **Payables aging** (`finance.payables_aging`) | `GET /finance/payables-aging` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
+| **Banking (bank accounts and matching rules)** (`finance.bank_accounts`) | `GET /finance/banking` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **One bank account (statement import and matching)** (`finance.bank_account`) | `GET /finance/banking/{bank_id}` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **Bank reconciliation** (`finance.reconciliation`) | `GET /finance/reconciliations/{rec_id}` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **Transfers between bank accounts** (`finance.transfers`) | `GET /finance/transfers` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
