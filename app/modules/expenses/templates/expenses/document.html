@@ -29,6 +29,17 @@
     </select>
     {{ ui.field_error(errs, "cost_centre_id") }}
   </div>
+  {% if projects %}
+  <div>
+    <label class="kx-label" for="pj-{{ key }}">Project</label>
+    {% set chosen_pj = v.get("project_id") or (line.project_id|string if line and line.project_id else "") %}
+    <select id="pj-{{ key }}" name="project_id" class="kx-input">
+      <option value="">None</option>
+      {% for pid, pname in projects %}<option value="{{ pid }}" {% if chosen_pj == pid|string %}selected{% endif %}>{{ pname }}</option>{% endfor %}
+    </select>
+    {{ ui.field_error(errs, "project_id") }}
+  </div>
+  {% endif %}
   <div>{{ ui.text_field("amount", "Amount (₦)", value=v.get("amount") or (line.amount if line else ""), errors=errs, inputmode="decimal") }}</div>
   <div class="sm:col-span-2">{{ ui.text_field("no_receipt_reason", "No receipt? Say why", value=v.get("no_receipt_reason") or (line.no_receipt_reason if line and line.no_receipt_reason else ""), errors=errs) }}</div>
   <div class="flex items-end justify-end gap-2 sm:col-span-2">
@@ -86,7 +97,7 @@
             {% for l in doc.lines %}
             <tr class="align-top">
               <td class="whitespace-nowrap px-4 py-3 tnum">{{ l.day | date }}</td>
-              <td class="px-4 py-3"><span class="font-medium">{{ l.category }}</span> · {{ l.description }}{% if l.cost_centre %}<span class="block text-xs text-ink-3">{{ l.cost_centre }}</span>{% endif %}</td>
+              <td class="px-4 py-3"><span class="font-medium">{{ l.category }}</span> · {{ l.description }}{% if l.cost_centre %}<span class="block text-xs text-ink-3">{{ l.cost_centre }}</span>{% endif %}{% if l.project %}<span class="block text-xs text-ink-3">{{ l.project }}</span>{% endif %}</td>
               <td class="whitespace-nowrap px-4 py-3 text-right tnum">{{ l.amount | money }}{% if l.original_amount %}<span class="block text-xs text-warning-text">changed from {{ l.original_amount | money }}</span>{% endif %}</td>
               <td class="px-4 py-3">
                 {% if l.receipt_file_id %}

@@ -5,6 +5,7 @@ from app.authz import engine
 from app.modules.finance import service as finance
 from app.modules.hr.org_access import PositionTreeResolver
 from app.modules.inventory import service as inventory
+from app.modules.projects import service as projects
 
 
 def configure_runtime() -> None:
@@ -12,3 +13,5 @@ def configure_runtime() -> None:
     engine.set_org_resolver(PositionTreeResolver())
     # Finance moves stock through inventory without importing it (ADR 0029).
     finance.set_link(inventory.LINK)
+    # Finance and the modules posting through it name projects the same way (ADR 0031).
+    finance.set_project_link(projects.LINK)

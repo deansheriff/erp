@@ -1798,3 +1798,105 @@ screens:
     actions: {}
     field_classes: []
     approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.list
+    phase: 11
+    module: projects
+    title: Projects
+    route: GET /projects
+    template: app/modules/projects/templates/projects/list.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.log
+    actions:
+      new_project: projects.project.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.project
+    phase: 11
+    module: projects
+    title: One project (figures, budget, plan, team, ledger lines)
+    route: GET /projects/{project_id}
+    template: app/modules/projects/templates/projects/project.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.log
+    actions:
+      edit: projects.project.create
+      status: projects.project.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.project_form
+    phase: 11
+    module: projects
+    title: Set up or change a project
+    route: GET /projects/new
+    template: app/modules/projects/templates/projects/project_form.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.project.create
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.task
+    phase: 11
+    module: projects
+    title: One project task
+    route: GET /projects/tasks/{task_id}
+    template: app/modules/projects/templates/projects/task.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.project.create
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.timesheet
+    phase: 11
+    module: projects
+    title: My weekly timesheet
+    route: GET /projects/timesheet
+    template: app/modules/projects/templates/projects/timesheet.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.log
+    actions:
+      submit: projects.time.log
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.approvals
+    phase: 11
+    module: projects
+    title: Time approvals
+    route: GET /projects/approvals
+    template: app/modules/projects/templates/projects/approvals.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.approve
+    actions:
+      approve: projects.time.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.profitability
+    phase: 11
+    module: projects
+    title: Project profitability
+    route: GET /projects/profitability
+    template: app/modules/projects/templates/projects/profitability.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.project.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.settings
+    phase: 11
+    module: projects
+    title: Project settings and hourly cost rates
+    route: GET /projects/settings
+    template: app/modules/projects/templates/projects/settings.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.settings.manage
+    actions:
+      set_rate: projects.rate.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)

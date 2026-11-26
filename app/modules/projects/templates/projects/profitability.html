@@ -1,0 +1,45 @@
+{# Projects → profitability (ADR 0031): revenue and costs from ledger lines naming each
+   project, plus labour from approved hours. Design: design/stitch/exports/projects.profitability.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Project profitability", "Revenue and costs come from ledger lines that name the project; labour isn't posted, it's shown from approved hours.") %}{% endcall %}
+
+<form method="get" class="kx-card mt-6 flex flex-wrap items-end gap-4 p-5">
+  <div><label class="kx-label" for="status">Status</label><select id="status" name="status" class="kx-input">{% for key, label in labels.items() %}<option value="{{ key }}" {% if status == key %}selected{% endif %}>{{ label }}</option>{% endfor %}<option value="all" {% if status == "all" %}selected{% endif %}>All</option></select></div>
+  <div><label class="kx-label" for="start">From</label><input id="start" type="date" name="start" value="{{ start }}" class="kx-input"></div>
+  <div><label class="kx-label" for="end">To</label><input id="end" type="date" name="end" value="{{ end }}" class="kx-input"></div>
+  <button type="submit" class="kx-btn-secondary">Show</button>
+</form>
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Projects">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[1100px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Project</th><th class="px-3 py-3 text-right font-semibold">Revenue</th><th class="px-3 py-3 text-right font-semibold">Materials</th><th class="px-3 py-3 text-right font-semibold">Expenses</th><th class="px-3 py-3 text-right font-semibold">Other</th><th class="px-3 py-3 text-right font-semibold">Labour</th><th class="px-3 py-3 text-right font-semibold">Total cost</th><th class="px-3 py-3 text-right font-semibold">Profit</th><th class="px-3 py-3 text-right font-semibold">Margin</th><th class="px-5 py-3 text-right font-semibold">Budget used</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        {% set f = r.figures %}
+        <tr>
+          <td class="px-5 py-3"><a href="/projects/{{ r.project.id }}" class="font-semibold text-iris">{{ r.project.name }}</a><span class="block text-xs text-ink-3"><span class="font-mono">{{ r.project.code }}</span>{% if r.client %} · {{ r.client }}{% endif %}</span></td>
+          <td class="px-3 py-3 text-right tnum">{{ f.revenue | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ f.actual["materials"] | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ f.actual["expenses"] | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ f.actual["other"] | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ f.actual["labour"] | money }}{% if f.unrated_hours %}<span class="block text-xs text-warning-text">{{ f.unrated_hours | plain }} h unrated</span>{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum">{{ f.cost | money }}</td>
+          <td class="px-3 py-3 text-right font-semibold tnum {{ 'text-danger-text' if f.profit < 0 }}">{{ f.profit | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ (f.margin ~ "%") if f.margin is not none else "—" }}</td>
+          <td class="px-5 py-3 text-right tnum {{ 'text-danger-text' if f.used and f.used > 100 }}">{{ (f.used ~ "%") if f.used is not none else "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold"><tr><td class="px-5 py-3">Total</td><td class="px-3 py-3 text-right tnum">{{ totals.revenue | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.actual["materials"] | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.actual["expenses"] | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.actual["other"] | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.actual["labour"] | money }}</td><td class="px-3 py-3 text-right tnum">{{ totals.cost | money }}</td><td class="px-3 py-3 text-right tnum {{ 'text-danger-text' if totals.profit < 0 }}">{{ totals.profit | money }}</td><td class="px-3 py-3 text-right tnum">{{ (totals.margin ~ "%") if totals.margin is not none else "—" }}</td><td class="px-5 py-3 text-right tnum">{{ (totals.used ~ "%") if totals.used is not none else "—" }}</td></tr></tfoot>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("chart-line", "No projects here", "Change the status filter to see others.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

@@ -427,12 +427,14 @@ def _document_context(
             "cost_centre_id": str(view.doc.cost_centre_id or ""),
             "account_id": str(view.doc.account_id or ""),
             "reason": view.doc.reason or "",
+            "project_id": str(view.doc.project_id or ""),
         }
         if view
         else {"doc_date": clock.today().isoformat()}
     )
     return {
         "shell": _shell(db, actor, "Movements"),
+        "projects": finance.project_link().choices(db),
         "v": view,
         "kind": kind,
         "kinds": documents.KIND_LABELS,
@@ -501,6 +503,7 @@ def save_movement(
     cost_centre_id: FormStr = "",
     account_id: FormStr = "",
     reason: FormStr = "",
+    project_id: FormStr = "",
     item_id: FormList = [],  # noqa: B006  (FastAPI form default)
     quantity: FormList = [],  # noqa: B006
     unit_cost: FormList = [],  # noqa: B006
@@ -534,6 +537,7 @@ def save_movement(
         account_id,
         reason,
         lines,
+        project_id,
     )
     try:
         with db.begin_nested():
@@ -564,6 +568,7 @@ def save_movement(
             "cost_centre_id": cost_centre_id,
             "account_id": account_id,
             "reason": reason,
+            "project_id": project_id,
         }
         context = _document_context(
             db, actor, document_id, kind=kind, rows=rows, header=header, errors=_errors(exc)

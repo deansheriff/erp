@@ -5,6 +5,22 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 11d: Projects
+- Projects (`PRJ-`) with a client, manager, dates, budget by category (labour,
+  materials, expenses, other), members, milestones and tasks; planned → active → on
+  hold → completed or cancelled (ADR 0031). A new Project Manager role sets them up.
+- A project on journal lines, like a cost centre. It can be named on:
+  - invoice, credit note, purchase order, direct bill and expense claim lines;
+  - stock issues;
+  - manual journals.
+- Weekly timesheets, approved by the project's manager, or by their line manager for
+  the manager's own time.
+- Hourly cost rates for labour cost; it isn't posted.
+- Profitability from the ledger plus labour, budget against actual by category, and
+  daily budget alerts at 80% and 100% (to confirm).
+- Permissions `projects.project.create`, `.read`, `projects.time.log`, `.approve`,
+  `.approve_any`, `projects.rate.manage` and `projects.settings.manage`.
+
 ### Added — Phase 11c: Procurement
 - Purchase requisitions (`PR-`) from any employee, for stock items or described goods and
   services, with estimated prices (ADR 0030).

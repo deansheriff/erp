@@ -110,6 +110,19 @@ equipment 3 years, all straight line.
   the invoices due a reminder. An invoice gets at most one a day. Staff can also email
   one from the customer page.
 
+## Projects on the ledger
+
+Journal lines can name an active project (ADR 0031), like a cost centre.
+
+- **Where:** manual journals, invoice and credit note lines (with the cost of stock
+  sold), purchase order lines and the bills made from them, direct bill lines, expense
+  claims and stock issues.
+- **Closed projects:** bills against an order keep its project even after the project
+  closes.
+- **Recurring templates:** they don't name projects.
+
+Project profitability is read from these lines (`docs/PROJECTS.md`).
+
 ## Payables
 
 - **Purchase orders** (`PO-`) are drafted by one person and approved by another. Goods

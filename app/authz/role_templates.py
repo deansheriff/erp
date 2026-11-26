@@ -115,6 +115,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "inventory.request.read": SELF,
             "procurement.requisition.create": SELF,
             "procurement.requisition.read": SELF,
+            "projects.time.log": SELF,
         },
     ),
     RoleTemplate(
@@ -134,6 +135,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "inventory.request.approve": Scope.TEAM,
             "procurement.requisition.read": Scope.TEAM,
             "procurement.requisition.approve": Scope.TEAM,
+            "projects.time.approve": ORG,  # their reports' time on projects they manage
         },
     ),
     RoleTemplate(
@@ -287,6 +289,9 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "procurement.requisition.approve_finance": ORG,
             "procurement.rfq.read": ORG,
             "procurement.settings.manage": ORG,
+            "projects.project.read": ORG,
+            "projects.rate.manage": ORG,
+            "projects.settings.manage": ORG,
         },
     ),
     RoleTemplate(
@@ -349,6 +354,19 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "procurement.requisition.approve_any": ORG,
             "procurement.rfq.read": ORG,
             "procurement.settings.manage": ORG,
+            "projects.project.read": ORG,
+            "projects.time.approve_any": ORG,
+            "projects.settings.manage": ORG,
+        },
+    ),
+    RoleTemplate(
+        "project_manager",
+        "Project Manager",
+        "Sets up projects, manages the ones they lead and approves their team's time.",
+        grants={
+            "projects.project.create": ORG,
+            "projects.time.approve": ORG,  # on projects they manage
+            "finance.customer.read": ORG,
         },
     ),
     RoleTemplate("support_agent", "Support Agent", "Works the support ticket queue."),

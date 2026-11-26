@@ -34,12 +34,16 @@ auditor:
   payroll.run.read: organization
   procurement.requisition.read: organization
   procurement.rfq.read: organization
+  projects.project.read: organization
 director:
   procurement.requisition.approve_any: organization
   procurement.requisition.approve_director: organization
   procurement.requisition.read: organization
   procurement.rfq.read: organization
   procurement.settings.manage: organization
+  projects.project.read: organization
+  projects.settings.manage: organization
+  projects.time.approve_any: organization
 employee:
   attendance.clock.use: self
   attendance.correction.request: self
@@ -67,6 +71,7 @@ employee:
   payroll.relief.declare: self
   procurement.requisition.create: self
   procurement.requisition.read: self
+  projects.time.log: self
 expense_approver:
   expenses.claim.approve: team
   expenses.claim.read: team
@@ -120,6 +125,9 @@ finance_manager:
   procurement.requisition.read: organization
   procurement.rfq.read: organization
   procurement.settings.manage: organization
+  projects.project.read: organization
+  projects.rate.manage: organization
+  projects.settings.manage: organization
 finance_officer:
   expenses.claim.read: organization
   finance.account.read: organization
@@ -232,6 +240,7 @@ line_manager:
   leave.request.read: team
   procurement.requisition.approve: team
   procurement.requisition.read: team
+  projects.time.approve: organization
 organization_administrator:
   attendance.clock.use: self
   attendance.correction.request: organization
@@ -353,6 +362,13 @@ organization_administrator:
   procurement.rfq.read: organization
   procurement.settings.manage: organization
   procurement.supplier.rate: organization
+  projects.project.create: organization
+  projects.project.read: organization
+  projects.rate.manage: organization
+  projects.settings.manage: organization
+  projects.time.approve: organization
+  projects.time.approve_any: organization
+  projects.time.log: organization
 payroll_officer:
   payroll.certificate.read: organization
   payroll.loan.manage: organization
@@ -375,6 +391,10 @@ procurement_officer:
   procurement.rfq.manage: organization
   procurement.rfq.read: organization
   procurement.supplier.rate: organization
+project_manager:
+  finance.customer.read: organization
+  projects.project.create: organization
+  projects.time.approve: organization
 reimburser:
   expenses.claim.read: organization
   expenses.claim.reimburse: organization
@@ -499,6 +519,13 @@ super_administrator:
   procurement.rfq.read: organization
   procurement.settings.manage: organization
   procurement.supplier.rate: organization
+  projects.project.create: organization
+  projects.project.read: organization
+  projects.rate.manage: organization
+  projects.settings.manage: organization
+  projects.time.approve: organization
+  projects.time.approve_any: organization
+  projects.time.log: organization
   system.branding.manage: organization
   system.mail.manage: organization
   system.security.manage: organization

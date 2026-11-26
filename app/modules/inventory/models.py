@@ -242,6 +242,7 @@ class StockDocument(IdMixin, Base):
     warehouse_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("warehouses.id"))
     to_warehouse_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("warehouses.id"))
     cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    project_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("projects.id"))  # ADR 0031
     account_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("finance_accounts.id"))
     reason: Mapped[str | None] = mapped_column(Text)
     request_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("material_requests.id"))

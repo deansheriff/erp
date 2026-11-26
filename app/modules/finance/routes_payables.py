@@ -23,6 +23,7 @@ from app.modules.finance import (
     payables,
     payments,
     periods,
+    project_link,
     purchasing,
     receipts,
     receivables,
@@ -316,7 +317,9 @@ def _line_inputs(
     *,
     item_id: list[str],
     warehouse_id: list[str],
+    project_id: list[str] | None = None,
 ) -> list[LineInput]:
+    projects = project_id or []
     rows = max(len(description), len(account_id), len(unit_price), len(item_id))
     return [
         LineInput(
@@ -328,6 +331,7 @@ def _line_inputs(
             _at(vat_code, i) or "standard",
             _at(item_id, i),
             _at(warehouse_id, i),
+            project_id=_at(projects, i),
         )
         for i in range(rows)
     ]
@@ -342,6 +346,7 @@ def _pickers(db: Session) -> dict[str, Any]:
     link = stock_link.link()
     return {
         "stock_items": link.items(db),
+        "projects": project_link.link().choices(db),
         "warehouses": link.warehouses(db),
         "bins": link.bins(db),
         "cost_accounts": purchasing.cost_accounts(db),
@@ -367,6 +372,7 @@ def _order_context(
                 line.vat_code,
                 str(line.item_id or ""),
                 str(line.warehouse_id or ""),
+                project_id=str(line.project_id or ""),
             )
             for line in (view.lines if view else [])
         ]
@@ -435,6 +441,7 @@ def save_order(
     vat_code: FormList = [],  # noqa: B006
     item_id: FormList = [],  # noqa: B006
     warehouse_id: FormList = [],  # noqa: B006
+    project_id: FormList = [],  # noqa: B006
 ) -> Response:
     lines = _line_inputs(
         description,
@@ -445,6 +452,7 @@ def save_order(
         vat_code,
         item_id=item_id,
         warehouse_id=warehouse_id,
+        project_id=project_id,
     )
     data = purchasing.OrderInput(
         supplier_id, parse_day(order_date), parse_day(expected_date), reference, memo, lines
@@ -589,6 +597,7 @@ def _bill_context(
                 f"{line.unit_price:.2f}",
                 line.vat_code,
                 line.serials or "",
+                str(line.project_id or ""),
             )
             for line in (view.lines if view else [])
         ]
@@ -668,6 +677,7 @@ def save_bill(
     unit_price: FormList = [],  # noqa: B006
     vat_code: FormList = [],  # noqa: B006
     serials: FormList = [],  # noqa: B006
+    project_id: FormList = [],  # noqa: B006
 ) -> Response:
     rows = max(len(description), len(account_id), len(unit_price))
     lines = [
@@ -680,6 +690,7 @@ def save_bill(
             _at(unit_price, i),
             _at(vat_code, i) or "standard",
             _at(serials, i),
+            _at(project_id, i),
         )
         for i in range(rows)
     ]

@@ -58,7 +58,7 @@ def _check(
     day_of_month: str,
     first_month: date | None,
     last_month: date | None,
-    parsed: list[tuple[object, object, object, Decimal, Decimal]],
+    parsed: list[journals.Parsed],
     errors: dict[str, str],
 ) -> int:
     """Add the template's problems to `errors`; return the day of the month."""
@@ -76,8 +76,8 @@ def _check(
         errors["first_month"] = "Choose the first month."
     elif last_month is not None and last_month < first_month:
         errors["last_month"] = "The last month can't be before the first."
-    debit = sum((d for *_, d, _ in parsed), ZERO)
-    credit = sum((c for *_, c in parsed), ZERO)
+    debit = sum((line[3] for line in parsed), ZERO)
+    credit = sum((line[4] for line in parsed), ZERO)
     if not errors and (len(parsed) < 2 or debit != credit):
         errors["form"] = "The lines must balance, with at least two of them."
     return day
@@ -105,7 +105,7 @@ def save_template(
         day_of_month=day_of_month,
         first_month=first_month,
         last_month=last_month,
-        parsed=parsed,  # type: ignore[arg-type]
+        parsed=parsed,
         errors=errors,
     )
     if errors:
@@ -131,7 +131,8 @@ def save_template(
     for old in db.scalars(select(RecurringLine).where(RecurringLine.recurring_id == row.id)):
         db.delete(old)
     db.flush()
-    for position, (account, centre, description, d, c) in enumerate(parsed, start=1):
+    # Recurring templates don't name projects (ADR 0031).
+    for position, (account, centre, description, d, c, _) in enumerate(parsed, start=1):
         db.add(
             RecurringLine(
                 recurring_id=row.id,

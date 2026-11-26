@@ -18,7 +18,16 @@ from app.core import clock, numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
 from app.mail import service as mail
-from app.modules.finance import accounts, journals, pdf, periods, receivables, stock_link, tax
+from app.modules.finance import (
+    accounts,
+    journals,
+    pdf,
+    periods,
+    project_link,
+    receivables,
+    stock_link,
+    tax,
+)
 from app.modules.finance.models import (
     DOCUMENT_KINDS,
     VAT_CODES,
@@ -125,6 +134,7 @@ class LineInput:
     item_id: str = ""  # a stock item (ADR 0029)
     warehouse_id: str = ""
     serials: str = ""
+    project_id: str = ""  # ADR 0031
 
 
 @dataclass(frozen=True, slots=True)
@@ -151,6 +161,7 @@ class ParsedLine:
     item_id: uuid.UUID | None = None
     warehouse_id: uuid.UUID | None = None
     serials: str = ""
+    project_id: uuid.UUID | None = None
 
     @property
     def net(self) -> Decimal:
@@ -214,6 +225,7 @@ def parse_lines(
         quantity = _quantity(line.quantity, key, errors)
         price = journals.parse_amount(line.unit_price, key, errors)
         item, warehouse = _stock_fields(db, line, key, errors)
+        project = project_link.check(db, line.project_id, key, errors)
         if key in errors:
             continue
         account = known.get(_uuid(line.account_id))  # type: ignore[arg-type]
@@ -241,6 +253,7 @@ def parse_lines(
                     item.id if item else None,
                     warehouse if item else None,
                     line.serials.strip() if item else "",
+                    project,
                 )
             )
     return parsed, errors
@@ -389,6 +402,7 @@ def _replace_lines(db: Session, doc: SalesDocument, parsed: list[ParsedLine]) ->
                 item_id=line.item_id,
                 warehouse_id=line.warehouse_id,
                 serials=line.serials or None,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -430,21 +444,24 @@ def _journal_lines(db: Session, doc: SalesDocument) -> list[journals.SystemLine]
     same the other way round."""
     settings = periods.settings(db)
     codes = {a.id: a.code for a in accounts.all_accounts(db)}
-    sides: list[tuple[str, uuid.UUID | None, Decimal]] = [
-        (codes[line.account_id], line.cost_centre_id, line.net) for line in _lines(db, doc.id)
+    sides: list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None]] = [
+        (codes[line.account_id], line.cost_centre_id, line.net, line.project_id)
+        for line in _lines(db, doc.id)
     ]
-    sides.append((settings.vat_output_code, None, doc.vat))
-    sides.append((settings.stamp_duty_code, None, doc.stamp_duty))
+    sides.append((settings.vat_output_code, None, doc.vat, None))
+    sides.append((settings.stamp_duty_code, None, doc.stamp_duty, None))
     credit_note = doc.kind == "credit_note"
     out: list[journals.SystemLine] = [
         (settings.receivables_code, None, ZERO, doc.total)
         if credit_note
         else (settings.receivables_code, None, doc.total, ZERO)
     ]
-    for code, centre, amount in sides:
+    for code, centre, amount, project in sides:
         if amount:
             out.append(
-                (code, centre, amount, ZERO) if credit_note else (code, centre, ZERO, amount)
+                (code, centre, amount, ZERO, project)
+                if credit_note
+                else (code, centre, ZERO, amount, project)
             )
     return out
 
@@ -480,7 +497,7 @@ def _move_stock(db: Session, actor: Actor, doc: SalesDocument) -> list[journals.
         actor.user_id,
     )
     codes = {a.id: a.code for a in accounts.all_accounts(db)}
-    amounts: dict[str, Decimal] = defaultdict(lambda: ZERO)  # debit positive
+    amounts: dict[tuple[str, uuid.UUID | None], Decimal] = defaultdict(lambda: ZERO)
     for line in lines:
         assert line.item_id is not None and line.warehouse_id is not None  # noqa: S101
         item = link.item(db, line.item_id)
@@ -504,11 +521,11 @@ def _move_stock(db: Session, actor: Actor, doc: SalesDocument) -> list[journals.
             message = next(iter((exc.field_errors or {}).values()), "Check the stock lines.")
             raise Conflict(f"{line.description}: {message}") from exc
         sign = 1 if doc.kind == "invoice" else -1
-        amounts[codes[item.cogs_account_id]] += sign * value
-        amounts[codes[item.inventory_account_id]] -= sign * value
+        amounts[(codes[item.cogs_account_id], line.project_id)] += sign * value  # debit +
+        amounts[(codes[item.inventory_account_id], None)] -= sign * value
     return [
-        (code, None, amount, ZERO) if amount > 0 else (code, None, ZERO, -amount)
-        for code, amount in amounts.items()
+        (code, None, amount, ZERO, project) if amount > 0 else (code, None, ZERO, -amount, project)
+        for (code, project), amount in amounts.items()
         if amount
     ]
 
@@ -661,6 +678,7 @@ def _copy(
                 item_id=line.item_id,
                 warehouse_id=line.warehouse_id,
                 serials=line.serials,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -784,6 +802,8 @@ class LineView:
     warehouse_id: uuid.UUID | None = None
     warehouse: str | None = None
     serials: str | None = None
+    project_id: uuid.UUID | None = None  # ADR 0031
+    project: str | None = None
 
     @property
     def vat_label(self) -> str:
@@ -931,6 +951,9 @@ def get_document(db: Session, actor: Actor, document_id: uuid.UUID, *, today: da
     centres = dict(org.cost_centre_choices(db))
     link = stock_link.link()
     stores = dict(link.warehouses(db))
+    projects = project_link.link().labels(
+        db, {x.project_id for x in _lines(db, doc.id) if x.project_id}
+    )
     items: dict[uuid.UUID, str] = {}
     for line in _lines(db, doc.id):
         if line.item_id and line.item_id not in items:
@@ -954,6 +977,8 @@ def get_document(db: Session, actor: Actor, document_id: uuid.UUID, *, today: da
             line.warehouse_id,
             stores.get(line.warehouse_id, "") if line.warehouse_id else None,
             line.serials,
+            line.project_id,
+            projects.get(line.project_id) if line.project_id else None,
         )
         for line in _lines(db, doc.id)
     ]

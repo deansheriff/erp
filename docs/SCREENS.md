@@ -164,3 +164,11 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Supplier performance** (`procurement.suppliers`) | `GET /procurement/suppliers` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
 | **One supplier's performance and ratings** (`procurement.supplier`) | `GET /procurement/suppliers/{supplier_id}` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
 | **Procurement settings (approval tiers and quotes)** (`procurement.settings`) | `GET /procurement/settings` | procurement.settings.manage | — | Dean Sheriff (2026-11-26) |
+| **Projects** (`projects.list`) | `GET /projects` | projects.time.log | — | Dean Sheriff (2026-11-26) |
+| **One project (figures, budget, plan, team, ledger lines)** (`projects.project`) | `GET /projects/{project_id}` | projects.time.log | — | Dean Sheriff (2026-11-26) |
+| **Set up or change a project** (`projects.project_form`) | `GET /projects/new` | projects.project.create | — | Dean Sheriff (2026-11-26) |
+| **One project task** (`projects.task`) | `GET /projects/tasks/{task_id}` | projects.project.create | — | Dean Sheriff (2026-11-26) |
+| **My weekly timesheet** (`projects.timesheet`) | `GET /projects/timesheet` | projects.time.log | — | Dean Sheriff (2026-11-26) |
+| **Time approvals** (`projects.approvals`) | `GET /projects/approvals` | projects.time.approve | — | Dean Sheriff (2026-11-26) |
+| **Project profitability** (`projects.profitability`) | `GET /projects/profitability` | projects.project.read | — | Dean Sheriff (2026-11-26) |
+| **Project settings and hourly cost rates** (`projects.settings`) | `GET /projects/settings` | projects.settings.manage | — | Dean Sheriff (2026-11-26) |

@@ -31,6 +31,7 @@
     {% endif %}
     {% if kind == "issue" %}
     <div><label class="kx-label" for="cost_centre_id">Cost centre</label><select id="cost_centre_id" name="cost_centre_id" class="kx-input"><option value="">None</option>{% for cid, clabel in cost_centres %}<option value="{{ cid }}" {% if h.get("cost_centre_id") == cid|string %}selected{% endif %}>{{ clabel }}</option>{% endfor %}</select>{{ ui.field_error(errors, "cost_centre_id") }}</div>
+    {% if projects %}<div><label class="kx-label" for="project_id">Project</label><select id="project_id" name="project_id" class="kx-input"><option value="">None</option>{% for pid, plabel in projects %}<option value="{{ pid }}" {% if h.get("project_id") == pid|string %}selected{% endif %}>{{ plabel }}</option>{% endfor %}</select>{{ ui.field_error(errors, "project_id") }}</div>{% endif %}
     {% endif %}
     {% if kind != "transfer" %}
     <div><label class="kx-label" for="account_id">{{ "Expense account" if kind == "issue" else "Contra account" }}</label><select id="account_id" name="account_id" class="kx-input"><option value="">The category's {{ "issue" if kind == "issue" else "adjustment" }} account</option>{% for a in postable %}<option value="{{ a.id }}" {% if h.get("account_id") == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "account_id") }}</div>

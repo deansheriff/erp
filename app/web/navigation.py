@@ -197,7 +197,29 @@ MODULES: tuple[NavModule, ...] = (
             ),
         ),
     ),
-    NavModule("projects", "Projects", "briefcase", "/projects"),
+    NavModule(
+        "projects",
+        "Projects",
+        "briefcase",
+        "/projects",
+        (
+            NavSection(
+                "Projects",
+                "/projects",
+                permission=("projects.time.log", "projects.project.read"),
+            ),
+            NavSection("My timesheet", "/projects/timesheet", permission="projects.time.log"),
+            NavSection("Time approvals", "/projects/approvals", permission="projects.time.approve"),
+            NavSection(
+                "Profitability", "/projects/profitability", permission="projects.project.read"
+            ),
+            NavSection(
+                "Settings",
+                "/projects/settings",
+                permission=("projects.rate.manage", "projects.settings.manage"),
+            ),
+        ),
+    ),
     NavModule("support", "Support", "headset", "/support"),
     NavModule("fleet", "Fleet", "truck", "/fleet"),
     NavModule("collaboration", "Chat", "messages-square", "/chat"),

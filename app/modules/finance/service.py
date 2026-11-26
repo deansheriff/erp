@@ -5,6 +5,7 @@ accounts. Inventory posts its own documents' journals through `post_document_jou
 history through `procurement_link` (ADR 0030)."""
 
 from app.modules.finance.accounts import all_accounts, postable
+from app.modules.finance.customers import choices as customer_choices
 from app.modules.finance.journals import (
     SystemLine,
     post_document_journal,
@@ -25,6 +26,17 @@ from app.modules.finance.procurement_link import (
     supplier_history,
     suppliers_by_id,
 )
+from app.modules.finance.project_link import (
+    ProjectLink,
+    ProjectPosting,
+    ProjectTotal,
+    customer_names,
+    project_postings,
+    project_totals,
+)
+from app.modules.finance.project_link import check as check_project
+from app.modules.finance.project_link import link as project_link
+from app.modules.finance.project_link import set_link as set_project_link
 from app.modules.finance.sales import VAT_LABELS, organisation_name
 from app.modules.finance.stock_link import Source as StockSource
 from app.modules.finance.stock_link import StockItem, StockLine, link, set_link
@@ -35,6 +47,9 @@ __all__ = [
     "VAT_LABELS",
     "OrderFacts",
     "OrderLineDraft",
+    "ProjectLink",
+    "ProjectPosting",
+    "ProjectTotal",
     "StockItem",
     "StockLine",
     "StockSource",
@@ -42,6 +57,9 @@ __all__ = [
     "SystemLine",
     "all_accounts",
     "all_suppliers",
+    "check_project",
+    "customer_choices",
+    "customer_names",
     "draft_order",
     "link",
     "order_status",
@@ -50,8 +68,12 @@ __all__ = [
     "post_document_journal",
     "post_system_journal",
     "postable",
+    "project_link",
+    "project_postings",
+    "project_totals",
     "purchase_accounts",
     "set_link",
+    "set_project_link",
     "statuses",
     "supplier_choices",
     "supplier_history",

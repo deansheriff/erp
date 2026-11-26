@@ -17,7 +17,15 @@ from app.authz import catalogue, engine, sod
 from app.core import clock, numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
-from app.modules.finance import accounts, journals, periods, sales, stock_link, tax
+from app.modules.finance import (
+    accounts,
+    journals,
+    periods,
+    project_link,
+    sales,
+    stock_link,
+    tax,
+)
 from app.modules.finance.models import (
     Account,
     Bill,
@@ -195,6 +203,7 @@ def save_order(
                 vat=ZERO,
                 item_id=line.item_id,
                 warehouse_id=line.warehouse_id,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -551,6 +560,8 @@ class OrderLineView:
     tracking: str = "none"
     warehouse_id: uuid.UUID | None = None
     warehouse: str | None = None
+    project_id: uuid.UUID | None = None  # ADR 0031
+    project: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -640,6 +651,9 @@ def get_order(db: Session, actor: Actor, order_id: uuid.UUID) -> OrderView:
         if line.item_id and line.item_id not in items:
             items[line.item_id] = link.item(db, line.item_id)
     stores = dict(link.warehouses(db))
+    projects = project_link.link().labels(
+        db, {x.project_id for x in order_lines(db, order.id) if x.project_id}
+    )
     posted = {
         j.id: j.number
         for j in db.scalars(
@@ -683,6 +697,8 @@ def get_order(db: Session, actor: Actor, order_id: uuid.UUID) -> OrderView:
                 _tracking(items.get(line.item_id)) if line.item_id else "none",
                 line.warehouse_id,
                 stores.get(line.warehouse_id, "") if line.warehouse_id else None,
+                line.project_id,
+                projects.get(line.project_id) if line.project_id else None,
             )
             for line in order_lines(db, order.id)
         ],

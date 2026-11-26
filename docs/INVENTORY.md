@@ -35,7 +35,7 @@ first. Serial items move by serial number, one per unit.
 
 | Movement | Journal (source `stock`) | Posted by |
 |---|---|---|
-| Issue | Debit the expense account (the category's issue account unless another is chosen) by cost centre; credit inventory | Inventory staff |
+| Issue | Debit the expense account (the category's issue account unless another is chosen) by cost centre and, if named, project (ADR 0031); credit inventory | Inventory staff |
 | Transfer | None: value moves at cost between warehouses or bins | Inventory staff |
 | Adjustment in | Debit inventory; credit the contra account (the category's adjustment account unless another is chosen, e.g. for opening stock) | Someone other than whoever recorded it |
 | Adjustment out | Debit the contra account; credit inventory at cost | Someone other than whoever recorded it |

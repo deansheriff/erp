@@ -10,7 +10,7 @@ sends any difference to the item's variance account; a debit note sends the stoc
 to the supplier, crediting inventory at cost."""
 
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import date, datetime, timedelta
 from decimal import ROUND_HALF_UP, Decimal
 
@@ -27,6 +27,7 @@ from app.modules.finance import (
     journals,
     payables,
     periods,
+    project_link,
     purchasing,
     sales,
     stock_link,
@@ -99,6 +100,7 @@ class BillLineInput:
     unit_price: str
     vat_code: str
     serials: str = ""  # a debit note returning serial items
+    project_id: str = ""  # a direct line's project (ADR 0031)
 
 
 @dataclass(frozen=True, slots=True)
@@ -152,6 +154,8 @@ def _parse(
                 line.quantity,
                 line.unit_price,
                 line.vat_code,
+                # A PO line keeps its project, even once the project has closed.
+                project_id="" if po_line else line.project_id,
             )
         )
     parsed, errors = sales.parse_lines(db, parsed_input, allowed=allowed)
@@ -164,9 +168,11 @@ def _parse(
         if line.description.strip() or line.account_id or line.unit_price.strip()
     ]
     out = []
-    for p, line in zip(parsed, kept, strict=True):
+    for found, line in zip(parsed, kept, strict=True):
         po_id = _uuid(line.order_line_id)
-        out.append((p, po_id if po_id in order_lines else None, line.serials.strip()))
+        po = order_lines.get(po_id) if po_id else None
+        kept_line = replace(found, project_id=po.project_id) if po is not None else found
+        out.append((kept_line, po.id if po else None, line.serials.strip()))
     return out, errors
 
 
@@ -271,6 +277,7 @@ def _replace_lines(db: Session, row: Bill, parsed: Parsed) -> None:
                 vat=ZERO,
                 item_id=item_id,
                 serials=(serials or None) if item_id else None,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -345,6 +352,7 @@ def bill_from_order(db: Session, actor: Actor, order_id: uuid.UUID, *, today: da
                 vat_rate=ZERO,
                 vat=ZERO,
                 item_id=line.item_id,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -391,6 +399,7 @@ def debit_note_for(db: Session, actor: Actor, bill_id: uuid.UUID, *, today: date
                 vat_rate=ZERO,
                 vat=ZERO,
                 item_id=line.item_id,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -464,7 +473,7 @@ def _stock_sides(
     line: BillLine,
     costs: dict[uuid.UUID, Decimal],
     codes: dict[uuid.UUID, str],
-) -> list[tuple[str, uuid.UUID | None, Decimal]]:
+) -> list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None]]:
     """A stock line's sides (ADR 0029). A bill: GRNI at the order price, the rest to the
     variance account. A debit note: inventory at the returned stock's cost, the rest to
     the variance account."""
@@ -479,8 +488,8 @@ def _stock_sides(
         value = (line.quantity * po.unit_price).quantize(purchasing.CENT, rounding=ROUND_HALF_UP)
         main = periods.settings(db).grni_code
     return [
-        (main, line.cost_centre_id, value),
-        (codes[item.adjustment_account_id], line.cost_centre_id, line.net - value),
+        (main, line.cost_centre_id, value, None),
+        (codes[item.adjustment_account_id], line.cost_centre_id, line.net - value, None),
     ]
 
 
@@ -492,24 +501,24 @@ def _journal_lines(
     settings = periods.settings(db)
     codes = {a.id: a.code for a in accounts.all_accounts(db)}
     note = row.kind == "debit_note"
-    sides: list[tuple[str, uuid.UUID | None, Decimal]] = []
+    sides: list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None]] = []
     for line in bill_lines(db, row.id):
         if line.item_id and line.order_line_id:
             sides += _stock_sides(db, row, line, costs or {}, codes)
         else:
-            sides.append((codes[line.account_id], line.cost_centre_id, line.net))
-    sides.append((settings.vat_input_code, None, row.vat))
+            sides.append((codes[line.account_id], line.cost_centre_id, line.net, line.project_id))
+    sides.append((settings.vat_input_code, None, row.vat, None))
     out: list[journals.SystemLine] = [
         (settings.payables_code, None, row.total, ZERO)
         if note
         else (settings.payables_code, None, ZERO, row.total)
     ]
-    for code, centre, amount in sides:
+    for code, centre, amount, project in sides:
         debit = -amount if note else amount  # a debit note's sides are credits
         if debit > 0:
-            out.append((code, centre, debit, ZERO))
+            out.append((code, centre, debit, ZERO, project))
         elif debit < 0:
-            out.append((code, centre, ZERO, -debit))
+            out.append((code, centre, ZERO, -debit, project))
     return out
 
 
@@ -658,6 +667,8 @@ class BillLineView:
     match: MatchResult | None = None
     item: str | None = None  # a stock line's item (ADR 0029)
     serials: str | None = None
+    project_id: uuid.UUID | None = None  # ADR 0031
+    project: str | None = None
 
     @property
     def vat_label(self) -> str:
@@ -781,6 +792,9 @@ def get_bill(db: Session, actor: Actor, bill_id: uuid.UUID, *, today: date) -> B
     centres = dict(org.cost_centre_choices(db))
     results = match(db, row) if row.status != "posted" else {}
     link = stock_link.link()
+    projects = project_link.link().labels(
+        db, {x.project_id for x in bill_lines(db, row.id) if x.project_id}
+    )
     item_labels: dict[uuid.UUID, str] = {}
     for line in bill_lines(db, row.id):
         if line.item_id and line.item_id not in item_labels:
@@ -804,6 +818,8 @@ def get_bill(db: Session, actor: Actor, bill_id: uuid.UUID, *, today: date) -> B
             results.get(line.id),
             item_labels.get(line.item_id) if line.item_id else None,
             line.serials,
+            line.project_id,
+            projects.get(line.project_id) if line.project_id else None,
         )
         for line in bill_lines(db, row.id)
     ]

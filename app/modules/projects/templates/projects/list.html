@@ -1,0 +1,42 @@
+{# Projects → the list (ADR 0031): your projects, active ones and all you may see.
+   Design: design/stitch/exports/projects.list.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Projects", "Projects you lead or work on, with their progress and budget.") %}
+  {% if can_create %}<a href="/projects/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New project</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<nav class="kx-segment mt-6" aria-label="Projects">
+  {% for key, label in tabs %}
+  <a href="/projects?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</nav>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="Projects">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[900px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Project</th><th class="px-3 py-3 text-left font-semibold">Manager</th><th class="px-3 py-3 text-left font-semibold">Dates</th><th class="w-40 px-3 py-3 text-left font-semibold">Tasks done</th><th class="w-40 px-3 py-3 text-left font-semibold">Budget used</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        {% set p = r.project %}
+        <tr>
+          <td class="px-5 py-3"><a href="/projects/{{ p.id }}" class="font-semibold text-iris">{{ p.name }}</a><span class="block text-xs text-ink-3"><span class="font-mono">{{ p.code }}</span>{% if r.client %} · {{ r.client }}{% endif %}</span></td>
+          <td class="px-3 py-3">{{ r.manager }}</td>
+          <td class="px-3 py-3 text-ink-2">{{ p.start_date | date }}{% if p.end_date %} – {{ p.end_date | date }}{% endif %}</td>
+          <td class="px-3 py-3">{% if r.tasks %}<progress class="kx-meter" value="{{ r.tasks_done }}" max="{{ r.tasks }}" aria-label="{{ r.tasks_done }} of {{ r.tasks }} tasks done"></progress><span class="mt-1 block text-xs text-ink-3">{{ r.tasks_done }} of {{ r.tasks }}</span>{% else %}<span class="text-xs text-ink-3">No tasks yet</span>{% endif %}</td>
+          <td class="px-3 py-3 tnum">{% if r.used is none %}<span class="text-ink-3">—</span>{% else %}<span class="{{ 'text-danger-text' if r.used > 100 else ('text-warning-text' if r.used >= 80 else '') }} font-semibold">{{ r.used }}%</span>{% endif %}</td>
+          <td class="px-5 py-3">{{ ui.badge(tones[p.status], labels[p.status]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("briefcase", "No projects here", "Projects you lead or are a member of appear here.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

@@ -71,6 +71,7 @@ class DocumentInput:
     account_id: str = ""
     reason: str = ""
     lines: tuple[LineInput, ...] = ()
+    project_id: str = ""  # an issue's project (ADR 0031)
 
 
 def _active_warehouse(db: Session, value: str) -> Warehouse | None:
@@ -98,6 +99,8 @@ def _check_header(db: Session, data: DocumentInput, errors: dict[str, str]) -> N
         found = next((a for a in finance.postable(db) if a.id == account), None)
         if found is None or found.type not in wanted:
             errors["account_id"] = "Choose an account that takes postings."
+    if data.kind == "issue":
+        finance.check_project(db, data.project_id, "project_id", errors)
     if data.kind == "adjustment" and not data.reason.strip():
         errors["reason"] = "Say why the stock is being adjusted."
 
@@ -186,6 +189,7 @@ def save(
     row.doc_date, row.warehouse_id, row.to_warehouse_id = data.doc_date, warehouse, target
     row.cost_centre_id = uuid_or_none(data.cost_centre_id)
     row.account_id = uuid_or_none(data.account_id)
+    row.project_id = uuid_or_none(data.project_id) if data.kind == "issue" else None
     row.reason = data.reason.strip() or None
     for old in db.scalars(select(StockDocumentLine).where(StockDocumentLine.document_id == row.id)):
         db.delete(old)
@@ -452,10 +456,12 @@ def _post_journal(
 ) -> uuid.UUID | None:
     """Post the journal (signed amounts: debit positive). None when nothing moved in value."""
     codes = {a.id: a.code for a in finance.all_accounts(db)}
+    # An issue's expense (its debit) names the project, if any (ADR 0031).
+    project = row.project_id if row.kind == "issue" else None
     lines: list[finance.SystemLine] = [
-        (codes[account], centre, amount, ZERO)
+        (codes[account], centre, amount, ZERO, project)
         if amount > 0
-        else (codes[account], centre, ZERO, -amount)
+        else (codes[account], centre, ZERO, -amount, None)
         for (account, centre), amount in amounts.items()
         if amount != 0
     ]

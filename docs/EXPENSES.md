@@ -15,6 +15,12 @@ Phase 8. Decisions are in ADR 0020; permissions in `docs/PERMISSIONS.md`.
 | `expense_repayments` | Money an employee pays back on an advance. |
 | `expense_journals`, `expense_journal_lines` | Balanced journals queued for the ledger (Phase 10). |
 
+## Projects
+
+A claim line can name an active project (ADR 0031). When the claim is reimbursed, the
+project goes with the line into the journal, and the project's Expenses figure picks it
+up.
+
 ## Defaults (confirm before go-live)
 
 - Second-level approval above ₦100,000; Finance approval above ₦500,000.

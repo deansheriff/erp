@@ -1,0 +1,78 @@
+{# Projects → my timesheet (ADR 0031): a week's hours by project and task, saved together
+   and submitted per project to its manager. Design: design/stitch/exports/projects.timesheet.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% if no_staff %}
+{% call ui.page_header("My timesheet") %}{% endcall %}
+<div class="mt-6">{% call ui.empty_state("clock", "No HR record yet", "Timesheets are for people on the staff list.") %}{% endcall %}</div>
+{% else %}
+{% set v = values %}
+{% call ui.page_header("Week of " ~ (week.start | date), "Hours in quarters. Each project's week goes to its manager when you submit it.") %}
+  <a href="/projects/timesheet?week={{ previous.isoformat() }}" class="kx-btn-ghost" aria-label="Previous week">{{ ui.icon("chevron-left", "sm") }}</a>
+  {% if week.start != this_week %}<a href="/projects/timesheet" class="kx-btn-ghost">This week</a>{% endif %}
+  <a href="/projects/timesheet?week={{ next.isoformat() }}" class="kx-btn-ghost" aria-label="Next week">{{ ui.icon("chevron-right", "sm") }}</a>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{% if not week.projects and not week.rows %}
+<div class="mt-6">{% call ui.empty_state("briefcase", "No active projects", "You can log time once you're on an active project.") %}{% endcall %}</div>
+{% else %}
+<form method="post" action="/projects/timesheet" class="mt-6 space-y-6" novalidate>
+  {{ ui.csrf_field() }}
+  <input type="hidden" name="week" value="{{ week.start.isoformat() }}">
+  <section class="kx-card overflow-hidden" aria-label="Hours">
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[980px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="w-64 px-3 py-2.5 text-left font-semibold">Project and task</th>{% for d in week.days %}<th class="px-1.5 py-2.5 text-center font-semibold">{{ d.strftime("%a") }}<span class="block font-normal">{{ d.day }}</span></th>{% endfor %}<th class="w-24 px-3 py-2.5 text-right font-semibold">Total</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% set n = namespace(i=0) %}
+          {% for row in week.rows %}
+          {% set r = n.i %}
+          <tr class="align-top">
+            {% if row.locked %}
+            <td class="px-3 py-2.5"><span class="font-semibold">{{ row.project }}</span><span class="block text-xs text-ink-3">{{ row.task or "No task" }} · locked</span></td>
+            {% for h in row.hours %}<td class="px-1.5 py-2.5 text-center tnum text-ink-2">{{ h | plain if h else "" }}</td>{% endfor %}
+            {% else %}
+            <td class="px-3 py-2"><input type="hidden" name="rp_{{ r }}" value="{{ row.project_id }}"><span class="block font-semibold">{{ row.project }}</span><label class="sr-only" for="rt-{{ r }}">Task, {{ row.project }}</label><select id="rt-{{ r }}" name="rt_{{ r }}" class="kx-input mt-1 h-9 text-xs"><option value="">No task</option>{% for tid, title in week.tasks.get(row.project_id, []) %}<option value="{{ tid }}" {% if (v.get('rt_' ~ r) or (row.task_id|string if row.task_id else '')) == tid|string %}selected{% endif %}>{{ title }}</option>{% endfor %}</select></td>
+            {% for h in row.hours %}{% set d = loop.index0 %}<td class="px-1 py-2"><label class="sr-only" for="h-{{ r }}-{{ d }}">{{ row.project }}, {{ week.days[d].strftime("%A") }}</label><input id="h-{{ r }}-{{ d }}" name="h_{{ r }}_{{ d }}" value="{{ v.get('h_' ~ r ~ '_' ~ d) if v else (h | plain if h else '') }}" inputmode="decimal" class="kx-input h-10 w-full min-w-[56px] text-center tnum {{ 'border-danger-text' if errors.get('cell_' ~ (r * 7 + d)) }}"></td>{% endfor %}
+            {% endif %}
+            <td class="px-3 py-2.5 text-right font-semibold tnum">{{ row.total | plain }}</td>
+          </tr>
+          {% if not row.locked %}{% set n.i = n.i + 1 %}{% endif %}
+          {% endfor %}
+          {% for b in range(blank_rows) %}
+          {% set r = n.i + b %}
+          <tr class="align-top">
+            <td class="px-3 py-2"><label class="sr-only" for="rp-{{ r }}">Project, new row {{ b + 1 }}</label><select id="rp-{{ r }}" name="rp_{{ r }}" class="kx-input h-10"><option value="">Add a project…</option>{% for pid, label in week.projects %}<option value="{{ pid }}" {% if v.get('rp_' ~ r) == pid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select><label class="sr-only" for="rt-{{ r }}">Task, new row {{ b + 1 }}</label><select id="rt-{{ r }}" name="rt_{{ r }}" class="kx-input mt-1 h-9 text-xs"><option value="">No task</option>{% for pid, label in week.projects %}{% if week.tasks.get(pid) %}<optgroup label="{{ label }}">{% for tid, title in week.tasks[pid] %}<option value="{{ tid }}" {% if v.get('rt_' ~ r) == tid|string %}selected{% endif %}>{{ title }}</option>{% endfor %}</optgroup>{% endif %}{% endfor %}</select></td>
+            {% for d in range(7) %}<td class="px-1 py-2"><label class="sr-only" for="h-{{ r }}-{{ d }}">New row {{ b + 1 }}, {{ week.days[d].strftime("%A") }}</label><input id="h-{{ r }}-{{ d }}" name="h_{{ r }}_{{ d }}" value="{{ v.get('h_' ~ r ~ '_' ~ d, '') }}" inputmode="decimal" class="kx-input h-10 w-full min-w-[56px] text-center tnum"></td>{% endfor %}
+            <td></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot class="border-t border-line bg-surface-sunken/60 text-xs"><tr><th scope="row" class="px-3 py-2.5 text-left font-semibold">Day total</th>{% for t in week.day_totals %}<td class="px-1.5 py-2.5 text-center font-semibold tnum">{{ t | plain if t else "" }}</td>{% endfor %}<td class="whitespace-nowrap px-3 py-2.5 text-right font-semibold tnum">{{ week.total | plain }} h</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="flex items-center justify-between gap-3 border-t border-line p-5"><p class="text-xs text-ink-3">Enter hours like 7.5. Rows for weeks already submitted or approved are locked.</p><button type="submit" name="save" value="1" class="kx-btn-primary">Save hours</button></div>
+  </section>
+
+  <section class="kx-card overflow-hidden" aria-labelledby="sheets-title">
+    <h2 id="sheets-title" class="border-b border-line px-5 py-4 font-h3 text-h3">This week by project</h2>
+    <ul class="divide-y divide-line text-body-sm">
+      {% for s in week.sheets %}
+      <li class="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+        <div class="min-w-0"><p class="font-semibold">{{ s.project }}</p><p class="text-xs text-ink-3"><span class="tnum">{{ s.hours | plain }} h</span>{% if s.status == "submitted" and s.approver %} · with {{ s.approver }}{% elif s.status == "approved" and s.decided_by %} · approved by {{ s.decided_by }}{% endif %}</p>{% if s.status == "rejected" and s.note %}<p class="mt-1 text-xs text-danger-text">Rejected: {{ s.note }}</p>{% endif %}</div>
+        <div class="flex items-center gap-2">
+          {% if s.status %}{{ ui.badge(tones[s.status], labels[s.status]) }}{% endif %}
+          {% if s.status in ("draft", "rejected") and s.hours %}<button type="submit" name="submit" value="{{ s.project_id }}" class="kx-btn-secondary text-xs">{{ ui.icon("send", "sm") }} Submit</button>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+</form>
+{% endif %}
+{% endif %}
+{% endblock %}

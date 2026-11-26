@@ -191,6 +191,18 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `procurement.settings.manage` | Manage procurement settings | Organisation |  | Change the approval tiers and the amount over which three quotes are needed. |
 | `procurement.supplier.rate` | Rate suppliers | Organisation |  | Rate a supplier's purchase order once it has been received. |
 
+### projects
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `projects.project.create` | Create projects | Organisation |  | Set up projects and manage the ones you lead: members, budget, milestones, tasks and status. |
+| `projects.project.read` | View all projects | Organisation |  | See every project with its revenue, costs, labour and profitability. |
+| `projects.rate.manage` | Manage hourly cost rates | Organisation | yes | Set the hourly cost of each person used for project labour cost. |
+| `projects.settings.manage` | Manage project settings | Organisation |  | Change the budget alert thresholds. |
+| `projects.time.approve` | Approve project time | Organisation |  | Decide timesheets on projects you manage, or your reports' time on their own projects. |
+| `projects.time.approve_any` | Step in on project time | Organisation |  | Decide any timesheet when neither the project manager nor a line manager can. |
+| `projects.time.log` | Log project time | Self, Team, Department, Organisation |  | Record hours on projects you're a member of and submit them weekly. |
+
 ### system
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -330,6 +342,13 @@ Everything, including technical settings. Can't be edited or removed.
 | `procurement.rfq.read` | O |
 | `procurement.settings.manage` | O |
 | `procurement.supplier.rate` | O |
+| `projects.project.create` | O |
+| `projects.project.read` | O |
+| `projects.rate.manage` | O |
+| `projects.settings.manage` | O |
+| `projects.time.approve` | O |
+| `projects.time.approve_any` | O |
+| `projects.time.log` | O |
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
@@ -461,6 +480,13 @@ Everything except technical settings such as mail, branding and security.
 | `procurement.rfq.read` | O |
 | `procurement.settings.manage` | O |
 | `procurement.supplier.rate` | O |
+| `projects.project.create` | O |
+| `projects.project.read` | O |
+| `projects.rate.manage` | O |
+| `projects.settings.manage` | O |
+| `projects.time.approve` | O |
+| `projects.time.approve_any` | O |
+| `projects.time.log` | O |
 
 ### Auditor
 
@@ -501,6 +527,7 @@ Reads everything, including the audit log. Changes nothing.
 | `payroll.run.read` | O |
 | `procurement.requisition.read` | O |
 | `procurement.rfq.read` | O |
+| `projects.project.read` | O |
 
 ### Employee
 
@@ -534,6 +561,7 @@ Self-service: their own profile, requests and payslips.
 | `payroll.relief.declare` | S |
 | `procurement.requisition.create` | S |
 | `procurement.requisition.read` | S |
+| `projects.time.log` | S |
 
 ### Line Manager
 
@@ -553,6 +581,7 @@ Approves their team's requests and sees their team.
 | `leave.request.read` | T |
 | `procurement.requisition.approve` | T |
 | `procurement.requisition.read` | T |
+| `projects.time.approve` | O |
 
 ### HR Officer
 
@@ -739,6 +768,9 @@ Approves and posts finance documents.
 | `procurement.requisition.read` | O |
 | `procurement.rfq.read` | O |
 | `procurement.settings.manage` | O |
+| `projects.project.read` | O |
+| `projects.rate.manage` | O |
+| `projects.settings.manage` | O |
 
 ### Expense Approver
 
@@ -807,6 +839,19 @@ Approves the largest requisitions and steps in when there's no line manager.
 | `procurement.requisition.read` | O |
 | `procurement.rfq.read` | O |
 | `procurement.settings.manage` | O |
+| `projects.project.read` | O |
+| `projects.settings.manage` | O |
+| `projects.time.approve_any` | O |
+
+### Project Manager
+
+Sets up projects, manages the ones they lead and approves their team's time.
+
+| Permission | Scope |
+|---|---|
+| `finance.customer.read` | O |
+| `projects.project.create` | O |
+| `projects.time.approve` | O |
 
 ### Support Agent
 
@@ -850,5 +895,7 @@ _No grants yet: added by the phase that delivers its module._
 | `procurement.no_self_approve_any` | `procurement.requisition.approve_any` | owner_is_actor | You can't approve your own requisition. |
 | `procurement.no_self_approve_finance` | `procurement.requisition.approve_finance` | owner_is_actor | You can't approve your own requisition. |
 | `procurement.no_self_approve_director` | `procurement.requisition.approve_director` | owner_is_actor | You can't approve your own requisition. |
+| `projects.no_self_approve` | `projects.time.approve` | owner_is_actor | You can't approve your own time. |
+| `projects.no_self_approve_any` | `projects.time.approve_any` | owner_is_actor | You can't approve your own time. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

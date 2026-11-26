@@ -9,6 +9,7 @@ from app.modules.finance import tasks as finance_tasks  # noqa: F401
 from app.modules.hr import tasks as hr_tasks  # noqa: F401
 from app.modules.inventory import tasks as inventory_tasks  # noqa: F401
 from app.modules.leave import tasks as leave_tasks  # noqa: F401
+from app.modules.projects import tasks as projects_tasks  # noqa: F401
 from app.wiring import configure_runtime
 
 configure_runtime()

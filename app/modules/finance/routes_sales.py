@@ -20,6 +20,7 @@ from app.identity.schemas import Actor
 from app.modules.finance import (
     customers,
     periods,
+    project_link,
     receipts,
     receivables,
     sales,
@@ -371,9 +372,11 @@ def _line_inputs(
     vat_code: list[str],
     *,
     stock: tuple[list[str], list[str], list[str]] = ([], [], []),
+    project_id: list[str] | None = None,
 ) -> list[LineInput]:
     """Form lines. `stock` is the item, warehouse and serials lists (ADR 0029)."""
     item_id, warehouse_id, serials = stock
+    projects = project_id or []
     rows = max(len(description), len(account_id), len(unit_price), len(item_id))
 
     def at(values: list[str], i: int) -> str:
@@ -390,6 +393,7 @@ def _line_inputs(
             at(item_id, i),
             at(warehouse_id, i),
             at(serials, i),
+            at(projects, i),
         )
         for i in range(rows)
     ]
@@ -420,6 +424,7 @@ def _document_context(
                 str(line.item_id or ""),
                 str(line.warehouse_id or ""),
                 line.serials or "",
+                str(line.project_id or ""),
             )
             for line in (view.lines if view else [])
         ]
@@ -433,6 +438,7 @@ def _document_context(
         "customers": customers.choices(db),
         "income_accounts": sales.income_accounts(db),
         "stock_items": stock_link.link().items(db),
+        "projects": project_link.link().choices(db),
         "warehouses": stock_link.link().warehouses(db),
         "cost_centres": org.cost_centre_choices(db),
         "vat_codes": [(c, sales.VAT_LABELS[c]) for c in VAT_CODES],
@@ -510,6 +516,7 @@ def save_document(
     item_id: FormList = [],  # noqa: B006
     warehouse_id: FormList = [],  # noqa: B006
     serials: FormList = [],  # noqa: B006
+    project_id: FormList = [],  # noqa: B006
 ) -> Response:
     lines = _line_inputs(
         description,
@@ -519,6 +526,7 @@ def save_document(
         unit_price,
         vat_code,
         stock=(item_id, warehouse_id, serials),
+        project_id=project_id,
     )
     data = DocumentInput(
         kind,

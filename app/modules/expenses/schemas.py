@@ -19,6 +19,8 @@ class LineView:
     receipt_name: str | None
     no_receipt_reason: str | None
     receipt_needed: bool  # over the category's amount, with no receipt and no reason
+    project_id: uuid.UUID | None = None  # ADR 0031
+    project: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
