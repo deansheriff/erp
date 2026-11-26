@@ -20,6 +20,7 @@ SUBJECTS = {
     "file_quarantined": "A file was blocked by the virus scanner",
     "finance_payment_reminder": "Payment reminder from {organisation}",
     "finance_sales_document": "{kind_title} {number} from {organisation}",
+    "inventory_low_stock": "Low stock at {organisation}: {count} to reorder",
 }
 
 

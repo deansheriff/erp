@@ -5,6 +5,28 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 11a: Inventory
+- Items with a unit of measure, category, FIFO or weighted-average valuation, lot or
+  serial tracking and reorder levels; warehouses and bins; item categories naming the
+  inventory, cost of sales, adjustment and issue accounts (ADR 0028).
+- Issues to a cost centre and transfers, posted by inventory staff; adjustments (also for
+  opening stock) posted by a second person. Stock never goes negative; lot items without
+  a lot take the earliest-expiring lots first.
+- Stock counts with the variance posted by a second person.
+- Material requests from any employee, approved by their line manager and issued in
+  parts.
+- A daily low-stock email to people who manage items, at most once a day per item and
+  warehouse.
+- Stock journals (source `stock`) for issues, adjustments and count variances; a new
+  5200 Stock adjustments and variances account (to confirm).
+- Permissions `inventory.item.*`, `inventory.stock.*` and `inventory.request.*`; a new
+  Inventory Manager role, and grants for the Inventory Clerk, line managers and
+  employees.
+
+### Fixed
+- The worker now loads finance's scheduled tasks (recurring journals, payment reminders
+  and depreciation drafts), which it hadn't been registering.
+
 ### Added — Phase 10e: Fixed assets
 - Asset categories with a depreciation method (straight line, reducing balance or none),
   useful life or rate and their accounts; new accounts 1511 to 1551, 3300, 4910 and 6910

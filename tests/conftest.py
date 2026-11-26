@@ -171,7 +171,9 @@ def clean_db(migrated_db: None) -> Iterator[None]:
                 "receipts, sales_allocations, vat_rates, wht_types, stamp_duty_types, "
                 "tax_returns, suppliers, purchase_orders, goods_receipts, bills, "
                 "supplier_payments, bank_accounts, bank_rules, bank_transfers, asset_categories, "
-                "fixed_assets, asset_changes, depreciation_runs CASCADE"
+                "fixed_assets, asset_changes, depreciation_runs, inventory_units, warehouses, "
+                "item_categories, items, stock_moves, stock_documents, stock_counts, "
+                "material_requests, low_stock_alerts CASCADE"
             )
         )
         _migration("0010_payroll.py").seed_defaults(conn)
@@ -180,6 +182,7 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         _migration("0013_finance_receivables_and_tax.py").seed_defaults(conn)
         _migration("0015_finance_banking.py").seed_defaults(conn)
         _migration("0016_finance_fixed_assets.py").seed_defaults(conn)
+        _migration("0017_inventory.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

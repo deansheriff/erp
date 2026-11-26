@@ -37,6 +37,7 @@ SOURCES = (
     "bank",
     "tax",
     "asset",
+    "stock",
 )
 
 Money = Numeric(16, 2)

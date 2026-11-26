@@ -143,3 +143,16 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Depreciation runs** (`finance.depreciation`) | `GET /finance/depreciation` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
 | **Asset categories and fixed asset settings** (`finance.asset_categories`) | `GET /finance/assets/categories` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
 | **Register or edit a fixed asset** (`finance.asset_form`) | `GET /finance/assets/new` | finance.asset.manage | — | Dean Sheriff (2026-11-26) |
+
+## Phase 11
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Inventory items (stock value, low stock, the item list)** (`inventory.items`) | `GET /inventory/items` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **One inventory item (stock by location, serials, stock ledger, details)** (`inventory.item`) | `GET /inventory/items/{item_id}` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **Inventory setup (warehouses and bins, item categories, units)** (`inventory.setup`) | `GET /inventory/setup` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **Stock movements and counts** (`inventory.movements`) | `GET /inventory/movements` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **One issue, transfer or adjustment** (`inventory.movement`) | `GET /inventory/movements/{document_id}` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **A stock count sheet** (`inventory.count`) | `GET /inventory/counts/{count_id}` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **Material requests** (`inventory.requests`) | `GET /inventory/requests` | inventory.request.read | — | Dean Sheriff (2026-11-26) |
+| **One material request (draft, decision, issue)** (`inventory.request`) | `GET /inventory/requests/{request_id}` | inventory.request.read | — | Dean Sheriff (2026-11-26) |

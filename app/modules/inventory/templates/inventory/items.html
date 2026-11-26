@@ -1,0 +1,68 @@
+{# Inventory → items (ADR 0028): stock value, items at or below their reorder level, and
+   every item with what is on hand.
+   Design: design/stitch/exports/inventory.items.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set f = filters %}
+{% call ui.page_header("Items", "Stock on hand, its value and what needs reordering.") %}
+  <a href="/inventory/movements" class="kx-btn-ghost">{{ ui.icon("arrow-left-right", "sm") }} Movements</a>
+  <a href="/inventory/requests" class="kx-btn-ghost">{{ ui.icon("clipboard-list", "sm") }} Material requests</a>
+  <a href="/inventory/setup" class="kx-btn-ghost">{{ ui.icon("settings-2", "sm") }} Setup</a>
+  {% if can_manage %}<a href="/inventory/items/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Add item</a>{% endif %}
+{% endcall %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  {{ ui.kpi_tile("Stock value", totals.value | money) }}
+  {{ ui.kpi_tile("Active items", totals.items) }}
+  {{ ui.kpi_tile("Low stock", totals.low) }}
+  {{ ui.kpi_tile("Warehouses", totals.warehouses) }}
+</div>
+
+{% if low %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="low-title">
+  <div class="border-b border-line bg-warning-bg px-5 py-3">
+    <h2 id="low-title" class="font-h3 text-h3 text-warning-text">Low stock · {{ low | length }} at or below the reorder level</h2>
+  </div>
+  <ul class="divide-y divide-line text-body-sm">
+    {% for item, warehouse, qty in low %}
+    <li class="flex flex-wrap items-center justify-between gap-3 px-5 py-2.5"><span><a href="/inventory/items/{{ item.id }}" class="font-mono text-xs font-semibold text-iris">{{ item.code }}</a> {{ item.name }} · {{ warehouse }}</span><span class="tnum"><span class="font-semibold text-warning-text">{{ qty | plain }}</span> <span class="text-ink-3">/ reorder at {{ item.reorder_level | plain }}{% if item.reorder_quantity %}, usually {{ item.reorder_quantity | plain }}{% endif %}</span></span></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<form method="get" action="/inventory/items" class="mt-6 flex flex-wrap items-end gap-3">
+  <div><label class="kx-label" for="category">Category</label><select id="category" name="category" class="kx-input"><option value="">All categories</option>{% for c in categories %}<option value="{{ c.id }}" {% if f.category == c.id|string %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select></div>
+  <div><label class="kx-label" for="warehouse">Warehouse</label><select id="warehouse" name="warehouse" class="kx-input"><option value="">All warehouses</option>{% for w in warehouses %}<option value="{{ w.id }}" {% if f.warehouse == w.id|string %}selected{% endif %}>{{ w.name }}</option>{% endfor %}</select></div>
+  <div><label class="kx-label" for="view">Show</label><select id="view" name="view" class="kx-input">{% for key, label in (("all", "Active items"), ("low", "Low stock"), ("inactive", "Inactive")) %}<option value="{{ key }}" {% if f.view == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+  <div class="min-w-[200px] flex-1"><label class="kx-label" for="q">Search</label><input id="q" name="q" value="{{ f.q }}" class="kx-input" placeholder="Name or code"></div>
+  <button type="submit" class="kx-btn-secondary">Filter</button>
+</form>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="Items">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[860px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Item</th><th class="px-3 py-3 text-left font-semibold">Unit</th><th class="px-3 py-3 text-left font-semibold">Valuation</th><th class="px-3 py-3 text-left font-semibold">Tracking</th><th class="px-3 py-3 text-right font-semibold">On hand</th><th class="px-3 py-3 text-right font-semibold">Reorder at</th><th class="px-5 py-3 text-right font-semibold">Stock value</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        <tr>
+          <td class="px-5 py-3"><a href="/inventory/items/{{ r.id }}" class="font-mono text-xs font-semibold text-iris">{{ r.code }}</a> <span class="font-medium">{{ r.name }}</span><span class="block text-xs text-ink-3">{{ r.category }}</span></td>
+          <td class="px-3 py-3">{{ r.unit }}</td>
+          <td class="px-3 py-3">{{ ui.badge("info" if r.valuation == "fifo" else "neutral", "FIFO" if r.valuation == "fifo" else "Average") }}</td>
+          <td class="px-3 py-3">{% if r.tracking != "none" %}{{ ui.badge("neutral", trackings[r.tracking]) }}{% else %}<span class="text-ink-3">—</span>{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum">{% if r.low %}<span class="font-semibold text-warning-text">{{ r.on_hand | plain }}</span> {{ ui.badge("warning", "Low") }}{% else %}{{ r.on_hand | plain }}{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum text-ink-2">{{ r.reorder_level | plain if r.reorder_level else "—" }}</td>
+          <td class="px-5 py-3 text-right font-semibold tnum">{{ r.value | money }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("package", "No items here", "Add an item, then bring its stock in with an adjustment.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff","ink-3":"#626280","on-background":"#1a1c1f","danger-bg":"#FFE4E6","surface-container":"#ededf1","lime":"#C5F04A","inverse-primary":"#c5c0ff","primary":"#412ec2","secondary-fixed":"#c7f24c","iris":"#5A4BDB","on-iris":"#FFFFFF","destructive":"#C42836","tertiary-fixed-dim":"#ffb68b","warning-text":"#8A4B00","error-container":"#ffdad6","on-tertiary-fixed-variant":"#743400","outline-variant":"#c8c4d7","tertiary-container":"#9f4a00","on-primary-fixed":"#140067","info-bg":"#DFEBFF","line-strong":"#8B8BA6","success-bg":"#DDF7E8","ink-2":"#4B4B66","line":"#E4E4EE","surface":"#FFFFFF","on-primary-fixed-variant":"#3d28be","iris-hover":"#4A3CC4","on-error-container":"#93000a","inverse-surface":"#2e3034","secondary-container":"#c4ef49","on-tertiary-fixed":"#321300","tertiary":"#7a3700","tertiary-fixed":"#ffdbc8","on-tertiary-container":"#ffd7c1","danger-text":"#B4232F","outline":"#787586","success-text":"#0F6B3E","secondary":"#4f6600","on-primary-container":"#e0dbff","background":"#f9f9fd","primary-container":"#5a4bdb","surface-raised":"#FFFFFF","primary-fixed-dim":"#c5c0ff","surface-container-highest":"#e2e2e6","surface-variant":"#e2e2e6","on-surface":"#1a1c1f","surface-bright":"#f9f9fd","primary-fixed":"#e4dfff","secondary-fixed-dim":"#acd530","surface-tint":"#5646d7","surface-sunken":"#EFEFF6","inverse-on-surface":"#f0f0f4","lime-ink":"#4D7A0A","warning-bg":"#FFF1D6","on-surface-variant":"#474554","surface-dim":"#d9dade","on-secondary-fixed":"#161f00","surface-container-high":"#e8e8ec","on-secondary-container":"#536b00","on-secondary-fixed-variant":"#3b4d00","on-secondary":"#ffffff","iris-tint":"#EEECFD","canvas":"#F6F6FA","info-text":"#1D55B8","on-primary":"#ffffff","ink":"#16162A","surface-container-lowest":"#ffffff","on-error":"#ffffff","surface-container-low":"#f3f3f7","error":"#ba1a1a"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"2rem","space-xl":"2rem","gutter":"1.5rem","space-sm":"0.5rem","space-3xl":"4rem","space-xs":"0.25rem","space-lg":"1.5rem","space-md":"1rem","space-2xl":"3rem"},fontFamily:{"h2":["Plus Jakarta Sans"],"body-sm":["Inter"],"label":["Inter"],"h1":["Plus Jakarta Sans"],"h3":["Plus Jakarta Sans"],"overline":["Inter"],"body":["Inter"],"display":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"]},fontSize:{"h2":["18px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"body-sm":["14px",{lineHeight:"20px",fontWeight:"400"}],"label":["14px",{lineHeight:"20px",fontWeight:"500"}],"h1":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}],"h3":["16px",{lineHeight:"24px",letterSpacing:"-0.015em",fontWeight:"600"}],"overline":["12px",{lineHeight:"16px",letterSpacing:"0.06em",fontWeight:"600"}],"body":["16px",{lineHeight:"24px",fontWeight:"400"}],"display":["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"700"}],"stat":["30px",{lineHeight:"36px",fontWeight:"700"}]}}}}</script></head><body class="bg-background font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col h-full"><div class="h-16 px-space-md flex items-center gap-space-sm bg-surface"><div class="w-9 h-9 rounded-lg bg-tertiary-container flex items-center justify-center text-on-tertiary shadow-sm"><span class="material-symbols-outlined text-[20px]">deployed_code</span></div><div class="flex flex-col min-w-0"><span class="font-h3 text-h3 leading-tight text-on-surface truncate">Kxmeleon ERP</span><span class="font-overline text-overline text-tertiary truncate uppercase tracking-wider">Adeyemi Holdings Ltd</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-space-md"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-overline text-overline text-ink-3 uppercase tracking-wider">Core Modules</div><nav class="space-y-space-xs" data-active-classes="bg-tertiary-container text-on-tertiary shadow-sm font-label"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard-home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="truncate">Dashboard / Home</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="hr-and-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="truncate">HR &amp; People</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="truncate">Leave</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="truncate">Attendance</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="truncate">Expenses</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="truncate">Payroll</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="truncate">Finance</span></a><div class="pt-space-xs"><a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-label text-label bg-tertiary-fixed text-tertiary shadow-sm ring-1 ring-tertiary-fixed-dim" data-path="inventory" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-tertiary">inventory_2</span><span class="font-label font-bold text-tertiary truncate">Inventory</span></div><span class="w-2 h-2 rounded-full bg-tertiary"></span></a></div><div class="pl-space-md pr-space-xs py-space-xs space-y-space-xs"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="items" href="#"><span class="truncate">Items</span><span class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="movements-and-stock-transfers" href="#"><span class="truncate">Movements &amp; Transfers</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stock-counts-and-audits" href="#"><span class="truncate">Stock counts &amp; Audits</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="material-requests" href="#"><span class="truncate">Material requests</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="warehouses-and-locations" href="#"><span class="truncate">Warehouses &amp; Locations</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="valuation-and-costing" href="#"><span class="truncate">Valuation &amp; Costing</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-settings" href="#"><span class="truncate">Settings</span></a></div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">rocket_launch</span><span class="truncate">Projects</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span class="truncate">Administration</span></a></nav></div></div><div class="p-space-sm bg-surface-container-lowest m-space-sm rounded-xl shadow-[0_1px_2px_rgba(22,22,42,0.04)]"><div class="flex items-center justify-between"><div class="flex flex-col"><span class="font-label text-label text-ink">System Health</span><span class="font-overline text-overline text-success-text flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-success-text inline-block"></span>Operational</span></div><span class="font-overline text-overline px-space-xs py-0.5 rounded bg-surface-sunken text-ink-3">v4.18</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label text-label text-ink-3"><span class="text-tertiary font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Inventory</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-on-surface font-semibold">Items</span></div><div class="relative w-80"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 rounded-lg bg-surface-sunken text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-tertiary-container transition-all" placeholder="Search inventory, SKU, or batch..." type="text"/><kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[11px] font-label font-semibold bg-surface text-ink-3 shadow-sm border border-line">Ctrl K</kbd></div></div><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-full bg-warning-bg text-warning-text hover:opacity-90 transition-opacity" data-path="approvals" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-overline text-overline">Approvals</span><span class="w-5 h-5 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center font-label text-[11px]">3</span></a><button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive"></span></button><button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="h-6 w-px bg-line"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label text-label leading-tight text-on-surface font-semibold">Fatima Bello</span><span class="font-overline text-[11px] text-ink-3 leading-none">Finance &amp; Ops Manager</span></div><span class="material-symbols-outlined text-[18px] text-outline-variant">unfold_more</span></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="p-space-lg max-w-[1440px] mx-auto w-full space-y-space-md">
+<!-- Top Breadcrumb & Workflow Metadata Banner -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md bg-surface p-space-md rounded-xl shadow-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs font-overline text-overline uppercase tracking-wider text-ink-3">
+<span>Inventory</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Stock counts &amp; Audits</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-tertiary font-bold">SC-00004</span>
+</div>
+<div class="flex items-center flex-wrap gap-space-sm">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Count SC-00004 · Lagos main store · 28 Nov 2026</h1>
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full text-warning-text bg-warning-bg font-label text-overline font-semibold uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-warning-text animate-pulse"></span>
+            Counting in progress
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+          Lagos Main Store (LOS-01) • Aisle A &amp; B Storage Bins • Initiated by <strong class="text-ink">Fatima Bello</strong> at 08:30 WAT
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="h-11 px-space-sm rounded-lg bg-surface-container-low text-ink hover:bg-surface-container transition-colors flex items-center justify-center gap-2 font-label text-label cursor-pointer" id="btnPrint" title="Print count sheet" type="button">
+<span class="material-symbols-outlined text-[20px]">print</span>
+<span class="hidden sm:inline">Print Sheet</span>
+</button>
+<button class="h-11 px-space-sm rounded-lg bg-surface-container-low text-ink hover:bg-surface-container transition-colors flex items-center justify-center gap-2 font-label text-label cursor-pointer" id="btnExport" title="Export to CSV" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="hidden sm:inline">Export</span>
+</button>
+<button class="h-11 px-space-md rounded-lg bg-surface text-ink hover:bg-surface-sunken transition-all shadow-sm flex items-center gap-2 font-label text-label cursor-pointer" id="btnSaveCounts" type="button">
+<span class="material-symbols-outlined text-[20px] text-ink-3">save</span>
+<span>Save counts</span>
+</button>
+<button class="h-11 px-space-lg rounded-lg bg-iris hover:bg-iris-hover text-on-iris transition-all shadow-md flex items-center gap-2 font-label text-label cursor-pointer" id="btnSubmitApproval" type="button">
+<span class="material-symbols-outlined text-[20px]">send_and_archive</span>
+<span>Submit for approval</span>
+</button>
+</div>
+</div>
+<!-- Informational Audit Callout / Dual-Control Notice -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="lg:col-span-8 flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed text-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">gavel</span>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="font-h3 text-h3 text-ink">Segregation of Duties Enforced (ERP-INV-SOD-5200)</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-label font-bold uppercase tracking-wider bg-info-bg text-info-text">Blind Count Mode</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+            Expected inventory levels were snapshot at 08:30 WAT on count opening. Final variances are permanently posted to 
+            <strong class="text-ink">GL Account 5200 (Stock Adjustments &amp; Inventory Variances)</strong> once validated by an independent approving officer. Counter cannot approve own counts.
+          </p>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col justify-center bg-surface-container-low p-space-sm rounded-lg space-y-1">
+<div class="flex justify-between items-center text-overline font-overline text-ink-3 uppercase">
+<span>Overall Audit Readiness</span>
+<span class="text-success-text font-bold">98% Complete</span>
+</div>
+<div class="w-full bg-line rounded-full h-2 overflow-hidden">
+<div class="bg-success-text h-2 rounded-full transition-all duration-500" style="width: 98%;"></div>
+</div>
+<div class="flex justify-between items-center text-[12px] text-ink-3 font-body-sm pt-0.5">
+<span>182 / 186 verified items</span>
+<span>4 Pending Count</span>
+</div>
+</div>
+</div>
+<!-- Toolbar & Filter Controls -->
+<div class="bg-surface p-space-md rounded-xl shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search SKU / Description -->
+<div class="flex items-center gap-space-sm flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full h-11 pl-10 pr-16 rounded-lg bg-surface-sunken text-body-sm font-body-sm text-ink placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-iris transition-all" id="itemSearch" placeholder="Search SKU, description, bin, or lot..." type="text"/>
+<kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[11px] font-label font-semibold bg-surface text-ink-3 shadow-xs">Ctrl K</kbd>
+</div>
+<!-- Bin Filter Dropdown -->
+<div class="relative shrink-0">
+<select class="h-11 px-3 pr-8 rounded-lg bg-surface-sunken font-label text-body-sm text-ink focus:outline-none focus:ring-2 focus:ring-iris transition-all cursor-pointer appearance-none" id="binFilter">
+<option value="ALL">All Bins (A1, A2, B1, Yard)</option>
+<option value="Bin A1">Bin A1</option>
+<option value="Bin A2">Bin A2</option>
+<option value="Bin B1">Bin B1</option>
+<option value="Bin Yard-01">Bin Yard-01</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-outline text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Variance Toggle & Column Utilities -->
+<div class="flex items-center flex-wrap gap-space-sm shrink-0">
+<!-- Differences Only Filter Switch -->
+<button class="h-11 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container font-label text-label text-ink flex items-center gap-2 cursor-pointer transition-colors" data-active="false" id="toggleVarianceOnly" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">tune</span>
+<span>Show only variances</span>
+<span class="px-2 py-0.5 rounded-full text-overline font-label font-bold bg-danger-bg text-danger-text" id="varianceBadge">2 active</span>
+</button>
+<div class="h-6 w-px bg-line"></div>
+<!-- Density / Column Layout Helpers -->
+<div class="flex items-center gap-1 bg-surface-sunken p-1 rounded-lg">
+<button class="w-9 h-9 flex items-center justify-center rounded text-ink-3 hover:text-ink hover:bg-surface transition-all" id="btnDensityCompact" title="Compact density" type="button">
+<span class="material-symbols-outlined text-[18px]">density_small</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded bg-surface text-ink shadow-xs transition-all" id="btnDensityNormal" title="Normal density" type="button">
+<span class="material-symbols-outlined text-[18px]">density_medium</span>
+</button>
+</div>
+<button class="h-11 px-3 rounded-lg bg-surface-sunken text-ink hover:bg-surface-container flex items-center gap-1 font-label text-body-sm transition-colors" title="Customize visible columns" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">view_column</span>
+<span class="hidden sm:inline">Columns</span>
+</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse" id="stockSheetTable">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider select-none">
+<th class="py-3.5 px-space-md text-left" scope="col">Item Description</th>
+<th class="py-3.5 px-space-sm text-left" scope="col">Bin Location</th>
+<th class="py-3.5 px-space-sm text-left" scope="col">Lot &amp; Expiry</th>
+<th class="py-3.5 px-space-sm text-right" scope="col">Expected Qty</th>
+<th class="py-3.5 px-space-sm text-center w-44" scope="col">Counted Qty</th>
+<th class="py-3.5 px-space-sm text-right" scope="col">Variance</th>
+<th class="py-3.5 px-space-md text-right" scope="col">Variance Value</th>
+<th class="py-3.5 px-space-md text-center" scope="col">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-ink" id="tableBody">
+<!-- Row 1: Pharma / Danger Variance -->
+<tr class="item-row transition-colors hover:bg-surface-container-low" data-bin="Bin A1" data-sku="ITM-00041" data-value="-40000" data-variance="-10">
+<td class="py-space-md px-space-md align-middle">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-tertiary">
+<span class="material-symbols-outlined text-[18px]">medication</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Paracetamol 500mg (100 blisters)</span>
+<span class="font-overline text-[11px] text-ink-3 font-mono">ITM-00041 • Pharma</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<span class="px-2.5 py-1 rounded bg-surface-container-low font-label text-body-sm font-semibold text-ink-2">Bin A1</span>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<div class="flex flex-col">
+<span class="font-mono text-[12px] font-semibold text-ink">LOT-2026-PARA-08</span>
+<span class="text-[11px] text-ink-3">Exp: 18 Jan 2027</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right font-mono font-semibold tabular-nums align-middle text-ink-2">
+                1,240 <span class="font-sans text-[11px] text-ink-3 font-normal">CTN</span>
+</td>
+<td class="py-space-md px-space-sm align-middle text-center">
+<div class="relative inline-flex items-center">
+<input class="counted-input w-28 h-9 text-center font-mono font-bold tabular-nums text-ink bg-surface-container-lowest rounded-lg shadow-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris transition-all" data-expected="1240" data-unit="CTN" data-unit-price="4000" step="1" type="number" value="1230"/>
+<span class="ml-1.5 text-[11px] text-ink-3 font-mono font-medium">CTN</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right align-middle font-mono font-bold tabular-nums variance-cell">
+<span class="inline-flex items-center gap-1 text-danger-text bg-danger-bg px-2 py-0.5 rounded text-[12px]">
+                  -10 CTN
+                </span>
+</td>
+<td class="py-space-md px-space-md text-right align-middle font-mono font-bold tabular-nums text-danger-text value-cell">
+                ₦(40,000.00)
+              </td>
+<td class="py-space-md px-space-md text-center align-middle">
+<span class="inline-flex items-center gap-1 text-[11px] font-label font-semibold text-warning-text bg-warning-bg px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]">flag</span>
+                  Recount Flag
+                </span>
+</td>
+</tr>
+<!-- Row 2: Tech Supply / Neutral Variance -->
+<tr class="item-row transition-colors hover:bg-surface-container-low" data-bin="Bin B1" data-sku="ITM-00028" data-value="0" data-variance="0">
+<td class="py-space-md px-space-md align-middle">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-ink-3">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">HP LaserJet Pro Toner Cartridge W1106A</span>
+<span class="font-overline text-[11px] text-ink-3 font-mono">ITM-00028 • IT Supplies</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<span class="px-2.5 py-1 rounded bg-surface-container-low font-label text-body-sm font-semibold text-ink-2">Bin B1</span>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<div class="flex flex-col">
+<span class="font-mono text-[12px] font-semibold text-ink">SN: HPLJ-99214-X</span>
+<span class="text-[11px] text-ink-3">Standard OEM</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right font-mono font-semibold tabular-nums align-middle text-ink-2">
+                12 <span class="font-sans text-[11px] text-ink-3 font-normal">UNIT</span>
+</td>
+<td class="py-space-md px-space-sm align-middle text-center">
+<div class="relative inline-flex items-center">
+<input class="counted-input w-28 h-9 text-center font-mono font-bold tabular-nums text-ink bg-surface-container-lowest rounded-lg shadow-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris transition-all" data-expected="12" data-unit="UNIT" data-unit-price="38000" step="1" type="number" value="12"/>
+<span class="ml-1.5 text-[11px] text-ink-3 font-mono font-medium">UNIT</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right align-middle font-mono font-normal tabular-nums variance-cell text-ink-3">
+<span class="text-[13px]">-</span>
+</td>
+<td class="py-space-md px-space-md text-right align-middle font-mono font-medium tabular-nums text-ink-3 value-cell">
+                ₦0.00
+              </td>
+<td class="py-space-md px-space-md text-center align-middle">
+<span class="inline-flex items-center gap-1 text-[11px] font-label font-semibold text-success-text bg-success-bg px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  Verified
+                </span>
+</td>
+</tr>
+<!-- Row 3: Industrial Safety / Neutral Variance -->
+<tr class="item-row transition-colors hover:bg-surface-container-low" data-bin="Bin A2" data-sku="ITM-00092" data-value="0" data-variance="0">
+<td class="py-space-md px-space-md align-middle">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-ink-3">
+<span class="material-symbols-outlined text-[18px]">security</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Industrial High-Visibility Vest Reflector</span>
+<span class="font-overline text-[11px] text-ink-3 font-mono">ITM-00092 • PPE &amp; Safety</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<span class="px-2.5 py-1 rounded bg-surface-container-low font-label text-body-sm font-semibold text-ink-2">Bin A2</span>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<div class="flex flex-col">
+<span class="font-mono text-[12px] font-semibold text-ink">LOT-2026-SAF-11</span>
+<span class="text-[11px] text-ink-3">ANSI Class 2</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right font-mono font-semibold tabular-nums align-middle text-ink-2">
+                45 <span class="font-sans text-[11px] text-ink-3 font-normal">PIECE</span>
+</td>
+<td class="py-space-md px-space-sm align-middle text-center">
+<div class="relative inline-flex items-center">
+<input class="counted-input w-28 h-9 text-center font-mono font-bold tabular-nums text-ink bg-surface-container-lowest rounded-lg shadow-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris transition-all" data-expected="45" data-unit="PIECE" data-unit-price="5500" step="1" type="number" value="45"/>
+<span class="ml-1.5 text-[11px] text-ink-3 font-mono font-medium">PIECE</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right align-middle font-mono font-normal tabular-nums variance-cell text-ink-3">
+<span class="text-[13px]">-</span>
+</td>
+<td class="py-space-md px-space-md text-right align-middle font-mono font-medium tabular-nums text-ink-3 value-cell">
+                ₦0.00
+              </td>
+<td class="py-space-md px-space-md text-center align-middle">
+<span class="inline-flex items-center gap-1 text-[11px] font-label font-semibold text-success-text bg-success-bg px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  Verified
+                </span>
+</td>
+</tr>
+<!-- Row 4: Packaging / Positive Variance (Surplus) -->
+<tr class="item-row transition-colors hover:bg-surface-container-low" data-bin="Bin B1" data-sku="ITM-00073" data-value="19500" data-variance="5">
+<td class="py-space-md px-space-md align-middle">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[18px]">inventory</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Corrugated Shipping Box #4 (Pack of 25)</span>
+<span class="font-overline text-[11px] text-ink-3 font-mono">ITM-00073 • Packaging</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<span class="px-2.5 py-1 rounded bg-surface-container-low font-label text-body-sm font-semibold text-ink-2">Bin B1</span>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<div class="flex flex-col">
+<span class="font-mono text-[12px] font-semibold text-ink">LOT-2026-PKG-02</span>
+<span class="text-[11px] text-ink-3">Heavy Duty Kraft</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right font-mono font-semibold tabular-nums align-middle text-ink-2">
+                200 <span class="font-sans text-[11px] text-ink-3 font-normal">PACK</span>
+</td>
+<td class="py-space-md px-space-sm align-middle text-center">
+<div class="relative inline-flex items-center">
+<input class="counted-input w-28 h-9 text-center font-mono font-bold tabular-nums text-ink bg-surface-container-lowest rounded-lg shadow-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris transition-all" data-expected="200" data-unit="PACK" data-unit-price="3900" step="1" type="number" value="205"/>
+<span class="ml-1.5 text-[11px] text-ink-3 font-mono font-medium">PACK</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right align-middle font-mono font-bold tabular-nums variance-cell">
+<span class="inline-flex items-center gap-1 text-success-text bg-success-bg px-2 py-0.5 rounded text-[12px]">
+                  +5 PACK
+                </span>
+</td>
+<td class="py-space-md px-space-md text-right align-middle font-mono font-bold tabular-nums text-success-text value-cell">
+                +₦19,500.00
+              </td>
+<td class="py-space-md px-space-md text-center align-middle">
+<span class="inline-flex items-center gap-1 text-[11px] font-label font-semibold text-info-text bg-info-bg px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]">difference</span>
+                  Surplus Audited
+                </span>
+</td>
+</tr>
+<!-- Row 5: IT Equipment / Danger Variance (Shortage) -->
+<tr class="item-row transition-colors hover:bg-surface-container-low" data-bin="Bin A2" data-sku="ITM-00115" data-value="-28000" data-variance="-2">
+<td class="py-space-md px-space-md align-middle">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-tertiary">
+<span class="material-symbols-outlined text-[18px]">power</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Dell 65W USB-C AC Power Adapter</span>
+<span class="font-overline text-[11px] text-ink-3 font-mono">ITM-00115 • IT Hardware</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<span class="px-2.5 py-1 rounded bg-surface-container-low font-label text-body-sm font-semibold text-ink-2">Bin A2</span>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<div class="flex flex-col">
+<span class="font-mono text-[12px] font-semibold text-ink">SN: DELL-PWR-881</span>
+<span class="text-[11px] text-ink-3">Origin: Ireland</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right font-mono font-semibold tabular-nums align-middle text-ink-2">
+                15 <span class="font-sans text-[11px] text-ink-3 font-normal">UNIT</span>
+</td>
+<td class="py-space-md px-space-sm align-middle text-center">
+<div class="relative inline-flex items-center">
+<input class="counted-input w-28 h-9 text-center font-mono font-bold tabular-nums text-ink bg-surface-container-lowest rounded-lg shadow-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris transition-all" data-expected="15" data-unit="UNIT" data-unit-price="14000" step="1" type="number" value="13"/>
+<span class="ml-1.5 text-[11px] text-ink-3 font-mono font-medium">UNIT</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right align-middle font-mono font-bold tabular-nums variance-cell">
+<span class="inline-flex items-center gap-1 text-danger-text bg-danger-bg px-2 py-0.5 rounded text-[12px]">
+                  -2 UNIT
+                </span>
+</td>
+<td class="py-space-md px-space-md text-right align-middle font-mono font-bold tabular-nums text-danger-text value-cell">
+                ₦(28,000.00)
+              </td>
+<td class="py-space-md px-space-md text-center align-middle">
+<span class="inline-flex items-center gap-1 text-[11px] font-label font-semibold text-warning-text bg-warning-bg px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]">search_check</span>
+                  Recount Pending
+                </span>
+</td>
+</tr>
+<!-- Row 6: Lubricants / Fleet / Yard-01 -->
+<tr class="item-row transition-colors hover:bg-surface-container-low" data-bin="Bin Yard-01" data-sku="ITM-00019" data-value="0" data-variance="0">
+<td class="py-space-md px-space-md align-middle">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-ink-3">
+<span class="material-symbols-outlined text-[18px]">oil_barrel</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Engine Oil 15W-40 Total Rubia (20L Drum)</span>
+<span class="font-overline text-[11px] text-ink-3 font-mono">ITM-00019 • Fleet Maintenance</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<span class="px-2.5 py-1 rounded bg-surface-container-low font-label text-body-sm font-semibold text-ink-2">Bin Yard-01</span>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<div class="flex flex-col">
+<span class="font-mono text-[12px] font-semibold text-ink">LOT-2026-OIL-09</span>
+<span class="text-[11px] text-ink-3">Batch sealed</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right font-mono font-semibold tabular-nums align-middle text-ink-2">
+                40 <span class="font-sans text-[11px] text-ink-3 font-normal">DRUM</span>
+</td>
+<td class="py-space-md px-space-sm align-middle text-center">
+<div class="relative inline-flex items-center">
+<input class="counted-input w-28 h-9 text-center font-mono font-bold tabular-nums text-ink bg-surface-container-lowest rounded-lg shadow-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris transition-all" data-expected="40" data-unit="DRUM" data-unit-price="62000" step="1" type="number" value="40"/>
+<span class="ml-1.5 text-[11px] text-ink-3 font-mono font-medium">DRUM</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right align-middle font-mono font-normal tabular-nums variance-cell text-ink-3">
+<span class="text-[13px]">-</span>
+</td>
+<td class="py-space-md px-space-md text-right align-middle font-mono font-medium tabular-nums text-ink-3 value-cell">
+                ₦0.00
+              </td>
+<td class="py-space-md px-space-md text-center align-middle">
+<span class="inline-flex items-center gap-1 text-[11px] font-label font-semibold text-success-text bg-success-bg px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  Verified
+                </span>
+</td>
+</tr>
+<!-- Row 7: Stationery Supplies / Bin A1 -->
+<tr class="item-row transition-colors hover:bg-surface-container-low" data-bin="Bin A1" data-sku="ITM-00005" data-value="0" data-variance="0">
+<td class="py-space-md px-space-md align-middle">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0 text-ink-3">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Double A Paper A4 80gsm</span>
+<span class="font-overline text-[11px] text-ink-3 font-mono">ITM-00005 • Stationery</span>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<span class="px-2.5 py-1 rounded bg-surface-container-low font-label text-body-sm font-semibold text-ink-2">Bin A1</span>
+</td>
+<td class="py-space-md px-space-sm align-middle">
+<div class="flex flex-col">
+<span class="font-mono text-[12px] font-semibold text-ink">LOT-2026-PPR-44</span>
+<span class="text-[11px] text-ink-3">Box (5 Reams)</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right font-mono font-semibold tabular-nums align-middle text-ink-2">
+                60 <span class="font-sans text-[11px] text-ink-3 font-normal">BOX</span>
+</td>
+<td class="py-space-md px-space-sm align-middle text-center">
+<div class="relative inline-flex items-center">
+<input class="counted-input w-28 h-9 text-center font-mono font-bold tabular-nums text-ink bg-surface-container-lowest rounded-lg shadow-sm focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris transition-all" data-expected="60" data-unit="BOX" data-unit-price="18500" step="1" type="number" value="60"/>
+<span class="ml-1.5 text-[11px] text-ink-3 font-mono font-medium">BOX</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm text-right align-middle font-mono font-normal tabular-nums variance-cell text-ink-3">
+<span class="text-[13px]">-</span>
+</td>
+<td class="py-space-md px-space-md text-right align-middle font-mono font-medium tabular-nums text-ink-3 value-cell">
+                ₦0.00
+              </td>
+<td class="py-space-md px-space-md text-center align-middle">
+<span class="inline-flex items-center gap-1 text-[11px] font-label font-semibold text-success-text bg-success-bg px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+                  Verified
+                </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Empty State if Filter matches nothing -->
+<div class="hidden p-space-2xl text-center flex-col items-center justify-center space-y-2" id="noMatchState">
+<span class="material-symbols-outlined text-[40px] text-outline">search_off</span>
+<p class="font-h3 text-h3 text-ink">No items match your filter criteria</p>
+<p class="font-body-sm text-body-sm text-ink-3">Try adjusting your bin filter or toggle to view all lines.</p>
+<button class="mt-2 px-space-md py-1.5 rounded-lg bg-surface-sunken text-ink font-label text-body-sm hover:bg-surface-container transition-colors" id="resetFilters" type="button">
+          Clear Filters
+        </button>
+</div>
+<!-- Pagination & Live Count Bar -->
+<div class="px-space-md py-space-sm bg-surface-sunken flex flex-col sm:flex-row items-center justify-between gap-space-sm text-body-sm">
+<div class="flex items-center gap-space-sm text-ink-3 font-body-sm">
+<span>Showing <strong class="text-ink">1–7</strong> of <strong class="text-ink">186</strong> items</span>
+<span>•</span>
+<span class="text-success-text font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+            Auto-saved 2 mins ago
+          </span>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-outline opacity-40 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-iris text-on-iris font-label font-semibold" type="button">1</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface text-ink transition-colors font-label" type="button">2</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface text-ink transition-colors font-label" type="button">3</button>
+<span class="px-1 text-ink-3">…</span>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface text-ink transition-colors font-label" type="button">19</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-ink hover:bg-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Metrics & Valuation Summary Bar -->
+<div class="sticky bottom-4 z-30 bg-surface/95 backdrop-blur-md p-space-md rounded-xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center flex-wrap gap-space-lg w-full md:w-auto">
+<!-- Lines Metric -->
+<div class="flex flex-col">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Count Progress</span>
+<div class="flex items-baseline gap-2">
+<span class="font-h2 text-h2 text-ink">182 <span class="text-ink-3 text-body-sm font-normal">/ 186 lines</span></span>
+<span class="px-2 py-0.5 rounded text-[11px] font-label font-bold bg-success-bg text-success-text">98% Done</span>
+</div>
+</div>
+<div class="hidden sm:block h-8 w-px bg-line"></div>
+<!-- Discrepancy Count -->
+<div class="flex flex-col">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Discrepant Items</span>
+<div class="flex items-baseline gap-2">
+<span class="font-h2 text-h2 text-danger-text" id="discrepancyCountTotal">3 items</span>
+<span class="text-[12px] text-ink-3">(2 shortages • 1 surplus)</span>
+</div>
+</div>
+<div class="hidden sm:block h-8 w-px bg-line"></div>
+<!-- Net Variance Amount -->
+<div class="flex flex-col">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Net Variance Value</span>
+<div class="flex items-baseline gap-2">
+<span class="font-stat text-stat tabular-nums font-bold text-danger-text tracking-tight" id="netVarianceDisplay">₦(48,500.00)</span>
+<span class="text-[11px] text-ink-3">Pending Post to GL 5200</span>
+</div>
+</div>
+</div>
+<!-- Quick Action on bottom bar -->
+<div class="flex items-center gap-space-sm w-full md:w-auto justify-end">
+<button class="h-11 px-space-md rounded-lg bg-surface text-ink hover:bg-surface-sunken transition-all shadow-sm font-label text-label cursor-pointer" id="btnBottomSave" type="button">
+          Save Counts
+        </button>
+<button class="h-11 px-space-lg rounded-lg bg-iris hover:bg-iris-hover text-on-iris transition-all shadow-md font-label text-label cursor-pointer flex items-center gap-2" id="btnBottomSubmit" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Submit for Approval</span>
+</button>
+</div>
+</div>
+<!-- Notification Toast (Live interactions) -->
+<div class="fixed bottom-24 right-8 z-50 bg-ink text-on-primary px-space-md py-3 rounded-xl shadow-xl flex items-center gap-3 transition-all duration-300 opacity-0 pointer-events-none translate-y-4" id="actionToast">
+<span class="material-symbols-outlined text-[20px] text-lime" id="toastIcon">check_circle</span>
+<span class="font-label text-label" id="toastMessage">Counts saved successfully</span>
+</div>
+</div>
+</div>
+<script>
+  (function () {
+    const tableBody = document.getElementById('tableBody');
+    const rows = Array.from(tableBody.querySelectorAll('.item-row'));
+    const toggleVarianceBtn = document.getElementById('toggleVarianceOnly');
+    const varianceBadge = document.getElementById('varianceBadge');
+    const searchInput = document.getElementById('itemSearch');
+    const binFilter = document.getElementById('binFilter');
+    const noMatchState = document.getElementById('noMatchState');
+    const netVarianceDisplay = document.getElementById('netVarianceDisplay');
+    const discrepancyCountTotal = document.getElementById('discrepancyCountTotal');
+    const toast = document.getElementById('actionToast');
+    const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+
+    let isVarianceOnly = false;
+
+    // Toast helper
+    function showToast(msg, iconName = 'check_circle', iconColor = 'text-lime') {
+      toastMessage.textContent = msg;
+      toastIcon.textContent = iconName;
+      toastIcon.className = `material-symbols-outlined text-[20px] ${iconColor}`;
+      toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      }, 3500);
+    }
+
+    // Format currency to Nigerian Naira
+    function formatNaira(amount) {
+      if (amount === 0) return '₦0.00';
+      const absFormatted = Math.abs(amount).toLocaleString('en-NG', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      if (amount < 0) {
+        return `₦(${absFormatted})`;
+      }
+      return `+₦${absFormatted}`;
+    }
+
+    // Recalculate row & summary metrics
+    function recalculateTable() {
+      let netSum = 0;
+      let diffCount = 0;
+      let shortages = 0;
+      let surplus = 0;
+
+      rows.forEach(row => {
+        const input = row.querySelector('.counted-input');
+        const expected = parseFloat(input.getAttribute('data-expected')) || 0;
+        const counted = parseFloat(input.value) || 0;
+        const unitPrice = parseFloat(input.getAttribute('data-unit-price')) || 0;
+        const unit = input.getAttribute('data-unit') || '';
+
+        const diff = counted - expected;
+        const valDiff = diff * unitPrice;
+
+        row.setAttribute('data-variance', diff);
+        row.setAttribute('data-value', valDiff);
+
+        const varianceCell = row.querySelector('.variance-cell');
+        const valueCell = row.querySelector('.value-cell');
+
+        if (diff === 0) {
+          varianceCell.innerHTML = '<span class="text-[13px] text-ink-3">-</span>';
+          valueCell.innerHTML = '₦0.00';
+          valueCell.className = 'py-space-md px-space-md text-right align-middle font-mono font-medium tabular-nums text-ink-3 value-cell';
+        } else if (diff < 0) {
+          diffCount++;
+          shortages++;
+          varianceCell.innerHTML = `<span class="inline-flex items-center gap-1 text-danger-text bg-danger-bg px-2 py-0.5 rounded text-[12px] font-bold">${diff} ${unit}</span>`;
+          valueCell.innerHTML = formatNaira(valDiff);
+          valueCell.className = 'py-space-md px-space-md text-right align-middle font-mono font-bold tabular-nums text-danger-text value-cell';
+        } else {
+          diffCount++;
+          surplus++;
+          varianceCell.innerHTML = `<span class="inline-flex items-center gap-1 text-success-text bg-success-bg px-2 py-0.5 rounded text-[12px] font-bold">+${diff} ${unit}</span>`;
+          valueCell.innerHTML = formatNaira(valDiff);
+          valueCell.className = 'py-space-md px-space-md text-right align-middle font-mono font-bold tabular-nums text-success-text value-cell';
+        }
+
+        netSum += valDiff;
+      });
+
+      // Update summaries
+      netVarianceDisplay.innerHTML = formatNaira(netSum);
+      if (netSum < 0) {
+        netVarianceDisplay.className = 'font-stat text-stat tabular-nums font-bold text-danger-text tracking-tight';
+      } else if (netSum > 0) {
+        netVarianceDisplay.className = 'font-stat text-stat tabular-nums font-bold text-success-text tracking-tight';
+      } else {
+        netVarianceDisplay.className = 'font-stat text-stat tabular-nums font-bold text-ink tracking-tight';
+      }
+
+      varianceBadge.textContent = `${diffCount} active`;
+      discrepancyCountTotal.textContent = `${diffCount} item${diffCount === 1 ? '' : 's'}`;
+      const descDetail = document.querySelector('#discrepancyCountTotal + span');
+      if (descDetail) {
+        descDetail.textContent = `(${shortages} shortage${shortages === 1 ? '' : 's'} · ${surplus} surplus)`;
+      }
+    }
+
+    // Filter application
+    function applyFilters() {
+      const q = searchInput.value.toLowerCase().trim();
+      const selectedBin = binFilter.value;
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const rowBin = row.getAttribute('data-bin');
+        const diff = parseFloat(row.getAttribute('data-variance')) || 0;
+
+        const matchesQuery = !q || text.includes(q);
+        const matchesBin = selectedBin === 'ALL' || rowBin === selectedBin;
+        const matchesVariance = !isVarianceOnly || diff !== 0;
+
+        if (matchesQuery && matchesBin && matchesVariance) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        noMatchState.classList.remove('hidden');
+        noMatchState.classList.add('flex');
+      } else {
+        noMatchState.classList.add('hidden');
+        noMatchState.classList.remove('flex');
+      }
+    }
+
+    // Attach row input listeners
+    document.querySelectorAll('.counted-input').forEach(input => {
+      input.addEventListener('input', () => {
+        recalculateTable();
+        applyFilters();
+      });
+      input.addEventListener('change', () => {
+        showToast('Count updated locally & draft synced', 'cloud_sync');
+      });
+    });
+
+    // Toggle variance filter
+    toggleVarianceBtn.addEventListener('click', () => {
+      isVarianceOnly = !isVarianceOnly;
+      if (isVarianceOnly) {
+        toggleVarianceBtn.classList.remove('bg-surface-sunken');
+        toggleVarianceBtn.classList.add('bg-tertiary-fixed', 'text-tertiary');
+      } else {
+        toggleVarianceBtn.classList.add('bg-surface-sunken');
+        toggleVarianceBtn.classList.remove('bg-tertiary-fixed', 'text-tertiary');
+      }
+      applyFilters();
+    });
+
+    // Search and Bin filters
+    searchInput.addEventListener('input', applyFilters);
+    binFilter.addEventListener('change', applyFilters);
+
+    // Reset filters button in empty state
+    document.getElementById('resetFilters')?.addEventListener('click', () => {
+      searchInput.value = '';
+      binFilter.value = 'ALL';
+      isVarianceOnly = false;
+      toggleVarianceBtn.classList.add('bg-surface-sunken');
+      toggleVarianceBtn.classList.remove('bg-tertiary-fixed', 'text-tertiary');
+      applyFilters();
+    });
+
+    // Density toggle buttons
+    const btnCompact = document.getElementById('btnDensityCompact');
+    const btnNormal = document.getElementById('btnDensityNormal');
+
+    btnCompact.addEventListener('click', () => {
+      btnCompact.classList.add('bg-surface', 'text-ink', 'shadow-xs');
+      btnCompact.classList.remove('text-ink-3');
+      btnNormal.classList.remove('bg-surface', 'text-ink', 'shadow-xs');
+      btnNormal.classList.add('text-ink-3');
+      rows.forEach(r => {
+        r.querySelectorAll('td').forEach(cell => {
+          cell.classList.remove('py-space-md');
+          cell.classList.add('py-2');
+        });
+      });
+    });
+
+    btnNormal.addEventListener('click', () => {
+      btnNormal.classList.add('bg-surface', 'text-ink', 'shadow-xs');
+      btnNormal.classList.remove('text-ink-3');
+      btnCompact.classList.remove('bg-surface', 'text-ink', 'shadow-xs');
+      btnCompact.classList.add('text-ink-3');
+      rows.forEach(r => {
+        r.querySelectorAll('td').forEach(cell => {
+          cell.classList.remove('py-2');
+          cell.classList.add('py-space-md');
+        });
+      });
+    });
+
+    // Action button triggers
+    function handleSave() {
+      showToast('Draft counts saved. Local audit log updated.', 'check_circle', 'text-lime');
+    }
+
+    function handleSubmit() {
+      showToast('Count SC-00004 submitted for dual-control sign-off.', 'mark_email_read', 'text-iris');
+    }
+
+    document.getElementById('btnSaveCounts')?.addEventListener('click', handleSave);
+    document.getElementById('btnBottomSave')?.addEventListener('click', handleSave);
+    document.getElementById('btnSubmitApproval')?.addEventListener('click', handleSubmit);
+    document.getElementById('btnBottomSubmit')?.addEventListener('click', handleSubmit);
+
+    document.getElementById('btnPrint')?.addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('btnExport')?.addEventListener('click', () => {
+      showToast('Generating CSV report with LOT snapshots...', 'file_download', 'text-info-text');
+    });
+
+    // Global shortcut Ctrl+K
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    });
+
+    // Initial run
+    recalculateTable();
+  })();
+</script></main></div></body></html>

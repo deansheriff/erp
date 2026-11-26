@@ -119,6 +119,19 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `identity.user.manage` | Manage user accounts | Organisation | yes | Resend invitations, suspend, reactivate and unlock accounts. |
 | `identity.user.read` | View user accounts | Organisation |  | See everyone who can sign in. |
 
+### inventory
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `inventory.item.manage` | Manage items and warehouses | Organisation |  | Add and change items, categories, units of measure, warehouses and bins. Receives the daily low-stock digest. |
+| `inventory.item.read` | View inventory | Organisation |  | See items, stock on hand and its value, warehouses and the stock ledger. |
+| `inventory.request.approve` | Approve material requests | Self, Team, Department, Organisation |  | Decide the material requests you are named on as line manager, or by delegation. |
+| `inventory.request.approve_any` | Step in on material requests | Organisation |  | Decide any material request, e.g. when the requester has no line manager. |
+| `inventory.request.create` | Request materials | Self, Team, Department, Organisation |  | Raise material requests for your own work. |
+| `inventory.request.read` | View material requests | Self, Team, Department, Organisation |  | See material requests within scope. |
+| `inventory.stock.approve` | Approve stock adjustments | Organisation |  | Post adjustments and count variances someone else recorded. |
+| `inventory.stock.move` | Move stock | Organisation |  | Issue and transfer stock, record adjustments and counts, and issue approved material requests. |
+
 ### leave
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -255,6 +268,14 @@ Everything, including technical settings. Can't be edited or removed.
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `inventory.item.manage` | O |
+| `inventory.item.read` | O |
+| `inventory.request.approve` | O |
+| `inventory.request.approve_any` | O |
+| `inventory.request.create` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.approve` | O |
+| `inventory.stock.move` | O |
 | `leave.balance.adjust` | O |
 | `leave.balance.read` | O |
 | `leave.request.approve` | O |
@@ -368,6 +389,14 @@ Everything except technical settings such as mail, branding and security.
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `inventory.item.manage` | O |
+| `inventory.item.read` | O |
+| `inventory.request.approve` | O |
+| `inventory.request.approve_any` | O |
+| `inventory.request.create` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.approve` | O |
+| `inventory.stock.move` | O |
 | `leave.balance.adjust` | O |
 | `leave.balance.read` | O |
 | `leave.request.approve` | O |
@@ -425,6 +454,8 @@ Reads everything, including the audit log. Changes nothing.
 | `hr.employee.sensitive.read` | O |
 | `hr.employee.statutory.read` | O |
 | `identity.user.read` | O |
+| `inventory.item.read` | O |
+| `inventory.request.read` | O |
 | `leave.balance.read` | O |
 | `leave.request.read` | O |
 | `org.structure.read` | O |
@@ -454,6 +485,8 @@ Self-service: their own profile, requests and payslips.
 | `hr.employee.sensitive.read` | S |
 | `hr.employee.statutory.read` | S |
 | `hr.profile.request_change` | S |
+| `inventory.request.create` | S |
+| `inventory.request.read` | S |
 | `leave.balance.read` | S |
 | `leave.request.create` | S |
 | `leave.request.read` | S |
@@ -474,6 +507,8 @@ Approves their team's requests and sees their team.
 | `expenses.claim.approve` | T |
 | `expenses.claim.read` | T |
 | `hr.employee.personal.read` | T |
+| `inventory.request.approve` | T |
+| `inventory.request.read` | T |
 | `leave.balance.read` | T |
 | `leave.request.approve` | T |
 | `leave.request.read` | T |
@@ -602,6 +637,7 @@ Day-to-day accounting.
 | `finance.supplier.manage` | O |
 | `finance.supplier.read` | O |
 | `finance.tax.read` | O |
+| `inventory.item.read` | O |
 | `payroll.loan.read` | O |
 | `payroll.remittance.export` | O |
 | `payroll.run.pay` | O |
@@ -648,6 +684,7 @@ Approves and posts finance documents.
 | `finance.supplier.read` | O |
 | `finance.tax.manage` | O |
 | `finance.tax.read` | O |
+| `inventory.item.read` | O |
 | `payroll.certificate.read` | O |
 | `payroll.loan.approve` | O |
 | `payroll.loan.read` | O |
@@ -680,7 +717,24 @@ Pays out approved expense claims.
 
 Receives, issues and counts stock.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `inventory.item.read` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.move` | O |
+
+### Inventory Manager
+
+Keeps items and warehouses, and approves stock adjustments and counts.
+
+| Permission | Scope |
+|---|---|
+| `inventory.item.manage` | O |
+| `inventory.item.read` | O |
+| `inventory.request.approve_any` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.approve` | O |
+| `inventory.stock.move` | O |
 
 ### Procurement Officer
 
@@ -723,5 +777,8 @@ _No grants yet: added by the phase that delivers its module._
 | `finance.payment_four_eyes` | `finance.payment.approve` | creator_is_actor | Someone else approves a supplier payment you prepared. |
 | `finance.bank_four_eyes` | `finance.bank.approve` | creator_is_actor | Someone else approves a reconciliation or transfer you prepared. |
 | `finance.asset_four_eyes` | `finance.asset.approve` | creator_is_actor | Someone else posts a depreciation run or approves an asset change you prepared. |
+| `inventory.adjust_four_eyes` | `inventory.stock.approve` | creator_is_actor | Someone else posts a stock adjustment or count you recorded. |
+| `inventory.no_self_approve` | `inventory.request.approve` | owner_is_actor | You can't approve your own material request. |
+| `inventory.no_self_approve_any` | `inventory.request.approve_any` | owner_is_actor | You can't approve your own material request. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

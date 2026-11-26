@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-container": "#ededf1",
+          "inverse-primary": "#c5c0ff",
+          "secondary": "#4f6600",
+          "ink-3": "#626280",
+          "on-tertiary-fixed-variant": "#743400",
+          "primary-container": "#5a4bdb",
+          "surface-container-low": "#f3f3f7",
+          "tertiary-fixed-dim": "#ffb68b",
+          "lime-ink": "#4D7A0A",
+          "surface-sunken": "#EFEFF6",
+          "danger-bg": "#FFE4E6",
+          "canvas": "#F6F6FA",
+          "primary-fixed": "#e4dfff",
+          "on-error": "#ffffff",
+          "warning-text": "#8A4B00",
+          "info-text": "#1D55B8",
+          "on-error-container": "#93000a",
+          "on-tertiary-container": "#ffd7c1",
+          "line-strong": "#8B8BA6",
+          "surface-variant": "#e2e2e6",
+          "surface-container-highest": "#e2e2e6",
+          "secondary-fixed-dim": "#acd530",
+          "on-primary-fixed-variant": "#3d28be",
+          "ink-2": "#4B4B66",
+          "on-primary-container": "#e0dbff",
+          "secondary-fixed": "#c7f24c",
+          "on-secondary-container": "#536b00",
+          "surface-bright": "#f9f9fd",
+          "outline-variant": "#c8c4d7",
+          "on-primary-fixed": "#140067",
+          "warning-bg": "#FFF1D6",
+          "iris-hover": "#4A3CC4",
+          "error-container": "#ffdad6",
+          "on-background": "#1a1c1f",
+          "inverse-surface": "#2e3034",
+          "line": "#E4E4EE",
+          "danger-text": "#B4232F",
+          "surface-dim": "#d9dade",
+          "tertiary": "#7a3700",
+          "surface-container-lowest": "#ffffff",
+          "on-tertiary": "#ffffff",
+          "on-surface": "#1a1c1f",
+          "iris": "#5A4BDB",
+          "success-bg": "#DDF7E8",
+          "lime": "#C5F04A",
+          "on-secondary-fixed-variant": "#3b4d00",
+          "on-secondary-fixed": "#161f00",
+          "on-secondary": "#ffffff",
+          "primary-fixed-dim": "#c5c0ff",
+          "background": "#f9f9fd",
+          "surface": "#FFFFFF",
+          "primary": "#412ec2",
+          "outline": "#787586",
+          "surface-container-high": "#e8e8ec",
+          "destructive": "#C42836",
+          "ink": "#16162A",
+          "error": "#ba1a1a",
+          "secondary-container": "#c4ef49",
+          "tertiary-container": "#9f4a00",
+          "surface-raised": "#FFFFFF",
+          "on-primary": "#ffffff",
+          "surface-tint": "#5646d7",
+          "on-tertiary-fixed": "#321300",
+          "inverse-on-surface": "#f0f0f4",
+          "tertiary-fixed": "#ffdbc8",
+          "on-surface-variant": "#474554",
+          "on-iris": "#FFFFFF",
+          "info-bg": "#DFEBFF",
+          "success-text": "#0F6B3E",
+          "iris-tint": "#EEECFD"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-sm": "0.5rem",
+          "space-xl": "2rem",
+          "margin": "2rem",
+          "space-2xl": "3rem",
+          "space-lg": "1.5rem",
+          "space-md": "1rem",
+          "space-xs": "0.25rem",
+          "space-3xl": "4rem",
+          "gutter": "1.5rem"
+        },
+        "fontFamily": {
+          "overline": ["Inter"],
+          "body-sm": ["Inter"],
+          "label": ["Inter"],
+          "body": ["Inter"],
+          "display": ["Plus Jakarta Sans"],
+          "h3": ["Plus Jakarta Sans"],
+          "h1": ["Plus Jakarta Sans"],
+          "stat": ["Plus Jakarta Sans"],
+          "h2": ["Plus Jakarta Sans"]
+        },
+        "fontSize": {
+          "overline": ["12px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600"}],
+          "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+          "label": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+          "body": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+          "h3": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+          "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+          "stat": ["30px", {"lineHeight": "36px", "fontWeight": "700"}],
+          "h2": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}]
+        }
+      }
+    }
+  }</script></head><body class="bg-canvas font-body text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col flex-1 min-h-0"><div class="px-6 py-5 flex items-center justify-between"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl bg-iris flex items-center justify-center text-on-iris font-display font-h2">K</div><div class="flex flex-col"><span class="font-h3 text-h3 leading-none text-on-surface">Kxmeleon</span><span class="font-overline text-overline uppercase tracking-wider text-ink-3 mt-1">Adeyemi Holdings Ltd</span></div></div></div><nav class="flex-1 px-3 overflow-y-auto space-y-1" data-active-classes="bg-tertiary-container text-on-tertiary font-h3"><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">home</span><span>Home</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="hr-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>HR & People</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span>Leave</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span>Attendance</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Expenses</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span>Payroll</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span>Finance</span></a><div class="pt-1"><a class="flex items-center justify-between px-3 py-2 rounded-lg bg-warning-bg text-warning-text font-h3 text-h3" data-path="inventory" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-tertiary">inventory_2</span><span>Inventory</span></div><span class="material-symbols-outlined text-[18px] text-tertiary">expand_more</span></a><div class="ml-4 pl-3 mt-1 space-y-1"><a class="block px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="inventory-overview" href="#">Overview</a><a class="block px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="inventory-items" href="#">Items</a><a class="block px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="inventory-movements" href="#">Stock movements</a><a aria-current="page" class="block px-3 py-1.5 rounded-lg bg-tertiary-container text-on-tertiary font-h3" data-path="inventory-adjustments" href="#">Adjustments</a><a class="block px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="inventory-stock-counts" href="#">Stock counts</a><a class="block px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="inventory-warehouses" href="#">Warehouses</a><a class="block px-3 py-1.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="inventory-settings" href="#">Settings</a></div></div><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">dataset</span><span>Projects</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span>Administration</span></a></nav></div><div class="p-3 bg-surface-container space-y-1"><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="help-docs" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span>Help & docs</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label text-label" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Settings</span></a><div class="mt-2 pt-2 px-3 py-2 rounded-xl bg-surface flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-3 min-w-0"><div class="w-9 h-9 rounded-full bg-tertiary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-tertiary text-[18px]">person</span></div><div class="flex flex-col min-w-0"><span class="font-label text-label truncate text-on-surface">Fatima Bello</span><span class="font-overline text-overline truncate text-ink-3">Inventory & Finance Admin</span></div></div><button aria-label="User menu" class="w-7 h-7 flex items-center justify-center rounded-lg text-ink-3 hover:bg-surface-container-high hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_vert</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-8"><div class="flex items-center gap-2 font-label text-label text-ink-3"><a class="hover:text-tertiary transition-colors" data-path="inventory" href="#">Inventory</a><span class="material-symbols-outlined text-[16px]">chevron_right</span><a class="hover:text-tertiary transition-colors" data-path="inventory-adjustments" href="#">Adjustments</a><span class="material-symbols-outlined text-[16px]">chevron_right</span><span class="text-tertiary font-h3 text-h3">ADJ-2026-00018</span></div><div class="flex items-center gap-4"><div class="relative flex items-center"><div class="flex items-center w-72 h-10 px-3 rounded-xl bg-surface-sunken text-ink-3 hover:bg-surface-container transition-colors cursor-pointer"><span class="material-symbols-outlined text-[18px] mr-2">search</span><span class="font-body-sm text-body-sm flex-1 text-ink-3">Search anything...</span><kbd class="px-2 py-0.5 rounded bg-surface text-ink-2 font-overline text-overline shadow-[0_1px_2px_rgb(22_22_42_/_0.04)]">Ctrl K</kbd></div></div><a class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-warning-bg text-warning-text font-label text-label hover:bg-tertiary-fixed hover:text-on-tertiary-fixed transition-colors" data-path="approvals" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span>4 Approvals</span></a><button aria-label="Notifications" class="w-10 h-10 rounded-xl flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Toggle theme" class="w-10 h-10 rounded-xl flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-canvas"><div class="flex flex-col w-full pb-16">
+<!-- Top Command & Header Ribbon -->
+<div class="px-8 pt-6 pb-6 bg-surface shadow-sm">
+<div class="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-3">
+<h1 class="font-display font-h1 text-h1 text-ink tracking-tight">Draft adjustment</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-label text-overline font-semibold uppercase tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-3"></span>
+            Draft
+          </span>
+<span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded bg-surface-container text-ink-3 font-mono text-overline">
+            SOX / SoD Enforced
+          </span>
+</div>
+<p class="font-body text-body-sm text-ink-3 mt-1 max-w-3xl">
+          Record positive or negative inventory quantity adjustments, scrap write-offs, and batch reconciliation into the general ledger.
+        </p>
+</div>
+<!-- Header CTAs -->
+<div class="flex items-center gap-2.5 shrink-0">
+<button class="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-xl text-destructive hover:bg-danger-bg font-label text-label transition-colors" title="Discard draft adjustment" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+<span>Delete</span>
+</button>
+<button class="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-xl bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">save</span>
+<span>Save draft</span>
+</button>
+<button class="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label shadow-sm transition-all shadow-iris/20 active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Submit for approval</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Canvas Space -->
+<div class="max-w-[1440px] mx-auto w-full px-8 pt-6 space-y-6">
+<!-- Document Mode Switcher & Material Request Issue Variant Banner -->
+<div class="flex flex-col space-y-3">
+<div class="flex items-center justify-between flex-wrap gap-3">
+<!-- Switcher Segmented Control -->
+<div class="inline-flex p-1 rounded-xl bg-surface-container-high shadow-inner">
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface text-ink font-label text-label shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">tune</span>
+<span>Stock Adjustment (Variance / Audit)</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg text-ink-3 hover:text-ink font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">outbox</span>
+<span>Stock Issue (Material Request Linked)</span>
+</button>
+</div>
+<div class="flex items-center gap-2 text-ink-3 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px] text-warning-text">verified_user</span>
+<span>Two-tier segregation of duties requirement is <strong>Active</strong></span>
+</div>
+</div>
+<!-- Variant Demonstration Drawer/Callout Card -->
+<div class="rounded-xl bg-surface-sunken p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-8 h-8 rounded-lg bg-warning-bg flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-warning-text text-[20px]">assignment_turned_in</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-h3 text-h3 text-ink">Variant Context: Stock Issue vs General Adjustment</span>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline uppercase tracking-wider">Configuration rules</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5 leading-relaxed">
+              When switched to <strong>Stock Issue</strong> mode: requires department Cost Centre (e.g. <span class="font-mono text-ink">CC-310 Logistics & Fleet</span>), Expense GL Account (e.g. <span class="font-mono text-ink">6210 Fleet Maintenance</span> / <span class="font-mono text-ink">6300 Office Supplies</span>), and mandatory voucher link to approved Material Request <span class="font-mono font-medium text-ink bg-surface px-1.5 py-0.5 rounded">MR-00008</span> (Approved by <em>Segun Afolabi</em>). Automatically routes contra debit against departmental OPEX budgets.
+            </p>
+</div>
+</div>
+<button class="shrink-0 text-primary hover:text-iris-hover font-label text-body-sm flex items-center gap-1" type="button">
+<span>View routing rules</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Header Information Card -->
+<div class="rounded-xl bg-surface p-6 shadow-sm">
+<div class="flex items-center justify-between pb-4 mb-5 bg-surface-sunken/40 -mx-6 -mt-6 px-6 pt-5 rounded-t-xl">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-ink-2">article</span>
+<span class="font-h2 text-h2 text-ink">Document metadata</span>
+</div>
+<div class="flex items-center gap-2 font-mono text-overline text-ink-3">
+<span>AUDIT LOG TRACKED</span>
+<span>•</span>
+<span>TIMESTAMP: 2026-11-19 14:02:18 UTC+1</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5">
+<!-- Document No. (Col 3) -->
+<div class="lg:col-span-3 flex flex-col gap-1.5">
+<label class="font-label text-label text-ink-2 flex items-center justify-between">
+<span>Adjustment Voucher #</span>
+<span class="font-overline text-overline uppercase text-ink-3">Immutable</span>
+</label>
+<div class="flex items-center h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-mono font-semibold text-body tracking-wide select-all">
+<span class="material-symbols-outlined text-[18px] text-ink-3 mr-2">tag</span>
+            ADJ-2026-00018
+          </div>
+</div>
+<!-- Adjustment Date (Col 3) -->
+<div class="lg:col-span-3 flex flex-col gap-1.5">
+<label class="font-label text-label text-ink-2" for="adj-date">Adjustment Date</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">calendar_today</span>
+<input class="w-full h-11 pl-9 pr-3 rounded-xl bg-surface-sunken text-ink font-body text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/30 focus:bg-surface transition-all" id="adj-date" type="text" value="19 Nov 2026"/>
+</div>
+</div>
+<!-- Warehouse (Col 3) -->
+<div class="lg:col-span-3 flex flex-col gap-1.5">
+<label class="font-label text-label text-ink-2" for="warehouse-select">Warehouse / Depot</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">warehouse</span>
+<select class="w-full h-11 pl-9 pr-8 rounded-xl bg-surface-sunken text-ink font-body text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-iris/30 focus:bg-surface transition-all" id="warehouse-select">
+<option selected="">Lagos Main Store (Depot A)</option>
+<option>Abuja Regional Fulfillment Center</option>
+<option>Port Harcourt Distribution Hub</option>
+<option>Ibadan Quarantine Depot</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Contra Account (Col 3) -->
+<div class="lg:col-span-3 flex flex-col gap-1.5">
+<label class="font-label text-label text-ink-2" for="contra-select">Contra / Adjustment Account</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">account_tree</span>
+<select class="w-full h-11 pl-9 pr-8 rounded-xl bg-surface-sunken text-ink font-body text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-iris/30 focus:bg-surface transition-all" id="contra-select">
+<option selected="">5200 · Stock adjustments & variances</option>
+<option>5210 · Warehouse inventory write-downs</option>
+<option>5220 · Expired / Spoilage material cost</option>
+<option>6230 · Internal R&D sampling</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Adjustment Reason (Col 4) -->
+<div class="lg:col-span-4 flex flex-col gap-1.5">
+<label class="font-label text-label text-ink-2" for="reason-select">Primary Reason</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[18px] text-ink-3 pointer-events-none">rule</span>
+<select class="w-full h-11 pl-9 pr-8 rounded-xl bg-surface-sunken text-ink font-body text-body-sm appearance-none focus:outline-none focus:ring-2 focus:ring-iris/30 focus:bg-surface transition-all" id="reason-select">
+<option selected="">Cycle count variance</option>
+<option>Damaged stock / Spoilage write-off</option>
+<option>Physical audit reconciliation</option>
+<option>Quality control failure reclassification</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 text-[18px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Reason Note (Col 5) -->
+<div class="lg:col-span-5 flex flex-col gap-1.5">
+<label class="font-label text-label text-ink-2" for="reason-note">Variance Memo / Investigation Notes</label>
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-body text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/30 focus:bg-surface transition-all" id="reason-note" type="text" value="Reconciliation following Q4 warehouse cycle count discrepancy."/>
+</div>
+<!-- Approver Routing SoD preview info (Col 3) -->
+<div class="lg:col-span-3 flex flex-col justify-center rounded-xl bg-surface-container-low p-3">
+<div class="flex items-center gap-1.5 text-warning-text font-label text-overline font-semibold uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>Approval Policy #INV-POL-04</span>
+</div>
+<p class="font-body-sm text-overline leading-tight text-ink-2">
+            Requires two-tier sign-off from Head of Operations & Finance Controller for adjustments > ₦50,000.00.
+          </p>
+</div>
+</div>
+</div>
+<!-- Adjustment Lines Editor Table Section -->
+<div class="rounded-xl bg-surface shadow-sm overflow-hidden flex flex-col">
+<!-- Section Toolbar -->
+<div class="px-6 py-4 flex items-center justify-between flex-wrap gap-4 bg-surface">
+<div class="flex items-center gap-3">
+<h2 class="font-display font-h2 text-h2 text-ink">Adjustment lines</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-mono text-overline">3 items listed</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[16px] text-ink-3 pointer-events-none">filter_alt</span>
+<input class="h-9 pl-8 pr-3 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm w-44 focus:w-60 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-iris/20 transition-all" placeholder="Filter lines..." type="text"/>
+</div>
+<button class="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg bg-iris text-on-iris hover:bg-iris-hover font-label text-body-sm transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add item line</span>
+</button>
+</div>
+</div>
+<!-- High-Density Lines Table -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-4 w-12 text-center" scope="col">#</th>
+<th class="py-3 px-4 min-w-[280px]" scope="col">Item / Description & Tracking</th>
+<th class="py-3 px-3 min-w-[120px]" scope="col">Bin Location</th>
+<th class="py-3 px-4 min-w-[260px]" scope="col">Tracking Details (Lot / Serial)</th>
+<th class="py-3 px-4 min-w-[130px] text-right" scope="col">Adjustment Qty</th>
+<th class="py-3 px-4 min-w-[130px] text-right" scope="col">Unit Cost (₦)</th>
+<th class="py-3 px-4 min-w-[150px] text-right" scope="col">Line Total (₦)</th>
+<th class="py-3 px-4 w-14 text-center" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body text-body-sm text-on-surface">
+<!-- Line 1: Positive Lot-Tracked -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-3.5 px-4 font-mono text-ink-3 text-overline text-center">01</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-mono text-overline text-ink-3">ITM-00041</span>
+<span class="inline-flex items-center px-2 py-0.2 rounded-md bg-info-bg text-info-text font-label text-overline font-semibold">
+                      Lot-tracked
+                    </span>
+</div>
+<span class="font-label text-body-sm font-semibold text-ink truncate mt-0.5">Paracetamol 500mg (Carton / 100 blisters)</span>
+<span class="font-body-sm text-overline text-ink-3">SKU: PHARM-PCM-500 · Category: Analgesics</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 font-mono text-overline px-2 py-1 rounded bg-surface-sunken text-ink">
+<span class="material-symbols-outlined text-[14px] text-ink-3">location_on</span>
+                  A1-Rack-04
+                </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-mono text-overline font-medium text-ink bg-surface-sunken px-2 py-0.5 rounded">
+                      LOT-2026-PARA-08
+                    </span>
+</div>
+<div class="flex items-center gap-1 text-ink-3 font-overline text-overline">
+<span class="material-symbols-outlined text-[13px]">event</span>
+<span>Exp: 18 Jan 2027</span>
+<span class="text-success-text font-medium ml-1">(Valid)</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center justify-end gap-1 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-mono font-semibold text-body-sm tabular-nums">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>30 CTN</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-mono tabular-nums text-ink">
+                ₦4,000.00
+              </td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-mono font-semibold tabular-nums text-success-text text-body-sm">
+                  +₦120,000.00
+                </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-destructive hover:bg-danger-bg transition-colors" title="Delete row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete_outline</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Line 2: Negative Lot-Tracked (Scrap/Damage) -->
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-3.5 px-4 font-mono text-ink-3 text-overline text-center">02</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-mono text-overline text-ink-3">ITM-00041</span>
+<span class="inline-flex items-center px-2 py-0.2 rounded-md bg-info-bg text-info-text font-label text-overline font-semibold">
+                      Lot-tracked
+                    </span>
+<span class="inline-flex items-center px-1.5 py-0.2 rounded bg-danger-bg text-danger-text font-label text-overline">
+                      Damaged Write-off
+                    </span>
+</div>
+<span class="font-label text-body-sm font-semibold text-ink truncate mt-0.5">Paracetamol 500mg (Carton / 100 blisters)</span>
+<span class="font-body-sm text-overline text-ink-3">Note: Crushed cartons sustained during warehouse forklift transit</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 font-mono text-overline px-2 py-1 rounded bg-surface-sunken text-ink">
+<span class="material-symbols-outlined text-[14px] text-ink-3">ac_unit</span>
+                  Cold-Room C-01
+                </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-mono text-overline font-medium text-ink bg-surface-sunken px-2 py-0.5 rounded">
+                      LOT-2026-PARA-14
+                    </span>
+</div>
+<div class="flex items-center gap-1 text-ink-3 font-overline text-overline">
+<span class="material-symbols-outlined text-[13px]">event</span>
+<span>Exp: 22 Nov 2027</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center justify-end gap-1 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-mono font-semibold text-body-sm tabular-nums">
+<span class="material-symbols-outlined text-[16px]">remove</span>
+<span>4 CTN</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-mono tabular-nums text-ink">
+<div class="flex flex-col items-end">
+<span>₦4,000.00</span>
+<span class="text-[11px] text-ink-3 font-body-sm">(Weighted Avg)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-mono font-semibold tabular-nums text-danger-text text-body-sm">
+                  (₦16,000.00)
+                </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-destructive hover:bg-danger-bg transition-colors" title="Delete row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete_outline</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Line 3: Serial-Tracked Active Interactive Draft Entry -->
+<tr class="bg-surface-sunken/30 hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4 font-mono text-ink-3 text-overline text-center">03</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-mono text-overline text-ink-3">ITM-00028</span>
+<span class="inline-flex items-center px-2 py-0.2 rounded-md bg-warning-bg text-warning-text font-label text-overline font-semibold">
+                      Serial-tracked
+                    </span>
+<span class="inline-flex items-center px-1.5 py-0.2 rounded bg-surface-container text-ink-3 font-mono text-overline">Draft Entry</span>
+</div>
+<span class="font-label text-body-sm font-semibold text-ink truncate mt-0.5">HP LaserJet Pro Toner Cartridge W1106A</span>
+<span class="font-body-sm text-overline text-ink-3">Asset category: Office & Printing Equipment</span>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<div class="relative">
+<input class="w-28 h-8 px-2 rounded-lg bg-surface text-ink font-mono text-overline focus:outline-none focus:ring-1 focus:ring-iris" type="text" value="B2-Cabinet-01"/>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1.5 max-w-sm">
+<div class="flex flex-wrap gap-1">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface text-ink font-mono text-overline shadow-sm">
+                      SN-HP-99214-X
+                      <button class="text-ink-3 hover:text-destructive" type="button"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface text-ink font-mono text-overline shadow-sm">
+                      SN-HP-99215-Y
+                      <button class="text-ink-3 hover:text-destructive" type="button"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</span>
+</div>
+<div class="flex items-center gap-1">
+<input class="h-7 px-2 rounded bg-surface text-ink font-mono text-overline w-full focus:outline-none focus:ring-1 focus:ring-iris placeholder:text-ink-3" placeholder="Type serial & hit Enter..." type="text"/>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1.5">
+<input class="w-16 h-8 text-right px-2 rounded-lg bg-surface text-ink font-mono font-semibold text-body-sm focus:outline-none focus:ring-1 focus:ring-iris tabular-nums" max="100" min="-100" type="number" value="0"/>
+<span class="text-overline font-mono text-ink-3">PCS</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end">
+<span class="text-ink-3 font-mono mr-1 text-overline">₦</span>
+<input class="w-24 h-8 text-right px-2 rounded-lg bg-surface text-ink font-mono text-body-sm focus:outline-none focus:ring-1 focus:ring-iris tabular-nums" type="text" value="42,000.00"/>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-mono tabular-nums text-ink-3 font-medium">
+                ₦0.00
+              </td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-3 hover:text-destructive hover:bg-danger-bg transition-colors" title="Delete row" type="button">
+<span class="material-symbols-outlined text-[18px]">delete_outline</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Quick Add Drawer / Shortcut Action Area -->
+<div class="px-6 py-3.5 bg-surface-sunken/50 flex items-center justify-between flex-wrap gap-3">
+<button class="inline-flex items-center gap-2 font-label text-body-sm text-primary hover:text-iris-hover" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ Add new adjustment line</span>
+</button>
+<div class="flex items-center gap-4 text-ink-3 font-body-sm text-overline">
+<span class="flex items-center gap-1">
+<kbd class="px-1.5 py-0.5 rounded bg-surface shadow-xs text-ink font-mono">Shift</kbd> + <kbd class="px-1.5 py-0.5 rounded bg-surface shadow-xs text-ink font-mono">A</kbd> Quick add
+          </span>
+<span class="flex items-center gap-1">
+<kbd class="px-1.5 py-0.5 rounded bg-surface shadow-xs text-ink font-mono">Tab</kbd> Move cell
+          </span>
+</div>
+</div>
+</div>
+<!-- Footer Summary & Ledger Impact Bento -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Metrics & Net Impact (7 cols) -->
+<div class="lg:col-span-7 rounded-xl bg-surface p-6 shadow-sm flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">analytics</span>
+<span class="font-h2 text-h2 text-ink">Inventory financial impact</span>
+</div>
+<span class="font-overline text-overline uppercase text-ink-3">Valuation: Weighted Average (FIFO Linked)</span>
+</div>
+<!-- 3 Metric Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<!-- Metric 1: Increase -->
+<div class="rounded-xl bg-success-bg/40 p-4 flex flex-col justify-between min-h-[100px]">
+<div class="flex items-center justify-between">
+<span class="font-label text-overline uppercase font-semibold text-success-text">Total Inbound (+Add)</span>
+<span class="material-symbols-outlined text-success-text text-[18px]">arrow_upward</span>
+</div>
+<div class="mt-2">
+<div class="font-display font-h1 text-h1 text-success-text tabular-nums">₦120,000.00</div>
+<span class="font-mono text-overline text-ink-2">+30 units added</span>
+</div>
+</div>
+<!-- Metric 2: Decrease -->
+<div class="rounded-xl bg-danger-bg/40 p-4 flex flex-col justify-between min-h-[100px]">
+<div class="flex items-center justify-between">
+<span class="font-label text-overline uppercase font-semibold text-danger-text">Total Outbound (−Scrap)</span>
+<span class="material-symbols-outlined text-danger-text text-[18px]">arrow_downward</span>
+</div>
+<div class="mt-2">
+<div class="font-display font-h1 text-h1 text-danger-text tabular-nums">(₦16,000.00)</div>
+<span class="font-mono text-overline text-ink-2">−4 units written off</span>
+</div>
+</div>
+<!-- Metric 3: Net Impact -->
+<div class="rounded-xl bg-surface-container-high p-4 flex flex-col justify-between min-h-[100px]">
+<div class="flex items-center justify-between">
+<span class="font-label text-overline uppercase font-semibold text-ink">Net Value Impact</span>
+<span class="material-symbols-outlined text-primary text-[18px]">account_balance_wallet</span>
+</div>
+<div class="mt-2">
+<div class="font-display font-h1 text-h1 text-ink tabular-nums">₦104,000.00</div>
+<span class="font-mono text-overline text-ink-3">Net asset appreciation</span>
+</div>
+</div>
+</div>
+<!-- Four-Eyes SoD & Audit Card -->
+<div class="flex items-start gap-3 rounded-xl bg-surface-sunken p-4">
+<span class="material-symbols-outlined text-[20px] text-ink-2 mt-0.5">verified_user</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink">Segregation of Duties (SoD) Audit Notice</span>
+<p class="font-body-sm text-body-sm text-ink-2 mt-0.5">
+              Prepared by <strong class="text-ink">Fatima Bello</strong> (Inventory Admin) · Pending Four-Eyes approval by <strong class="text-ink">Tunde Bakare</strong> (Finance Controller) before posting directly to General Ledger.
+            </p>
+</div>
+</div>
+</div>
+<!-- General Ledger Impact Simulator (5 cols) -->
+<div class="lg:col-span-5 rounded-xl bg-surface p-6 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-ink-2">receipt_long</span>
+<span class="font-h2 text-h2 text-ink">General ledger preview</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-sunken font-mono text-overline text-ink-3">POSTING SIMULATION</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+          The following double-entry transaction will execute automatically upon final controller approval:
+        </p>
+<!-- Journal Entry Voucher Visual -->
+<div class="rounded-xl bg-surface-sunken p-4 flex flex-col gap-3 font-mono text-body-sm">
+<!-- Debit Line -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface shadow-xs">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed text-overline font-bold">DR</span>
+<span class="font-semibold text-ink">1200 · Inventory Asset</span>
+</div>
+<span class="text-overline text-ink-3 mt-0.5 font-body">Sub-ledger: Pharmaceutical Stock</span>
+</div>
+<div class="font-semibold text-success-text tabular-nums shrink-0 ml-3">
+              +₦104,000.00
+            </div>
+</div>
+<!-- Credit Line -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface shadow-xs">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-ink-2 text-overline font-bold">CR</span>
+<span class="font-semibold text-ink">5200 · Variance Account</span>
+</div>
+<span class="text-overline text-ink-3 mt-0.5 font-body">Cost: Stock adjustments & variances</span>
+</div>
+<div class="font-semibold text-ink-2 tabular-nums shrink-0 ml-3">
+              -₦104,000.00
+            </div>
+</div>
+<!-- Balanced indicator -->
+<div class="flex items-center justify-between pt-2 px-1 text-overline text-ink-3">
+<span class="flex items-center gap-1 font-body text-body-sm text-success-text">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+              Voucher balances to ₦0.00
+            </span>
+<span class="font-mono">GL PERIOD: 2026-11</span>
+</div>
+</div>
+<!-- Sticky Status Footer within Card -->
+<div class="flex items-center justify-between pt-2">
+<span class="text-overline font-mono text-ink-3">CURRENCY: NGN (₦)</span>
+<button class="text-primary hover:text-iris-hover font-label text-body-sm flex items-center gap-1" type="button">
+<span>View COA mapping</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

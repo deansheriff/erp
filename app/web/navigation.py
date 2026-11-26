@@ -162,7 +162,21 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Tax settings", "/finance/tax", permission="finance.tax.read"),
         ),
     ),
-    NavModule("inventory", "Inventory", "package", "/inventory"),
+    NavModule(
+        "inventory",
+        "Inventory",
+        "package",
+        "/inventory/items",
+        (
+            NavSection("Items", "/inventory/items", permission="inventory.item.read"),
+            NavSection("Movements", "/inventory/movements", permission="inventory.item.read"),
+            NavSection("Counts", "/inventory/counts", permission="inventory.item.read"),
+            NavSection(
+                "Material requests", "/inventory/requests", permission="inventory.request.read"
+            ),
+            NavSection("Setup", "/inventory/setup", permission="inventory.item.read"),
+        ),
+    ),
     NavModule("procurement", "Procurement", "shopping-cart", "/procurement"),
     NavModule("projects", "Projects", "briefcase", "/projects"),
     NavModule("support", "Support", "headset", "/support"),

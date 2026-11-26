@@ -111,6 +111,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.relief.declare": SELF,
             "payroll.loan.read": SELF,
             "payroll.certificate.read": SELF,  # once December is paid
+            "inventory.request.create": SELF,
+            "inventory.request.read": SELF,
         },
     ),
     RoleTemplate(
@@ -126,6 +128,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "attendance.record.approve": Scope.TEAM,
             "expenses.claim.read": Scope.TEAM,
             "expenses.claim.approve": Scope.TEAM,
+            "inventory.request.read": Scope.TEAM,
+            "inventory.request.approve": Scope.TEAM,
         },
     ),
     RoleTemplate(
@@ -221,6 +225,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.bank.reconcile": ORG,
             "finance.asset.read": ORG,
             "finance.asset.manage": ORG,
+            "inventory.item.read": ORG,
         },
     ),
     RoleTemplate(
@@ -273,6 +278,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.asset.read": ORG,
             "finance.asset.manage": ORG,
             "finance.asset.approve": ORG,  # what someone else prepared
+            "inventory.item.read": ORG,
         },
     ),
     RoleTemplate(
@@ -287,7 +293,29 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "Pays out approved expense claims.",
         grants={"expenses.claim.read": ORG, "expenses.claim.reimburse": ORG},
     ),
-    RoleTemplate("inventory_clerk", "Inventory Clerk", "Receives, issues and counts stock."),
+    RoleTemplate(
+        "inventory_clerk",
+        "Inventory Clerk",
+        "Receives, issues and counts stock.",
+        grants={
+            "inventory.item.read": ORG,
+            "inventory.stock.move": ORG,
+            "inventory.request.read": ORG,
+        },
+    ),
+    RoleTemplate(
+        "inventory_manager",
+        "Inventory Manager",
+        "Keeps items and warehouses, and approves stock adjustments and counts.",
+        grants={
+            "inventory.item.read": ORG,
+            "inventory.item.manage": ORG,
+            "inventory.stock.move": ORG,
+            "inventory.stock.approve": ORG,  # what someone else recorded
+            "inventory.request.read": ORG,
+            "inventory.request.approve_any": ORG,
+        },
+    ),
     RoleTemplate(
         "procurement_officer", "Procurement Officer", "Requisitions, RFQs and purchase orders."
     ),

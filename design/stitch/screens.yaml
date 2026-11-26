@@ -1545,3 +1545,150 @@ screens:
       save: finance.asset.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.items
+    phase: 11
+    module: inventory
+    title: Inventory items (stock value, low stock, the item list)
+    route: GET /inventory/items
+    template: app/modules/inventory/templates/inventory/items.html
+    stitch_screens:
+      desktop: 53bf1e41d9be41bb8c1b2a5a3b05a37b
+    exports:
+      - design/stitch/exports/inventory.items.html
+    permission: inventory.item.read
+    actions:
+      add_item: inventory.item.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.item
+    phase: 11
+    module: inventory
+    title: One inventory item (stock by location, serials, stock ledger, details)
+    route: GET /inventory/items/{item_id}
+    template: app/modules/inventory/templates/inventory/item.html
+    stitch_screens:
+      desktop: 180b459bf97b47649962fbae445c2066
+    exports:
+      - design/stitch/exports/inventory.item.html
+    permission: inventory.item.read
+    actions:
+      save: inventory.item.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.setup
+    phase: 11
+    module: inventory
+    title: Inventory setup (warehouses and bins, item categories, units)
+    route: GET /inventory/setup
+    template: app/modules/inventory/templates/inventory/setup.html
+    stitch_screens:
+      desktop: d6cabcbaa8f34eabbb91fea6af4f33aa
+    exports:
+      - design/stitch/exports/inventory.setup.html
+    permission: inventory.item.read
+    actions:
+      save_warehouse: inventory.item.manage
+      add_bin: inventory.item.manage
+      save_category: inventory.item.manage
+      add_unit: inventory.item.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.movements
+    phase: 11
+    module: inventory
+    title: Stock movements and counts
+    route: GET /inventory/movements
+    template: app/modules/inventory/templates/inventory/movements.html
+    stitch_screens:
+      desktop: 622ebb7ae9ad48689b139be7b9e32a51
+    exports:
+      - design/stitch/exports/inventory.movements.html
+    permission: inventory.item.read
+    actions:
+      new_movement: inventory.stock.move
+      start_count: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.movement
+    phase: 11
+    module: inventory
+    title: One issue, transfer or adjustment
+    route: GET /inventory/movements/{document_id}
+    template: app/modules/inventory/templates/inventory/movement.html
+    stitch_screens:
+      desktop: c83bb6d9c54d4b0c8fe390fdbd93255f
+    exports:
+      - design/stitch/exports/inventory.movement.html
+    permission: inventory.item.read
+    actions:
+      save: inventory.stock.move
+      post_issue_or_transfer: inventory.stock.move
+      submit_adjustment: inventory.stock.move
+      post_adjustment: inventory.stock.approve
+      send_back: inventory.stock.approve
+      delete: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.count
+    phase: 11
+    module: inventory
+    title: A stock count sheet
+    route: GET /inventory/counts/{count_id}
+    template: app/modules/inventory/templates/inventory/count.html
+    stitch_screens:
+      desktop: 264469e43b1d40aca7a240147324ee2d
+    exports:
+      - design/stitch/exports/inventory.count.html
+    permission: inventory.item.read
+    actions:
+      save_counts: inventory.stock.move
+      add_line: inventory.stock.move
+      submit: inventory.stock.move
+      post: inventory.stock.approve
+      send_back: inventory.stock.approve
+      delete: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.requests
+    phase: 11
+    module: inventory
+    title: Material requests
+    route: GET /inventory/requests
+    template: app/modules/inventory/templates/inventory/requests.html
+    stitch_screens:
+      desktop: 577916a255cd4b1184d81c26c6ce0eff
+    exports:
+      - design/stitch/exports/inventory.requests.html
+    permission: inventory.request.read
+    actions:
+      new_request: inventory.request.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.request
+    phase: 11
+    module: inventory
+    title: One material request (draft, decision, issue)
+    route: GET /inventory/requests/{request_id}
+    template: app/modules/inventory/templates/inventory/request.html
+    stitch_screens:
+      desktop: 724fbb988bef4cdf9346a5cd80bfb4e3
+    exports:
+      - design/stitch/exports/inventory.request.html
+    permission: inventory.request.read
+    actions:
+      save: inventory.request.create
+      submit: inventory.request.create
+      cancel: inventory.request.create
+      approve: inventory.request.approve
+      reject: inventory.request.approve
+      issue: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
