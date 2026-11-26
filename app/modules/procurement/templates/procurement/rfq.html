@@ -1,0 +1,129 @@
+{# Procurement → one RFQ (ADR 0030): the invited suppliers and their quotes, the comparison
+   line by line, the award (with a reason when it isn't the lowest), and the draft purchase
+   order. Design: design/stitch/exports/procurement.rfq.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set r = view.row %}
+{% set req = view.requisition %}
+{% set v = values %}
+{% call ui.page_header(r.number, "For " ~ req.number ~ (" · reply by " ~ (r.respond_by | date) if r.respond_by else ""), tones[r.status], labels[r.status]) %}
+  <a href="/procurement/rfqs/{{ r.id }}/pdf" target="_blank" rel="noopener" class="kx-btn-ghost">{{ ui.icon("file-down", "sm") }} PDF</a>
+  {% if view.can_manage and view.is_open %}
+  <form method="post" action="/procurement/rfqs/{{ r.id }}/cancel">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">Cancel RFQ</button></form>
+  <form method="post" action="/procurement/rfqs/{{ r.id }}/send">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary">{{ ui.icon("mail", "sm") }} Email suppliers</button></form>
+  {% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if view.is_open and view.quotes | length < view.needed %}
+<div class="mt-5">{{ ui.alert("info", ("This requisition is over " ~ (view.threshold | money) ~ ", so it needs at least " ~ view.needed ~ " quotes before an award.") if view.needed > 1 else "One quote is enough for this requisition.") }}</div>
+{% endif %}
+
+<dl class="kx-card mt-6 grid gap-4 p-5 text-body-sm sm:grid-cols-2 lg:grid-cols-4">
+  <div><dt class="text-xs text-ink-3">Requisition</dt><dd><a href="/procurement/requisitions/{{ req.id }}" class="font-mono text-xs font-semibold text-iris">{{ req.number }}</a></dd></div>
+  <div class="sm:col-span-2"><dt class="text-xs text-ink-3">Purpose</dt><dd>{{ req.purpose }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Estimated total</dt><dd class="tnum">{{ req.estimated_total | money }}</dd></div>
+  {% if r.note %}<div class="sm:col-span-2 lg:col-span-4"><dt class="text-xs text-ink-3">Note to suppliers</dt><dd>{{ r.note }}</dd></div>{% endif %}
+</dl>
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="suppliers-title">
+  <h2 id="suppliers-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Suppliers</h2>
+  <ul class="divide-y divide-line text-body-sm">
+    {% for s in view.suppliers %}
+    <li class="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+      <div class="min-w-0"><p class="font-semibold">{{ s.name }}</p><p class="text-xs text-ink-3">{% if s.emailed_at %}Emailed {{ s.emailed_at | datetime }}{% elif s.email %}Not emailed yet{% else %}No email address: send the PDF another way{% endif %}</p></div>
+      <div class="flex flex-wrap items-center gap-2">
+        {% if s.declined %}{{ ui.badge("neutral", "Declined") }}
+        {% elif s.quote %}{{ ui.badge("success" if s.quote.awarded else "info", "Awarded" if s.quote.awarded else "Quoted " ~ (s.quote.net | money)) }}{% if s.quote.file_id %}<a href="/files/{{ s.quote.file_id }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs text-iris">{{ ui.icon("paperclip", "sm") }} Their quote</a>{% endif %}
+        {% else %}{{ ui.badge("warning", "Waiting") }}{% endif %}
+        <a href="/procurement/rfqs/{{ r.id }}/pdf?supplier={{ s.supplier_id }}" target="_blank" rel="noopener" class="kx-btn-ghost text-xs">PDF</a>
+        {% if view.can_manage and view.is_open %}
+        <a href="/procurement/rfqs/{{ r.id }}/quotes/{{ s.supplier_id }}" class="kx-btn-secondary text-xs">{{ "Change quote" if s.quote else "Record quote" }}</a>
+        {% if s.quote %}
+        <form method="post" action="/procurement/quotes/{{ s.quote.id }}/document" enctype="multipart/form-data" x-data="autoSubmit">{{ ui.csrf_field() }}<label class="kx-btn-ghost cursor-pointer text-xs">{{ ui.icon("paperclip", "sm") }} Attach<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp" class="sr-only" x-on:change="send" aria-label="Attach {{ s.name }}'s quote"></label></form>
+        {% endif %}
+        {% if not s.declined %}<form method="post" action="/procurement/rfqs/{{ r.id }}/suppliers/{{ s.supplier_id }}/decline">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-xs">Declined</button></form>{% endif %}
+        {% if not s.quote %}<form method="post" action="/procurement/rfqs/{{ r.id }}/suppliers/{{ s.supplier_id }}/remove">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-xs text-danger-text" aria-label="Remove {{ s.name }}">{{ ui.icon("x", "sm") }}</button></form>{% endif %}
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% if view.can_manage and view.is_open and invitable %}
+  <form method="post" action="/procurement/rfqs/{{ r.id }}/invite" class="flex flex-wrap items-end gap-3 border-t border-line px-5 py-4">
+    {{ ui.csrf_field() }}
+    <div class="min-w-[260px]"><label class="kx-label" for="supplier_id">Invite another supplier</label><select id="supplier_id" name="supplier_id" class="kx-input">{% for sid, label in invitable %}<option value="{{ sid }}">{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errors, "supplier_id") }}</div>
+    <button type="submit" class="kx-btn-secondary">{{ ui.icon("plus", "sm") }} Invite</button>
+  </form>
+  {% endif %}
+</section>
+
+{% if view.quotes %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="compare-title">
+  <h2 id="compare-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Comparison</h2>
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[760px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Line</th>{% for q in view.quotes %}{% set s = view.suppliers | selectattr("supplier_id", "equalto", q.supplier_id) | first %}<th class="px-3 py-2.5 text-right font-semibold">{{ s.name }}{% if q.lowest %} <span class="block font-normal text-success-text">Lowest</span>{% endif %}</th>{% endfor %}</tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in view.lines %}
+        <tr><td class="px-5 py-2.5">{{ line.description }}<span class="block text-xs text-ink-3">{{ line.quantity | plain }} {{ view.units.get(line.id, "") }}</span></td>
+          {% for q in view.quotes %}{% set p = q.prices.get(line.id) %}<td class="px-3 py-2.5 text-right tnum {{ 'font-semibold text-success-text' if view.cheapest.get(line.id) == q.id }}">{% if p %}{{ p.unit_price | money }}<span class="block text-xs font-normal text-ink-3">{{ p.net | money }}</span>{% else %}—{% endif %}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken/60 text-xs">
+        <tr><th scope="row" class="px-5 py-2 text-left font-semibold">Net</th>{% for q in view.quotes %}<td class="px-3 py-2 text-right font-semibold tnum">{{ q.net | money }}</td>{% endfor %}</tr>
+        <tr><th scope="row" class="px-5 py-2 text-left font-normal text-ink-3">VAT</th>{% for q in view.quotes %}<td class="px-3 py-2 text-right tnum">{{ q.vat | money }}</td>{% endfor %}</tr>
+        <tr><th scope="row" class="px-5 py-2 text-left font-normal text-ink-3">Total</th>{% for q in view.quotes %}<td class="px-3 py-2 text-right tnum">{{ q.total | money }}</td>{% endfor %}</tr>
+        <tr><th scope="row" class="px-5 py-2 text-left font-normal text-ink-3">Delivery</th>{% for q in view.quotes %}<td class="px-3 py-2 text-right">{{ (q.delivery_days ~ " days") if q.delivery_days is not none else "—" }}</td>{% endfor %}</tr>
+        <tr><th scope="row" class="px-5 py-2 text-left font-normal text-ink-3">Valid until</th>{% for q in view.quotes %}<td class="px-3 py-2 text-right">{{ q.valid_until | date if q.valid_until else "—" }}</td>{% endfor %}</tr>
+      </tfoot>
+    </table>
+  </div>
+  {% if view.can_manage and view.is_open %}
+  <form method="post" action="/procurement/rfqs/{{ r.id }}/award" class="space-y-4 border-t border-line p-5" novalidate>
+    {{ ui.csrf_field() }}
+    <fieldset><legend class="kx-label">Award to</legend>
+      <div class="mt-1 flex flex-wrap gap-3">
+        {% for q in view.quotes %}{% set s = view.suppliers | selectattr("supplier_id", "equalto", q.supplier_id) | first %}
+        <label class="flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-body-sm"><input type="radio" name="quote_id" value="{{ q.id }}" {% if v.get("quote_id") == q.id|string %}checked{% endif %}> {{ s.name }} · <span class="tnum">{{ q.net | money }}</span></label>
+        {% endfor %}
+      </div>
+      {{ ui.field_error(errors, "quote_id") }}
+    </fieldset>
+    <div><label class="kx-label" for="reason">Why not the lowest quote?</label><textarea id="reason" name="reason" rows="2" class="kx-input" placeholder="Needed only when it isn't the lowest net total">{{ v.get("reason", "") }}</textarea>{{ ui.field_error(errors, "reason") }}</div>
+    <div class="flex justify-end"><button type="submit" class="kx-btn-primary">{{ ui.icon("award", "sm") }} Award</button></div>
+  </form>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if view.awarded %}
+{% set s = view.suppliers | selectattr("supplier_id", "equalto", view.awarded.supplier_id) | first %}
+<section class="kx-card mt-6 p-5" aria-labelledby="award-title">
+  <h2 id="award-title" class="font-h3 text-h3">Awarded to {{ s.name }} · <span class="tnum">{{ view.awarded.net | money }}</span></h2>
+  <p class="mt-1 text-body-sm text-ink-3">By {{ view.awarded_by }}{% if r.awarded_at %}, {{ r.awarded_at | datetime }}{% endif %}{% if r.award_reason %}: “{{ r.award_reason }}”{% endif %}</p>
+  {% if view.order %}
+  <p class="mt-4 text-body-sm">Purchase order <a href="/finance/purchase-orders/{{ view.order[0] }}" class="font-mono text-xs font-semibold text-iris">{{ view.order[1] }}</a> ({{ view.order[2] | replace("_", " ") }}).</p>
+  {% elif view.waiting_for %}
+  <div class="mt-4">{{ ui.alert("warning", "The quoted total needs approval from " ~ (view.waiting_for | join(", ")) ~ " before ordering.") }}</div>
+  {% elif view.can_manage %}
+  <form method="post" action="/procurement/rfqs/{{ r.id }}/order" class="mt-4 space-y-4" novalidate>
+    {{ ui.csrf_field() }}
+    {% set free = view.lines | rejectattr("item_id") | rejectattr("account_id") | list %}
+    {% if free %}
+    <p class="text-body-sm text-ink-3">Choose the account to charge for lines that don't have one.</p>
+    <div class="grid gap-3 sm:grid-cols-2">
+      {% for line in free %}
+      <div><label class="kx-label" for="acct-{{ line.id }}">{{ line.description }}</label><select id="acct-{{ line.id }}" name="account_{{ line.id }}" class="kx-input"><option value="">Choose an account</option>{% for a in accounts %}<option value="{{ a.id }}" {% if v.get("account_" ~ line.id) == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "account_" ~ line.id) }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="flex justify-end"><button type="submit" class="kx-btn-primary">{{ ui.icon("shopping-cart", "sm") }} Make purchase order</button></div>
+  </form>
+  {% endif %}
+</section>
+{% endif %}
+{% endblock %}

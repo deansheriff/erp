@@ -1,0 +1,10 @@
+Hello {{ supplier }},
+
+{{ organisation }} would like your quotation for the items below (request {{ number }}). Please quote unit prices excluding VAT, say which VAT applies, how many days delivery takes and how long your prices hold{% if respond_by %}, by {{ respond_by }}{% endif %}.
+
+{% for line in lines %}- {{ line.description }}: {{ line.quantity }}{% if line.unit %} {{ line.unit }}{% endif %}
+{% endfor %}
+{% if note %}
+{{ note }}
+{% endif %}
+The request is attached as a PDF. Reply to this email with your quotation, quoting {{ number }}.

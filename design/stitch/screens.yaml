@@ -1692,3 +1692,109 @@ screens:
       issue: inventory.stock.move
     field_classes: []
     approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.requisitions
+    phase: 11
+    module: procurement
+    title: Purchase requisitions
+    route: GET /procurement/requisitions
+    template: app/modules/procurement/templates/procurement/requisitions.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.requisition.read
+    actions:
+      new_requisition: procurement.requisition.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.requisition
+    phase: 11
+    module: procurement
+    title: One purchase requisition (draft, approvals, starting the RFQ)
+    route: GET /procurement/requisitions/{requisition_id}
+    template: app/modules/procurement/templates/procurement/requisition.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.requisition.read
+    actions:
+      save_draft: procurement.requisition.create
+      submit: procurement.requisition.create
+      approve: procurement.requisition.approve
+      start_rfq: procurement.rfq.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.rfqs
+    phase: 11
+    module: procurement
+    title: Requests for quotation
+    route: GET /procurement/rfqs
+    template: app/modules/procurement/templates/procurement/rfqs.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.rfq
+    phase: 11
+    module: procurement
+    title: One RFQ (suppliers, quote comparison, award and order)
+    route: GET /procurement/rfqs/{rfq_id}
+    template: app/modules/procurement/templates/procurement/rfq.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions:
+      invite: procurement.rfq.manage
+      send: procurement.rfq.manage
+      award: procurement.rfq.manage
+      make_order: procurement.rfq.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.quote
+    phase: 11
+    module: procurement
+    title: Record a supplier quote
+    route: GET /procurement/rfqs/{rfq_id}/quotes/{supplier_id}
+    template: app/modules/procurement/templates/procurement/quote.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.suppliers
+    phase: 11
+    module: procurement
+    title: Supplier performance
+    route: GET /procurement/suppliers
+    template: app/modules/procurement/templates/procurement/suppliers.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.supplier
+    phase: 11
+    module: procurement
+    title: One supplier's performance and ratings
+    route: GET /procurement/suppliers/{supplier_id}
+    template: app/modules/procurement/templates/procurement/supplier.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions:
+      rate: procurement.supplier.rate
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.settings
+    phase: 11
+    module: procurement
+    title: Procurement settings (approval tiers and quotes)
+    route: GET /procurement/settings
+    template: app/modules/procurement/templates/procurement/settings.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.settings.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)

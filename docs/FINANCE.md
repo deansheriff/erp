@@ -115,6 +115,8 @@ equipment 3 years, all straight line.
 - **Purchase orders** (`PO-`) are drafted by one person and approved by another. Goods
   received (`GRN-`) are recorded against an approved PO's lines, never more than is still
   to come. Lines that aren't stock post nothing until the bill.
+- **From procurement** (ADR 0030): awarding a supplier's quote on an approved requisition
+  makes a draft purchase order with the quote's prices, approved here as usual.
 - **Stock lines** (ADR 0029): a PO line can name a stock item and a warehouse; it's
   charged to the item's inventory account. Receiving it brings the stock in at the order
   price (with a bin, lot and expiry, or serial numbers, as the item needs) and posts debit

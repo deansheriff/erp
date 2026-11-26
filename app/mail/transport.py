@@ -22,11 +22,19 @@ class SmtpConfig:
 
 
 @dataclass(frozen=True, slots=True)
+class Attachment:
+    filename: str
+    content_type: str  # e.g. application/pdf
+    data: bytes
+
+
+@dataclass(frozen=True, slots=True)
 class Message:
     to: str
     subject: str
     text: str
     html: str
+    attachment: Attachment | None = None
 
 
 class SendFailed(Exception):
@@ -47,6 +55,14 @@ def _build(config: SmtpConfig, message: Message) -> EmailMessage:
         email["Reply-To"] = config.reply_to
     email.set_content(message.text)
     email.add_alternative(message.html, subtype="html")
+    if message.attachment is not None:
+        main, sub = message.attachment.content_type.split("/", 1)
+        email.add_attachment(
+            message.attachment.data,
+            maintype=main,
+            subtype=sub,
+            filename=message.attachment.filename,
+        )
     return email
 
 

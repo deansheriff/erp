@@ -177,7 +177,26 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Setup", "/inventory/setup", permission="inventory.item.read"),
         ),
     ),
-    NavModule("procurement", "Procurement", "shopping-cart", "/procurement"),
+    NavModule(
+        "procurement",
+        "Procurement",
+        "shopping-cart",
+        "/procurement/requisitions",
+        (
+            NavSection(
+                "Requisitions",
+                "/procurement/requisitions",
+                permission="procurement.requisition.read",
+            ),
+            NavSection("RFQs", "/procurement/rfqs", permission="procurement.rfq.read"),
+            NavSection(
+                "Supplier performance", "/procurement/suppliers", permission="procurement.rfq.read"
+            ),
+            NavSection(
+                "Settings", "/procurement/settings", permission="procurement.settings.manage"
+            ),
+        ),
+    ),
     NavModule("projects", "Projects", "briefcase", "/projects"),
     NavModule("support", "Support", "headset", "/support"),
     NavModule("fleet", "Fleet", "truck", "/fleet"),

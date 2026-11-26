@@ -1,0 +1,76 @@
+{# Procurement → one supplier's performance (ADR 0030): the measures, each order with its
+   delivery and price checks and rating, and their quotes.
+   Design: design/stitch/exports/procurement.supplier.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro pct(value) %}{% if value is none %}—{% else %}{{ value }}%{% endif %}{% endmacro %}
+
+{% block content %}
+{% set c = view.card %}
+{% set v = values %}
+{% call ui.page_header(view.supplier.name, "Last " ~ months ~ " months") %}
+  <a href="/finance/suppliers/{{ view.supplier.id }}" class="kx-btn-ghost">Supplier record</a>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">On-time delivery</p><p class="mt-1 font-h2 text-h2 tnum">{{ pct(c.on_time_pct) }}</p><p class="text-xs text-ink-3">{{ c.on_time }} of {{ c.deliveries }} deliveries</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Lines received in full</p><p class="mt-1 font-h2 text-h2 tnum">{{ pct(c.in_full_pct) }}</p><p class="text-xs text-ink-3">{% if c.returned_pct is not none %}{{ c.returned_pct }}% returned{% else %}Nothing received{% endif %}</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Bills within tolerance</p><p class="mt-1 font-h2 text-h2 tnum">{{ pct(c.tolerance_pct) }}</p><p class="text-xs text-ink-3">{{ c.in_tolerance }} of {{ c.bill_lines }} bill lines · quotes won {{ c.wins }} of {{ c.quotes }}</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Rating</p><p class="mt-1 flex items-center gap-1 font-h2 text-h2 tnum">{% if c.rating is not none %}{{ ui.icon("star", "", "text-warning-text") }} {{ c.rating }}{% else %}—{% endif %}</p><p class="text-xs text-ink-3">{{ c.ratings }} rating{{ "s" if c.ratings != 1 }}</p></div>
+</div>
+
+<section id="orders" class="kx-card mt-6 overflow-hidden" aria-labelledby="orders-title">
+  <h2 id="orders-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Orders</h2>
+  {% if view.orders %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[960px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Order</th><th class="px-3 py-2.5 text-left font-semibold">Expected</th><th class="px-3 py-2.5 text-left font-semibold">Delivery</th><th class="px-3 py-2.5 text-right font-semibold">Ordered</th><th class="px-3 py-2.5 text-right font-semibold">Received</th><th class="px-3 py-2.5 text-right font-semibold">Returned</th><th class="px-3 py-2.5 text-left font-semibold">Bill prices</th><th class="px-5 py-2.5 text-left font-semibold">Rating</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for o in view.orders %}
+        {% set f = o.facts %}
+        <tr class="align-top">
+          <td class="px-5 py-2.5"><a href="/finance/purchase-orders/{{ f.id }}" class="font-mono text-xs font-semibold text-iris">{{ f.number }}</a><span class="block text-xs text-ink-3">{{ f.order_date | date }} · {{ f.status | replace("_", " ") | capitalize }}</span></td>
+          <td class="px-3 py-2.5">{{ f.expected_date | date if f.expected_date else "—" }}</td>
+          <td class="px-3 py-2.5">{% if not f.receipts %}<span class="text-ink-3">Nothing yet</span>{% elif not f.expected_date %}{{ f.receipts[-1] | date }}{% elif f.late %}{{ ui.badge("warning", f.days_late ~ " day" ~ ("s" if f.days_late != 1 else "") ~ " late") }}{% else %}{{ ui.badge("success", "On time") }}{% endif %}</td>
+          <td class="px-3 py-2.5 text-right tnum">{{ f.ordered | plain }}</td>
+          <td class="px-3 py-2.5 text-right tnum">{{ f.received | plain }}</td>
+          <td class="px-3 py-2.5 text-right tnum">{{ f.returned | plain if f.returned else "—" }}</td>
+          <td class="px-3 py-2.5">{% if not f.bill_lines %}<span class="text-ink-3">Not billed</span>{% elif f.bill_lines_in_tolerance == f.bill_lines %}{{ ui.badge("success", "Matched") }}{% else %}{{ ui.badge("danger", (f.bill_lines - f.bill_lines_in_tolerance) ~ " over tolerance") }}{% endif %}</td>
+          <td class="px-5 py-2.5">
+            {% if o.rating %}<span class="inline-flex items-center gap-1">{% for n in range(o.rating.score) %}{{ ui.icon("star", "sm", "text-warning-text") }}{% endfor %}</span>{% if o.rating.comment %}<span class="block text-xs text-ink-3">“{{ o.rating.comment }}”</span>{% endif %}{% endif %}
+            {% if view.can_rate and o.rateable %}
+            <form method="post" action="/procurement/suppliers/{{ view.supplier.id }}/orders/{{ f.id }}/rate" class="mt-1 flex flex-wrap items-center gap-2" novalidate>
+              {{ ui.csrf_field() }}
+              <label class="sr-only" for="score-{{ f.id }}">Rating for {{ f.number }}</label><select id="score-{{ f.id }}" name="score" class="kx-input h-9 w-28 text-xs">{% for n in (5, 4, 3, 2, 1) %}<option value="{{ n }}" {% if (o.rating and o.rating.score == n) or (v.get("order") == f.id|string and v.get("score") == n|string) %}selected{% endif %}>{{ n }} star{{ "s" if n != 1 }}</option>{% endfor %}</select>
+              <label class="sr-only" for="comment-{{ f.id }}">Comment for {{ f.number }}</label><input id="comment-{{ f.id }}" name="comment" value="{{ o.rating.comment or '' if o.rating else '' }}" placeholder="Comment" class="kx-input h-9 w-40 text-xs">
+              <button type="submit" class="kx-btn-secondary text-xs">{{ "Update" if o.rating else "Rate" }}</button>
+              {{ ui.field_error(errors, "score_" ~ f.id) }}
+            </form>
+            {% elif not o.rating %}<span class="text-xs text-ink-3">Rated once received</span>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="px-5 py-6 text-body-sm text-ink-3">No approved orders in the period.</p>
+  {% endif %}
+</section>
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="quotes-title">
+  <h2 id="quotes-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Quotes</h2>
+  {% if view.quotes %}
+  <ul class="divide-y divide-line text-body-sm">
+    {% for q in view.quotes %}
+    <li class="flex items-center justify-between px-5 py-3"><span><a href="/procurement/rfqs/{{ q.rfq_id }}" class="font-mono text-xs font-semibold text-iris">{{ q.rfq }}</a> · {{ q.received_on | date }} · <span class="tnum">{{ q.net | money }}</span></span>{{ ui.badge("success" if q.result == "won" else ("neutral" if q.result == "lost" else "info"), q.result | capitalize) }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="px-5 py-6 text-body-sm text-ink-3">No quotes in the period.</p>
+  {% endif %}
+</section>
+{% endblock %}

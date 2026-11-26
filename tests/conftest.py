@@ -173,7 +173,8 @@ def clean_db(migrated_db: None) -> Iterator[None]:
                 "supplier_payments, bank_accounts, bank_rules, bank_transfers, asset_categories, "
                 "fixed_assets, asset_changes, depreciation_runs, inventory_units, warehouses, "
                 "item_categories, items, stock_moves, stock_documents, stock_counts, "
-                "material_requests, low_stock_alerts CASCADE"
+                "material_requests, low_stock_alerts, procurement_settings, procurement_tiers, "
+                "purchase_requisitions, rfqs, supplier_ratings CASCADE"
             )
         )
         _migration("0010_payroll.py").seed_defaults(conn)
@@ -184,6 +185,7 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         _migration("0016_finance_fixed_assets.py").seed_defaults(conn)
         _migration("0017_inventory.py").seed_defaults(conn)
         _migration("0018_stock_in_purchasing_and_sales.py").seed_defaults(conn)
+        _migration("0019_procurement.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

@@ -1,0 +1,47 @@
+{# Procurement → record a supplier's quote (ADR 0030): a unit price excluding VAT and the
+   VAT for every line, delivery days and validity.
+   Design: design/stitch/exports/procurement.quote.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set r = view.row %}
+{% set q = entry.quote %}
+{% set v = values %}
+{% call ui.page_header("Quote from " ~ entry.name, r.number ~ " · " ~ view.requisition.number) %}
+  <a href="/procurement/rfqs/{{ r.id }}" class="kx-btn-ghost">Back to {{ r.number }}</a>
+{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<form method="post" action="/procurement/rfqs/{{ r.id }}/quotes/{{ entry.supplier_id }}" class="kx-card mt-6 overflow-hidden" novalidate>
+  {{ ui.csrf_field() }}
+  <div class="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-4">
+    {{ ui.text_field("reference", "Supplier's quote reference", value=v.get("reference") or (q.reference or "" if q else ""), errors=errors) }}
+    {{ ui.text_field("received_on", "Received on", value=v.get("received_on") or (q.received_on.isoformat() if q else today.isoformat()), type="date", errors=errors) }}
+    {{ ui.text_field("valid_until", "Valid until", value=v.get("valid_until") or (q.valid_until.isoformat() if q and q.valid_until else ""), type="date", errors=errors) }}
+    {{ ui.text_field("delivery_days", "Delivery days", value=v.get("delivery_days") or (q.delivery_days if q and q.delivery_days is not none else ""), inputmode="numeric", errors=errors) }}
+    <div class="sm:col-span-2 lg:col-span-4">{{ ui.text_field("note", "Note", value=v.get("note") or (q.note or "" if q else ""), errors=errors) }}</div>
+  </div>
+  <div class="kx-scroll-x border-t border-line">
+    <table class="w-full min-w-[720px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Line</th><th class="w-24 px-3 py-2.5 text-right font-semibold">Qty</th><th class="w-44 px-3 py-2.5 text-right font-semibold">Unit price</th><th class="w-44 px-5 py-2.5 text-left font-semibold">VAT</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in view.lines %}
+        {% set p = q.prices.get(line.id) if q else none %}
+        {% set key = line.id | string %}
+        <tr class="align-top">
+          <td class="px-5 py-2.5">{{ line.description }}{% if line.item %}<span class="mt-0.5 flex items-center gap-1 text-xs text-ink-3">{{ ui.icon("package", "sm") }} {{ line.item }}</span>{% endif %}</td>
+          <td class="px-3 py-2.5 text-right tnum">{{ line.quantity | plain }} {{ view.units.get(line.id, "") }}</td>
+          <td class="px-3 py-2"><label class="sr-only" for="pr-{{ loop.index0 }}">Unit price, {{ line.description }}</label><input id="pr-{{ loop.index0 }}" name="price_{{ key }}" value="{{ v.get('price_' ~ key) or ('%.2f' % p.unit_price if p else '') }}" inputmode="decimal" placeholder="0.00" class="kx-input h-10 text-right tnum">{{ ui.field_error(errors, "price_" ~ key) }}</td>
+          <td class="px-5 py-2"><label class="sr-only" for="vt-{{ loop.index0 }}">VAT, {{ line.description }}</label><select id="vt-{{ loop.index0 }}" name="vat_{{ key }}" class="kx-input h-10">{% for code, label in vat_codes %}<option value="{{ code }}" {% if (v.get('vat_' ~ key) or (p.vat_code if p else 'standard')) == code %}selected{% endif %}>{{ label }}{% if code == "standard" and vat_rate %} {{ vat_rate | plain }}%{% endif %}</option>{% endfor %}</select></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex flex-col gap-3 border-t border-line p-5 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-xs text-ink-3">Prices exclude VAT. Every line needs a price; if the supplier can't supply, mark them as declined on the RFQ instead. Attach their document from the RFQ once the quote is saved.</p>
+    <button type="submit" class="kx-btn-primary">Save quote</button>
+  </div>
+</form>
+{% endblock %}

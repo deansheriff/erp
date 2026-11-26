@@ -2,7 +2,17 @@
 
 from datetime import datetime
 
-from sqlalchemy import Boolean, CheckConstraint, Index, Integer, String, Text, func, true
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Index,
+    Integer,
+    LargeBinary,
+    String,
+    Text,
+    func,
+    true,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base, IdMixin
@@ -50,3 +60,7 @@ class MailOutbox(IdMixin, Base):
     last_error: Mapped[str | None] = mapped_column(String(40))  # a category, never raw text
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     sent_at: Mapped[datetime | None]
+    # One optional attachment, e.g. an RFQ's PDF (ADR 0030).
+    attachment_name: Mapped[str | None] = mapped_column(String(120))
+    attachment_type: Mapped[str | None] = mapped_column(String(80))
+    attachment_data: Mapped[bytes | None] = mapped_column(LargeBinary)

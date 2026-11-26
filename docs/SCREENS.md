@@ -156,3 +156,11 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **A stock count sheet** (`inventory.count`) | `GET /inventory/counts/{count_id}` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
 | **Material requests** (`inventory.requests`) | `GET /inventory/requests` | inventory.request.read | — | Dean Sheriff (2026-11-26) |
 | **One material request (draft, decision, issue)** (`inventory.request`) | `GET /inventory/requests/{request_id}` | inventory.request.read | — | Dean Sheriff (2026-11-26) |
+| **Purchase requisitions** (`procurement.requisitions`) | `GET /procurement/requisitions` | procurement.requisition.read | — | Dean Sheriff (2026-11-26) |
+| **One purchase requisition (draft, approvals, starting the RFQ)** (`procurement.requisition`) | `GET /procurement/requisitions/{requisition_id}` | procurement.requisition.read | — | Dean Sheriff (2026-11-26) |
+| **Requests for quotation** (`procurement.rfqs`) | `GET /procurement/rfqs` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **One RFQ (suppliers, quote comparison, award and order)** (`procurement.rfq`) | `GET /procurement/rfqs/{rfq_id}` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **Record a supplier quote** (`procurement.quote`) | `GET /procurement/rfqs/{rfq_id}/quotes/{supplier_id}` | procurement.rfq.manage | — | Dean Sheriff (2026-11-26) |
+| **Supplier performance** (`procurement.suppliers`) | `GET /procurement/suppliers` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **One supplier's performance and ratings** (`procurement.supplier`) | `GET /procurement/suppliers/{supplier_id}` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **Procurement settings (approval tiers and quotes)** (`procurement.settings`) | `GET /procurement/settings` | procurement.settings.manage | — | Dean Sheriff (2026-11-26) |

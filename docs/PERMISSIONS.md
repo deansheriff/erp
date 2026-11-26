@@ -176,6 +176,21 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `payroll.settings.manage` | Manage statutory settings | Organisation |  | PAYE bands, reliefs, pension, NHF and other statutory rates. |
 | `payroll.structure.manage` | Manage salary structures | Organisation |  | Pay components, salary structures and pay groups. |
 
+### procurement
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `procurement.requisition.approve` | Approve requisitions as line manager | Self, Team, Department, Organisation |  | Decide the line-manager step of requisitions you are named on, or by delegation. |
+| `procurement.requisition.approve_any` | Step in on requisitions | Organisation |  | Decide the line-manager step when the requester has no line manager. |
+| `procurement.requisition.approve_director` | Approve requisitions as Director | Organisation |  | Decide the director step of requisitions over the director tier's amount. |
+| `procurement.requisition.approve_finance` | Approve requisitions as Finance | Organisation |  | Decide the finance step of requisitions over the finance tier's amount. |
+| `procurement.requisition.create` | Raise purchase requisitions | Self, Team, Department, Organisation |  | Ask for goods or services to be bought for your department. |
+| `procurement.requisition.read` | View purchase requisitions | Self, Team, Department, Organisation |  | See purchase requisitions within scope, with their approvals. |
+| `procurement.rfq.manage` | Run RFQs | Organisation |  | Invite suppliers to quote on approved requisitions, record their quotes, award one and draft the purchase order. |
+| `procurement.rfq.read` | View RFQs and supplier performance | Organisation |  | See requests for quotation, the quotes received, awards and supplier performance. |
+| `procurement.settings.manage` | Manage procurement settings | Organisation |  | Change the approval tiers and the amount over which three quotes are needed. |
+| `procurement.supplier.rate` | Rate suppliers | Organisation |  | Rate a supplier's purchase order once it has been received. |
+
 ### system
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -305,6 +320,16 @@ Everything, including technical settings. Can't be edited or removed.
 | `payroll.run.review` | O |
 | `payroll.settings.manage` | O |
 | `payroll.structure.manage` | O |
+| `procurement.requisition.approve` | O |
+| `procurement.requisition.approve_any` | O |
+| `procurement.requisition.approve_director` | O |
+| `procurement.requisition.approve_finance` | O |
+| `procurement.requisition.create` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.manage` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
+| `procurement.supplier.rate` | O |
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
@@ -426,6 +451,16 @@ Everything except technical settings such as mail, branding and security.
 | `payroll.run.review` | O |
 | `payroll.settings.manage` | O |
 | `payroll.structure.manage` | O |
+| `procurement.requisition.approve` | O |
+| `procurement.requisition.approve_any` | O |
+| `procurement.requisition.approve_director` | O |
+| `procurement.requisition.approve_finance` | O |
+| `procurement.requisition.create` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.manage` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
+| `procurement.supplier.rate` | O |
 
 ### Auditor
 
@@ -464,6 +499,8 @@ Reads everything, including the audit log. Changes nothing.
 | `payroll.pay.read` | O |
 | `payroll.payslip.read` | O |
 | `payroll.run.read` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.read` | O |
 
 ### Employee
 
@@ -495,6 +532,8 @@ Self-service: their own profile, requests and payslips.
 | `payroll.pay.read` | S |
 | `payroll.payslip.read` | S |
 | `payroll.relief.declare` | S |
+| `procurement.requisition.create` | S |
+| `procurement.requisition.read` | S |
 
 ### Line Manager
 
@@ -512,6 +551,8 @@ Approves their team's requests and sees their team.
 | `leave.balance.read` | T |
 | `leave.request.approve` | T |
 | `leave.request.read` | T |
+| `procurement.requisition.approve` | T |
+| `procurement.requisition.read` | T |
 
 ### HR Officer
 
@@ -694,6 +735,10 @@ Approves and posts finance documents.
 | `payroll.run.read` | O |
 | `payroll.run.review` | O |
 | `payroll.settings.manage` | O |
+| `procurement.requisition.approve_finance` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
 
 ### Expense Approver
 
@@ -740,7 +785,28 @@ Keeps items and warehouses, and approves stock adjustments and counts.
 
 Requisitions, RFQs and purchase orders.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `finance.purchase.create` | O |
+| `finance.purchase.read` | O |
+| `finance.supplier.read` | O |
+| `inventory.item.read` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.manage` | O |
+| `procurement.rfq.read` | O |
+| `procurement.supplier.rate` | O |
+
+### Director
+
+Approves the largest requisitions and steps in when there's no line manager.
+
+| Permission | Scope |
+|---|---|
+| `procurement.requisition.approve_any` | O |
+| `procurement.requisition.approve_director` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
 
 ### Support Agent
 
@@ -780,5 +846,9 @@ _No grants yet: added by the phase that delivers its module._
 | `inventory.adjust_four_eyes` | `inventory.stock.approve` | creator_is_actor | Someone else posts a stock adjustment or count you recorded. |
 | `inventory.no_self_approve` | `inventory.request.approve` | owner_is_actor | You can't approve your own material request. |
 | `inventory.no_self_approve_any` | `inventory.request.approve_any` | owner_is_actor | You can't approve your own material request. |
+| `procurement.no_self_approve` | `procurement.requisition.approve` | owner_is_actor | You can't approve your own requisition. |
+| `procurement.no_self_approve_any` | `procurement.requisition.approve_any` | owner_is_actor | You can't approve your own requisition. |
+| `procurement.no_self_approve_finance` | `procurement.requisition.approve_finance` | owner_is_actor | You can't approve your own requisition. |
+| `procurement.no_self_approve_director` | `procurement.requisition.approve_director` | owner_is_actor | You can't approve your own requisition. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

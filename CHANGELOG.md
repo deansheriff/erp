@@ -5,6 +5,33 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 11c: Procurement
+- Purchase requisitions (`PR-`) from any employee, for stock items or described goods and
+  services, with estimated prices (ADR 0030).
+- Approval by amount in a chain: the line manager, then a Finance Manager over ₦500,000,
+  then a Director over ₦5,000,000 (all to confirm, editable in Procurement settings).
+  - Each step is decided by a different person, never the requester.
+  - The new Director role steps in when there's no line manager.
+- Requests for quotation (`RFQ-`):
+  - emailed to suppliers with the RFQ as a PDF attachment;
+  - quotes recorded per line, with the supplier's document attached;
+  - a comparison of the quotes line by line.
+- Awards and orders:
+  - Three quotes are needed over ₦1,000,000 (to confirm).
+  - Awarding a quote that isn't the lowest needs a reason.
+  - An award over the approved tier goes back for the missing approvals.
+  - The award becomes a draft purchase order that someone else approves.
+- Supplier performance: on-time delivery, lines received in full, returns, bills within
+  the price tolerance, quotes won, and a 1–5 rating per order.
+- Outgoing mail can carry one attachment.
+- New permissions:
+  - `procurement.requisition.*` (create, read, approve, approve_any, approve_finance and
+    approve_director);
+  - `procurement.rfq.read` and `.manage`;
+  - `procurement.supplier.rate`;
+  - `procurement.settings.manage`.
+- Grants for the Procurement Officer, Finance Managers, line managers and employees.
+
 ### Added — Phase 11b: Stock in purchasing and sales
 - Purchase order and sales lines can name a stock item and warehouse (ADR 0029). A stock
   PO line is charged to the item's inventory account.

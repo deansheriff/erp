@@ -113,6 +113,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.certificate.read": SELF,  # once December is paid
             "inventory.request.create": SELF,
             "inventory.request.read": SELF,
+            "procurement.requisition.create": SELF,
+            "procurement.requisition.read": SELF,
         },
     ),
     RoleTemplate(
@@ -130,6 +132,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "expenses.claim.approve": Scope.TEAM,
             "inventory.request.read": Scope.TEAM,
             "inventory.request.approve": Scope.TEAM,
+            "procurement.requisition.read": Scope.TEAM,
+            "procurement.requisition.approve": Scope.TEAM,
         },
     ),
     RoleTemplate(
@@ -279,6 +283,10 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.asset.manage": ORG,
             "finance.asset.approve": ORG,  # what someone else prepared
             "inventory.item.read": ORG,
+            "procurement.requisition.read": ORG,
+            "procurement.requisition.approve_finance": ORG,
+            "procurement.rfq.read": ORG,
+            "procurement.settings.manage": ORG,
         },
     ),
     RoleTemplate(
@@ -317,7 +325,31 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         },
     ),
     RoleTemplate(
-        "procurement_officer", "Procurement Officer", "Requisitions, RFQs and purchase orders."
+        "procurement_officer",
+        "Procurement Officer",
+        "Requisitions, RFQs and purchase orders.",
+        grants={
+            "procurement.requisition.read": ORG,
+            "procurement.rfq.read": ORG,
+            "procurement.rfq.manage": ORG,
+            "procurement.supplier.rate": ORG,
+            "finance.supplier.read": ORG,
+            "finance.purchase.read": ORG,
+            "finance.purchase.create": ORG,  # drafts; someone else approves (ADR 0030)
+            "inventory.item.read": ORG,
+        },
+    ),
+    RoleTemplate(
+        "director",
+        "Director",
+        "Approves the largest requisitions and steps in when there's no line manager.",
+        grants={
+            "procurement.requisition.read": ORG,
+            "procurement.requisition.approve_director": ORG,
+            "procurement.requisition.approve_any": ORG,
+            "procurement.rfq.read": ORG,
+            "procurement.settings.manage": ORG,
+        },
     ),
     RoleTemplate("support_agent", "Support Agent", "Works the support ticket queue."),
     RoleTemplate("fleet_manager", "Fleet Manager", "Vehicles, drivers, fuel and maintenance."),
