@@ -1,0 +1,87 @@
+{# Finance → the fixed asset register (ADR 0027): totals, bill lines waiting to be
+   registered, the register, and its cost compared with the ledger.
+   Design: design/stitch/exports/finance.assets.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Fixed assets", "The asset register, its depreciation and changes.") %}
+  <a href="/finance/assets/categories" class="kx-btn-ghost">{{ ui.icon("shapes", "sm") }} Categories</a>
+  <a href="/finance/depreciation" class="kx-btn-ghost">{{ ui.icon("trending-down", "sm") }} Depreciation</a>
+  {% if can_manage %}<a href="/finance/assets/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Register asset</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  {{ ui.kpi_tile("Cost or valuation", totals.gross | money) }}
+  {{ ui.kpi_tile("Accumulated depreciation", (-totals.accumulated) | money) }}
+  {{ ui.kpi_tile("Net book value", totals.book_value | money) }}
+  {{ ui.kpi_tile("Depreciated to", totals.depreciated_to.strftime("%B %Y") if totals.depreciated_to else "Not yet") }}
+</div>
+
+{% if candidates %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="bills-title">
+  <div class="border-b border-line px-5 py-4">
+    <h2 id="bills-title" class="font-h3 text-h3">From bills <span class="text-body-sm font-normal text-ink-3">· {{ candidates | length }} waiting</span></h2>
+    <p class="mt-1 text-body-sm text-ink-3">Posted bill lines on an asset category's cost account, at or above the capitalisation threshold.</p>
+  </div>
+  <ul class="divide-y divide-line text-body-sm">
+    {% for c in candidates %}
+    <li class="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+      <span class="min-w-0"><a href="/finance/bills/{{ c.bill_id }}" class="font-mono text-xs font-semibold text-iris">{{ c.bill_number }}</a> · {{ c.supplier }} · <span class="font-medium">{{ c.description }}</span><span class="block text-xs text-ink-3">{{ c.bill_date | date }} · {{ c.account }}</span></span>
+      <span class="flex items-center gap-3"><span class="font-semibold tnum">{{ c.net | money }}</span>{% if can_manage %}<a href="/finance/assets/new?bill_line={{ c.line_id }}" class="kx-btn-secondary h-8">Register</a>{% endif %}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<form method="get" action="/finance/assets" class="mt-6 flex flex-wrap items-end gap-3">
+  <div><label class="kx-label" for="category">Category</label><select id="category" name="category" class="kx-input"><option value="">All categories</option>{% for c in categories %}<option value="{{ c.id }}" {% if category == c.id|string %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select></div>
+  <nav class="kx-segment" aria-label="Status">
+    {% for key, label in (("active", "Active"), ("disposed", "Disposed"), ("all", "All")) %}
+    <a href="/finance/assets?status={{ key }}{% if category %}&category={{ category }}{% endif %}{% if q %}&q={{ q | urlencode }}{% endif %}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if status == key else 'text-ink-2 hover:text-ink' }}" {% if status == key %}aria-current="page"{% endif %}>{{ label }}</a>
+    {% endfor %}
+  </nav>
+  <input type="hidden" name="status" value="{{ status }}">
+  <div class="min-w-[200px] flex-1"><label class="kx-label" for="q">Search</label><input id="q" name="q" value="{{ q }}" class="kx-input" placeholder="Name, number or serial"></div>
+  <button type="submit" class="kx-btn-secondary">Filter</button>
+</form>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="Register">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[900px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Asset</th><th class="px-3 py-3 text-left font-semibold">Category</th><th class="px-3 py-3 text-left font-semibold">Acquired</th><th class="px-3 py-3 text-right font-semibold">Cost or valuation</th><th class="px-3 py-3 text-right font-semibold">Accumulated depreciation</th><th class="px-3 py-3 text-right font-semibold">Net book value</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        <tr>
+          <td class="px-5 py-3"><a href="/finance/assets/{{ r.id }}" class="font-mono text-xs font-semibold text-iris">{{ r.number }}</a> <span class="font-medium">{{ r.name }}</span>{% if r.serial %}<span class="block text-xs text-ink-3">{{ r.serial }}</span>{% endif %}</td>
+          <td class="px-3 py-3 text-ink-2">{{ r.category }}</td>
+          <td class="whitespace-nowrap px-3 py-3">{{ r.acquired_on | date }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.gross | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ (-r.accumulated) | money }}</td>
+          <td class="px-3 py-3 text-right font-semibold tnum">{{ r.book_value | money }}</td>
+          <td class="px-5 py-3">{{ ui.badge(tones[r.status], labels[r.status]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("archive", "No assets here", "Register an asset, or one from a posted bill.") %}{% endcall %}
+  {% endif %}
+</section>
+
+{% if checks %}
+<section class="kx-card mt-6 p-5" aria-labelledby="check-title">
+  <h2 id="check-title" class="font-h3 text-h3">Register and ledger</h2>
+  <p class="mt-1 text-body-sm text-ink-3">The active register's cost or valuation against each cost account's balance. A difference is an asset not registered, or a cost not in the ledger.</p>
+  <ul class="mt-3 divide-y divide-line text-body-sm">
+    {% for c in checks %}
+    <li class="flex flex-wrap items-center justify-between gap-2 py-2"><span>{{ c.account }}</span><span class="flex items-center gap-3 tnum"><span>Register {{ c.register | money }}</span><span class="text-ink-3">Ledger {{ c.ledger | money }}</span>{{ ui.badge("success" if c.matches else "warning", "Agrees" if c.matches else "Differs by " ~ ((c.ledger - c.register) | money)) }}</span></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endblock %}

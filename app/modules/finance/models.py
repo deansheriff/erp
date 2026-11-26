@@ -36,6 +36,7 @@ SOURCES = (
     "payable",
     "bank",
     "tax",
+    "asset",
 )
 
 Money = Numeric(16, 2)
@@ -219,6 +220,11 @@ class FinanceSettings(Base):
     price_tolerance: Mapped[Decimal] = mapped_column(Numeric(5, 2), server_default="2.00")
     # Banking (ADR 0026), to confirm.
     match_days: Mapped[int] = mapped_column(SmallInteger, server_default="3")
+    # Fixed assets (ADR 0027), to confirm.
+    capitalisation_threshold: Mapped[Decimal] = mapped_column(Money, server_default="100000")
+    revaluation_reserve_code: Mapped[str] = mapped_column(String(20), server_default="3300")
+    disposal_code: Mapped[str] = mapped_column(String(20), server_default="4910")
+    revaluation_loss_code: Mapped[str] = mapped_column(String(20), server_default="6910")
 
 
 # ------------------------------------------------------------------ receivables and tax (ADR 0024)
@@ -787,3 +793,158 @@ class BankTransfer(IdMixin, Base):
     approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     approved_at: Mapped[datetime | None]
     journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
+
+
+# ------------------------------------------------------------------ fixed assets (ADR 0027)
+
+DEPRECIATION_METHODS = ("straight_line", "reducing_balance", "none")
+ASSET_STATUSES = ("active", "disposed")
+CHANGE_KINDS = ("revaluation", "disposal")
+CHANGE_STATUSES = ("draft", "posted")
+RUN_STATUSES = ("draft", "posted")
+
+_METHOD_RULE = (
+    "(method <> 'straight_line' OR life_months > 0) "
+    "AND (method <> 'reducing_balance' OR (rate > 0 AND rate <= 100))"
+)
+
+
+class AssetCategory(IdMixin, Base):
+    __tablename__ = "asset_categories"
+    __table_args__ = (
+        CheckConstraint(_in("method", DEPRECIATION_METHODS), name="method"),
+        CheckConstraint(_METHOD_RULE, name="method_figures"),
+        CheckConstraint(
+            "method = 'none' OR (accumulated_account_id IS NOT NULL "
+            "AND expense_account_id IS NOT NULL)",
+            name="accounts",
+        ),
+    )
+
+    name: Mapped[str] = mapped_column(String(80), unique=True)
+    method: Mapped[str] = mapped_column(String(16))
+    life_months: Mapped[int | None] = mapped_column(SmallInteger)
+    rate: Mapped[Decimal | None] = mapped_column(Numeric(5, 2))  # % a year
+    cost_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("finance_accounts.id"))
+    accumulated_account_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("finance_accounts.id")
+    )
+    expense_account_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("finance_accounts.id"))
+    is_active: Mapped[bool] = mapped_column(Boolean, server_default="true")
+
+
+class FixedAsset(IdMixin, Base):
+    """An asset in the register. `gross` is its cost or valuation in the ledger, and
+    `accumulated` the depreciation posted since; neither changes except by posting."""
+
+    __tablename__ = "fixed_assets"
+    __table_args__ = (
+        CheckConstraint(_in("method", DEPRECIATION_METHODS), name="method"),
+        CheckConstraint(_METHOD_RULE, name="method_figures"),
+        CheckConstraint(_in("status", ASSET_STATUSES), name="status"),
+        CheckConstraint(
+            "cost > 0 AND gross >= 0 AND residual >= 0 AND accumulated >= 0 "
+            "AND reserve >= 0 AND revaluation_losses >= 0",
+            name="amounts",
+        ),
+        CheckConstraint("(status = 'disposed') = (disposed_on IS NOT NULL)", name="disposed"),
+    )
+
+    number: Mapped[str] = mapped_column(String(20), unique=True)
+    name: Mapped[str] = mapped_column(String(200))
+    serial: Mapped[str | None] = mapped_column(String(120))
+    location: Mapped[str | None] = mapped_column(String(120))
+    description: Mapped[str | None] = mapped_column(Text)
+    category_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("asset_categories.id"), index=True)
+    method: Mapped[str] = mapped_column(String(16))
+    life_months: Mapped[int | None] = mapped_column(SmallInteger)
+    rate: Mapped[Decimal | None] = mapped_column(Numeric(5, 2))
+    cost_account_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("finance_accounts.id"))
+    accumulated_account_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("finance_accounts.id")
+    )
+    expense_account_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("finance_accounts.id"))
+    cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    acquired_on: Mapped[date]
+    cost: Mapped[Decimal] = mapped_column(Money)  # what it cost
+    gross: Mapped[Decimal] = mapped_column(Money)  # cost, or its latest valuation
+    residual: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    accumulated: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    months_left: Mapped[int | None] = mapped_column(SmallInteger)  # straight line
+    depreciated_to: Mapped[date | None]  # first day of the last month charged
+    reserve: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    revaluation_losses: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    status: Mapped[str] = mapped_column(String(8), server_default="active")
+    disposed_on: Mapped[date | None]
+    supplier_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("suppliers.id"))
+    bill_line_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("bill_lines.id"), unique=True)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+
+class AssetChange(IdMixin, Base):
+    """A revaluation or disposal: recorded by one person, approved by another, which
+    posts its journal."""
+
+    __tablename__ = "asset_changes"
+    __table_args__ = (
+        CheckConstraint(_in("kind", CHANGE_KINDS), name="kind"),
+        CheckConstraint(_in("status", CHANGE_STATUSES), name="status"),
+        CheckConstraint("amount >= 0", name="amount"),
+    )
+
+    asset_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("fixed_assets.id"), index=True)
+    kind: Mapped[str] = mapped_column(String(11))
+    status: Mapped[str] = mapped_column(String(6), server_default="draft")
+    change_date: Mapped[date]
+    amount: Mapped[Decimal] = mapped_column(Money)  # the new value, or the proceeds
+    bank_account_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("bank_accounts.id"))
+    reason: Mapped[str] = mapped_column(Text)
+    carrying: Mapped[Decimal | None] = mapped_column(Money)  # at approval
+    result: Mapped[Decimal | None] = mapped_column(Money)  # gain (+) or loss (-), at approval
+    created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    approved_at: Mapped[datetime | None]
+    journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
+
+
+# An asset has at most one change waiting.
+Index(
+    "uq_asset_change_waiting",
+    AssetChange.asset_id,
+    unique=True,
+    postgresql_where=AssetChange.status == "draft",
+)
+
+
+class DepreciationRun(IdMixin, Base):
+    __tablename__ = "depreciation_runs"
+    __table_args__ = (
+        CheckConstraint(_in("status", RUN_STATUSES), name="status"),
+        CheckConstraint("EXTRACT(DAY FROM month) = 1", name="month"),
+    )
+
+    month: Mapped[date] = mapped_column(unique=True)  # its first day
+    status: Mapped[str] = mapped_column(String(6), server_default="draft")
+    total: Mapped[Decimal] = mapped_column(Money, server_default="0")
+    prepared_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))  # None: task
+    prepared_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    posted_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+    posted_at: Mapped[datetime | None]
+    journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))
+
+
+class DepreciationLine(IdMixin, Base):
+    __tablename__ = "depreciation_lines"
+    __table_args__ = (
+        UniqueConstraint("run_id", "asset_id"),
+        CheckConstraint("months > 0 AND amount > 0", name="amounts"),
+    )
+
+    run_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("depreciation_runs.id", ondelete="CASCADE"), index=True
+    )
+    asset_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("fixed_assets.id"), index=True)
+    months: Mapped[int] = mapped_column(SmallInteger)
+    amount: Mapped[Decimal] = mapped_column(Money)

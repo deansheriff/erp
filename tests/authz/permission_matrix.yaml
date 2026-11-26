@@ -6,6 +6,7 @@ auditor:
   authz.role.read: organization
   expenses.claim.read: organization
   finance.account.read: organization
+  finance.asset.read: organization
   finance.bank.read: organization
   finance.customer.read: organization
   finance.journal.read: organization
@@ -62,6 +63,9 @@ finance_manager:
   expenses.settings.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.asset.approve: organization
+  finance.asset.manage: organization
+  finance.asset.read: organization
   finance.bank.approve: organization
   finance.bank.manage: organization
   finance.bank.read: organization
@@ -100,6 +104,8 @@ finance_manager:
 finance_officer:
   expenses.claim.read: organization
   finance.account.read: organization
+  finance.asset.manage: organization
+  finance.asset.read: organization
   finance.bank.read: organization
   finance.bank.reconcile: organization
   finance.customer.manage: organization
@@ -216,6 +222,9 @@ organization_administrator:
   files.file.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.asset.approve: organization
+  finance.asset.manage: organization
+  finance.asset.read: organization
   finance.bank.approve: organization
   finance.bank.manage: organization
   finance.bank.read: organization
@@ -333,6 +342,9 @@ super_administrator:
   files.file.manage: organization
   finance.account.manage: organization
   finance.account.read: organization
+  finance.asset.approve: organization
+  finance.asset.manage: organization
+  finance.asset.read: organization
   finance.bank.approve: organization
   finance.bank.manage: organization
   finance.bank.read: organization

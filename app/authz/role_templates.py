@@ -219,6 +219,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.payment.create": ORG,
             "finance.bank.read": ORG,
             "finance.bank.reconcile": ORG,
+            "finance.asset.read": ORG,
+            "finance.asset.manage": ORG,
         },
     ),
     RoleTemplate(
@@ -268,6 +270,9 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.bank.manage": ORG,
             "finance.bank.reconcile": ORG,
             "finance.bank.approve": ORG,  # what someone else prepared
+            "finance.asset.read": ORG,
+            "finance.asset.manage": ORG,
+            "finance.asset.approve": ORG,  # what someone else prepared
         },
     ),
     RoleTemplate(

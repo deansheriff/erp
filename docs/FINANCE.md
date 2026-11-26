@@ -1,7 +1,7 @@
 # Finance
 
 Phase 10, in five gates. 10a, the general ledger, is in ADR 0023; 10b, receivables and
-tax, is in ADR 0024; 10c, payables, is in ADR 0025; 10d, banking, is in ADR 0026; permissions are in
+tax, is in ADR 0024; 10c, payables, is in ADR 0025; 10d, banking, is in ADR 0026; 10e, fixed assets, is in ADR 0027; permissions are in
 `docs/PERMISSIONS.md`.
 
 ## Tables
@@ -29,6 +29,10 @@ tax, is in ADR 0024; 10c, payables, is in ADR 0025; 10d, banking, is in ADR 0026
 | `bank_rules` | Description-contains rules that give unmatched lines an entry account. |
 | `bank_reconciliations` | One per bank account and statement date: the statement balance, prepared, submitted and approved by. |
 | `bank_transfers` | Transfers between bank accounts, recorded by one person and approved by another. |
+| `asset_categories` | Depreciation method (straight line, reducing balance or none), useful life or annual rate, and the cost, accumulated depreciation and expense accounts. |
+| `fixed_assets` | The register (`FA-00001`): cost, cost or valuation in the ledger, residual, accumulated depreciation, months left, the month depreciated to, revaluation reserve, and the bill line it came from. |
+| `asset_changes` | Revaluations and disposals, recorded by one person and approved by another, with the figures at approval. |
+| `depreciation_runs`, `depreciation_lines` | One run per month and what it charged each asset. |
 
 ## How journals get to the ledger
 
@@ -63,6 +67,11 @@ Receivables 1100, VAT output 2200, VAT input 1310, WHT receivable 1320, WHT paya
 stamp duty payable 2220. Payment terms 30 days; reminders 3 days before, on the due date,
 then every 7 days; returns due on the 21st. Trade payables 2010; bill price tolerance 2%.
 Bank matching within 3 days of the ledger date; statement files kept 6 years.
+Fixed assets: accumulated depreciation 1511 to 1551 (one per cost account), revaluation
+reserve 3300, gain or loss on disposal 4910, revaluation losses 6910, capitalisation
+threshold ₦100,000; categories Buildings 50 years, Land not depreciated, Plant and
+machinery 10 years, Motor vehicles 4 years, Furniture and fittings 5 years, Computer
+equipment 3 years, all straight line.
 
 ## Receivables
 
@@ -136,6 +145,29 @@ Bank matching within 3 days of the ledger date; statement files kept 6 years.
 - **Transfers** (`TRF-`) between bank accounts are recorded by one person and approved by
   another; approval debits the receiving account and credits the paying one.
 
+## Fixed assets
+
+- **Categories** give the method (straight line over a useful life, reducing balance at an
+  annual rate, or not depreciated) and the cost, accumulated depreciation and expense
+  accounts. An asset copies them when registered.
+- **Registering** posts nothing, because the purchase is already in the ledger. A posted
+  bill line on a category's cost account, at or above the threshold, is offered on the
+  register and brings its cost, date and supplier. Anything else is registered by hand,
+  with any depreciation from before go-live. The register shows its cost or valuation
+  against each cost account's ledger balance.
+- **Depreciation:** a full month's charge in the month acquired, none in the month of
+  disposal. Straight line spreads what is left above the residual over the months left;
+  reducing balance takes the annual rate a month at a time, never below the residual.
+  One run per month, in order, catching up any month an asset missed. The nightly task
+  (01:45 UTC) prepares the next month once it has ended, and someone other than the
+  preparer posts it: debit expense by cost centre, credit accumulated depreciation.
+- **Revaluations** (IAS 16, elimination method) and **disposals** need the depreciation
+  up to the month before. Each is recorded by one person and approved by another,
+  which posts it. An increase reverses earlier revaluation losses (6910), then goes to
+  the reserve (3300); a decrease uses the reserve, then goes to 6910. A disposal clears
+  cost and depreciation, takes any proceeds into a bank account, puts the gain or loss
+  in 4910, and moves the asset's reserve to retained earnings.
+
 ## Tax
 
 - **VAT** 7.5% from 1 February 2020, effective-dated (confirm). Issued invoices keep their
@@ -163,6 +195,7 @@ general ledger download as CSV.
 
 Finance → Customers (and each customer), Sales (and each document and receipt), Aging,
 Suppliers (and each supplier), Purchases (and each PO, bill and payment), Payables aging,
-Banking (and each bank account and reconciliation), Transfers,
+Banking (and each bank account and reconciliation), Transfers, Fixed assets (and each
+asset, its form, the categories and the depreciation runs),
 Journals (and each journal), Chart of accounts, Recurring, Periods, Reports, Tax returns,
 Tax settings.

@@ -58,6 +58,9 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 |---|---|---|---|---|
 | `finance.account.manage` | Manage the chart of accounts | Organisation |  | Add accounts, rename them, and deactivate ones no longer used. |
 | `finance.account.read` | View the chart of accounts | Organisation |  | See accounts and their balances. |
+| `finance.asset.approve` | Approve depreciation and asset changes | Organisation |  | Post a depreciation run, or approve a revaluation or disposal, that someone else prepared. |
+| `finance.asset.manage` | Manage fixed assets | Organisation |  | Keep asset categories, register assets, prepare depreciation runs, and record revaluations and disposals. |
+| `finance.asset.read` | View fixed assets | Organisation |  | See the asset register, categories, depreciation runs, revaluations and disposals. |
 | `finance.bank.approve` | Approve reconciliations and transfers | Organisation |  | Approve a reconciliation or a transfer someone else prepared, posting its journals. |
 | `finance.bank.manage` | Manage bank accounts | Organisation |  | Add bank accounts, set their statement layouts, and keep the matching rules. |
 | `finance.bank.read` | View banking | Organisation |  | See bank accounts, imported statements, matching, reconciliations and transfers. |
@@ -202,6 +205,9 @@ Everything, including technical settings. Can't be edited or removed.
 | `files.file.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.asset.approve` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
 | `finance.bank.approve` | O |
 | `finance.bank.manage` | O |
 | `finance.bank.read` | O |
@@ -312,6 +318,9 @@ Everything except technical settings such as mail, branding and security.
 | `files.file.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.asset.approve` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
 | `finance.bank.approve` | O |
 | `finance.bank.manage` | O |
 | `finance.bank.read` | O |
@@ -400,6 +409,7 @@ Reads everything, including the audit log. Changes nothing.
 | `authz.role.read` | O |
 | `expenses.claim.read` | O |
 | `finance.account.read` | O |
+| `finance.asset.read` | O |
 | `finance.bank.read` | O |
 | `finance.customer.read` | O |
 | `finance.journal.read` | O |
@@ -574,6 +584,8 @@ Day-to-day accounting.
 |---|---|
 | `expenses.claim.read` | O |
 | `finance.account.read` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
 | `finance.bank.read` | O |
 | `finance.bank.reconcile` | O |
 | `finance.customer.manage` | O |
@@ -607,6 +619,9 @@ Approves and posts finance documents.
 | `expenses.settings.manage` | O |
 | `finance.account.manage` | O |
 | `finance.account.read` | O |
+| `finance.asset.approve` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
 | `finance.bank.approve` | O |
 | `finance.bank.manage` | O |
 | `finance.bank.read` | O |
@@ -707,5 +722,6 @@ _No grants yet: added by the phase that delivers its module._
 | `finance.purchase_four_eyes` | `finance.purchase.approve` | creator_is_actor | Someone else approves a purchase order, bill or debit note you drafted. |
 | `finance.payment_four_eyes` | `finance.payment.approve` | creator_is_actor | Someone else approves a supplier payment you prepared. |
 | `finance.bank_four_eyes` | `finance.bank.approve` | creator_is_actor | Someone else approves a reconciliation or transfer you prepared. |
+| `finance.asset_four_eyes` | `finance.asset.approve` | creator_is_actor | Someone else posts a depreciation run or approves an asset change you prepared. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

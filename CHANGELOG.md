@@ -5,6 +5,19 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 10e: Fixed assets
+- Asset categories with a depreciation method (straight line, reducing balance or none),
+  useful life or rate and their accounts; new accounts 1511 to 1551, 3300, 4910 and 6910
+  and a ₦100,000 capitalisation threshold, all to confirm (ADR 0027).
+- The register (`FA-`): assets from posted bill lines on a cost account, or by hand with
+  depreciation from before go-live, and a comparison with the ledger.
+- Monthly depreciation runs, prepared nightly or by hand and posted by someone else, with
+  a full month in the month acquired and catch-up for late registrations.
+- Revaluations to a reserve and disposals with a gain or loss, each approved by a second
+  person.
+- Permissions `finance.asset.read`, `.manage` and `.approve`; grants for the Finance
+  Officer and Finance Manager.
+
 ### Added — Phase 10d: Banking
 - Bank accounts, each with its own ledger account (1010 first, new ones from 1011), bank
   details and a statement layout (ADR 0026).

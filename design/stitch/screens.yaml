@@ -1458,3 +1458,90 @@ screens:
       approve: finance.bank.approve
     field_classes: []
     approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.assets
+    phase: 10
+    module: finance
+    title: Fixed asset register (totals, assets from bills, ledger comparison)
+    route: GET /finance/assets
+    template: app/modules/finance/templates/finance/assets.html
+    stitch_screens:
+      desktop: 93807d1566f740b0b647b539d3dbc26b
+    exports:
+      - design/stitch/exports/finance.assets.html
+    permission: finance.asset.read
+    actions:
+      register_asset: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.asset
+    phase: 10
+    module: finance
+    title: One fixed asset (figures, depreciation, revaluations and disposals)
+    route: GET /finance/assets/{asset_id}
+    template: app/modules/finance/templates/finance/asset.html
+    stitch_screens:
+      desktop: e878642a58b347d1b7829ad4c5953a32
+    exports:
+      - design/stitch/exports/finance.asset.html
+    permission: finance.asset.read
+    actions:
+      record_revaluation: finance.asset.manage
+      record_disposal: finance.asset.manage
+      delete_change: finance.asset.manage
+      approve_change: finance.asset.approve
+      delete_asset: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.depreciation
+    phase: 10
+    module: finance
+    title: Depreciation runs
+    route: GET /finance/depreciation
+    template: app/modules/finance/templates/finance/depreciation.html
+    stitch_screens:
+      desktop: 4fdbffe8be174df8b31d1cdd2051ae0f
+    exports:
+      - design/stitch/exports/finance.depreciation.html
+    permission: finance.asset.read
+    actions:
+      prepare: finance.asset.manage
+      post: finance.asset.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.asset_categories
+    phase: 10
+    module: finance
+    title: Asset categories and fixed asset settings
+    route: GET /finance/assets/categories
+    template: app/modules/finance/templates/finance/asset_categories.html
+    stitch_screens:
+      desktop: 7bb14a05e5284f62a7720d999d41c166
+    exports:
+      - design/stitch/exports/finance.asset_categories.html
+    permission: finance.asset.read
+    actions:
+      save_category: finance.asset.manage
+      save_settings: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.asset_form
+    phase: 10
+    module: finance
+    title: Register or edit a fixed asset
+    route: GET /finance/assets/new
+    template: app/modules/finance/templates/finance/asset_form.html
+    stitch_screens:
+      desktop: 6dc17f489e764e6887847d97ca192c87
+    exports:
+      - design/stitch/exports/finance.asset_form.html
+    permission: finance.asset.manage
+    actions:
+      register: finance.asset.manage
+      save: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)

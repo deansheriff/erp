@@ -138,3 +138,8 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **One bank account (statement import and matching)** (`finance.bank_account`) | `GET /finance/banking/{bank_id}` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
 | **Bank reconciliation** (`finance.reconciliation`) | `GET /finance/reconciliations/{rec_id}` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
 | **Transfers between bank accounts** (`finance.transfers`) | `GET /finance/transfers` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **Fixed asset register (totals, assets from bills, ledger comparison)** (`finance.assets`) | `GET /finance/assets` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **One fixed asset (figures, depreciation, revaluations and disposals)** (`finance.asset`) | `GET /finance/assets/{asset_id}` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **Depreciation runs** (`finance.depreciation`) | `GET /finance/depreciation` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **Asset categories and fixed asset settings** (`finance.asset_categories`) | `GET /finance/assets/categories` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **Register or edit a fixed asset** (`finance.asset_form`) | `GET /finance/assets/new` | finance.asset.manage | — | Dean Sheriff (2026-11-26) |

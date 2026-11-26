@@ -1,12 +1,13 @@
-"""Finance background tasks: draft the recurring journals that fall due (ADR 0023), and
-email customers the payment reminders due today (ADR 0024)."""
+"""Finance background tasks: draft the recurring journals that fall due (ADR 0023), email
+customers the payment reminders due today (ADR 0024), and draft each month's depreciation
+run once the month has ended (ADR 0027)."""
 
 from celery.schedules import crontab
 
 from app.core import clock
 from app.core.db import session_scope
 from app.core.worker import celery_app
-from app.modules.finance import customers, recurring
+from app.modules.finance import customers, depreciation, recurring
 
 
 @celery_app.task(name="finance.draft_recurring")  # type: ignore[untyped-decorator]
@@ -21,11 +22,21 @@ def send_reminders() -> int:
         return customers.send_due(db, today=clock.today())
 
 
+@celery_app.task(name="finance.draft_depreciation")  # type: ignore[untyped-decorator]
+def draft_depreciation() -> bool:
+    with session_scope() as db:
+        return depreciation.draft_due(db, today=clock.today())
+
+
 celery_app.conf.beat_schedule = {
     **(celery_app.conf.beat_schedule or {}),
     "finance-recurring": {
         "task": "finance.draft_recurring",
         "schedule": crontab(hour=1, minute=30),
+    },
+    "finance-depreciation": {
+        "task": "finance.draft_depreciation",
+        "schedule": crontab(hour=1, minute=45),
     },
     "finance-reminders": {
         "task": "finance.send_reminders",

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"surface-container":"#ededf1","tertiary":"#7a3700","surface-container-highest":"#e2e2e6","background":"#f9f9fd","danger-text":"#B4232F","on-primary-container":"#e0dbff","surface-raised":"#FFFFFF","error":"#ba1a1a","on-secondary-fixed":"#161f00","on-surface-variant":"#474554","on-surface":"#1a1c1f","surface-bright":"#f9f9fd","iris":"#5A4BDB","on-background":"#1a1c1f","lime":"#C5F04A","danger-bg":"#FFE4E6","inverse-on-surface":"#f0f0f4","surface-sunken":"#EFEFF6","destructive":"#C42836","surface-container-low":"#f3f3f7","surface-container-lowest":"#ffffff","on-tertiary-fixed":"#321300","warning-bg":"#FFF1D6","line-strong":"#8B8BA6","canvas":"#F6F6FA","line":"#E4E4EE","on-tertiary":"#ffffff","surface-variant":"#e2e2e6","warning-text":"#8A4B00","on-primary":"#ffffff","secondary-container":"#c4ef49","primary-fixed":"#e4dfff","on-tertiary-fixed-variant":"#743400","on-secondary":"#ffffff","inverse-surface":"#2e3034","surface":"#FFFFFF","primary-fixed-dim":"#c5c0ff","secondary-fixed-dim":"#acd530","on-secondary-fixed-variant":"#3b4d00","on-error":"#ffffff","primary-container":"#5a4bdb","success-bg":"#DDF7E8","lime-ink":"#4D7A0A","secondary":"#4f6600","surface-dim":"#d9dade","on-error-container":"#93000a","outline":"#787586","ink":"#16162A","inverse-primary":"#c5c0ff","secondary-fixed":"#c7f24c","tertiary-container":"#9f4a00","info-text":"#1D55B8","iris-hover":"#4A3CC4","success-text":"#0F6B3E","on-tertiary-container":"#ffd7c1","primary":"#412ec2","ink-2":"#4B4B66","tertiary-fixed-dim":"#ffb68b","surface-tint":"#5646d7","on-iris":"#FFFFFF","ink-3":"#626280","tertiary-fixed":"#ffdbc8","iris-tint":"#EEECFD","surface-container-high":"#e8e8ec","on-primary-fixed-variant":"#3d28be","info-bg":"#DFEBFF","outline-variant":"#c8c4d7","error-container":"#ffdad6","on-secondary-container":"#536b00","on-primary-fixed":"#140067"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","space-xl":"2rem","space-2xl":"3rem","space-md":"1rem","gutter":"1.5rem","margin":"2rem","space-3xl":"4rem","space-xs":"0.25rem","space-lg":"1.5rem"},"fontFamily":{"stat":["Plus Jakarta Sans"],"overline":["Inter"],"display":["Plus Jakarta Sans"],"body":["Inter"],"h2":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"h3":["Plus Jakarta Sans"],"body-sm":["Inter"],"label":["Inter"]},"fontSize":{"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}]}}}};</script></head><body class="bg-background font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest flex flex-col z-50 shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">hub</span></div><span class="font-h2 text-h2 text-ink tracking-tight">Adeyemi Holdings Ltd</span></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm"><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-label"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="dashboard-home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label text-label">Dashboard / Home</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="hr-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label text-label">HR &amp; People</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-label text-label">Attendance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payroll</span></a><div class="rounded-xl bg-info-bg/40 p-space-xs"><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg bg-info-bg text-info-text" data-path="finance" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-label text-label font-semibold">Finance</span></div><span class="material-symbols-outlined text-[18px]">expand_more</span></a><div class="mt-space-xs pl-space-md flex flex-col gap-1"><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="general-ledger" href="#">General ledger</a><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="journals" href="#">Journals</a><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="accounts-payable" href="#">Accounts payable</a><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="receivables" href="#">Receivables</a><a aria-current="page" class="flex items-center justify-between px-space-md py-1.5 rounded-md bg-primary-container text-on-primary-container font-label" data-path="fixed-assets" href="#"><div class="flex items-center gap-2"><span class="w-1 h-3.5 rounded-full bg-info-text"></span><span>Fixed assets</span></div></a><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="banking" href="#">Banking</a><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="tax" href="#">Tax</a><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="reports" href="#">Reports</a><a class="px-space-md py-1.5 rounded-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-body-sm text-body-sm transition-colors" data-path="settings" href="#">Settings</a></div></div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label text-label">Inventory</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">task_alt</span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span class="font-label text-label">Administration</span></a></nav></div><div class="p-space-md bg-surface-container-lowest shadow-[0_-1px_6px_rgba(22,22,42,0.03)] flex flex-col gap-space-xs"><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="help-docs" href="#"><span class="material-symbols-outlined text-[18px]">help</span><span class="font-body-sm text-body-sm">Help &amp; docs</span></a><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="sidebar-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-sm text-body-sm">Settings</span></a><div class="mt-space-xs p-space-sm rounded-xl bg-surface-sunken flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="min-w-0"><p class="font-label text-label text-ink truncate">Fatima Bello</p><p class="font-overline text-[11px] text-ink-3 truncate leading-none mt-0.5">Finance Manager</p></div></div><button class="text-ink-3 hover:text-ink p-1 rounded-md transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">more_vert</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-raised/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-sm"><nav aria-label="Breadcrumb" class="flex items-center gap-1.5 font-body-sm text-body-sm"><span class="text-ink-3">Finance</span><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><span class="text-ink-3">Fixed assets</span><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><span class="font-semibold text-ink">Register an asset</span></nav></div><div class="flex items-center gap-space-md"><div class="relative flex items-center w-72"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-full h-10 pl-9 pr-14 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" placeholder="Search transactions, assets..." type="text"/><span class="absolute right-2 px-1.5 py-0.5 rounded bg-surface-raised shadow-[0_1px_2px_rgba(22,22,42,0.08)] font-overline text-[11px] text-ink-2">Ctrl K</span></div><div class="flex items-center gap-space-xs"><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-warning-bg text-warning-text font-body-sm text-body-sm font-semibold" type="button"><span class="w-2 h-2 rounded-full bg-warning-text"></span>4 Approvals</button><button class="w-10 h-10 flex items-center justify-center rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error"></span></button><button class="w-10 h-10 flex items-center justify-center rounded-lg text-ink-2 hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center gap-space-sm pl-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden xl:block text-left"><p class="font-label text-label text-ink leading-tight">Fatima Bello</p><p class="font-overline text-[11px] text-ink-3 leading-tight">Finance Manager</p></div></div></div></header><main class="relative w-full pt-16 bg-background px-space-lg py-space-lg"><div class="flex flex-col w-full pb-space-3xl">
+<!-- Top Context / Breadcrumb Bar & Primary Title Area -->
+<div class="flex flex-col gap-space-md mb-space-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm min-w-0">
+<a class="h-10 px-3.5 rounded-lg bg-surface-raised shadow-[0_1px_3px_rgba(22,22,42,0.06)] hover:bg-surface-container-low text-ink-2 hover:text-ink flex items-center gap-2 font-label text-label transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Fixed assets</span>
+</a>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">IFRS IAS 16 Compliant</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-[11px] font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+            NG-GAAP Active
+          </span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<a class="h-11 px-space-md rounded-lg text-ink-2 hover:text-ink hover:bg-surface-container-low flex items-center gap-2 font-label text-label transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+<span>View asset categories</span>
+</a>
+<button class="h-11 px-space-lg rounded-lg bg-surface-raised shadow-[0_1px_3px_rgba(22,22,42,0.08)] hover:bg-surface-container-low text-ink font-label text-label flex items-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">bookmark</span>
+<span>Save draft</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-1 max-w-4xl">
+<div class="flex items-baseline gap-space-sm">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Register an asset</h1>
+<span class="font-overline text-[11px] text-iris px-2 py-0.5 rounded bg-iris-tint font-semibold">ASSET REGISTRY FORM</span>
+</div>
+<p class="font-body text-body text-ink-2 max-w-3xl">
+        Capitalise and schedule depreciation for newly acquired tangible assets in accordance with IFRS IAS 16 and Nigerian GAAP. Cost allocation and general ledger entries are locked upon registry.
+      </p>
+</div>
+</div>
+<!-- Linked Bill Info Banner -->
+<div class="rounded-xl bg-gradient-to-r from-info-bg/90 via-surface-raised to-info-bg/40 p-space-md shadow-[0_1px_4px_rgba(22,22,42,0.04)] mb-space-xl">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex items-start sm:items-center gap-space-md min-w-0">
+<div class="w-11 h-11 rounded-lg bg-surface-raised shadow-[0_2px_6px_rgba(29,85,184,0.12)] flex items-center justify-center text-info-text shrink-0">
+<span class="material-symbols-outlined text-[24px]">receipt_long</span>
+</div>
+<div class="min-w-0 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-overline text-overline uppercase tracking-wider text-info-text font-bold">Matched AP Source</span>
+<span class="w-1 h-1 rounded-full bg-line-strong"></span>
+<span class="font-h3 text-h3 text-ink font-semibold">BILL-00031</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span class="font-body-sm text-body-sm text-ink-2 truncate">Lagos Office Supplies Ltd</span>
+</div>
+<span class="hidden sm:inline text-outline">•</span>
+<p class="font-body-sm text-body-sm text-ink-3">Dell Latitude 5440 laptops <span class="font-semibold text-ink font-mono">₦1,850,000.00</span>. Verified ledger cost imported directly.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 self-end lg:self-center">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-bg text-success-text font-overline text-[11px] font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+          Pre-cleared in Payables
+        </span>
+<a class="h-9 px-3 rounded-lg bg-surface-raised text-info-text hover:bg-surface-sunken shadow-sm flex items-center gap-1.5 font-label text-body-sm transition-colors" href="#">
+<span>View source bill</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Primary Layout: Form and Context Preview Rail -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-xl items-start">
+<!-- Left 8 Cols: Comprehensive Registration Form -->
+<div class="xl:col-span-8 flex flex-col gap-space-xl">
+<div class="rounded-xl bg-surface-raised p-space-lg lg:p-space-xl shadow-[0_2px_12px_rgba(22,22,42,0.04)]">
+<div class="flex items-center justify-between pb-space-md mb-space-lg">
+<div>
+<h2 class="font-h2 text-h2 text-ink">Asset Identification &amp; Statutory Parameters</h2>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">Enter key physical parameters and asset class to determine capital depreciation cycles.</p>
+</div>
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Step 1 of 2</span>
+</div>
+<form class="space-y-space-lg" onsubmit="event.preventDefault();">
+<!-- Row 1: Name and Category -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Asset Name -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="asset-name">
+<span>Asset name <span class="text-destructive">*</span></span>
+<span class="font-overline text-[11px] text-ink-3">Internal identifier</span>
+</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm placeholder:text-outline focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all" id="asset-name" name="asset-name" placeholder="e.g. Caterpillar 320 GC Excavator" required="" type="text" value="Dell Latitude 5440 (5 units for Tech &amp; Ops)"/>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Specify unit descriptors, model type, and target organizational cohort.</p>
+</div>
+<!-- Category -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="asset-category">
+<span>Asset category <span class="text-destructive">*</span></span>
+<span class="font-overline text-[11px] text-iris">Depreciation rule linked</span>
+</label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-10 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] appearance-none cursor-pointer transition-all" id="asset-category" name="asset-category">
+<option selected="" value="comp-eq">Computer equipment · Straight line 36 months</option>
+<option value="furn-fix">Office Furniture &amp; Fixtures · Straight line 60 months</option>
+<option value="mot-veh">Motor Vehicles · Reducing balance 20% p.a.</option>
+<option value="plant-mach">Plant &amp; Heavy Machinery · Straight line 120 months</option>
+<option value="leasehold">Leasehold Improvements · Life of Lease</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[20px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-surface-container-low text-ink-2 font-body-sm text-[12px]">
+<span class="material-symbols-outlined text-[16px] text-iris">account_tree</span>
+<span>GL 1550 (Asset) / GL 1551 (Acc. Dep) / GL 6500 (Dep. Exp)</span>
+</div>
+</div>
+</div>
+<!-- Row 2: In-Service Date & Locked Cost -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Date Ready for Use -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="date-ready">
+<span>Date ready for use <span class="text-destructive">*</span></span>
+<span class="font-overline text-[11px] text-ink-3">IAS 16 Capitalisation</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-[20px] text-ink-3 pointer-events-none">calendar_month</span>
+<input class="w-full h-11 pl-11 pr-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all cursor-pointer" id="date-ready" required="" type="date" value="2026-11-19"/>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Depreciation begins strictly from this date under IAS 16 provisions.</p>
+</div>
+<!-- Cost (Read-Only Locked) -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink flex items-center gap-1.5">
+<span>Gross asset cost (NGN)</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3" title="Value matched to vendor invoice">lock</span>
+</label>
+<span class="px-2 py-0.5 rounded bg-surface-container text-ink-2 font-overline text-[10px] font-bold tracking-wider">AP MATCHED</span>
+</div>
+<div class="relative flex items-center">
+<div class="w-full h-11 px-3.5 rounded-lg bg-surface-container-high/80 text-ink flex items-center justify-between select-none">
+<div class="flex items-center gap-2">
+<span class="font-label text-label text-ink-3">₦</span>
+<span class="font-stat text-[18px] text-ink font-mono font-bold tracking-tight">1,850,000.00</span>
+</div>
+<span class="flex items-center gap-1 font-overline text-[11px] text-ink-3">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+                    Locked to BILL-00031
+                  </span>
+</div>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Value verified against Accounts Payable disbursement voucher.</p>
+</div>
+</div>
+<!-- Row 3: Residual Value & Useful Life -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Residual Value -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="residual-val">
+<span>Estimated residual value (optional)</span>
+<span class="font-overline text-[11px] text-ink-3">10% Statutory Baseline</span>
+</label>
+<div class="relative flex items-center">
+<span class="absolute left-3.5 font-label text-body text-ink-3">₦</span>
+<input class="w-full h-11 pl-9 pr-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm font-mono focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all" id="residual-val" placeholder="0.00" type="text" value="185,000.00"/>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Depreciable base will calculate as: ₦1,665,000.00 (Cost minus Residual).</p>
+</div>
+<!-- Useful Life -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between">
+<span>Useful lifespan <span class="text-destructive">*</span></span>
+<span class="font-overline text-[11px] text-success-text font-semibold">Straight-Line Calc</span>
+</label>
+<div class="grid grid-cols-2 gap-2">
+<div class="relative flex items-center">
+<input class="w-full h-11 px-3.5 pr-12 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm font-mono focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all" id="useful-months" type="number" value="36"/>
+<span class="absolute right-3 font-body-sm text-body-sm text-ink-3 pointer-events-none">Mos</span>
+</div>
+<div class="h-11 px-3 rounded-lg bg-surface-sunken flex items-center justify-between">
+<span class="font-body-sm text-[13px] text-ink-3">Rate:</span>
+<span class="font-label text-label text-ink font-mono font-semibold">33.33% p.a.</span>
+</div>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Default statutory lifespan for high-turnover IT hardware.</p>
+</div>
+</div>
+<!-- Row 4: Cost Centre & Serial Number -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Cost Centre -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="cost-centre">
+<span>Cost centre allocation <span class="text-destructive">*</span></span>
+<span class="font-overline text-[11px] text-ink-3">Budget Unit</span>
+</label>
+<div class="relative">
+<select class="w-full h-11 px-3.5 pr-10 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] appearance-none cursor-pointer transition-all" id="cost-centre" name="cost-centre">
+<option selected="" value="cc-400">CC-400 · Technology &amp; Engineering</option>
+<option value="cc-100">CC-100 · Executive Management</option>
+<option value="cc-200">CC-200 · Finance &amp; Accounting</option>
+<option value="cc-300">CC-300 · Operations &amp; Logistics</option>
+<option value="cc-500">CC-500 · Human Resources</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[20px] text-ink-3 pointer-events-none">expand_more</span>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Monthly depreciation journals post to this departmental budget.</p>
+</div>
+<!-- Serial / Asset Tag -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="serial-tag">
+<span>Serial number / Asset barcode tag</span>
+<span class="font-overline text-[11px] text-ink-3">Physical Tag</span>
+</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm font-mono focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all" id="serial-tag" placeholder="e.g. SN-998822 / TAG-0042" type="text" value="SN: DELL-5440-BATCH-01 / TAG-2026-0042"/>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Matches physical RFID/matrix tag stamped on equipment casing.</p>
+</div>
+</div>
+<!-- Row 5: Physical Location -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="physical-location">
+<span>Physical deployment location <span class="text-destructive">*</span></span>
+<span class="font-overline text-[11px] text-ink-3">Audit Verification Point</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-[20px] text-ink-3 pointer-events-none">location_on</span>
+<input class="w-full h-11 pl-11 pr-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all" id="physical-location" placeholder="Building, Floor, Room or Grid reference" type="text" value="Lagos HQ — 14 Adeola Odeku St, Tech Floor (Rack/Workstation B4)"/>
+</div>
+<p class="font-body-sm text-[12px] text-ink-3">Asset verification teams will physically audit this coordinate annually.</p>
+</div>
+<!-- Row 6: Description & Operational Notes -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink flex items-center justify-between" for="asset-notes">
+<span>Description &amp; procurement notes</span>
+<span class="font-overline text-[11px] text-ink-3">Max 500 characters</span>
+</label>
+<textarea class="w-full p-3.5 rounded-lg bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:bg-surface-raised focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all resize-none" id="asset-notes" placeholder="Provide technical specs, purchase context, warranty contracts or maintenance vendor notes..." rows="3">Procured under PO-00014 for Q4 engineering team expansion. Configured with standard enterprise security endpoint profile and 3-year ProSupport Next Business Day on-site warranty.</textarea>
+</div>
+<!-- Collapsible Section: Brought in from before go-live -->
+<div class="pt-space-sm">
+<div class="rounded-xl bg-surface-container-low overflow-hidden">
+<button aria-expanded="false" class="w-full px-space-md py-space-md flex items-center justify-between hover:bg-surface-container text-left transition-colors" onclick="const c = document.getElementById('pre-golive-content'); const i = document.getElementById('collapse-icon'); c.classList.toggle('hidden'); i.classList.toggle('rotate-180');" type="button">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-sunken flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</div>
+<div>
+<span class="font-h3 text-h3 text-ink">Brought in from before go-live</span>
+<p class="font-body-sm text-[12px] text-ink-3">Only applicable for legacy assets acquired prior to Kxmeleon ERP system cut-off date.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-overline text-[11px] text-ink-3 uppercase font-semibold">Opening Balance Adjustments</span>
+<span class="material-symbols-outlined text-[20px] text-ink-2 transition-transform duration-200" id="collapse-icon">expand_more</span>
+</div>
+</button>
+<div class="px-space-md pb-space-lg pt-space-xs flex flex-col gap-space-md" id="pre-golive-content">
+<div class="p-space-sm rounded-lg bg-warning-bg/60 text-warning-text flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-warning-text shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-[13px] leading-relaxed">
+<strong>Opening balance rule:</strong> Its cost and historical depreciation are already recorded in the general ledger via initial opening balances; registering here builds the future depreciation schedule and <em>posts nothing</em> immediately to the GL.
+                  </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-2">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm text-ink" for="accum-dep-prior">Accumulated depreciation so far</label>
+<div class="relative flex items-center">
+<span class="absolute left-3.5 font-label text-body-sm text-ink-3">₦</span>
+<input class="w-full h-11 pl-9 pr-3.5 rounded-lg bg-surface-raised text-ink font-body-sm text-body-sm font-mono focus:outline-none focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all" id="accum-dep-prior" placeholder="0.00" type="text" value="0.00"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-body-sm text-ink" for="depreciated-up-to">Depreciated up to month</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-[20px] text-ink-3 pointer-events-none">event_repeat</span>
+<input class="w-full h-11 pl-11 pr-3.5 rounded-lg bg-surface-raised text-ink font-body-sm text-body-sm focus:outline-none focus:shadow-[0_0_0_2px_rgba(90,75,219,0.3)] transition-all" id="depreciated-up-to" type="month" value="2026-10"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+<!-- Action Footer (Pinned Bottom Anchor) -->
+<div class="rounded-xl bg-surface-raised p-space-md shadow-[0_2px_10px_rgba(22,22,42,0.04)] flex flex-wrap items-center justify-between gap-space-md">
+<a class="h-11 px-space-md rounded-lg text-ink-2 hover:text-ink hover:bg-surface-container-low font-label text-label flex items-center transition-colors" href="#">
+          Cancel and return to register
+        </a>
+<div class="flex items-center gap-space-sm">
+<button class="h-11 px-space-lg rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label transition-colors" type="button">
+            Save as draft
+          </button>
+<button class="h-11 px-space-xl rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-[0_2px_8px_rgba(90,75,219,0.35)] flex items-center gap-2 transition-all active:scale-[0.98]" onclick="document.getElementById('confirmation-toast').classList.remove('translate-y-24', 'opacity-0'); setTimeout(() =&gt; document.getElementById('confirmation-toast').classList.add('translate-y-24', 'opacity-0'), 4000);" type="button">
+<span class="material-symbols-outlined text-[18px]">app_registration</span>
+<span>Register asset</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right 4 Cols: Statutory Preview & Policy Guidance Rail -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- Statutory Schedule Summary Widget -->
+<div class="rounded-xl bg-surface-raised p-space-lg shadow-[0_2px_12px_rgba(22,22,42,0.04)] relative overflow-hidden">
+<div class="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-primary/5 pointer-events-none"></div>
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-iris"></span>
+<h3 class="font-h3 text-h3 text-ink">Schedule Preview</h3>
+</div>
+<span class="font-overline text-[11px] text-ink-3 uppercase font-semibold">IAS 16 Active</span>
+</div>
+<!-- Metric Highlight -->
+<div class="my-space-md p-space-md rounded-xl bg-surface-sunken flex flex-col gap-1">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Net Book Value (Initial)</span>
+<div class="flex items-baseline gap-1">
+<span class="font-label text-label text-ink-3">₦</span>
+<span class="font-stat text-stat text-ink font-mono tracking-tight">1,850,000.00</span>
+</div>
+<div class="flex items-center justify-between pt-2 mt-2 text-ink-2 font-body-sm text-[12px]">
+<span>Net depreciable balance:</span>
+<span class="font-mono font-semibold text-ink">₦1,665,000.00</span>
+</div>
+</div>
+<!-- Monthly Calculation Pill -->
+<div class="flex flex-col gap-3 py-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-iris">pie_chart</span>
+<span class="font-label text-label text-ink">Monthly Depreciation</span>
+</div>
+<span class="font-stat text-[20px] text-iris font-mono font-bold">₦46,250.00</span>
+</div>
+<div class="flex items-center justify-between text-ink-2 font-body-sm text-[13px]">
+<span>First scheduled run:</span>
+<span class="px-2 py-0.5 rounded bg-iris-tint text-primary font-semibold text-[12px]">November 2026 Run</span>
+</div>
+<div class="flex items-center justify-between text-ink-2 font-body-sm text-[13px]">
+<span>Final cycle date:</span>
+<span class="font-mono font-medium text-ink">October 2029</span>
+</div>
+</div>
+<!-- Visual Depreciation Mini Chart (SVG) -->
+<div class="mt-space-md pt-space-md flex flex-col gap-2">
+<div class="flex items-center justify-between text-ink-3 font-overline text-[11px]">
+<span>COST ₦1.85M</span>
+<span>AMORTIZATION TRAJECTORY (36 MOS)</span>
+<span>RESIDUAL ₦185K</span>
+</div>
+<div class="h-16 w-full bg-surface-container-low rounded-lg p-2 flex items-end">
+<svg class="w-full h-full text-iris overflow-visible" preserveaspectratio="none" viewbox="0 0 240 40">
+<!-- Grid line floor -->
+<line stroke="currentColor" stroke-dasharray="2,2" stroke-opacity="0.15" x1="0" x2="240" y1="36" y2="36"></line>
+<!-- Gradient fill under trajectory -->
+<defs>
+<lineargradient id="depGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#5A4BDB" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#5A4BDB" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<polygon fill="url(#depGrad)" points="0,4 240,32 240,40 0,40"></polygon>
+<polyline fill="none" points="0,4 60,11 120,18 180,25 240,32" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></polyline>
+<circle cx="0" cy="4" fill="currentColor" r="3.5"></circle>
+<circle cx="240" cy="32" fill="currentColor" r="3.5"></circle>
+</svg>
+</div>
+</div>
+<!-- General Ledger Mapping Tuple -->
+<div class="mt-space-md pt-space-md flex flex-col gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">General Ledger Postings</span>
+<div class="flex flex-col gap-1.5 font-body-sm text-[12px]">
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunken">
+<span class="text-ink font-medium">Debit 1550 (Computer Equipment)</span>
+<span class="font-mono text-ink-2">₦1,850,000.00</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunken">
+<span class="text-ink font-medium">Credit 1551 (Accum. Depreciation)</span>
+<span class="font-mono text-ink-2">Monthly schedule</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-sunken">
+<span class="text-ink font-medium">Debit 6500 (Depreciation Expense)</span>
+<span class="font-mono text-ink-2">₦46,250.00 / mo</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Policy Notice: Edit Variant Policy Notice Box -->
+<div class="rounded-xl bg-surface-raised p-space-md shadow-[0_1px_6px_rgba(22,22,42,0.04)] flex flex-col gap-2.5">
+<div class="flex items-center gap-2 text-warning-text">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+<span class="font-label text-label font-semibold text-ink">Statutory Edit Policy</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 leading-relaxed">
+          Once the first monthly depreciation period has posted, statutory financial fields (Asset Cost, Capitalisation Date, and Category) are permanently locked under IAS 16 audit controls.
+        </p>
+<div class="p-2.5 rounded-lg bg-surface-sunken flex flex-col gap-1 font-body-sm text-[12px] text-ink-3">
+<span class="font-semibold text-ink">Mutable fields post-registration:</span>
+<span>• Asset name &amp; tag number</span>
+<span>• Physical deploy location</span>
+<span>• Cost centre routing</span>
+<span>• Operational &amp; warranty descriptions</span>
+</div>
+</div>
+<!-- Quick Document Audit Card -->
+<div class="rounded-xl bg-surface-raised p-space-md shadow-[0_1px_6px_rgba(22,22,42,0.04)] flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-iris-tint text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+<div class="min-w-0">
+<p class="font-label text-label text-ink truncate">Auditor Sign-off Status</p>
+<p class="font-body-sm text-[12px] text-ink-3 truncate">Tax Year 2026 Asset Register</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-sunken text-ink-2 font-overline text-[11px] font-semibold">Active</span>
+</div>
+</div>
+</div>
+<!-- Interactive Mock Toast Notification -->
+<div class="fixed bottom-6 right-8 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="confirmation-toast">
+<div class="px-5 py-4 rounded-xl bg-ink text-surface-raised shadow-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-lime text-[22px]">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label text-label text-surface-raised">Asset Register Schedule Generated</span>
+<span class="font-body-sm text-[12px] text-surface-container">Dell Latitude 5440 scheduled for Nov 2026 run.</span>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

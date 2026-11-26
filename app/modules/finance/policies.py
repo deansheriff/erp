@@ -179,6 +179,26 @@ BANK_APPROVE = Permission(
     "Approve a reconciliation or a transfer someone else prepared, posting its journals.",
     scopes=ORG_ONLY,
 )
+# Fixed assets (ADR 0027)
+ASSET_READ = Permission(
+    "finance.asset.read",
+    "View fixed assets",
+    "See the asset register, categories, depreciation runs, revaluations and disposals.",
+    scopes=ORG_ONLY,
+)
+ASSET_MANAGE = Permission(
+    "finance.asset.manage",
+    "Manage fixed assets",
+    "Keep asset categories, register assets, prepare depreciation runs, and record "
+    "revaluations and disposals.",
+    scopes=ORG_ONLY,
+)
+ASSET_APPROVE = Permission(
+    "finance.asset.approve",
+    "Approve depreciation and asset changes",
+    "Post a depreciation run, or approve a revaluation or disposal, that someone else prepared.",
+    scopes=ORG_ONLY,
+)
 
 PERMISSIONS = (
     ACCOUNT_READ,
@@ -209,6 +229,9 @@ PERMISSIONS = (
     BANK_MANAGE,
     BANK_RECONCILE,
     BANK_APPROVE,
+    ASSET_READ,
+    ASSET_MANAGE,
+    ASSET_APPROVE,
 )
 
 SOD_RULES = (
@@ -241,5 +264,11 @@ SOD_RULES = (
         permission=BANK_APPROVE.key,
         conflict="creator_is_actor",
         message="Someone else approves a reconciliation or transfer you prepared.",
+    ),
+    SodRule(
+        key="finance.asset_four_eyes",
+        permission=ASSET_APPROVE.key,
+        conflict="creator_is_actor",
+        message="Someone else posts a depreciation run or approves an asset change you prepared.",
     ),
 )
