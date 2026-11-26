@@ -1,6 +1,7 @@
 """Purchase orders and goods received (ADR 0025). A PO is drafted by one person and
 approved by another; goods are received against its lines, never more than is
-outstanding. Nothing here posts to the ledger."""
+outstanding. Receiving a stock line brings it into stock and posts Dr inventory, Cr goods
+received not invoiced (ADR 0029); other lines post nothing."""
 
 import uuid
 from collections import defaultdict
@@ -16,13 +17,14 @@ from app.authz import catalogue, engine, sod
 from app.core import clock, numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
-from app.modules.finance import accounts, journals, sales, tax
+from app.modules.finance import accounts, journals, periods, sales, stock_link, tax
 from app.modules.finance.models import (
     Account,
     Bill,
     BillLine,
     GoodsReceipt,
     GoodsReceiptLine,
+    Journal,
     PurchaseLine,
     PurchaseOrder,
     Supplier,
@@ -153,7 +155,9 @@ def save_order(
         errors["order_date"] = "Enter the order date."
     if data.expected_date and data.order_date and data.expected_date < data.order_date:
         errors["expected_date"] = "Delivery can't be expected before the order date."
-    parsed, line_errors = sales.parse_lines(db, data.lines, allowed=cost_accounts(db))
+    parsed, line_errors = sales.parse_lines(
+        db, data.lines, allowed=cost_accounts(db), stock_account=True
+    )
     errors.update(line_errors)
     if not parsed and not errors:
         errors["form"] = "Add at least one line."
@@ -189,6 +193,8 @@ def save_order(
                 vat_code=line.vat_code,
                 vat_rate=ZERO,
                 vat=ZERO,
+                item_id=line.item_id,
+                warehouse_id=line.warehouse_id,
             )
         )
     db.flush()
@@ -309,15 +315,30 @@ def billed_quantities(
 
 
 def received_quantities(db: Session, line_ids: list[uuid.UUID]) -> dict[uuid.UUID, Decimal]:
+    """Quantities received, less stock sent back on posted debit notes (ADR 0029)."""
     if not line_ids:
         return {}
-    return dict(
-        db.execute(
-            select(GoodsReceiptLine.line_id, func.sum(GoodsReceiptLine.quantity))
-            .where(GoodsReceiptLine.line_id.in_(line_ids))
-            .group_by(GoodsReceiptLine.line_id)
-        ).all()
-    )
+    out: dict[uuid.UUID, Decimal] = defaultdict(lambda: ZERO)
+    for line_id, qty in db.execute(
+        select(GoodsReceiptLine.line_id, func.sum(GoodsReceiptLine.quantity))
+        .where(GoodsReceiptLine.line_id.in_(line_ids))
+        .group_by(GoodsReceiptLine.line_id)
+    ).all():
+        out[line_id] += qty
+    for po_id, returned in db.execute(
+        select(BillLine.order_line_id, func.sum(BillLine.quantity))
+        .join(Bill, Bill.id == BillLine.bill_id)
+        .where(
+            BillLine.order_line_id.in_(line_ids),
+            BillLine.item_id.is_not(None),
+            Bill.kind == "debit_note",
+            Bill.status == "posted",
+        )
+        .group_by(BillLine.order_line_id)
+    ).all():
+        if po_id:
+            out[po_id] -= returned
+    return dict(out)
 
 
 def progress(db: Session, order_id: uuid.UUID) -> dict[uuid.UUID, Progress]:
@@ -341,6 +362,69 @@ def shown_status(order: PurchaseOrder, done: dict[uuid.UUID, Progress]) -> str:
     return "approved"
 
 
+@dataclass(frozen=True, slots=True)
+class ReceiveDetail:
+    """Where a stock line goes and what identifies it, as typed on the GRN form."""
+
+    bin_id: str = ""
+    lot_number: str = ""
+    expiry: date | None = None
+    serials: str = ""
+
+
+def _receive_stock(
+    db: Session,
+    actor: Actor,
+    grn: GoodsReceipt,
+    taken: list[tuple[uuid.UUID, Decimal]],
+    details: dict[str, ReceiveDetail],
+) -> list[journals.SystemLine]:
+    """Bring the GRN's stock lines into stock at the order price. Returns Dr inventory,
+    Cr goods received not invoiced."""
+    lines = {line.id: line for line in order_lines(db, grn.order_id)}
+    stocked = [(lid, qty) for lid, qty in taken if lines[lid].item_id and lines[lid].warehouse_id]
+    if not stocked:
+        return []
+    link = stock_link.link()
+    src = stock_link.Source(
+        "receipt", "goods_receipt", grn.id, grn.number, grn.received_on, actor.user_id
+    )
+    codes = {a.id: a.code for a in accounts.all_accounts(db)}
+    errors: dict[str, str] = {}
+    out: list[journals.SystemLine] = []
+    total = ZERO
+    for lid, qty in stocked:
+        line = lines[lid]
+        assert line.item_id is not None and line.warehouse_id is not None  # noqa: S101
+        item = link.item(db, line.item_id)
+        assert item is not None  # noqa: S101  (foreign key)
+        detail = details.get(str(lid), ReceiveDetail())
+        value = (qty * line.unit_price).quantize(CENT, rounding=ROUND_HALF_UP)
+        moving = stock_link.StockLine(
+            f"qty_{lid}",
+            line.item_id,
+            line.warehouse_id,
+            qty,
+            bin_id=_uuid(detail.bin_id),
+            lot_number=detail.lot_number.strip(),
+            expiry=detail.expiry,
+            serials=detail.serials,
+        )
+        try:
+            link.move_in(db, src, moving, value)
+        except ValidationFailed as exc:
+            errors.update(exc.field_errors or {})
+            continue
+        if value:
+            out.append((codes[item.inventory_account_id], line.cost_centre_id, value, ZERO))
+            total += value
+    if errors:
+        raise ValidationFailed(field_errors=errors)
+    if total:
+        out.append((periods.settings(db).grni_code, None, ZERO, total))
+    return out
+
+
 def receive(
     db: Session,
     actor: Actor,
@@ -350,6 +434,7 @@ def receive(
     delivery_note: str,
     note: str,
     quantities: dict[str, str],
+    details: dict[str, ReceiveDetail] | None = None,
 ) -> str:
     """Record goods received against an approved order. Returns the GRN number."""
     _require(db, actor, CREATE)
@@ -362,22 +447,7 @@ def receive(
         errors["received_on"] = "Enter the date the goods arrived."
     elif received_on < order.order_date:
         errors["received_on"] = "Goods can't arrive before the order date."
-    taken: list[tuple[uuid.UUID, Decimal]] = []
-    for line_id, text in quantities.items():
-        lid = _uuid(line_id)
-        if lid is None or lid not in done or not text.strip():
-            continue
-        key = f"qty_{lid}"
-        try:
-            qty = Decimal(text.strip().replace(",", ""))
-        except ArithmeticError:
-            qty = Decimal(-1)
-        if not qty.is_finite() or qty < 0 or qty != qty.quantize(Decimal("0.001")):
-            errors[key] = "Enter a quantity."
-        elif qty > done[lid].to_receive:
-            errors[key] = f"Only {done[lid].to_receive.normalize():f} is still to come."
-        elif qty:
-            taken.append((lid, qty))
+    taken = _quantities(done, quantities, errors)
     if not taken and not errors:
         errors["form"] = "Enter what was received on at least one line."
     if errors:
@@ -396,6 +466,21 @@ def receive(
     for lid, qty in taken:
         db.add(GoodsReceiptLine(receipt_id=grn.id, line_id=lid, quantity=qty))
     db.flush()
+    stock_lines = _receive_stock(db, actor, grn, taken, details or {})
+    if stock_lines:
+        supplier = db.get(Supplier, order.supplier_id)
+        journal = journals.post_document_journal(
+            db,
+            source_id=grn.id,
+            journal_date=received_on,
+            memo=f"Goods received {grn.number} · {supplier.name if supplier else ''}",
+            lines=stock_lines,
+            poster=actor.user_id,
+            source="payable",
+        )
+        grn.journal_id = journal.id
+        stock_link.link().set_journal(db, "goods_receipt", grn.id, journal.id)
+        db.flush()
     record_by(
         db,
         actor,
@@ -405,6 +490,29 @@ def receive(
         changes={"grn": grn.number, "lines": len(taken)},
     )
     return grn.number
+
+
+def _quantities(
+    done: dict[uuid.UUID, Progress], quantities: dict[str, str], errors: dict[str, str]
+) -> list[tuple[uuid.UUID, Decimal]]:
+    """The GRN form's quantities, by PO line, never more than is still to come."""
+    taken: list[tuple[uuid.UUID, Decimal]] = []
+    for line_id, text in quantities.items():
+        lid = _uuid(line_id)
+        if lid is None or lid not in done or not text.strip():
+            continue
+        key = f"qty_{lid}"
+        try:
+            qty = Decimal(text.strip().replace(",", ""))
+        except ArithmeticError:
+            qty = Decimal(-1)
+        if not qty.is_finite() or qty < 0 or qty != qty.quantize(Decimal("0.001")):
+            errors[key] = "Enter a quantity."
+        elif qty > done[lid].to_receive:
+            errors[key] = f"Only {done[lid].to_receive.normalize():f} is still to come."
+        elif qty:
+            taken.append((lid, qty))
+    return taken
 
 
 def close_if_billed(db: Session, order_id: uuid.UUID) -> None:
@@ -438,6 +546,11 @@ class OrderLineView:
     vat_rate: Decimal
     vat: Decimal
     progress: Progress
+    item_id: uuid.UUID | None = None  # a stock line (ADR 0029)
+    item: str | None = None
+    tracking: str = "none"
+    warehouse_id: uuid.UUID | None = None
+    warehouse: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -449,6 +562,7 @@ class ReceiptView:
     note: str | None
     by: str | None
     lines: int
+    journal: tuple[uuid.UUID, str] | None = None  # stock received (ADR 0029)
 
 
 @dataclass(frozen=True, slots=True)
@@ -520,6 +634,18 @@ def get_order(db: Session, actor: Actor, order_id: uuid.UUID) -> OrderView:
             "You drafted this purchase order, so someone else approves it.",
         )
     shown = shown_status(order, done)
+    link = stock_link.link()
+    items = {}
+    for line in order_lines(db, order.id):
+        if line.item_id and line.item_id not in items:
+            items[line.item_id] = link.item(db, line.item_id)
+    stores = dict(link.warehouses(db))
+    posted = {
+        j.id: j.number
+        for j in db.scalars(
+            select(Journal).where(Journal.id.in_([g.journal_id for g in grns if g.journal_id]))
+        )
+    }
     return OrderView(
         id=order.id,
         number=order.number,
@@ -552,6 +678,11 @@ def get_order(db: Session, actor: Actor, order_id: uuid.UUID) -> OrderView:
                 line.vat_rate,
                 line.vat,
                 done[line.id],
+                line.item_id,
+                _label(items.get(line.item_id)) if line.item_id else None,
+                _tracking(items.get(line.item_id)) if line.item_id else "none",
+                line.warehouse_id,
+                stores.get(line.warehouse_id, "") if line.warehouse_id else None,
             )
             for line in order_lines(db, order.id)
         ],
@@ -564,6 +695,9 @@ def get_order(db: Session, actor: Actor, order_id: uuid.UUID) -> OrderView:
                 g.note,
                 names.get(g.created_by) if g.created_by else None,
                 counts.get(g.id, 0),
+                (g.journal_id, posted[g.journal_id] or "")
+                if g.journal_id and g.journal_id in posted
+                else None,
             )
             for g in grns
         ],
@@ -579,6 +713,14 @@ def get_order(db: Session, actor: Actor, order_id: uuid.UUID) -> OrderView:
         and _can(db, actor, APPROVE)
         and not any(p.received for p in done.values()),
     )
+
+
+def _label(item: stock_link.StockItem | None) -> str:
+    return item.label if item else ""
+
+
+def _tracking(item: stock_link.StockItem | None) -> str:
+    return item.tracking if item else "none"
 
 
 @dataclass(frozen=True, slots=True)

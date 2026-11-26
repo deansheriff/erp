@@ -5,6 +5,18 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 11b: Stock in purchasing and sales
+- Purchase order and sales lines can name a stock item and warehouse (ADR 0029). A stock
+  PO line is charged to the item's inventory account.
+- Goods received notes bring stock in at the order price, with bins, lots and expiry or
+  serial numbers, and post debit inventory, credit 2030 Goods received not invoiced (new,
+  to confirm, a finance setting).
+- Bills clear goods received not invoiced at the order price, with any price difference
+  to the item's variance account; debit notes send stock back to the supplier at cost.
+- Invoices take stock out at cost and post cost of sales in the same journal, refused
+  without enough on hand; credit notes put it back at the invoice's cost.
+- Stock move kinds `receipt`, `purchase_return`, `sale` and `sale_return`.
+
 ### Added — Phase 11a: Inventory
 - Items with a unit of measure, category, FIFO or weighted-average valuation, lot or
   serial tracking and reorder levels; warehouses and bins; item categories naming the

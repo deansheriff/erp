@@ -40,6 +40,14 @@ first. Serial items move by serial number, one per unit.
 | Adjustment in | Debit inventory; credit the contra account (the category's adjustment account unless another is chosen, e.g. for opening stock) | Someone other than whoever recorded it |
 | Adjustment out | Debit the contra account; credit inventory at cost | Someone other than whoever recorded it |
 | Count variance | Through each category's adjustment account | Someone other than whoever started the count |
+| Goods received (`GRN-`) | Debit inventory at the order price; credit 2030 goods received not invoiced (source `payable`) | Whoever records the receipt in Finance |
+| Debit note (`DN-`) | Credit inventory at cost; the bill difference to the category's adjustment account | Someone other than its drafter |
+| Invoice (`INV-`) | Debit the category's cost of sales; credit inventory at cost | Whoever issues it |
+| Credit note (`CN-`) | Debit inventory at the invoice's cost; credit cost of sales | Someone other than its drafter |
+
+Finance moves stock through `app/modules/finance/stock_link.py`, which this module
+implements in `service.py` (ADR 0029); the stock ledger shows the finance document's
+number.
 
 Stock journals are reversed only by another stock document, never from the Journals
 screen.

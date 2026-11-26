@@ -11,13 +11,19 @@ from app.modules.finance.journals import (
     statuses,
 )
 from app.modules.finance.sales import organisation_name
+from app.modules.finance.stock_link import Source as StockSource
+from app.modules.finance.stock_link import StockItem, StockLine, set_link
 
 __all__ = [
+    "StockItem",
+    "StockLine",
+    "StockSource",
     "SystemLine",
     "all_accounts",
     "organisation_name",
     "post_document_journal",
     "post_system_journal",
     "postable",
+    "set_link",
     "statuses",
 ]

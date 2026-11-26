@@ -72,14 +72,17 @@
     <div class="sm:col-span-2">{{ ui.text_field("memo", "Memo", value=v.get("memo") or (b.memo or "" if b else ""), errors=errors) }}</div>
   </div>
   <div class="kx-scroll-x border-t border-line">
-    <table class="w-full min-w-[1080px] text-body-sm">
-      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="w-56 px-3 py-2.5 text-left font-semibold">Account</th><th class="w-44 px-3 py-2.5 text-left font-semibold">Cost centre</th><th class="w-20 px-3 py-2.5 text-right font-semibold">Qty</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Unit price</th><th class="w-36 px-3 py-2.5 text-left font-semibold">VAT</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Net</th>{% if from_order %}<th class="px-3 py-2.5 text-left font-semibold">Match</th>{% endif %}</tr></thead>
+    <table class="w-full min-w-[1320px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="w-56 px-3 py-2.5 text-left font-semibold">Account</th><th class="w-44 px-3 py-2.5 text-left font-semibold">Cost centre</th><th class="w-24 px-3 py-2.5 text-right font-semibold">Qty</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Unit price</th><th class="w-36 px-3 py-2.5 text-left font-semibold">VAT</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Net</th>{% if from_order %}<th class="px-3 py-2.5 text-left font-semibold">Match</th>{% endif %}</tr></thead>
       <tbody class="divide-y divide-line">
         {% for line in rows %}
         {% set i = loop.index0 %}
         {% set shown_line = b.lines[i] if b and i < b.lines | length else none %}
         <tr class="align-top" data-line>
-          <td class="px-3 py-2"><input type="hidden" name="order_line_id" value="{{ line.order_line_id }}"><label class="sr-only" for="ds-{{ i }}">Description, line {{ i + 1 }}</label><input id="ds-{{ i }}" name="description" value="{{ line.description }}" class="kx-input h-10">{% if errors.get("line_" ~ i) %}<p class="kx-field-error">{{ ui.icon("circle-alert", "sm") }} {{ errors["line_" ~ i] }}</p>{% endif %}</td>
+          <td class="px-3 py-2"><input type="hidden" name="order_line_id" value="{{ line.order_line_id }}"><label class="sr-only" for="ds-{{ i }}">Description, line {{ i + 1 }}</label><input id="ds-{{ i }}" name="description" value="{{ line.description }}" class="kx-input h-10">
+            {% if shown_line and shown_line.item %}<span class="mt-1 flex items-center gap-1 text-xs text-ink-3">{{ ui.icon("package", "sm") }} {{ shown_line.item }}</span>{% endif %}
+            {% if kind == "debit_note" and shown_line and shown_line.item %}<label class="sr-only" for="sn-{{ i }}">Serial numbers returned, line {{ i + 1 }}</label><input id="sn-{{ i }}" name="serials" value="{{ line.serials }}" placeholder="Serial numbers returned, for serial items" class="kx-input mt-1.5 h-9 font-mono text-xs">{% else %}<input type="hidden" name="serials" value="">{% endif %}
+            {% if errors.get("line_" ~ i) %}<p class="kx-field-error">{{ ui.icon("circle-alert", "sm") }} {{ errors["line_" ~ i] }}</p>{% endif %}</td>
           <td class="px-3 py-2">
             {% if line.order_line_id %}<input type="hidden" name="account_id" value="{{ line.account_id }}"><span class="block pt-2 text-ink-2">{% for a in cost_accounts if a.id|string == line.account_id %}{{ a.code }} {{ a.name }}{% endfor %}</span>
             {% else %}<label class="sr-only" for="ac-{{ i }}">Account, line {{ i + 1 }}</label><select id="ac-{{ i }}" name="account_id" class="kx-input h-10"><option value="">—</option>{% for a in cost_accounts %}<option value="{{ a.id }}" {% if line.account_id == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>{% endif %}
@@ -96,7 +99,8 @@
     </table>
   </div>
   <div class="flex flex-col gap-4 border-t border-line p-5 sm:flex-row sm:items-end sm:justify-between">
-    <p class="text-xs text-ink-3">{% if from_order %}Lines come from the purchase order. Prices may differ from it by up to {{ tolerance | plain }}%; quantities can't be more than was received.{% else %}Need more lines? Save, and more empty rows appear.{% endif %}</p>
+    <div class="space-y-1 text-xs text-ink-3"><p>{% if from_order %}Lines come from the purchase order. Prices may differ from it by up to {{ tolerance | plain }}%; quantities can't be more than was received.{% else %}Need more lines? Save, and more empty rows appear.{% endif %}</p>
+      {% if b and b.lines | selectattr("item") | list %}<p>{% if kind == "debit_note" %}Stock lines go back to the supplier when the note is issued, taken out of stock at cost; any difference goes to the item's variance account.{% else %}Stock lines clear goods received not invoiced at the order price; any price difference goes to the item's variance account.{% endif %}</p>{% endif %}</div>
     <dl class="w-full max-w-xs space-y-1 text-body-sm" aria-live="polite">
       <div class="flex justify-between"><dt class="text-ink-3">Net</dt><dd class="tnum" x-text="net"></dd></div>
       <div class="flex justify-between"><dt class="text-ink-3">VAT</dt><dd class="tnum" x-text="vat"></dd></div>
@@ -112,7 +116,7 @@
       <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Description</th><th class="px-3 py-2.5 text-left font-semibold">Account</th><th class="px-3 py-2.5 text-right font-semibold">Qty</th><th class="px-3 py-2.5 text-right font-semibold">Unit price</th><th class="px-3 py-2.5 text-left font-semibold">VAT</th><th class="px-3 py-2.5 text-right font-semibold">Net</th><th class="px-5 py-2.5 text-right font-semibold">VAT amount</th></tr></thead>
       <tbody class="divide-y divide-line">
         {% for line in b.lines %}
-        <tr><td class="px-5 py-2.5">{{ line.description }}{% if line.cost_centre %}<span class="block text-xs text-ink-3">{{ line.cost_centre }}</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.account }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.quantity | plain }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.unit_price | money }}</td><td class="px-3 py-2.5">{{ line.vat_label }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.net | money }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.vat | money }}</td></tr>
+        <tr><td class="px-5 py-2.5">{{ line.description }}{% if line.item %}<span class="mt-0.5 flex items-center gap-1 text-xs text-ink-3">{{ ui.icon("package", "sm") }} {{ line.item }}</span>{% if line.serials %}<span class="block font-mono text-xs text-ink-3">{{ line.serials }}</span>{% endif %}{% endif %}{% if line.cost_centre %}<span class="block text-xs text-ink-3">{{ line.cost_centre }}</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.account }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.quantity | plain }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.unit_price | money }}</td><td class="px-3 py-2.5">{{ line.vat_label }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.net | money }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.vat | money }}</td></tr>
         {% endfor %}
       </tbody>
     </table>

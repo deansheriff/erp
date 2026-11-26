@@ -226,6 +226,8 @@ class FinanceSettings(Base):
     revaluation_reserve_code: Mapped[str] = mapped_column(String(20), server_default="3300")
     disposal_code: Mapped[str] = mapped_column(String(20), server_default="4910")
     revaluation_loss_code: Mapped[str] = mapped_column(String(20), server_default="6910")
+    # Stock in purchasing (ADR 0029), to confirm.
+    grni_code: Mapped[str] = mapped_column(String(20), server_default="2030")
 
 
 # ------------------------------------------------------------------ receivables and tax (ADR 0024)
@@ -336,6 +338,10 @@ class SalesLine(IdMixin, Base):
     vat_code: Mapped[str] = mapped_column(String(8))
     vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
     vat: Mapped[Decimal] = mapped_column(Money)
+    # A stock item (ADR 0029): inventory's items and warehouses.
+    item_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("items.id"))
+    warehouse_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("warehouses.id"))
+    serials: Mapped[str | None] = mapped_column(Text)
 
 
 class Receipt(IdMixin, Base):
@@ -513,6 +519,9 @@ class PurchaseLine(IdMixin, Base):
     vat_code: Mapped[str] = mapped_column(String(8))
     vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
     vat: Mapped[Decimal] = mapped_column(Money)
+    # A stock item (ADR 0029): inventory's items and warehouses.
+    item_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("items.id"))
+    warehouse_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("warehouses.id"))
 
 
 class GoodsReceipt(IdMixin, Base):
@@ -527,6 +536,7 @@ class GoodsReceipt(IdMixin, Base):
     note: Mapped[str | None] = mapped_column(Text)
     created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))  # stock
 
 
 class GoodsReceiptLine(IdMixin, Base):
@@ -607,6 +617,8 @@ class BillLine(IdMixin, Base):
     vat_code: Mapped[str] = mapped_column(String(8))
     vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
     vat: Mapped[Decimal] = mapped_column(Money)
+    item_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("items.id"))  # from its order
+    serials: Mapped[str | None] = mapped_column(Text)  # a debit note returning serial items
 
 
 class SupplierPayment(IdMixin, Base):

@@ -38,6 +38,10 @@ MOVE_KINDS = (
     "adjustment_out",
     "count_in",
     "count_out",
+    "receipt",
+    "purchase_return",
+    "sale",
+    "sale_return",
 )
 
 Money = Numeric(16, 2)

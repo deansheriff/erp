@@ -67,6 +67,7 @@ Receivables 1100, VAT output 2200, VAT input 1310, WHT receivable 1320, WHT paya
 stamp duty payable 2220. Payment terms 30 days; reminders 3 days before, on the due date,
 then every 7 days; returns due on the 21st. Trade payables 2010; bill price tolerance 2%.
 Bank matching within 3 days of the ledger date; statement files kept 6 years.
+Goods received not invoiced: 2030.
 Fixed assets: accumulated depreciation 1511 to 1551 (one per cost account), revaluation
 reserve 3300, gain or loss on disposal 4910, revaluation losses 6910, capitalisation
 threshold ₦100,000; categories Buildings 50 years, Land not depreciated, Plant and
@@ -84,6 +85,12 @@ equipment 3 years, all straight line.
   force on the invoice date. An optional stamp duty type adds a flat amount or a
   percentage of the net. Issuing posts debit receivables, credit income, VAT output and
   stamp duty payable. An invoice dated in a closed or unopened month can't be issued.
+- **Stock lines** (ADR 0029): a sales line can name a stock item and a warehouse (and
+  serial numbers for serial items). Issuing an invoice takes the stock out at cost,
+  earliest-expiring lot first, and adds debit cost of sales, credit inventory to its
+  journal; it's refused if there isn't enough on hand. A credit note puts the stock
+  back at the cost its invoice took it out at (or the current cost without an invoice),
+  debit inventory, credit cost of sales.
 - **Credit notes** are drafted by one person and issued by another
   (`finance.credit_note.issue`), and post the invoice's journal the other way round. One
   raised against an invoice is allocated to it, and credit notes can't come to more than
@@ -107,7 +114,12 @@ equipment 3 years, all straight line.
 
 - **Purchase orders** (`PO-`) are drafted by one person and approved by another. Goods
   received (`GRN-`) are recorded against an approved PO's lines, never more than is still
-  to come; nothing posts until the bill.
+  to come. Lines that aren't stock post nothing until the bill.
+- **Stock lines** (ADR 0029): a PO line can name a stock item and a warehouse; it's
+  charged to the item's inventory account. Receiving it brings the stock in at the order
+  price (with a bin, lot and expiry, or serial numbers, as the item needs) and posts debit
+  inventory, credit goods received not invoiced (2030), so the date must be in an open
+  month.
 - **Bills** (`BILL-`) come from a PO (its received, unbilled lines) or are direct, against
   expense or asset accounts. Each records the supplier's invoice number, once per
   supplier. Every bill is approved by someone other than its drafter. A bill from a PO is
@@ -115,8 +127,14 @@ equipment 3 years, all straight line.
   up to the tolerance (2%) away from the PO. One that fails is **held**; a Finance Manager
   (`finance.bill.override`) posts it with a reason, or it is corrected and approved again.
   Posting debits the lines' accounts and VAT input and credits trade payables (2010).
+  A stock line instead debits goods received not invoiced at the order price, with any
+  price difference to the item's variance account (5200); stock keeps its received
+  cost.
 - **Debit notes** (`DN-`) are raised against a posted bill, issued by someone other than
-  the drafter, and can't be more than the bill's balance.
+  the drafter, and can't be more than the bill's balance. Stock lines go back to the
+  supplier from the order line's warehouse (serial items name their serials): inventory
+  is credited at cost, the difference goes to the variance account, and the quantity no
+  longer counts as received.
 - **Payments** (`PAY-`) settle posted bills. WHT is withheld at payment from each bill's
   WHT type at the supplier's company or individual rate, on the part settled that isn't
   VAT. A payment is prepared by one person and approved by another; approval posts debit

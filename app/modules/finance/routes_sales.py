@@ -17,7 +17,15 @@ from app.core import clock
 from app.core.db import get_db
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
-from app.modules.finance import customers, periods, receipts, receivables, sales, tax
+from app.modules.finance import (
+    customers,
+    periods,
+    receipts,
+    receivables,
+    sales,
+    stock_link,
+    tax,
+)
 from app.modules.finance.customers import CustomerInput
 from app.modules.finance.models import VAT_CODES, Customer, SalesDocument
 from app.modules.finance.sales import DocumentInput, LineInput
@@ -361,8 +369,12 @@ def _line_inputs(
     quantity: list[str],
     unit_price: list[str],
     vat_code: list[str],
+    *,
+    stock: tuple[list[str], list[str], list[str]] = ([], [], []),
 ) -> list[LineInput]:
-    rows = max(len(description), len(account_id), len(unit_price))
+    """Form lines. `stock` is the item, warehouse and serials lists (ADR 0029)."""
+    item_id, warehouse_id, serials = stock
+    rows = max(len(description), len(account_id), len(unit_price), len(item_id))
 
     def at(values: list[str], i: int) -> str:
         return values[i] if i < len(values) else ""
@@ -375,6 +387,9 @@ def _line_inputs(
             at(quantity, i),
             at(unit_price, i),
             at(vat_code, i) or "standard",
+            at(item_id, i),
+            at(warehouse_id, i),
+            at(serials, i),
         )
         for i in range(rows)
     ]
@@ -402,6 +417,9 @@ def _document_context(
                 f"{line.quantity.normalize():f}",
                 f"{line.unit_price:.2f}",
                 line.vat_code,
+                str(line.item_id or ""),
+                str(line.warehouse_id or ""),
+                line.serials or "",
             )
             for line in (view.lines if view else [])
         ]
@@ -414,6 +432,8 @@ def _document_context(
         "rows": _form_rows(lines),
         "customers": customers.choices(db),
         "income_accounts": sales.income_accounts(db),
+        "stock_items": stock_link.link().items(db),
+        "warehouses": stock_link.link().warehouses(db),
         "cost_centres": org.cost_centre_choices(db),
         "vat_codes": [(c, sales.VAT_LABELS[c]) for c in VAT_CODES],
         "vat_rate": tax.vat_rate_on(db, today),
@@ -487,8 +507,19 @@ def save_document(
     quantity: FormList = [],  # noqa: B006
     unit_price: FormList = [],  # noqa: B006
     vat_code: FormList = [],  # noqa: B006
+    item_id: FormList = [],  # noqa: B006
+    warehouse_id: FormList = [],  # noqa: B006
+    serials: FormList = [],  # noqa: B006
 ) -> Response:
-    lines = _line_inputs(description, account_id, cost_centre_id, quantity, unit_price, vat_code)
+    lines = _line_inputs(
+        description,
+        account_id,
+        cost_centre_id,
+        quantity,
+        unit_price,
+        vat_code,
+        stock=(item_id, warehouse_id, serials),
+    )
     data = DocumentInput(
         kind,
         customer_id,
@@ -519,7 +550,7 @@ def save_document(
             actor,
             existing,
             kind=kind if kind in sales.KIND_LABELS else "invoice",
-            lines=[line for line in lines if line.description or line.unit_price],
+            lines=[line for line in lines if line.description or line.unit_price or line.item_id],
             values=values,
             errors=_errors(exc),
         )

@@ -1185,7 +1185,7 @@ screens:
       email: finance.sales.create
       download_pdf: finance.sales.read
     field_classes: []
-    approved_by: Dean Sheriff (2026-11-22)
+    approved_by: Dean Sheriff (2026-11-26)
 
   - id: finance.receipt
     phase: 10
@@ -1327,7 +1327,7 @@ screens:
       receive: finance.purchase.create
       make_bill: finance.purchase.create
     field_classes: []
-    approved_by: Dean Sheriff (2026-11-22)
+    approved_by: Dean Sheriff (2026-11-26)
 
   - id: finance.bill
     phase: 10
@@ -1347,7 +1347,7 @@ screens:
       post_held: finance.bill.override
       debit_note: finance.purchase.create
     field_classes: []
-    approved_by: Dean Sheriff (2026-11-22)
+    approved_by: Dean Sheriff (2026-11-26)
 
   - id: finance.payment
     phase: 10

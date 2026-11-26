@@ -183,6 +183,7 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         _migration("0015_finance_banking.py").seed_defaults(conn)
         _migration("0016_finance_fixed_assets.py").seed_defaults(conn)
         _migration("0017_inventory.py").seed_defaults(conn)
+        _migration("0018_stock_in_purchasing_and_sales.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "
