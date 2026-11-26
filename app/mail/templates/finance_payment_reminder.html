@@ -1,0 +1,11 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ customer }},</p>
+<p style="margin:0 0 16px;">This is a reminder from {{ organisation }} about the following invoices, as at {{ today }}.</p>
+<table role="presentation" style="margin:0 0 16px;border-collapse:collapse;width:100%;">
+<tr><th align="left" style="padding:6px 12px 6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Invoice</th><th align="left" style="padding:6px 12px 6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Due</th><th align="right" style="padding:6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Balance</th></tr>
+{% for inv in invoices %}<tr><td style="padding:6px 12px 6px 0;font-weight:600;">{{ inv.number }}</td><td style="padding:6px 12px 6px 0;">{{ inv.due }}{% if inv.overdue %} <span style="color:#B4232F;">({{ inv.overdue }} days overdue)</span>{% endif %}</td><td align="right" style="padding:6px 0;">{{ inv.balance }}</td></tr>
+{% endfor %}<tr><td colspan="2" style="padding:8px 12px 0 0;font-weight:700;border-top:1px solid #E4E4EE;">Total</td><td align="right" style="padding:8px 0 0;font-weight:700;border-top:1px solid #E4E4EE;">{{ total }}</td></tr>
+</table>
+<p style="margin:0;color:#4B4B66;">If you have already paid, thank you, and please ignore this email. Otherwise please pay at your earliest convenience, quoting the invoice numbers.</p>
+{% endblock %}

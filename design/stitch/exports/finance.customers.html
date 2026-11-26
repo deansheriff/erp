@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary": "#ffffff", "secondary": "#4f6600", "success-text": "#0F6B3E", "success-bg": "#DDF7E8", "iris-hover": "#4A3CC4", "warning-bg": "#FFF1D6", "ink-3": "#626280", "on-secondary-fixed-variant": "#3b4d00", "warning-text": "#8A4B00", "on-background": "#1a1c1f", "on-primary-fixed-variant": "#3d28be", "surface-bright": "#f9f9fd", "tertiary-container": "#9f4a00", "on-secondary": "#ffffff", "on-primary-fixed": "#140067", "on-iris": "#FFFFFF", "secondary-container": "#c4ef49", "surface-container-highest": "#e2e2e6", "surface-container-high": "#e8e8ec", "on-primary-container": "#e0dbff", "tertiary-fixed": "#ffdbc8", "on-surface": "#1a1c1f", "inverse-surface": "#2e3034", "surface-container-lowest": "#ffffff", "canvas": "#F6F6FA", "on-tertiary-fixed-variant": "#743400", "tertiary": "#7a3700", "surface-dim": "#d9dade", "iris-tint": "#EEECFD", "on-secondary-fixed": "#161f00", "surface-sunken": "#EFEFF6", "lime": "#C5F04A", "info-bg": "#DFEBFF", "inverse-primary": "#c5c0ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#ffb68b", "surface-container-low": "#f3f3f7", "on-error": "#ffffff", "on-surface-variant": "#474554", "iris": "#5A4BDB", "on-primary": "#ffffff", "surface-container": "#ededf1", "outline": "#787586", "surface": "#FFFFFF", "info-text": "#1D55B8", "surface-tint": "#5646d7", "on-tertiary-fixed": "#321300", "primary-container": "#5a4bdb", "danger-text": "#B4232F", "on-error-container": "#93000a", "secondary-fixed": "#c7f24c", "destructive": "#C42836", "secondary-fixed-dim": "#acd530", "surface-raised": "#FFFFFF", "primary-fixed-dim": "#c5c0ff", "error-container": "#ffdad6", "danger-bg": "#FFE4E6", "surface-variant": "#e2e2e6", "outline-variant": "#c8c4d7", "line-strong": "#8B8BA6", "on-secondary-container": "#536b00", "primary": "#412ec2", "primary-fixed": "#e4dfff", "on-tertiary-container": "#ffd7c1", "ink": "#16162A", "inverse-on-surface": "#f0f0f4", "lime-ink": "#4D7A0A", "line": "#E4E4EE", "ink-2": "#4B4B66", "background": "#f9f9fd" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "space-lg": "1.5rem", "space-3xl": "4rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "2rem", "margin": "2rem", "gutter": "1.5rem", "space-2xl": "3rem" }, "fontFamily": { "h2": ["Plus Jakarta Sans"], "display": ["Plus Jakarta Sans"], "h3": ["Plus Jakarta Sans"], "overline": ["Inter"], "label": ["Inter"], "body-sm": ["Inter"], "stat": ["Plus Jakarta Sans"], "h1": ["Plus Jakarta Sans"], "body": ["Inter"] }, "fontSize": { "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }], "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }] } } } };</script></head><body class="bg-canvas font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface z-50 flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between bg-surface"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink tracking-tight">Kxmeleon</span><span class="font-overline text-overline uppercase text-ink-3 -mt-1">Enterprise ERP</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-ink transition-colors">menu_open</span></div><div class="px-space-md py-space-sm"><div class="p-space-xs bg-surface-sunken rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="font-label text-label text-ink font-semibold">Finance Module</span></div><span class="font-overline text-overline px-1.5 py-0.5 rounded bg-surface text-ink-2 uppercase">Cobalt</span></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-xs flex flex-col gap-space-md"><div class="flex flex-col gap-space-xs"><div class="px-space-xs py-1"><span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Receivables</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-all bg-iris-tint text-iris font-semibold rounded-lg" data-path="customers" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label text-label">Customers</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="invoices" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Invoices</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="payments-received" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payments Received</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="aging-reports" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-label text-label">Aging Reports</span></a></nav></div><div class="flex flex-col gap-space-xs"><div class="px-space-xs py-1"><span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Payables</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="vendors" href="#"><span class="material-symbols-outlined text-[20px]">domain</span><span class="font-label text-label">Vendors</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="bills-expenses" href="#"><span class="material-symbols-outlined text-[20px]">request_quote</span><span class="font-label text-label">Bills &amp; Expenses</span></a></nav></div><div class="flex flex-col gap-space-xs"><div class="px-space-xs py-1"><span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Treasury</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="bank-accounts" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-label text-label">Bank Accounts</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="reconciliation" href="#"><span class="material-symbols-outlined text-[20px]">sync_alt</span><span class="font-label text-label">Reconciliation</span></a></nav></div></div><div class="p-space-md bg-surface-sunken/60 mx-space-md mb-space-md rounded-xl flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[20px]">security</span><span class="font-overline text-overline text-ink-2 uppercase">SOC2 Type II</span></div><span class="material-symbols-outlined text-ink-3 text-[16px]">lock</span></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-ink-3 text-[20px]">corporate_fare</span><span class="font-label text-label font-semibold text-ink">Adeyemi Holdings Ltd</span><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer">unfold_more</span></div><div class="relative flex items-center"><div class="flex items-center gap-space-sm bg-surface-sunken hover:bg-surface-container transition-colors px-space-md py-2 rounded-lg w-80 cursor-text"><span class="material-symbols-outlined text-ink-3 text-[18px]">search</span><span class="font-body-sm text-body-sm text-ink-3 flex-1">Search records, invoices...</span><kbd class="font-overline text-overline bg-surface px-1.5 py-0.5 rounded text-ink-3 shadow-[0_1px_2px_rgba(22,22,42,0.06)]">⌘ K</kbd></div></div></div><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container transition-colors" data-path="approvals" href="#"><span class="material-symbols-outlined text-ink-2 text-[18px]">fact_check</span><span class="font-label text-label text-ink-2">Approvals</span><span class="font-overline text-overline font-semibold px-1.5 py-0.2 rounded-full bg-primary text-on-primary">5</span></a><button class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-sunken transition-colors relative" type="button"><span class="material-symbols-outlined text-ink-2 text-[20px]">notifications</span><span class="w-2 h-2 rounded-full bg-error absolute top-2 right-2 ring-2 ring-surface"></span></button><button class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-sunken transition-colors" type="button"><span class="material-symbols-outlined text-ink-2 text-[20px]">light_mode</span></button><div class="h-6 w-px bg-surface-sunken mx-1"></div><div class="flex items-center gap-space-sm pl-1"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label text-label text-ink font-semibold leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3 leading-tight">Finance Manager</span></div></div></div></header><main class="w-full pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full">
+<div class="px-space-xl py-space-lg flex flex-col gap-space-lg">
+<!-- Header Section -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Customers</h1>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-overline text-overline bg-iris-tint text-iris">
+            48 active
+          </span>
+<span class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-overline text-overline bg-success-bg text-success-text">
+<span class="material-symbols-outlined text-[14px]">verified_user</span> JTB/FIRS Linked
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 max-w-2xl">
+          Manage debtor accounts, billing details, credit terms, and automated invoice payment reminders with live JTB/FIRS validation.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm self-start lg:self-center">
+<button class="h-11 px-space-md rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 font-label text-label transition-colors shadow-sm flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[20px] text-ink-3">download</span>
+<span>Export CSV</span>
+</button>
+<button class="h-11 px-space-md rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-colors shadow-sm flex items-center gap-2" id="toggle-drawer-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add customer</span>
+</button>
+</div>
+</div>
+<!-- Summary KPI Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1 -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Total Receivables</span>
+<div class="w-8 h-8 rounded-lg bg-iris-tint flex items-center justify-center text-iris">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-ink font-semibold tracking-tight">₦34,820,000.00</div>
+<div class="flex items-center gap-1.5 mt-1 font-overline text-overline text-success-text">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>▲ 8.4% vs prior month</span>
+</div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Overdue Balance</span>
+<div class="w-8 h-8 rounded-lg bg-danger-bg flex items-center justify-center text-danger-text">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-danger-text font-semibold tracking-tight">₦4,150,000.00</div>
+<div class="flex items-center gap-1.5 mt-1 font-overline text-overline text-ink-3">
+<span class="inline-block w-2 h-2 rounded-full bg-destructive"></span>
+<span>7 flagged accounts · Action required</span>
+</div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Active Debtors</span>
+<div class="w-8 h-8 rounded-lg bg-surface-sunken flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[18px]">domain_verification</span>
+</div>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-ink font-semibold tracking-tight">48 entities</div>
+<div class="flex items-center gap-1.5 mt-1 font-overline text-overline text-ink-3">
+<span>Footprint: Lagos, Abuja, PH</span>
+</div>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Automated Reminders</span>
+<div class="w-8 h-8 rounded-lg bg-success-bg flex items-center justify-center text-success-text">
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+</div>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-ink font-semibold tracking-tight">42 schedules</div>
+<div class="flex items-center gap-1.5 mt-1 font-overline text-overline text-success-text">
+<span class="material-symbols-outlined text-[14px]">format_image_left</span>
+<span>87.5% protected volume</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Split Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Filter Bar & Table (approx 68% / 8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-md">
+<!-- Filter Controls -->
+<div class="bg-surface rounded-xl p-space-sm shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-sm">
+<!-- Segmented Filter Control -->
+<div class="flex items-center bg-surface-sunken p-1 rounded-lg w-full md:w-auto overflow-x-auto">
+<button class="tab-pill px-3 py-1.5 rounded-md font-label text-label text-ink font-semibold bg-surface shadow-xs whitespace-nowrap transition-all" type="button">
+              All (48)
+            </button>
+<button class="tab-pill px-3 py-1.5 rounded-md font-label text-label text-ink-3 hover:text-ink whitespace-nowrap transition-all" type="button">
+              Active (45)
+            </button>
+<button class="tab-pill px-3 py-1.5 rounded-md font-label text-label text-ink-3 hover:text-ink whitespace-nowrap transition-all" type="button">
+              With overdue (7)
+            </button>
+<button class="tab-pill px-3 py-1.5 rounded-md font-label text-label text-ink-3 hover:text-ink whitespace-nowrap transition-all" type="button">
+              Inactive (3)
+            </button>
+</div>
+<!-- Secondary Toolbar Actions -->
+<div class="flex items-center gap-space-xs w-full md:w-auto">
+<div class="relative flex-1 md:w-64">
+<span class="material-symbols-outlined text-ink-3 text-[18px] absolute left-3 top-1/2 -translate-y-1/2">search</span>
+<input class="w-full h-9 pl-9 pr-3 rounded-lg bg-surface-sunken text-ink placeholder-ink-3 font-body-sm text-body-sm outline-none focus:ring-2 focus:ring-iris/30 transition-all" placeholder="Search name, TIN, code..." type="text"/>
+</div>
+<button class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 font-label text-label flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-ink-3">filter_list</span>
+<span class="text-body-sm">Terms</span>
+</button>
+<button class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 font-label text-label flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-ink-3">swap_vert</span>
+<span class="text-body-sm">Sort</span>
+</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface rounded-2xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-space-md" scope="col">Customer &amp; Code</th>
+<th class="py-3 px-space-sm" scope="col">TIN</th>
+<th class="py-3 px-space-sm" scope="col">Terms</th>
+<th class="py-3 px-space-md text-right font-medium" scope="col">Balance</th>
+<th class="py-3 px-space-md text-right font-medium" scope="col">Overdue</th>
+<th class="py-3 px-space-sm text-center" scope="col">Reminders</th>
+<th class="py-3 px-space-sm text-right" scope="col"><span class="sr-only">Actions</span></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line text-ink font-body-sm text-body-sm">
+<!-- Row 1: Selected Customer -->
+<tr class="bg-iris-tint/40 hover:bg-iris-tint/60 transition-colors group">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-iris text-on-iris font-h3 text-h3 flex items-center justify-center font-bold flex-shrink-0">
+                        A
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate flex items-center gap-1.5">
+                          Adebayo Foods Ltd
+                          <span class="w-2 h-2 rounded-full bg-iris"></span>
+</span>
+<span class="font-overline text-overline text-ink-3">C-0012 · billing@adebayofoods.ng</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-sm">
+<div class="flex items-center gap-1 font-body-sm text-ink-2">
+<span>21984710-0001</span>
+<span class="material-symbols-outlined text-[14px] text-success-text" title="JTB Verified">check_circle</span>
+</div>
+</td>
+<td class="py-3 px-space-sm text-ink-2">30 days</td>
+<td class="py-3 px-space-md text-right font-semibold text-ink font-mono tracking-tight tabular-nums">₦2,450,000.00</td>
+<td class="py-3 px-space-md text-right font-semibold text-danger-text font-mono tracking-tight tabular-nums">₦850,000.00</td>
+<td class="py-3 px-space-sm text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> On
+                    </span>
+</td>
+<td class="py-3 px-space-sm text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-sunken/50 transition-colors group">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-sunken text-ink font-h3 text-h3 flex items-center justify-center font-bold flex-shrink-0">
+                        D
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Dangote Sugar Refinery Plc</span>
+<span class="font-overline text-overline text-ink-3">C-0018 · ap.accounts@dangote-sugar.com</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-sm">
+<div class="flex items-center gap-1 font-body-sm text-ink-2">
+<span>23901928-0001</span>
+<span class="material-symbols-outlined text-[14px] text-success-text" title="JTB Verified">check_circle</span>
+</div>
+</td>
+<td class="py-3 px-space-sm text-ink-2">45 days</td>
+<td class="py-3 px-space-md text-right font-medium text-ink font-mono tracking-tight tabular-nums">₦8,400,000.00</td>
+<td class="py-3 px-space-md text-right font-semibold text-danger-text font-mono tracking-tight tabular-nums">₦1,200,000.00</td>
+<td class="py-3 px-space-sm text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> On
+                    </span>
+</td>
+<td class="py-3 px-space-sm text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-sunken/50 transition-colors group">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-sunken text-ink font-h3 text-h3 flex items-center justify-center font-bold flex-shrink-0">
+                        F
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Flutterwave Tech Solutions</span>
+<span class="font-overline text-overline text-ink-3">C-0021 · billing@flutterwave.com</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-sm">
+<div class="flex items-center gap-1 font-body-sm text-ink-2">
+<span>23456789-0001</span>
+<span class="material-symbols-outlined text-[14px] text-success-text" title="JTB Verified">check_circle</span>
+</div>
+</td>
+<td class="py-3 px-space-sm text-ink-2">15 days</td>
+<td class="py-3 px-space-md text-right font-medium text-ink font-mono tracking-tight tabular-nums">₦1,700,000.00</td>
+<td class="py-3 px-space-md text-right font-mono tracking-tight text-ink-3 tabular-nums">—</td>
+<td class="py-3 px-space-sm text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> On
+                    </span>
+</td>
+<td class="py-3 px-space-sm text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-sunken/50 transition-colors group">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-sunken text-ink font-h3 text-h3 flex items-center justify-center font-bold flex-shrink-0">
+                        M
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">MainOne Cable Logistics</span>
+<span class="font-overline text-overline text-ink-3">C-0024 · finance@mainone.net</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-sm">
+<div class="flex items-center gap-1 font-body-sm text-ink-2">
+<span>22019482-0001</span>
+<span class="material-symbols-outlined text-[14px] text-success-text" title="JTB Verified">check_circle</span>
+</div>
+</td>
+<td class="py-3 px-space-sm text-ink-2">30 days</td>
+<td class="py-3 px-space-md text-right font-medium text-ink font-mono tracking-tight tabular-nums">₦1,450,000.00</td>
+<td class="py-3 px-space-md text-right font-mono tracking-tight text-ink-3 tabular-nums">—</td>
+<td class="py-3 px-space-sm text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-overline text-overline bg-surface-sunken text-ink-3">
+                      Off
+                    </span>
+</td>
+<td class="py-3 px-space-sm text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-sunken/50 transition-colors group">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-sunken text-ink font-h3 text-h3 flex items-center justify-center font-bold flex-shrink-0">
+                        E
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Eko Hotels &amp; Suites</span>
+<span class="font-overline text-overline text-ink-3">C-0031 · vendor.pay@ekohotels.com</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-sm">
+<div class="flex items-center gap-1 font-body-sm text-ink-2">
+<span>19847119-0001</span>
+<span class="material-symbols-outlined text-[14px] text-success-text" title="JTB Verified">check_circle</span>
+</div>
+</td>
+<td class="py-3 px-space-sm text-ink-2">Net 30</td>
+<td class="py-3 px-space-md text-right font-medium text-ink font-mono tracking-tight tabular-nums">₦900,000.00</td>
+<td class="py-3 px-space-md text-right font-mono tracking-tight text-ink-3 tabular-nums">—</td>
+<td class="py-3 px-space-sm text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> On
+                    </span>
+</td>
+<td class="py-3 px-space-sm text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-sunken/50 transition-colors group">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-sunken text-ink font-h3 text-h3 flex items-center justify-center font-bold flex-shrink-0">
+                        B
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">BUA Cement West Africa</span>
+<span class="font-overline text-overline text-ink-3">C-0042 · accounts@buacement.com</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-sm">
+<div class="flex items-center gap-1 font-body-sm text-ink-2">
+<span>28194018-0001</span>
+<span class="material-symbols-outlined text-[14px] text-success-text" title="JTB Verified">check_circle</span>
+</div>
+</td>
+<td class="py-3 px-space-sm text-ink-2">30 days</td>
+<td class="py-3 px-space-md text-right font-medium text-ink font-mono tracking-tight tabular-nums">₦2,100,000.00</td>
+<td class="py-3 px-space-md text-right font-semibold text-danger-text font-mono tracking-tight tabular-nums">₦450,000.00</td>
+<td class="py-3 px-space-sm text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> On
+                    </span>
+</td>
+<td class="py-3 px-space-sm text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-sunken/50 transition-colors group">
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-sunken text-ink font-h3 text-h3 flex items-center justify-center font-bold flex-shrink-0">
+                        Z
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label text-ink font-semibold truncate">Zenith General Insurance</span>
+<span class="font-overline text-overline text-ink-3">C-0049 · claims.vendor@zenithinsure.ng</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-sm">
+<div class="flex items-center gap-1 font-body-sm text-ink-2">
+<span>20198471-0001</span>
+<span class="material-symbols-outlined text-[14px] text-success-text" title="JTB Verified">check_circle</span>
+</div>
+</td>
+<td class="py-3 px-space-sm text-ink-2">45 days</td>
+<td class="py-3 px-space-md text-right font-medium text-ink font-mono tracking-tight tabular-nums">₦3,600,000.00</td>
+<td class="py-3 px-space-md text-right font-mono tracking-tight text-ink-3 tabular-nums">—</td>
+<td class="py-3 px-space-sm text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-overline text-overline bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span> On
+                    </span>
+</td>
+<td class="py-3 px-space-sm text-right">
+<button class="w-8 h-8 inline-flex items-center justify-center rounded-lg hover:bg-surface-sunken text-ink-3 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Footer -->
+<div class="p-space-md bg-surface flex flex-col sm:flex-row items-center justify-between gap-space-sm text-ink-3">
+<div class="flex items-center gap-space-md font-body-sm text-body-sm">
+<span>Showing <strong class="text-ink font-medium">1-7</strong> of <strong class="text-ink font-medium">48</strong> records</span>
+<div class="flex items-center gap-1 text-ink-3">
+<span>Per page:</span>
+<span class="font-medium text-ink bg-surface-sunken px-2 py-0.5 rounded">10</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-sunken text-ink-3 disabled:opacity-40" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label text-label bg-iris text-on-iris font-semibold" type="button">1</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label text-label text-ink-2 hover:bg-surface-sunken" type="button">2</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label text-label text-ink-2 hover:bg-surface-sunken" type="button">3</button>
+<span class="px-1 text-ink-3 font-body-sm">...</span>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center font-label text-label text-ink-2 hover:bg-surface-sunken" type="button">5</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-sunken text-ink-2" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Inline 'Add Customer' Panel (approx 32% / 4 cols) -->
+<div class="lg:col-span-4 bg-surface rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md relative" id="add-customer-panel">
+<!-- Panel Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h2 class="font-h2 text-h2 text-ink">Add customer</h2>
+<span class="font-overline text-overline px-2 py-0.5 rounded bg-surface-sunken text-ink-2 uppercase tracking-wide">
+                Receivables
+              </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1">
+              Register a corporate debtor for invoicing and automated reminder tracking.
+            </p>
+</div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors" id="clear-form-btn" title="Reset panel" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Form Body -->
+<form class="flex flex-col gap-space-md mt-1" id="customer-form" onsubmit="event.preventDefault();">
+<!-- Field: Customer Name -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink font-semibold flex items-center gap-1" for="cust-name">
+                Customer name <span class="text-destructive">*</span>
+</label>
+<span class="font-overline text-overline text-ink-3">Corporate entity</span>
+</div>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-ink placeholder-ink-3 font-body text-body outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="cust-name" placeholder="e.g. Adebayo Foods Ltd" required="" type="text"/>
+</div>
+</div>
+<!-- Field: Invoicing Email -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-semibold flex items-center gap-1" for="cust-email">
+              Email for invoices and reminders <span class="text-destructive">*</span>
+</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-ink placeholder-ink-3 font-body text-body outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="cust-email" placeholder="billing@company.ng" required="" type="email"/>
+</div>
+<span class="font-overline text-overline text-ink-3">
+              Statements and overdue notices will be dispatched to this address.
+            </span>
+</div>
+<!-- Field: Phone Number -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-semibold" for="cust-phone">Phone number</label>
+<div class="flex items-center gap-2">
+<div class="h-11 px-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm flex items-center gap-1 flex-shrink-0 font-medium select-none">
+<span class="text-[14px]">🇳🇬</span>
+<span>+234</span>
+</div>
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-ink placeholder-ink-3 font-body text-body outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="cust-phone" placeholder="0803 123 4567" type="tel"/>
+</div>
+</div>
+<!-- Field: Registered Address -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-semibold flex items-center gap-1" for="cust-address">
+              Registered address <span class="text-destructive">*</span>
+</label>
+<textarea class="w-full p-3 rounded-xl bg-surface-sunken text-ink placeholder-ink-3 font-body-sm text-body-sm outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 resize-none transition-all" id="cust-address" placeholder="Registered office address, Street, City, State" required="" rows="2"></textarea>
+</div>
+<!-- Field: Tax ID (TIN) with Validation -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink font-semibold" for="cust-tin">Tax Identification Number (TIN)</label>
+<span class="hidden font-overline text-overline text-success-text items-center gap-1" id="tin-status">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Verified
+              </span>
+</div>
+<div class="flex items-center gap-2">
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-ink placeholder-ink-3 font-body-sm text-body-sm uppercase outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="cust-tin" placeholder="E.g. 23456789-0001" type="text"/>
+<button class="h-11 px-4 rounded-xl bg-surface-sunken hover:bg-surface-container text-iris font-label text-label font-semibold flex-shrink-0 transition-colors" id="verify-tin-btn" type="button">
+                Verify
+              </button>
+</div>
+<span class="font-overline text-overline text-ink-3">
+              10 or 12 digit format with branch suffix. Required for state withholding tax certificates.
+            </span>
+</div>
+<!-- Field: Payment Terms -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink font-semibold" for="cust-terms">Payment terms (in days)</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-body text-body outline-none focus:bg-surface focus:ring-2 focus:ring-iris/30 transition-all" id="cust-terms" max="180" min="0" type="number" value="30"/>
+<span class="absolute right-3.5 top-1/2 -translate-y-1/2 font-body-sm text-body-sm text-ink-3">Days</span>
+</div>
+<span class="font-overline text-overline text-ink-3">The default is 30 days, set in Tax settings</span>
+</div>
+<!-- Switch: Automated Reminders -->
+<div class="p-space-md bg-surface-sunken/60 rounded-xl flex items-start gap-space-sm">
+<input checked="" class="w-5 h-5 mt-0.5 rounded accent-iris cursor-pointer" id="cust-reminders" type="checkbox"/>
+<div class="flex flex-col cursor-pointer" onclick="document.getElementById('cust-reminders').click()">
+<label class="font-label text-label text-ink font-semibold cursor-pointer" for="cust-reminders">Email payment reminders</label>
+<p class="font-overline text-overline text-ink-3 leading-normal mt-0.5">
+                Send automatic reminder 3 days before due date and weekly on overdue invoices.
+              </p>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center justify-end gap-space-sm pt-space-xs mt-space-xs">
+<button class="h-11 px-space-md rounded-xl hover:bg-surface-sunken text-ink-2 font-label text-label transition-colors" id="reset-btn" type="button">
+              Cancel
+            </button>
+<button class="h-11 px-space-lg rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-sm transition-colors flex items-center gap-2" id="save-customer-btn" type="submit">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save customer</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const verifyBtn = document.getElementById('verify-tin-btn');
+    const tinStatus = document.getElementById('tin-status');
+    const tinInput = document.getElementById('cust-tin');
+    const form = document.getElementById('customer-form');
+    const resetBtn = document.getElementById('reset-btn');
+    const clearBtn = document.getElementById('clear-form-btn');
+    const toggleDrawerBtn = document.getElementById('toggle-drawer-btn');
+    const addCustomerPanel = document.getElementById('add-customer-panel');
+
+    // Simulate TIN verification
+    if (verifyBtn && tinInput && tinStatus) {
+      verifyBtn.addEventListener('click', function() {
+        if (!tinInput.value.trim()) {
+          tinInput.focus();
+          return;
+        }
+        verifyBtn.innerText = 'Checking...';
+        verifyBtn.disabled = true;
+
+        setTimeout(function() {
+          verifyBtn.innerText = 'Verify';
+          verifyBtn.disabled = false;
+          tinStatus.classList.remove('hidden');
+          tinStatus.classList.add('inline-flex');
+        }, 650);
+      });
+
+      tinInput.addEventListener('input', function() {
+        tinStatus.classList.add('hidden');
+        tinStatus.classList.remove('inline-flex');
+      });
+    }
+
+    // Reset Form
+    function resetForm() {
+      if (form) form.reset();
+      if (tinStatus) {
+        tinStatus.classList.add('hidden');
+        tinStatus.classList.remove('inline-flex');
+      }
+    }
+
+    if (resetBtn) resetBtn.addEventListener('click', resetForm);
+    if (clearBtn) clearBtn.addEventListener('click', resetForm);
+
+    // Focus panel on "+ Add customer" click
+    if (toggleDrawerBtn && addCustomerPanel) {
+      toggleDrawerBtn.addEventListener('click', function() {
+        addCustomerPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        const nameInput = document.getElementById('cust-name');
+        if (nameInput) {
+          nameInput.focus();
+          nameInput.classList.add('ring-2', 'ring-iris');
+          setTimeout(() => nameInput.classList.remove('ring-2', 'ring-iris'), 1200);
+        }
+      });
+    }
+
+    // Interactive tabs highlight
+    const tabPills = document.querySelectorAll('.tab-pill');
+    tabPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        tabPills.forEach(p => {
+          p.classList.remove('bg-surface', 'font-semibold', 'text-ink', 'shadow-xs');
+          p.classList.add('text-ink-3');
+        });
+        pill.classList.remove('text-ink-3');
+        pill.classList.add('bg-surface', 'font-semibold', 'text-ink', 'shadow-xs');
+      });
+    });
+  })();
+</script></main></div></body></html>

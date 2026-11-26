@@ -1,0 +1,13 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ customer }},</p>
+<p style="margin:0 0 16px;">{{ organisation }} has sent you {{ kind_article }} {{ kind }}: <strong>{{ number }}</strong>, dated {{ date }}{% if due %}, due {{ due }}{% endif %}.</p>
+<table role="presentation" style="margin:0 0 16px;border-collapse:collapse;width:100%;">
+{% for line in lines %}<tr><td style="padding:6px 12px 6px 0;border-bottom:1px solid #E4E4EE;">{{ line.description }}</td><td align="right" style="padding:6px 0;border-bottom:1px solid #E4E4EE;">{{ line.amount }}</td></tr>
+{% endfor %}<tr><td style="padding:6px 12px 0 0;color:#4B4B66;">Net</td><td align="right" style="padding:6px 0 0;">{{ net }}</td></tr>
+<tr><td style="padding:4px 12px 0 0;color:#4B4B66;">VAT</td><td align="right" style="padding:4px 0 0;">{{ vat }}</td></tr>
+{% if stamp_duty %}<tr><td style="padding:4px 12px 0 0;color:#4B4B66;">Stamp duty</td><td align="right" style="padding:4px 0 0;">{{ stamp_duty }}</td></tr>
+{% endif %}<tr><td style="padding:8px 12px 0 0;font-weight:700;">Total</td><td align="right" style="padding:8px 0 0;font-weight:700;">{{ total }}</td></tr>
+</table>
+{% if reference %}<p style="margin:0;color:#4B4B66;">Your reference: {{ reference }}</p>{% endif %}
+{% endblock %}

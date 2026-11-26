@@ -1,0 +1,58 @@
+{# Finance → transfers between the organisation's bank accounts (ADR 0026): recorded by one
+   person, approved by another.
+   Design: design/stitch/exports/finance.transfers.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Transfers", "Money moved between your own bank accounts.") %}
+  <a href="/finance/banking" class="kx-btn-ghost">Banking</a>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{% if can_record %}
+<form method="post" action="/finance/transfers" class="kx-card mt-6 grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-5 lg:items-end" novalidate>
+  {{ ui.csrf_field() }}
+  <h2 class="font-h3 text-h3 sm:col-span-2 lg:col-span-5">New transfer <span class="text-body-sm font-normal text-ink-3">· someone other than you approves it</span></h2>
+  {% for key, label in (("from_id", "From"), ("to_id", "To")) %}
+  <div><label class="kx-label" for="{{ key }}">{{ label }}</label><select id="{{ key }}" name="{{ key }}" class="kx-input"><option value="">Choose</option>{% for bid, blabel in banks %}<option value="{{ bid }}" {% if v.get(key) == bid|string %}selected{% endif %}>{{ blabel }}</option>{% endfor %}</select>{{ ui.field_error(errors, key) }}</div>
+  {% endfor %}
+  {{ ui.text_field("amount", "Amount", value=v.get("amount"), inputmode="decimal", errors=errors) }}
+  {{ ui.text_field("on", "Date", value=v.get("on") or today.isoformat(), type="date", errors=errors) }}
+  {{ ui.text_field("reference", "Reference", value=v.get("reference"), errors=errors) }}
+  <div class="flex justify-end sm:col-span-2 lg:col-span-5"><button type="submit" class="kx-btn-primary">Save for approval</button></div>
+</form>
+{% endif %}
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Transfers">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[860px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Transfer</th><th class="px-3 py-3 text-left font-semibold">Date</th><th class="px-3 py-3 text-left font-semibold">From</th><th class="px-3 py-3 text-left font-semibold">To</th><th class="px-3 py-3 text-right font-semibold">Amount</th><th class="px-3 py-3 text-left font-semibold">Status</th><th class="px-5 py-3 text-right font-semibold"><span class="sr-only">Actions</span></th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for t in rows %}
+        <tr class="align-top">
+          <td class="px-5 py-3"><span class="font-mono text-xs font-semibold">{{ t.number or "—" }}</span>{% if t.reference %}<span class="block text-xs text-ink-3">{{ t.reference }}</span>{% endif %}</td>
+          <td class="whitespace-nowrap px-3 py-3">{{ t.transfer_date | date }}</td>
+          <td class="px-3 py-3">{{ t.from_name }}</td>
+          <td class="px-3 py-3">{{ t.to_name }}</td>
+          <td class="px-3 py-3 text-right font-semibold tnum">{{ t.amount | money }}</td>
+          <td class="px-3 py-3">{{ ui.badge(tones[t.status], labels[t.status]) }}{% if t.journal %}<a href="/finance/journals/{{ t.journal[0] }}" class="ml-2 font-mono text-xs text-iris">{{ t.journal[1] }}</a>{% endif %}{% if t.created_by %}<span class="mt-1 block text-xs text-ink-3">Recorded by {{ t.created_by }}</span>{% endif %}{% if t.approve_blocked %}<span class="mt-1 block text-xs text-ink-3">{{ t.approve_blocked }}</span>{% endif %}</td>
+          <td class="px-5 py-3">
+            <div class="flex justify-end gap-2">
+              {% if t.can_delete %}<form method="post" action="/finance/transfers/{{ t.id }}/delete">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost h-8 text-danger-text">Delete</button></form>{% endif %}
+              {% if t.can_approve %}<form method="post" action="/finance/transfers/{{ t.id }}/approve">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary h-8">Approve</button></form>{% endif %}
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("arrow-right-left", "No transfers yet", "Transfers between your bank accounts appear here.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,151 @@
+{# Finance → a supplier bill or debit note (ADR 0025): the draft editor with the three-way
+   match, approval or posting a held bill with a reason, and what has been paid.
+   Design: design/stitch/exports/finance.bill.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set b = bill %}
+{% set v = values %}
+{% set editing = not b or b.can_edit %}
+{% set label = kind_labels[kind] %}
+{% if b %}
+{% set shown = b.shown_status %}
+{% call ui.page_header(b.number or (("Held " if b.status == "held" else "Draft ") ~ label | lower), b.supplier, tones[shown], status_labels[shown] ~ (" · " ~ b.days_overdue ~ " days" if shown == "overdue" else "")) %}
+  {% if b.status != "posted" %}
+    {% if b.can_edit %}<form method="post" action="/finance/bills/{{ b.id }}/delete">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-danger-text">{{ ui.icon("trash-2", "sm") }} Delete</button></form>{% endif %}
+    {% if b.status == "draft" %}<form method="post" action="/finance/bills/{{ b.id }}/approve">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary" {% if not b.can_approve %}disabled aria-describedby="approve-blocked"{% endif %}>{{ ui.icon("check", "sm") }} {{ "Issue" if kind == "debit_note" else "Approve" }}</button></form>{% endif %}
+  {% elif b.can_act and kind == "bill" and b.balance > 0 %}
+    <form method="post" action="/finance/bills/{{ b.id }}/debit-note">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">{{ ui.icon("undo-2", "sm") }} Raise debit note</button></form>
+    <a href="/finance/payments/new?supplier={{ b.supplier_id }}" class="kx-btn-primary">{{ ui.icon("banknote", "sm") }} Prepare payment</a>
+  {% endif %}
+{% endcall %}
+{% else %}
+{% call ui.page_header("New bill", "Record a supplier's invoice. Prices exclude VAT. Someone other than you approves it.") %}{% endcall %}
+{% endif %}
+{% if notice %}<div class="mt-5">{{ ui.alert("warning" if b and b.status == "held" else "success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if b and b.approve_blocked %}<div class="mt-5" id="approve-blocked">{{ ui.alert("info", b.approve_blocked) }}</div>{% endif %}
+{% if b and b.status == "held" %}<div class="mt-3">{{ ui.alert("danger", "Held: " ~ b.hold_reason) }}</div>{% endif %}
+{% if b and b.override_reason %}<div class="mt-3">{{ ui.alert("info", "Posted despite the match: " ~ b.override_reason) }}</div>{% endif %}
+
+{% if b %}
+<dl class="kx-card mt-6 grid gap-4 p-5 text-body-sm sm:grid-cols-2 lg:grid-cols-4">
+  <div><dt class="text-xs text-ink-3">Supplier</dt><dd><a href="/finance/suppliers/{{ b.supplier_id }}" class="font-semibold text-iris">{{ b.supplier }}</a></dd></div>
+  {% if b.supplier_reference %}<div><dt class="text-xs text-ink-3">Supplier's invoice</dt><dd>{{ b.supplier_reference }}</dd></div>{% endif %}
+  {% if b.order %}<div><dt class="text-xs text-ink-3">Purchase order</dt><dd><a href="/finance/purchase-orders/{{ b.order[0] }}" class="font-mono text-xs font-semibold text-iris">{{ b.order[1] }}</a></dd></div>{% endif %}
+  {% if b.bill %}<div><dt class="text-xs text-ink-3">Against bill</dt><dd><a href="/finance/bills/{{ b.bill[0] }}" class="font-mono text-xs font-semibold text-iris">{{ b.bill[1] }}</a></dd></div>{% endif %}
+  {% if b.wht_type %}<div><dt class="text-xs text-ink-3">WHT at payment</dt><dd>{{ b.wht_type }}</dd></div>{% endif %}
+  {% if b.journal %}<div><dt class="text-xs text-ink-3">Journal</dt><dd><a href="/finance/journals/{{ b.journal[0] }}" class="font-mono text-xs font-semibold text-iris">{{ b.journal[1] }}</a></dd></div>{% endif %}
+  <div><dt class="text-xs text-ink-3">Drafted by</dt><dd>{{ b.created_by or "—" }}</dd></div>
+  {% if b.approved_by %}<div><dt class="text-xs text-ink-3">Approved</dt><dd>{{ b.approved_by }}, {{ b.approved_at | datetime }}</dd></div>{% endif %}
+</dl>
+{% endif %}
+
+{% if b and b.status == "held" %}
+<section class="kx-card mt-6 p-5" aria-labelledby="override-title">
+  <h2 id="override-title" class="font-h3 text-h3">Post it anyway</h2>
+  <p class="mt-1 text-body-sm text-ink-3">A Finance Manager can post a bill that doesn't match, with a reason. Or correct the lines below and approve it again.</p>
+  {% if b.can_override %}
+  <form method="post" action="/finance/bills/{{ b.id }}/approve" class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    <div class="flex-1">{{ ui.text_field("reason", "Why", value=v.get("reason"), errors=errors) }}</div>
+    <button type="submit" class="kx-btn-primary">Post with this reason</button>
+  </form>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if editing %}
+<form method="post" action="/finance/bills" class="kx-card mt-6 overflow-hidden" x-data="salesTotals" x-on:input="recalc" x-on:change="recalc" data-vat-rate="{{ vat_rate or 0 }}" novalidate>
+  {{ ui.csrf_field() }}
+  {% if b %}<input type="hidden" name="bill_id" value="{{ b.id }}">{% endif %}
+  <input type="hidden" name="kind" value="{{ kind }}">
+  <div class="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="sm:col-span-2"><label class="kx-label" for="supplier_id">Supplier</label><select id="supplier_id" name="supplier_id" class="kx-input" {% if b and (b.order or b.bill) %}disabled{% endif %}><option value="">Choose a supplier</option>{% for sid, slabel in suppliers %}<option value="{{ sid }}" {% if (v.get("supplier_id") or (b.supplier_id|string if b else "")) == sid|string %}selected{% endif %}>{{ slabel }}</option>{% endfor %}</select>{% if b and (b.order or b.bill) %}<input type="hidden" name="supplier_id" value="{{ b.supplier_id }}">{% endif %}{{ ui.field_error(errors, "supplier_id") }}</div>
+    {% if kind == "bill" %}{{ ui.text_field("supplier_reference", "Supplier's invoice number", value=v.get("supplier_reference") or (b.supplier_reference or "" if b else ""), errors=errors) }}{% else %}<div></div>{% endif %}
+    {{ ui.text_field("bill_date", "Date", value=v.get("bill_date") or (b.bill_date.isoformat() if b else today.isoformat()), type="date", errors=errors) }}
+    {% if kind == "bill" %}
+    {{ ui.text_field("due_date", "Due date", value=v.get("due_date") or (b.due_date.isoformat() if b and b.due_date else ""), type="date", errors=errors, hint="Blank uses the supplier's terms.") }}
+    <div><label class="kx-label" for="wht_type_id">WHT at payment</label><select id="wht_type_id" name="wht_type_id" class="kx-input"><option value="">None</option>{% for w in wht_types %}<option value="{{ w.id }}" {% if (v.get("wht_type_id") or (b.wht_type_id|string if b and b.wht_type_id else "")) == w.id|string %}selected{% endif %}>{{ w.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "wht_type_id") }}</div>
+    {% endif %}
+    <div class="sm:col-span-2">{{ ui.text_field("memo", "Memo", value=v.get("memo") or (b.memo or "" if b else ""), errors=errors) }}</div>
+  </div>
+  <div class="kx-scroll-x border-t border-line">
+    <table class="w-full min-w-[1080px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="w-56 px-3 py-2.5 text-left font-semibold">Account</th><th class="w-44 px-3 py-2.5 text-left font-semibold">Cost centre</th><th class="w-20 px-3 py-2.5 text-right font-semibold">Qty</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Unit price</th><th class="w-36 px-3 py-2.5 text-left font-semibold">VAT</th><th class="w-32 px-3 py-2.5 text-right font-semibold">Net</th>{% if from_order %}<th class="px-3 py-2.5 text-left font-semibold">Match</th>{% endif %}</tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in rows %}
+        {% set i = loop.index0 %}
+        {% set shown_line = b.lines[i] if b and i < b.lines | length else none %}
+        <tr class="align-top" data-line>
+          <td class="px-3 py-2"><input type="hidden" name="order_line_id" value="{{ line.order_line_id }}"><label class="sr-only" for="ds-{{ i }}">Description, line {{ i + 1 }}</label><input id="ds-{{ i }}" name="description" value="{{ line.description }}" class="kx-input h-10">{% if errors.get("line_" ~ i) %}<p class="kx-field-error">{{ ui.icon("circle-alert", "sm") }} {{ errors["line_" ~ i] }}</p>{% endif %}</td>
+          <td class="px-3 py-2">
+            {% if line.order_line_id %}<input type="hidden" name="account_id" value="{{ line.account_id }}"><span class="block pt-2 text-ink-2">{% for a in cost_accounts if a.id|string == line.account_id %}{{ a.code }} {{ a.name }}{% endfor %}</span>
+            {% else %}<label class="sr-only" for="ac-{{ i }}">Account, line {{ i + 1 }}</label><select id="ac-{{ i }}" name="account_id" class="kx-input h-10"><option value="">—</option>{% for a in cost_accounts %}<option value="{{ a.id }}" {% if line.account_id == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select>{% endif %}
+          </td>
+          <td class="px-3 py-2"><label class="sr-only" for="cc-{{ i }}">Cost centre, line {{ i + 1 }}</label><select id="cc-{{ i }}" name="cost_centre_id" class="kx-input h-10"><option value="">—</option>{% for cid, clabel in cost_centres %}<option value="{{ cid }}" {% if line.cost_centre_id == cid|string %}selected{% endif %}>{{ clabel }}</option>{% endfor %}</select></td>
+          <td class="px-3 py-2"><label class="sr-only" for="qt-{{ i }}">Quantity, line {{ i + 1 }}</label><input id="qt-{{ i }}" name="quantity" value="{{ line.quantity }}" inputmode="decimal" placeholder="1" class="kx-input h-10 text-right tnum"></td>
+          <td class="px-3 py-2"><label class="sr-only" for="up-{{ i }}">Unit price, line {{ i + 1 }}</label><input id="up-{{ i }}" name="unit_price" value="{{ line.unit_price }}" inputmode="decimal" placeholder="0.00" class="kx-input h-10 text-right tnum"></td>
+          <td class="px-3 py-2"><label class="sr-only" for="vc-{{ i }}">VAT, line {{ i + 1 }}</label><select id="vc-{{ i }}" name="vat_code" class="kx-input h-10">{% for code, vlabel in vat_codes %}<option value="{{ code }}" {% if line.vat_code == code %}selected{% endif %}>{{ vlabel }}{% if code == "standard" and vat_rate %} {{ vat_rate | plain }}%{% endif %}</option>{% endfor %}</select></td>
+          <td class="px-3 py-2 pt-4 text-right tnum text-ink-2" data-line-net></td>
+          {% if from_order %}<td class="px-3 py-2 pt-3">{% if shown_line and shown_line.match %}{{ ui.badge("success" if shown_line.match.ok else "danger", shown_line.match.message) }}<span class="mt-1 block text-xs text-ink-3">Received {{ shown_line.match.received | plain }} · PO price {{ shown_line.match.po_price | money }}</span>{% endif %}</td>{% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex flex-col gap-4 border-t border-line p-5 sm:flex-row sm:items-end sm:justify-between">
+    <p class="text-xs text-ink-3">{% if from_order %}Lines come from the purchase order. Prices may differ from it by up to {{ tolerance | plain }}%; quantities can't be more than was received.{% else %}Need more lines? Save, and more empty rows appear.{% endif %}</p>
+    <dl class="w-full max-w-xs space-y-1 text-body-sm" aria-live="polite">
+      <div class="flex justify-between"><dt class="text-ink-3">Net</dt><dd class="tnum" x-text="net"></dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">VAT</dt><dd class="tnum" x-text="vat"></dd></div>
+      <div class="flex justify-between border-t border-line pt-1 font-semibold"><dt>Total</dt><dd class="tnum" x-text="total"></dd></div>
+    </dl>
+  </div>
+  <div class="flex justify-end gap-3 border-t border-line p-5"><button type="submit" class="kx-btn-primary">Save draft</button></div>
+</form>
+{% else %}
+<section class="kx-card mt-6 overflow-hidden" aria-label="Lines">
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[820px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Description</th><th class="px-3 py-2.5 text-left font-semibold">Account</th><th class="px-3 py-2.5 text-right font-semibold">Qty</th><th class="px-3 py-2.5 text-right font-semibold">Unit price</th><th class="px-3 py-2.5 text-left font-semibold">VAT</th><th class="px-3 py-2.5 text-right font-semibold">Net</th><th class="px-5 py-2.5 text-right font-semibold">VAT amount</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in b.lines %}
+        <tr><td class="px-5 py-2.5">{{ line.description }}{% if line.cost_centre %}<span class="block text-xs text-ink-3">{{ line.cost_centre }}</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.account }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.quantity | plain }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.unit_price | money }}</td><td class="px-3 py-2.5">{{ line.vat_label }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.net | money }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.vat | money }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex justify-end border-t border-line p-5">
+    <dl class="w-full max-w-xs space-y-1 text-body-sm">
+      <div class="flex justify-between"><dt class="text-ink-3">Net</dt><dd class="tnum">{{ b.net | money }}</dd></div>
+      <div class="flex justify-between"><dt class="text-ink-3">VAT</dt><dd class="tnum">{{ b.vat | money }}</dd></div>
+      <div class="flex justify-between border-t border-line pt-1 font-semibold"><dt>Total</dt><dd class="tnum">{{ b.total | money }}</dd></div>
+      {% if kind == "bill" %}
+      <div class="flex justify-between"><dt class="text-ink-3">Paid or debited</dt><dd class="tnum">{{ b.paid | money }}</dd></div>
+      <div class="flex justify-between font-semibold {{ 'text-danger-text' if shown == 'overdue' }}"><dt>Balance due</dt><dd class="tnum">{{ b.balance | money }}</dd></div>
+      {% endif %}
+    </dl>
+  </div>
+</section>
+
+{% if kind == "bill" %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="paid-title">
+  <h2 id="paid-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Payments and debit notes</h2>
+  {% if b.settlements %}
+  <ul class="divide-y divide-line text-body-sm">
+    {% for s in b.settlements %}
+    <li class="flex flex-wrap items-center justify-between gap-2 px-5 py-3">
+      <span><a href="{{ '/finance/payments/' if s.kind == 'payment' else '/finance/bills/' }}{{ s.id }}" class="font-mono text-xs font-semibold text-iris">{{ s.number }}</a> <span class="text-ink-3">· {{ s.day | date }}</span>{% if s.wht %} <span class="text-xs text-ink-3">(includes {{ s.wht | money }} WHT withheld)</span>{% endif %}</span>
+      <span class="tnum">{{ s.amount | money }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="px-5 py-6 text-body-sm text-ink-3">Nothing paid or debited yet.</p>
+  {% endif %}
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}

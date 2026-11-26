@@ -1,0 +1,84 @@
+{# Finance → asset categories with their depreciation method and accounts, and the fixed
+   asset settings (ADR 0027).
+   Design: design/stitch/exports/finance.asset_categories.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Asset categories", "How each kind of asset depreciates, and its accounts.") %}
+  <a href="/finance/assets" class="kx-btn-ghost">Fixed assets</a>
+  {% if can_manage %}<a href="/finance/assets/categories?edit=new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Add category</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 {{ 'xl:grid-cols-[minmax(0,1fr)_400px]' if editing and can_manage }}">
+  <section class="kx-card overflow-hidden" aria-label="Categories">
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[860px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Category</th><th class="px-3 py-3 text-left font-semibold">Method</th><th class="px-3 py-3 text-left font-semibold">Life or rate</th><th class="px-3 py-3 text-left font-semibold">Cost</th><th class="px-3 py-3 text-left font-semibold">Accumulated depreciation</th><th class="px-3 py-3 text-left font-semibold">Expense</th><th class="px-3 py-3 text-right font-semibold">Assets</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for r in rows %}
+          <tr>
+            <td class="px-5 py-3 font-medium">{% if can_manage %}<a href="/finance/assets/categories?edit={{ r.category.id }}" class="text-iris">{{ r.category.name }}</a>{% else %}{{ r.category.name }}{% endif %}</td>
+            <td class="px-3 py-3">{{ ui.badge("info" if r.category.method != "none" else "neutral", method_labels[r.category.method]) }}</td>
+            <td class="px-3 py-3">{{ r.life_or_rate }}</td>
+            <td class="px-3 py-3 text-ink-2">{{ r.cost }}</td>
+            <td class="px-3 py-3 text-ink-2">{{ r.accumulated }}</td>
+            <td class="px-3 py-3 text-ink-2">{{ r.expense }}</td>
+            <td class="px-3 py-3 text-right tnum">{{ r.assets }}</td>
+            <td class="px-5 py-3">{{ ui.badge("success" if r.category.is_active else "neutral", "Active" if r.category.is_active else "Off") }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {% if editing and can_manage %}
+  {% set c = category %}
+  {% set e = errors if form in ("category", "") else {} %}
+  {% set cv = v if form == "category" else {} %}
+  <aside class="kx-card h-fit p-5" aria-labelledby="category-form-title">
+    <h2 id="category-form-title" class="font-h3 text-h3">{{ "Edit " ~ c.name if c else "Add category" }}</h2>
+    <p class="mt-1 text-body-sm text-ink-3">Assets registered later copy these. Assets already registered keep theirs.</p>
+    <form method="post" action="/finance/assets/categories" class="mt-4 space-y-4" novalidate>
+      {{ ui.csrf_field() }}
+      {% if c %}<input type="hidden" name="category_id" value="{{ c.id }}">{% endif %}
+      {{ ui.text_field("name", "Name", value=cv.get("name") or (c.name if c else ""), errors=e) }}
+      {% set chosen = cv.get("method") or (c.method if c else "straight_line") %}
+      <fieldset><legend class="kx-label">Method</legend>
+        <div class="mt-1 space-y-1.5">{% for key, label in methods %}<label class="flex items-center gap-2 text-body-sm"><input type="radio" name="method" value="{{ key }}" class="kx-check" {% if chosen == key %}checked{% endif %}> {{ label }}</label>{% endfor %}</div>
+        {{ ui.field_error(e, "method") }}
+      </fieldset>
+      <div class="grid grid-cols-2 gap-3">
+        {{ ui.text_field("life_months", "Useful life (months)", value=cv.get("life_months") or (c.life_months|string if c and c.life_months else ""), inputmode="numeric", errors=e, hint="Straight line") }}
+        {{ ui.text_field("rate", "Annual rate (%)", value=cv.get("rate") or (c.rate | plain if c and c.rate is not none else ""), inputmode="decimal", errors=e, hint="Reducing balance") }}
+      </div>
+      {% for key, label, hint in (("cost_account_id", "Cost account", None), ("accumulated_account_id", "Accumulated depreciation account", "Not needed when not depreciated"), ("expense_account_id", "Depreciation expense account", "Not needed when not depreciated")) %}
+      {% set current = cv.get(key) or (c[key]|string if c and c[key] else "") %}
+      <div><label class="kx-label" for="{{ key }}">{{ label }}</label><select id="{{ key }}" name="{{ key }}" class="kx-input"><option value="">—</option>{% for acc in postable %}<option value="{{ acc.id }}" {% if current == acc.id|string %}selected{% endif %}>{{ acc.code }} {{ acc.name }}</option>{% endfor %}</select>{{ ui.field_error(e, key) }}{% if hint %}<p class="mt-1 text-xs text-ink-3">{{ hint }}</p>{% endif %}</div>
+      {% endfor %}
+      {% if c %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if c.is_active %}checked{% endif %}> Active</label>{% endif %}
+      <div class="flex justify-end gap-3 pt-2"><a href="/finance/assets/categories" class="kx-btn-ghost">Cancel</a><button type="submit" class="kx-btn-primary">Save</button></div>
+    </form>
+  </aside>
+  {% endif %}
+</div>
+
+<section class="kx-card mt-6 p-5" aria-labelledby="settings-title">
+  <h2 id="settings-title" class="font-h3 text-h3">Settings</h2>
+  <p class="mt-1 text-body-sm text-ink-3">Defaults to confirm before go-live.</p>
+  {% set se = errors if form == "settings" else {} %}
+  {% set sv = v if form == "settings" else {} %}
+  <form method="post" action="/finance/assets/settings" class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    {{ ui.text_field("threshold", "Capitalisation threshold", value=sv.get("threshold") or ("%.2f" | format(settings.capitalisation_threshold)), inputmode="decimal", errors=se, readonly=not can_manage) }}
+    {{ ui.text_field("reserve_code", "Revaluation reserve", value=sv.get("reserve_code") or settings.revaluation_reserve_code, errors=se, readonly=not can_manage) }}
+    {{ ui.text_field("disposal_code", "Gain or loss on disposal", value=sv.get("disposal_code") or settings.disposal_code, errors=se, readonly=not can_manage) }}
+    {{ ui.text_field("loss_code", "Revaluation losses", value=sv.get("loss_code") or settings.revaluation_loss_code, errors=se, readonly=not can_manage) }}
+    {% if can_manage %}<div class="flex justify-end"><button type="submit" class="kx-btn-secondary">Save settings</button></div>{% endif %}
+  </form>
+</section>
+{% endblock %}

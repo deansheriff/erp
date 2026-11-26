@@ -1,0 +1,120 @@
+{# Finance → Reports: trial balance, profit and loss, balance sheet, cash flow, general
+   ledger (ADR 0023). Design: design/stitch/exports/finance.reports.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro section_table(sections, total_label=None, total=None) -%}
+{% for s in sections %}
+<tbody class="divide-y divide-line">
+  <tr class="bg-surface-sunken/50"><th colspan="2" class="px-5 py-2 text-left text-xs font-semibold uppercase tracking-wide text-ink-3">{{ s.title }}</th></tr>
+  {% for r in s.rows %}
+  <tr><td class="px-5 py-2"><span class="font-mono text-xs text-ink-3">{{ r.code }}</span> {{ r.name }}</td><td class="px-5 py-2 text-right tnum">{{ r.amount | money }}</td></tr>
+  {% endfor %}
+  {% if sections | length > 1 or not total_label %}<tr class="font-semibold"><td class="px-5 py-2">Total {{ s.title | lower }}</td><td class="px-5 py-2 text-right tnum">{{ s.total | money }}</td></tr>{% endif %}
+</tbody>
+{% endfor %}
+{% if total_label %}
+<tbody><tr class="border-t-2 border-line font-semibold"><td class="px-5 py-3">{{ total_label }}</td><td class="px-5 py-3 text-right tnum">{{ total | money }}</td></tr></tbody>
+{% endif %}
+{%- endmacro %}
+
+{% macro flow_rows(title, rows, total, first=None) -%}
+<tbody class="divide-y divide-line">
+  <tr class="bg-surface-sunken/50"><th colspan="2" class="px-5 py-2 text-left text-xs font-semibold uppercase tracking-wide text-ink-3">{{ title }}</th></tr>
+  {% if first %}<tr><td class="px-5 py-2">{{ first[0] }}</td><td class="px-5 py-2 text-right tnum">{{ first[1] | money }}</td></tr>{% endif %}
+  {% for r in rows %}<tr><td class="px-5 py-2"><span class="font-mono text-xs text-ink-3">{{ r.code }}</span> {{ r.name }}</td><td class="px-5 py-2 text-right tnum">{{ r.amount | money }}</td></tr>{% endfor %}
+  <tr class="font-semibold"><td class="px-5 py-2">Net cash from {{ title | lower }}</td><td class="px-5 py-2 text-right tnum">{{ total | money }}</td></tr>
+</tbody>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Reports", "From posted journals. Negative amounts are in brackets.") %}{% endcall %}
+
+<nav class="kx-segment mt-6 flex-wrap" aria-label="Reports">
+  {% for key, label in reports %}
+  <a href="/finance/reports?report={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if report == key else 'text-ink-2 hover:text-ink' }}" {% if report == key %}aria-current="page"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</nav>
+
+<form method="get" action="/finance/reports" class="mt-5 flex flex-wrap items-end gap-3">
+  <input type="hidden" name="report" value="{{ report }}">
+  {% if report in ("tb", "bs") %}
+  <div><label for="f-as_at" class="kx-label">As at</label><input id="f-as_at" name="as_at" type="date" value="{{ as_at.isoformat() }}" class="kx-input h-10"></div>
+  {% else %}
+  {% if report == "gl" %}
+  <div class="min-w-[260px]"><label for="f-account" class="kx-label">Account</label><select id="f-account" name="account" class="kx-input h-10">{% for a in postable %}<option value="{{ a.id }}" {% if account == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select></div>
+  {% endif %}
+  <div><label for="f-start" class="kx-label">From</label><input id="f-start" name="start" type="date" value="{{ start.isoformat() }}" class="kx-input h-10"></div>
+  <div><label for="f-end" class="kx-label">To</label><input id="f-end" name="end" type="date" value="{{ end.isoformat() }}" class="kx-input h-10"></div>
+  {% if report == "pl" %}
+  <div><label for="f-cc" class="kx-label">Cost centre</label><select id="f-cc" name="cost_centre" class="kx-input h-10"><option value="">All</option>{% for cid, label in cost_centres %}<option value="{{ cid }}" {% if cost_centre == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+  {% endif %}
+  {% endif %}
+  <button type="submit" class="kx-btn-secondary h-10">Show</button>
+  {% if report == "tb" %}<a href="/finance/reports/trial-balance.csv?as_at={{ as_at.isoformat() }}" hx-boost="false" download class="kx-btn-ghost h-10">{{ ui.icon("download", "sm") }} CSV</a>{% endif %}
+  {% if report == "gl" and account %}<a href="/finance/reports/ledger.csv?account={{ account }}&start={{ start.isoformat() }}&end={{ end.isoformat() }}" hx-boost="false" download class="kx-btn-ghost h-10">{{ ui.icon("download", "sm") }} CSV</a>{% endif %}
+</form>
+
+<section class="kx-card mt-5 overflow-hidden" aria-label="{{ page_title }}">
+  {% set d = data %}
+  {% if report == "tb" %}
+  <div class="flex flex-wrap items-center justify-between gap-2 px-5 py-4"><h2 class="font-h3 text-h3">Trial balance as at {{ d.as_at | date }}</h2>{{ ui.badge("success", "Balances") if d.debit == d.credit else ui.badge("danger", "Doesn't balance") }}</div>
+  <div class="kx-scroll-x"><table class="w-full min-w-[560px] text-body-sm">
+    <thead class="border-y border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Account</th><th class="px-3 py-2.5 text-right font-semibold">Debit</th><th class="px-5 py-2.5 text-right font-semibold">Credit</th></tr></thead>
+    <tbody class="divide-y divide-line">
+      {% for r in d.rows %}<tr><td class="px-5 py-2"><a href="/finance/reports?report=gl&account={{ r.account_id }}" class="hover:text-iris"><span class="font-mono text-xs text-ink-3">{{ r.code }}</span> {{ r.name }}</a></td><td class="px-3 py-2 text-right tnum">{{ r.debit | money if r.debit else "" }}</td><td class="px-5 py-2 text-right tnum">{{ r.credit | money if r.credit else "" }}</td></tr>{% else %}<tr><td colspan="3" class="px-5 py-6 text-center text-ink-3">No postings yet.</td></tr>{% endfor %}
+    </tbody>
+    <tfoot class="border-t-2 border-line font-semibold"><tr><td class="px-5 py-3">Total</td><td class="px-3 py-3 text-right tnum">{{ d.debit | money }}</td><td class="px-5 py-3 text-right tnum">{{ d.credit | money }}</td></tr></tfoot>
+  </table></div>
+
+  {% elif report == "pl" %}
+  <h2 class="px-5 py-4 font-h3 text-h3">Profit and loss, {{ d.start | date }} to {{ d.end | date }}</h2>
+  <div class="kx-scroll-x"><table class="w-full min-w-[480px] text-body-sm">
+    {{ section_table(d.income, "Total income", d.total_income) }}
+    {{ section_table(d.expenses, "Total expenses", d.total_expenses) }}
+    <tbody><tr class="bg-iris-tint font-semibold"><td class="px-5 py-3">{{ "Net profit" if d.net_profit >= 0 else "Net loss" }}</td><td class="px-5 py-3 text-right font-stat text-h3 tnum">{{ d.net_profit | money }}</td></tr></tbody>
+  </table></div>
+
+  {% elif report == "bs" %}
+  <div class="flex flex-wrap items-center justify-between gap-2 px-5 py-4"><h2 class="font-h3 text-h3">Balance sheet as at {{ d.as_at | date }}</h2>{{ ui.badge("success", "Assets = Liabilities + Equity") if d.balances else ui.badge("danger", "Doesn't balance") }}</div>
+  <div class="kx-scroll-x"><table class="w-full min-w-[480px] text-body-sm">
+    {{ section_table(d.assets, "Total assets", d.total_assets) }}
+    {{ section_table(d.liabilities, "Total liabilities", d.total_liabilities) }}
+    {{ section_table(d.equity) }}
+    <tbody class="divide-y divide-line">
+      <tr><td class="px-5 py-2">Profit not yet closed to retained earnings</td><td class="px-5 py-2 text-right tnum">{{ d.unclosed_profit | money }}</td></tr>
+      <tr class="font-semibold"><td class="px-5 py-3">Total equity</td><td class="px-5 py-3 text-right tnum">{{ d.total_equity | money }}</td></tr>
+      <tr class="border-t-2 border-line bg-iris-tint font-semibold"><td class="px-5 py-3">Liabilities and equity</td><td class="px-5 py-3 text-right tnum">{{ (d.total_liabilities + d.total_equity) | money }}</td></tr>
+    </tbody>
+  </table></div>
+
+  {% elif report == "cf" %}
+  <h2 class="px-5 py-4 font-h3 text-h3">Cash flow, {{ d.start | date }} to {{ d.end | date }}</h2>
+  <div class="kx-scroll-x"><table class="w-full min-w-[480px] text-body-sm">
+    {{ flow_rows("Operating activities", d.operating, d.operating_total, ("Profit for the period", d.net_profit)) }}
+    {{ flow_rows("Investing activities", d.investing, d.investing_total) }}
+    {{ flow_rows("Financing activities", d.financing, d.financing_total) }}
+    <tbody class="divide-y divide-line border-t-2 border-line">
+      <tr class="font-semibold"><td class="px-5 py-2">Net change in cash</td><td class="px-5 py-2 text-right tnum">{{ d.net_change | money }}</td></tr>
+      <tr><td class="px-5 py-2">Cash at the start</td><td class="px-5 py-2 text-right tnum">{{ d.opening_cash | money }}</td></tr>
+      <tr class="bg-iris-tint font-semibold"><td class="px-5 py-3">Cash at the end</td><td class="px-5 py-3 text-right tnum">{{ d.closing_cash | money }}</td></tr>
+    </tbody>
+  </table></div>
+
+  {% elif d %}
+  <div class="flex flex-wrap items-center justify-between gap-2 px-5 py-4"><h2 class="font-h3 text-h3"><span class="font-mono">{{ d.account.code }}</span> {{ d.account.name }}</h2><span class="text-xs text-ink-3">{{ d.start | date }} to {{ d.end | date }}</span></div>
+  <div class="kx-scroll-x"><table class="w-full min-w-[820px] text-body-sm">
+    <thead class="border-y border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Date</th><th class="px-3 py-2.5 text-left font-semibold">Journal</th><th class="px-3 py-2.5 text-left font-semibold">Memo</th><th class="px-3 py-2.5 text-right font-semibold">Debit</th><th class="px-3 py-2.5 text-right font-semibold">Credit</th><th class="px-5 py-2.5 text-right font-semibold">Balance</th></tr></thead>
+    <tbody class="divide-y divide-line">
+      <tr class="bg-surface-sunken/50"><td class="px-5 py-2 font-semibold" colspan="5">Opening balance</td><td class="px-5 py-2 text-right font-semibold tnum">{{ d.opening | money }}</td></tr>
+      {% for line in d.lines %}
+      <tr><td class="whitespace-nowrap px-5 py-2">{{ line.journal_date | date }}</td><td class="px-3 py-2"><a href="/finance/journals/{{ line.journal_id }}" class="font-mono text-xs font-semibold text-iris">{{ line.number }}</a></td><td class="px-3 py-2 text-ink-2">{{ line.memo }}{% if line.description %} <span class="text-ink-3">· {{ line.description }}</span>{% endif %}</td><td class="px-3 py-2 text-right tnum">{{ line.debit | money if line.debit else "" }}</td><td class="px-3 py-2 text-right tnum">{{ line.credit | money if line.credit else "" }}</td><td class="px-5 py-2 text-right tnum">{{ line.balance | money }}</td></tr>
+      {% endfor %}
+    </tbody>
+    <tfoot class="border-t-2 border-line font-semibold"><tr><td class="px-5 py-3" colspan="5">Closing balance</td><td class="px-5 py-3 text-right tnum">{{ d.closing | money }}</td></tr></tfoot>
+  </table></div>
+  {% else %}
+  {% call ui.empty_state("book-open", "No accounts", "Add accounts to the chart first.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

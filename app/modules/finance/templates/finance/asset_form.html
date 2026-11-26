@@ -1,0 +1,61 @@
+{# Finance → register a fixed asset, from a bill line or by hand, or change one (ADR 0027).
+   Design: design/stitch/exports/finance.asset_form.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% set locked = figures_locked %}
+{% call ui.page_header("Edit " ~ asset.number ~ " " ~ asset.name if asset else "Register an asset") %}
+  <a href="{{ '/finance/assets/' ~ asset.id if asset else '/finance/assets' }}" class="kx-btn-ghost">{{ "Back to the asset" if asset else "Fixed assets" }}</a>
+{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if candidate %}<div class="mt-5">{{ ui.alert("info", "From " ~ candidate.bill_number ~ " · " ~ candidate.supplier ~ " · " ~ candidate.description ~ " " ~ (candidate.net | money) ~ ". The cost and supplier come from the bill.") }}</div>{% endif %}
+{% if locked %}<div class="mt-5">{{ ui.alert("info", "Something has been posted for this asset, so only its name, serial, location, cost centre and description can change.") }}</div>{% endif %}
+
+<form method="post" action="{{ '/finance/assets/' ~ asset.id ~ '/edit' if asset else '/finance/assets/new' }}" class="kx-card mt-6 space-y-6 p-5" novalidate>
+  {{ ui.csrf_field() }}
+  <input type="hidden" name="bill_line_id" value="{{ v.get('bill_line_id', '') }}">
+  <div class="grid gap-4 md:grid-cols-2">
+    {{ ui.text_field("name", "Name", value=v.get("name"), errors=errors) }}
+    <div>
+      <label class="kx-label" for="category_id">Category</label>
+      <select id="category_id" name="category_id" class="kx-input" {% if locked %}disabled{% endif %}>
+        <option value="">Choose</option>
+        {% for c in categories %}<option value="{{ c.id }}" {% if v.get("category_id") == c.id|string %}selected{% endif %}>{{ c.name }} · {{ methods[c.method] }}{% if c.method == "straight_line" %} {{ c.life_months }} months{% elif c.method == "reducing_balance" %} {{ c.rate | plain }}%{% endif %}</option>{% endfor %}
+      </select>
+      {% if locked %}<input type="hidden" name="category_id" value="{{ v.get('category_id') }}">{% endif %}
+      {{ ui.field_error(errors, "category_id") }}
+    </div>
+    {{ ui.text_field("acquired_on", "Date ready for use", value=v.get("acquired_on"), type="date", errors=errors, readonly=locked) }}
+    {{ ui.text_field("cost", "Cost", value=v.get("cost"), inputmode="decimal", errors=errors, readonly=locked or candidate or (asset and asset.bill_line_id), hint="From the bill" if candidate else None) }}
+    {{ ui.text_field("residual", "Residual value", value=v.get("residual"), inputmode="decimal", errors=errors, readonly=locked, hint="What it should be worth at the end of its life") }}
+    <div class="grid grid-cols-2 gap-3">
+      {{ ui.text_field("life_months", "Useful life (months)", value=v.get("life_months"), inputmode="numeric", errors=errors, readonly=locked, hint="Straight line") }}
+      {{ ui.text_field("rate", "Annual rate (%)", value=v.get("rate"), inputmode="decimal", errors=errors, readonly=locked, hint="Reducing balance") }}
+    </div>
+    <div>
+      <label class="kx-label" for="cost_centre_id">Cost centre</label>
+      <select id="cost_centre_id" name="cost_centre_id" class="kx-input"><option value="">None</option>{% for cid, clabel in cost_centres %}<option value="{{ cid }}" {% if v.get("cost_centre_id") == cid|string %}selected{% endif %}>{{ clabel }}</option>{% endfor %}</select>
+      {{ ui.field_error(errors, "cost_centre_id") }}
+    </div>
+    {{ ui.text_field("serial", "Serial or registration number", value=v.get("serial"), errors=errors) }}
+    {{ ui.text_field("location", "Location", value=v.get("location"), errors=errors) }}
+    <div class="md:col-span-2"><label class="kx-label" for="description">Description</label><textarea id="description" name="description" rows="3" class="kx-input">{{ v.get("description", "") }}</textarea></div>
+  </div>
+  {% if not candidate %}
+  <details class="border-t border-line pt-4" {% if v.get("opening_accumulated") or errors.get("opening_accumulated") or errors.get("opening_to") %}open{% endif %}>
+    <summary class="cursor-pointer text-body-sm font-semibold">Brought in from before go-live</summary>
+    <p class="mt-2 text-body-sm text-ink-3">Its cost and depreciation are already in the ledger from your opening balances, so registering posts nothing.</p>
+    <div class="mt-3 grid gap-4 md:grid-cols-2">
+      {{ ui.text_field("opening_accumulated", "Accumulated depreciation so far", value=v.get("opening_accumulated"), inputmode="decimal", errors=errors, readonly=locked) }}
+      {{ ui.text_field("opening_to", "Depreciated up to", value=v.get("opening_to", "")[:7], type="month", errors=errors, readonly=locked) }}
+    </div>
+  </details>
+  {% endif %}
+  <div class="flex justify-end gap-3 border-t border-line pt-4">
+    <a href="{{ '/finance/assets/' ~ asset.id if asset else '/finance/assets' }}" class="kx-btn-ghost">Cancel</a>
+    <button type="submit" class="kx-btn-primary">{{ "Save" if asset else "Register" }}</button>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kxmeleon ERP - Finance</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-primary-container": "#e0dbff",
+          "inverse-on-surface": "#f0f0f4",
+          "on-primary-fixed": "#140067",
+          "on-surface-variant": "#474554",
+          "surface-raised": "#FFFFFF",
+          "secondary": "#4f6600",
+          "surface-sunken": "#EFEFF6",
+          "info-bg": "#DFEBFF",
+          "success-text": "#0F6B3E",
+          "inverse-primary": "#c5c0ff",
+          "surface-container-high": "#e8e8ec",
+          "surface-container": "#ededf1",
+          "warning-text": "#8A4B00",
+          "on-tertiary": "#ffffff",
+          "secondary-fixed-dim": "#acd530",
+          "error-container": "#ffdad6",
+          "on-background": "#1a1c1f",
+          "tertiary": "#7a3700",
+          "success-bg": "#DDF7E8",
+          "surface-bright": "#f9f9fd",
+          "on-tertiary-fixed": "#321300",
+          "surface-dim": "#d9dade",
+          "ink": "#16162A",
+          "surface-container-low": "#f3f3f7",
+          "on-primary": "#ffffff",
+          "danger-text": "#B4232F",
+          "line-strong": "#8B8BA6",
+          "primary-fixed": "#e4dfff",
+          "tertiary-fixed": "#ffdbc8",
+          "tertiary-container": "#9f4a00",
+          "on-error-container": "#93000a",
+          "warning-bg": "#FFF1D6",
+          "canvas": "#F6F6FA",
+          "lime": "#C5F04A",
+          "on-error": "#ffffff",
+          "surface-tint": "#5646d7",
+          "iris-hover": "#4A3CC4",
+          "info-text": "#1D55B8",
+          "iris-tint": "#EEECFD",
+          "background": "#f9f9fd",
+          "outline-variant": "#c8c4d7",
+          "primary": "#412ec2",
+          "ink-2": "#4B4B66",
+          "on-tertiary-container": "#ffd7c1",
+          "line": "#E4E4EE",
+          "surface-container-lowest": "#ffffff",
+          "surface-variant": "#e2e2e6",
+          "on-tertiary-fixed-variant": "#743400",
+          "lime-ink": "#4D7A0A",
+          "on-secondary-fixed": "#161f00",
+          "destructive": "#C42836",
+          "on-secondary": "#ffffff",
+          "iris": "#5A4BDB",
+          "on-surface": "#1a1c1f",
+          "secondary-fixed": "#c7f24c",
+          "danger-bg": "#FFE4E6",
+          "on-iris": "#FFFFFF",
+          "outline": "#787586",
+          "ink-3": "#626280",
+          "primary-fixed-dim": "#c5c0ff",
+          "on-primary-fixed-variant": "#3d28be",
+          "secondary-container": "#c4ef49",
+          "on-secondary-fixed-variant": "#3b4d00",
+          "on-secondary-container": "#536b00",
+          "primary-container": "#5a4bdb",
+          "tertiary-fixed-dim": "#ffb68b",
+          "inverse-surface": "#2e3034",
+          "error": "#ba1a1a",
+          "surface-container-highest": "#e2e2e6",
+          "surface": "#FFFFFF"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-2xl": "3rem",
+          "margin": "2rem",
+          "space-3xl": "4rem",
+          "space-sm": "0.5rem",
+          "gutter": "1.5rem",
+          "space-xs": "0.25rem",
+          "space-lg": "1.5rem",
+          "space-xl": "2rem",
+          "space-md": "1rem"
+        },
+        "fontFamily": {
+          "body": ["Inter"],
+          "stat": ["Plus Jakarta Sans"],
+          "body-sm": ["Inter"],
+          "h1": ["Plus Jakarta Sans"],
+          "display": ["Plus Jakarta Sans"],
+          "label": ["Inter"],
+          "h3": ["Plus Jakarta Sans"],
+          "overline": ["Inter"],
+          "h2": ["Plus Jakarta Sans"]
+        },
+        "fontSize": {
+          "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+          "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }],
+          "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+          "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+          "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }],
+          "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+          "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+          "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }],
+          "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: 20px;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .material-symbols-outlined.fill-1 {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sidebar-scroll::-webkit-scrollbar-thumb {
+    background: #E4E4EE;
+    border-radius: 9999px;
+  }
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: #8B8BA6;
+  }
+  @layer base {
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+</style>
+<meta content="web_dashboard" name="shell-type"/>
+</head>
+<body class="bg-canvas text-ink antialiased min-h-screen selection:bg-iris selection:text-white">
+<!-- ========================================================================= -->
+<!-- 1. LEFT SIDEBAR COMPONENT (Fixed 272px)                                   -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-[272px] z-30 flex flex-col justify-between p-4 bg-surface border-r border-line shadow-card">
+<!-- Top Block: Brand Header & Combobox -->
+<div class="flex-shrink-0">
+<!-- Organization Brand Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div aria-label="Adeyemi Holdings Ltd Corporate Crest" class="w-9 h-9 rounded-xl bg-ink text-white font-h2 text-label font-bold flex items-center justify-center shadow-card tracking-tight">
+          AH
+        </div>
+<div class="flex flex-col">
+<span class="font-h2 text-label font-bold text-ink leading-tight">Adeyemi Holdings Ltd</span>
+<span class="font-overline text-[11px] text-ink-3 uppercase tracking-wider">Enterprise Hub</span>
+</div>
+</div>
+<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-sunken hover:text-ink transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+</div>
+<!-- Quick Nav Combobox -->
+<button aria-label="Quick Navigation" class="w-full bg-surface-sunken hover:bg-surface-container-low text-ink-3 hover:text-ink rounded-lg px-3 py-2 text-label font-label flex items-center justify-between border border-line mt-3 mb-4 transition-all duration-150 group" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-ink-3 group-hover:text-ink">search</span>
+<span class="font-body-sm text-body-sm">Go to…</span>
+</div>
+<kbd class="font-label text-[11px] bg-surface text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-card font-semibold">Ctrl K</kbd>
+</button>
+</div>
+<!-- Navigation Modules Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto sidebar-scroll pr-1 -mr-1">
+<div class="font-overline text-[11px] font-semibold text-ink-3 tracking-wider uppercase mb-2 px-2">
+      MODULES
+    </div>
+<nav aria-label="Enterprise Modules" class="space-y-0.5">
+<!-- Home -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#3F3F5A]/[0.12] text-[#3F3F5A] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">home</span>
+</div>
+<span class="truncate">Home</span>
+</a>
+<!-- HR & People -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#7C3AED]/[0.12] text-[#7C3AED] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<span class="truncate">HR &amp; People</span>
+</a>
+<!-- Leave -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0369A1]/[0.12] text-[#0369A1] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</div>
+<span class="truncate">Leave</span>
+</a>
+<!-- Attendance -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#0E7490]/[0.12] text-[#0E7490] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+<span class="truncate">Attendance</span>
+</a>
+<!-- Expenses -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#EA580C]/[0.12] text-[#EA580C] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</div>
+<span class="truncate">Expenses</span>
+</a>
+<!-- Payroll -->
+<a class="h-11 flex items-center gap-3 px-2 rounded-lg text-ink-2 font-label text-label hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#047857]/[0.12] text-[#047857] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+<span class="truncate">Payroll</span>
+</a>
+<!-- ACTIVE MODULE: Finance (Cobalt Accent) -->
+<div class="pt-0.5 pb-1">
+<div class="h-11 flex items-center justify-between px-2 rounded-lg bg-[#1D4ED8]/[0.08] text-ink font-semibold">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#1D4ED8]/[0.16] text-[#1D4ED8] flex-shrink-0">
+<span class="material-symbols-outlined text-[20px] fill-1">query_stats</span>
+</div>
+<span class="font-h3 text-label text-ink">Finance</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-[#1D4ED8] mr-1"></span>
+</div>
+<!-- Indented Sub-sections under Finance -->
+<nav aria-label="Finance sub-navigation" class="ml-6 pl-4 border-l border-line mt-1 space-y-0.5" data-active-classes="bg-[#1D4ED8]/[0.12] text-[#1D4ED8] font-semibold">
+<a aria-current="page" class="block py-1.5 px-2.5 rounded-md transition-colors duration-150 bg-[#1D4ED8]/[0.12] text-[#1D4ED8] font-semibold" data-path="journals" href="#">
+            Journals
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" data-path="chart-of-accounts" href="#">
+            Chart of Accounts
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" data-path="general-ledger" href="#">
+            General Ledger
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" data-path="payables" href="#">
+            Payables
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" data-path="receivables" href="#">
+            Receivables
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" data-path="banking" href="#">
+            Banking
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" data-path="reports" href="#">
+            Reports
+          </a>
+<a class="block py-1.5 px-2.5 text-body-sm text-ink-2 hover:text-ink rounded-md transition-colors duration-150" data-path="finance-settings" href="#">
+            Settings
+          </a>
+</nav>
+</div>
+</nav>
+</div>
+<!-- Sidebar Bottom: Secondary Navigation & User Mini-Card -->
+<div class="flex-shrink-0 pt-3 border-t border-line mt-2 space-y-1">
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">help</span>
+<span>Help &amp; documentation</span>
+</a>
+<a class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-body-sm text-ink-2 hover:bg-surface-container-low hover:text-ink transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Settings</span>
+</a>
+<!-- User Mini-Card -->
+<div class="rounded-xl p-2.5 bg-surface-sunken/60 hover:bg-surface-sunken border border-line flex items-center justify-between mt-2 cursor-pointer transition-colors duration-150 group">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center flex-shrink-0 shadow-card">
+          FB
+        </div>
+<div class="flex flex-col min-w-0">
+<span class="font-h3 text-body-sm font-semibold text-ink truncate leading-snug">Fatima Bello</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-snug">Finance Manager</span>
+</div>
+</div>
+<button aria-label="Account options" class="w-7 h-7 rounded-md flex items-center justify-center text-ink-3 group-hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- 2. TOP BAR COMPONENT (Sticky 64px, ML 272px)                              -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 ml-[272px] h-16 bg-surface/80 backdrop-blur-md border-b border-line flex items-center justify-between px-8 z-20 shadow-card">
+<!-- Left: Breadcrumb Trail -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2">
+<span class="font-label text-body-sm text-ink-2">Finance</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span>
+<span class="font-h3 text-body-sm font-semibold text-ink">Journals</span>
+</nav>
+<!-- Centre: Global Search Field -->
+<div class="max-w-md w-full mx-6">
+<div class="relative flex items-center bg-surface-sunken rounded-lg px-3.5 py-2 border border-transparent focus-within:border-iris focus-within:bg-white transition-all shadow-card">
+<span class="material-symbols-outlined text-[20px] text-ink-3 mr-2.5">search</span>
+<input class="w-full bg-transparent border-0 p-0 text-body-sm text-ink placeholder:text-ink-3 focus:ring-0 focus:outline-none" placeholder="Search transactions, journals, accounts…" type="text"/>
+<kbd class="font-label text-[11px] bg-white text-ink-2 px-1.5 py-0.5 rounded border border-line shadow-card font-semibold ml-2 select-none whitespace-nowrap">
+        Ctrl K
+      </kbd>
+</div>
+</div>
+<!-- Right: Action Cluster -->
+<div class="flex items-center gap-2">
+<!-- Approvals Inbox Button -->
+<button aria-label="Approvals inbox" class="w-11 h-11 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">inbox</span>
+<span class="absolute top-2 right-2 bg-iris text-white font-label text-[10px] font-bold h-4 min-w-[16px] px-1 rounded-full flex items-center justify-center leading-none ring-2 ring-surface">
+        5
+      </span>
+</button>
+<!-- Notifications Bell Button -->
+<button aria-label="Notifications" class="w-11 h-11 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors relative" type="button">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime ring-2 ring-surface"></span>
+</button>
+<!-- Theme Toggle Button -->
+<button aria-label="Toggle theme" class="w-11 h-11 rounded-lg flex items-center justify-center text-ink-2 hover:text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]">light_mode</span>
+</button>
+<!-- User Profile Avatar Mini-Pill -->
+<button aria-label="User profile menu" class="h-11 pl-1.5 pr-2.5 rounded-lg hover:bg-surface-sunken flex items-center gap-2 border border-transparent hover:border-line transition-all duration-150 ml-1" type="button">
+<div class="w-8 h-8 rounded-full bg-iris text-white font-h2 text-label font-semibold flex items-center justify-center shadow-card">
+        FB
+      </div>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Bottom Cobalt Progress / Accent Indicator -->
+<div class="absolute bottom-0 left-0 w-full h-[2px] bg-[#1D4ED8]/[0.2]">
+<div class="h-full w-2/5 bg-[#1D4ED8]"></div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- 3. MAIN CONTENT AREA (ML 272px, Min H calc(100vh - 64px))                 -->
+<!-- ========================================================================= -->
+<main class="ml-[272px] min-h-[calc(100vh-64px)] bg-canvas p-8 relative overflow-hidden">
+<div class="flex flex-col w-full">
+<!-- Page Header & Action Cluster -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-overline text-overline uppercase text-ink-3">General Ledger Operations</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-label text-[11px] bg-success-bg text-success-text font-semibold">
+          FY 2026 Active
+        </span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Journals</h1>
+<p class="font-body-sm text-body-sm text-ink-3 max-w-2xl mt-1">
+        Manage general journal entries, automated module vouchers, adjustments, and period close postings.
+      </p>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3">
+<button aria-label="Export journals CSV" class="h-11 px-4 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-label transition-colors duration-150 flex items-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">file_download</span>
+<span>Export CSV</span>
+</button>
+<button aria-label="Bulk post journals" class="h-11 px-4 rounded-xl bg-surface hover:bg-surface-container-low text-ink font-label text-label transition-colors duration-150 flex items-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">playlist_add_check</span>
+<span>Bulk post</span>
+</button>
+<button aria-label="Create new journal" class="h-11 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold transition-all duration-150 flex items-center gap-2 shadow-md hover:shadow-lg" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New journal</span>
+</button>
+</div>
+</div>
+<!-- Operational Metric Bento Strip -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+<div class="p-5 rounded-2xl bg-surface shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-2">
+<span class="font-overline text-overline uppercase tracking-wider">Posted Total (Nov)</span>
+<span class="material-symbols-outlined text-info-text text-[20px]">account_balance</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat text-stat text-ink font-bold" style="font-variant-numeric: tabular-nums;">₦148.92M</span>
+<span class="font-label text-[12px] text-success-text font-semibold flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> +14.2%
+        </span>
+</div>
+<span class="font-body-sm text-[12px] text-ink-3 mt-1">42 journal runs balanced</span>
+</div>
+<div class="p-5 rounded-2xl bg-surface shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-2">
+<span class="font-overline text-overline uppercase tracking-wider">Awaiting Post</span>
+<span class="material-symbols-outlined text-ink-2 text-[20px]">pending_actions</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat text-stat text-ink font-bold">3 drafts</span>
+<span class="font-body-sm text-[12px] text-ink-3">₦4.20M</span>
+</div>
+<span class="font-body-sm text-[12px] text-ink-3 mt-1">Fatima Bello • 2 pending approval</span>
+</div>
+<div class="p-5 rounded-2xl bg-warning-bg/60 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-warning-text mb-2">
+<span class="font-overline text-overline uppercase tracking-wider">Held Vouchers</span>
+<span class="material-symbols-outlined text-[20px]">error_outline</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat text-stat text-warning-text font-bold">2 entries</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-warning-bg text-warning-text">Action required</span>
+</div>
+<span class="font-body-sm text-[12px] text-warning-text mt-1">Closed period &amp; unmapped codes</span>
+</div>
+<div class="p-5 rounded-2xl bg-surface shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-ink-3 mb-2">
+<span class="font-overline text-overline uppercase tracking-wider">Audit Integrity</span>
+<span class="material-symbols-outlined text-success-text text-[20px]">verified_user</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat text-stat text-success-text font-bold">100%</span>
+<span class="font-label text-[12px] text-ink-2">Zero variances</span>
+</div>
+<span class="font-body-sm text-[12px] text-ink-3 mt-1">Debits equal credits strictly</span>
+</div>
+</div>
+<!-- Horizontal Filter Tabs -->
+<div class="flex items-center justify-between mb-4">
+<div class="inline-flex p-1.5 rounded-2xl bg-surface-sunken gap-1">
+<button class="px-4 py-2 rounded-xl font-label text-label text-ink-3 hover:text-ink transition-all duration-150" type="button">
+        All <span class="ml-1.5 text-[11px] px-1.5 py-0.5 rounded-full bg-surface-container-high text-ink-2 font-semibold">42</span>
+</button>
+<button class="px-4 py-2 rounded-xl font-label text-label font-semibold bg-surface text-ink shadow-sm transition-all duration-150" type="button">
+        Posted <span class="ml-1.5 text-[11px] px-1.5 py-0.5 rounded-full bg-surface-sunken text-ink font-semibold">37</span>
+</button>
+<button class="px-4 py-2 rounded-xl font-label text-label text-ink-3 hover:text-ink transition-all duration-150" type="button">
+        Drafts <span class="ml-1.5 text-[11px] px-1.5 py-0.5 rounded-full bg-surface-container-high text-ink-2 font-semibold">3</span>
+</button>
+<button class="px-4 py-2 rounded-xl font-label text-label text-warning-text hover:bg-warning-bg/50 transition-all duration-150 flex items-center gap-1.5" type="button">
+<span>Held</span>
+<span class="px-1.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-bold text-[11px]">2</span>
+</button>
+<button class="px-4 py-2 rounded-xl font-label text-label text-ink-3 hover:text-ink transition-all duration-150" type="button">
+        Reversals
+      </button>
+</div>
+<div class="hidden lg:flex items-center gap-2 text-ink-3 font-body-sm text-[13px]">
+<span class="inline-block w-2 h-2 rounded-full bg-lime"></span>
+<span>Ledger Auto-Sync: <strong>Connected (Lagos HQ Server)</strong></span>
+</div>
+</div>
+<!-- Prominent Contextual Banner (Held items caution) -->
+<div class="mb-6 p-4 rounded-2xl bg-warning-bg text-warning-text flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+<div class="flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-white/70 flex items-center justify-center flex-shrink-0 text-warning-text shadow-sm">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+</div>
+<div>
+<p class="font-h3 text-h3 text-warning-text leading-tight">2 Held vouchers require manual remediation</p>
+<p class="font-body-sm text-body-sm text-warning-text/90 mt-0.5">
+          Held journals originated from automated <strong>Payroll</strong> or <strong>Expenses</strong> dated in a closed fiscal month or reference an account code missing from your Chart of Accounts.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0 self-end md:self-auto">
+<button class="px-3.5 py-2 rounded-xl bg-white text-warning-text font-label text-body-sm font-semibold hover:bg-white/80 transition shadow-sm" type="button">
+        Review unmapped accounts
+      </button>
+<button class="px-3.5 py-2 rounded-xl bg-warning-text text-white font-label text-body-sm font-semibold hover:opacity-90 transition shadow-sm" type="button">
+        Finance Settings
+      </button>
+</div>
+</div>
+<!-- Search & Filter Card Toolbar -->
+<div class="p-4 rounded-2xl bg-surface shadow-sm mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3 flex-1">
+<!-- Date Range Selector -->
+<div class="relative">
+<button class="h-11 px-3.5 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-body-sm flex items-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">calendar_month</span>
+<span class="font-medium">1 Nov 2026 – 30 Nov 2026</span>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Account Combobox Search -->
+<div class="relative min-w-[260px] flex-1 max-w-sm">
+<div class="h-11 px-3.5 rounded-xl bg-surface-sunken flex items-center gap-2 focus-within:bg-white focus-within:ring-2 focus-within:ring-iris/20 transition-all">
+<span class="material-symbols-outlined text-[18px] text-ink-3">search</span>
+<input class="w-full bg-transparent border-0 p-0 font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-0" placeholder="Search account, code (e.g. 1010, 6100)…" type="text"/>
+</div>
+</div>
+<!-- Source Filter Pill Multi-select -->
+<div class="flex items-center gap-1.5 overflow-x-auto py-1">
+<button class="h-9 px-3 rounded-lg font-label text-[13px] font-semibold bg-ink text-white transition-colors" type="button">
+          All sources
+        </button>
+<button class="h-9 px-3 rounded-lg font-label text-[13px] bg-surface-sunken hover:bg-surface-container-high text-ink-2 transition-colors" type="button">
+          Payroll
+        </button>
+<button class="h-9 px-3 rounded-lg font-label text-[13px] bg-surface-sunken hover:bg-surface-container-high text-ink-2 transition-colors" type="button">
+          Expenses
+        </button>
+<button class="h-9 px-3 rounded-lg font-label text-[13px] bg-surface-sunken hover:bg-surface-container-high text-ink-2 transition-colors" type="button">
+          Manual
+        </button>
+<button class="h-9 px-3 rounded-lg font-label text-[13px] bg-surface-sunken hover:bg-surface-container-high text-ink-2 transition-colors" type="button">
+          Recurring
+        </button>
+</div>
+</div>
+<!-- Clear Filters & Columns -->
+<div class="flex items-center gap-2 self-end lg:self-auto flex-shrink-0">
+<button class="h-11 px-3 text-ink-3 hover:text-destructive font-label text-body-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[18px]">clear_all</span>
+<span>Clear filters</span>
+</button>
+<button aria-label="Table columns configuration" class="w-11 h-11 rounded-xl bg-surface-sunken hover:bg-surface-container-high text-ink-2 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">view_column</span>
+</button>
+</div>
+</div>
+<!-- Primary Journal Table Container -->
+<div class="rounded-2xl bg-surface shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider select-none">
+<th class="py-3.5 pl-6 pr-3 w-10">
+<input aria-label="Select all journals" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-surface cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3.5 px-4 font-semibold">Voucher No</th>
+<th class="py-3.5 px-4 font-semibold">Posting Date</th>
+<th class="py-3.5 px-4 font-semibold min-w-[280px]">Memo / Description</th>
+<th class="py-3.5 px-4 font-semibold">Source</th>
+<th class="py-3.5 px-4 font-semibold text-right">Total (NGN ₦)</th>
+<th class="py-3.5 px-4 font-semibold">Drafted By</th>
+<th class="py-3.5 px-4 font-semibold">Posted By</th>
+<th class="py-3.5 px-4 font-semibold">Status</th>
+<th class="py-3.5 pr-6 pl-3 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1: Payroll Journal (Posted) -->
+<tr class="hover:bg-surface-bright transition-colors duration-100 group">
+<td class="py-4 pl-6 pr-3">
+<input aria-label="Select journal JV-2026-00128" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-surface-sunken cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4 font-mono text-[13px] font-semibold text-ink whitespace-nowrap">
+              JV-2026-00128
+            </td>
+<td class="py-4 px-4 font-body-sm text-body-sm text-ink-2 whitespace-nowrap">
+              28 Nov 2026, 17:30 WAT
+            </td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm font-semibold text-ink line-clamp-1">
+                Nov 2026 Core Staff Net Salary &amp; Statutory Remittances Disbursement
+              </div>
+<div class="font-body-sm text-[12px] text-ink-3">
+                Lagos HQ, Abuja &amp; PH Branch Offsite Teams (142 employees)
+              </div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-success-bg text-success-text">
+<span class="w-1.5 h-1.5 rounded-full bg-[#047857]"></span>
+                Payroll
+              </span>
+</td>
+<td class="py-4 px-4 text-right font-body-sm text-body-sm font-bold text-ink whitespace-nowrap" style="font-variant-numeric: tabular-nums;">
+              ₦18,450,000.00
+            </td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-success-bg text-success-text font-bold text-[10px] flex items-center justify-center">
+                  PE
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Payroll Engine v4.2</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris text-white font-bold text-[10px] flex items-center justify-center">
+                  TB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Tunde Bakare</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md font-label text-[12px] font-semibold bg-success-bg text-success-text">
+                Posted
+              </span>
+</td>
+<td class="py-4 pr-6 pl-3 text-right whitespace-nowrap">
+<button aria-label="Journal options" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Expenses Journal (Posted) -->
+<tr class="hover:bg-surface-bright transition-colors duration-100 bg-surface-container-lowest group">
+<td class="py-4 pl-6 pr-3">
+<input aria-label="Select journal JV-2026-00127" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-surface-sunken cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4 font-mono text-[13px] font-semibold text-ink whitespace-nowrap">
+              JV-2026-00127
+            </td>
+<td class="py-4 px-4 font-body-sm text-body-sm text-ink-2 whitespace-nowrap">
+              26 Nov 2026, 11:14 WAT
+            </td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm font-semibold text-ink line-clamp-1">
+                EXP-00042 Client visit Abuja executive travel &amp; accommodations reimbursement
+              </div>
+<div class="font-body-sm text-[12px] text-ink-3">
+                Transcorp Hilton lodgings, flights &amp; client dinners
+              </div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#FFEDD5] text-[#C2410C]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#C2410C]"></span>
+                Expenses
+              </span>
+</td>
+<td class="py-4 px-4 text-right font-body-sm text-body-sm font-bold text-ink whitespace-nowrap" style="font-variant-numeric: tabular-nums;">
+              ₦642,800.00
+            </td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-sunken text-ink-2 font-bold text-[10px] flex items-center justify-center">
+                  EB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Exp-Bot Sync</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris text-white font-bold text-[10px] flex items-center justify-center">
+                  FB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Fatima Bello</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md font-label text-[12px] font-semibold bg-success-bg text-success-text">
+                Posted
+              </span>
+</td>
+<td class="py-4 pr-6 pl-3 text-right whitespace-nowrap">
+<button aria-label="Journal options" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Manual Depreciation (Posted) -->
+<tr class="hover:bg-surface-bright transition-colors duration-100 group">
+<td class="py-4 pl-6 pr-3">
+<input aria-label="Select journal JV-2026-00126" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-surface-sunken cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4 font-mono text-[13px] font-semibold text-ink whitespace-nowrap">
+              JV-2026-00126
+            </td>
+<td class="py-4 px-4 font-body-sm text-body-sm text-ink-2 whitespace-nowrap">
+              24 Nov 2026, 09:20 WAT
+            </td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm font-semibold text-ink line-clamp-1">
+                Depreciation expense • Q4 2026 IT Equipment &amp; High-Density Server Racks
+              </div>
+<div class="font-body-sm text-[12px] text-ink-3">
+                Asset register batch DEP-2026-Q4-01
+              </div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-surface-sunken text-ink-2">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-2"></span>
+                Manual
+              </span>
+</td>
+<td class="py-4 px-4 text-right font-body-sm text-body-sm font-bold text-ink whitespace-nowrap" style="font-variant-numeric: tabular-nums;">
+              ₦1,420,000.00
+            </td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris-tint text-iris font-bold text-[10px] flex items-center justify-center">
+                  CE
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Chinedu Eze</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris text-white font-bold text-[10px] flex items-center justify-center">
+                  FB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Fatima Bello</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md font-label text-[12px] font-semibold bg-success-bg text-success-text">
+                Posted
+              </span>
+</td>
+<td class="py-4 pr-6 pl-3 text-right whitespace-nowrap">
+<button aria-label="Journal options" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Recurring Amortization (Posted) -->
+<tr class="hover:bg-surface-bright transition-colors duration-100 bg-surface-container-lowest group">
+<td class="py-4 pl-6 pr-3">
+<input aria-label="Select journal JV-2026-00125" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-surface-sunken cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4 font-mono text-[13px] font-semibold text-ink whitespace-nowrap">
+              JV-2026-00125
+            </td>
+<td class="py-4 px-4 font-body-sm text-body-sm text-ink-2 whitespace-nowrap">
+              20 Nov 2026, 08:00 WAT
+            </td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm font-semibold text-ink line-clamp-1">
+                Prepaid Office Rent Amortization • Lagos HQ Victoria Island Tower
+              </div>
+<div class="font-body-sm text-[12px] text-ink-3">
+                Monthly 1/12 recognition schedule (Nov 2026)
+              </div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-iris-tint text-iris">
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+                Recurring
+              </span>
+</td>
+<td class="py-4 px-4 text-right font-body-sm text-body-sm font-bold text-ink whitespace-nowrap" style="font-variant-numeric: tabular-nums;">
+              ₦3,750,000.00
+            </td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris text-white font-bold text-[10px] flex items-center justify-center">
+                  FB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Fatima Bello</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-sunken text-ink-3 font-bold text-[10px] flex items-center justify-center">
+                  BA
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Babatunde Adeyemi</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md font-label text-[12px] font-semibold bg-success-bg text-success-text">
+                Posted
+              </span>
+</td>
+<td class="py-4 pr-6 pl-3 text-right whitespace-nowrap">
+<button aria-label="Journal options" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Held Journal - Unmapped Account Error -->
+<tr class="bg-warning-bg/20 hover:bg-warning-bg/30 transition-colors duration-100 group">
+<td class="py-4 pl-6 pr-3">
+<input aria-label="Select journal JV-2026-00124" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-white cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4 font-mono text-[13px] font-semibold text-warning-text whitespace-nowrap">
+              JV-2026-00124
+            </td>
+<td class="py-4 px-4 font-body-sm text-body-sm text-ink-2 whitespace-nowrap">
+              18 Nov 2026, 14:05 WAT
+            </td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm font-semibold text-ink line-clamp-1">
+                Foreign Exchange Revaluation adjustment • USD Sourcing Zenith Domiciliary
+              </div>
+<div class="flex items-center gap-1.5 text-[12px] text-warning-text font-medium mt-0.5">
+<span class="material-symbols-outlined text-[14px]">info</span>
+<span>Account code '6199 - Unrealized FX Loss' not found in Chart of Accounts</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-surface-sunken text-ink-2">
+<span class="w-1.5 h-1.5 rounded-full bg-ink-2"></span>
+                Manual
+              </span>
+</td>
+<td class="py-4 px-4 text-right font-body-sm text-body-sm font-bold text-warning-text whitespace-nowrap" style="font-variant-numeric: tabular-nums;">
+              ₦5,840,000.00
+            </td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris-tint text-iris font-bold text-[10px] flex items-center justify-center">
+                  AO
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Adaeze Okafor</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="font-body-sm text-[13px] text-ink-3 italic">Halt / Unmapped</span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-label text-[12px] font-semibold bg-warning-bg text-warning-text">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+                Held
+              </span>
+</td>
+<td class="py-4 pr-6 pl-3 text-right whitespace-nowrap">
+<button aria-label="Journal options" class="w-9 h-9 rounded-lg hover:bg-warning-bg/50 text-warning-text inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">build</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Held Journal - Closed Month Collision -->
+<tr class="bg-warning-bg/20 hover:bg-warning-bg/30 transition-colors duration-100 group">
+<td class="py-4 pl-6 pr-3">
+<input aria-label="Select journal JV-2026-00123" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-white cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4 font-mono text-[13px] font-semibold text-warning-text whitespace-nowrap">
+              JV-2026-00123
+            </td>
+<td class="py-4 px-4 font-body-sm text-body-sm text-ink-2 whitespace-nowrap">
+              31 Oct 2026, 23:59 WAT
+            </td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm font-semibold text-ink line-clamp-1">
+                EXP-00038 Late Vendor Invoice • Lekki Branch Fuel Supply Gen Maintenance
+              </div>
+<div class="flex items-center gap-1.5 text-[12px] text-warning-text font-medium mt-0.5">
+<span class="material-symbols-outlined text-[14px]">event_busy</span>
+<span>Posting failed: Fiscal period 'October 2026' is hard closed</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#FFEDD5] text-[#C2410C]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#C2410C]"></span>
+                Expenses
+              </span>
+</td>
+<td class="py-4 px-4 text-right font-body-sm text-body-sm font-bold text-warning-text whitespace-nowrap" style="font-variant-numeric: tabular-nums;">
+              ₦92,500.00
+            </td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-sunken text-ink-2 font-bold text-[10px] flex items-center justify-center">
+                  EB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Exp-Bot Sync</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="font-body-sm text-[13px] text-ink-3 italic">Locked period</span>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md font-label text-[12px] font-semibold bg-warning-bg text-warning-text">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+                Held
+              </span>
+</td>
+<td class="py-4 pr-6 pl-3 text-right whitespace-nowrap">
+<button aria-label="Journal options" class="w-9 h-9 rounded-lg hover:bg-warning-bg/50 text-warning-text inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">build</span>
+</button>
+</td>
+</tr>
+<!-- Row 7: Reversal Journal (Reversed) -->
+<tr class="hover:bg-surface-bright transition-colors duration-100 group">
+<td class="py-4 pl-6 pr-3">
+<input aria-label="Select journal JV-2026-00122" class="w-4 h-4 rounded text-iris focus:ring-iris/20 bg-surface-sunken cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-4 font-mono text-[13px] font-semibold text-ink whitespace-nowrap">
+              JV-2026-00122
+            </td>
+<td class="py-4 px-4 font-body-sm text-body-sm text-ink-2 whitespace-nowrap">
+              15 Nov 2026, 16:40 WAT
+            </td>
+<td class="py-4 px-4">
+<div class="font-body-sm text-body-sm font-semibold text-ink line-clamp-1">
+                Reversal of Accrued Consulting Fees • KPMG Nigeria Tax Advisory Retainer
+              </div>
+<div class="font-body-sm text-[12px] text-ink-3">
+                Automatic auto-reversal of JV-2026-00098
+              </div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-semibold bg-[#FFF1D6] text-warning-text">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+                Reversal
+              </span>
+</td>
+<td class="py-4 px-4 text-right font-body-sm text-body-sm font-bold text-ink whitespace-nowrap" style="font-variant-numeric: tabular-nums;">
+              ₦8,200,000.00
+            </td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris text-white font-bold text-[10px] flex items-center justify-center">
+                  TB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Tunde Bakare</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-iris text-white font-bold text-[10px] flex items-center justify-center">
+                  FB
+                </div>
+<span class="font-body-sm text-[13px] text-ink">Fatima Bello</span>
+</div>
+</td>
+<td class="py-4 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md font-label text-[12px] font-semibold bg-danger-bg text-danger-text">
+                Reversed
+              </span>
+</td>
+<td class="py-4 pr-6 pl-3 text-right whitespace-nowrap">
+<button aria-label="Journal options" class="w-9 h-9 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink inline-flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Trial Balance Total Integrity Strip -->
+<div class="p-4 bg-surface-sunken/80 flex flex-col md:flex-row md:items-center justify-between gap-3 text-body-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-success-text text-[20px]">check_circle</span>
+<span class="font-label text-ink font-semibold">Ledger Verification:</span>
+<span class="text-ink-2">Total Debits: <strong class="text-ink font-semibold">₦38,450,000.00</strong></span>
+<span class="text-ink-3">•</span>
+<span class="text-ink-2">Total Credits: <strong class="text-ink font-semibold">₦38,450,000.00</strong></span>
+</div>
+<div class="flex items-center gap-2 self-end md:self-auto">
+<span class="font-body-sm text-[13px] text-ink-3">Net Difference:</span>
+<span class="px-2.5 py-0.5 rounded-full bg-success-bg text-success-text font-bold text-[12px]">₦0.00 Balanced</span>
+</div>
+</div>
+<!-- Table Pagination Footer -->
+<div class="p-4 bg-surface flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="font-body-sm text-body-sm text-ink-3">
+          Showing <span class="font-semibold text-ink">1–7</span> of <span class="font-semibold text-ink">42</span> entries
+        </span>
+<div class="flex items-center gap-1.5 ml-4">
+<span class="font-body-sm text-[13px] text-ink-3">Rows:</span>
+<select aria-label="Rows per page" class="bg-surface-sunken text-ink text-body-sm rounded-lg py-1 px-2 border-0 focus:ring-1 focus:ring-iris cursor-pointer">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+</div>
+<!-- Controls -->
+<nav aria-label="Journal table pagination" class="flex items-center gap-1">
+<button aria-label="Previous page" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink-3 bg-surface-sunken/40 cursor-not-allowed" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button aria-current="page" class="w-9 h-9 rounded-lg flex items-center justify-center font-label text-body-sm font-semibold bg-iris text-white shadow-sm" type="button">
+          1
+        </button>
+<button class="w-9 h-9 rounded-lg flex items-center justify-center font-label text-body-sm text-ink hover:bg-surface-sunken transition-colors" type="button">
+          2
+        </button>
+<button class="w-9 h-9 rounded-lg flex items-center justify-center font-label text-body-sm text-ink hover:bg-surface-sunken transition-colors" type="button">
+          3
+        </button>
+<span class="w-8 text-center text-ink-3 font-label text-body-sm">…</span>
+<button class="w-9 h-9 rounded-lg flex items-center justify-center font-label text-body-sm text-ink hover:bg-surface-sunken transition-colors" type="button">
+          6
+        </button>
+<button aria-label="Next page" class="w-9 h-9 rounded-lg flex items-center justify-center text-ink hover:bg-surface-sunken transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</nav>
+</div>
+</div>
+</div>
+</main>
+</body></html>

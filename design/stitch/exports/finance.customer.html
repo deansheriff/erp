@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary": "#ffffff", "secondary": "#4f6600", "success-text": "#0F6B3E", "success-bg": "#DDF7E8", "iris-hover": "#4A3CC4", "warning-bg": "#FFF1D6", "ink-3": "#626280", "on-secondary-fixed-variant": "#3b4d00", "warning-text": "#8A4B00", "on-background": "#1a1c1f", "on-primary-fixed-variant": "#3d28be", "surface-bright": "#f9f9fd", "tertiary-container": "#9f4a00", "on-secondary": "#ffffff", "on-primary-fixed": "#140067", "on-iris": "#FFFFFF", "secondary-container": "#c4ef49", "surface-container-highest": "#e2e2e6", "surface-container-high": "#e8e8ec", "on-primary-container": "#e0dbff", "tertiary-fixed": "#ffdbc8", "on-surface": "#1a1c1f", "inverse-surface": "#2e3034", "surface-container-lowest": "#ffffff", "canvas": "#F6F6FA", "on-tertiary-fixed-variant": "#743400", "tertiary": "#7a3700", "surface-dim": "#d9dade", "iris-tint": "#EEECFD", "on-secondary-fixed": "#161f00", "surface-sunken": "#EFEFF6", "lime": "#C5F04A", "info-bg": "#DFEBFF", "inverse-primary": "#c5c0ff", "error": "#ba1a1a", "tertiary-fixed-dim": "#ffb68b", "surface-container-low": "#f3f3f7", "on-error": "#ffffff", "on-surface-variant": "#474554", "iris": "#5A4BDB", "on-primary": "#ffffff", "surface-container": "#ededf1", "outline": "#787586", "surface": "#FFFFFF", "info-text": "#1D55B8", "surface-tint": "#5646d7", "on-tertiary-fixed": "#321300", "primary-container": "#5a4bdb", "danger-text": "#B4232F", "on-error-container": "#93000a", "secondary-fixed": "#c7f24c", "destructive": "#C42836", "secondary-fixed-dim": "#acd530", "surface-raised": "#FFFFFF", "primary-fixed-dim": "#c5c0ff", "error-container": "#ffdad6", "danger-bg": "#FFE4E6", "surface-variant": "#e2e2e6", "outline-variant": "#c8c4d7", "line-strong": "#8B8BA6", "on-secondary-container": "#536b00", "primary": "#412ec2", "primary-fixed": "#e4dfff", "on-tertiary-container": "#ffd7c1", "ink": "#16162A", "inverse-on-surface": "#f0f0f4", "lime-ink": "#4D7A0A", "line": "#E4E4EE", "ink-2": "#4B4B66", "background": "#f9f9fd" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "space-lg": "1.5rem", "space-3xl": "4rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "2rem", "margin": "2rem", "gutter": "1.5rem", "space-2xl": "3rem" }, "fontFamily": { "h2": ["Plus Jakarta Sans"], "display": ["Plus Jakarta Sans"], "h3": ["Plus Jakarta Sans"], "overline": ["Inter"], "label": ["Inter"], "body-sm": ["Inter"], "stat": ["Plus Jakarta Sans"], "h1": ["Plus Jakarta Sans"], "body": ["Inter"] }, "fontSize": { "h2": ["18px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "overline": ["12px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "label": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "stat": ["30px", { "lineHeight": "36px", "fontWeight": "700" }], "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body": ["16px", { "lineHeight": "24px", "fontWeight": "400" }] } } } };</script></head><body class="bg-canvas font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface z-50 flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between bg-surface"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink tracking-tight">Kxmeleon</span><span class="font-overline text-overline uppercase text-ink-3 -mt-1">Enterprise ERP</span></div></div><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer hover:text-ink transition-colors">menu_open</span></div><div class="px-space-md py-space-sm"><div class="p-space-xs bg-surface-sunken rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="font-label text-label text-ink font-semibold">Finance Module</span></div><span class="font-overline text-overline px-1.5 py-0.5 rounded bg-surface text-ink-2 uppercase">Cobalt</span></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-xs flex flex-col gap-space-md"><div class="flex flex-col gap-space-xs"><div class="px-space-xs py-1"><span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Receivables</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="customers" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label text-label">Customers</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="invoices" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Invoices</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="payments-received" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payments Received</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="aging-reports" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-label text-label">Aging Reports</span></a></nav></div><div class="flex flex-col gap-space-xs"><div class="px-space-xs py-1"><span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Payables</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="vendors" href="#"><span class="material-symbols-outlined text-[20px]">domain</span><span class="font-label text-label">Vendors</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="bills-expenses" href="#"><span class="material-symbols-outlined text-[20px]">request_quote</span><span class="font-label text-label">Bills &amp; Expenses</span></a></nav></div><div class="flex flex-col gap-space-xs"><div class="px-space-xs py-1"><span class="font-overline text-overline uppercase tracking-wider text-ink-3 font-semibold">Treasury</span></div><nav class="flex flex-col gap-1" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="bank-accounts" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-label text-label">Bank Accounts</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-ink-2 hover:bg-surface-sunken hover:text-ink transition-all" data-path="reconciliation" href="#"><span class="material-symbols-outlined text-[20px]">sync_alt</span><span class="font-label text-label">Reconciliation</span></a></nav></div></div><div class="p-space-md bg-surface-sunken/60 mx-space-md mb-space-md rounded-xl flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[20px]">security</span><span class="font-overline text-overline text-ink-2 uppercase">SOC2 Type II</span></div><span class="material-symbols-outlined text-ink-3 text-[16px]">lock</span></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-ink-3 text-[20px]">corporate_fare</span><span class="font-label text-label font-semibold text-ink">Adeyemi Holdings Ltd</span><span class="material-symbols-outlined text-ink-3 text-[18px] cursor-pointer">unfold_more</span></div><div class="relative flex items-center"><div class="flex items-center gap-space-sm bg-surface-sunken hover:bg-surface-container transition-colors px-space-md py-2 rounded-lg w-80 cursor-text"><span class="material-symbols-outlined text-ink-3 text-[18px]">search</span><span class="font-body-sm text-body-sm text-ink-3 flex-1">Search records, invoices...</span><kbd class="font-overline text-overline bg-surface px-1.5 py-0.5 rounded text-ink-3 shadow-[0_1px_2px_rgba(22,22,42,0.06)]">⌘ K</kbd></div></div></div><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container transition-colors" data-path="approvals" href="#"><span class="material-symbols-outlined text-ink-2 text-[18px]">fact_check</span><span class="font-label text-label text-ink-2">Approvals</span><span class="font-overline text-overline font-semibold px-1.5 py-0.2 rounded-full bg-primary text-on-primary">5</span></a><button class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-sunken transition-colors relative" type="button"><span class="material-symbols-outlined text-ink-2 text-[20px]">notifications</span><span class="w-2 h-2 rounded-full bg-error absolute top-2 right-2 ring-2 ring-surface"></span></button><button class="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-surface-sunken transition-colors" type="button"><span class="material-symbols-outlined text-ink-2 text-[20px]">light_mode</span></button><div class="h-6 w-px bg-surface-sunken mx-1"></div><div class="flex items-center gap-space-sm pl-1"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label text-label text-ink font-semibold leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3 leading-tight">Finance Manager</span></div></div></div></header><main class="w-full pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full px-space-xl py-space-lg space-y-space-lg">
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-space-xs text-body-sm font-body text-ink-3">
+<a class="hover:text-primary transition-colors" href="#">Finance</a>
+<span class="material-symbols-outlined text-[16px] text-line-strong">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Receivables</a>
+<span class="material-symbols-outlined text-[16px] text-line-strong">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Customers</a>
+<span class="material-symbols-outlined text-[16px] text-line-strong">chevron_right</span>
+<span class="font-label text-ink font-semibold flex items-center gap-1.5">
+      Adebayo Foods Ltd
+      <span class="font-overline text-overline font-semibold px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2">C-0012</span>
+</span>
+</nav>
+<!-- Page Header -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pb-1">
+<div class="flex flex-col space-y-1.5">
+<div class="flex flex-wrap items-center gap-3">
+<h1 class="font-h1 text-h1 text-ink tracking-tight flex items-center gap-2">
+          Adebayo Foods Ltd
+        </h1>
+<span class="font-overline text-overline px-2.5 py-0.5 rounded-md font-mono bg-surface-container-high text-ink font-bold tracking-wide">
+          C-0012
+        </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-success-bg text-success-text font-label text-overline font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text animate-pulse"></span>
+          Active
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 flex flex-wrap items-center gap-2">
+<span>Corporate Tier A</span>
+<span class="text-line-strong">•</span>
+<span>FMCG &amp; Packaged Foods Distribution</span>
+<span class="text-line-strong">•</span>
+<span class="font-mono">TIN: 21984710-0001</span>
+<span class="text-line-strong">•</span>
+<span class="inline-flex items-center gap-1 text-primary text-overline font-semibold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+          JTB/FIRS Linked
+        </span>
+</p>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-2.5 flex-wrap">
+<button class="h-10 px-4 rounded-xl bg-surface hover:bg-surface-sunken text-ink-2 font-label text-label flex items-center gap-1.5 shadow-sm transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+        Edit
+      </button>
+<button class="h-10 px-4 rounded-xl bg-surface hover:bg-surface-sunken text-ink font-label text-label flex items-center gap-1.5 shadow-sm transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">payments</span>
+        Record receipt
+      </button>
+<button class="h-10 px-4.5 rounded-xl bg-primary hover:bg-iris-hover text-on-primary font-label text-label flex items-center gap-1.5 shadow-md shadow-primary/20 transition-all active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+        New invoice
+      </button>
+</div>
+</div>
+<!-- Summary KPI Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Total Balance -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Total Balance</span>
+<div class="w-8 h-8 rounded-lg bg-iris-tint flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-ink tabular-nums">₦2,450,000.00</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1 flex items-center gap-1">
+<span>3 open invoices</span>
+<span class="text-line-strong">•</span>
+<span>Limit: ₦5.0M</span>
+</p>
+</div>
+</div>
+<!-- Overdue Balance -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-danger-text font-bold">Overdue Balance</span>
+<div class="w-8 h-8 rounded-lg bg-danger-bg flex items-center justify-center text-danger-text">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-danger-text tabular-nums">₦850,000.00</div>
+<p class="font-body-sm text-body-sm text-danger-text mt-1 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span>
+          1 invoice overdue · Action required
+        </p>
+</div>
+</div>
+<!-- Unallocated Credit -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">Unallocated Credit</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[18px]">savings</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-ink tabular-nums flex items-baseline gap-2">
+<span>₦120,000.00</span>
+<span class="font-overline text-overline px-1.5 py-0.5 rounded bg-lime text-lime-ink font-semibold">New</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1 flex items-center gap-1">
+<span>RCT-00017 (Zenith Bank)</span>
+<span class="text-line-strong">•</span>
+<span class="text-success-text font-medium">Ready</span>
+</p>
+</div>
+</div>
+<!-- WHT Awaiting Credit Notes -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">WHT Pending Notes</span>
+<div class="w-8 h-8 rounded-lg bg-warning-bg flex items-center justify-center text-warning-text">
+<span class="material-symbols-outlined text-[18px]">receipt</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="font-stat text-stat text-ink tabular-nums">₦45,000.00</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-1">
+          5% statutory WHT schedule pending
+        </p>
+</div>
+</div>
+</div>
+<!-- Aging Strip Card -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm flex flex-col space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div>
+<h2 class="font-h2 text-h2 text-ink">Receivables Aging Profile</h2>
+<p class="font-body-sm text-body-sm text-ink-3">
+          Calculated on standard Net 30 terms as of Today (19 Nov 2026)
+        </p>
+</div>
+<span class="font-overline text-overline font-semibold px-2.5 py-1 rounded-lg bg-surface-sunken text-ink-2 self-start sm:self-auto">
+        Aging basis: Invoice Due Date
+      </span>
+</div>
+<!-- Multi-segment visual progress bar -->
+<div class="w-full h-3 rounded-full bg-surface-sunken overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 65.3%;" title="Current: ₦1,600,000.00 (65.3%)"></div>
+<div class="h-full bg-destructive" style="width: 34.7%;" title="1-30 Overdue: ₦850,000.00 (34.7%)"></div>
+</div>
+<!-- 5 Segment Stat Grid -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-3 pt-1">
+<div class="p-3 rounded-xl bg-surface-sunken/60 flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-overline text-overline text-ink-2">Current (0–30)</span>
+</div>
+<span class="font-label text-label font-bold text-ink mt-1 tabular-nums">₦1,600,000.00</span>
+<span class="font-overline text-overline text-ink-3 mt-0.5">65.3% of total</span>
+</div>
+<div class="p-3 rounded-xl bg-danger-bg/40 flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-destructive"></span>
+<span class="font-overline text-overline text-danger-text font-bold">1–30 Days Overdue</span>
+</div>
+<span class="font-label text-label font-bold text-danger-text mt-1 tabular-nums">₦850,000.00</span>
+<span class="font-overline text-overline text-danger-text/80 mt-0.5">34.7% of total</span>
+</div>
+<div class="p-3 rounded-xl bg-surface-sunken/40 flex flex-col opacity-60">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-line-strong"></span>
+<span class="font-overline text-overline text-ink-3">31–60 Days</span>
+</div>
+<span class="font-label text-label font-semibold text-ink-3 mt-1 tabular-nums">₦0.00</span>
+<span class="font-overline text-overline text-ink-3 mt-0.5">0.0%</span>
+</div>
+<div class="p-3 rounded-xl bg-surface-sunken/40 flex flex-col opacity-60">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-line-strong"></span>
+<span class="font-overline text-overline text-ink-3">61–90 Days</span>
+</div>
+<span class="font-label text-label font-semibold text-ink-3 mt-1 tabular-nums">₦0.00</span>
+<span class="font-overline text-overline text-ink-3 mt-0.5">0.0%</span>
+</div>
+<div class="p-3 rounded-xl bg-surface-sunken/40 flex flex-col opacity-60">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-line-strong"></span>
+<span class="font-overline text-overline text-ink-3">90+ Days</span>
+</div>
+<span class="font-label text-label font-semibold text-ink-3 mt-1 tabular-nums">₦0.00</span>
+<span class="font-overline text-overline text-ink-3 mt-0.5">0.0%</span>
+</div>
+</div>
+</div>
+<!-- Two-Column Master-Detail Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Invoices & Statement -->
+<div class="xl:col-span-8 flex flex-col space-y-space-lg min-w-0">
+<!-- Open Invoices Card -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm flex flex-col space-y-space-md">
+<!-- Card Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-2">
+<h2 class="font-h2 text-h2 text-ink">Open Invoices</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink font-label text-overline font-semibold">
+              3 active
+            </span>
+</div>
+<div class="flex items-center gap-2 flex-wrap">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-[18px] text-ink-3 absolute left-3">search</span>
+<input class="h-9 pl-9 pr-3 rounded-lg bg-surface-sunken text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:bg-surface-container transition-colors w-44 sm:w-56" placeholder="Filter invoices..." type="text"/>
+</div>
+<button class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink-2 font-label text-body-sm flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+              Export CSV
+            </button>
+</div>
+</div>
+<!-- Invoices Table -->
+<div class="overflow-x-auto rounded-xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-4 font-semibold">Invoice No</th>
+<th class="py-3 px-3 font-semibold">Issue Date</th>
+<th class="py-3 px-3 font-semibold">Due Date</th>
+<th class="py-3 px-3 font-semibold text-right">Gross Total</th>
+<th class="py-3 px-3 font-semibold text-right">Paid</th>
+<th class="py-3 px-4 font-semibold text-right">Balance Due</th>
+<th class="py-3 px-3 font-semibold text-center">Status</th>
+<th class="py-3 px-3 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line text-body-sm font-body">
+<!-- Invoice Row 1 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4 font-label font-semibold text-primary">
+<a class="hover:underline flex items-center gap-1" href="#">
+                    INV-2026-00042
+                    <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</td>
+<td class="py-3.5 px-3 text-ink-2 whitespace-nowrap">18 Nov 2026</td>
+<td class="py-3.5 px-3 text-ink-2 whitespace-nowrap">18 Dec 2026</td>
+<td class="py-3.5 px-3 text-right font-medium text-ink tabular-nums whitespace-nowrap">₦1,075,000.00</td>
+<td class="py-3.5 px-3 text-right text-ink-3 tabular-nums whitespace-nowrap">₦0.00</td>
+<td class="py-3.5 px-4 text-right font-bold text-ink tabular-nums whitespace-nowrap">₦1,075,000.00</td>
+<td class="py-3.5 px-3 text-center whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-info-bg text-info-text font-label text-overline font-semibold">
+                    Due in 29 days
+                  </span>
+</td>
+<td class="py-3.5 px-3 text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 rounded-md text-ink-3 hover:text-primary hover:bg-surface-sunken" title="View details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1 rounded-md text-ink-3 hover:text-ink hover:bg-surface-sunken" title="More options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Invoice Row 2 (Overdue) -->
+<tr class="bg-danger-bg/15 hover:bg-danger-bg/25 transition-colors">
+<td class="py-3.5 px-4 font-label font-semibold text-primary">
+<a class="hover:underline flex items-center gap-1" href="#">
+                    INV-2026-00038
+                    <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</td>
+<td class="py-3.5 px-3 text-ink-2 whitespace-nowrap">15 Oct 2026</td>
+<td class="py-3.5 px-3 text-danger-text font-medium whitespace-nowrap">07 Nov 2026</td>
+<td class="py-3.5 px-3 text-right font-medium text-ink tabular-nums whitespace-nowrap">₦970,000.00</td>
+<td class="py-3.5 px-3 text-right text-ink-3 tabular-nums whitespace-nowrap">₦120,000.00</td>
+<td class="py-3.5 px-4 text-right font-bold text-danger-text tabular-nums whitespace-nowrap">₦850,000.00</td>
+<td class="py-3.5 px-3 text-center whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-danger-bg text-danger-text font-label text-overline font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span>
+                    Overdue 12 days
+                  </span>
+</td>
+<td class="py-3.5 px-3 text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="px-2 py-1 rounded-md bg-primary hover:bg-iris-hover text-on-primary font-label text-overline font-semibold shadow-xs" title="Allocate Credit" type="button">
+                      Allocate
+                    </button>
+<button class="p-1 rounded-md text-ink-3 hover:text-ink hover:bg-surface-sunken" title="More options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Invoice Row 3 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4 font-label font-semibold text-primary">
+<a class="hover:underline flex items-center gap-1" href="#">
+                    INV-2026-00029
+                    <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</td>
+<td class="py-3.5 px-3 text-ink-2 whitespace-nowrap">10 Sep 2026</td>
+<td class="py-3.5 px-3 text-warning-text font-medium whitespace-nowrap">24 Nov 2026</td>
+<td class="py-3.5 px-3 text-right font-medium text-ink tabular-nums whitespace-nowrap">₦525,000.00</td>
+<td class="py-3.5 px-3 text-right text-ink-3 tabular-nums whitespace-nowrap">₦0.00</td>
+<td class="py-3.5 px-4 text-right font-bold text-ink tabular-nums whitespace-nowrap">₦525,000.00</td>
+<td class="py-3.5 px-3 text-center whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-label text-overline font-semibold">
+                    Due in 5 days
+                  </span>
+</td>
+<td class="py-3.5 px-3 text-right whitespace-nowrap">
+<div class="inline-flex items-center gap-1">
+<button class="p-1 rounded-md text-ink-3 hover:text-primary hover:bg-surface-sunken" title="View details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1 rounded-md text-ink-3 hover:text-ink hover:bg-surface-sunken" title="More options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+<!-- Table Footer -->
+<tfoot>
+<tr class="bg-surface-sunken/80 font-label font-semibold text-ink">
+<td class="py-3 px-4 text-overline uppercase tracking-wider text-ink-2" colspan="3">Total Outstanding</td>
+<td class="py-3 px-3 text-right tabular-nums">₦2,570,000.00</td>
+<td class="py-3 px-3 text-right tabular-nums text-ink-3">₦120,000.00</td>
+<td class="py-3 px-4 text-right tabular-nums text-primary font-bold">₦2,450,000.00</td>
+<td colspan="2"></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+<!-- Customer Statement Card -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm flex flex-col space-y-space-md">
+<!-- Statement Header & Range Controls -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm">
+<div>
+<h2 class="font-h2 text-h2 text-ink">Customer Statement of Account</h2>
+<p class="font-body-sm text-body-sm text-ink-3">Official audit ledger records for Nigeria tax compliance</p>
+</div>
+<div class="flex items-center gap-2 flex-wrap">
+<button class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-body-sm flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-destructive">picture_as_pdf</span>
+              Download PDF
+            </button>
+<button class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-body-sm flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">mail</span>
+              Email Statement
+            </button>
+</div>
+</div>
+<!-- Filter bar -->
+<div class="p-3 rounded-xl bg-surface-sunken/60 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-overline text-overline uppercase text-ink-3 font-semibold">Date Range:</span>
+<div class="flex items-center gap-1.5 bg-surface px-2.5 py-1.5 rounded-lg text-body-sm font-label text-ink shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-ink-3">calendar_today</span>
+<span>01/10/2026</span>
+<span class="text-ink-3 font-normal">to</span>
+<span>19/11/2026</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2 py-1 rounded-md text-overline font-semibold text-ink-3 hover:text-ink hover:bg-surface" type="button">This Month</button>
+<button class="px-2 py-1 rounded-md text-overline font-semibold bg-surface text-primary shadow-xs" type="button">Last 90 Days</button>
+<button class="px-2 py-1 rounded-md text-overline font-semibold text-ink-3 hover:text-ink hover:bg-surface" type="button">FY 2026</button>
+</div>
+</div>
+<button class="h-8 px-3 rounded-lg bg-primary text-on-primary font-label text-overline font-semibold hover:bg-iris-hover transition-colors" type="button">
+            Apply Filters
+          </button>
+</div>
+<!-- Statement Ledger Table -->
+<div class="overflow-x-auto rounded-xl">
+<table class="w-full text-left border-collapse text-body-sm font-body">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-3 font-semibold">Date</th>
+<th class="py-3 px-3 font-semibold">Reference</th>
+<th class="py-3 px-4 font-semibold">Description</th>
+<th class="py-3 px-3 font-semibold text-right">Debit (₦)</th>
+<th class="py-3 px-3 font-semibold text-right">Credit (₦)</th>
+<th class="py-3 px-4 font-semibold text-right">Running Balance (₦)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line">
+<!-- Opening Row -->
+<tr class="bg-surface-container-low/40 font-medium">
+<td class="py-2.5 px-3 text-ink-2 whitespace-nowrap">01 Oct 2026</td>
+<td class="py-2.5 px-3 text-ink-3 font-mono text-overline">—</td>
+<td class="py-2.5 px-4 font-semibold text-ink">Opening Balance</td>
+<td class="py-2.5 px-3 text-right text-ink-3">—</td>
+<td class="py-2.5 px-3 text-right text-ink-3">—</td>
+<td class="py-2.5 px-4 text-right font-bold text-ink tabular-nums">₦1,200,000.00</td>
+</tr>
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-3 text-ink-2 whitespace-nowrap">15 Oct 2026</td>
+<td class="py-3 px-3 font-mono text-body-sm font-medium text-primary">INV-2026-00038</td>
+<td class="py-3 px-4 text-ink truncate max-w-xs">Commercial food logistics &amp; dry supplies</td>
+<td class="py-3 px-3 text-right text-ink font-medium tabular-nums">₦970,000.00</td>
+<td class="py-3 px-3 text-right text-ink-3">—</td>
+<td class="py-3 px-4 text-right text-ink tabular-nums">₦2,170,000.00</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-3 text-ink-2 whitespace-nowrap">28 Oct 2026</td>
+<td class="py-3 px-3 font-mono text-body-sm font-medium text-success-text">RCT-00014</td>
+<td class="py-3 px-4 text-ink truncate max-w-xs">Direct NIP Bank Transfer - Zenith Ref 99201</td>
+<td class="py-3 px-3 text-right text-ink-3">—</td>
+<td class="py-3 px-3 text-right text-success-text font-medium tabular-nums">₦1,200,000.00</td>
+<td class="py-3 px-4 text-right text-ink tabular-nums">₦970,000.00</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors bg-surface-bright">
+<td class="py-3 px-3 text-ink-2 whitespace-nowrap">14 Nov 2026</td>
+<td class="py-3 px-3 font-mono text-body-sm font-medium text-success-text">RCT-00017</td>
+<td class="py-3 px-4 text-ink truncate max-w-xs">Unallocated payment deposit - Zenith NIP</td>
+<td class="py-3 px-3 text-right text-ink-3">—</td>
+<td class="py-3 px-3 text-right text-success-text font-medium tabular-nums">₦120,000.00</td>
+<td class="py-3 px-4 text-right text-ink tabular-nums">₦850,000.00</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-3 text-ink-2 whitespace-nowrap">18 Nov 2026</td>
+<td class="py-3 px-3 font-mono text-body-sm font-medium text-primary">INV-2026-00042</td>
+<td class="py-3 px-4 text-ink truncate max-w-xs">Q4 Beverage &amp; grocery batch fulfillment</td>
+<td class="py-3 px-3 text-right text-ink font-medium tabular-nums">₦1,075,000.00</td>
+<td class="py-3 px-3 text-right text-ink-3">—</td>
+<td class="py-3 px-4 text-right text-ink tabular-nums">₦1,925,000.00</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-3 text-ink-2 whitespace-nowrap">19 Nov 2026</td>
+<td class="py-3 px-3 font-mono text-body-sm font-medium text-primary">INV-2026-00029</td>
+<td class="py-3 px-4 text-ink truncate max-w-xs">Freight handling &amp; warehousing restock</td>
+<td class="py-3 px-3 text-right text-ink font-medium tabular-nums">₦525,000.00</td>
+<td class="py-3 px-3 text-right text-ink-3">—</td>
+<td class="py-3 px-4 text-right text-ink tabular-nums">₦2,450,000.00</td>
+</tr>
+<!-- Closing Row -->
+<tr class="bg-surface-sunken/90 font-label font-bold text-ink">
+<td class="py-3 px-3 whitespace-nowrap">19 Nov 2026</td>
+<td class="py-3 px-3 font-mono text-overline text-ink-3">—</td>
+<td class="py-3 px-4 font-bold text-ink">Closing Net Debtor Balance</td>
+<td class="py-3 px-3 text-right tabular-nums text-ink">₦2,570,000.00</td>
+<td class="py-3 px-3 text-right tabular-nums text-success-text">₦1,320,000.00</td>
+<td class="py-3 px-4 text-right tabular-nums text-primary font-bold">₦2,450,000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Quick Actions & Customer Profile -->
+<div class="xl:col-span-4 flex flex-col space-y-space-lg">
+<!-- Unallocated Credit Quick Fast-Form -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm flex flex-col space-y-space-md relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">assignment_turned_in</span>
+<h2 class="font-h2 text-h2 text-ink">Allocate Credit</h2>
+</div>
+<span class="font-overline text-overline font-semibold px-2 py-0.5 rounded-full bg-surface-sunken text-primary">
+            RCT-00017
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">
+          Received 14 Nov 2026 via Zenith Bank Direct Deposit. Currently unapplied against open ledger receivables.
+        </p>
+<!-- Fast Allocation Form -->
+<form class="space-y-3.5 pt-1" onsubmit="event.preventDefault(); alert('Credit of ₦120,000 allocated successfully to INV-2026-00038');">
+<div>
+<label class="block font-label text-overline uppercase tracking-wider text-ink-3 mb-1 font-semibold">Source Receipt</label>
+<div class="h-10 px-3 rounded-xl bg-surface-sunken flex items-center justify-between text-body-sm font-label text-ink">
+<span class="font-mono">RCT-00017</span>
+<span class="font-semibold text-success-text tabular-nums">₦120,000.00 Avail</span>
+</div>
+</div>
+<div>
+<label class="block font-label text-overline uppercase tracking-wider text-ink-3 mb-1 font-semibold">Apply To Invoice</label>
+<div class="relative">
+<select class="w-full h-10 pl-3 pr-8 rounded-xl bg-surface-sunken text-body-sm text-ink font-label focus:outline-none focus:bg-surface-container transition-colors appearance-none cursor-pointer">
+<option selected="">INV-2026-00038 (₦850,000.00 Overdue)</option>
+<option>INV-2026-00029 (₦525,000.00 Due 24 Nov)</option>
+<option>INV-2026-00042 (₦1,075,000.00 Due 18 Dec)</option>
+</select>
+<span class="material-symbols-outlined text-[18px] text-ink-3 absolute right-2.5 top-2.5 pointer-events-none">unfold_more</span>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="font-label text-overline uppercase tracking-wider text-ink-3 font-semibold">Amount to Allocate</label>
+<button class="text-overline font-semibold text-primary hover:underline" type="button">Max (₦120,000.00)</button>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-ink-3 font-semibold text-body-sm">₦</span>
+<input class="w-full h-10 pl-7 pr-3 rounded-xl bg-surface-sunken text-body-sm font-semibold tabular-nums text-ink focus:outline-none focus:bg-surface-container transition-colors" type="text" value="120,000.00"/>
+</div>
+</div>
+<button class="w-full h-11 rounded-xl bg-primary hover:bg-iris-hover text-on-primary font-label text-label font-semibold flex items-center justify-center gap-2 shadow-md shadow-primary/20 transition-all active:scale-[0.98]" type="submit">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+            Allocate credit now
+          </button>
+</form>
+<div class="pt-2 flex items-center gap-1.5 text-ink-3 text-overline">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+<span>Applies immediate credit against General Ledger sub-account 1200.</span>
+</div>
+</div>
+<!-- Reminders & Dunning Card -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-ink-2 text-[20px]">schedule_send</span>
+<h2 class="font-h2 text-h2 text-ink">Automated Reminders</h2>
+</div>
+<!-- Toggle switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-sunken peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="space-y-2 text-body-sm">
+<p class="text-ink-2">
+            Sent 3 days before due date, on due date, and weekly on overdue balance.
+          </p>
+<div class="p-2.5 rounded-xl bg-surface-sunken/60 text-ink-3 text-overline flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5">mark_email_read</span>
+<span>Last sent 3 Nov 2026 to <strong class="text-ink">billing@adebayofoods.ng</strong> (Opened 4 Nov 2026)</span>
+</div>
+</div>
+<div class="pt-1 flex flex-col gap-2">
+<button class="w-full h-10 px-4 rounded-xl bg-surface-sunken hover:bg-surface-container text-ink font-label text-body-sm flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+            Email a reminder now
+          </button>
+<a class="text-center text-overline font-semibold text-primary hover:underline py-1" href="#">
+            Preview overdue dunning template
+          </a>
+</div>
+</div>
+<!-- Customer Details Card -->
+<div class="p-space-lg rounded-2xl bg-surface shadow-sm flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<h2 class="font-h2 text-h2 text-ink">Debtor Details</h2>
+<a class="font-label text-overline font-semibold text-primary hover:underline flex items-center gap-1" href="#">
+            Edit details
+            <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+<!-- Details list -->
+<div class="space-y-3 text-body-sm">
+<!-- Billing Email -->
+<div class="flex items-start justify-between">
+<span class="text-ink-3 text-overline uppercase tracking-wider font-semibold">Billing Contact</span>
+<div class="flex items-center gap-1 text-right">
+<span class="font-label text-ink font-medium">billing@adebayofoods.ng</span>
+<button class="p-0.5 text-ink-3 hover:text-primary" onclick="navigator.clipboard.writeText('billing@adebayofoods.ng')" title="Copy email" type="button">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Phone -->
+<div class="flex items-start justify-between">
+<span class="text-ink-3 text-overline uppercase tracking-wider font-semibold">Phone</span>
+<span class="font-label text-ink font-medium tabular-nums">+234 803 123 4567</span>
+</div>
+<!-- Physical Address -->
+<div class="flex flex-col gap-1">
+<span class="text-ink-3 text-overline uppercase tracking-wider font-semibold">Registered Address</span>
+<span class="text-ink-2 font-body-sm leading-relaxed">
+              24 Commercial Avenue, Ikeja Industrial Estate, Lagos State, Nigeria
+            </span>
+</div>
+<!-- Tax ID -->
+<div class="flex items-center justify-between">
+<span class="text-ink-3 text-overline uppercase tracking-wider font-semibold">Tax ID (TIN)</span>
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm text-ink font-semibold">21984710-0001</span>
+<span class="px-1.5 py-0.5 rounded bg-success-bg text-success-text text-overline font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">check</span>
+                FIRS
+              </span>
+</div>
+</div>
+<!-- Payment Terms -->
+<div class="flex items-center justify-between">
+<span class="text-ink-3 text-overline uppercase tracking-wider font-semibold">Payment Terms</span>
+<span class="font-label text-ink font-semibold">Net 30 Days</span>
+</div>
+<!-- Bank Account -->
+<div class="flex items-start justify-between">
+<span class="text-ink-3 text-overline uppercase tracking-wider font-semibold">Bank Account</span>
+<div class="text-right">
+<div class="font-label text-ink font-semibold">Zenith Bank PLC</div>
+<div class="font-mono text-overline text-ink-3">1014299831</div>
+</div>
+</div>
+<!-- Credit Limit Gauge -->
+<div class="pt-2 space-y-1.5">
+<div class="flex items-center justify-between text-body-sm font-label">
+<span class="text-ink-3 text-overline uppercase tracking-wider font-semibold">Credit Limit (₦5.0M)</span>
+<span class="font-bold text-ink tabular-nums">49% Utilised</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-sunken overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 49%;"></div>
+</div>
+<div class="flex items-center justify-between text-overline text-ink-3">
+<span>Utilised: ₦2,450,000.00</span>
+<span class="text-success-text font-semibold">Available: ₦2,550,000.00</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

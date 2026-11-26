@@ -291,7 +291,9 @@ def test_payment_queues_a_balanced_journal(team: Team) -> None:
             ]
         )
     ]
-    assert [j.memo for j in service.queued_journals(db)] == [f"{doc.number} Trip"]
+    [journal] = service.recent_journals(db)
+    assert journal.memo == f"{doc.number} Trip"
+    assert journal.status == "held"  # no financial year is open in these tests
 
 
 def test_approvers_and_claimants_cannot_pay(team: Team) -> None:

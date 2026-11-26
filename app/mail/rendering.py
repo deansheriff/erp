@@ -18,6 +18,8 @@ SUBJECTS = {
     "password_reset": "Reset your Kxmeleon password",
     "test": "Kxmeleon test email",
     "file_quarantined": "A file was blocked by the virus scanner",
+    "finance_payment_reminder": "Payment reminder from {organisation}",
+    "finance_sales_document": "{kind_title} {number} from {organisation}",
 }
 
 

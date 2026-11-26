@@ -1,0 +1,61 @@
+{# Finance → Recurring journals (ADR 0023).
+   Design: design/stitch/exports/finance.recurring.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+{% from "finance/_lines.html" import line_editor with context %}
+
+{% block content %}
+{% call ui.page_header("Recurring journals", "Each one is drafted on its day; someone other than its author posts it.") %}
+  {% if can_create %}<a href="/finance/recurring?edit=new#template-form" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New recurring journal</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+{% if templates %}
+<ul class="mt-6 grid gap-4 lg:grid-cols-2">
+  {% for t in templates %}
+  <li class="kx-card kx-enter p-5">
+    <div class="flex flex-wrap items-start justify-between gap-3">
+      <div class="min-w-0">
+        <p class="font-semibold">{{ t.name }}</p>
+        <p class="text-body-sm text-ink-2">{{ t.memo }}</p>
+        <p class="mt-1 text-xs text-ink-3">Day {{ t.day_of_month }} of each month · from {{ t.first_month.strftime("%b %Y") }}{% if t.last_month %} to {{ t.last_month.strftime("%b %Y") }}{% endif %}</p>
+      </div>
+      <div class="text-right">
+        {{ ui.badge("success", "Active") if t.is_active else ui.badge("neutral", "Paused") }}
+        <p class="mt-2 font-semibold tnum">{{ t.total | money }}</p>
+      </div>
+    </div>
+    <ul class="mt-3 space-y-1 font-mono text-xs text-ink-2">
+      {% for line in t.lines %}<li class="flex justify-between gap-4"><span>{{ line.account_code }} {{ line.account_name }}{% if line.cost_centre %} · {{ line.cost_centre }}{% endif %}</span><span class="tnum">{{ ("Dr " ~ (line.debit | money)) if line.debit else ("Cr " ~ (line.credit | money)) }}</span></li>{% endfor %}
+    </ul>
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-3 text-xs text-ink-3">
+      <span>{% if t.next_date and t.is_active %}Next draft {{ t.next_date | date }}{% elif not t.next_date %}All months drafted{% else %}Paused{% endif %}</span>
+      {% if can_create %}<a href="/finance/recurring?edit={{ t.id }}#template-form" class="kx-btn-ghost h-8 px-3 text-xs">Edit</a>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% elif editing != "new" %}
+<section class="kx-card mt-6">{% call ui.empty_state("repeat", "No recurring journals", "Set one up for monthly entries like rent accruals.") %}{% endcall %}</section>
+{% endif %}
+
+{% if can_create and editing %}
+{% set v = values %}
+<form id="template-form" method="post" action="/finance/recurring" class="kx-card mt-6 overflow-hidden" x-data="journalTotals" x-on:input="recalc" novalidate>
+  {{ ui.csrf_field() }}
+  {% if chosen %}<input type="hidden" name="template_id" value="{{ chosen.id }}">{% endif %}
+  <div class="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-4">
+    <h2 class="font-h3 text-h3 sm:col-span-2 lg:col-span-4">{{ "Edit " ~ chosen.name if chosen else "New recurring journal" }}</h2>
+    {% if errors.get("form") %}<div class="sm:col-span-2 lg:col-span-4">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+    <div class="sm:col-span-2">{{ ui.text_field("name", "Name", value=v.get("name") or (chosen.name if chosen else ""), errors=errors) }}</div>
+    <div class="sm:col-span-2">{{ ui.text_field("memo", "Memo on each journal", value=v.get("memo") or (chosen.memo if chosen else ""), errors=errors) }}</div>
+    {{ ui.text_field("day_of_month", "Day of the month (1-28)", value=v.get("day_of_month") or (chosen.day_of_month if chosen else "1"), errors=errors, inputmode="numeric") }}
+    {{ ui.text_field("first_month", "First month", value=v.get("first_month") or (chosen.first_month.strftime("%Y-%m") if chosen else this_month), type="month", errors=errors) }}
+    {{ ui.text_field("last_month", "Last month (optional)", value=v.get("last_month") or (chosen.last_month.strftime("%Y-%m") if chosen and chosen.last_month else ""), type="month", errors=errors) }}
+    {% if chosen %}<label class="flex items-center gap-2 self-end pb-3 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if chosen.is_active %}checked{% endif %}> Active</label>{% endif %}
+  </div>
+  {{ line_editor(rows, postable, cost_centres, errors) }}
+  <div class="flex justify-end gap-3 border-t border-line p-5"><a href="/finance/recurring" class="kx-btn-ghost">Cancel</a><button type="submit" class="kx-btn-primary">Save</button></div>
+</form>
+{% endif %}
+{% endblock %}

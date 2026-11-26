@@ -1,0 +1,84 @@
+{# Finance → Sales (ADR 0024): invoices, quotes, orders, credit notes and receipts.
+   Design: design/stitch/exports/finance.sales.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Sales", "Quotes, orders, invoices, credit notes and what customers have paid.") %}
+  {% if can_create %}
+  <a href="/finance/sales/new?kind=quote" class="kx-btn-ghost">New quote</a>
+  <a href="/finance/sales/new?kind=order" class="kx-btn-ghost">New order</a>
+  {% endif %}
+  {% if can_receive %}<a href="/finance/receipts/new" class="kx-btn-secondary">{{ ui.icon("banknote", "sm") }} Record receipt</a>{% endif %}
+  {% if can_create %}<a href="/finance/sales/new?kind=invoice" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New invoice</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<div class="mt-6 flex flex-wrap items-end justify-between gap-4">
+  <nav class="kx-segment" aria-label="Sales documents">
+    {% for key, label in tabs %}
+    <a href="/finance/sales?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}{% if counts.get(key) %} ({{ counts[key] }}){% endif %}</a>
+    {% endfor %}
+  </nav>
+  <form method="get" action="/finance/sales" class="flex flex-wrap items-end gap-2">
+    <input type="hidden" name="tab" value="{{ tab }}">
+    <div><label for="f-customer" class="kx-label">Customer</label><select id="f-customer" name="customer" class="kx-input h-10 w-56"><option value="">All</option>{% for cid, label in customers %}<option value="{{ cid }}" {% if filters.customer == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div><label for="f-status" class="kx-label">Status</label><select id="f-status" name="status" class="kx-input h-10"><option value="">All</option>{% for s in statuses %}<option value="{{ s }}" {% if filters.status == s %}selected{% endif %}>{{ status_labels[s] }}</option>{% endfor %}</select></div>
+    <div><label for="f-start" class="kx-label">From</label><input id="f-start" name="start" type="date" value="{{ filters.start }}" class="kx-input h-10"></div>
+    <div><label for="f-end" class="kx-label">To</label><input id="f-end" name="end" type="date" value="{{ filters.end }}" class="kx-input h-10"></div>
+    <button type="submit" class="kx-btn-secondary h-10">Filter</button>
+  </form>
+</div>
+
+<section class="kx-card mt-5 overflow-hidden" aria-label="Documents">
+  {% if rows and tab == "receipt" %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[760px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Receipt</th><th class="px-3 py-3 text-left font-semibold">Customer</th><th class="px-3 py-3 text-left font-semibold">Date</th><th class="px-3 py-3 text-right font-semibold">Cash</th><th class="px-3 py-3 text-right font-semibold">WHT</th><th class="px-3 py-3 text-right font-semibold">Total</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+          <td class="px-5 py-3"><a href="/finance/receipts/{{ r.id }}" class="font-mono text-xs font-semibold text-iris">{{ r.number }}</a></td>
+          <td class="px-3 py-3">{{ r.customer }}</td>
+          <td class="whitespace-nowrap px-3 py-3">{{ r.receipt_date | date }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.cash | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.wht | money if r.wht else "—" }}</td>
+          <td class="px-3 py-3 text-right font-semibold tnum">{{ r.total | money }}</td>
+          <td class="px-5 py-3">{% if r.status == "reversed" %}{{ ui.badge("neutral", "Reversed") }}{% elif r.awaiting_certificate %}{{ ui.badge("warning", "Awaiting WHT credit note") }}{% else %}{{ ui.badge("success", "Posted") }}{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% elif rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[900px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr>
+        <th class="px-5 py-3 text-left font-semibold">Number</th><th class="px-3 py-3 text-left font-semibold">Customer</th><th class="px-3 py-3 text-left font-semibold">Date</th>
+        <th class="px-3 py-3 text-left font-semibold">{{ "Valid until" if tab == "quote" else "Due" if tab == "invoice" else "" }}</th>
+        <th class="px-3 py-3 text-right font-semibold">Net</th><th class="px-3 py-3 text-right font-semibold">VAT</th><th class="px-3 py-3 text-right font-semibold">Total</th>
+        {% if tab == "invoice" %}<th class="px-3 py-3 text-right font-semibold">Balance</th>{% endif %}
+        <th class="px-5 py-3 text-left font-semibold">Status</th>
+      </tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for d in rows %}
+        <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+          <td class="px-5 py-3"><a href="/finance/sales/{{ d.id }}" class="font-mono text-xs font-semibold text-iris">{{ d.number or "Draft" }}</a>{% if d.source_number %}<span class="block text-xs text-ink-3">From {{ d.source_number }}</span>{% endif %}</td>
+          <td class="px-3 py-3"><a href="/finance/customers/{{ d.customer_id }}" class="hover:text-iris">{{ d.customer }}</a></td>
+          <td class="whitespace-nowrap px-3 py-3">{{ d.doc_date | date }}</td>
+          <td class="whitespace-nowrap px-3 py-3">{% if tab == "quote" and d.valid_until %}{{ d.valid_until | date }}{% elif tab == "invoice" and d.due_date %}{{ d.due_date | date }}{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum">{{ d.net | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ d.vat | money }}</td>
+          <td class="px-3 py-3 text-right font-semibold tnum">{{ d.total | money }}</td>
+          {% if tab == "invoice" %}<td class="px-3 py-3 text-right tnum">{{ d.balance | money if d.number else "—" }}</td>{% endif %}
+          <td class="px-5 py-3">{{ ui.badge(tones[d.status], status_labels[d.status]) }}{% if tab == "credit_note" and d.status == "draft" %}<span class="mt-1 block text-xs text-ink-3">Someone other than the drafter issues it</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("receipt-text", "Nothing here", "Documents appear here as they are drafted and issued.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

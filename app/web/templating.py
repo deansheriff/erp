@@ -41,6 +41,11 @@ def _money(amount: Decimal, currency: str = "NGN") -> str:
     return format_money(amount, currency)
 
 
+def _plain(value: Decimal) -> str:
+    """A quantity or rate without trailing zeros or exponent: 40, 7.5, 2.25."""
+    return f"{value.normalize():f}"
+
+
 def _date(value: date) -> str:
     return format_date(value)
 
@@ -83,6 +88,7 @@ def build_templates() -> Jinja2Templates:
     env.lstrip_blocks = True
     filters: dict[str, Any] = {
         "money": _money,
+        "plain": _plain,
         "date": _date,
         "datetime": _datetime,
         "period_end": _period_end,

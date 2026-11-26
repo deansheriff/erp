@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-surface":"#1a1c1f","primary-fixed-dim":"#c5c0ff","on-primary-container":"#e0dbff","surface":"#FFFFFF","secondary-container":"#c4ef49","tertiary":"#7a3700","surface-sunken":"#EFEFF6","surface-container":"#ededf1","danger-text":"#B4232F","outline-variant":"#c8c4d7","surface-variant":"#e2e2e6","surface-container-lowest":"#ffffff","on-iris":"#FFFFFF","warning-text":"#8A4B00","primary-container":"#5a4bdb","surface-container-high":"#e8e8ec","on-secondary-fixed":"#161f00","success-bg":"#DDF7E8","surface-container-highest":"#e2e2e6","on-tertiary":"#ffffff","on-tertiary-fixed":"#321300","line":"#E4E4EE","primary-fixed":"#e4dfff","on-error-container":"#93000a","on-secondary":"#ffffff","ink-2":"#4B4B66","on-primary-fixed-variant":"#3d28be","on-primary-fixed":"#140067","on-surface-variant":"#474554","lime-ink":"#4D7A0A","surface-bright":"#f9f9fd","error-container":"#ffdad6","secondary-fixed":"#c7f24c","on-tertiary-container":"#ffd7c1","secondary-fixed-dim":"#acd530","ink":"#16162A","iris-tint":"#EEECFD","surface-raised":"#FFFFFF","inverse-on-surface":"#f0f0f4","destructive":"#C42836","primary":"#412ec2","ink-3":"#626280","lime":"#C5F04A","background":"#f9f9fd","iris":"#5A4BDB","on-background":"#1a1c1f","success-text":"#0F6B3E","outline":"#787586","info-text":"#1D55B8","inverse-primary":"#c5c0ff","on-primary":"#ffffff","line-strong":"#8B8BA6","inverse-surface":"#2e3034","on-secondary-container":"#536b00","tertiary-fixed-dim":"#ffb68b","tertiary-fixed":"#ffdbc8","on-error":"#ffffff","on-tertiary-fixed-variant":"#743400","on-secondary-fixed-variant":"#3b4d00","tertiary-container":"#9f4a00","danger-bg":"#FFE4E6","info-bg":"#DFEBFF","error":"#ba1a1a","surface-container-low":"#f3f3f7","secondary":"#4f6600","surface-dim":"#d9dade","warning-bg":"#FFF1D6","iris-hover":"#4A3CC4","surface-tint":"#5646d7","canvas":"#F6F6FA"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-3xl":"4rem","space-md":"1rem","space-2xl":"3rem","space-xl":"2rem","gutter":"1.5rem","space-xs":"0.25rem","margin":"2rem","space-lg":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"label":["Inter"],"body":["Inter"],"overline":["Inter"],"body-sm":["Inter"],"display":["Plus Jakarta Sans"],"h2":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"],"h1":["Plus Jakarta Sans"],"h3":["Plus Jakarta Sans"]},"fontSize":{"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}};</script></head><body class="bg-canvas font-body text-on-surface"><aside class="fixed left-0 top-0 h-full w-72 bg-surface z-50 flex flex-col shadow-[0_1px_8px_rgba(22,22,42,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between bg-surface"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">account_balance</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-on-surface leading-tight">Kxmeleon</span><span class="font-overline text-overline text-on-surface-variant truncate max-w-[140px]">Adeyemi Holdings Ltd</span></div></div><span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-overline text-[10px]">PROD</span></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-space-xs"><div class="px-space-sm pt-space-xs pb-1"><span class="font-overline text-overline text-outline uppercase">Modules</span></div><nav class="space-y-1" data-active-classes="bg-iris-tint text-iris font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="executive-overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Executive Overview</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg font-label text-label text-iris bg-iris-tint font-semibold transition-all" data-path="finance-dashboard" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px] text-iris">payments</span><span>Finance</span></div><span class="material-symbols-outlined text-[18px] text-iris">expand_more</span></a><div class="pl-8 pr-1 py-1 space-y-0.5"><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="general-ledger" href="#">General ledger</a><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="journals" href="#">Journals</a><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="accounts-payable" href="#">Accounts payable</a><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="accounts-receivable" href="#">Accounts receivable</a><a aria-current="page" class="block px-space-sm py-1.5 transition-colors bg-iris-tint text-iris font-semibold rounded-lg" data-path="asset-categories" href="#">Fixed assets</a><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="banking" href="#">Banking</a><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="tax-compliance" href="#">Tax</a><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="financial-reports" href="#">Reports</a><a class="block px-space-sm py-1.5 rounded font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="finance-settings" href="#">Settings</a></div><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="human-resources" href="#"><span class="material-symbols-outlined text-[20px]">groups</span><span>Human Resources</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="procurement" href="#"><span class="material-symbols-outlined text-[20px]">shopping_cart</span><span>Procurement</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all" data-path="inventory" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Inventory &amp; Supply</span></a></nav></div><div class="p-space-sm bg-surface-container-lowest"><div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-outline text-[18px]">dns</span><span class="font-body-sm text-body-sm text-on-surface-variant">Fiscal Year 2024</span></div><span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(22,22,42,0.04)] px-space-lg flex items-center justify-between"><div class="flex items-center gap-2 text-on-surface-variant font-label text-label"><a class="text-on-surface-variant hover:text-on-surface transition-colors" data-path="finance-dashboard" href="#">Finance</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><a class="text-on-surface-variant hover:text-on-surface transition-colors" data-path="asset-categories" href="#">Fixed assets</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><span class="text-on-surface font-semibold">Asset categories</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center w-80"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 rounded-lg bg-surface-container-low font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-iris/20" placeholder="Search assets, categories, accounts..." type="text"/><kbd class="absolute right-2 px-1.5 py-0.5 rounded bg-surface font-overline text-[11px] text-on-surface-variant shadow-[0_1px_2px_rgba(22,22,42,0.08)]">Ctrl K</kbd></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-1.5 h-9 px-3 rounded-lg bg-warning-bg text-warning-text font-label text-label hover:opacity-95 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">pending_actions</span><span>4 Approvals</span></button><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center gap-3 pl-2"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label text-label text-on-surface font-semibold leading-tight">Fatima Bello</span><span class="font-overline text-[11px] text-on-surface-variant">Finance Manager</span></div></div></div></header><main class="w-full pt-16 bg-canvas min-h-screen"><div class="flex flex-col w-full">
+<!-- Subtle Finance Cobalt Glow Decorator -->
+<div class="relative w-full overflow-hidden px-space-lg lg:px-space-xl pt-space-lg pb-space-2xl">
+<div class="absolute -top-32 -left-20 w-96 h-96 bg-primary-container/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-10 right-48 w-80 h-80 bg-iris-tint/60 rounded-full blur-2xl pointer-events-none -z-10"></div>
+<!-- Header Section with Breadcrumb Context & Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col gap-1 min-w-0">
+<div class="flex items-center gap-2 text-on-surface-variant font-overline text-overline uppercase tracking-wider">
+<span>Finance</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Fixed assets</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold">Asset categories</span>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-1">
+<h1 class="font-display text-display text-on-surface tracking-tight">Asset categories</h1>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-on-surface font-label text-label shadow-sm">
+<span class="w-2 h-2 rounded-full bg-success-text"></span>
+<span class="font-semibold text-body-sm" style="font-variant-numeric: tabular-nums;">6 categories configured</span>
+</span>
+</div>
+<p class="font-body text-body-sm text-ink-2 max-w-3xl mt-1 leading-relaxed">
+          Define tangible asset classes, statutory depreciation schedules under Nigerian GAAP &amp; IFRS, and General Ledger account linkages for Adeyemi Holdings Ltd.
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-3 shrink-0 self-start md:self-center">
+<a class="h-11 px-4 rounded-lg bg-surface hover:bg-surface-container-low text-ink font-label text-label flex items-center gap-2 shadow-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-ink-2">table_chart</span>
+<span>Fixed assets register</span>
+</a>
+<button class="h-11 px-5 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label flex items-center gap-2 shadow-md transition-all active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add category</span>
+</button>
+</div>
+</div>
+<!-- KPI / Summary Metric Tiles -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-xl">
+<!-- Metric 1 -->
+<div class="relative p-5 rounded-xl bg-surface shadow-sm overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label text-label text-ink-3 uppercase tracking-wide">Total Capitalised</span>
+<div class="w-8 h-8 rounded-lg bg-iris-tint flex items-center justify-center text-iris">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-stat text-stat text-on-surface tracking-tight" style="font-variant-numeric: tabular-nums;">₦48,250,000.00</span>
+<span class="font-overline text-overline text-ink-3 mt-1">Gross carrying cost (Historical)</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="relative p-5 rounded-xl bg-surface shadow-sm overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label text-label text-ink-3 uppercase tracking-wide">Configured Classes</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[18px]">category</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-stat text-stat text-on-surface tracking-tight" style="font-variant-numeric: tabular-nums;">6 Categories</span>
+<span class="font-overline text-overline text-ink-3 mt-1">5 amortising · 1 non-depreciable Land</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="relative p-5 rounded-xl bg-surface shadow-sm overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label text-label text-ink-3 uppercase tracking-wide">Asset Count</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-stat text-stat text-on-surface tracking-tight" style="font-variant-numeric: tabular-nums;">28 Items</span>
+<span class="font-overline text-overline text-ink-3 mt-1">Active on fixed register</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="relative p-5 rounded-xl bg-surface shadow-sm overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label text-label text-ink-3 uppercase tracking-wide">GL Linkage Health</span>
+<div class="w-8 h-8 rounded-lg bg-success-bg flex items-center justify-center text-success-text">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-stat text-stat text-success-text tracking-tight" style="font-variant-numeric: tabular-nums;">100%</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline font-semibold">Mapped</span>
+</div>
+<span class="font-overline text-overline text-ink-3 mt-1">IFRS IAS 16 Compliant balance</span>
+</div>
+</div>
+</div>
+<!-- Main Workspace: Split Content Grid & Drawer -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column (Tables & Statutory Settings): 7 of 12 cols -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Asset Categories Table Container -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Toolbar -->
+<div class="p-4 bg-surface flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-3 flex-1 min-w-[240px]">
+<div class="relative flex-1 max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-3 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink placeholder:text-outline focus:outline-none focus:bg-surface focus:shadow-sm transition-all" placeholder="Search category name or code..." type="text"/>
+</div>
+<div class="relative">
+<select class="h-10 px-3 pr-8 rounded-lg bg-surface-sunken font-label text-label text-ink appearance-none focus:outline-none focus:bg-surface cursor-pointer">
+<option>All methods</option>
+<option>Straight line</option>
+<option>Reducing balance</option>
+<option>Not depreciated</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-outline pointer-events-none text-[18px]">arrow_drop_down</span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<span class="px-3 py-1 rounded-full bg-surface-sunken font-overline text-overline text-ink-2 font-medium">Active (6)</span>
+<button class="h-10 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container font-label text-label text-ink flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- The Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-4">Category &amp; Code</th>
+<th class="py-3 px-4">Method</th>
+<th class="py-3 px-4">Life / Rate</th>
+<th class="py-3 px-4">GL Cost Acct</th>
+<th class="py-3 px-4">Accum. Dep Acct</th>
+<th class="py-3 px-4 text-center">Assets</th>
+<th class="py-3 px-4 text-center">Status</th>
+<th class="py-3 px-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: Land & Buildings -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">apartment</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Land &amp; Buildings</span>
+<span class="font-overline text-overline text-ink-3" style="font-variant-numeric: tabular-nums;">CAT-001 · 1510-BLD</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-[11px] font-semibold">Straight line</span>
+</td>
+<td class="py-3.5 px-4 font-medium" style="font-variant-numeric: tabular-nums;">50 years (2%)</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1510 Land &amp; bldgs</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1511 Acc. Dep — Bldgs</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container font-medium text-ink text-body-sm" style="font-variant-numeric: tabular-nums;">4</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Active</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors ml-auto">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Motor Vehicles (ACTIVELY SELECTED) -->
+<tr class="bg-iris-tint/40 shadow-sm relative transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-iris text-on-iris flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">directions_car</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label text-label font-bold text-iris">Motor vehicles</span>
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+</div>
+<span class="font-overline text-overline text-iris" style="font-variant-numeric: tabular-nums;">CAT-002 · 1520-MV</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-[11px] font-semibold">Straight line</span>
+</td>
+<td class="py-3.5 px-4 font-semibold text-iris" style="font-variant-numeric: tabular-nums;">4 years (25%)</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink font-semibold" style="font-variant-numeric: tabular-nums;">1520 Motor veh.</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink font-semibold" style="font-variant-numeric: tabular-nums;">1521 Acc. Dep — MV</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded bg-primary-fixed-dim text-on-primary-fixed font-bold text-body-sm" style="font-variant-numeric: tabular-nums;">8</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Active</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="px-2.5 py-1 rounded bg-iris text-on-iris font-label text-[12px] font-medium shadow-sm inline-flex items-center gap-1">
+<span>Editing</span>
+<span class="material-symbols-outlined text-[14px]">edit</span>
+</span>
+</td>
+</tr>
+<!-- Row 3: Plant & Machinery -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-surface-container text-ink-2 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Plant &amp; machinery</span>
+<span class="font-overline text-overline text-ink-3" style="font-variant-numeric: tabular-nums;">CAT-003 · 1530-PM</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-[11px] font-semibold">Reducing bal.</span>
+</td>
+<td class="py-3.5 px-4 font-medium" style="font-variant-numeric: tabular-nums;">20% a year</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1530 Plant &amp; mach</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1531 Acc. Dep — PM</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container font-medium text-ink text-body-sm" style="font-variant-numeric: tabular-nums;">6</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Active</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors ml-auto">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: IT & Server Infrastructure -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-surface-container text-ink-2 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">dns</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">IT &amp; server infrastructure</span>
+<span class="font-overline text-overline text-ink-3" style="font-variant-numeric: tabular-nums;">CAT-004 · 1540-IT</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-[11px] font-semibold">Straight line</span>
+</td>
+<td class="py-3.5 px-4 font-medium" style="font-variant-numeric: tabular-nums;">3 years (33.3%)</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1540 IT &amp; servers</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1541 Acc. Dep — IT</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container font-medium text-ink text-body-sm" style="font-variant-numeric: tabular-nums;">7</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Active</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors ml-auto">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Office Furniture -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-surface-container text-ink-2 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">chair</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Office furniture &amp; fixtures</span>
+<span class="font-overline text-overline text-ink-3" style="font-variant-numeric: tabular-nums;">CAT-005 · 1560-FUR</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-[11px] font-semibold">Straight line</span>
+</td>
+<td class="py-3.5 px-4 font-medium" style="font-variant-numeric: tabular-nums;">5 years (20%)</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1560 Office furn.</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1561 Acc. Dep — Furn</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container font-medium text-ink text-body-sm" style="font-variant-numeric: tabular-nums;">2</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Active</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors ml-auto">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Freehold Land -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-surface-container text-ink-2 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">landscape</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Freehold land</span>
+<span class="font-overline text-overline text-ink-3" style="font-variant-numeric: tabular-nums;">CAT-006 · 1515-LND</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex px-2 py-0.5 rounded-full bg-surface-container-high text-ink-2 font-overline text-[11px] font-semibold">Not depreciated</span>
+</td>
+<td class="py-3.5 px-4 font-medium text-outline">—</td>
+<td class="py-3.5 px-4 font-mono text-[13px] text-ink-2" style="font-variant-numeric: tabular-nums;">1515 Freehold land</td>
+<td class="py-3.5 px-4 text-outline font-mono">—</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded bg-surface-container font-medium text-ink text-body-sm" style="font-variant-numeric: tabular-nums;">1</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Active</span>
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink transition-colors ml-auto">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Pagination Notice -->
+<div class="p-3 bg-surface-sunken flex items-center justify-between text-body-sm text-ink-3">
+<span style="font-variant-numeric: tabular-nums;">Showing 6 of 6 categories</span>
+<span class="font-overline text-overline">Standard Schedule: 12-Period Monthly Amortisation</span>
+</div>
+</div>
+<!-- Statutory & Accounting Rules Card -->
+<div class="p-space-lg rounded-xl bg-surface shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">policy</span>
+<h2 class="font-h2 text-h2 text-on-surface">Asset Accounting &amp; Capitalisation Settings</h2>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+              Company-wide thresholds and general ledger linkage for revaluations and asset retirements under Nigerian tax provisions.
+            </p>
+</div>
+<!-- Configuration Form Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md mt-1">
+<!-- Field: Capitalisation Threshold -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label text-label font-medium text-ink">Capitalisation threshold</label>
+<span class="font-overline text-[11px] text-primary bg-primary-fixed px-1.5 py-0.5 rounded font-semibold">Nigerian GAAP</span>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-3 font-semibold text-ink-2">₦</span>
+<input class="w-full h-11 pl-8 pr-3 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink font-semibold focus:outline-none focus:bg-surface focus:shadow-sm transition-all" style="font-variant-numeric: tabular-nums;" type="text" value="100,000.00"/>
+</div>
+<span class="font-overline text-[11px] text-ink-3">Items below this value are expensed immediately on invoice receipt.</span>
+</div>
+<!-- Field: Revaluation Reserve Account -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-medium text-ink">Revaluation reserve account (Equity)</label>
+<div class="relative">
+<select class="w-full h-11 px-3 pr-8 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink appearance-none focus:outline-none focus:bg-surface">
+<option selected="">3300 — Asset Revaluation Reserve (Equity)</option>
+<option>3310 — Capital Reserves (Undistributed)</option>
+<option>3900 — Retained Earnings</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<span class="font-overline text-[11px] text-ink-3">Carries surplus adjustments under IAS 16 fair-value model.</span>
+</div>
+<!-- Field: Disposal Gain/Loss Account -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-medium text-ink">Disposal gain or loss account (P&amp;L)</label>
+<div class="relative">
+<select class="w-full h-11 px-3 pr-8 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink appearance-none focus:outline-none focus:bg-surface">
+<option selected="">4910 — Gain/Loss on Fixed Asset Disposal (P&amp;L)</option>
+<option>4915 — Scrapped Equipment Residuals</option>
+<option>6920 — Terminal Loss Write-Offs</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<span class="font-overline text-[11px] text-ink-3">Net scrap proceeds vs net carrying book value upon derecognition.</span>
+</div>
+<!-- Field: Revaluation Losses Account -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label font-medium text-ink">Revaluation losses account (P&amp;L)</label>
+<div class="relative">
+<select class="w-full h-11 px-3 pr-8 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink appearance-none focus:outline-none focus:bg-surface">
+<option selected="">6910 — Impairment &amp; Revaluation Loss (P&amp;L)</option>
+<option>6912 — Physical Asset Damage Losses</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<span class="font-overline text-[11px] text-ink-3">Excess revaluation downward charges exceeding previous reserves.</span>
+</div>
+</div>
+<!-- Automated Monthly Depreciation Run Checkbox -->
+<div class="mt-2 p-3.5 rounded-lg bg-surface-sunken flex items-center justify-between">
+<div class="flex items-center gap-3">
+<input checked="" class="w-5 h-5 rounded text-iris bg-surface focus:ring-iris cursor-pointer" id="auto-dep-run" type="checkbox"/>
+<label class="flex flex-col cursor-pointer select-none" for="auto-dep-run">
+<span class="font-label text-label font-semibold text-ink">Enforce automated monthly depreciation draft run</span>
+<span class="font-body-sm text-[13px] text-ink-2">Generates unposted General Ledger journals on the 1st of each calendar month for review.</span>
+</label>
+</div>
+<span class="material-symbols-outlined text-iris text-[22px]">schedule</span>
+</div>
+<!-- Card Action Bar -->
+<div class="pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-2 text-ink-3 font-overline text-overline">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span>Last saved: 14 Nov 2026 by Fatima Bello</span>
+</div>
+<button class="h-11 px-6 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-medium transition-all shadow-sm" type="button">
+              Save settings
+            </button>
+</div>
+</div>
+</div>
+<!-- Right Column: Dockable Drawer / Side Panel (5 of 12 cols) -->
+<div class="lg:col-span-5 flex flex-col">
+<div class="sticky top-20 bg-surface rounded-xl shadow-md p-space-lg flex flex-col gap-space-md">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h3 class="font-h3 text-h3 text-ink">Edit Motor vehicles</h3>
+<span class="px-2 py-0.5 rounded bg-surface-container font-mono text-[11px] font-semibold text-ink-2">CAT-002</span>
+</div>
+<span class="font-overline text-[11px] text-ink-3">IFRS IAS 16 Classification</span>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-sunken text-ink-3 hover:text-ink flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 -mt-1 leading-snug">
+            Update calculation rule, statutory recovery lifespan, and default general ledger booking codes.
+          </p>
+<!-- Drawer Form Fields -->
+<div class="flex flex-col gap-space-md">
+<!-- Category Name & Code Row -->
+<div class="grid grid-cols-3 gap-3">
+<div class="col-span-2 flex flex-col gap-1">
+<label class="font-label text-label font-medium text-ink">Category name <span class="text-error">*</span></label>
+<input class="h-11 px-3 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink font-semibold focus:outline-none focus:bg-surface shadow-sm" type="text" value="Motor vehicles"/>
+</div>
+<div class="col-span-1 flex flex-col gap-1">
+<label class="font-label text-label font-medium text-ink">Code</label>
+<input class="h-11 px-3 rounded-lg bg-surface-container font-mono text-[13px] text-ink-2 font-bold focus:outline-none cursor-not-allowed" readonly="" type="text" value="1520-MV"/>
+</div>
+</div>
+<!-- Depreciation Method Selection -->
+<div class="flex flex-col gap-2">
+<label class="font-label text-label font-medium text-ink">Depreciation method</label>
+<div class="flex flex-col gap-2">
+<!-- Option 1 (Selected) -->
+<label class="p-3 rounded-lg bg-iris-tint/40 flex items-start gap-3 cursor-pointer">
+<input checked="" class="mt-1 text-iris focus:ring-iris" name="dep_method" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label text-label font-bold text-iris">Straight line</span>
+<span class="font-body-sm text-[12px] text-ink-2">Uniform monthly write-down based on asset statutory lifespan.</span>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="p-3 rounded-lg bg-surface-sunken hover:bg-surface-container-high/60 flex items-start gap-3 cursor-pointer transition-colors">
+<input class="mt-1 text-iris focus:ring-iris" name="dep_method" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Reducing balance</span>
+<span class="font-body-sm text-[12px] text-ink-3">Accelerated depreciation calculated on carrying net book value.</span>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="p-3 rounded-lg bg-surface-sunken hover:bg-surface-container-high/60 flex items-start gap-3 cursor-pointer transition-colors">
+<input class="mt-1 text-iris focus:ring-iris" name="dep_method" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label text-label font-semibold text-ink">Not depreciated</span>
+<span class="font-body-sm text-[12px] text-ink-3">Used for non-amortising assets like freehold land.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Lifespan and Rate Equivalents -->
+<div class="grid grid-cols-2 gap-3 p-3.5 rounded-lg bg-surface-sunken">
+<div class="flex flex-col gap-1">
+<label class="font-label text-label text-ink font-medium">Useful lifespan</label>
+<div class="relative flex items-center">
+<input class="w-full h-10 px-3 rounded bg-surface font-body-sm text-body-sm font-bold text-ink focus:outline-none" style="font-variant-numeric: tabular-nums;" type="number" value="4"/>
+<span class="absolute right-3 font-overline text-overline text-ink-3">Years</span>
+</div>
+<span class="font-overline text-[11px] text-ink-3" style="font-variant-numeric: tabular-nums;">48 accounting periods</span>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label text-label text-ink font-medium">Annual rate</label>
+<div class="relative flex items-center">
+<input class="w-full h-10 px-3 rounded bg-surface-container font-body-sm text-body-sm font-bold text-ink-2 focus:outline-none" readonly="" style="font-variant-numeric: tabular-nums;" type="text" value="25.00"/>
+<span class="absolute right-3 font-overline text-overline text-ink-3">% p.a.</span>
+</div>
+<span class="font-overline text-[11px] text-ink-3">Automated reciprocal</span>
+</div>
+<div class="col-span-2 pt-1 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<label class="font-label text-label text-ink font-medium">Baseline residual value</label>
+<span class="font-overline text-[11px] text-ink-3">Optional floor</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-10 px-3 rounded bg-surface font-body-sm text-body-sm font-bold text-ink focus:outline-none" style="font-variant-numeric: tabular-nums;" type="text" value="10.00"/>
+<span class="absolute right-3 font-overline text-overline text-ink-3">% of gross cost</span>
+</div>
+</div>
+</div>
+<!-- General Ledger Account Mappings -->
+<div class="flex flex-col gap-3">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">General Ledger Accounts Linkage</span>
+<!-- Cost Account -->
+<div class="flex flex-col gap-1">
+<label class="font-label text-[13px] font-semibold text-ink flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Asset Cost Account (Debit)</span>
+</label>
+<div class="relative">
+<select class="w-full h-10 px-3 pr-8 rounded-lg bg-surface-sunken font-mono text-[13px] text-ink appearance-none focus:outline-none focus:bg-surface" style="font-variant-numeric: tabular-nums;">
+<option selected="">1520 · Motor vehicles (Capitalised)</option>
+<option>1522 · Executive Fleet (Additions)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Accumulated Depreciation Account -->
+<div class="flex flex-col gap-1">
+<label class="font-label text-[13px] font-semibold text-ink flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-ink-2"></span>
+<span>Accumulated Depreciation Account (Contra)</span>
+</label>
+<div class="relative">
+<select class="w-full h-10 px-3 pr-8 rounded-lg bg-surface-sunken font-mono text-[13px] text-ink appearance-none focus:outline-none focus:bg-surface" style="font-variant-numeric: tabular-nums;">
+<option selected="">1521 · Accumulated depreciation — Motor vehicles</option>
+<option>1523 · Acc. Dep — Executive Fleet</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Depreciation Expense Account -->
+<div class="flex flex-col gap-1">
+<label class="font-label text-[13px] font-semibold text-ink flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span>Depreciation Expense Account (OpEx P&amp;L)</span>
+</label>
+<div class="relative">
+<select class="w-full h-10 px-3 pr-8 rounded-lg bg-surface-sunken font-mono text-[13px] text-ink appearance-none focus:outline-none focus:bg-surface" style="font-variant-numeric: tabular-nums;">
+<option selected="">6500 · Depreciation expense — Operations</option>
+<option>6510 · Depreciation — Administrative Vehicles</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Active Status Toggle -->
+<div class="p-3 rounded-lg bg-surface-sunken flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label text-label font-medium text-ink">Active for new acquisitions</span>
+<span class="font-overline text-[11px] text-ink-3">Permit tagging in Purchase Orders and Vouchers</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-iris"></div>
+</label>
+</div>
+<!-- Statutory Prospective Notice -->
+<div class="p-3 rounded-lg bg-info-bg text-info-text flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-[12px] leading-relaxed">
+                Modifications to rates will apply prospectively to new purchases or require an authorised valuation adjustment batch under Nigerian FIRS rules.
+              </p>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="pt-4 flex items-center justify-end gap-3">
+<button class="h-11 px-4 rounded-lg bg-surface-sunken hover:bg-surface-container font-label text-label text-ink-2 transition-colors" type="button">
+              Cancel
+            </button>
+<button class="h-11 px-6 rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-medium shadow-md transition-all active:scale-[0.99] flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save changes</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

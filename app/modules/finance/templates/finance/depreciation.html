@@ -1,0 +1,72 @@
+{# Finance → depreciation runs (ADR 0027): the draft for the next month, grouped by
+   category, posted by someone other than whoever prepared it; and the posted runs.
+   Design: design/stitch/exports/finance.depreciation.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Depreciation", "A full month's charge in the month an asset is acquired, none in the month it's disposed of.") %}
+  <a href="/finance/assets" class="kx-btn-ghost">Fixed assets</a>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success" if notice != "No month is ready to run yet." else "info", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{% if run %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="run-title">
+  <div class="flex flex-wrap items-start justify-between gap-4 border-b border-line p-5">
+    <div>
+      <h2 id="run-title" class="font-h3 text-h3">{{ run.month.strftime("%B %Y") }} {{ ui.badge("warning", "Draft") }}</h2>
+      <p class="mt-1 text-body-sm text-ink-3">Prepared {{ "by " ~ run.prepared_by if run.prepared_by else "by the nightly task" }}, {{ run.prepared_at | datetime }} · {{ run.count }} asset{{ "s" if run.count != 1 }}</p>
+      <p class="mt-2 font-stat text-h1 tnum">{{ run.total | money }}</p>
+    </div>
+    <div class="flex flex-col items-end gap-2">
+      <div class="flex gap-2">
+        {% if can_manage %}<form method="post" action="/finance/depreciation/prepare">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">{{ ui.icon("refresh-cw", "sm") }} Recalculate</button></form>{% endif %}
+        {% if can_approve %}<form method="post" action="/finance/depreciation/{{ run.id }}/post">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary" {% if not run.can_post %}disabled aria-describedby="post-note"{% endif %}>Post</button></form>{% endif %}
+      </div>
+      <p id="post-note" class="text-xs text-ink-3">{{ run.post_blocked or "Someone other than whoever prepared it posts it." }}</p>
+    </div>
+  </div>
+  {% if run.groups %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[640px] text-body-sm">
+      <thead class="bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Asset</th><th class="px-3 py-2.5 text-right font-semibold">Months</th><th class="px-5 py-2.5 text-right font-semibold">Charge</th></tr></thead>
+      {% for g in run.groups %}
+      <tbody class="divide-y divide-line">
+        <tr class="bg-canvas"><th colspan="3" class="px-5 py-2 text-left text-xs font-semibold">{{ g.category }} <span class="font-normal text-ink-3">· Dr {{ g.expense }} / Cr {{ g.accumulated }}</span></th></tr>
+        {% for line in g.lines %}
+        <tr><td class="px-5 py-2.5"><a href="/finance/assets/{{ line.asset_id }}" class="font-mono text-xs font-semibold text-iris">{{ line.number }}</a> {{ line.name }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.months }}{% if line.months > 1 %} <span class="text-xs text-ink-3">(catching up)</span>{% endif %}</td><td class="px-5 py-2.5 text-right tnum">{{ line.amount | money }}</td></tr>
+        {% endfor %}
+        <tr><td colspan="2" class="px-5 py-2 text-right text-xs text-ink-3">{{ g.category }}</td><td class="px-5 py-2 text-right font-semibold tnum">{{ g.total | money }}</td></tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  {% else %}
+  <p class="px-5 py-4 text-body-sm text-ink-3">Nothing to charge this month. Posting it moves on to the next month.</p>
+  {% endif %}
+</section>
+{% else %}
+<section class="kx-card mt-6 p-5" aria-label="Next run">
+  {% if next_month %}
+  <p class="text-body-sm">The next run is <span class="font-semibold">{{ next_month.strftime("%B %Y") }}</span>. The nightly task prepares it once the month has ended.</p>
+  {% if can_manage and next_month <= this_month %}<form method="post" action="/finance/depreciation/prepare" class="mt-3">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary">Prepare {{ next_month.strftime("%B %Y") }}</button></form>{% endif %}
+  {% else %}
+  <p class="text-body-sm text-ink-3">No asset needs depreciating yet.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="posted-title">
+  <h2 id="posted-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Posted runs</h2>
+  {% if posted %}
+  <ul class="divide-y divide-line text-body-sm">
+    {% for r in posted %}
+    <li class="flex flex-wrap items-center justify-between gap-3 px-5 py-3"><span class="font-medium">{{ r.month.strftime("%B %Y") }}</span><span class="flex items-center gap-3"><span class="tnum">{{ r.total | money }}</span>{% if r.journal %}<a href="/finance/journals/{{ r.journal[0] }}" class="font-mono text-xs font-semibold text-iris">{{ r.journal[1] }}</a>{% endif %}<span class="text-xs text-ink-3">posted by {{ r.posted_by or "—" }}{% if r.posted_at %}, {{ r.posted_at | date }}{% endif %}</span></span></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="px-5 py-4 text-body-sm text-ink-3">None yet.</p>
+  {% endif %}
+</section>
+{% endblock %}

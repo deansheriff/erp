@@ -5,6 +5,93 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 10e: Fixed assets
+- Asset categories with a depreciation method (straight line, reducing balance or none),
+  useful life or rate and their accounts; new accounts 1511 to 1551, 3300, 4910 and 6910
+  and a ₦100,000 capitalisation threshold, all to confirm (ADR 0027).
+- The register (`FA-`): assets from posted bill lines on a cost account, or by hand with
+  depreciation from before go-live, and a comparison with the ledger.
+- Monthly depreciation runs, prepared nightly or by hand and posted by someone else, with
+  a full month in the month acquired and catch-up for late registrations.
+- Revaluations to a reserve and disposals with a gain or loss, each approved by a second
+  person.
+- Permissions `finance.asset.read`, `.manage` and `.approve`; grants for the Finance
+  Officer and Finance Manager.
+
+### Added — Phase 10d: Banking
+- Bank accounts, each with its own ledger account (1010 first, new ones from 1011), bank
+  details and a statement layout (ADR 0026).
+- Statement import from CSV, Excel or OFX; files kept 6 years (to confirm); lines already
+  imported are skipped.
+- Auto-matching on the exact amount within 3 days (editable), rules that give the rest an
+  entry account, and matching by hand.
+- Reconciliations to a statement date, down to a nil difference, submitted by one person
+  and approved by another; approval posts the rule and hand entries and locks the lines.
+- Transfers between bank accounts (`TRF-`) approved by a second person.
+- Marking a tax return paid now posts the payment from a chosen bank account.
+- Permissions `finance.bank.read`, `.manage`, `.reconcile` and `.approve`; grants for the
+  Finance Officer and Finance Manager.
+
+### Added — Phase 10c: Payables
+- Suppliers (company or individual, for the WHT rate) with terms, a usual WHT type and
+  bank details for the payment file (ADR 0025).
+- Purchase orders approved by someone other than the drafter, and goods received against
+  their lines (nothing posts). Gap-free numbers `PO-`, `GRN-`.
+- Bills (`BILL-`) from a purchase order or direct, approved by a second person, with a
+  three-way match on approval: billed quantities against received, prices within a 2%
+  tolerance (to confirm). Bills that fail are held until a Finance Manager posts them
+  with a reason. Supplier invoice numbers can't be entered twice.
+- Debit notes (`DN-`) against a posted bill, issued by a second person.
+- Supplier payments (`PAY-`) with WHT withheld at payment at the supplier's company or
+  individual rate, approved by a second person, downloadable as the generic bank CSV,
+  and reversible with a reason. VAT input and WHT payable now reach the tax returns.
+- Payables aging with CSV; supplier pages with what is owed and open purchase orders.
+- Permissions `finance.supplier.*`, `finance.purchase.*`, `finance.bill.override` and
+  `finance.payment.*`; grants for the Finance Officer, Finance Manager and Auditor.
+
+### Added — Phase 10b: Receivables and tax
+- Customers with payment terms (30 days by default, to confirm), TIN and reminders on or
+  off (ADR 0024).
+- Quotes, sales orders, invoices and credit notes, every step optional; converting copies
+  the lines into a new draft. Gap-free numbers `QT-`, `SO-`, `INV-`, `CN-`.
+- VAT per line, standard (7.5% from 1 February 2020, to confirm), zero-rated or exempt,
+  with prices excluding VAT; optional stamp duty types. Issuing an invoice or credit note
+  posts its journal in the same transaction; credit notes are issued by someone other
+  than their drafter.
+- Receipts (`RCT-`) with cash and WHT deducted, allocated to invoices, credit left on
+  account to allocate later, WHT credit notes recorded, and reversal with a reason.
+- Aging (current to 90+ days) with CSV, customer statements with PDF, PDFs of each
+  document, emailing a document to the customer, and payment reminders emailed before,
+  on and after the due date (once a day at most).
+- Tax settings: effective-dated VAT rates, withholding-tax types (seeded without rates),
+  stamp duty types, and the receivables accounts, terms and reminder days.
+- Monthly VAT, WHT and stamp duty returns read from the ledger, due the 21st (to
+  confirm), filed and paid with references, flagged if the ledger moves after filing.
+- Permissions `finance.customer.*`, `finance.sales.*`, `finance.credit_note.issue`,
+  `finance.receipt.*` and `finance.tax.*`; grants for the Finance Officer, Finance Manager
+  and Auditor.
+
+### Added — Phase 10a: General ledger
+- Chart of accounts: hierarchical, typed asset, liability, equity, income or expense, with
+  header accounts and a cash-flow class on balance-sheet accounts. A Nigerian SME chart is
+  seeded using the codes payroll and expenses already use (to confirm) (ADR 0023).
+- Financial years January to December with twelve months; a Finance Manager closes
+  months (not while drafts are dated in them), reopens one with a reason, and closes the
+  year to retained earnings for good.
+- Journals: drafted by one person and posted by another; at least two lines that balance,
+  active accounts, an open month; gap-free numbers `JV-00001`; posted journals reversed,
+  never edited. Live debit and credit totals while editing.
+- Payroll and expenses now post their journals into the ledger in the same transaction.
+  Journals dated in a closed or unopened month, or using an unknown account, are held for
+  Finance to post or re-date with a reason. Payroll remittances and expense payments show
+  each journal's ledger number or that it is held.
+- Recurring journals drafted on their day each month by a daily task; someone other than
+  the template's author posts them.
+- Reports: trial balance, profit and loss (by cost centre), balance sheet, cash flow
+  (indirect) and the general ledger, with CSV for the trial balance and ledger.
+- Permissions `finance.account.*`, `finance.journal.*`, `finance.period.manage` and
+  `finance.report.read`; grants for the Finance Officer, Finance Manager and Auditor.
+
 ### Added — Phase 9b: Payroll remittances, loans and tax certificates
 - Remittances from an approved run as CSV: the bank payment file (CBN bank codes, with
   anyone who can't be paid listed), PAYE per state of residence, pension per PFA and

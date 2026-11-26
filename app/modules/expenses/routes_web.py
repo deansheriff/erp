@@ -468,7 +468,7 @@ def _payments_context(db: Session, actor: Actor, tab: str, **extra: Any) -> dict
         "rows": rows,
         "counts": {"claims": len(claims), "advances": len(advances)},
         "payable": service.payable_ids(db, actor, [r.id for r in rows]),
-        "journals": service.queued_journals(db, limit=20) if tab == "paid" else [],
+        "journals": service.recent_journals(db, limit=20) if tab == "paid" else [],
         "today": clock.today(),
         "values": {},
         "errors": {},

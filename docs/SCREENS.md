@@ -108,3 +108,38 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Payroll remittances and files** (`payroll.remittances`) | `GET /payroll/remittances` | payroll.run.read | statutory, banking, compensation | Dean Sheriff (2026-11-20) |
 | **Loans and salary advances** (`payroll.loans`) | `GET /payroll/loans` | payroll.loan.read | directory, compensation | Dean Sheriff (2026-11-20) |
 | **Year-end tax certificates** (`payroll.certificates`) | `GET /payroll/certificates` | payroll.certificate.read | directory, statutory, compensation | Dean Sheriff (2026-11-20) |
+
+## Phase 10
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Journals** (`finance.journals`) | `GET /finance/journals` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Journal (draft editor, held or posted)** (`finance.journal`) | `GET /finance/journals/{journal_id}` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Chart of accounts** (`finance.accounts`) | `GET /finance/accounts` | finance.account.read | — | Dean Sheriff (2026-11-22) |
+| **Recurring journals** (`finance.recurring`) | `GET /finance/recurring` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Financial years and periods** (`finance.periods`) | `GET /finance/periods` | finance.journal.read | — | Dean Sheriff (2026-11-22) |
+| **Financial reports** (`finance.reports`) | `GET /finance/reports` | finance.report.read | — | Dean Sheriff (2026-11-22) |
+| **Customers** (`finance.customers`) | `GET /finance/customers` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
+| **One customer (balance, aging, statement, credit, reminders)** (`finance.customer`) | `GET /finance/customers/{customer_id}` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
+| **Sales (invoices, quotes, orders, credit notes, receipts)** (`finance.sales`) | `GET /finance/sales` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
+| **Quote, order, invoice or credit note** (`finance.sales_document`) | `GET /finance/sales/{document_id}` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
+| **Record or view a receipt** (`finance.receipt`) | `GET /finance/receipts/{receipt_id}` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
+| **Receivables aging** (`finance.aging`) | `GET /finance/aging` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
+| **Tax settings** (`finance.tax`) | `GET /finance/tax` | finance.tax.read | — | Dean Sheriff (2026-11-22) |
+| **Tax returns** (`finance.tax_returns`) | `GET /finance/tax/returns` | finance.tax.read | — | Dean Sheriff (2026-11-22) |
+| **Suppliers** (`finance.suppliers`) | `GET /finance/suppliers` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
+| **One supplier (owed, aging, bills, orders, bank details)** (`finance.supplier`) | `GET /finance/suppliers/{supplier_id}` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
+| **Purchases (bills, purchase orders, debit notes, payments)** (`finance.purchases`) | `GET /finance/purchases` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Purchase order and goods received** (`finance.purchase_order`) | `GET /finance/purchase-orders/{order_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Supplier bill or debit note, with the three-way match** (`finance.bill`) | `GET /finance/bills/{bill_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Prepare or view a supplier payment** (`finance.payment`) | `GET /finance/payments/{payment_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Payables aging** (`finance.payables_aging`) | `GET /finance/payables-aging` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
+| **Banking (bank accounts and matching rules)** (`finance.bank_accounts`) | `GET /finance/banking` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **One bank account (statement import and matching)** (`finance.bank_account`) | `GET /finance/banking/{bank_id}` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **Bank reconciliation** (`finance.reconciliation`) | `GET /finance/reconciliations/{rec_id}` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **Transfers between bank accounts** (`finance.transfers`) | `GET /finance/transfers` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
+| **Fixed asset register (totals, assets from bills, ledger comparison)** (`finance.assets`) | `GET /finance/assets` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **One fixed asset (figures, depreciation, revaluations and disposals)** (`finance.asset`) | `GET /finance/assets/{asset_id}` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **Depreciation runs** (`finance.depreciation`) | `GET /finance/depreciation` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **Asset categories and fixed asset settings** (`finance.asset_categories`) | `GET /finance/assets/categories` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
+| **Register or edit a fixed asset** (`finance.asset_form`) | `GET /finance/assets/new` | finance.asset.manage | — | Dean Sheriff (2026-11-26) |

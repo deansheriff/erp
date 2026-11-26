@@ -112,11 +112,11 @@
 <section class="kx-card mt-6 overflow-hidden" aria-labelledby="h-journal">
   <div class="p-5">
     <h2 id="h-journal" class="font-h3 text-h3">Payroll journals</h2>
-    <p class="text-body-sm text-ink-3">Queued for the ledger when the run is posted, and again when it is paid.</p>
+    <p class="text-body-sm text-ink-3">Posted to the ledger when the run is posted, and again when it is paid. A journal dated in a closed month waits in Finance.</p>
   </div>
   {% for j in view.journals %}
   <div class="border-t border-line">
-    <p class="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-body-sm"><span class="font-semibold">{{ j.memo }}</span><span class="flex items-center gap-2 text-xs text-ink-3">{{ j.journal_date | date }} {{ ui.badge("info" if j.status == "queued" else "success", "Queued for the ledger" if j.status == "queued" else "Posted") }}</span></p>
+    <p class="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-body-sm"><span class="font-semibold">{{ j.memo }}</span><span class="flex items-center gap-2 text-xs text-ink-3">{{ j.journal_date | date }} {{ ui.badge("success", "Posted " ~ j.number) if j.status == "posted" else ui.badge("warning", "Held in Finance") }}</span></p>
     <div class="kx-scroll-x"><table class="w-full min-w-[520px] text-body-sm">
       <thead class="bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2 text-left font-semibold">Account</th><th class="px-3 py-2 text-left font-semibold">Cost centre</th><th class="px-3 py-2 text-right font-semibold">Debit</th><th class="px-5 py-2 text-right font-semibold">Credit</th></tr></thead>
       <tbody class="divide-y divide-line">
@@ -128,7 +128,7 @@
     </table></div>
   </div>
   {% else %}
-  <p class="border-t border-line px-5 py-4 text-body-sm text-ink-3">Nothing yet: the journal is queued when the run is posted.</p>
+  <p class="border-t border-line px-5 py-4 text-body-sm text-ink-3">Nothing yet: the journal goes to the ledger when the run is posted.</p>
   {% endfor %}
 </section>
 {% else %}

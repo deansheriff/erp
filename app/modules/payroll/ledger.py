@@ -17,6 +17,7 @@ from app.audit.service import diff_changes, record_by
 from app.authz import engine
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
+from app.modules.finance import service as finance
 from app.modules.payroll.models import (
     PayrollAccounts,
     PayrollBank,
@@ -175,10 +176,11 @@ class JournalView:
     kind: str
     journal_date: date
     memo: str
-    status: str
+    status: str  # posted or held in the ledger
     lines: list[tuple[str, str | None, Decimal, Decimal]]  # account, cost centre, Dr, Cr
     debit: Decimal
     credit: Decimal
+    number: str | None = None  # the ledger's journal number once posted
 
 
 def _queue(
@@ -213,6 +215,20 @@ def _queue(
                     credit=-net if net < 0 else ZERO,
                 )
             )
+    db.flush()
+    _, posted = finance.post_system_journal(
+        db,
+        source="payroll",
+        source_id=journal.id,
+        journal_date=when,
+        memo=journal.memo,
+        lines=[
+            (account, centre, max(net, ZERO), max(-net, ZERO))
+            for (account, centre), net in merged.items()
+            if net
+        ],
+    )
+    journal.status = "posted" if posted else "queued"
     db.flush()
 
 
@@ -267,6 +283,14 @@ def queue_loan(db: Session, loan: StaffLoan, *, when: date, memo: str) -> None:
 def journals_of_run(db: Session, run_id: uuid.UUID) -> list[JournalView]:
     labels = dict(org.cost_centre_choices(db))
     views = []
+    rows_of_run = list(
+        db.scalars(
+            select(PayrollJournal)
+            .where(PayrollJournal.run_id == run_id)
+            .order_by(PayrollJournal.created_at)
+        )
+    )
+    in_ledger = finance.statuses(db, "payroll", [j.id for j in rows_of_run])
     for j in db.scalars(
         select(PayrollJournal)
         .where(PayrollJournal.run_id == run_id)
@@ -284,7 +308,8 @@ def journals_of_run(db: Session, run_id: uuid.UUID) -> list[JournalView]:
                 kind=j.kind,
                 journal_date=j.journal_date,
                 memo=j.memo,
-                status=j.status,
+                status=in_ledger.get(j.id, ("held", None))[0],
+                number=in_ledger.get(j.id, ("held", None))[1],
                 lines=[
                     (
                         r.account,

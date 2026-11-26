@@ -52,6 +52,42 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 |---|---|---|---|---|
 | `files.file.manage` | Manage files | Organisation | yes | See every file's details and scan state, place legal holds and delete files. Doesn't grant access to file contents. |
 
+### finance
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `finance.account.manage` | Manage the chart of accounts | Organisation |  | Add accounts, rename them, and deactivate ones no longer used. |
+| `finance.account.read` | View the chart of accounts | Organisation |  | See accounts and their balances. |
+| `finance.asset.approve` | Approve depreciation and asset changes | Organisation |  | Post a depreciation run, or approve a revaluation or disposal, that someone else prepared. |
+| `finance.asset.manage` | Manage fixed assets | Organisation |  | Keep asset categories, register assets, prepare depreciation runs, and record revaluations and disposals. |
+| `finance.asset.read` | View fixed assets | Organisation |  | See the asset register, categories, depreciation runs, revaluations and disposals. |
+| `finance.bank.approve` | Approve reconciliations and transfers | Organisation |  | Approve a reconciliation or a transfer someone else prepared, posting its journals. |
+| `finance.bank.manage` | Manage bank accounts | Organisation |  | Add bank accounts, set their statement layouts, and keep the matching rules. |
+| `finance.bank.read` | View banking | Organisation |  | See bank accounts, imported statements, matching, reconciliations and transfers. |
+| `finance.bank.reconcile` | Reconcile bank accounts | Organisation |  | Import statements, match and give entries to lines, prepare reconciliations, and record transfers between accounts. |
+| `finance.bill.override` | Post held bills | Organisation |  | Post a bill that failed the three-way match, with a reason. |
+| `finance.credit_note.issue` | Issue credit notes | Organisation |  | Issue a credit note someone else drafted. |
+| `finance.customer.manage` | Manage customers | Organisation |  | Add and change customers, and email them payment reminders. |
+| `finance.customer.read` | View customers | Organisation |  | See customers, their balances, aging and statements. |
+| `finance.journal.create` | Draft journals | Organisation |  | Draft manual journals and set up recurring ones. |
+| `finance.journal.post` | Post journals | Organisation |  | Post drafted and held journals, and reverse posted ones. |
+| `finance.journal.read` | View journals | Organisation |  | See drafted, held and posted journals and their lines. |
+| `finance.payment.approve` | Approve supplier payments | Organisation |  | Approve and post supplier payments someone else prepared, download the bank file, and reverse payments. |
+| `finance.payment.create` | Prepare supplier payments | Organisation |  | Prepare payments to suppliers for someone else to approve. |
+| `finance.period.manage` | Manage financial periods | Organisation |  | Open financial years, close and reopen months, and close the year. |
+| `finance.purchase.approve` | Approve purchases | Organisation |  | Approve purchase orders and bills, and issue debit notes, that someone else drafted. |
+| `finance.purchase.create` | Raise purchases | Organisation |  | Draft purchase orders, bills and debit notes, and record goods received. |
+| `finance.purchase.read` | View purchases | Organisation |  | See purchase orders, goods received, bills, debit notes and supplier payments. |
+| `finance.receipt.create` | Record receipts | Organisation |  | Record customer receipts, allocate credit to invoices, and record WHT credit notes. |
+| `finance.receipt.reverse` | Reverse receipts | Organisation |  | Reverse a recorded receipt, for example a bounced cheque. |
+| `finance.report.read` | View financial reports | Organisation |  | Trial balance, profit and loss, balance sheet, cash flow and the general ledger. |
+| `finance.sales.create` | Raise sales documents | Organisation |  | Draft and issue quotes, sales orders and invoices, and draft credit notes. |
+| `finance.sales.read` | View sales documents | Organisation |  | See quotes, sales orders, invoices, credit notes and receipts. |
+| `finance.supplier.manage` | Manage suppliers | Organisation |  | Add and change suppliers, including their bank details. |
+| `finance.supplier.read` | View suppliers | Organisation |  | See suppliers, their bank details, what is owed to them and the payables aging. |
+| `finance.tax.manage` | Manage tax | Organisation |  | Change tax rates, types and receivables settings, and file returns. |
+| `finance.tax.read` | View tax returns | Organisation |  | See VAT, withholding tax and stamp duty returns and the tax settings. |
+
 ### hr
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -167,6 +203,37 @@ Everything, including technical settings. Can't be edited or removed.
 | `expenses.claim.reimburse_override` | O |
 | `expenses.settings.manage` | O |
 | `files.file.manage` | O |
+| `finance.account.manage` | O |
+| `finance.account.read` | O |
+| `finance.asset.approve` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
+| `finance.bank.approve` | O |
+| `finance.bank.manage` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
+| `finance.bill.override` | O |
+| `finance.credit_note.issue` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.post` | O |
+| `finance.journal.read` | O |
+| `finance.payment.approve` | O |
+| `finance.payment.create` | O |
+| `finance.period.manage` | O |
+| `finance.purchase.approve` | O |
+| `finance.purchase.create` | O |
+| `finance.purchase.read` | O |
+| `finance.receipt.create` | O |
+| `finance.receipt.reverse` | O |
+| `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.supplier.manage` | O |
+| `finance.supplier.read` | O |
+| `finance.tax.manage` | O |
+| `finance.tax.read` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -249,6 +316,37 @@ Everything except technical settings such as mail, branding and security.
 | `expenses.claim.reimburse_override` | O |
 | `expenses.settings.manage` | O |
 | `files.file.manage` | O |
+| `finance.account.manage` | O |
+| `finance.account.read` | O |
+| `finance.asset.approve` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
+| `finance.bank.approve` | O |
+| `finance.bank.manage` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
+| `finance.bill.override` | O |
+| `finance.credit_note.issue` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.post` | O |
+| `finance.journal.read` | O |
+| `finance.payment.approve` | O |
+| `finance.payment.create` | O |
+| `finance.period.manage` | O |
+| `finance.purchase.approve` | O |
+| `finance.purchase.create` | O |
+| `finance.purchase.read` | O |
+| `finance.receipt.create` | O |
+| `finance.receipt.reverse` | O |
+| `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.supplier.manage` | O |
+| `finance.supplier.read` | O |
+| `finance.tax.manage` | O |
+| `finance.tax.read` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -310,6 +408,16 @@ Reads everything, including the audit log. Changes nothing.
 | `audit.log.read` | O |
 | `authz.role.read` | O |
 | `expenses.claim.read` | O |
+| `finance.account.read` | O |
+| `finance.asset.read` | O |
+| `finance.bank.read` | O |
+| `finance.customer.read` | O |
+| `finance.journal.read` | O |
+| `finance.purchase.read` | O |
+| `finance.report.read` | O |
+| `finance.sales.read` | O |
+| `finance.supplier.read` | O |
+| `finance.tax.read` | O |
 | `hr.employee.banking.read` | O |
 | `hr.employee.compensation.read` | O |
 | `hr.employee.personal.read` | O |
@@ -475,6 +583,25 @@ Day-to-day accounting.
 | Permission | Scope |
 |---|---|
 | `expenses.claim.read` | O |
+| `finance.account.read` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.read` | O |
+| `finance.payment.create` | O |
+| `finance.purchase.create` | O |
+| `finance.purchase.read` | O |
+| `finance.receipt.create` | O |
+| `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.supplier.manage` | O |
+| `finance.supplier.read` | O |
+| `finance.tax.read` | O |
 | `payroll.loan.read` | O |
 | `payroll.remittance.export` | O |
 | `payroll.run.pay` | O |
@@ -490,6 +617,37 @@ Approves and posts finance documents.
 | `expenses.claim.approve_finance` | O |
 | `expenses.claim.read` | O |
 | `expenses.settings.manage` | O |
+| `finance.account.manage` | O |
+| `finance.account.read` | O |
+| `finance.asset.approve` | O |
+| `finance.asset.manage` | O |
+| `finance.asset.read` | O |
+| `finance.bank.approve` | O |
+| `finance.bank.manage` | O |
+| `finance.bank.read` | O |
+| `finance.bank.reconcile` | O |
+| `finance.bill.override` | O |
+| `finance.credit_note.issue` | O |
+| `finance.customer.manage` | O |
+| `finance.customer.read` | O |
+| `finance.journal.create` | O |
+| `finance.journal.post` | O |
+| `finance.journal.read` | O |
+| `finance.payment.approve` | O |
+| `finance.payment.create` | O |
+| `finance.period.manage` | O |
+| `finance.purchase.approve` | O |
+| `finance.purchase.create` | O |
+| `finance.purchase.read` | O |
+| `finance.receipt.create` | O |
+| `finance.receipt.reverse` | O |
+| `finance.report.read` | O |
+| `finance.sales.create` | O |
+| `finance.sales.read` | O |
+| `finance.supplier.manage` | O |
+| `finance.supplier.read` | O |
+| `finance.tax.manage` | O |
+| `finance.tax.read` | O |
 | `payroll.certificate.read` | O |
 | `payroll.loan.approve` | O |
 | `payroll.loan.read` | O |
@@ -559,5 +717,11 @@ _No grants yet: added by the phase that delivers its module._
 | `payroll.no_self_relief` | `payroll.relief.verify` | owner_is_actor | You can't verify your own rent declaration. |
 | `payroll.no_self_loan` | `payroll.loan.approve` | owner_is_actor | You can't approve your own loan. |
 | `payroll.loan_four_eyes` | `payroll.loan.approve` | creator_is_actor | Someone else approves a loan you recorded. |
+| `finance.journal_four_eyes` | `finance.journal.post` | creator_is_actor | Someone else posts a journal you drafted. |
+| `finance.credit_note_four_eyes` | `finance.credit_note.issue` | creator_is_actor | Someone else issues a credit note you drafted. |
+| `finance.purchase_four_eyes` | `finance.purchase.approve` | creator_is_actor | Someone else approves a purchase order, bill or debit note you drafted. |
+| `finance.payment_four_eyes` | `finance.payment.approve` | creator_is_actor | Someone else approves a supplier payment you prepared. |
+| `finance.bank_four_eyes` | `finance.bank.approve` | creator_is_actor | Someone else approves a reconciliation or transfer you prepared. |
+| `finance.asset_four_eyes` | `finance.asset.approve` | creator_is_actor | Someone else posts a depreciation run or approves an asset change you prepared. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

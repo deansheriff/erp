@@ -1009,3 +1009,539 @@ screens:
       download_pdf: payroll.certificate.read
     field_classes: [directory, statutory, compensation]
     approved_by: Dean Sheriff (2026-11-20)
+
+  - id: finance.journals
+    phase: 10
+    module: finance
+    title: Journals
+    route: GET /finance/journals
+    template: app/modules/finance/templates/finance/journals.html
+    stitch_screens:
+      desktop: 2fc73a21c1984a25b6fa18c164d59254
+    exports:
+      - design/stitch/exports/finance.journals.html
+    permission: finance.journal.read
+    actions:
+      new_journal: finance.journal.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.journal
+    phase: 10
+    module: finance
+    title: Journal (draft editor, held or posted)
+    route: GET /finance/journals/{journal_id}
+    template: app/modules/finance/templates/finance/journal.html
+    stitch_screens:
+      desktop: a14c59371d2e4e89be650827ef550a8b
+    exports:
+      - design/stitch/exports/finance.journal.html
+    permission: finance.journal.read
+    actions:
+      save_draft: finance.journal.create
+      delete_draft: finance.journal.create
+      post: finance.journal.post
+      redate_held: finance.journal.post
+      reverse: finance.journal.post
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.accounts
+    phase: 10
+    module: finance
+    title: Chart of accounts
+    route: GET /finance/accounts
+    template: app/modules/finance/templates/finance/accounts.html
+    stitch_screens:
+      desktop: b0efd1899e3f40368e872dbe00327d40
+    exports:
+      - design/stitch/exports/finance.accounts.html
+    permission: finance.account.read
+    actions:
+      save: finance.account.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.recurring
+    phase: 10
+    module: finance
+    title: Recurring journals
+    route: GET /finance/recurring
+    template: app/modules/finance/templates/finance/recurring.html
+    stitch_screens:
+      desktop: 0030d240ff6b42c2935d1155b499704b
+    exports:
+      - design/stitch/exports/finance.recurring.html
+    permission: finance.journal.read
+    actions:
+      save: finance.journal.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.periods
+    phase: 10
+    module: finance
+    title: Financial years and periods
+    route: GET /finance/periods
+    template: app/modules/finance/templates/finance/periods.html
+    stitch_screens:
+      desktop: 5e3ec1b99bbb45b382ba037b389b23cb
+    exports:
+      - design/stitch/exports/finance.periods.html
+    permission: finance.journal.read
+    actions:
+      open_year: finance.period.manage
+      close_month: finance.period.manage
+      reopen_month: finance.period.manage
+      close_year: finance.period.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.reports
+    phase: 10
+    module: finance
+    title: Financial reports
+    route: GET /finance/reports
+    template: app/modules/finance/templates/finance/reports.html
+    stitch_screens:
+      desktop: 28d96eb9c95644539e506414dbeff7e9
+    exports:
+      - design/stitch/exports/finance.reports.html
+    permission: finance.report.read
+    actions:
+      download_csv: finance.report.read
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.customers
+    phase: 10
+    module: finance
+    title: Customers
+    route: GET /finance/customers
+    template: app/modules/finance/templates/finance/customers.html
+    stitch_screens:
+      desktop: f8338a62d66e4ab28069aad2c17c3f8b
+    exports:
+      - design/stitch/exports/finance.customers.html
+    permission: finance.customer.read
+    actions:
+      save: finance.customer.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.customer
+    phase: 10
+    module: finance
+    title: One customer (balance, aging, statement, credit, reminders)
+    route: GET /finance/customers/{customer_id}
+    template: app/modules/finance/templates/finance/customer.html
+    stitch_screens:
+      desktop: 860a39e477f44e938a43ea62aa5367a2
+    exports:
+      - design/stitch/exports/finance.customer.html
+    permission: finance.customer.read
+    actions:
+      remind: finance.customer.manage
+      allocate: finance.receipt.create
+      download_statement: finance.customer.read
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.sales
+    phase: 10
+    module: finance
+    title: Sales (invoices, quotes, orders, credit notes, receipts)
+    route: GET /finance/sales
+    template: app/modules/finance/templates/finance/sales.html
+    stitch_screens:
+      desktop: 890c34c28cd648c2ae3064c8ae5c2d0c
+    exports:
+      - design/stitch/exports/finance.sales.html
+    permission: finance.sales.read
+    actions:
+      new_document: finance.sales.create
+      record_receipt: finance.receipt.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.sales_document
+    phase: 10
+    module: finance
+    title: Quote, order, invoice or credit note
+    route: GET /finance/sales/{document_id}
+    template: app/modules/finance/templates/finance/sales_document.html
+    stitch_screens:
+      desktop: 04a0ccd65fcd4cb3806a14319907203a
+    exports:
+      - design/stitch/exports/finance.sales_document.html
+    permission: finance.sales.read
+    actions:
+      save_draft: finance.sales.create
+      delete_draft: finance.sales.create
+      issue: finance.sales.create
+      issue_credit_note: finance.credit_note.issue
+      convert: finance.sales.create
+      set_status: finance.sales.create
+      email: finance.sales.create
+      download_pdf: finance.sales.read
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.receipt
+    phase: 10
+    module: finance
+    title: Record or view a receipt
+    route: GET /finance/receipts/{receipt_id}
+    template: app/modules/finance/templates/finance/receipt.html
+    stitch_screens:
+      desktop: 23d814f066ad4fb186b61c9dfcc04bec
+    exports:
+      - design/stitch/exports/finance.receipt.html
+    permission: finance.sales.read
+    actions:
+      record: finance.receipt.create
+      record_certificate: finance.receipt.create
+      reverse: finance.receipt.reverse
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.aging
+    phase: 10
+    module: finance
+    title: Receivables aging
+    route: GET /finance/aging
+    template: app/modules/finance/templates/finance/aging.html
+    stitch_screens:
+      desktop: 0ff9835cb8e84532a960b6564cf55eb3
+    exports:
+      - design/stitch/exports/finance.aging.html
+    permission: finance.customer.read
+    actions:
+      download_csv: finance.customer.read
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.tax
+    phase: 10
+    module: finance
+    title: Tax settings
+    route: GET /finance/tax
+    template: app/modules/finance/templates/finance/tax.html
+    stitch_screens:
+      desktop: 63b3b42c0c8645c49630ce82195238a5
+    exports:
+      - design/stitch/exports/finance.tax.html
+    permission: finance.tax.read
+    actions:
+      add_vat_rate: finance.tax.manage
+      save_wht_rates: finance.tax.manage
+      save_stamp_type: finance.tax.manage
+      save_settings: finance.tax.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.tax_returns
+    phase: 10
+    module: finance
+    title: Tax returns
+    route: GET /finance/tax/returns
+    template: app/modules/finance/templates/finance/tax_returns.html
+    stitch_screens:
+      desktop: acd3ebea6bc74cacbdc7110e6eb9bb35
+    exports:
+      - design/stitch/exports/finance.tax_returns.html
+    permission: finance.tax.read
+    actions:
+      file: finance.tax.manage
+      mark_paid: finance.tax.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.suppliers
+    phase: 10
+    module: finance
+    title: Suppliers
+    route: GET /finance/suppliers
+    template: app/modules/finance/templates/finance/suppliers.html
+    stitch_screens:
+      desktop: 3e710ec28bd446af97e4688a09701c44
+    exports:
+      - design/stitch/exports/finance.suppliers.html
+    permission: finance.supplier.read
+    actions:
+      save: finance.supplier.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.supplier
+    phase: 10
+    module: finance
+    title: One supplier (owed, aging, bills, orders, bank details)
+    route: GET /finance/suppliers/{supplier_id}
+    template: app/modules/finance/templates/finance/supplier.html
+    stitch_screens:
+      desktop: 2a552a9c3ce2457d8e031f81a0425151
+    exports:
+      - design/stitch/exports/finance.supplier.html
+    permission: finance.supplier.read
+    actions:
+      new_order: finance.purchase.create
+      new_bill: finance.purchase.create
+      prepare_payment: finance.payment.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.purchases
+    phase: 10
+    module: finance
+    title: Purchases (bills, purchase orders, debit notes, payments)
+    route: GET /finance/purchases
+    template: app/modules/finance/templates/finance/purchases.html
+    stitch_screens:
+      desktop: a6a46c9f7d71480dbbb22900f1c7358b
+    exports:
+      - design/stitch/exports/finance.purchases.html
+    permission: finance.purchase.read
+    actions:
+      new_document: finance.purchase.create
+      prepare_payment: finance.payment.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.purchase_order
+    phase: 10
+    module: finance
+    title: Purchase order and goods received
+    route: GET /finance/purchase-orders/{order_id}
+    template: app/modules/finance/templates/finance/purchase_order.html
+    stitch_screens:
+      desktop: 2e99125cf4c0438e84db76c7652cfa05
+    exports:
+      - design/stitch/exports/finance.purchase_order.html
+    permission: finance.purchase.read
+    actions:
+      save_draft: finance.purchase.create
+      delete_draft: finance.purchase.create
+      approve: finance.purchase.approve
+      cancel: finance.purchase.approve
+      receive: finance.purchase.create
+      make_bill: finance.purchase.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.bill
+    phase: 10
+    module: finance
+    title: Supplier bill or debit note, with the three-way match
+    route: GET /finance/bills/{bill_id}
+    template: app/modules/finance/templates/finance/bill.html
+    stitch_screens:
+      desktop: 11d3d19b37384240804303590554a92c
+    exports:
+      - design/stitch/exports/finance.bill.html
+    permission: finance.purchase.read
+    actions:
+      save_draft: finance.purchase.create
+      delete: finance.purchase.create
+      approve: finance.purchase.approve
+      post_held: finance.bill.override
+      debit_note: finance.purchase.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.payment
+    phase: 10
+    module: finance
+    title: Prepare or view a supplier payment
+    route: GET /finance/payments/{payment_id}
+    template: app/modules/finance/templates/finance/payment.html
+    stitch_screens:
+      desktop: db544fcade774b1bb11769678f095b40
+    exports:
+      - design/stitch/exports/finance.payment.html
+    permission: finance.purchase.read
+    actions:
+      prepare: finance.payment.create
+      delete: finance.payment.create
+      approve: finance.payment.approve
+      bank_file: finance.payment.approve
+      reverse: finance.payment.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.payables_aging
+    phase: 10
+    module: finance
+    title: Payables aging
+    route: GET /finance/payables-aging
+    template: app/modules/finance/templates/finance/payables_aging.html
+    stitch_screens:
+      desktop: ec5fdedfdde540ab9f61c34a24ed6818
+    exports:
+      - design/stitch/exports/finance.payables_aging.html
+    permission: finance.supplier.read
+    actions:
+      download_csv: finance.supplier.read
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-22)
+
+  - id: finance.bank_accounts
+    phase: 10
+    module: finance
+    title: Banking (bank accounts and matching rules)
+    route: GET /finance/banking
+    template: app/modules/finance/templates/finance/bank_accounts.html
+    stitch_screens:
+      desktop: cedb92ecc26f4cd2bd0cec399553c9db
+    exports:
+      - design/stitch/exports/finance.bank_accounts.html
+    permission: finance.bank.read
+    actions:
+      save_account: finance.bank.manage
+      save_rule: finance.bank.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.bank_account
+    phase: 10
+    module: finance
+    title: One bank account (statement import and matching)
+    route: GET /finance/banking/{bank_id}
+    template: app/modules/finance/templates/finance/bank_account.html
+    stitch_screens:
+      desktop: 720f0e3684fe4fd4a407c4b0817740d6
+    exports:
+      - design/stitch/exports/finance.bank_account.html
+    permission: finance.bank.read
+    actions:
+      import_statement: finance.bank.reconcile
+      match_again: finance.bank.reconcile
+      match: finance.bank.reconcile
+      unmatch: finance.bank.reconcile
+      give_entry: finance.bank.reconcile
+      start_reconciliation: finance.bank.reconcile
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.reconciliation
+    phase: 10
+    module: finance
+    title: Bank reconciliation
+    route: GET /finance/reconciliations/{rec_id}
+    template: app/modules/finance/templates/finance/reconciliation.html
+    stitch_screens:
+      desktop: c596b491f2954769a667c600acc1f9a9
+    exports:
+      - design/stitch/exports/finance.reconciliation.html
+    permission: finance.bank.read
+    actions:
+      submit: finance.bank.reconcile
+      approve: finance.bank.approve
+      send_back: finance.bank.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.transfers
+    phase: 10
+    module: finance
+    title: Transfers between bank accounts
+    route: GET /finance/transfers
+    template: app/modules/finance/templates/finance/transfers.html
+    stitch_screens:
+      desktop: 1262094b8edb4f6b800f17456014fd0f
+    exports:
+      - design/stitch/exports/finance.transfers.html
+    permission: finance.bank.read
+    actions:
+      record: finance.bank.reconcile
+      delete: finance.bank.reconcile
+      approve: finance.bank.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.assets
+    phase: 10
+    module: finance
+    title: Fixed asset register (totals, assets from bills, ledger comparison)
+    route: GET /finance/assets
+    template: app/modules/finance/templates/finance/assets.html
+    stitch_screens:
+      desktop: 93807d1566f740b0b647b539d3dbc26b
+    exports:
+      - design/stitch/exports/finance.assets.html
+    permission: finance.asset.read
+    actions:
+      register_asset: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.asset
+    phase: 10
+    module: finance
+    title: One fixed asset (figures, depreciation, revaluations and disposals)
+    route: GET /finance/assets/{asset_id}
+    template: app/modules/finance/templates/finance/asset.html
+    stitch_screens:
+      desktop: e878642a58b347d1b7829ad4c5953a32
+    exports:
+      - design/stitch/exports/finance.asset.html
+    permission: finance.asset.read
+    actions:
+      record_revaluation: finance.asset.manage
+      record_disposal: finance.asset.manage
+      delete_change: finance.asset.manage
+      approve_change: finance.asset.approve
+      delete_asset: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.depreciation
+    phase: 10
+    module: finance
+    title: Depreciation runs
+    route: GET /finance/depreciation
+    template: app/modules/finance/templates/finance/depreciation.html
+    stitch_screens:
+      desktop: 4fdbffe8be174df8b31d1cdd2051ae0f
+    exports:
+      - design/stitch/exports/finance.depreciation.html
+    permission: finance.asset.read
+    actions:
+      prepare: finance.asset.manage
+      post: finance.asset.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.asset_categories
+    phase: 10
+    module: finance
+    title: Asset categories and fixed asset settings
+    route: GET /finance/assets/categories
+    template: app/modules/finance/templates/finance/asset_categories.html
+    stitch_screens:
+      desktop: 7bb14a05e5284f62a7720d999d41c166
+    exports:
+      - design/stitch/exports/finance.asset_categories.html
+    permission: finance.asset.read
+    actions:
+      save_category: finance.asset.manage
+      save_settings: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: finance.asset_form
+    phase: 10
+    module: finance
+    title: Register or edit a fixed asset
+    route: GET /finance/assets/new
+    template: app/modules/finance/templates/finance/asset_form.html
+    stitch_screens:
+      desktop: 6dc17f489e764e6887847d97ca192c87
+    exports:
+      - design/stitch/exports/finance.asset_form.html
+    permission: finance.asset.manage
+    actions:
+      register: finance.asset.manage
+      save: finance.asset.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)

@@ -1,0 +1,63 @@
+{# Finance → Chart of accounts (ADR 0023).
+   Design: design/stitch/exports/finance.accounts.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro account_form(a=None) -%}
+{% set key = a.id|string if a else "new" %}
+{% set errs = errors if editing == key else {} %}
+{% set v = values if editing == key else {} %}
+<form method="post" action="/finance/accounts" class="grid gap-4 bg-surface-sunken/40 p-5 sm:grid-cols-2 lg:grid-cols-4" novalidate>
+  {{ ui.csrf_field() }}
+  {% if a %}<input type="hidden" name="account_id" value="{{ a.id }}">{% endif %}
+  {% if errs.get("form") %}<div class="sm:col-span-2 lg:col-span-4">{{ ui.alert("danger", errs["form"]) }}</div>{% endif %}
+  <div><label class="kx-label" for="code-{{ key }}">Code</label><input id="code-{{ key }}" name="code" class="kx-input font-mono" value="{{ v.get('code') or (a.code if a else '') }}">{{ ui.field_error(errs, "code") }}</div>
+  <div class="lg:col-span-2"><label class="kx-label" for="name-{{ key }}">Name</label><input id="name-{{ key }}" name="name" class="kx-input" value="{{ v.get('name') or (a.name if a else '') }}">{{ ui.field_error(errs, "name") }}</div>
+  <div><label class="kx-label" for="type-{{ key }}">Type</label><select id="type-{{ key }}" name="type" class="kx-input">{% for t, label in types %}<option value="{{ t }}" {% if (v.get('type') or (a.type if a else 'expense')) == t %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errs, "type") }}</div>
+  <div class="lg:col-span-2"><label class="kx-label" for="parent-{{ key }}">Under</label><select id="parent-{{ key }}" name="parent_id" class="kx-input"><option value="">Top level</option>{% for h in headers if not a or h.id != a.id %}<option value="{{ h.id }}" {% if (v.get('parent_id') or (a.parent_id|string if a and a.parent_id else '')) == h.id|string %}selected{% endif %}>{{ h.code }} {{ h.name }}</option>{% endfor %}</select>{{ ui.field_error(errs, "parent_id") }}</div>
+  <div class="lg:col-span-2"><label class="kx-label" for="cf-{{ key }}">Cash-flow class <span class="font-normal text-ink-3">(balance-sheet accounts)</span></label><select id="cf-{{ key }}" name="cash_flow" class="kx-input"><option value="">—</option>{% for c, label in cash_flows %}<option value="{{ c }}" {% if (v.get('cash_flow') or (a.cash_flow if a else '')) == c %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errs, "cash_flow") }}</div>
+  <div class="sm:col-span-2 lg:col-span-4"><label class="kx-label" for="desc-{{ key }}">Note (optional)</label><input id="desc-{{ key }}" name="description" class="kx-input" value="{{ v.get('description') or (a.description or '' if a else '') }}"></div>
+  <div class="flex flex-wrap items-center justify-between gap-3 sm:col-span-2 lg:col-span-4">
+    <div class="flex flex-wrap gap-x-6 gap-y-2 text-body-sm">
+      <label class="flex items-center gap-2"><input type="checkbox" name="is_header" value="1" class="kx-check" {% if v.get('is_header') or (a and a.is_header) %}checked{% endif %}> Groups other accounts (no postings)</label>
+      {% if a %}<label class="flex items-center gap-2"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if a.is_active %}checked{% endif %}> Active</label>{% endif %}
+    </div>
+    {{ ui.field_error(errs, "is_header") }}
+    <button type="submit" class="kx-btn-primary">{{ "Save" if a else "Add account" }}</button>
+  </div>
+</form>
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Chart of accounts", "Seeded for a Nigerian business; codes and names are yours to confirm.") %}
+  {% if can_manage %}<a href="/finance/accounts?edit=new#new-account" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New account</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+{% if can_manage and editing == "new" %}
+<section id="new-account" class="kx-card mt-6 overflow-hidden" aria-labelledby="h-new"><h2 id="h-new" class="px-5 pt-5 font-h3 text-h3">New account</h2>{{ account_form() }}</section>
+{% endif %}
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Accounts">
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[760px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Account</th><th class="px-3 py-3 text-left font-semibold">Type</th><th class="px-3 py-3 text-left font-semibold">Cash flow</th><th class="px-3 py-3 text-right font-semibold">Balance</th><th class="px-5 py-3"><span class="sr-only">Edit</span></th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        {% set a = r.account %}
+        <tr id="a-{{ a.id }}" class="{{ 'bg-surface-sunken/50 font-semibold' if a.is_header }} {{ 'text-ink-3' if not a.is_active }}">
+          <td class="px-5 py-2.5"><span class="inline-flex items-center gap-2 {{ ["", "pl-5", "pl-10", "pl-14", "pl-16"][[r.depth, 4] | min] }}"><span class="font-mono text-xs">{{ a.code }}</span> {{ a.name }}{% if not a.is_active %} {{ ui.badge("neutral", "Inactive") }}{% endif %}</span></td>
+          <td class="px-3 py-2.5">{% if not a.is_header %}{{ ui.badge("neutral", type_labels[a.type]) }}{% endif %}</td>
+          <td class="px-3 py-2.5 text-ink-2">{{ cash_flow_labels.get(a.cash_flow, "") }}</td>
+          <td class="px-3 py-2.5 text-right tnum">{{ r.balance | money if r.balance or r.has_postings or a.is_header else "" }}</td>
+          <td class="px-5 py-2.5 text-right">{% if can_manage %}<a href="/finance/accounts?edit={{ a.id }}#a-{{ a.id }}" class="kx-btn-ghost h-8 px-3 text-xs">Edit</a>{% endif %}</td>
+        </tr>
+        {% if can_manage and editing == a.id|string %}
+        <tr><td colspan="5" class="p-0">{{ account_form(a) }}</td></tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

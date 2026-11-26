@@ -1,0 +1,93 @@
+{# Finance → Tax returns (ADR 0024): monthly VAT, WHT and stamp duty returns read from the
+   ledger, filed and paid with references.
+   Design: design/stitch/exports/finance.tax_returns.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Tax returns", "Figures come from the ledger and are frozen when a return is filed.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<nav class="kx-segment mt-6 w-fit" aria-label="Tax">
+  {% for key, label in taxes %}
+  <a href="/finance/tax/returns?tax={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tax == key else 'text-ink-2 hover:text-ink' }}" {% if tax == key %}aria-current="page"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</nav>
+
+{% if not rows %}
+<section class="kx-card mt-5">{% call ui.empty_state("calendar", "No returns yet", "Returns appear once a month of an open financial year has ended.") %}{% endcall %}</section>
+{% else %}
+<div class="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_440px]">
+  <section class="kx-card overflow-hidden" aria-label="Returns">
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[720px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Month</th><th class="px-3 py-3 text-left font-semibold">Due</th>{% if tax == "vat" %}<th class="px-3 py-3 text-right font-semibold">Output</th><th class="px-3 py-3 text-right font-semibold">Input</th>{% endif %}<th class="px-3 py-3 text-right font-semibold">{{ "Net payable" if tax == "vat" else "Payable" }}</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for r in rows %}
+          {% set state = "overdue" if r.overdue else r.status %}
+          <tr class="transition-colors duration-base hover:bg-surface-sunken/60 {{ 'bg-iris/5' if detail and detail[0].key == r.key }}">
+            <td class="px-5 py-3"><a href="/finance/tax/returns?tax={{ tax }}&period={{ r.key }}" class="font-semibold text-iris">{{ r.label }}</a></td>
+            <td class="whitespace-nowrap px-3 py-3">{{ r.due | date }}</td>
+            {% if tax == "vat" %}<td class="px-3 py-3 text-right tnum">{{ r.output | money }}</td><td class="px-3 py-3 text-right tnum">{{ r.input | money }}</td>{% endif %}
+            <td class="px-3 py-3 text-right font-semibold tnum">{{ r.net | money }}</td>
+            <td class="px-5 py-3">{{ ui.badge(tones[state], state | capitalize) }}{% if r.changed_by %} <span class="ml-1">{{ ui.badge("warning", "Changed") }}</span>{% endif %}{% if r.filing_reference %}<span class="mt-1 block text-xs text-ink-3">{{ r.filing_reference }}</span>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  {% if detail %}
+  {% set r, outputs, inputs = detail %}
+  <section class="kx-card h-fit overflow-hidden" aria-labelledby="ret-title">
+    <div class="border-b border-line px-5 py-4">
+      <h2 id="ret-title" class="font-h3 text-h3">{{ tax_label }} return · {{ r.label }}</h2>
+      <p class="text-body-sm text-ink-3">Due {{ r.due | date }}{% if r.filed_on %} · filed {{ r.filed_on | date }}{% endif %}{% if r.paid_on %} · paid {{ r.paid_on | date }} ({{ r.payment_reference }}){% endif %}</p>
+    </div>
+    {% if r.changed_by %}<div class="px-5 pt-4">{{ ui.alert("warning", "The ledger has moved by " ~ (r.changed_by | money) ~ " since this return was filed. Check whether it needs amending.") }}</div>{% endif %}
+    <div class="space-y-4 p-5 text-body-sm">
+      <div>
+        <div class="flex justify-between font-semibold"><span>{{ "Output VAT" if tax == "vat" else "Deducted or charged" }}</span><span class="tnum">{{ r.output | money }}</span></div>
+        {% if outputs %}<ul class="mt-2 max-h-56 space-y-1 overflow-auto text-xs text-ink-2">{% for line in outputs %}<li class="flex justify-between gap-3"><span><a href="/finance/journals/{{ line.journal_id }}" class="font-mono font-semibold text-iris">{{ line.number }}</a> {{ line.memo }}</span><span class="tnum">{{ line.amount | money }}</span></li>{% endfor %}</ul>{% endif %}
+      </div>
+      {% if tax == "vat" %}
+      <div>
+        <div class="flex justify-between font-semibold"><span>Input VAT</span><span class="tnum">{{ r.input | money }}</span></div>
+        {% if inputs %}<ul class="mt-2 max-h-56 space-y-1 overflow-auto text-xs text-ink-2">{% for line in inputs %}<li class="flex justify-between gap-3"><span><a href="/finance/journals/{{ line.journal_id }}" class="font-mono font-semibold text-iris">{{ line.number }}</a> {{ line.memo }}</span><span class="tnum">{{ line.amount | money }}</span></li>{% endfor %}</ul>{% endif %}
+      </div>
+      {% endif %}
+      <div class="flex justify-between border-t border-line pt-3 text-body font-semibold"><span>{{ "Net payable" if tax == "vat" else "Payable" }}</span><span class="tnum">{{ r.net | money }}</span></div>
+    </div>
+    {% if can_manage and r.status != "paid" %}
+    {% set action = "file" if r.status == "draft" else "paid" %}
+    <form method="post" action="/finance/tax/returns/{{ tax }}/{{ r.key }}/{{ action }}" class="grid gap-3 border-t border-line p-5 sm:grid-cols-2" novalidate>
+      {{ ui.csrf_field() }}
+      <h3 class="font-semibold sm:col-span-2">{{ "Mark as filed" if action == "file" else "Mark as paid" }}</h3>
+      {{ ui.text_field("on", "Filed on" if action == "file" else "Paid on", value=values.get("on") or today.isoformat(), type="date", errors=errors) }}
+      {{ ui.text_field("reference", "Filing reference" if action == "file" else "Payment reference", value=values.get("reference"), errors=errors) }}
+      {% if action == "paid" %}
+      <div class="sm:col-span-2"><label class="kx-label" for="paid_from">Paid from</label><select id="paid_from" name="paid_from" class="kx-input">{% for bid, blabel in banks %}<option value="{{ bid }}" {% if values.get("paid_from") == bid|string %}selected{% endif %}>{{ blabel }}</option>{% endfor %}</select>{{ ui.field_error(errors, "paid_from") }}<p class="mt-1 text-xs text-ink-3">{{ "Posts output VAT against input VAT and pays the net from this account." if tax == "vat" else "Posts the payment of the liability from this account." }}</p></div>
+      {% endif %}
+      <div class="flex justify-end sm:col-span-2"><button type="submit" class="kx-btn-primary">{{ "Mark as filed" if action == "file" else "Mark as paid" }}</button></div>
+    </form>
+    {% endif %}
+  </section>
+  {% endif %}
+</div>
+{% endif %}
+
+{% if tax == "wht" %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="await-title">
+  <div class="border-b border-line px-5 py-4"><h2 id="await-title" class="font-h3 text-h3">WHT credit notes awaited from customers</h2><p class="mt-1 text-body-sm text-ink-3">Tax customers deducted from what they paid you. Record each credit note on its receipt.</p></div>
+  {% if awaiting %}
+  <ul class="divide-y divide-line text-body-sm">
+    {% for a in awaiting %}<li class="flex flex-wrap justify-between gap-2 px-5 py-3"><span><a href="/finance/receipts/{{ a.id }}" class="font-mono text-xs font-semibold text-iris">{{ a.number }}</a> · {{ a.customer }} · {{ a.receipt_date | date }}</span><span class="tnum">{{ a.wht | money }}</span></li>{% endfor %}
+  </ul>
+  {% else %}
+  <p class="px-5 py-4 text-body-sm text-ink-3">None outstanding.</p>
+  {% endif %}
+</section>
+{% endif %}
+{% endblock %}

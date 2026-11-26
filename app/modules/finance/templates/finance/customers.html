@@ -1,0 +1,79 @@
+{# Finance → Customers (ADR 0024): the list, with the add or edit form beside it.
+   Design: design/stitch/exports/finance.customers.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Customers", "Who you sell to, what they owe, and what is overdue.") %}
+  {% if can_manage %}<a href="/finance/customers?edit=new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Add customer</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 {{ 'xl:grid-cols-[minmax(0,1fr)_380px]' if editing }}">
+  <div>
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <nav class="kx-segment" aria-label="Show">
+        {% for key, label in (("active", "Active"), ("overdue", "With overdue"), ("inactive", "Inactive")) %}
+        <a href="/finance/customers?show={{ key }}{% if filters.q %}&q={{ filters.q | urlencode }}{% endif %}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if filters.show == key else 'text-ink-2 hover:text-ink' }}" {% if filters.show == key %}aria-current="page"{% endif %}>{{ label }}</a>
+        {% endfor %}
+      </nav>
+      <form method="get" action="/finance/customers" class="flex items-end gap-2" role="search">
+        <input type="hidden" name="show" value="{{ filters.show }}">
+        <label for="q" class="sr-only">Search customers</label>
+        <input id="q" name="q" value="{{ filters.q }}" placeholder="Name, code or email" class="kx-input h-10 w-64">
+        <button type="submit" class="kx-btn-secondary h-10">Search</button>
+      </form>
+    </div>
+
+    <section class="kx-card mt-4 overflow-hidden" aria-label="Customers">
+      {% if rows %}
+      <div class="kx-scroll-x">
+        <table class="w-full min-w-[820px] text-body-sm">
+          <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Customer</th><th class="px-3 py-3 text-left font-semibold">Email</th><th class="px-3 py-3 text-left font-semibold">TIN</th><th class="px-3 py-3 text-left font-semibold">Terms</th><th class="px-3 py-3 text-right font-semibold">Balance</th><th class="px-3 py-3 text-right font-semibold">Overdue</th><th class="px-5 py-3 text-left font-semibold">Reminders</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            {% for c in rows %}
+            <tr class="transition-colors duration-base hover:bg-surface-sunken/60">
+              <td class="px-5 py-3"><a href="/finance/customers/{{ c.id }}" class="font-semibold text-iris">{{ c.name }}</a><span class="ml-2 font-mono text-xs text-ink-3">{{ c.code }}</span></td>
+              <td class="px-3 py-3 text-ink-2">{{ c.email or "—" }}</td>
+              <td class="px-3 py-3 font-mono text-xs text-ink-2">{{ c.tin or "—" }}</td>
+              <td class="px-3 py-3">{{ c.payment_terms_days }} days</td>
+              <td class="px-3 py-3 text-right tnum">{{ c.balance | money }}</td>
+              <td class="px-3 py-3 text-right tnum {{ 'font-semibold text-danger-text' if c.overdue > 0 }}">{{ c.overdue | money if c.overdue > 0 else "—" }}</td>
+              <td class="px-5 py-3">{{ ui.badge("success" if c.reminders else "neutral", "On" if c.reminders else "Off") }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      {% call ui.empty_state("users", "No customers here", "Add your first customer to start invoicing." if filters.show == "active" and not filters.q else "Nothing matches.") %}{% endcall %}
+      {% endif %}
+    </section>
+  </div>
+
+  {% if editing and can_manage %}
+  {% set c = customer %}
+  {% set v = values %}
+  <aside class="kx-card h-fit p-5" aria-labelledby="customer-form-title">
+    <h2 id="customer-form-title" class="font-h3 text-h3">{{ "Edit " ~ c.name if c else "Add customer" }}</h2>
+    <form method="post" action="/finance/customers" class="mt-4 space-y-4" novalidate>
+      {{ ui.csrf_field() }}
+      {% if c %}<input type="hidden" name="customer_id" value="{{ c.id }}">{% endif %}
+      {{ ui.text_field("name", "Name", value=v.get("name") or (c.name if c else ""), errors=errors) }}
+      {{ ui.text_field("email", "Email for invoices and reminders", value=v.get("email") or (c.email or "" if c else ""), type="email", errors=errors) }}
+      {{ ui.text_field("phone", "Phone", value=v.get("phone") or (c.phone or "" if c else ""), errors=errors) }}
+      <div><label class="kx-label" for="address">Address</label><textarea id="address" name="address" rows="3" class="kx-input">{{ v.get("address") or (c.address or "" if c else "") }}</textarea></div>
+      {{ ui.text_field("tin", "TIN", value=v.get("tin") or (c.tin or "" if c else ""), errors=errors) }}
+      {{ ui.text_field("payment_terms_days", "Payment terms (days)", value=v.get("payment_terms_days") or (c.payment_terms_days if c else default_terms), inputmode="numeric", errors=errors, hint="The default is " ~ default_terms ~ " days, set in Tax settings.") }}
+      <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="reminders" value="1" class="kx-check" {% if v.get("reminders") or (c.reminders if c else not v) %}checked{% endif %}> Email payment reminders</label>
+      {% if c %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if (v.get("is_active") if v else c.is_active) %}checked{% endif %}> Active</label>{% endif %}
+      <div class="flex justify-end gap-3 pt-2">
+        <a href="{{ '/finance/customers/' ~ c.id if c else '/finance/customers' }}" class="kx-btn-ghost">Cancel</a>
+        <button type="submit" class="kx-btn-primary">Save</button>
+      </div>
+    </form>
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

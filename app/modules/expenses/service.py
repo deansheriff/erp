@@ -34,6 +34,7 @@ from app.modules.expenses.models import (
     ExpenseStep,
 )
 from app.modules.expenses.schemas import DocumentView, JournalView, LineView, StepView
+from app.modules.finance import service as finance
 from app.modules.hr import service as people
 from app.org import service as org
 
@@ -648,6 +649,17 @@ def _journal(
                     credit=c,
                 )
             )
+    db.flush()
+    _, posted = finance.post_system_journal(
+        db,
+        source="expenses",
+        source_id=journal.id,
+        journal_date=when,
+        memo=journal.memo,
+        lines=[(account, centre, d, c) for account, centre, d, c in lines if d or c],
+    )
+    journal.status = "posted" if posted else "queued"
+    db.flush()
 
 
 def _payment_lines(
@@ -1133,18 +1145,15 @@ def paid(db: Session, actor: Actor, limit: int = 50) -> list[DocumentView]:
     return _views(db, actor, rows)
 
 
-# ------------------------------------------------------------------ for the ledger (Phase 10)
+# ------------------------------------------------------------------ in the ledger (ADR 0023)
 
 
-def queued_journals(db: Session, limit: int = 200) -> list[JournalView]:
+def recent_journals(db: Session, limit: int = 200) -> list[JournalView]:
+    """The latest journals handed to the ledger, with how they stand there."""
     journals = list(
-        db.scalars(
-            select(ExpenseJournal)
-            .where(ExpenseJournal.status == "queued")
-            .order_by(ExpenseJournal.journal_date)
-            .limit(limit)
-        )
+        db.scalars(select(ExpenseJournal).order_by(ExpenseJournal.created_at.desc()).limit(limit))
     )
+    in_ledger = finance.statuses(db, "expenses", [j.id for j in journals])
     lines: dict[uuid.UUID, list[tuple[str, Decimal, Decimal]]] = defaultdict(list)
     for line in db.scalars(
         select(ExpenseJournalLine).where(
@@ -1152,4 +1161,14 @@ def queued_journals(db: Session, limit: int = 200) -> list[JournalView]:
         )
     ):
         lines[line.journal_id].append((line.account, line.debit, line.credit))
-    return [JournalView(j.id, j.journal_date, j.memo, j.status, lines[j.id]) for j in journals]
+    return [
+        JournalView(
+            j.id,
+            j.journal_date,
+            j.memo,
+            in_ledger.get(j.id, ("held", None))[0],
+            lines[j.id],
+            in_ledger.get(j.id, ("held", None))[1],
+        )
+        for j in journals
+    ]

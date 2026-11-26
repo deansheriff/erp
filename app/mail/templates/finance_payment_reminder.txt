@@ -1,0 +1,10 @@
+Hello {{ customer }},
+
+This is a reminder from {{ organisation }} about the following invoices, as at {{ today }}:
+
+{% for inv in invoices %}- {{ inv.number }}, due {{ inv.due }}: {{ inv.balance }}{% if inv.overdue %} ({{ inv.overdue }} days overdue){% endif %}
+
+{% endfor %}
+Total: {{ total }}
+
+If you have already paid, thank you, and please ignore this email. Otherwise please pay at your earliest convenience, quoting the invoice numbers.

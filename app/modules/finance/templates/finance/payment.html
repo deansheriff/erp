@@ -1,0 +1,120 @@
+{# Finance → prepare or view a supplier payment (ADR 0025): WHT withheld at payment,
+   approval by someone other than the preparer, the bank file and reversal.
+   Design: design/stitch/exports/finance.payment.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set p = payment %}
+{% set v = values %}
+{% set editing = not p or p.can_edit %}
+{% if p %}
+{% call ui.page_header(p.number or "Payment awaiting approval", p.supplier, tones[p.status], status_labels[p.status]) %}
+  {% if p.status == "draft" %}
+    {% if p.can_edit %}<form method="post" action="/finance/payments/{{ p.id }}/delete">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-danger-text">{{ ui.icon("trash-2", "sm") }} Delete</button></form>{% endif %}
+    <form method="post" action="/finance/payments/{{ p.id }}/approve">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary" {% if not p.can_approve %}disabled aria-describedby="approve-blocked"{% endif %}>{{ ui.icon("check", "sm") }} Approve and post</button></form>
+  {% elif p.can_download %}
+    <a href="/finance/payments/{{ p.id }}/bank.csv" class="kx-btn-primary {{ 'pointer-events-none opacity-50' if not p.has_bank }}">{{ ui.icon("download", "sm") }} Bank file (CSV)</a>
+  {% endif %}
+{% endcall %}
+{% else %}
+{% call ui.page_header("Prepare payment", "Pay a supplier's bills. WHT is withheld here, and someone other than you approves it.") %}{% endcall %}
+{% endif %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if p and p.approve_blocked %}<div class="mt-5" id="approve-blocked">{{ ui.alert("info", p.approve_blocked) }}</div>{% endif %}
+{% if p and p.can_download and not p.has_bank %}<div class="mt-3">{{ ui.alert("warning", "Add the supplier's bank details to download the bank file.") }}</div>{% endif %}
+
+{% if p and not editing %}
+<dl class="kx-card mt-6 grid gap-4 p-5 text-body-sm sm:grid-cols-2 lg:grid-cols-4">
+  <div><dt class="text-xs text-ink-3">Supplier</dt><dd><a href="/finance/suppliers/{{ p.supplier_id }}" class="font-semibold text-iris">{{ p.supplier }}</a></dd></div>
+  <div><dt class="text-xs text-ink-3">Date</dt><dd>{{ p.payment_date | date }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Paid from</dt><dd>{{ p.bank_account }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Reference</dt><dd>{{ p.reference or "—" }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Settled</dt><dd class="tnum">{{ p.settled | money }}</dd></div>
+  <div><dt class="text-xs text-ink-3">WHT withheld</dt><dd class="tnum">{{ p.wht | money }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Cash paid</dt><dd class="font-semibold tnum">{{ p.cash | money }}</dd></div>
+  <div><dt class="text-xs text-ink-3">Journal</dt><dd>{% if p.journal %}<a href="/finance/journals/{{ p.journal[0] }}" class="font-mono text-xs font-semibold text-iris">{{ p.journal[1] }}</a>{% else %}—{% endif %}</dd></div>
+  <div><dt class="text-xs text-ink-3">Prepared by</dt><dd>{{ p.created_by or "—" }}</dd></div>
+  {% if p.approved_by %}<div><dt class="text-xs text-ink-3">Approved</dt><dd>{{ p.approved_by }}, {{ p.approved_at | datetime }}</dd></div>{% endif %}
+  {% if p.status == "reversed" %}<div class="sm:col-span-2"><dt class="text-xs text-ink-3">Reversed on {{ p.reversed_on | date }}</dt><dd>{{ p.reversal_reason }}{% if p.reversal %} · <a href="/finance/journals/{{ p.reversal[0] }}" class="font-mono text-xs font-semibold text-iris">{{ p.reversal[1] }}</a>{% endif %}</dd></div>{% endif %}
+</dl>
+{% endif %}
+
+{% if p %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="pay-lines-title">
+  <h2 id="pay-lines-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Bills paid</h2>
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[720px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Bill</th><th class="px-3 py-2.5 text-right font-semibold">Settled</th><th class="px-3 py-2.5 text-left font-semibold">WHT type</th><th class="px-3 py-2.5 text-right font-semibold">WHT</th><th class="px-5 py-2.5 text-right font-semibold">Cash</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in p.lines %}
+        <tr><td class="px-5 py-2.5"><a href="/finance/bills/{{ line.bill_id }}" class="font-mono text-xs font-semibold text-iris">{{ line.number }}</a>{% if line.supplier_reference %}<span class="block text-xs text-ink-3">{{ line.supplier_reference }}</span>{% endif %}</td><td class="px-3 py-2.5 text-right tnum">{{ line.amount | money }}</td><td class="px-3 py-2.5 text-ink-2">{{ line.wht_type ~ " (" ~ (line.wht_rate | plain) ~ "%)" if line.wht_type else "None" }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.wht | money }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.cash | money }}</td></tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold"><tr><td class="px-5 py-3">Total</td><td class="px-3 py-3 text-right tnum">{{ p.settled | money }}</td><td></td><td class="px-3 py-3 text-right tnum">{{ p.wht | money }}</td><td class="px-5 py-3 text-right tnum">{{ p.cash | money }}</td></tr></tfoot>
+    </table>
+  </div>
+  {% if p.status == "draft" %}<p class="border-t border-line px-5 py-3 text-xs text-ink-3">WHT is worked out again at the rates in force when it's approved.</p>{% endif %}
+</section>
+{% endif %}
+
+{% if editing %}
+<form method="post" action="/finance/payments" class="mt-6 space-y-6" novalidate>
+  {{ ui.csrf_field() }}
+  {% if p %}<input type="hidden" name="payment_id" value="{{ p.id }}">{% endif %}
+  <section class="kx-card grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-4" aria-label="Payment">
+    <div class="sm:col-span-2">
+      <label class="kx-label" for="supplier_id">Supplier</label>
+      <div class="flex gap-2">
+        <select id="supplier_id" name="supplier_id" class="kx-input"><option value="">Choose a supplier</option>{% for sid, slabel in suppliers %}<option value="{{ sid }}" {% if (v.get("supplier_id") or (p.supplier_id|string if p else "")) == sid|string %}selected{% endif %}>{{ slabel }}</option>{% endfor %}</select>
+        {% if not p %}<button type="submit" name="step" value="supplier" class="kx-btn-ghost shrink-0">Show bills</button>{% endif %}
+      </div>
+      {{ ui.field_error(errors, "supplier_id") }}
+    </div>
+    {{ ui.text_field("payment_date", "Payment date", value=v.get("payment_date") or (p.payment_date.isoformat() if p else today.isoformat()), type="date", errors=errors) }}
+    <div><label class="kx-label" for="bank_account_id">Pay from</label><select id="bank_account_id" name="bank_account_id" class="kx-input">{% for bk in banks %}<option value="{{ bk.id }}" {% if (v.get("bank_account_id") or (p.bank_account_id|string if p else "")) == bk.id|string %}selected{% endif %}>{{ bk.code }} {{ bk.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "bank_account_id") }}</div>
+    <div class="sm:col-span-2">{{ ui.text_field("reference", "Reference (appears on the bank file)", value=v.get("reference") or (p.reference or "" if p else ""), errors=errors) }}</div>
+  </section>
+
+  <section class="kx-card overflow-hidden" aria-labelledby="open-bills-title">
+    <h2 id="open-bills-title" class="border-b border-line px-5 py-4 font-h3 text-h3">What to pay</h2>
+    {% if open_bills %}
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[760px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Bill</th><th class="px-3 py-2.5 text-left font-semibold">Due</th><th class="px-3 py-2.5 text-right font-semibold">Balance</th><th class="px-3 py-2.5 text-left font-semibold">WHT</th><th class="w-44 px-5 py-2.5 text-right font-semibold">Settle</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for b in open_bills %}
+          {% set rate = rates.get(b.id) %}
+          <tr>
+            <td class="px-5 py-2.5"><span class="font-mono text-xs font-semibold">{{ b.number }}</span>{% if b.supplier_reference %}<span class="block text-xs text-ink-3">{{ b.supplier_reference }}</span>{% endif %}<input type="hidden" name="bill_id" value="{{ b.id }}"></td>
+            <td class="px-3 py-2.5 {{ 'text-danger-text' if b.days_overdue > 0 }}">{{ b.due_date | date }}</td>
+            <td class="px-3 py-2.5 text-right tnum">{{ b.balance | money }}</td>
+            <td class="px-3 py-2.5 text-ink-2">{% if not b.wht_type_id %}None{% elif rate is none %}<span class="text-warning-text">{{ wht_names[b.wht_type_id] }}: rate not set</span>{% else %}{{ wht_names[b.wht_type_id] }} ({{ rate | plain }}%){% endif %}</td>
+            <td class="px-5 py-2"><label class="sr-only" for="pay-{{ loop.index0 }}">Settle {{ b.number }}</label><input id="pay-{{ loop.index0 }}" name="pay" value="{{ allocations.get(b.id|string, '') }}" inputmode="decimal" placeholder="0.00" class="kx-input h-10 text-right tnum">{{ ui.field_error(errors, "alloc_" ~ b.id) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <p class="border-t border-line px-5 py-3 text-xs text-ink-3">Enter the amount each bill is settled by. WHT is taken off the part that isn't VAT, and the rest is paid in cash.</p>
+    {% elif v.get("supplier_id") or p %}
+    <p class="px-5 py-6 text-body-sm text-ink-3">This supplier has no posted bills waiting to be paid.</p>
+    {% else %}
+    <p class="px-5 py-6 text-body-sm text-ink-3">Choose the supplier to see their bills.</p>
+    {% endif %}
+  </section>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Save for approval</button></div>
+</form>
+{% endif %}
+
+{% if p and p.can_reverse %}
+<form method="post" action="/finance/payments/{{ p.id }}/reverse" class="kx-card mt-6 grid gap-3 p-5 sm:grid-cols-[180px_minmax(0,1fr)_auto] sm:items-end" novalidate>
+  {{ ui.csrf_field() }}
+  <div class="sm:col-span-3"><h2 class="font-h3 text-h3">Reverse this payment</h2><p class="text-body-sm text-ink-3">If it bounced or went to the wrong account. The journal is reversed and the bills it paid are open again.</p></div>
+  {{ ui.text_field("reverse_on", "Reversal date", value=v.get("reverse_on") or today.isoformat(), type="date", errors=errors) }}
+  {{ ui.text_field("reason", "Why", value=v.get("reason"), errors=errors) }}
+  <button type="submit" class="kx-btn-secondary">{{ ui.icon("undo-2", "sm") }} Reverse</button>
+</form>
+{% endif %}
+{% endblock %}
