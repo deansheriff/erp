@@ -23,12 +23,15 @@ from app.modules.finance import (
     payables,
     payments,
     periods,
+    project_link,
     purchasing,
     receipts,
     receivables,
     sales,
+    stock_link,
     suppliers,
     tax,
+    vehicle_link,
 )
 from app.modules.finance.bills import BillInput, BillLineInput
 from app.modules.finance.models import SUPPLIER_KINDS, VAT_CODES, Supplier, WhtType
@@ -312,8 +315,13 @@ def _line_inputs(
     quantity: list[str],
     unit_price: list[str],
     vat_code: list[str],
+    *,
+    item_id: list[str],
+    warehouse_id: list[str],
+    project_id: list[str] | None = None,
 ) -> list[LineInput]:
-    rows = max(len(description), len(account_id), len(unit_price))
+    projects = project_id or []
+    rows = max(len(description), len(account_id), len(unit_price), len(item_id))
     return [
         LineInput(
             _at(description, i),
@@ -322,6 +330,9 @@ def _line_inputs(
             _at(quantity, i),
             _at(unit_price, i),
             _at(vat_code, i) or "standard",
+            _at(item_id, i),
+            _at(warehouse_id, i),
+            project_id=_at(projects, i),
         )
         for i in range(rows)
     ]
@@ -333,7 +344,13 @@ def _form_rows(lines: list[Any], blank: Any) -> list[Any]:
 
 
 def _pickers(db: Session) -> dict[str, Any]:
+    link = stock_link.link()
     return {
+        "stock_items": link.items(db),
+        "projects": project_link.link().choices(db),
+        "vehicles": vehicle_link.link().choices(db),
+        "warehouses": link.warehouses(db),
+        "bins": link.bins(db),
         "cost_accounts": purchasing.cost_accounts(db),
         "cost_centres": org.cost_centre_choices(db),
         "vat_codes": [(c, sales.VAT_LABELS[c]) for c in VAT_CODES],
@@ -355,6 +372,9 @@ def _order_context(
                 f"{line.quantity.normalize():f}",
                 f"{line.unit_price:.2f}",
                 line.vat_code,
+                str(line.item_id or ""),
+                str(line.warehouse_id or ""),
+                project_id=str(line.project_id or ""),
             )
             for line in (view.lines if view else [])
         ]
@@ -421,8 +441,21 @@ def save_order(
     quantity: FormList = [],  # noqa: B006
     unit_price: FormList = [],  # noqa: B006
     vat_code: FormList = [],  # noqa: B006
+    item_id: FormList = [],  # noqa: B006
+    warehouse_id: FormList = [],  # noqa: B006
+    project_id: FormList = [],  # noqa: B006
 ) -> Response:
-    lines = _line_inputs(description, account_id, cost_centre_id, quantity, unit_price, vat_code)
+    lines = _line_inputs(
+        description,
+        account_id,
+        cost_centre_id,
+        quantity,
+        unit_price,
+        vat_code,
+        item_id=item_id,
+        warehouse_id=warehouse_id,
+        project_id=project_id,
+    )
     data = purchasing.OrderInput(
         supplier_id, parse_day(order_date), parse_day(expected_date), reference, memo, lines
     )
@@ -442,7 +475,7 @@ def save_order(
             db,
             actor,
             existing,
-            lines=[line for line in lines if line.description or line.unit_price],
+            lines=[line for line in lines if line.description or line.unit_price or line.item_id],
             values=values,
             errors=_errors(exc),
         )
@@ -484,8 +517,18 @@ def receive_goods(
     note: FormStr = "",
     line_id: FormList = [],  # noqa: B006  (FastAPI form lists)
     received: FormList = [],  # noqa: B006
+    bin_id: FormList = [],  # noqa: B006
+    lot_number: FormList = [],  # noqa: B006
+    expiry: FormList = [],  # noqa: B006
+    serials: FormList = [],  # noqa: B006
 ) -> Response:
     quantities = dict(zip(line_id, received, strict=False))
+    details = {
+        lid: purchasing.ReceiveDetail(
+            _at(bin_id, i), _at(lot_number, i), parse_day(_at(expiry, i)), _at(serials, i)
+        )
+        for i, lid in enumerate(line_id)
+    }
     try:
         with db.begin_nested():
             purchasing.receive(
@@ -496,6 +539,7 @@ def receive_goods(
                 delivery_note=delivery_note,
                 note=note,
                 quantities=quantities,
+                details=details,
             )
     except (ValidationFailed, Conflict, PermissionDenied) as exc:
         values = {
@@ -504,6 +548,13 @@ def receive_goods(
             "note": note,
             **{f"qty_{k}": v for k, v in quantities.items()},
         }
+        for i, lid in enumerate(line_id):
+            values |= {
+                f"bin_{lid}": _at(bin_id, i),
+                f"lot_{lid}": _at(lot_number, i),
+                f"expiry_{lid}": _at(expiry, i),
+                f"serials_{lid}": _at(serials, i),
+            }
         context = _order_context(db, actor, order_id, values=values, errors=_errors(exc))
         return _render(request, "finance/purchase_order.html", context, 422)
     return _see_other(f"/finance/purchase-orders/{order_id}?notice=received")
@@ -547,6 +598,9 @@ def _bill_context(
                 f"{line.quantity.normalize():f}",
                 f"{line.unit_price:.2f}",
                 line.vat_code,
+                line.serials or "",
+                str(line.project_id or ""),
+                str(line.vehicle_id or ""),
             )
             for line in (view.lines if view else [])
         ]
@@ -625,6 +679,9 @@ def save_bill(
     quantity: FormList = [],  # noqa: B006
     unit_price: FormList = [],  # noqa: B006
     vat_code: FormList = [],  # noqa: B006
+    serials: FormList = [],  # noqa: B006
+    project_id: FormList = [],  # noqa: B006
+    vehicle_id: FormList = [],  # noqa: B006
 ) -> Response:
     rows = max(len(description), len(account_id), len(unit_price))
     lines = [
@@ -636,6 +693,9 @@ def save_bill(
             _at(quantity, i),
             _at(unit_price, i),
             _at(vat_code, i) or "standard",
+            _at(serials, i),
+            _at(project_id, i),
+            _at(vehicle_id, i),
         )
         for i in range(rows)
     ]

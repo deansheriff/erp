@@ -1,0 +1,37 @@
+{# Projects → time approvals (ADR 0031): timesheets waiting for your decision.
+   Design: design/stitch/exports/projects.approvals.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Time approvals", "Weeks submitted on projects you manage, or by people whose project time you decide.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{% if rows %}
+<div class="mt-6 space-y-4">
+  {% for r in rows %}
+  {% set s = r.sheet %}
+  <section class="kx-card overflow-hidden" aria-label="{{ r.person }}, {{ r.project }}">
+    <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+      <div><p class="font-semibold">{{ r.person }}</p><p class="text-xs text-ink-3">{{ r.project }} · week of {{ s.week_start | date }} · submitted {{ s.submitted_at | datetime }}</p></div>
+      <p class="font-h3 text-h3 tnum">{{ r.hours | plain }} h</p>
+    </div>
+    <table class="w-full border-t border-line text-body-sm">
+      <tbody class="divide-y divide-line">
+        {% for day, task, hours in r.entries %}<tr><td class="px-5 py-2">{{ day.strftime("%a %d %b") }}</td><td class="px-3 py-2 text-ink-2">{{ task or "No task" }}</td><td class="px-5 py-2 text-right tnum">{{ hours | plain }} h</td></tr>{% endfor %}
+      </tbody>
+    </table>
+    <form method="post" class="flex flex-wrap items-end gap-3 border-t border-line px-5 py-4" novalidate>
+      {{ ui.csrf_field() }}
+      <div class="min-w-[260px] flex-1"><label class="kx-label" for="note-{{ s.id }}">Note (needed to reject)</label><input id="note-{{ s.id }}" name="note" value="{{ values.get('note_' ~ s.id, '') }}" class="kx-input">{{ ui.field_error(errors, "note_" ~ s.id) }}</div>
+      <button type="submit" formaction="/projects/approvals/{{ s.id }}/approve" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Approve</button>
+      <button type="submit" formaction="/projects/approvals/{{ s.id }}/reject" class="kx-btn-ghost text-danger-text">Reject</button>
+    </form>
+  </section>
+  {% endfor %}
+</div>
+{% else %}
+<div class="mt-6">{% call ui.empty_state("clock", "Nothing waiting", "Submitted timesheets you can decide appear here. You can't approve your own time; your line manager does.") %}{% endcall %}</div>
+{% endif %}
+{% endblock %}

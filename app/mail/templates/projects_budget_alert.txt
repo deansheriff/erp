@@ -1,0 +1,5 @@
+Hello {{ name }},
+
+{{ code }} {{ project }} has used {{ used }}% of its budget at {{ organisation }}: {{ cost }} against {{ budget }}, labour included.
+
+You get this because you manage the project. It's sent once when costs pass each alert level.

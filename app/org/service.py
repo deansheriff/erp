@@ -9,6 +9,7 @@ import re
 import uuid
 from collections import defaultdict
 from collections.abc import Callable
+from dataclasses import dataclass
 from datetime import date
 
 from sqlalchemy import ColumnElement, case, func, or_, select
@@ -651,6 +652,35 @@ def set_position_active(db: Session, actor: Actor, position_id: uuid.UUID, *, ac
 def departments_under(db: Session, department_id: uuid.UUID) -> set[uuid.UUID]:
     """A department and every department below it."""
     return resolver.departments_under(db, department_id)
+
+
+@dataclass(frozen=True, slots=True)
+class DepartmentPeople:
+    """Who currently holds positions in a department (not counting sub-departments),
+    and who holds its top positions (those whose parent sits outside it)."""
+
+    department_id: uuid.UUID
+    holders: frozenset[uuid.UUID]
+    heads: frozenset[uuid.UUID]
+
+
+def department_people(db: Session, on: date) -> dict[uuid.UUID, DepartmentPeople]:
+    """Current holders by active department, for department chat channels (ADR 0034)."""
+    positions = {p.id: p for p in db.scalars(select(Position).where(Position.is_active))}
+    holders: dict[uuid.UUID, set[uuid.UUID]] = {}
+    heads: dict[uuid.UUID, set[uuid.UUID]] = {}
+    for a in _current_assignments(db, on):
+        position = positions.get(a.position_id)
+        if position is None:
+            continue
+        holders.setdefault(position.department_id, set()).add(a.employee_id)
+        parent = positions.get(position.parent_id) if position.parent_id else None
+        if parent is None or parent.department_id != position.department_id:
+            heads.setdefault(position.department_id, set()).add(a.employee_id)
+    return {
+        d: DepartmentPeople(d, frozenset(holders.get(d, ())), frozenset(heads.get(d, ())))
+        for d in db.scalars(select(Department.id).where(Department.is_active))
+    }
 
 
 def position_choices(db: Session) -> list[tuple[uuid.UUID, str]]:

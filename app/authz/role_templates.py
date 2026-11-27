@@ -111,6 +111,16 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "payroll.relief.declare": SELF,
             "payroll.loan.read": SELF,
             "payroll.certificate.read": SELF,  # once December is paid
+            "inventory.request.create": SELF,
+            "inventory.request.read": SELF,
+            "procurement.requisition.create": SELF,
+            "procurement.requisition.read": SELF,
+            "projects.time.log": SELF,
+            "support.ticket.create": SELF,
+            "support.ticket.read": SELF,
+            "fleet.vehicle.use": SELF,
+            "chat.conversation.use": SELF,
+            "assistant.policy.ask": SELF,
         },
     ),
     RoleTemplate(
@@ -126,6 +136,12 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "attendance.record.approve": Scope.TEAM,
             "expenses.claim.read": Scope.TEAM,
             "expenses.claim.approve": Scope.TEAM,
+            "inventory.request.read": Scope.TEAM,
+            "inventory.request.approve": Scope.TEAM,
+            "procurement.requisition.read": Scope.TEAM,
+            "procurement.requisition.approve": Scope.TEAM,
+            "projects.time.approve": ORG,  # their reports' time on projects they manage
+            "assistant.evidence.summarise": Scope.TEAM,
         },
     ),
     RoleTemplate(
@@ -156,6 +172,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "attendance.photo.view": ORG,
             "attendance.schedule.manage": ORG,
             "payroll.relief.verify": ORG,
+            "assistant.policy.manage": ORG,
+            "assistant.hiring.draft": ORG,
         },
     ),
     RoleTemplate(
@@ -163,7 +181,13 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "HR Manager",
         "All HR records, including sensitive ones.",
         rule=_hr_everything,
-        grants={"identity.user.invite": ORG, "org.structure.read": ORG},
+        grants={
+            "identity.user.invite": ORG,
+            "org.structure.read": ORG,
+            "assistant.policy.manage": ORG,
+            "assistant.hiring.draft": ORG,
+            "assistant.evidence.summarise": ORG,
+        },
     ),
     RoleTemplate(
         "it_support",
@@ -221,6 +245,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.bank.reconcile": ORG,
             "finance.asset.read": ORG,
             "finance.asset.manage": ORG,
+            "inventory.item.read": ORG,
         },
     ),
     RoleTemplate(
@@ -273,6 +298,15 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.asset.read": ORG,
             "finance.asset.manage": ORG,
             "finance.asset.approve": ORG,  # what someone else prepared
+            "inventory.item.read": ORG,
+            "procurement.requisition.read": ORG,
+            "procurement.requisition.approve_finance": ORG,
+            "procurement.rfq.read": ORG,
+            "procurement.settings.manage": ORG,
+            "projects.project.read": ORG,
+            "projects.rate.manage": ORG,
+            "projects.settings.manage": ORG,
+            "fleet.cost.read": ORG,
         },
     ),
     RoleTemplate(
@@ -287,12 +321,93 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "Pays out approved expense claims.",
         grants={"expenses.claim.read": ORG, "expenses.claim.reimburse": ORG},
     ),
-    RoleTemplate("inventory_clerk", "Inventory Clerk", "Receives, issues and counts stock."),
     RoleTemplate(
-        "procurement_officer", "Procurement Officer", "Requisitions, RFQs and purchase orders."
+        "inventory_clerk",
+        "Inventory Clerk",
+        "Receives, issues and counts stock.",
+        grants={
+            "inventory.item.read": ORG,
+            "inventory.stock.move": ORG,
+            "inventory.request.read": ORG,
+        },
     ),
-    RoleTemplate("support_agent", "Support Agent", "Works the support ticket queue."),
-    RoleTemplate("fleet_manager", "Fleet Manager", "Vehicles, drivers, fuel and maintenance."),
+    RoleTemplate(
+        "inventory_manager",
+        "Inventory Manager",
+        "Keeps items and warehouses, and approves stock adjustments and counts.",
+        grants={
+            "inventory.item.read": ORG,
+            "inventory.item.manage": ORG,
+            "inventory.stock.move": ORG,
+            "inventory.stock.approve": ORG,  # what someone else recorded
+            "inventory.request.read": ORG,
+            "inventory.request.approve_any": ORG,
+        },
+    ),
+    RoleTemplate(
+        "procurement_officer",
+        "Procurement Officer",
+        "Requisitions, RFQs and purchase orders.",
+        grants={
+            "procurement.requisition.read": ORG,
+            "procurement.rfq.read": ORG,
+            "procurement.rfq.manage": ORG,
+            "procurement.supplier.rate": ORG,
+            "finance.supplier.read": ORG,
+            "finance.purchase.read": ORG,
+            "finance.purchase.create": ORG,  # drafts; someone else approves (ADR 0030)
+            "inventory.item.read": ORG,
+        },
+    ),
+    RoleTemplate(
+        "director",
+        "Director",
+        "Approves the largest requisitions and steps in when there's no line manager.",
+        grants={
+            "procurement.requisition.read": ORG,
+            "procurement.requisition.approve_director": ORG,
+            "procurement.requisition.approve_any": ORG,
+            "procurement.rfq.read": ORG,
+            "procurement.settings.manage": ORG,
+            "projects.project.read": ORG,
+            "projects.time.approve_any": ORG,
+            "projects.settings.manage": ORG,
+            "fleet.cost.read": ORG,
+        },
+    ),
+    RoleTemplate(
+        "project_manager",
+        "Project Manager",
+        "Sets up projects, manages the ones they lead and approves their team's time.",
+        grants={
+            "projects.project.create": ORG,
+            "projects.time.approve": ORG,  # on projects they manage
+            "finance.customer.read": ORG,
+        },
+    ),
+    RoleTemplate(
+        "support_agent",
+        "Support Agent",
+        "Works the support ticket queue.",
+        grants={
+            "support.ticket.read": ORG,  # their teams' tickets, as the service filters
+            "support.ticket.work": ORG,
+            "support.report.read": ORG,
+            "finance.customer.read": ORG,  # to record customers' tickets
+            "assistant.ticket.suggest": ORG,
+        },
+    ),
+    RoleTemplate(
+        "fleet_manager",
+        "Fleet Manager",
+        "Vehicles, drivers, fuel and maintenance.",
+        grants={
+            "fleet.vehicle.read": ORG,
+            "fleet.vehicle.manage": ORG,
+            "fleet.cost.read": ORG,
+            "fleet.vehicle.use": ORG,
+        },
+    ),
 )
 
 

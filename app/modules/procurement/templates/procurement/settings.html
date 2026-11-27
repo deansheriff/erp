@@ -1,0 +1,35 @@
+{# Procurement → settings (ADR 0030): the approval tiers by amount and the quotes threshold.
+   Design: design/stitch/exports/procurement.settings.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Procurement settings", "Who approves requisitions, and when three quotes are needed.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<form method="post" action="/procurement/settings" class="mt-6 space-y-6" novalidate>
+  {{ ui.csrf_field() }}
+  <section class="kx-card overflow-hidden" aria-labelledby="tiers-title">
+    <div class="border-b border-line px-5 py-4"><h2 id="tiers-title" class="font-h3 text-h3">Approval tiers</h2><p class="mt-1 text-body-sm text-ink-3">Each tier adds an approver when a requisition's estimated total is over its amount. Steps are decided in order, each by a different person. The amounts are defaults to confirm.</p></div>
+    <table class="w-full text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Step</th><th class="px-3 py-2.5 text-left font-semibold">Needed when the total is over</th><th class="px-5 py-2.5 text-left font-semibold">In use</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for t in tiers %}
+        <tr>
+          <td class="px-5 py-3 font-semibold">{{ level_labels[t.level] }}</td>
+          <td class="px-3 py-2">{% if t.level == "line_manager" %}<span class="text-ink-3">Always</span>{% else %}<label class="sr-only" for="above-{{ t.level }}">{{ level_labels[t.level] }} amount</label><input id="above-{{ t.level }}" name="above_{{ t.level }}" value="{{ v.get('above_' ~ t.level) or ('{:,.2f}'.format(t.above)) }}" inputmode="decimal" class="kx-input h-10 max-w-[220px] text-right tnum">{{ ui.field_error(errors, "above_" ~ t.level) }}{% endif %}</td>
+          <td class="px-5 py-3">{% if t.level == "line_manager" %}<span class="text-ink-3">Always</span>{% else %}<label class="flex items-center gap-2"><input type="checkbox" name="active_{{ t.level }}" value="1" class="kx-check" {% if (v and v.get("active_" ~ t.level)) or (not v and t.is_active) %}checked{% endif %}> <span class="sr-only">{{ level_labels[t.level] }} </span>In use</label>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <section class="kx-card p-5" aria-labelledby="quotes-title">
+    <h2 id="quotes-title" class="font-h3 text-h3">Quotes</h2>
+    <div class="mt-4 max-w-sm">{{ ui.text_field("quote_threshold", "Three quotes needed over", value=v.get("quote_threshold") or ("{:,.2f}".format(settings.quote_threshold)), inputmode="decimal", errors=errors, hint="Below this, one quote is enough. A default to confirm.") }}</div>
+  </section>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save settings</button></div>
+</form>
+{% endblock %}

@@ -1,0 +1,49 @@
+{# Support → SLA report (ADR 0032): tickets resolved in a month, by team and priority and by
+   agent. Design: design/stitch/exports/support.sla_report.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro pct(value) %}{% if value is none %}<span class="text-ink-3">—</span>{% else %}{{ value }}%{% endif %}{% endmacro %}
+
+{% block content %}
+{% set tot = report.total %}
+{% call ui.page_header("SLA report", "Tickets resolved in " ~ month.strftime("%B %Y") ~ ".") %}
+  <form method="get" class="flex flex-wrap items-center gap-2"><label class="sr-only" for="month">Month</label><input id="month" type="month" name="month" value="{{ month.strftime('%Y-%m') }}" class="kx-input h-10 w-auto"><label class="sr-only" for="team">Team</label><select id="team" name="team" class="kx-input h-10 w-auto"><option value="">All teams</option>{% for t in teams %}<option value="{{ t.id }}" {% if team == t.id|string %}selected{% endif %}>{{ t.name }}</option>{% endfor %}</select><button type="submit" class="kx-btn-secondary">Show</button></form>
+{% endcall %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Tickets resolved</p><p class="mt-1 font-h2 text-h2 tnum">{{ tot.tickets }}</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">First response met</p><p class="mt-1 font-h2 text-h2 tnum">{{ pct(tot.pct(tot.response_met)) }}</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Resolution met</p><p class="mt-1 font-h2 text-h2 tnum">{{ pct(tot.pct(tot.resolve_met)) }}</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Average rating</p><p class="mt-1 font-h2 text-h2 tnum">{% if tot.rating is not none %}{{ tot.rating }}{% else %}—{% endif %}</p><p class="text-xs text-ink-3">{{ tot.ratings | length }} rating{{ "s" if tot.ratings | length != 1 }}</p></div>
+</div>
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="team-title">
+  <h2 id="team-title" class="border-b border-line px-5 py-4 font-h3 text-h3">By team and priority</h2>
+  {% if report.by_team %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[820px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Team</th><th class="px-3 py-2.5 text-left font-semibold">Priority</th><th class="px-3 py-2.5 text-right font-semibold">Tickets</th><th class="px-3 py-2.5 text-right font-semibold">Response met</th><th class="px-3 py-2.5 text-right font-semibold">Resolution met</th><th class="px-3 py-2.5 text-right font-semibold">Breached</th><th class="px-3 py-2.5 text-right font-semibold">Average time</th><th class="px-5 py-2.5 text-right font-semibold">Rating</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for name, priority, x in report.by_team %}
+        <tr><td class="px-5 py-2.5">{{ name }}</td><td class="px-3 py-2.5">{{ ui.badge(priority_tones[priority], priority_labels[priority]) }}</td><td class="px-3 py-2.5 text-right tnum">{{ x.tickets }}</td><td class="px-3 py-2.5 text-right tnum">{{ pct(x.pct(x.response_met)) }}</td><td class="px-3 py-2.5 text-right tnum">{{ pct(x.pct(x.resolve_met)) }}</td><td class="px-3 py-2.5 text-right tnum {{ 'font-semibold text-danger-text' if x.breached }}">{{ x.breached }}</td><td class="px-3 py-2.5 text-right tnum">{{ x.average_hours | plain }}h</td><td class="px-5 py-2.5 text-right tnum">{{ x.rating if x.rating is not none else "—" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}<p class="px-5 py-6 text-body-sm text-ink-3">No tickets were resolved that month.</p>{% endif %}
+</section>
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="agent-title">
+  <h2 id="agent-title" class="border-b border-line px-5 py-4 font-h3 text-h3">By agent</h2>
+  {% if report.by_agent %}
+  <table class="w-full text-body-sm">
+    <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Agent</th><th class="px-3 py-2.5 text-right font-semibold">Resolved</th><th class="px-3 py-2.5 text-right font-semibold">Resolution met</th><th class="px-5 py-2.5 text-right font-semibold">Rating</th></tr></thead>
+    <tbody class="divide-y divide-line">
+      {% for name, x in report.by_agent %}<tr><td class="px-5 py-2.5">{{ name }}</td><td class="px-3 py-2.5 text-right tnum">{{ x.tickets }}</td><td class="px-3 py-2.5 text-right tnum">{{ pct(x.pct(x.resolve_met)) }}</td><td class="px-5 py-2.5 text-right tnum">{{ x.rating if x.rating is not none else "—" }}</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="px-5 py-6 text-body-sm text-ink-3">No tickets were resolved that month.</p>{% endif %}
+</section>
+<p class="mt-4 text-xs text-ink-3">Times are business hours, Monday to Friday, excluding public holidays; time waiting on the requester doesn't count.</p>
+{% endblock %}

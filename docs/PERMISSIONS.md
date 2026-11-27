@@ -6,6 +6,16 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 
 ## Catalogue
 
+### assistant
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `assistant.evidence.summarise` | Summarise appraisal evidence | Team, Department, Organisation |  | Have the assistant summarise what's recorded for a person over a period. It never rates. |
+| `assistant.hiring.draft` | Draft job descriptions | Organisation |  | Have the assistant draft a job description and interview questions for a position. |
+| `assistant.policy.ask` | Ask about policies | Self, Team, Department, Organisation |  | Ask the assistant questions answered from the policy library, with checked quotes. |
+| `assistant.policy.manage` | Manage the policy library | Organisation |  | Add policies and new versions of them for the assistant to answer from. |
+| `assistant.ticket.suggest` | Suggest ticket categories and replies | Organisation |  | Have the assistant suggest a support ticket's category and draft a reply. |
+
 ### attendance
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -32,6 +42,14 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `authz.delegation.manage` | Manage everyone's delegations | Organisation |  | See and revoke delegations between any two people. |
 | `authz.role.manage` | Manage roles | Organisation | yes | Create, edit and delete roles. |
 | `authz.role.read` | View roles | Organisation |  | See roles and their permissions. |
+
+### chat
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `chat.channel.moderate` | Moderate department channels | Organisation |  | Delete any message in a department channel. |
+| `chat.conversation.use` | Use chat | Self, Team, Department, Organisation |  | Send direct messages, start groups and take part in the conversations you belong to. |
+| `chat.settings.manage` | Manage chat settings | Organisation |  | Change the edit window, the unread email delay and how long messages are kept. |
 
 ### expenses
 
@@ -88,6 +106,15 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `finance.tax.manage` | Manage tax | Organisation |  | Change tax rates, types and receivables settings, and file returns. |
 | `finance.tax.read` | View tax returns | Organisation |  | See VAT, withholding tax and stamp duty returns and the tax settings. |
 
+### fleet
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `fleet.cost.read` | View cost per vehicle | Organisation |  | See each vehicle's costs from the ledger, distance, fuel and cost per kilometre. |
+| `fleet.vehicle.manage` | Manage the fleet | Organisation |  | Add and change vehicles, documents, drivers and service plans; record services; approve bookings; review and close incidents; change the fleet settings. |
+| `fleet.vehicle.read` | View the fleet | Organisation |  | See every vehicle with its documents, services, fuel, incidents and bookings. |
+| `fleet.vehicle.use` | Use fleet vehicles | Self, Team, Department, Organisation |  | Log fuel on the vehicles you drive, report incidents and request pool vehicles. |
+
 ### hr
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -118,6 +145,19 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `identity.user.invite` | Invite users | Organisation |  | Send invitations to new people. |
 | `identity.user.manage` | Manage user accounts | Organisation | yes | Resend invitations, suspend, reactivate and unlock accounts. |
 | `identity.user.read` | View user accounts | Organisation |  | See everyone who can sign in. |
+
+### inventory
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `inventory.item.manage` | Manage items and warehouses | Organisation |  | Add and change items, categories, units of measure, warehouses and bins. Receives the daily low-stock digest. |
+| `inventory.item.read` | View inventory | Organisation |  | See items, stock on hand and its value, warehouses and the stock ledger. |
+| `inventory.request.approve` | Approve material requests | Self, Team, Department, Organisation |  | Decide the material requests you are named on as line manager, or by delegation. |
+| `inventory.request.approve_any` | Step in on material requests | Organisation |  | Decide any material request, e.g. when the requester has no line manager. |
+| `inventory.request.create` | Request materials | Self, Team, Department, Organisation |  | Raise material requests for your own work. |
+| `inventory.request.read` | View material requests | Self, Team, Department, Organisation |  | See material requests within scope. |
+| `inventory.stock.approve` | Approve stock adjustments | Organisation |  | Post adjustments and count variances someone else recorded. |
+| `inventory.stock.move` | Move stock | Organisation |  | Issue and transfer stock, record adjustments and counts, and issue approved material requests. |
 
 ### leave
 
@@ -163,10 +203,48 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `payroll.settings.manage` | Manage statutory settings | Organisation |  | PAYE bands, reliefs, pension, NHF and other statutory rates. |
 | `payroll.structure.manage` | Manage salary structures | Organisation |  | Pay components, salary structures and pay groups. |
 
+### procurement
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `procurement.requisition.approve` | Approve requisitions as line manager | Self, Team, Department, Organisation |  | Decide the line-manager step of requisitions you are named on, or by delegation. |
+| `procurement.requisition.approve_any` | Step in on requisitions | Organisation |  | Decide the line-manager step when the requester has no line manager. |
+| `procurement.requisition.approve_director` | Approve requisitions as Director | Organisation |  | Decide the director step of requisitions over the director tier's amount. |
+| `procurement.requisition.approve_finance` | Approve requisitions as Finance | Organisation |  | Decide the finance step of requisitions over the finance tier's amount. |
+| `procurement.requisition.create` | Raise purchase requisitions | Self, Team, Department, Organisation |  | Ask for goods or services to be bought for your department. |
+| `procurement.requisition.read` | View purchase requisitions | Self, Team, Department, Organisation |  | See purchase requisitions within scope, with their approvals. |
+| `procurement.rfq.manage` | Run RFQs | Organisation |  | Invite suppliers to quote on approved requisitions, record their quotes, award one and draft the purchase order. |
+| `procurement.rfq.read` | View RFQs and supplier performance | Organisation |  | See requests for quotation, the quotes received, awards and supplier performance. |
+| `procurement.settings.manage` | Manage procurement settings | Organisation |  | Change the approval tiers and the amount over which three quotes are needed. |
+| `procurement.supplier.rate` | Rate suppliers | Organisation |  | Rate a supplier's purchase order once it has been received. |
+
+### projects
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `projects.project.create` | Create projects | Organisation |  | Set up projects and manage the ones you lead: members, budget, milestones, tasks and status. |
+| `projects.project.read` | View all projects | Organisation |  | See every project with its revenue, costs, labour and profitability. |
+| `projects.rate.manage` | Manage hourly cost rates | Organisation | yes | Set the hourly cost of each person used for project labour cost. |
+| `projects.settings.manage` | Manage project settings | Organisation |  | Change the budget alert thresholds. |
+| `projects.time.approve` | Approve project time | Organisation |  | Decide timesheets on projects you manage, or your reports' time on their own projects. |
+| `projects.time.approve_any` | Step in on project time | Organisation |  | Decide any timesheet when neither the project manager nor a line manager can. |
+| `projects.time.log` | Log project time | Self, Team, Department, Organisation |  | Record hours on projects you're a member of and submit them weekly. |
+
+### support
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `support.report.read` | View the SLA report | Organisation |  | See response and resolution targets met and breached, and ratings, by team and agent. |
+| `support.settings.manage` | Manage support settings | Organisation |  | Set up teams, categories, SLA targets, business hours and when resolved tickets close. |
+| `support.ticket.create` | Raise support tickets | Self, Team, Department, Organisation |  | Ask for help from a support team, and follow your own tickets. |
+| `support.ticket.read` | View support tickets | Self, Team, Department, Organisation |  | See support tickets within scope, with their public replies. |
+| `support.ticket.work` | Work support tickets | Organisation |  | Take and work tickets in your teams' queues, record customers' tickets, reply, add internal notes and resolve. Team leads also assign. |
+
 ### system
 
 | Key | Permission | Scopes | Sensitive | Description |
 |---|---|---|---|---|
+| `system.ai.manage` | Manage the AI assistant | Organisation | yes | Turn the assistant on or off, choose the provider and model, and accept which data may be sent to it. |
 | `system.branding.manage` | Manage organisation details and branding | Organisation |  | Legal details, logo and document colours. |
 | `system.mail.manage` | Manage mail settings | Organisation | yes | Change the SMTP server and send test emails. |
 | `system.security.manage` | Manage security settings | Organisation | yes | Session, password and lockout rules, and who is a super admin. |
@@ -182,6 +260,11 @@ Everything, including technical settings. Can't be edited or removed.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | O |
+| `assistant.hiring.draft` | O |
+| `assistant.policy.ask` | O |
+| `assistant.policy.manage` | O |
+| `assistant.ticket.suggest` | O |
 | `attendance.clock.use` | O |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
@@ -194,6 +277,9 @@ Everything, including technical settings. Can't be edited or removed.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `chat.channel.moderate` | O |
+| `chat.conversation.use` | O |
+| `chat.settings.manage` | O |
 | `expenses.claim.approve` | O |
 | `expenses.claim.approve_any` | O |
 | `expenses.claim.approve_finance` | O |
@@ -234,6 +320,10 @@ Everything, including technical settings. Can't be edited or removed.
 | `finance.supplier.read` | O |
 | `finance.tax.manage` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
+| `fleet.vehicle.manage` | O |
+| `fleet.vehicle.read` | O |
+| `fleet.vehicle.use` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -255,6 +345,14 @@ Everything, including technical settings. Can't be edited or removed.
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `inventory.item.manage` | O |
+| `inventory.item.read` | O |
+| `inventory.request.approve` | O |
+| `inventory.request.approve_any` | O |
+| `inventory.request.create` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.approve` | O |
+| `inventory.stock.move` | O |
 | `leave.balance.adjust` | O |
 | `leave.balance.read` | O |
 | `leave.request.approve` | O |
@@ -284,6 +382,29 @@ Everything, including technical settings. Can't be edited or removed.
 | `payroll.run.review` | O |
 | `payroll.settings.manage` | O |
 | `payroll.structure.manage` | O |
+| `procurement.requisition.approve` | O |
+| `procurement.requisition.approve_any` | O |
+| `procurement.requisition.approve_director` | O |
+| `procurement.requisition.approve_finance` | O |
+| `procurement.requisition.create` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.manage` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
+| `procurement.supplier.rate` | O |
+| `projects.project.create` | O |
+| `projects.project.read` | O |
+| `projects.rate.manage` | O |
+| `projects.settings.manage` | O |
+| `projects.time.approve` | O |
+| `projects.time.approve_any` | O |
+| `projects.time.log` | O |
+| `support.report.read` | O |
+| `support.settings.manage` | O |
+| `support.ticket.create` | O |
+| `support.ticket.read` | O |
+| `support.ticket.work` | O |
+| `system.ai.manage` | O |
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
@@ -295,6 +416,11 @@ Everything except technical settings such as mail, branding and security.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | O |
+| `assistant.hiring.draft` | O |
+| `assistant.policy.ask` | O |
+| `assistant.policy.manage` | O |
+| `assistant.ticket.suggest` | O |
 | `attendance.clock.use` | S |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
@@ -307,6 +433,9 @@ Everything except technical settings such as mail, branding and security.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `chat.channel.moderate` | O |
+| `chat.conversation.use` | O |
+| `chat.settings.manage` | O |
 | `expenses.claim.approve` | O |
 | `expenses.claim.approve_any` | O |
 | `expenses.claim.approve_finance` | O |
@@ -347,6 +476,10 @@ Everything except technical settings such as mail, branding and security.
 | `finance.supplier.read` | O |
 | `finance.tax.manage` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
+| `fleet.vehicle.manage` | O |
+| `fleet.vehicle.read` | O |
+| `fleet.vehicle.use` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -368,6 +501,14 @@ Everything except technical settings such as mail, branding and security.
 | `identity.user.invite` | O |
 | `identity.user.manage` | O |
 | `identity.user.read` | O |
+| `inventory.item.manage` | O |
+| `inventory.item.read` | O |
+| `inventory.request.approve` | O |
+| `inventory.request.approve_any` | O |
+| `inventory.request.create` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.approve` | O |
+| `inventory.stock.move` | O |
 | `leave.balance.adjust` | O |
 | `leave.balance.read` | O |
 | `leave.request.approve` | O |
@@ -397,6 +538,28 @@ Everything except technical settings such as mail, branding and security.
 | `payroll.run.review` | O |
 | `payroll.settings.manage` | O |
 | `payroll.structure.manage` | O |
+| `procurement.requisition.approve` | O |
+| `procurement.requisition.approve_any` | O |
+| `procurement.requisition.approve_director` | O |
+| `procurement.requisition.approve_finance` | O |
+| `procurement.requisition.create` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.manage` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
+| `procurement.supplier.rate` | O |
+| `projects.project.create` | O |
+| `projects.project.read` | O |
+| `projects.rate.manage` | O |
+| `projects.settings.manage` | O |
+| `projects.time.approve` | O |
+| `projects.time.approve_any` | O |
+| `projects.time.log` | O |
+| `support.report.read` | O |
+| `support.settings.manage` | O |
+| `support.ticket.create` | O |
+| `support.ticket.read` | O |
+| `support.ticket.work` | O |
 
 ### Auditor
 
@@ -418,6 +581,8 @@ Reads everything, including the audit log. Changes nothing.
 | `finance.sales.read` | O |
 | `finance.supplier.read` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
+| `fleet.vehicle.read` | O |
 | `hr.employee.banking.read` | O |
 | `hr.employee.compensation.read` | O |
 | `hr.employee.personal.read` | O |
@@ -425,6 +590,8 @@ Reads everything, including the audit log. Changes nothing.
 | `hr.employee.sensitive.read` | O |
 | `hr.employee.statutory.read` | O |
 | `identity.user.read` | O |
+| `inventory.item.read` | O |
+| `inventory.request.read` | O |
 | `leave.balance.read` | O |
 | `leave.request.read` | O |
 | `org.structure.read` | O |
@@ -433,6 +600,11 @@ Reads everything, including the audit log. Changes nothing.
 | `payroll.pay.read` | O |
 | `payroll.payslip.read` | O |
 | `payroll.run.read` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.read` | O |
+| `projects.project.read` | O |
+| `support.report.read` | O |
+| `support.ticket.read` | O |
 
 ### Employee
 
@@ -440,12 +612,15 @@ Self-service: their own profile, requests and payslips.
 
 | Permission | Scope |
 |---|---|
+| `assistant.policy.ask` | S |
 | `attendance.clock.use` | S |
 | `attendance.correction.request` | S |
 | `attendance.photo.view` | S |
 | `attendance.record.read` | S |
+| `chat.conversation.use` | S |
 | `expenses.claim.create` | S |
 | `expenses.claim.read` | S |
+| `fleet.vehicle.use` | S |
 | `hr.employee.banking.read` | S |
 | `hr.employee.compensation.read` | S |
 | `hr.employee.personal.read` | S |
@@ -454,6 +629,8 @@ Self-service: their own profile, requests and payslips.
 | `hr.employee.sensitive.read` | S |
 | `hr.employee.statutory.read` | S |
 | `hr.profile.request_change` | S |
+| `inventory.request.create` | S |
+| `inventory.request.read` | S |
 | `leave.balance.read` | S |
 | `leave.request.create` | S |
 | `leave.request.read` | S |
@@ -462,6 +639,11 @@ Self-service: their own profile, requests and payslips.
 | `payroll.pay.read` | S |
 | `payroll.payslip.read` | S |
 | `payroll.relief.declare` | S |
+| `procurement.requisition.create` | S |
+| `procurement.requisition.read` | S |
+| `projects.time.log` | S |
+| `support.ticket.create` | S |
+| `support.ticket.read` | S |
 
 ### Line Manager
 
@@ -469,14 +651,20 @@ Approves their team's requests and sees their team.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | T |
 | `attendance.record.approve` | T |
 | `attendance.record.read` | T |
 | `expenses.claim.approve` | T |
 | `expenses.claim.read` | T |
 | `hr.employee.personal.read` | T |
+| `inventory.request.approve` | T |
+| `inventory.request.read` | T |
 | `leave.balance.read` | T |
 | `leave.request.approve` | T |
 | `leave.request.read` | T |
+| `procurement.requisition.approve` | T |
+| `procurement.requisition.read` | T |
+| `projects.time.approve` | O |
 
 ### HR Officer
 
@@ -484,6 +672,8 @@ Day-to-day HR records and requests.
 
 | Permission | Scope |
 |---|---|
+| `assistant.hiring.draft` | O |
+| `assistant.policy.manage` | O |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
 | `attendance.record.approve` | O |
@@ -514,6 +704,9 @@ All HR records, including sensitive ones.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | O |
+| `assistant.hiring.draft` | O |
+| `assistant.policy.manage` | O |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
 | `attendance.record.approve` | O |
@@ -602,6 +795,7 @@ Day-to-day accounting.
 | `finance.supplier.manage` | O |
 | `finance.supplier.read` | O |
 | `finance.tax.read` | O |
+| `inventory.item.read` | O |
 | `payroll.loan.read` | O |
 | `payroll.remittance.export` | O |
 | `payroll.run.pay` | O |
@@ -648,6 +842,8 @@ Approves and posts finance documents.
 | `finance.supplier.read` | O |
 | `finance.tax.manage` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
+| `inventory.item.read` | O |
 | `payroll.certificate.read` | O |
 | `payroll.loan.approve` | O |
 | `payroll.loan.read` | O |
@@ -657,6 +853,13 @@ Approves and posts finance documents.
 | `payroll.run.read` | O |
 | `payroll.run.review` | O |
 | `payroll.settings.manage` | O |
+| `procurement.requisition.approve_finance` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
+| `projects.project.read` | O |
+| `projects.rate.manage` | O |
+| `projects.settings.manage` | O |
 
 ### Expense Approver
 
@@ -680,25 +883,88 @@ Pays out approved expense claims.
 
 Receives, issues and counts stock.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `inventory.item.read` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.move` | O |
+
+### Inventory Manager
+
+Keeps items and warehouses, and approves stock adjustments and counts.
+
+| Permission | Scope |
+|---|---|
+| `inventory.item.manage` | O |
+| `inventory.item.read` | O |
+| `inventory.request.approve_any` | O |
+| `inventory.request.read` | O |
+| `inventory.stock.approve` | O |
+| `inventory.stock.move` | O |
 
 ### Procurement Officer
 
 Requisitions, RFQs and purchase orders.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `finance.purchase.create` | O |
+| `finance.purchase.read` | O |
+| `finance.supplier.read` | O |
+| `inventory.item.read` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.manage` | O |
+| `procurement.rfq.read` | O |
+| `procurement.supplier.rate` | O |
+
+### Director
+
+Approves the largest requisitions and steps in when there's no line manager.
+
+| Permission | Scope |
+|---|---|
+| `fleet.cost.read` | O |
+| `procurement.requisition.approve_any` | O |
+| `procurement.requisition.approve_director` | O |
+| `procurement.requisition.read` | O |
+| `procurement.rfq.read` | O |
+| `procurement.settings.manage` | O |
+| `projects.project.read` | O |
+| `projects.settings.manage` | O |
+| `projects.time.approve_any` | O |
+
+### Project Manager
+
+Sets up projects, manages the ones they lead and approves their team's time.
+
+| Permission | Scope |
+|---|---|
+| `finance.customer.read` | O |
+| `projects.project.create` | O |
+| `projects.time.approve` | O |
 
 ### Support Agent
 
 Works the support ticket queue.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `assistant.ticket.suggest` | O |
+| `finance.customer.read` | O |
+| `support.report.read` | O |
+| `support.ticket.read` | O |
+| `support.ticket.work` | O |
 
 ### Fleet Manager
 
 Vehicles, drivers, fuel and maintenance.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `fleet.cost.read` | O |
+| `fleet.vehicle.manage` | O |
+| `fleet.vehicle.read` | O |
+| `fleet.vehicle.use` | O |
 
 ## Separation of duties
 
@@ -723,5 +989,14 @@ _No grants yet: added by the phase that delivers its module._
 | `finance.payment_four_eyes` | `finance.payment.approve` | creator_is_actor | Someone else approves a supplier payment you prepared. |
 | `finance.bank_four_eyes` | `finance.bank.approve` | creator_is_actor | Someone else approves a reconciliation or transfer you prepared. |
 | `finance.asset_four_eyes` | `finance.asset.approve` | creator_is_actor | Someone else posts a depreciation run or approves an asset change you prepared. |
+| `inventory.adjust_four_eyes` | `inventory.stock.approve` | creator_is_actor | Someone else posts a stock adjustment or count you recorded. |
+| `inventory.no_self_approve` | `inventory.request.approve` | owner_is_actor | You can't approve your own material request. |
+| `inventory.no_self_approve_any` | `inventory.request.approve_any` | owner_is_actor | You can't approve your own material request. |
+| `procurement.no_self_approve` | `procurement.requisition.approve` | owner_is_actor | You can't approve your own requisition. |
+| `procurement.no_self_approve_any` | `procurement.requisition.approve_any` | owner_is_actor | You can't approve your own requisition. |
+| `procurement.no_self_approve_finance` | `procurement.requisition.approve_finance` | owner_is_actor | You can't approve your own requisition. |
+| `procurement.no_self_approve_director` | `procurement.requisition.approve_director` | owner_is_actor | You can't approve your own requisition. |
+| `projects.no_self_approve` | `projects.time.approve` | owner_is_actor | You can't approve your own time. |
+| `projects.no_self_approve_any` | `projects.time.approve_any` | owner_is_actor | You can't approve your own time. |
 
 Also enforced in app/authz/service.py: nobody can grant (to a role, a person or a delegate) a permission they don't hold themselves, or more widely than they hold it. Delegations last at most the configured number of days (default 90) and can't include `authz.*` or `system.*` permissions.

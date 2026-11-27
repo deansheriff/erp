@@ -1,0 +1,5 @@
+Hello {{ name }},
+
+{% if kind == "breached" %}{{ number }} ({{ title }}, {{ priority }}) has passed its resolution target at {{ organisation }}.{% else %}{{ number }} ({{ title }}, {{ priority }}) is close to its resolution target at {{ organisation }}: {{ left }} of business time left.{% endif %}
+
+You get this because you {{ "lead the team" if kind == "breached" else "are working the ticket" }}. Each alert is sent once per ticket.

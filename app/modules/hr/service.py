@@ -317,6 +317,18 @@ def page_in_scope(
     return rows, pages
 
 
+def person_in_scope(
+    db: Session, actor: Actor, permission: str, employee_id: uuid.UUID
+) -> Employee | None:
+    """The person if they're within the actor's scope of `permission`."""
+    return db.scalars(
+        select(Employee).where(
+            Employee.id == employee_id,
+            engine.scope_filter(db, actor.user_id, permission, Employee),
+        )
+    ).one_or_none()
+
+
 def branches_of(db: Session, employee_ids: list[uuid.UUID]) -> dict[uuid.UUID, uuid.UUID | None]:
     """Each person's branch (for clocking rules)."""
     if not employee_ids:

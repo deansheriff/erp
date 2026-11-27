@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"lime":"#C5F04A","on-surface":"#1a1c1f","error-container":"#ffdad6","secondary-container":"#c4ef49","primary-container":"#5a4bdb","on-tertiary-container":"#ffd7c1","ink-3":"#626280","surface-container":"#ededf1","inverse-on-surface":"#f0f0f4","destructive":"#C42836","on-error-container":"#93000a","on-secondary-fixed-variant":"#3b4d00","success-bg":"#DDF7E8","inverse-surface":"#2e3034","on-iris":"#FFFFFF","on-primary-container":"#e0dbff","info-bg":"#DFEBFF","danger-bg":"#FFE4E6","surface-variant":"#e2e2e6","surface-bright":"#f9f9fd","tertiary":"#7a3700","surface-container-highest":"#e2e2e6","on-primary":"#ffffff","surface-sunken":"#EFEFF6","background":"#f9f9fd","on-secondary":"#ffffff","secondary-fixed":"#c7f24c","on-error":"#ffffff","on-background":"#1a1c1f","on-tertiary":"#ffffff","danger-text":"#B4232F","canvas":"#F6F6FA","error":"#ba1a1a","warning-bg":"#FFF1D6","secondary":"#4f6600","primary-fixed":"#e4dfff","on-primary-fixed":"#140067","on-tertiary-fixed":"#321300","primary":"#412ec2","surface-dim":"#d9dade","surface-container-lowest":"#ffffff","ink":"#16162A","line":"#E4E4EE","tertiary-fixed-dim":"#ffb68b","surface":"#FFFFFF","surface-container-high":"#e8e8ec","warning-text":"#8A4B00","secondary-fixed-dim":"#acd530","on-secondary-container":"#536b00","surface-container-low":"#f3f3f7","info-text":"#1D55B8","surface-raised":"#FFFFFF","tertiary-fixed":"#ffdbc8","tertiary-container":"#9f4a00","surface-tint":"#5646d7","outline":"#787586","line-strong":"#8B8BA6","inverse-primary":"#c5c0ff","lime-ink":"#4D7A0A","iris-hover":"#4A3CC4","ink-2":"#4B4B66","success-text":"#0F6B3E","iris-tint":"#EEECFD","on-surface-variant":"#474554","primary-fixed-dim":"#c5c0ff","on-tertiary-fixed-variant":"#743400","iris":"#5A4BDB","on-secondary-fixed":"#161f00","outline-variant":"#c8c4d7","on-primary-fixed-variant":"#3d28be"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-xl":"2rem","margin":"2rem","space-2xl":"3rem","space-3xl":"4rem","space-md":"1rem","space-xs":"0.25rem","gutter":"1.5rem","space-lg":"1.5rem","space-sm":"0.5rem"},fontFamily:{"h3":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"label":["Inter"],"h2":["Plus Jakarta Sans"],"overline":["Inter"],"body":["Inter"],"h1":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"],"body-sm":["Inter"]},fontSize:{"h3":["16px",{"lineHeight":"24px","letterSpacing":"-0.015em","fontWeight":"600"}],"display":["32px",{"lineHeight":"40px","letterSpacing":"-0.015em","fontWeight":"700"}],"label":["14px",{"lineHeight":"20px","fontWeight":"500"}],"h2":["18px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"overline":["12px",{"lineHeight":"16px","letterSpacing":"0.06em","fontWeight":"600"}],"body":["16px",{"lineHeight":"24px","fontWeight":"400"}],"h1":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"stat":["30px",{"lineHeight":"36px","fontWeight":"700"}],"body-sm":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}};</script></head><body class="bg-canvas font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between bg-surface/60 backdrop-blur-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-tertiary-container flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-tertiary text-[20px]">hub</span></div><div class="flex flex-col"><span class="font-h3 text-h3 text-ink leading-tight">Kxmeleon</span><span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Adeyemi Holdings</span></div></div><span class="material-symbols-outlined text-ink-3 cursor-pointer hover:text-ink transition-colors">unfold_more</span></div><div class="px-space-md py-space-sm"><span class="px-space-sm font-overline text-overline text-ink-3 uppercase tracking-wider">Enterprise Suite</span></div><nav class="flex flex-col gap-0.5 px-space-md" data-active-classes="bg-tertiary-fixed text-on-tertiary-fixed font-semibold rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-label text-label">Home</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="hr-and-people" href="#"><span class="material-symbols-outlined text-[20px]">groups</span><span class="font-label text-label">HR &amp; People</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-label text-label">Attendance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payroll</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-label text-label">Finance</span></a><div class="flex flex-col bg-warning-bg/40 rounded-xl p-1"><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-tertiary font-semibold hover:bg-warning-bg transition-colors" data-path="inventory" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-tertiary text-[20px]">inventory_2</span><span class="font-label text-label">Inventory</span></div><span class="material-symbols-outlined text-tertiary text-[18px]">expand_more</span></a><div class="flex flex-col pl-7 pr-1 pt-1 pb-1 gap-1"><a class="px-space-md py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:text-tertiary hover:bg-surface-container-high/60 transition-colors" data-path="inventory-overview" href="#">Overview</a><a class="px-space-md py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:text-tertiary hover:bg-surface-container-high/60 transition-colors" data-path="items-and-stock" href="#">Items &amp; Stock</a><a class="px-space-md py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:text-tertiary hover:bg-surface-container-high/60 transition-colors" data-path="stock-adjustments" href="#">Stock adjustments</a><a class="px-space-md py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:text-tertiary hover:bg-surface-container-high/60 transition-colors" data-path="transfers" href="#">Transfers</a><a class="px-space-md py-1.5 rounded-lg font-body-sm text-body-sm text-ink-2 hover:text-tertiary hover:bg-surface-container-high/60 transition-colors" data-path="purchase-receipts" href="#">Purchase receipts</a><a aria-current="page" class="px-space-md py-1.5 transition-colors flex items-center justify-between bg-tertiary-fixed text-on-tertiary-fixed font-semibold rounded-lg shadow-sm" data-path="inventory-setup" href="#"><span>Setup</span><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span></a></div></div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span class="font-label text-label">Administration</span></a></nav></div><div class="flex flex-col gap-1 p-space-md bg-surface-container-low"><div class="flex flex-col gap-0.5 mb-2"><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="help-and-documentation" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span><span class="font-label text-label">Help &amp; documentation</span></a><a class="flex items-center gap-space-sm px-space-md py-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label text-label">Settings</span></a></div><div class="flex items-center gap-space-sm p-space-sm rounded-xl bg-surface shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col min-w-0 flex-1"><span class="font-label text-label text-ink font-semibold truncate">Fatima Bello</span><span class="font-overline text-overline text-ink-3 truncate">Inventory Admin</span></div><button class="text-ink-3 hover:text-ink" type="button"><span class="material-symbols-outlined text-[18px]">more_vert</span></button></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-space-sm"><nav class="flex items-center gap-2 font-label text-label text-ink-3"><a class="hover:text-ink transition-colors" data-path="inventory" href="#">Inventory</a><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><a class="hover:text-ink transition-colors" data-path="inventory-setup" href="#">Setup</a><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-ink font-semibold">Inventory setup</span></nav></div><div class="flex items-center gap-space-lg"><div class="relative flex items-center w-96"><span class="material-symbols-outlined absolute left-3 text-ink-3 text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 rounded-lg bg-surface-sunken text-ink placeholder-ink-3 font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" placeholder="Search inventory, items, warehouses..." type="text"/><div class="absolute right-2 flex items-center px-1.5 py-0.5 bg-surface rounded text-[11px] font-label text-ink-3 border border-line shadow-sm pointer-events-none"><kbd>Ctrl K</kbd></div></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-label transition-colors" type="button"><span class="material-symbols-outlined text-[18px] text-tertiary">task_alt</span><span>Approvals</span><span class="px-1.5 py-0.2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[11px] font-semibold">3</span></button><button class="relative p-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-lime border-2 border-surface"></span></button><button class="p-2 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="h-6 w-px bg-line"></div><div class="flex items-center gap-space-sm pl-1"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden xl:flex flex-col"><span class="font-label text-label text-ink leading-tight font-medium">Fatima Bello</span><span class="font-overline text-overline text-ink-3">Finance &amp; Operations</span></div></div></div></div></header><main class="relative pt-16 bg-canvas w-full px-8"><div class="flex flex-col w-full pb-16">
+<!-- Dynamic Ambient Backing Hue (Inventory amber-tertiary accent glow) -->
+<div class="relative w-full">
+<div class="absolute -top-10 left-1/4 w-96 h-96 bg-tertiary-fixed/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-48 right-10 w-80 h-80 bg-iris-tint/60 rounded-full blur-3xl pointer-events-none -z-10"></div>
+</div>
+<!-- Top View Title Bar & Global Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg pt-6 pb-8">
+<div class="flex flex-col gap-1 max-w-2xl">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline uppercase tracking-wider">
+          Module Configuration
+        </span>
+<span class="text-ink-3 font-overline text-overline">•</span>
+<span class="text-ink-3 font-overline text-overline">Rev 4.8.2</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Inventory setup</h1>
+<p class="font-body-sm text-body-sm text-ink-2">
+        Configure physical storage locations, general ledger account mappings by category, and standardized units of measure.
+      </p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="h-11 px-4 rounded-xl bg-surface hover:bg-surface-container-high text-ink font-label text-label shadow-sm transition-all flex items-center gap-2 group" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3 group-hover:text-ink transition-colors">history</span>
+<span>Audit log</span>
+</button>
+<button class="h-11 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label shadow-sm transition-all flex items-center gap-2 group" id="saveAllBtn" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-iris">done_all</span>
+<span>Save all changes</span>
+</button>
+</div>
+</div>
+<!-- SECTION 1: Warehouses & Storage Locations -->
+<section class="flex flex-col gap-6 mb-12">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<h2 class="font-h2 text-h2 text-ink">Warehouses &amp; Storage Locations</h2>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">Manage warehouse physical footprints, zone allocations, active statuses, and storage bin limits.</p>
+</div>
+<button class="h-10 px-4 rounded-xl bg-surface-container-high hover:bg-surface-container text-ink font-label text-label transition-colors flex items-center gap-2 shrink-0" id="toggleWarehouseDrawer" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">add_business</span>
+<span>+ Add warehouse</span>
+</button>
+</div>
+<!-- 3 Warehouse Cards Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Card 1: Lagos Main Store -->
+<div class="bg-surface rounded-2xl p-6 shadow-sm flex flex-col justify-between transition-all duration-200 hover:shadow-md relative overflow-hidden group">
+<div class="absolute top-0 left-0 right-0 h-1 bg-tertiary"></div>
+<div class="flex flex-col gap-4">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1 flex-wrap">
+<span class="font-overline text-overline font-mono px-2 py-0.5 rounded bg-surface-sunken text-ink">LOS-01</span>
+<span class="px-2 py-0.5 rounded-full bg-lime text-lime-ink font-overline text-overline">Primary Hub</span>
+</div>
+<h3 class="font-h3 text-h3 text-ink truncate">Lagos main store (LOS)</h3>
+</div>
+<!-- Custom Switch Toggle -->
+<label aria-label="Toggle Lagos Store status" class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-iris"></div>
+</label>
+</div>
+<!-- Address -->
+<div class="flex items-start gap-2 text-ink-2 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px] text-ink-3 shrink-0 mt-0.5">location_on</span>
+<span class="leading-snug">14 Adeola Odeku St, Victoria Island, Lagos</span>
+</div>
+<!-- Visual Mini Metric / Utilization -->
+<div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Capacity Utilization</span>
+<span class="font-h3 text-h3 text-ink">85 items <span class="font-body-sm text-body-sm text-ink-3 font-normal">/ 120 cap</span></span>
+</div>
+<div class="w-16 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[71%] h-full bg-tertiary rounded-full"></div>
+</div>
+</div>
+<!-- Bins Section -->
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between">
+<span class="font-label text-label text-ink">Storage Bins</span>
+<span class="font-overline text-overline text-ink-3">3 configured</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer">
+<span class="font-label text-label text-ink">Bin A1</span>
+<span class="px-1.5 py-0.2 rounded-md bg-surface text-ink-3 font-mono text-[11px]">42 items</span>
+</div>
+<div class="px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer">
+<span class="font-label text-label text-ink">Bin A2</span>
+<span class="px-1.5 py-0.2 rounded-md bg-surface text-ink-3 font-mono text-[11px]">28 items</span>
+</div>
+<div class="px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer">
+<span class="font-label text-label text-ink">Bin B1</span>
+<span class="px-1.5 py-0.2 rounded-md bg-surface text-ink-3 font-mono text-[11px]">15 items</span>
+</div>
+<button class="px-2.5 py-1.5 rounded-lg border border-dashed border-line-strong hover:bg-surface-container-low text-ink-2 font-label text-label flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add bin</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-6 pt-4 flex items-center justify-between">
+<span class="inline-flex items-center gap-1 font-overline text-overline text-secondary font-semibold">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>Default fulfillment</span>
+</span>
+<button class="px-3 py-1.5 rounded-lg hover:bg-surface-container-high text-iris font-label text-label transition-colors" type="button">
+            Edit warehouse
+          </button>
+</div>
+</div>
+<!-- Card 2: Abuja Depot -->
+<div class="bg-surface rounded-2xl p-6 shadow-sm flex flex-col justify-between transition-all duration-200 hover:shadow-md relative overflow-hidden group">
+<div class="absolute top-0 left-0 right-0 h-1 bg-surface-container-highest"></div>
+<div class="flex flex-col gap-4">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-overline text-overline font-mono px-2 py-0.5 rounded bg-surface-sunken text-ink">ABJ-02</span>
+<span class="px-2 py-0.5 rounded-full bg-info-bg text-info-text font-overline text-overline">Regional Depot</span>
+</div>
+<h3 class="font-h3 text-h3 text-ink truncate">Abuja depot (ABJ)</h3>
+</div>
+<label aria-label="Toggle Abuja Store status" class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-iris"></div>
+</label>
+</div>
+<!-- Address -->
+<div class="flex items-start gap-2 text-ink-2 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px] text-ink-3 shrink-0 mt-0.5">location_on</span>
+<span class="leading-snug">Plot 412 Constitution Avenue, CBD, Abuja</span>
+</div>
+<!-- Visual Mini Metric / Utilization -->
+<div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Capacity Utilization</span>
+<span class="font-h3 text-h3 text-ink">44 items <span class="font-body-sm text-body-sm text-ink-3 font-normal">/ 80 cap</span></span>
+</div>
+<div class="w-16 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[55%] h-full bg-iris rounded-full"></div>
+</div>
+</div>
+<!-- Bins Section -->
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between">
+<span class="font-label text-label text-ink">Storage Bins</span>
+<span class="font-overline text-overline text-ink-3">2 configured</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer">
+<span class="font-label text-label text-ink">Bin North-1</span>
+<span class="px-1.5 py-0.2 rounded-md bg-surface text-ink-3 font-mono text-[11px]">31 items</span>
+</div>
+<div class="px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer">
+<span class="font-label text-label text-ink">Bin North-2</span>
+<span class="px-1.5 py-0.2 rounded-md bg-surface text-ink-3 font-mono text-[11px]">13 items</span>
+</div>
+<button class="px-2.5 py-1.5 rounded-lg border border-dashed border-line-strong hover:bg-surface-container-low text-ink-2 font-label text-label flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add bin</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-6 pt-4 flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3">Transit ETA: 24h</span>
+<button class="px-3 py-1.5 rounded-lg hover:bg-surface-container-high text-iris font-label text-label transition-colors" type="button">
+            Edit warehouse
+          </button>
+</div>
+</div>
+<!-- Card 3: Port Harcourt Depot -->
+<div class="bg-surface rounded-2xl p-6 shadow-sm flex flex-col justify-between transition-all duration-200 hover:shadow-md relative overflow-hidden group">
+<div class="absolute top-0 left-0 right-0 h-1 bg-surface-container-highest"></div>
+<div class="flex flex-col gap-4">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-overline text-overline font-mono px-2 py-0.5 rounded bg-surface-sunken text-ink">PHC-03</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-sunken text-ink-2 font-overline text-overline">Coastal Depot</span>
+</div>
+<h3 class="font-h3 text-h3 text-ink truncate">Port Harcourt depot (PHC)</h3>
+</div>
+<label aria-label="Toggle Port Harcourt Store status" class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-iris"></div>
+</label>
+</div>
+<!-- Address -->
+<div class="flex items-start gap-2 text-ink-2 font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px] text-ink-3 shrink-0 mt-0.5">location_on</span>
+<span class="leading-snug truncate">Trans-Amadi Ind. Layout, Phase 2, PHC</span>
+</div>
+<!-- Visual Mini Metric / Utilization -->
+<div class="p-3 bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-overline text-overline text-ink-3">Capacity Utilization</span>
+<span class="font-h3 text-h3 text-ink">18 items <span class="font-body-sm text-body-sm text-ink-3 font-normal">/ 60 cap</span></span>
+</div>
+<div class="w-16 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[30%] h-full bg-secondary rounded-full"></div>
+</div>
+</div>
+<!-- Bins Section -->
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between">
+<span class="font-label text-label text-ink">Storage Bins</span>
+<span class="font-overline text-overline text-ink-3">2 configured</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer">
+<span class="font-label text-label text-ink">Bin Wharf-A</span>
+<span class="px-1.5 py-0.2 rounded-md bg-surface text-ink-3 font-mono text-[11px]">10 items</span>
+</div>
+<div class="px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer">
+<span class="font-label text-label text-ink">Bin Yard-01</span>
+<span class="px-1.5 py-0.2 rounded-md bg-surface text-ink-3 font-mono text-[11px]">8 items</span>
+</div>
+<button class="px-2.5 py-1.5 rounded-lg border border-dashed border-line-strong hover:bg-surface-container-low text-ink-2 font-label text-label flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add bin</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-6 pt-4 flex items-center justify-between">
+<span class="font-overline text-overline text-ink-3">Transit ETA: 48h</span>
+<button class="px-3 py-1.5 rounded-lg hover:bg-surface-container-high text-iris font-label text-label transition-colors" type="button">
+            Edit warehouse
+          </button>
+</div>
+</div>
+</div>
+<!-- Inline Add Warehouse Drawer/Card (Collapsible/Interactive) -->
+<div class="bg-surface rounded-2xl p-6 shadow-md transition-all duration-300" id="warehouseDrawer">
+<div class="flex items-center justify-between pb-4 mb-5 border-b border-line">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-[18px]">add_location_alt</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-h3 text-h3 text-ink">New warehouse location</h3>
+<span class="font-overline text-overline text-ink-3">Add regional hubs or bonded storage facilities</span>
+</div>
+</div>
+<button class="p-1 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-container-high transition-colors" id="closeWarehouseDrawer" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-5">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink" for="wh-code">Warehouse code</label>
+<input class="h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-mono text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="wh-code" placeholder="e.g. KAN-04" type="text" value="KAN-04"/>
+</div>
+<div class="flex flex-col gap-1.5 md:col-span-2">
+<label class="font-label text-label text-ink" for="wh-name">Warehouse name</label>
+<input class="h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="wh-name" placeholder="Enter warehouse name" type="text" value="Kano Regional Store"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink" for="wh-transit">Lead time (days)</label>
+<input class="h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-mono text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="wh-transit" type="number" value="3"/>
+</div>
+<div class="flex flex-col gap-1.5 md:col-span-3">
+<label class="font-label text-label text-ink" for="wh-address">Physical address</label>
+<input class="h-11 px-3.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="wh-address" placeholder="Street address, city, state" type="text" value="Bompai Industrial Area, Club Road, Kano State"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink" for="wh-manager">Assigned manager</label>
+<select class="h-11 px-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="wh-manager">
+<option>Aliyu Mohammed</option>
+<option>Fatima Bello</option>
+<option>Chidi Okafor</option>
+</select>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="h-10 px-4 rounded-xl hover:bg-surface-container-high text-ink font-label text-label transition-colors" id="cancelWarehouseDrawer" type="button">
+          Cancel
+        </button>
+<button class="h-10 px-5 rounded-xl bg-tertiary hover:bg-tertiary-container text-on-tertiary font-label text-label transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span>Save warehouse</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Item Categories & GL Mappings (7:5 Split) -->
+<section class="flex flex-col gap-6 mb-12">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-iris"></span>
+<h2 class="font-h2 text-h2 text-ink">Item categories &amp; General Ledger mappings</h2>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">Link stock movements to automatic double-entry posting rules across inventory valuation accounts.</p>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+<!-- Left Column: Categories Data Table (7 Cols) -->
+<div class="xl:col-span-7 bg-surface rounded-2xl shadow-sm overflow-hidden flex flex-col">
+<div class="p-4 px-5 bg-surface-container-low flex items-center justify-between border-b border-line">
+<div class="flex items-center gap-2">
+<span class="font-h3 text-h3 text-ink">Configured Categories</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-ink font-overline text-overline">4 active</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-ink-3 text-[14px]">Click a category to inspect &amp; map</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3 px-4">Category &amp; Code</th>
+<th class="py-3 px-3">Inventory Asset</th>
+<th class="py-3 px-3">COGS / Sales</th>
+<th class="py-3 px-3">Adjustments</th>
+<th class="py-3 px-3 text-center">Status</th>
+<th class="py-3 px-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line text-body-sm font-body-sm">
+<!-- Selected Row: Office Equipment -->
+<tr class="bg-iris-tint/40 hover:bg-iris-tint/60 transition-colors cursor-pointer group">
+<td class="py-3.5 px-4 font-label text-label text-ink">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-iris"></span>
+<div class="flex flex-col">
+<span class="font-semibold text-ink">Office Equipment</span>
+<span class="font-mono text-ink-3 text-[12px]">CAT-001 · EQP</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface px-1.5 py-0.5 rounded">1200</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface px-1.5 py-0.5 rounded">5100</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface px-1.5 py-0.5 rounded">5200</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="text-iris font-label text-label font-semibold">Editing</span>
+</td>
+</tr>
+<!-- Row 2: Stationery & Consumables -->
+<tr class="hover:bg-surface-sunken transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label text-label text-ink">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+<div class="flex flex-col">
+<span class="text-ink">Stationery &amp; Consumables</span>
+<span class="font-mono text-ink-3 text-[12px]">CAT-002 · CON</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">1210</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">5100</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">5200</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-ink-3 hover:text-iris font-label text-label transition-colors" type="button">Edit</button>
+</td>
+</tr>
+<!-- Row 3: IT & Server Hardware -->
+<tr class="hover:bg-surface-sunken transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label text-label text-ink">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+<div class="flex flex-col">
+<span class="text-ink">IT &amp; Server Hardware</span>
+<span class="font-mono text-ink-3 text-[12px]">CAT-003 · IT</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">1200</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">5110</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">5200</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-ink-3 hover:text-iris font-label text-label transition-colors" type="button">Edit</button>
+</td>
+</tr>
+<!-- Row 4: Packaging & Safety -->
+<tr class="hover:bg-surface-sunken transition-colors cursor-pointer">
+<td class="py-3.5 px-4 font-label text-label text-ink">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-transparent"></span>
+<div class="flex flex-col">
+<span class="text-ink">Packaging &amp; Safety</span>
+<span class="font-mono text-ink-3 text-[12px]">CAT-004 · PKG</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">1220</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">5120</span>
+</td>
+<td class="py-3.5 px-3">
+<span class="font-mono text-ink text-[12px] bg-surface-sunken px-1.5 py-0.5 rounded">5210</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-ink-3 hover:text-iris font-label text-label transition-colors" type="button">Edit</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 bg-surface-container-low/50 flex items-center justify-between text-ink-3 font-overline text-overline px-4">
+<span>Showing 4 categories</span>
+<button class="text-iris hover:underline font-label text-label flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>Add new category</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Edit Category Form Card (5 Cols) -->
+<div class="xl:col-span-5 bg-surface rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+<div class="flex items-center justify-between pb-3 border-b border-line">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-mono text-[11px] font-semibold">CAT-001</span>
+<h3 class="font-h3 text-h3 text-ink">Edit category</h3>
+</div>
+<span class="font-body-sm text-body-sm text-ink-3">Mapping general ledger journals</span>
+</div>
+<span class="w-8 h-8 rounded-full bg-surface-sunken flex items-center justify-center text-ink-2">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink" for="cat-name">Category name</label>
+<input class="h-10 px-3.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="cat-name" type="text" value="Office Equipment"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink" for="cat-code">Category code</label>
+<input class="h-10 px-3.5 rounded-xl bg-surface-sunken text-ink font-mono text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="cat-code" type="text" value="EQP-01"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink" for="cat-desc">Description</label>
+<input class="h-10 px-3.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="cat-desc" type="text" value="Fixed and mobile operational equipment, peripheral devices, and durable tools."/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label text-label text-ink" for="cat-val">Valuation method</label>
+<select class="h-10 px-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="cat-val">
+<option selected="">FIFO (First-In, First-Out)</option>
+<option>Weighted Average Cost (WAC)</option>
+<option>Standard Costing</option>
+</select>
+</div>
+<!-- GL Account Mappings Form Block -->
+<div class="p-4 bg-surface-container-low rounded-xl flex flex-col gap-3">
+<span class="font-overline text-overline uppercase tracking-wider text-ink-3">GL Account Postings</span>
+<div class="flex flex-col gap-1">
+<label class="font-body-sm text-body-sm text-ink-2" for="gl-asset">Inventory Asset Account</label>
+<select class="h-9 px-2.5 rounded-lg bg-surface text-ink font-mono text-[13px] border-0 focus:ring-2 focus:ring-iris/20" id="gl-asset">
+<option selected="">1200 · Merchandise &amp; Equipment Inventory</option>
+<option>1210 · Finished Goods &amp; Consumables</option>
+<option>1220 · Packaging Materials Stock</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-body-sm text-body-sm text-ink-2" for="gl-cogs">Cost of Goods Sold (COGS)</label>
+<select class="h-9 px-2.5 rounded-lg bg-surface text-ink font-mono text-[13px] border-0 focus:ring-2 focus:ring-iris/20" id="gl-cogs">
+<option selected="">5100 · Direct Cost of Sales</option>
+<option>5110 · IT Equipment Provision Cost</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-body-sm text-body-sm text-ink-2" for="gl-adj">Inventory Adjustments / Variances</label>
+<select class="h-9 px-2.5 rounded-lg bg-surface text-ink font-mono text-[13px] border-0 focus:ring-2 focus:ring-iris/20" id="gl-adj">
+<option selected="">5200 · Inventory Variances &amp; Stocktake Write-offs</option>
+<option>5210 · Packaging Spoilage &amp; Shrinkage</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-body-sm text-body-sm text-ink-2" for="gl-internal">Issues to Staff / Internal Use</label>
+<select class="h-9 px-2.5 rounded-lg bg-surface text-ink font-mono text-[13px] border-0 focus:ring-2 focus:ring-iris/20" id="gl-internal">
+<option selected="">6300 · Office Supplies &amp; Consumables Expense</option>
+<option>6310 · Employee Internal Equipment Allocations</option>
+</select>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="h-10 px-4 rounded-xl hover:bg-surface-container-high text-ink font-label text-label transition-colors" type="button">
+            Cancel
+          </button>
+<button class="h-10 px-5 rounded-xl bg-iris hover:bg-iris-hover text-on-iris font-label text-label transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save category changes</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Units of Measure (UoM) -->
+<section class="flex flex-col gap-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<h2 class="font-h2 text-h2 text-ink">Units of measure (UoM)</h2>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">Standardize quantity conversions, precision scales, and discrete vs. fractional billing dimensions.</p>
+</div>
+<button class="h-10 px-4 rounded-xl bg-surface hover:bg-surface-container text-ink font-label text-label shadow-sm transition-colors flex items-center gap-2 shrink-0" id="toggleUomModal" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">straighten</span>
+<span>+ Add unit</span>
+</button>
+</div>
+<!-- UoM Clean Modern Tabular Container -->
+<div class="bg-surface rounded-2xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="py-3.5 px-6">Unit Code</th>
+<th class="py-3.5 px-4">Name &amp; Type</th>
+<th class="py-3.5 px-6">Description</th>
+<th class="py-3.5 px-4 font-mono">Base Factor</th>
+<th class="py-3.5 px-4">Decimals</th>
+<th class="py-3.5 px-4">Status</th>
+<th class="py-3.5 px-6 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line font-body-sm text-body-sm">
+<!-- Row 1: EA -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<span class="font-mono text-ink font-semibold px-2 py-1 rounded bg-surface-sunken text-[13px]">EA</span>
+</td>
+<td class="py-4 px-4 font-label text-label text-ink font-medium">Each</td>
+<td class="py-4 px-6 text-ink-2">Standard unit for countable items (discrete units).</td>
+<td class="py-4 px-4 font-mono text-ink text-[13px]">1.000 EA</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-ink-3 font-overline text-overline">No (Integer)</span>
+</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Edit UoM" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Conversions" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: BOX -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<span class="font-mono text-ink font-semibold px-2 py-1 rounded bg-surface-sunken text-[13px]">BOX</span>
+</td>
+<td class="py-4 px-4 font-label text-label text-ink font-medium">Box</td>
+<td class="py-4 px-6 text-ink-2">Packaged multi-pack box (e.g. 10 or 25 retail units).</td>
+<td class="py-4 px-4 font-mono text-ink text-[13px]">10.000 EA</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-ink-3 font-overline text-overline">No (Integer)</span>
+</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Edit UoM" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Conversions" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: CTN -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<span class="font-mono text-ink font-semibold px-2 py-1 rounded bg-surface-sunken text-[13px]">CTN</span>
+</td>
+<td class="py-4 px-4 font-label text-label text-ink font-medium">Carton</td>
+<td class="py-4 px-6 text-ink-2">Outer master shipper carton container.</td>
+<td class="py-4 px-4 font-mono text-ink text-[13px]">100.000 EA</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-ink-3 font-overline text-overline">No (Integer)</span>
+</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Edit UoM" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Conversions" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: KG -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<span class="font-mono text-ink font-semibold px-2 py-1 rounded bg-surface-sunken text-[13px]">KG</span>
+</td>
+<td class="py-4 px-4 font-label text-label text-ink font-medium">Kilogram</td>
+<td class="py-4 px-6 text-ink-2">Metric weight unit for bulk goods and raw material inputs.</td>
+<td class="py-4 px-4 font-mono text-ink text-[13px]">1.000 KG</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">Yes (3 d.p.)</span>
+</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Edit UoM" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Conversions" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: L -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-4 px-6">
+<span class="font-mono text-ink font-semibold px-2 py-1 rounded bg-surface-sunken text-[13px]">L</span>
+</td>
+<td class="py-4 px-4 font-label text-label text-ink font-medium">Litre</td>
+<td class="py-4 px-6 text-ink-2">Liquid volume measure for chemical and petroleum stocks.</td>
+<td class="py-4 px-4 font-mono text-ink text-[13px]">1.000 L</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-overline text-overline">Yes (2 d.p.)</span>
+</td>
+<td class="py-4 px-4">
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-overline text-overline">Active</span>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Edit UoM" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1 text-ink-3 hover:text-ink transition-colors" title="Conversions" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Add Unit Inline Modal / Popover Preview Drawer -->
+<div class="hidden p-6 bg-surface-sunken border-t border-line" id="uomModal">
+<div class="max-w-3xl mx-auto bg-surface p-5 rounded-2xl shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">add_circle</span>
+<h3 class="font-h3 text-h3 text-ink">Register new Unit of Measure</h3>
+</div>
+<button class="text-ink-3 hover:text-ink" id="closeUomModal" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+<div class="flex flex-col gap-1">
+<label class="font-label text-label text-ink" for="uom-code">Unit code</label>
+<input class="h-10 px-3 rounded-xl bg-surface-sunken text-ink font-mono text-[13px] focus:outline-none focus:ring-2 focus:ring-iris/20" id="uom-code" placeholder="e.g. MTR" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label text-label text-ink" for="uom-name">Unit name</label>
+<input class="h-10 px-3 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="uom-name" placeholder="e.g. Meter" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label text-label text-ink" for="uom-cat">Category</label>
+<select class="h-10 px-2.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="uom-cat">
+<option>Length / Linear</option>
+<option>Discrete Count</option>
+<option>Weight / Mass</option>
+<option>Volume</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label text-label text-ink" for="uom-decimals">Allow decimal fractions</label>
+<select class="h-10 px-2.5 rounded-xl bg-surface-sunken text-ink font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-iris/20" id="uom-decimals">
+<option>Yes (2 decimals)</option>
+<option>Yes (3 decimals)</option>
+<option>No (Integers only)</option>
+</select>
+</div>
+</div>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="h-9 px-4 rounded-xl hover:bg-surface-container-high text-ink font-label text-label transition-colors" id="cancelUomBtn" type="button">
+              Cancel
+            </button>
+<button class="h-9 px-5 rounded-xl bg-secondary hover:bg-on-secondary-container text-on-secondary font-label text-label transition-colors" type="button">
+              Save unit
+            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive JavaScript handling inline drawers and feedback -->
+<script>
+    (function() {
+      // Warehouse Drawer Toggle
+      const toggleWarehouseBtn = document.getElementById('toggleWarehouseDrawer');
+      const warehouseDrawer = document.getElementById('warehouseDrawer');
+      const closeWarehouseBtn = document.getElementById('closeWarehouseDrawer');
+      const cancelWarehouseBtn = document.getElementById('cancelWarehouseDrawer');
+
+      function toggleDrawer() {
+        warehouseDrawer.classList.toggle('hidden');
+      }
+
+      if (toggleWarehouseBtn && warehouseDrawer) {
+        toggleWarehouseBtn.addEventListener('click', toggleDrawer);
+      }
+      if (closeWarehouseBtn && warehouseDrawer) {
+        closeWarehouseBtn.addEventListener('click', () => warehouseDrawer.classList.add('hidden'));
+      }
+      if (cancelWarehouseBtn && warehouseDrawer) {
+        cancelWarehouseBtn.addEventListener('click', () => warehouseDrawer.classList.add('hidden'));
+      }
+
+      // UoM Modal Popover Toggle
+      const toggleUomBtn = document.getElementById('toggleUomModal');
+      const uomModal = document.getElementById('uomModal');
+      const closeUomBtn = document.getElementById('closeUomModal');
+      const cancelUomBtn = document.getElementById('cancelUomBtn');
+
+      if (toggleUomBtn && uomModal) {
+        toggleUomBtn.addEventListener('click', () => {
+          uomModal.classList.toggle('hidden');
+        });
+      }
+      if (closeUomBtn && uomModal) {
+        closeUomBtn.addEventListener('click', () => uomModal.classList.add('hidden'));
+      }
+      if (cancelUomBtn && uomModal) {
+        cancelUomBtn.addEventListener('click', () => uomModal.classList.add('hidden'));
+      }
+
+      // Save feedback simulation
+      const saveAllBtn = document.getElementById('saveAllBtn');
+      if (saveAllBtn) {
+        saveAllBtn.addEventListener('click', () => {
+          const originalText = saveAllBtn.innerHTML;
+          saveAllBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Saving...</span>';
+          setTimeout(() => {
+            saveAllBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Saved successfully</span>';
+            setTimeout(() => {
+              saveAllBtn.innerHTML = originalText;
+            }, 2000);
+          }, 800);
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>

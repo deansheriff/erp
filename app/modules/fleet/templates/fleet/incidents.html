@@ -1,0 +1,41 @@
+{# Fleet → incidents (ADR 0033): every incident for Fleet Managers, your own for everyone
+   else. Built in the design language; design: design/stitch/exports/fleet.incidents.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Vehicle incidents", "Accidents, damage and theft, and their insurance claims." if is_manager else "Incidents you've reported.") %}
+  <a href="/fleet" class="kx-btn-secondary">{{ ui.icon("plus", "sm") }} Report an incident</a>
+{% endcall %}
+
+<form method="get" class="mt-6 flex flex-wrap items-center gap-2">
+  <label class="sr-only" for="status">Status</label>
+  <select id="status" name="status" class="kx-input h-10 w-auto"><option value="">Any status</option>{% for key, label in incident_labels.items() %}<option value="{{ key }}" {% if status == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  <button type="submit" class="kx-btn-secondary">Filter</button>
+</form>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="Incidents">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[880px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Incident</th><th class="px-3 py-3 text-left font-semibold">Vehicle</th><th class="px-3 py-3 text-left font-semibold">Driver</th><th class="px-3 py-3 text-left font-semibold">Claim</th><th class="px-3 py-3 text-right font-semibold">Repair cost</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        {% set i = r.incident %}
+        <tr>
+          <td class="px-5 py-3"><a href="/fleet/incidents/{{ i.id }}" class="font-semibold text-iris font-mono">{{ i.number }}</a><span class="block text-xs text-ink-3">{{ i.occurred_at | datetime }} · {{ i.place }}</span></td>
+          <td class="px-3 py-3">{{ r.vehicle }}</td>
+          <td class="px-3 py-3">{{ r.driver or "—" }}</td>
+          <td class="px-3 py-3">{{ claim_labels[i.claim_status] }}{% if i.claim_number %}<span class="block text-xs text-ink-3">{{ i.claim_number }}</span>{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum">{% if i.repair_cost is not none %}{{ i.repair_cost | money }}{% else %}—{% endif %}</td>
+          <td class="px-5 py-3">{{ ui.badge(incident_tones[i.status], incident_labels[i.status]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("shield-check", "No incidents", "Incidents appear here once they're reported.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

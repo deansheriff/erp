@@ -5,6 +5,174 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 13: AI assistant
+- A read-only assistant (ADR 0035), off until a Super Administrator opts in.
+- **Opt-in:** choose Anthropic, OpenAI or Gemini, save an encrypted API key, and accept
+  which kinds of data may leave (policies, directory, work records, support tickets).
+  Changing either withdraws the acceptance.
+- **Features:**
+  - policy questions answered from a new policy library;
+  - job descriptions and interview questions drafted from a position;
+  - neutral appraisal evidence that never rates, within the reader's scope;
+  - ticket category and reply suggestions for agents.
+- **Checked quotes:** every answer cites exact quotes, each one checked against its
+  source; quotes that don't match are removed.
+- **Limits and audit:** 200 requests per person a month, history kept 90 days for its
+  owner only, and every request audited without its text (both limits to confirm).
+- **Providers:** Claude through the official `anthropic` SDK (structured output and the
+  refusal fallback); OpenAI and Gemini over their REST APIs. Tests use a fake provider.
+- Permissions `assistant.policy.ask`, `.policy.manage`, `.hiring.draft`,
+  `.evidence.summarise`, `.ticket.suggest` and `system.ai.manage`.
+
+### Changed — Phase 13
+- **Evidence facts:** projects, support, attendance and leave each provide facts for
+  appraisal evidence through their `service.py`. Support gains a `service.py`.
+
+### Added — Phase 12: Chat
+- Direct messages, group chats and department channels (ADR 0034). Channel membership
+  comes from the org chart, including sub-departments, and is synced every 10 minutes.
+- **Membership checks:** every action checks the actor is a current member, and anyone
+  else gets "not found". Members see the whole history, and leaving loses it.
+- **Groups:** started by any employee. Admins add, remove and promote members and
+  rename the group. When the last admin leaves, the longest-standing member takes over.
+- **Messages:**
+  - mentions by full or first name;
+  - edits within 15 minutes (to confirm);
+  - deletes by the sender, or by group admins and channel moderators (the department's
+    head, and administrators);
+  - reactions and pins by any member.
+- **Reading:** unread counts and a "New" line; "Seen by" names in direct messages and
+  groups, and a count in channels.
+- **Attachments:** up to 25 MB, members only (file purpose `chat_attachment`).
+- **Real time:** `/ws/chat` sends small notices through Redis (or an in-process broker
+  for tests and single-process development). It checks the origin and the session
+  cookie, re-checks the session every minute, and closes at once when sessions are
+  revoked.
+- **Email:** a mention or direct message still unread after 30 minutes gets one email per
+  conversation per day (to confirm). It never includes the message.
+- **Settings:** the edit window, the email delay and retention. Messages are kept
+  indefinitely unless retention is set (to confirm).
+- Permissions `chat.conversation.use` (Employee, for themselves), `chat.channel.moderate`
+  and `chat.settings.manage`.
+
+### Changed — Phase 12
+- **Files:** a purpose may add an access check (`FilePurpose.allow`), and modules can
+  delete files as the system (`delete_by_system`).
+- **Sessions:** revoking sessions tells that user's open sockets to re-check. A session
+  can also be checked without counting as activity.
+
+### Added — Phase 11f: Fleet
+- A vehicle register (`VEH-`) with papers (insurance, vehicle licence, roadworthiness),
+  an assigned driver, pool vehicles and a status (ADR 0033).
+- Drivers: employees with a licence number, class and expiry. An expired licence blocks
+  assignments and bookings.
+- Service plans by distance, time or both, and a service history.
+- Fuel logs by the driver, with a receipt photo, an odometer that can't go back, km/L,
+  and a flag below 70% of the vehicle's average (to confirm).
+- Pool vehicle bookings, approved by a Fleet Manager with an optional driver, refused when
+  they overlap or the vehicle's papers have expired.
+- Incidents (`INC-`): reported with photos, reviewed with the repair cost and insurance
+  claim, then closed.
+- Daily alerts 30 and 7 days before papers and licences expire and on the day, and when a
+  service falls due. Each goes once.
+- Cost per vehicle from the ledger: journal, bill and expense lines can name a vehicle.
+- Permissions `fleet.vehicle.read`, `.manage`, `.use` and `fleet.cost.read`; the Fleet
+  Manager role.
+
+### Added — Phase 11e: Support
+- Support teams, with a lead and agents, and categories routed to a team (ADR 0032).
+- Tickets (`TKT-`):
+  - raised by employees for themselves, or recorded by agents for a finance customer;
+  - landing in the team's queue, where agents take them or the lead assigns them;
+  - public replies (emailed to the requester or the customer's contact) and internal
+    notes, plus file attachments;
+  - waiting on the requester, resolution, a 1–5 rating, reopening, and closing
+    automatically after 3 business days.
+- SLA targets by priority in business hours (Mon–Fri 08:00–17:00 Lagos, skipping public
+  holidays), all to confirm. Waiting time pauses the resolution clock.
+- Every 15 minutes, breaches are marked, the assignee is warned at 75% and the team lead
+  is emailed on a breach.
+- An SLA report by team, priority and agent.
+- Permissions `support.ticket.create`, `.read`, `.work`, `support.report.read` and
+  `support.settings.manage`; grants for the Support Agent and employees.
+
+### Added — Phase 11d: Projects
+- Projects (`PRJ-`) with a client, manager, dates, budget by category (labour,
+  materials, expenses, other), members, milestones and tasks; planned → active → on
+  hold → completed or cancelled (ADR 0031). A new Project Manager role sets them up.
+- A project on journal lines, like a cost centre. It can be named on:
+  - invoice, credit note, purchase order, direct bill and expense claim lines;
+  - stock issues;
+  - manual journals.
+- Weekly timesheets, approved by the project's manager, or by their line manager for
+  the manager's own time.
+- Hourly cost rates for labour cost; it isn't posted.
+- Profitability from the ledger plus labour, budget against actual by category, and
+  daily budget alerts at 80% and 100% (to confirm).
+- Permissions `projects.project.create`, `.read`, `projects.time.log`, `.approve`,
+  `.approve_any`, `projects.rate.manage` and `projects.settings.manage`.
+
+### Added — Phase 11c: Procurement
+- Purchase requisitions (`PR-`) from any employee, for stock items or described goods and
+  services, with estimated prices (ADR 0030).
+- Approval by amount in a chain: the line manager, then a Finance Manager over ₦500,000,
+  then a Director over ₦5,000,000 (all to confirm, editable in Procurement settings).
+  - Each step is decided by a different person, never the requester.
+  - The new Director role steps in when there's no line manager.
+- Requests for quotation (`RFQ-`):
+  - emailed to suppliers with the RFQ as a PDF attachment;
+  - quotes recorded per line, with the supplier's document attached;
+  - a comparison of the quotes line by line.
+- Awards and orders:
+  - Three quotes are needed over ₦1,000,000 (to confirm).
+  - Awarding a quote that isn't the lowest needs a reason.
+  - An award over the approved tier goes back for the missing approvals.
+  - The award becomes a draft purchase order that someone else approves.
+- Supplier performance: on-time delivery, lines received in full, returns, bills within
+  the price tolerance, quotes won, and a 1–5 rating per order.
+- Outgoing mail can carry one attachment.
+- New permissions:
+  - `procurement.requisition.*` (create, read, approve, approve_any, approve_finance and
+    approve_director);
+  - `procurement.rfq.read` and `.manage`;
+  - `procurement.supplier.rate`;
+  - `procurement.settings.manage`.
+- Grants for the Procurement Officer, Finance Managers, line managers and employees.
+
+### Added — Phase 11b: Stock in purchasing and sales
+- Purchase order and sales lines can name a stock item and warehouse (ADR 0029). A stock
+  PO line is charged to the item's inventory account.
+- Goods received notes bring stock in at the order price, with bins, lots and expiry or
+  serial numbers, and post debit inventory, credit 2030 Goods received not invoiced (new,
+  to confirm, a finance setting).
+- Bills clear goods received not invoiced at the order price, with any price difference
+  to the item's variance account; debit notes send stock back to the supplier at cost.
+- Invoices take stock out at cost and post cost of sales in the same journal, refused
+  without enough on hand; credit notes put it back at the invoice's cost.
+- Stock move kinds `receipt`, `purchase_return`, `sale` and `sale_return`.
+
+### Added — Phase 11a: Inventory
+- Items with a unit of measure, category, FIFO or weighted-average valuation, lot or
+  serial tracking and reorder levels; warehouses and bins; item categories naming the
+  inventory, cost of sales, adjustment and issue accounts (ADR 0028).
+- Issues to a cost centre and transfers, posted by inventory staff; adjustments (also for
+  opening stock) posted by a second person. Stock never goes negative; lot items without
+  a lot take the earliest-expiring lots first.
+- Stock counts with the variance posted by a second person.
+- Material requests from any employee, approved by their line manager and issued in
+  parts.
+- A daily low-stock email to people who manage items, at most once a day per item and
+  warehouse.
+- Stock journals (source `stock`) for issues, adjustments and count variances; a new
+  5200 Stock adjustments and variances account (to confirm).
+- Permissions `inventory.item.*`, `inventory.stock.*` and `inventory.request.*`; a new
+  Inventory Manager role, and grants for the Inventory Clerk, line managers and
+  employees.
+
+### Fixed
+- The worker now loads finance's scheduled tasks (recurring journals, payment reminders
+  and depreciation drafts), which it hadn't been registering.
+
 ### Added — Phase 10e: Fixed assets
 - Asset categories with a depreciation method (straight line, reducing balance or none),
   useful life or rate and their accounts; new accounts 1511 to 1551, 3300, 4910 and 6910

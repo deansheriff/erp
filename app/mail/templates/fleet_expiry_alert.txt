@@ -1,0 +1,5 @@
+Hello {{ name }},
+
+{{ what }} at {{ organisation }} expires on {{ expires }}. Please renew it in time.
+
+You get this because you manage the fleet or hold the licence. Each reminder is sent once.

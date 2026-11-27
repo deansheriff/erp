@@ -1,0 +1,25 @@
+{# Fleet → settings (ADR 0033): when expiry alerts go out, and when a fill counts as poor
+   fuel use. Built in the design language; design: design/stitch/exports/fleet.settings.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Fleet settings", "Alerts for papers and licences, and the fuel efficiency check.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<form method="post" action="/fleet/settings" class="kx-card mt-6 max-w-2xl space-y-5 p-6" novalidate>
+  {{ ui.csrf_field() }}
+  <fieldset class="grid gap-4 sm:grid-cols-2">
+    <legend class="mb-2 font-semibold">Expiry alerts</legend>
+    {{ ui.text_field("first_alert_days", "First alert (days before)", v.get("first_alert_days", ""), errors=errors, inputmode="numeric") }}
+    {{ ui.text_field("second_alert_days", "Second alert (days before)", v.get("second_alert_days", ""), errors=errors, inputmode="numeric") }}
+    <p class="text-xs text-ink-3 sm:col-span-2">Fleet Managers are emailed at each, and again on the day. Drivers hear about their own licence. Each alert goes once.</p>
+  </fieldset>
+  <fieldset class="border-t border-line pt-5">
+    <legend class="mb-2 pt-5 font-semibold">Fuel efficiency</legend>
+    {{ ui.text_field("low_efficiency_pct", "Flag a fill below this share of the vehicle's average (%)", v.get("low_efficiency_pct", ""), errors=errors, inputmode="numeric") }}
+  </fieldset>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save settings</button></div>
+</form>
+{% endblock %}

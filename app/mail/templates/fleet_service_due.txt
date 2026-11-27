@@ -1,0 +1,5 @@
+Hello {{ name }},
+
+{{ plan }} is due on {{ vehicle }} at {{ organisation }}.
+
+You get this because you manage the fleet. It's sent once each time the service falls due.

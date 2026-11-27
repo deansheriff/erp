@@ -1,0 +1,47 @@
+{# Projects → settings (ADR 0031): budget alert levels and hourly cost rates.
+   Design: design/stitch/exports/projects.settings.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Project settings", "Budget alerts and the hourly cost of each person's time.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{% if can_settings %}
+<form method="post" action="/projects/settings/alerts" class="kx-card mt-6 p-5" novalidate>
+  {{ ui.csrf_field() }}
+  <h2 class="font-h3 text-h3">Budget alerts</h2>
+  <p class="mt-1 text-body-sm text-ink-3">The project manager is emailed once when a project's costs, labour included, pass each level of its total budget. Defaults to confirm.</p>
+  <div class="mt-4 grid max-w-lg gap-4 sm:grid-cols-2">
+    {{ ui.text_field("warn_at", "First alert at (%)", value=v.get("warn_at") or settings.warn_at, inputmode="numeric", errors=errors) }}
+    {{ ui.text_field("alert_at", "Second alert at (%)", value=v.get("alert_at") or settings.alert_at, inputmode="numeric", errors=errors) }}
+  </div>
+  <div class="mt-4 flex justify-end"><button type="submit" class="kx-btn-primary">Save alerts</button></div>
+</form>
+{% endif %}
+
+{% if can_rates %}
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="rates-title">
+  <div class="border-b border-line px-5 py-4"><h2 id="rates-title" class="font-h3 text-h3">Hourly cost rates</h2><p class="mt-1 text-body-sm text-ink-3">Used only for project labour cost: approved hours times the rate in force that day. They aren't posted to the ledger.</p></div>
+  <form method="post" action="/projects/settings/rate" class="grid gap-4 border-b border-line p-5 sm:grid-cols-4 sm:items-end" novalidate>
+    {{ ui.csrf_field() }}
+    <div class="sm:col-span-2"><label class="kx-label" for="employee_id">Person</label><select id="employee_id" name="employee_id" class="kx-input"><option value="">Choose a person</option>{% for r in rates %}<option value="{{ r.employee_id }}" {% if v.get("employee_id") == r.employee_id|string %}selected{% endif %}>{{ r.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "employee_id") }}</div>
+    {{ ui.text_field("hourly", "Hourly cost", value=v.get("hourly", ""), inputmode="decimal", errors=errors) }}
+    {{ ui.text_field("effective_from", "From", value=v.get("effective_from") or today.isoformat(), type="date", errors=errors) }}
+    <div class="sm:col-span-4 flex justify-end"><button type="submit" class="kx-btn-secondary">{{ ui.icon("plus", "sm") }} Set rate</button></div>
+  </form>
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[640px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Person</th><th class="px-3 py-2.5 text-right font-semibold">Current rate</th><th class="px-3 py-2.5 text-left font-semibold">Since</th><th class="px-5 py-2.5 text-left font-semibold">Earlier and later rates</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rates %}
+        <tr><td class="px-5 py-2.5">{{ r.name }}</td><td class="px-3 py-2.5 text-right tnum">{% if r.current is not none %}{{ r.current | money }}{% else %}<span class="text-ink-3">No rate</span>{% endif %}</td><td class="px-3 py-2.5">{{ r.since | date if r.since else "—" }}</td><td class="px-5 py-2.5 text-xs text-ink-3">{% for h in r.history if h.hourly != r.current or h.effective_from != r.since %}{{ h.hourly | money }} from {{ h.effective_from | date }}{% if not loop.last %} · {% endif %}{% endfor %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

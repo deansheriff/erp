@@ -20,6 +20,11 @@ Phase 5. Decisions are in ADR 0016.
 Later modules add their own purposes (expense receipts, employee documents, payslips,
 invoices) in their `files.py`.
 
+**Access checks.** A purpose may also name an access check (`FilePurpose.allow`), which
+runs on attach and view as well as the permission. Chat uses it so only current members
+of a conversation can open its attachments (ADR 0034). With `view_permission=None`, the
+check alone decides who can view.
+
 ## Flows
 
 **Upload:** authorise attach → check quota → stream into quarantine with the size limit
@@ -33,7 +38,9 @@ detected type, `nosniff`, and `attachment` unless inline is allowed. Sensitive c
 are audited.
 
 **Delete:** soft delete; the nightly retention job hard-deletes after `retention_until`
-unless on legal hold. Replacing creates a new version; old versions stay readable.
+unless on legal hold. Replacing creates a new version; old versions stay readable. A
+module's own rule (a deleted chat message, chat retention) can delete as the system
+(`delete_by_system`), which is audited and skips files on legal hold.
 
 ## Rules enforced in CI
 

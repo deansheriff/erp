@@ -19,7 +19,10 @@ from app.files import scanner
 from app.identity import routes_api as identity_api
 from app.identity import routes_web as identity_web
 from app.identity import service as identity
+from app.modules.assistant import routes_web as assistant_web
 from app.modules.attendance import routes_web as attendance_web
+from app.modules.chat import routes_socket as chat_socket
+from app.modules.chat import routes_web as chat_web
 from app.modules.expenses import routes_web as expenses_web
 from app.modules.finance import routes_assets as finance_assets
 from app.modules.finance import routes_banking as finance_banking
@@ -27,15 +30,21 @@ from app.modules.finance import routes_payables as finance_payables
 from app.modules.finance import routes_sales as finance_sales
 from app.modules.finance import routes_tax as finance_tax
 from app.modules.finance import routes_web as finance_web
+from app.modules.fleet import routes_web as fleet_web
 from app.modules.hr import routes_people as hr_people_web
 from app.modules.hr import routes_process as hr_process_web
 from app.modules.hr import routes_self as hr_self_web
 from app.modules.hr import routes_web as hr_web
+from app.modules.inventory import routes_web as inventory_web
 from app.modules.leave import routes_web as leave_web
 from app.modules.payroll import routes_outputs as payroll_outputs_web
 from app.modules.payroll import routes_self as payroll_self_web
 from app.modules.payroll import routes_web as payroll_web
+from app.modules.procurement import routes_web as procurement_web
+from app.modules.projects import routes_web as projects_web
+from app.modules.support import routes_web as support_web
 from app.org import routes_web as org_web
+from app.realtime import broker as realtime
 from app.web import routes_dev, routes_health, routes_home
 from app.web.access import access_guard, csrf_guard
 from app.web.errors import register_error_handlers
@@ -72,6 +81,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     await anyio.to_thread.run_sync(verify_database_role, get_engine())
     await anyio.to_thread.run_sync(_verify_permission_catalogue)
     scanner.check_configuration()
+    realtime.check_configuration()
     await anyio.to_thread.run_sync(_announce_setup_code)
     yield
     get_engine().dispose()
@@ -105,6 +115,14 @@ def routers(settings: Settings) -> list[APIRouter]:
         finance_payables.router,
         finance_banking.router,
         finance_assets.router,
+        inventory_web.router,
+        procurement_web.router,
+        projects_web.router,
+        support_web.router,
+        fleet_web.router,
+        chat_web.router,
+        chat_socket.router,
+        assistant_web.router,
         payroll_self_web.router,
         files_web.router,
     ]

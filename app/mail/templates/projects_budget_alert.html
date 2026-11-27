@@ -1,0 +1,6 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ name }},</p>
+<p style="margin:0 0 16px;"><strong>{{ code }} {{ project }}</strong> has used <strong>{{ used }}%</strong> of its budget at {{ organisation }}: {{ cost }} against {{ budget }}, labour included.</p>
+<p style="margin:0;color:#4B4B66;">You get this because you manage the project. It's sent once when costs pass each alert level.</p>
+{% endblock %}

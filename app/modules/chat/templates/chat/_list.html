@@ -1,0 +1,33 @@
+{# The conversation list, grouped by kind, with unread counts. Context: rows, current_id. #}
+{% import "components/ui.html" as ui with context %}
+{% set groups = [("channel", "Channels"), ("group", "Groups"), ("direct", "Direct messages")] %}
+{% for kind, heading in groups %}
+{% set items = rows | selectattr("conversation.kind", "equalto", kind) | list %}
+{% if items %}
+<h3 class="px-4 pb-1 pt-4 text-xs font-semibold uppercase tracking-wide text-ink-3">{{ heading }}</h3>
+<ul>
+  {% for r in items %}
+  {% set c = r.conversation %}
+  {% set on = current_id and c.id == current_id %}
+  <li>
+    <a href="/chat/{{ c.id }}" class="flex items-start gap-3 px-4 py-2.5 {{ 'bg-iris-tint' if on else 'hover:bg-surface-sunken' }}" {% if on %}aria-current="page"{% endif %}>
+      <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line bg-surface-sunken text-xs font-semibold text-ink-2">{% if kind == "channel" %}#{% elif kind == "group" %}{{ ui.icon("users", "sm") }}{% else %}{{ r.title[:1] | upper }}{% endif %}</span>
+      <span class="min-w-0 flex-1">
+        <span class="flex items-center justify-between gap-2">
+          <span class="truncate text-body-sm {{ 'font-semibold' if r.unread else '' }}">{{ r.title }}</span>
+          {% if r.last_at %}<span class="shrink-0 text-xs text-ink-3">{{ r.last_at | clock }}</span>{% endif %}
+        </span>
+        <span class="flex items-center justify-between gap-2">
+          <span class="truncate text-xs text-ink-3">{{ r.preview or ("Read-only" if c.read_only else "No messages yet") }}</span>
+          {% if r.unread %}<span class="shrink-0 rounded-full bg-iris px-1.5 text-[11px] font-semibold text-on-iris" aria-label="{{ r.unread }} unread">{{ r.unread }}</span>{% endif %}
+        </span>
+      </span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endfor %}
+{% if not rows %}
+<p class="px-4 py-8 text-center text-body-sm text-ink-3">No conversations yet. Start one with <a href="/chat/new" class="text-iris">New</a>.</p>
+{% endif %}

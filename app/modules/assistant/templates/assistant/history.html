@@ -1,0 +1,29 @@
+{# Assistant → history (ADR 0035): your own requests only, kept for the history period.
+   Built in the design language; design: design/stitch/exports/assistant.history.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Your assistant history", "Only you can see this. Requests are deleted after " ~ days ~ " days.") %}{% endcall %}
+
+<form method="get" class="mt-6 flex flex-wrap items-center gap-2">
+  <label class="sr-only" for="feature">Feature</label>
+  <select id="feature" name="feature" class="kx-input h-10 w-auto"><option value="">Everything</option>{% for key, label in feature_labels.items() %}<option value="{{ key }}" {% if feature == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+  <button type="submit" class="kx-btn-secondary">Filter</button>
+</form>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="History">
+  {% if rows %}
+  <ul class="divide-y divide-line text-body-sm">
+    {% for r in rows %}
+    <li><a href="/assistant/history/{{ r.id }}" class="flex items-center justify-between gap-3 px-5 py-3 hover:bg-surface-sunken">
+      <span class="min-w-0"><span class="block truncate font-semibold">{{ r.title }}</span><span class="text-xs text-ink-3">{{ feature_labels[r.feature] }} · {{ r.created_at | datetime }}</span></span>
+      {% if r.status == "ok" %}{{ ui.badge("success", "Checked") }}{% elif r.status == "unverified" %}{{ ui.badge("warning", "Not checked") }}{% else %}{{ ui.badge("neutral", "Declined") }}{% endif %}
+    </a></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  {% call ui.empty_state("history", "Nothing yet", "Your questions and drafts appear here.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

@@ -22,6 +22,7 @@ os.environ["KX_S3_ENDPOINT_URL"] = ""
 os.environ["KX_S3_ACCESS_KEY"] = "test-access-key"
 os.environ["KX_S3_SECRET_KEY"] = "test-secret-key"
 os.environ["KX_SCANNER"] = "accept_all"
+os.environ["KX_REALTIME_BACKEND"] = "memory"
 os.environ["KX_DATABASE_URL"] = os.environ.get(
     "KX_TEST_DATABASE_URL", "postgresql+psycopg://kx_app:unset@127.0.0.1:1/unset"
 )
@@ -171,7 +172,15 @@ def clean_db(migrated_db: None) -> Iterator[None]:
                 "receipts, sales_allocations, vat_rates, wht_types, stamp_duty_types, "
                 "tax_returns, suppliers, purchase_orders, goods_receipts, bills, "
                 "supplier_payments, bank_accounts, bank_rules, bank_transfers, asset_categories, "
-                "fixed_assets, asset_changes, depreciation_runs CASCADE"
+                "fixed_assets, asset_changes, depreciation_runs, inventory_units, warehouses, "
+                "item_categories, items, stock_moves, stock_documents, stock_counts, "
+                "material_requests, low_stock_alerts, procurement_settings, procurement_tiers, "
+                "purchase_requisitions, rfqs, supplier_ratings, projects, project_cost_rates, "
+                "project_settings, support_settings, support_sla_targets, support_teams, "
+                "support_tickets, vehicles, fleet_drivers, fleet_settings, fleet_expiry_alerts, "
+                "chat_conversations, chat_settings, assistant_settings, assistant_policies, "
+                "assistant_requests "
+                "CASCADE"
             )
         )
         _migration("0010_payroll.py").seed_defaults(conn)
@@ -180,6 +189,14 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         _migration("0013_finance_receivables_and_tax.py").seed_defaults(conn)
         _migration("0015_finance_banking.py").seed_defaults(conn)
         _migration("0016_finance_fixed_assets.py").seed_defaults(conn)
+        _migration("0017_inventory.py").seed_defaults(conn)
+        _migration("0018_stock_in_purchasing_and_sales.py").seed_defaults(conn)
+        _migration("0019_procurement.py").seed_defaults(conn)
+        _migration("0020_projects.py").seed_defaults(conn)
+        _migration("0021_support.py").seed_defaults(conn)
+        _migration("0022_fleet.py").seed_defaults(conn)
+        _migration("0023_chat.py").seed_defaults(conn)
+        _migration("0024_ai_assistant.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

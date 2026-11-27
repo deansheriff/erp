@@ -1,0 +1,65 @@
+{# Projects → set up or change a project (ADR 0031): details, budget by category, members
+   and new milestones. Design: design/stitch/exports/projects.project_form.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set p = view.project if view else none %}
+{% set v = values %}
+{% set chosen = v.get("member") if v else (view.members | map(attribute=0) | map("string") | list if view else []) %}
+{% call ui.page_header("Edit " ~ p.code if p else "New project", "Costs and time can be recorded once it's started.") %}
+  {% if p %}<a href="/projects/{{ p.id }}" class="kx-btn-ghost">Back to {{ p.code }}</a>{% endif %}
+{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<form method="post" action="/projects" class="mt-6 space-y-6" novalidate>
+  {{ ui.csrf_field() }}
+  {% if p %}<input type="hidden" name="project_id" value="{{ p.id }}">{% endif %}
+  <section class="kx-card p-5" aria-labelledby="details-title">
+    <h2 id="details-title" class="font-h3 text-h3">Details</h2>
+    <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="sm:col-span-2">{{ ui.text_field("name", "Name", value=v.get("name") or (p.name if p else ""), errors=errors) }}</div>
+      <div><label class="kx-label" for="customer_id">Client</label><select id="customer_id" name="customer_id" class="kx-input"><option value="">None (internal)</option>{% for cid, label in customers %}<option value="{{ cid }}" {% if (v.get("customer_id") or (p.customer_id|string if p and p.customer_id else "")) == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errors, "customer_id") }}</div>
+      <div><label class="kx-label" for="manager_id">Project manager</label><select id="manager_id" name="manager_id" class="kx-input">{% for eid, name in staff %}<option value="{{ eid }}" {% if (v.get("manager_id") or (p.manager_employee_id|string if p else (me|string if me else ""))) == eid|string %}selected{% endif %}>{{ name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "manager_id") }}</div>
+      {{ ui.text_field("start_date", "Start date", value=v.get("start_date") or (p.start_date.isoformat() if p else ""), type="date", errors=errors) }}
+      {{ ui.text_field("end_date", "End date", value=v.get("end_date") or (p.end_date.isoformat() if p and p.end_date else ""), type="date", errors=errors) }}
+      <div><label class="kx-label" for="cost_centre_id">Cost centre</label><select id="cost_centre_id" name="cost_centre_id" class="kx-input"><option value="">None</option>{% for cid, label in centres %}<option value="{{ cid }}" {% if (v.get("cost_centre_id") or (p.cost_centre_id|string if p and p.cost_centre_id else "")) == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errors, "cost_centre_id") }}</div>
+      <div class="sm:col-span-2 lg:col-span-3"><label class="kx-label" for="description">Description</label><textarea id="description" name="description" rows="3" class="kx-input">{{ v.get("description") or (p.description or "" if p else "") }}</textarea></div>
+    </div>
+  </section>
+
+  <div class="grid gap-6 lg:grid-cols-2">
+    <section class="kx-card p-5" aria-labelledby="budget-title">
+      <h2 id="budget-title" class="font-h3 text-h3">Budget</h2>
+      <p class="mt-1 text-xs text-ink-3">Labour is approved hours at each person's hourly cost. Materials are stock issues, bills and the cost of stock sold; Expenses are claims; Other is anything else.</p>
+      <div class="mt-4 space-y-3">
+        {% for key, label in categories %}
+        <div class="flex items-center justify-between gap-3"><label class="text-body-sm" for="budget-{{ key }}">{{ label }}</label><input id="budget-{{ key }}" name="budget_{{ key }}" value="{{ v.get('budget_' ~ key) or (('{:,.2f}'.format(budget[key])) if budget.get(key) else '') }}" inputmode="decimal" placeholder="0.00" class="kx-input h-10 max-w-[220px] text-right tnum"></div>
+        {{ ui.field_error(errors, "budget_" ~ key) }}
+        {% endfor %}
+      </div>
+    </section>
+    <section class="kx-card p-5" aria-labelledby="members-title">
+      <h2 id="members-title" class="font-h3 text-h3">Members</h2>
+      <p class="mt-1 text-xs text-ink-3">Members log time and can be given tasks. The manager is always on the team.</p>
+      <div class="mt-3 max-h-64 space-y-1.5 overflow-y-auto rounded-lg border border-line p-3">
+        {% for eid, name in staff %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="member" value="{{ eid }}" class="kx-check" {% if eid|string in chosen %}checked{% endif %}> {{ name }}</label>{% endfor %}
+      </div>
+      {{ ui.field_error(errors, "members") }}
+    </section>
+  </div>
+
+  <section class="kx-card p-5" aria-labelledby="milestones-title">
+    <h2 id="milestones-title" class="font-h3 text-h3">{{ "Add milestones" if p else "Milestones" }}</h2>
+    {% if p and view.milestones %}<p class="mt-1 text-xs text-ink-3">Already: {{ view.milestones | map(attribute="milestone.name") | join(", ") }}</p>{% endif %}
+    <div class="mt-4 space-y-3">
+      {% for i in range(3) %}
+      <div class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_200px]"><div><label class="sr-only" for="ms-{{ i }}">Milestone {{ i + 1 }}</label><input id="ms-{{ i }}" name="milestone_name" placeholder="e.g. Design sign-off" class="kx-input"></div><div><label class="sr-only" for="md-{{ i }}">Due, milestone {{ i + 1 }}</label><input id="md-{{ i }}" type="date" name="milestone_due" class="kx-input"></div></div>
+      {% endfor %}
+    </div>
+    {{ ui.field_error(errors, "milestones") }}
+  </section>
+
+  <div class="flex justify-end gap-3">{% if p %}<a href="/projects/{{ p.id }}" class="kx-btn-ghost">Cancel</a>{% else %}<a href="/projects" class="kx-btn-ghost">Cancel</a>{% endif %}<button type="submit" class="kx-btn-primary">{{ "Save project" if p else "Create project" }}</button></div>
+</form>
+{% endblock %}

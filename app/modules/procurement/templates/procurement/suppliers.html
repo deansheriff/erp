@@ -1,0 +1,38 @@
+{# Procurement → supplier performance (ADR 0030): each measure on its own, no combined score.
+   Design: design/stitch/exports/procurement.suppliers.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro pct(value, suffix="%") %}{% if value is none %}<span class="text-ink-3">—</span>{% else %}{{ value }}{{ suffix }}{% endif %}{% endmacro %}
+
+{% block content %}
+{% call ui.page_header("Supplier performance", "Deliveries, quantities, prices and ratings over the period.") %}
+  <form method="get" class="flex items-center gap-2" x-data="autoSubmit"><label class="text-xs text-ink-3" for="months">Period</label><select id="months" name="months" class="kx-input h-10" x-on:change="send">{% for m in (3, 6, 12, 24) %}<option value="{{ m }}" {% if m == months %}selected{% endif %}>Last {{ m }} months</option>{% endfor %}</select></form>
+{% endcall %}
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Suppliers">
+  {% if cards %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[980px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Supplier</th><th class="px-3 py-3 text-right font-semibold">Orders</th><th class="px-3 py-3 text-right font-semibold">On-time delivery</th><th class="px-3 py-3 text-right font-semibold">Lines received in full</th><th class="px-3 py-3 text-right font-semibold">Returned</th><th class="px-3 py-3 text-right font-semibold">Bills within tolerance</th><th class="px-3 py-3 text-right font-semibold">Quotes won</th><th class="px-5 py-3 text-right font-semibold">Rating</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for c in cards %}
+        <tr>
+          <td class="px-5 py-3"><a href="/procurement/suppliers/{{ c.supplier_id }}?months={{ months }}" class="font-semibold text-iris">{{ c.name }}</a></td>
+          <td class="px-3 py-3 text-right tnum">{{ c.orders }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ pct(c.on_time_pct) }}{% if c.deliveries %}<span class="block text-xs text-ink-3">{{ c.on_time }} of {{ c.deliveries }}</span>{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum">{{ pct(c.in_full_pct) }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ pct(c.returned_pct) }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ pct(c.tolerance_pct) }}</td>
+          <td class="px-3 py-3 text-right tnum">{% if c.quotes %}{{ c.wins }} of {{ c.quotes }}{% else %}<span class="text-ink-3">—</span>{% endif %}</td>
+          <td class="px-5 py-3 text-right tnum">{% if c.rating is not none %}<span class="inline-flex items-center gap-1">{{ ui.icon("star", "sm", "text-warning-text") }} {{ c.rating }}</span><span class="block text-xs text-ink-3">{{ c.ratings }} rating{{ "s" if c.ratings != 1 }}</span>{% else %}<span class="text-ink-3">—</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("truck", "No supplier activity", "Suppliers appear here once they have orders or quotes in the period.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

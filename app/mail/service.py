@@ -15,7 +15,14 @@ from app.core.secrets import DecryptionFailed, decrypt, encrypt
 from app.mail.models import MailOutbox, MailSettings
 from app.mail.rendering import render
 from app.mail.schemas import MailSettingsInput, MailSettingsView, OutboxStats, TestResult
-from app.mail.transport import FAILURE_MESSAGES, Message, SendFailed, SmtpConfig, send
+from app.mail.transport import (
+    FAILURE_MESSAGES,
+    Attachment,
+    Message,
+    SendFailed,
+    SmtpConfig,
+    send,
+)
 
 log = logging.getLogger("app.mail")
 
@@ -163,14 +170,34 @@ def is_configured(db: Session) -> bool:
     return _row(db) is not None
 
 
-def queue(db: Session, *, to: str, template: str, context: dict[str, Any]) -> None:
+def queue(
+    db: Session,
+    *,
+    to: str,
+    template: str,
+    context: dict[str, Any],
+    attachment: Attachment | None = None,
+) -> None:
     """Add an email to the outbox in the caller's transaction; a worker sends it."""
     subject, text, html = render(template, context)
     db.add(
         MailOutbox(
-            to_address=to, subject=subject, body_text=text, body_html=html, template=template
+            to_address=to,
+            subject=subject,
+            body_text=text,
+            body_html=html,
+            template=template,
+            attachment_name=attachment.filename if attachment else None,
+            attachment_type=attachment.content_type if attachment else None,
+            attachment_data=attachment.data if attachment else None,
         )
     )
+
+
+def _attachment(item: MailOutbox) -> Attachment | None:
+    if not (item.attachment_name and item.attachment_type and item.attachment_data):
+        return None
+    return Attachment(item.attachment_name, item.attachment_type, item.attachment_data)
 
 
 def send_pending(limit: int = 50) -> int:
@@ -191,7 +218,16 @@ def send_pending(limit: int = 50) -> int:
         for item in due:
             item.attempts += 1
             try:
-                send(config, Message(item.to_address, item.subject, item.body_text, item.body_html))
+                send(
+                    config,
+                    Message(
+                        item.to_address,
+                        item.subject,
+                        item.body_text,
+                        item.body_html,
+                        _attachment(item),
+                    ),
+                )
             except SendFailed as failure:
                 item.last_error = failure.category
                 if item.attempts >= MAX_ATTEMPTS:

@@ -1,0 +1,39 @@
+{# Procurement → requests for quotation (ADR 0030): open, awarded, ordered and all.
+   Design: design/stitch/exports/procurement.rfqs.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Requests for quotation", "Quotes asked for on approved requisitions, compared and awarded.") %}{% endcall %}
+
+<nav class="kx-segment mt-6" aria-label="RFQs">
+  {% for key, label in tabs %}
+  <a href="/procurement/rfqs?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</nav>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="RFQs">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[900px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">RFQ</th><th class="px-3 py-3 text-left font-semibold">Requisition</th><th class="px-3 py-3 text-right font-semibold">Invited</th><th class="px-3 py-3 text-left font-semibold">Quotes</th><th class="px-3 py-3 text-left font-semibold">Reply by</th><th class="px-3 py-3 text-right font-semibold">Lowest net</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        <tr>
+          <td class="px-5 py-3"><a href="/procurement/rfqs/{{ r.id }}" class="font-mono text-xs font-semibold text-iris">{{ r.number }}</a></td>
+          <td class="px-3 py-3"><a href="/procurement/requisitions/{{ r.requisition_id }}" class="font-mono text-xs text-iris">{{ r.requisition }}</a><span class="block max-w-[240px] truncate text-xs text-ink-3">{{ r.purpose }}</span></td>
+          <td class="px-3 py-3 text-right tnum">{{ r.invited }}</td>
+          <td class="px-3 py-3"><span class="tnum">{{ r.quotes }}</span>{% if r.quotes < r.needed and r.status in ("draft", "sent") %} <span class="ml-1">{{ ui.badge("warning", "Needs " ~ r.needed) }}</span>{% endif %}</td>
+          <td class="px-3 py-3">{{ r.respond_by | date if r.respond_by else "—" }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.lowest | money if r.lowest is not none else "—" }}</td>
+          <td class="px-5 py-3">{{ ui.badge(tones[r.status], labels[r.status]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("file-text", "No RFQs here", "Start one from an approved requisition.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

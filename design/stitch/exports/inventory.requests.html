@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { 'colors': { 'outline-variant': '#c8c4d7', 'background': '#f9f9fd', 'lime-ink': '#4D7A0A', 'on-error-container': '#93000a', 'iris': '#5A4BDB', 'info-text': '#1D55B8', 'secondary-fixed': '#c7f24c', 'inverse-surface': '#2e3034', 'on-secondary-container': '#536b00', 'on-primary-fixed': '#140067', 'inverse-primary': '#c5c0ff', 'tertiary-container': '#9f4a00', 'on-background': '#1a1c1f', 'on-secondary': '#ffffff', 'on-secondary-fixed-variant': '#3b4d00', 'error-container': '#ffdad6', 'line-strong': '#8B8BA6', 'surface-container-highest': '#e2e2e6', 'on-tertiary-fixed': '#321300', 'on-primary': '#ffffff', 'info-bg': '#DFEBFF', 'surface-sunken': '#EFEFF6', 'on-primary-fixed-variant': '#3d28be', 'tertiary-fixed-dim': '#ffb68b', 'ink-2': '#4B4B66', 'on-tertiary': '#ffffff', 'on-error': '#ffffff', 'lime': '#C5F04A', 'primary': '#412ec2', 'ink': '#16162A', 'on-secondary-fixed': '#161f00', 'on-surface-variant': '#474554', 'primary-container': '#5a4bdb', 'surface-raised': '#FFFFFF', 'warning-text': '#8A4B00', 'success-text': '#0F6B3E', 'error': '#ba1a1a', 'surface-container-high': '#e8e8ec', 'inverse-on-surface': '#f0f0f4', 'surface-container-lowest': '#ffffff', 'canvas': '#F6F6FA', 'surface-container-low': '#f3f3f7', 'on-iris': '#FFFFFF', 'surface-variant': '#e2e2e6', 'primary-fixed': '#e4dfff', 'surface': '#FFFFFF', 'line': '#E4E4EE', 'destructive': '#C42836', 'tertiary': '#7a3700', 'danger-bg': '#FFE4E6', 'on-surface': '#1a1c1f', 'secondary': '#4f6600', 'secondary-container': '#c4ef49', 'warning-bg': '#FFF1D6', 'tertiary-fixed': '#ffdbc8', 'iris-tint': '#EEECFD', 'primary-fixed-dim': '#c5c0ff', 'ink-3': '#626280', 'surface-dim': '#d9dade', 'on-primary-container': '#e0dbff', 'danger-text': '#B4232F', 'outline': '#787586', 'on-tertiary-container': '#ffd7c1', 'success-bg': '#DDF7E8', 'iris-hover': '#4A3CC4', 'secondary-fixed-dim': '#acd530', 'surface-tint': '#5646d7', 'surface-container': '#ededf1', 'surface-bright': '#f9f9fd', 'on-tertiary-fixed-variant': '#743400' }, 'borderRadius': { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, 'spacing': { 'space-3xl': '4rem', 'margin': '2rem', 'space-2xl': '3rem', 'space-md': '1rem', 'space-lg': '1.5rem', 'space-sm': '0.5rem', 'gutter': '1.5rem', 'space-xs': '0.25rem', 'space-xl': '2rem' }, 'fontFamily': { 'h3': ['Plus Jakarta Sans'], 'stat': ['Plus Jakarta Sans'], 'h2': ['Plus Jakarta Sans'], 'body': ['Inter'], 'overline': ['Inter'], 'label': ['Inter'], 'h1': ['Plus Jakarta Sans'], 'display': ['Plus Jakarta Sans'], 'body-sm': ['Inter'] }, 'fontSize': { 'h3': ['16px', { 'lineHeight': '24px', 'letterSpacing': '-0.015em', 'fontWeight': '600' }], 'stat': ['30px', { 'lineHeight': '36px', 'fontWeight': '700' }], 'h2': ['18px', { 'lineHeight': '28px', 'letterSpacing': '-0.015em', 'fontWeight': '600' }], 'body': ['16px', { 'lineHeight': '24px', 'fontWeight': '400' }], 'overline': ['12px', { 'lineHeight': '16px', 'letterSpacing': '0.06em', 'fontWeight': '600' }], 'label': ['14px', { 'lineHeight': '20px', 'fontWeight': '500' }], 'h1': ['24px', { 'lineHeight': '32px', 'letterSpacing': '-0.015em', 'fontWeight': '700' }], 'display': ['32px', { 'lineHeight': '40px', 'letterSpacing': '-0.015em', 'fontWeight': '700' }], 'body-sm': ['14px', { 'lineHeight': '20px', 'fontWeight': '400' }] } } } };</script></head><body class="bg-background font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col h-full"><div class="h-16 px-space-lg flex items-center gap-space-sm bg-surface-container-lowest"><div class="w-9 h-9 rounded-lg bg-tertiary flex items-center justify-center text-on-tertiary font-h2 text-h2 shadow-[0_2px_6px_rgba(122,55,0,0.25)]">K</div><div class="flex flex-col min-w-0 flex-1"><span class="font-h3 text-h3 text-ink truncate leading-tight">Kxmeleon ERP</span><span class="font-overline text-overline uppercase tracking-wider text-ink-3 truncate leading-none mt-0.5">Adeyemi Holdings Ltd</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-1"><nav class="flex flex-col gap-0.5" data-active-classes="bg-tertiary-fixed text-on-tertiary-fixed-variant font-label font-bold rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-label text-label">Home / Dashboard</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="hr-and-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label text-label">HR &amp; People</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="font-label text-label">Leave</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">timer</span><span class="font-label text-label">Attendance</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label text-label">Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label text-label">Payroll</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="font-label text-label">Finance</span></a><div class="pt-1"><div class="flex items-center justify-between px-space-md py-2.5 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed-variant font-label text-label font-semibold"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-tertiary">inventory_2</span><span class="font-label text-label">Inventory</span></div><span class="material-symbols-outlined text-[18px] text-tertiary rotate-180">expand_more</span></div><div class="pl-8 pr-1 py-1 mt-0.5 space-y-0.5"><a class="flex items-center px-space-md py-1.5 rounded-lg font-label text-body-sm text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="items" href="#">Items</a><a class="flex items-center px-space-md py-1.5 rounded-lg font-label text-body-sm text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stock-movements" href="#">Stock movements</a><a class="flex items-center px-space-md py-1.5 rounded-lg font-label text-body-sm text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stock-counts-and-audits" href="#">Stock counts &amp; Audits</a><a aria-current="page" class="flex items-center px-space-md py-1.5 bg-tertiary-fixed text-on-tertiary-fixed-variant font-label font-bold rounded-lg shadow-sm" data-path="material-requests" href="#">Material requests</a><a class="flex items-center px-space-md py-1.5 rounded-lg font-label text-body-sm text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="warehouses-and-locations" href="#">Warehouses &amp; Locations</a><a class="flex items-center px-space-md py-1.5 rounded-lg font-label text-body-sm text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="valuation-and-costing" href="#">Valuation &amp; Costing</a><a class="flex items-center px-space-md py-1.5 rounded-lg font-label text-body-sm text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#">Settings</a></div></div><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">folder</span><span class="font-label text-label">Projects</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span class="font-label text-label">Administration</span></a></nav></div><div class="p-space-md bg-surface-container-low"><div class="flex items-center justify-between text-ink-3"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-lime-ink"></span><span class="font-overline text-overline uppercase">Operational</span></div><span class="font-overline text-overline">v2.4.1</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(22,22,42,0.04)] z-40 flex items-center justify-between px-gutter"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs text-body-sm font-label"><a class="text-ink-2 hover:text-ink font-label" data-path="inventory" href="#">Inventory</a><span class="material-symbols-outlined text-[16px] text-ink-3">chevron_right</span><span class="font-label text-ink font-semibold">Material requests</span></div></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><div class="w-80 h-10 rounded-lg bg-surface-sunken flex items-center px-space-md gap-space-sm text-ink-3"><span class="material-symbols-outlined text-[20px] text-ink-2">search</span><span class="font-body-sm text-body-sm text-ink-3 select-none flex-1">Search inventory, requests, items...</span><kbd class="px-1.5 py-0.5 rounded bg-surface font-label text-overline font-semibold text-ink-2 shadow-sm">Ctrl K</kbd></div></div><div class="flex items-center gap-space-sm"><div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text font-label text-body-sm font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span><span>Approvals</span><span class="px-1.5 py-0.2 rounded-full bg-surface font-semibold text-warning-text text-[11px]">3</span></div><button class="relative w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-lime"></span></button><button class="w-10 h-10 rounded-lg flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">light_mode</span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right hidden lg:flex"><span class="font-label text-label font-semibold text-ink leading-tight">Fatima Bello</span><span class="font-overline text-overline text-ink-3 leading-none mt-0.5">Inventory / Finance Lead</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="relative pt-16 bg-background min-h-screen"><div class="absolute top-16 left-0 right-0 h-44 pointer-events-none bg-[radial-gradient(ellipse_at_top,_rgba(146,64,14,0.1)_0%,_rgba(249,249,253,0)_70%)]"></div><div class="relative w-full px-gutter py-space-lg"><div class="flex flex-col w-full">
+<!-- PAGE HEADER -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-sm mb-1">
+<h1 class="font-h1 text-h1 text-ink tracking-tight">Material requests</h1>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-iris-tint text-iris font-overline text-overline font-semibold uppercase tracking-wider">Internal Requisitions</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3">Track internal department requisitions, authorization workflows, and store warehouse issue fulfillment.</p>
+</div>
+<!-- Right Header Actions -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="h-11 px-space-md rounded-lg bg-surface text-ink-2 hover:bg-surface-container-high hover:text-ink font-label text-label font-medium shadow-sm transition-colors flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export CSV</span>
+</button>
+<button class="h-11 px-space-md rounded-lg bg-iris hover:bg-iris-hover text-on-iris font-label text-label font-semibold shadow-sm transition-all duration-150 flex items-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New request</span>
+</button>
+</div>
+</div>
+<!-- TOP KPI METRIC TILES -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md mb-space-lg">
+<!-- Pending Approval -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between gap-space-xs mb-3">
+<span class="font-overline text-overline font-semibold uppercase text-warning-text tracking-wider">Pending Approval</span>
+<div class="w-8 h-8 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">pending_actions</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-xs mb-1">
+<span class="font-stat text-stat text-ink leading-none font-bold">2</span>
+<span class="font-body-sm text-body-sm text-ink-3">requests</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 truncate">Awaiting line manager &amp; HOD sign-off</p>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-warning-bg">
+<div class="h-full bg-warning-text w-2/5"></div>
+</div>
+</div>
+<!-- Ready to Issue -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between gap-space-xs mb-3">
+<span class="font-overline text-overline font-semibold uppercase text-info-text tracking-wider">Ready to Issue</span>
+<div class="w-8 h-8 rounded-lg bg-info-bg text-info-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">outbox</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-xs mb-1">
+<span class="font-stat text-stat text-ink leading-none font-bold">5</span>
+<span class="font-body-sm text-body-sm text-ink-3">vouchers</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 truncate">Approved by Dept Heads, storekeeper dispatch pending</p>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-info-bg">
+<div class="h-full bg-info-text w-3/5"></div>
+</div>
+</div>
+<!-- Partly Issued -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between gap-space-xs mb-3">
+<span class="font-overline text-overline font-semibold uppercase text-primary tracking-wider">Partly Issued</span>
+<div class="w-8 h-8 rounded-lg bg-iris-tint text-iris flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-xs mb-1">
+<span class="font-stat text-stat text-ink leading-none font-bold">3</span>
+<span class="font-body-sm text-body-sm text-ink-3">requests</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 truncate">Backordered SKU items in transit</p>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-iris-tint">
+<div class="h-full bg-iris w-1/3"></div>
+</div>
+</div>
+<!-- Completed This Month -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between group hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between gap-space-xs mb-3">
+<span class="font-overline text-overline font-semibold uppercase text-success-text tracking-wider">Completed This Month</span>
+<div class="w-8 h-8 rounded-lg bg-success-bg text-success-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mb-1">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-stat text-stat text-ink leading-none font-bold">38</span>
+<span class="font-body-sm text-body-sm text-ink-3">requests</span>
+</div>
+<span class="inline-flex items-center gap-0.5 font-overline text-overline font-bold text-success-text bg-success-bg px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> +14%
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 truncate">₦4,850,000.00 total value issued</p>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-success-bg">
+<div class="h-full bg-success-text w-full"></div>
+</div>
+</div>
+</div>
+<!-- CONTROLS & FILTER SECTION -->
+<div class="bg-surface rounded-xl p-space-md shadow-sm mb-space-md flex flex-col gap-space-md">
+<!-- Top Filter Controls Bar: Tabs and Search -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- Segmented Tabs -->
+<div class="flex items-center p-1 bg-surface-sunken rounded-lg shrink-0 self-start">
+<button class="h-9 px-space-md rounded-lg font-label text-body-sm text-ink-2 hover:text-ink transition-colors" type="button">Mine</button>
+<button class="h-9 px-space-md rounded-lg font-label text-body-sm text-ink-2 hover:text-ink transition-colors flex items-center gap-1.5" type="button">
+<span>To approve</span>
+<span class="px-1.5 py-0.5 rounded-full bg-warning-bg text-warning-text font-bold text-[11px]">2</span>
+</button>
+<button class="h-9 px-space-md rounded-lg font-label text-body-sm text-ink-2 hover:text-ink transition-colors flex items-center gap-1.5" type="button">
+<span>To issue</span>
+<span class="px-1.5 py-0.5 rounded-full bg-info-bg text-info-text font-bold text-[11px]">5</span>
+</button>
+<button class="h-9 px-space-md rounded-lg bg-surface text-ink font-label text-body-sm font-semibold shadow-sm" type="button">All requests</button>
+</div>
+<!-- Quick Search Bar -->
+<div class="relative flex-1 max-w-md">
+<div class="w-full h-10 rounded-lg bg-surface-sunken flex items-center px-space-md gap-space-sm text-ink-3 focus-within:bg-surface focus-within:shadow-sm">
+<span class="material-symbols-outlined text-[20px] text-ink-2">search</span>
+<input class="w-full bg-transparent border-0 outline-none font-body-sm text-body-sm text-ink placeholder:text-ink-3" placeholder="Search request number, requester, item, or cost centre..." type="text"/>
+<kbd class="px-1.5 py-0.5 rounded bg-surface font-label text-overline font-semibold text-ink-2 shadow-sm shrink-0">Ctrl K</kbd>
+</div>
+</div>
+</div>
+<!-- Secondary Dropdown Filters Row -->
+<div class="flex flex-wrap items-center gap-space-sm pt-space-xs">
+<!-- Warehouse Selector -->
+<div class="relative">
+<button class="h-9 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-body-sm flex items-center gap-space-xs transition-colors" type="button">
+<span class="text-ink-3">Warehouse:</span>
+<span class="font-semibold text-ink">All warehouses</span>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Cost Centre Selector -->
+<div class="relative">
+<button class="h-9 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-body-sm flex items-center gap-space-xs transition-colors" type="button">
+<span class="text-ink-3">Cost Centre:</span>
+<span class="font-semibold text-ink">All cost centres</span>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Status Selector -->
+<div class="relative">
+<button class="h-9 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-body-sm flex items-center gap-space-xs transition-colors" type="button">
+<span class="text-ink-3">Status:</span>
+<span class="font-semibold text-ink">All statuses</span>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Date Range Filter -->
+<div class="relative ml-auto">
+<button class="h-9 px-space-md rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink font-label text-body-sm flex items-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">date_range</span>
+<span class="font-medium text-ink">This Month (Nov 2026)</span>
+<span class="material-symbols-outlined text-[18px] text-ink-3">expand_more</span>
+</button>
+</div>
+<!-- Reset Filter Pill -->
+<button class="h-9 px-3 rounded-lg text-ink-3 hover:text-ink hover:bg-surface-sunken font-label text-body-sm flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>Reset</span>
+</button>
+</div>
+</div>
+<!-- DATA TABLE CONTAINER -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col mb-space-md">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<!-- Table Header -->
+<thead>
+<tr class="bg-surface-sunken h-11 text-ink-3 font-overline text-overline uppercase tracking-wider select-none">
+<th class="w-12 px-space-md py-2.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</th>
+<th class="px-space-md py-2.5 font-semibold">Request No.</th>
+<th class="px-space-md py-2.5 font-semibold">Requested By</th>
+<th class="px-space-md py-2.5 font-semibold">Needed By</th>
+<th class="px-space-md py-2.5 font-semibold">Lines / Items Summary</th>
+<th class="px-space-md py-2.5 font-semibold">Cost Centre</th>
+<th class="px-space-md py-2.5 font-semibold">Destination Depot</th>
+<th class="px-space-md py-2.5 font-semibold">Status</th>
+<th class="w-14 px-space-sm py-2.5 text-center font-semibold">Actions</th>
+</tr>
+</thead>
+<!-- Table Body -->
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1: MR-2026-00008 (Submitted) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="w-12 px-space-md py-3.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm font-semibold text-iris hover:underline cursor-pointer">MR-2026-00008</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3 group-hover:text-iris cursor-pointer transition-colors">launch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-warning-bg text-warning-text font-label text-overline font-bold flex items-center justify-center shrink-0">AO</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Amaka Obi</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-none mt-0.5">Finance &amp; Accounts</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-ink">22 Nov 2026</span>
+<span class="font-overline text-[11px] text-warning-text font-semibold">In 3 days</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col max-w-xs">
+<span class="font-label text-body-sm font-semibold text-ink">3 lines <span class="font-normal text-ink-3">(45 units)</span></span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">A4 Paper 80gsm, HP LaserJet Toner, Heavy Duty Tray</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-sunken font-label text-[12px] font-medium text-ink-2">CC-200 · Finance</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-ink-2">Lagos Main Depot</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text font-label text-body-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-warning-text"></span>
+<span>Submitted</span>
+</span>
+</td>
+<td class="w-14 px-space-sm py-3.5 text-center">
+<button aria-label="Action menu" class="w-10 h-10 rounded-lg inline-flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: MR-2026-00007 (Approved) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="w-12 px-space-md py-3.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm font-semibold text-iris hover:underline cursor-pointer">MR-2026-00007</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3 group-hover:text-iris cursor-pointer transition-colors">launch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-info-bg text-info-text font-label text-overline font-bold flex items-center justify-center shrink-0">CE</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Chinedu Eze</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-none mt-0.5">Tech &amp; IT</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-ink">21 Nov 2026</span>
+<span class="font-overline text-[11px] text-danger-text font-bold uppercase tracking-wider">Urgent · Tomorrow</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col max-w-xs">
+<span class="font-label text-body-sm font-semibold text-ink">2 lines <span class="font-normal text-ink-3">(14 units)</span></span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Dell 65W USB-C Adapters, Cat6 Ethernet Spool</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-sunken font-label text-[12px] font-medium text-ink-2">CC-310 · Tech &amp; Ops</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-ink-2">Lagos Main Depot</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-info-bg text-info-text font-label text-body-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+<span>Approved</span>
+</span>
+</td>
+<td class="w-14 px-space-sm py-3.5 text-center">
+<button aria-label="Action menu" class="w-10 h-10 rounded-lg inline-flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: MR-2026-00006 (Partly issued) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="w-12 px-space-md py-3.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm font-semibold text-iris hover:underline cursor-pointer">MR-2026-00006</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3 group-hover:text-iris cursor-pointer transition-colors">launch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-iris-tint text-iris font-label text-overline font-bold flex items-center justify-center shrink-0">SA</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Segun Afolabi</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-none mt-0.5">Fleet &amp; Logistics</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-ink">20 Nov 2026</span>
+<span class="font-overline text-[11px] text-ink-3">Due today</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col max-w-xs">
+<span class="font-label text-body-sm font-semibold text-ink">4 lines <span class="font-normal text-ink-3">(2/4 dispatched)</span></span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Engine Oil 15W-40, Oil Filters, High-Vis Vests, Safety Gloves</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-sunken font-label text-[12px] font-medium text-ink-2">CC-410 · Logistics</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-ink-2">Ikeja Transit Hub</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-iris-tint text-iris font-label text-body-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+<span>Partly issued</span>
+</span>
+</td>
+<td class="w-14 px-space-sm py-3.5 text-center">
+<button aria-label="Action menu" class="w-10 h-10 rounded-lg inline-flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: MR-2026-00005 (Issued) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="w-12 px-space-md py-3.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm font-semibold text-iris hover:underline cursor-pointer">MR-2026-00005</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3 group-hover:text-iris cursor-pointer transition-colors">launch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-success-bg text-success-text font-label text-overline font-bold flex items-center justify-center shrink-0">HS</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Halima Sani</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-none mt-0.5">Procurement</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-ink">19 Nov 2026</span>
+<span class="font-overline text-[11px] text-success-text font-semibold">Dispatched</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col max-w-xs">
+<span class="font-label text-body-sm font-semibold text-ink">1 line <span class="font-normal text-ink-3">(25 units)</span></span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Corrugated Shipping Boxes Pack of 25</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-sunken font-label text-[12px] font-medium text-ink-2">CC-100 · Lagos HQ</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-ink-2">Lagos Main Depot</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-body-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Issued</span>
+</span>
+</td>
+<td class="w-14 px-space-sm py-3.5 text-center">
+<button aria-label="Action menu" class="w-10 h-10 rounded-lg inline-flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: MR-2026-00004 (Issued) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="w-12 px-space-md py-3.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm font-semibold text-iris hover:underline cursor-pointer">MR-2026-00004</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3 group-hover:text-iris cursor-pointer transition-colors">launch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-lime-ink/10 text-lime-ink font-label text-overline font-bold flex items-center justify-center shrink-0">BA</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Babatunde Adeyemi</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-none mt-0.5">Operations</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-ink">18 Nov 2026</span>
+<span class="font-overline text-[11px] text-success-text font-semibold">Dispatched</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col max-w-xs">
+<span class="font-label text-body-sm font-semibold text-ink">5 lines <span class="font-normal text-ink-3">(32 units)</span></span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Warehouse Scanners, Thermal Rolls, Strapping Tape</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-sunken font-label text-[12px] font-medium text-ink-2">CC-400 · Operations</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-ink-2">Abuja Regional Hub</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-body-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-success-text"></span>
+<span>Issued</span>
+</span>
+</td>
+<td class="w-14 px-space-sm py-3.5 text-center">
+<button aria-label="Action menu" class="w-10 h-10 rounded-lg inline-flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: MR-2026-00003 (Rejected) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="w-12 px-space-md py-3.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm font-semibold text-iris hover:underline cursor-pointer">MR-2026-00003</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3 group-hover:text-iris cursor-pointer transition-colors">launch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-danger-bg text-danger-text font-label text-overline font-bold flex items-center justify-center shrink-0">NA</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Ngozi Adeyemi</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-none mt-0.5">Internal Audit</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-ink">16 Nov 2026</span>
+<span class="font-overline text-[11px] text-ink-3">Cancelled</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col max-w-xs">
+<span class="font-label text-body-sm font-semibold text-ink">2 lines <span class="font-normal text-ink-3">(6 units)</span></span>
+<span class="font-body-sm text-[12px] text-danger-text font-medium truncate">Declined: Non-budgeted Q4 requisition</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-sunken font-label text-[12px] font-medium text-ink-2">CC-240 · Audit</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-ink-2">Lagos Main Depot</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-danger-bg text-danger-text font-label text-body-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-danger-text"></span>
+<span>Rejected</span>
+</span>
+</td>
+<td class="w-14 px-space-sm py-3.5 text-center">
+<button aria-label="Action menu" class="w-10 h-10 rounded-lg inline-flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 7: MR-2026-00002 (Approved) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group">
+<td class="w-12 px-space-md py-3.5 text-center">
+<input class="w-4 h-4 rounded text-iris focus:ring-iris cursor-pointer accent-iris" type="checkbox"/>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="font-mono text-body-sm font-semibold text-iris hover:underline cursor-pointer">MR-2026-00002</span>
+<span class="material-symbols-outlined text-[16px] text-ink-3 group-hover:text-iris cursor-pointer transition-colors">launch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-info-bg text-info-text font-label text-overline font-bold flex items-center justify-center shrink-0">AM</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label text-label font-semibold text-ink truncate leading-tight">Aisha Mohammed</span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate leading-none mt-0.5">HR &amp; Admin</span>
+</div>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-ink">15 Nov 2026</span>
+<span class="font-overline text-[11px] text-ink-3">Awaiting dispatch</span>
+</div>
+</td>
+<td class="px-space-md py-3.5">
+<div class="flex flex-col max-w-xs">
+<span class="font-label text-body-sm font-semibold text-ink">3 lines <span class="font-normal text-ink-3">(150 units)</span></span>
+<span class="font-body-sm text-[12px] text-ink-3 truncate">Staff ID Lanyards, RFID Proximity Cards, Clips</span>
+</div>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-sunken font-label text-[12px] font-medium text-ink-2">CC-300 · HR &amp; Admin</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-ink-2">Lagos Main Depot</span>
+</td>
+<td class="px-space-md py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-info-bg text-info-text font-label text-body-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+<span>Approved</span>
+</span>
+</td>
+<td class="w-14 px-space-sm py-3.5 text-center">
+<button aria-label="Action menu" class="w-10 h-10 rounded-lg inline-flex items-center justify-center text-ink-2 hover:bg-surface-container-high hover:text-ink transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- TABLE FOOTER & PAGINATION -->
+<div class="px-space-lg py-space-md bg-surface flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<!-- Showing items count and rows-per-page -->
+<div class="flex items-center gap-space-md">
+<span class="font-body-sm text-body-sm text-ink-3">Showing <strong class="text-ink font-semibold">1–7</strong> of <strong class="text-ink font-semibold">28</strong> requests</span>
+<div class="h-4 w-px bg-surface-container"></div>
+<div class="flex items-center gap-space-xs text-ink-3 font-body-sm text-body-sm">
+<span>Rows per page:</span>
+<select class="bg-surface-sunken text-ink font-semibold rounded px-2 py-1 outline-none text-body-sm cursor-pointer">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+</div>
+<!-- Pagination Buttons -->
+<div class="flex items-center gap-1">
+<button aria-label="Previous page" class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink-2 disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="h-9 w-9 rounded-lg bg-iris text-on-iris font-label text-body-sm font-bold shadow-sm" type="button">1</button>
+<button class="h-9 w-9 rounded-lg hover:bg-surface-sunken text-ink-2 font-label text-body-sm font-medium transition-colors" type="button">2</button>
+<button class="h-9 w-9 rounded-lg hover:bg-surface-sunken text-ink-2 font-label text-body-sm font-medium transition-colors" type="button">3</button>
+<button aria-label="Next page" class="h-9 px-3 rounded-lg bg-surface-sunken hover:bg-surface-container-high text-ink-2 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- COMPLIANCE & GOVERNANCE CALLOUT -->
+<div class="rounded-xl p-space-md bg-info-bg/50 shadow-sm flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-info-bg text-info-text flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[22px]">policy</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="font-h3 text-h3 text-info-text">Internal Control &amp; Store Governance Active</span>
+<span class="px-2 py-0.5 rounded text-[11px] bg-surface font-semibold text-info-text shadow-sm uppercase tracking-wider">Dual Authorization</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2 leading-relaxed">
+        Per Adeyemi Holdings Financial Operating Manual (Sec 4.2.1), material issuances exceeding ₦250,000.00 or high-turnover IT/fleet spares require concurrent dual authorization from the Store Supervisor and Financial Controller prior to warehouse bin allocation and stock release.
+      </p>
+</div>
+</div>
+</div></div></main></div></body></html>

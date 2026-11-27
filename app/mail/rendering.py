@@ -20,6 +20,14 @@ SUBJECTS = {
     "file_quarantined": "A file was blocked by the virus scanner",
     "finance_payment_reminder": "Payment reminder from {organisation}",
     "finance_sales_document": "{kind_title} {number} from {organisation}",
+    "inventory_low_stock": "Low stock at {organisation}: {count} to reorder",
+    "procurement_rfq": "Request for quotation {number} from {organisation}",
+    "projects_budget_alert": "{code} has used {used}% of its budget",
+    "chat_unread": "{sender} messaged you in {where}",
+    "fleet_expiry_alert": "Renewal due: {what}",
+    "fleet_service_due": "Service due: {plan}, {vehicle}",
+    "support_sla_alert": "SLA {kind}: {number} {title}",
+    "support_ticket_update": "{number}: {title}",
 }
 
 

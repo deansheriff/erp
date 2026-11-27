@@ -1,0 +1,42 @@
+{# Procurement → purchase requisitions (ADR 0030): your own, those waiting for your
+   decision, those being sourced, and all you may see.
+   Design: design/stitch/exports/procurement.requisitions.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Purchase requisitions", "Goods and services asked for, approved by amount before they're bought.") %}
+  {% if can_create %}<a href="/procurement/requisitions/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New requisition</a>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<nav class="kx-segment mt-6" aria-label="Requisitions">
+  {% for key, label in tabs %}
+  <a href="/procurement/requisitions?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}{% if counts.get(key) %} ({{ counts[key] }}){% endif %}</a>
+  {% endfor %}
+</nav>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="Requisitions">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[860px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Requisition</th><th class="px-3 py-3 text-left font-semibold">Requested by</th><th class="px-3 py-3 text-left font-semibold">Purpose</th><th class="px-3 py-3 text-left font-semibold">Needed by</th><th class="px-3 py-3 text-right font-semibold">Estimated total</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        <tr>
+          <td class="px-5 py-3"><a href="/procurement/requisitions/{{ r.id }}" class="font-mono text-xs font-semibold text-iris">{{ r.number or "Draft" }}</a><span class="block text-xs text-ink-3">{{ r.created_at | date }}</span></td>
+          <td class="px-3 py-3">{{ r.requester }}</td>
+          <td class="max-w-[260px] truncate px-3 py-3 text-ink-2">{{ r.purpose }}</td>
+          <td class="px-3 py-3">{{ r.needed_by | date if r.needed_by else "—" }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ r.total | money }}</td>
+          <td class="px-5 py-3">{{ ui.badge(tones[r.status], labels[r.status]) }}{% if r.step %}<span class="mt-1 block text-xs text-ink-3">{{ r.step }}</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("clipboard-list", "Nothing here", "Requisitions appear here once raised.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

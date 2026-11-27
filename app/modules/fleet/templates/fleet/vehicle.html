@@ -1,0 +1,174 @@
+{# Fleet → a vehicle (ADR 0033): its papers with expiry, service plans by distance or
+   time and the service history, fuel logs with km/L, incidents, and this year's costs
+   from the ledger. Design: design/stitch/exports/fleet.vehicle.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set form = form | default("") %}
+{% set fv = values %}
+{% set open = v.status != "retired" %}
+{% call ui.page_header(v.registration ~ " · " ~ v.make ~ " " ~ v.model, v.code ~ " · " ~ type_labels[v.type] ~ " · " ~ fuel_labels[v.fuel] ~ (" · pool vehicle" if v.is_pool else ""), status_tones[v.status], status_labels[v.status]) %}
+  {% if view.can_manage %}
+  <a href="/fleet/vehicles/{{ v.id }}/edit" class="kx-btn-secondary">{{ ui.icon("pencil", "sm") }} Edit</a>
+  <form method="post" action="/fleet/vehicles/{{ v.id }}/status" class="flex items-center gap-2">
+    {{ ui.csrf_field() }}
+    <label class="sr-only" for="status">Status</label>
+    <select id="status" name="status" class="kx-input h-10 w-auto">{% for s in statuses %}<option value="{{ s }}" {% if v.status == s %}selected{% endif %}>{{ status_labels[s] }}</option>{% endfor %}</select>
+    <button type="submit" class="kx-btn-ghost">Change</button>
+  </form>
+  {% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if errors.get("status") %}<div class="mt-5">{{ ui.alert("danger", errors["status"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Odometer</p><p class="mt-1 font-stat text-h2 tnum">{{ "{:,}".format(view.odometer) }} km</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Assigned driver</p><p class="mt-1 font-semibold">{{ view.driver or "None (pool or unassigned)" }}</p></div>
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Average fuel use</p><p class="mt-1 font-stat text-h2 tnum">{% if view.average_km_per_litre %}{{ view.average_km_per_litre | plain }} km/L{% else %}—{% endif %}</p></div>
+  {% if view.can_costs %}
+  <div class="kx-card p-5"><p class="text-xs text-ink-3">Cost this year</p><p class="mt-1 font-stat text-h2 tnum">{{ ytd | money }}</p></div>
+  {% endif %}
+</div>
+
+<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+  <section class="kx-card overflow-hidden" aria-labelledby="docs-h">
+    <div class="flex items-center justify-between gap-3 px-5 pt-5"><h2 id="docs-h" class="font-h3 text-h3">{{ ui.icon("file-text", "sm") }} Papers</h2></div>
+    {% if view.documents %}
+    <ul class="mt-3 divide-y divide-line text-body-sm">
+      {% for d in view.documents %}
+      {% set days = (d.expires_on - today).days %}
+      <li class="flex items-start justify-between gap-3 px-5 py-2.5">
+        <span><span class="font-semibold">{{ document_labels[d.kind] }}</span>{% if d.number %} · {{ d.number }}{% endif %}<span class="block text-xs text-ink-3">{% if d.issuer %}{{ d.issuer }} · {% endif %}{% if d.issued_on %}from {{ d.issued_on | date }} · {% endif %}expires {{ d.expires_on | date }}</span>{% if d.file_id %}<a href="/files/{{ d.file_id }}" target="_blank" rel="noopener" class="text-xs text-iris">{{ ui.icon("paperclip", "sm") }} Copy</a>{% endif %}</span>
+        {% if days < 0 %}{{ ui.badge("danger", "Expired") }}{% elif days <= soon %}{{ ui.badge("warning", days ~ " days left") }}{% else %}{{ ui.badge("success", "In date") }}{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="px-5 pt-2 text-body-sm text-ink-3">No papers recorded. Insurance, the vehicle licence and roadworthiness are checked before a booking.</p>
+    {% endif %}
+    {% if view.can_manage and open %}
+    <details class="border-t border-line px-5 py-4 mt-4" {% if form == "document" %}open{% endif %}>
+      <summary class="cursor-pointer font-semibold text-iris">Add a document</summary>
+      <form method="post" action="/fleet/vehicles/{{ v.id }}/documents" enctype="multipart/form-data" class="mt-3 grid gap-3 sm:grid-cols-2" novalidate>
+        {{ ui.csrf_field() }}
+        <div><label class="kx-label" for="kind">Kind</label><select id="kind" name="kind" class="kx-input">{% for k in kinds %}<option value="{{ k }}" {% if form == "document" and fv.get("kind") == k %}selected{% endif %}>{{ document_labels[k] }}</option>{% endfor %}</select>{{ ui.field_error(errors, "kind") }}</div>
+        <div><label class="kx-label" for="number">Number</label><input id="number" name="number" class="kx-input" value="{{ fv.get('number', '') if form == 'document' }}"></div>
+        <div><label class="kx-label" for="issuer">Issued by</label><input id="issuer" name="issuer" class="kx-input" value="{{ fv.get('issuer', '') if form == 'document' }}"></div>
+        <div><label class="kx-label" for="issued_on">Issued on</label><input id="issued_on" name="issued_on" type="date" class="kx-input" value="{{ fv.get('issued_on', '') if form == 'document' }}"></div>
+        <div><label class="kx-label" for="expires_on">Expires on</label><input id="expires_on" name="expires_on" type="date" class="kx-input" value="{{ fv.get('expires_on', '') if form == 'document' }}">{{ ui.field_error(errors, "expires_on") }}</div>
+        <div><label class="kx-label" for="file">Scan or photo</label><input id="file" name="file" type="file" accept="image/*,application/pdf" class="kx-input">{{ ui.field_error(errors, "file") }}</div>
+        <div class="flex justify-end sm:col-span-2"><button type="submit" class="kx-btn-primary">Add document</button></div>
+      </form>
+    </details>
+    {% else %}<div class="pb-5"></div>{% endif %}
+  </section>
+
+  <section class="kx-card overflow-hidden" aria-labelledby="plans-h">
+    <h2 id="plans-h" class="px-5 pt-5 font-h3 text-h3">{{ ui.icon("wrench", "sm") }} Service plans</h2>
+    {% if view.plans %}
+    <ul class="mt-3 divide-y divide-line text-body-sm">
+      {% for p in view.plans %}
+      <li class="flex items-start justify-between gap-3 px-5 py-2.5">
+        <span><span class="font-semibold">{{ p.plan.name }}</span><span class="block text-xs text-ink-3">Every {% if p.plan.every_km %}{{ "{:,}".format(p.plan.every_km) }} km{% endif %}{% if p.plan.every_km and p.plan.every_months %} or {% endif %}{% if p.plan.every_months %}{{ p.plan.every_months }} months{% endif %}{% if p.plan.last_done_on %} · last done {{ p.plan.last_done_on | date }}{% endif %}</span></span>
+        <span class="text-right text-xs">{% if p.overdue %}{{ ui.badge("danger", "Overdue") }}{% else %}{{ ui.badge("success", "Not due") }}{% endif %}<span class="mt-1 block text-ink-3">{% if p.due_km %}at {{ "{:,}".format(p.due_km) }} km{% endif %}{% if p.due_km and p.due_on %} or {% endif %}{% if p.due_on %}by {{ p.due_on | date }}{% endif %}</span></span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="px-5 pt-2 text-body-sm text-ink-3">No service plans. Add one to be told when a service is due.</p>
+    {% endif %}
+    {% if view.can_manage and open %}
+    <details class="mt-4 border-t border-line px-5 py-4" {% if form == "plans" %}open{% endif %}>
+      <summary class="cursor-pointer font-semibold text-iris">Add a service plan</summary>
+      <form method="post" action="/fleet/vehicles/{{ v.id }}/plans" class="mt-3 grid gap-3 sm:grid-cols-3" novalidate>
+        {{ ui.csrf_field() }}
+        <div class="sm:col-span-3"><label class="kx-label" for="plan_name">Name</label><input id="plan_name" name="plan_name" class="kx-input" value="{{ fv.get('plan_name', '') if form == 'plans' }}" placeholder="Oil and filter change">{{ ui.field_error(errors, "plan_name") }}</div>
+        <div><label class="kx-label" for="every_km">Every (km)</label><input id="every_km" name="every_km" inputmode="numeric" class="kx-input" value="{{ fv.get('every_km', '') if form == 'plans' }}">{{ ui.field_error(errors, "every_km") }}</div>
+        <div><label class="kx-label" for="every_months">or every (months)</label><input id="every_months" name="every_months" inputmode="numeric" class="kx-input" value="{{ fv.get('every_months', '') if form == 'plans' }}">{{ ui.field_error(errors, "every_months") }}</div>
+        <div class="flex items-end justify-end"><button type="submit" class="kx-btn-primary">Save plan</button></div>
+      </form>
+    </details>
+    <details class="border-t border-line px-5 py-4" {% if form == "services" %}open{% endif %}>
+      <summary class="cursor-pointer font-semibold text-iris">Record a service</summary>
+      <form method="post" action="/fleet/vehicles/{{ v.id }}/services" class="mt-3 grid gap-3 sm:grid-cols-2" novalidate>
+        {{ ui.csrf_field() }}
+        <div><label class="kx-label" for="plan_id">Plan</label><select id="plan_id" name="plan_id" class="kx-input"><option value="">Not on a plan (a repair)</option>{% for p in view.plans %}<option value="{{ p.plan.id }}" {% if form == "services" and fv.get("plan_id") == p.plan.id|string %}selected{% endif %}>{{ p.plan.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "plan_id") }}</div>
+        <div><label class="kx-label" for="service_day">Date</label><input id="service_day" name="service_day" type="date" class="kx-input" value="{{ fv.get('service_day', today.isoformat()) if form == 'services' else today.isoformat() }}">{{ ui.field_error(errors, "service_day") }}</div>
+        <div><label class="kx-label" for="service_odometer">Odometer (km)</label><input id="service_odometer" name="service_odometer" inputmode="numeric" class="kx-input" value="{{ fv.get('service_odometer', '') if form == 'services' }}">{{ ui.field_error(errors, "service_odometer") }}</div>
+        <div><label class="kx-label" for="vendor">Workshop</label><input id="vendor" name="vendor" class="kx-input" value="{{ fv.get('vendor', '') if form == 'services' }}"></div>
+        <div class="sm:col-span-2"><label class="kx-label" for="service_description">What was done</label><input id="service_description" name="service_description" class="kx-input" value="{{ fv.get('service_description', '') if form == 'services' }}"><span class="kx-hint">Left blank, the plan's name is used.</span>{{ ui.field_error(errors, "service_description") }}</div>
+        <div><label class="kx-label" for="service_cost">Cost (₦)</label><input id="service_cost" name="service_cost" inputmode="decimal" class="kx-input" value="{{ fv.get('service_cost', '') if form == 'services' }}">{{ ui.field_error(errors, "service_cost") }}</div>
+        <div><label class="kx-label" for="service_reference">Bill reference</label><input id="service_reference" name="service_reference" class="kx-input" value="{{ fv.get('service_reference', '') if form == 'services' }}"><span class="kx-hint">The cost reaches the ledger through the supplier's bill, with this vehicle on the line.</span></div>
+        <div class="flex justify-end sm:col-span-2"><button type="submit" class="kx-btn-primary">Record service</button></div>
+      </form>
+    </details>
+    {% else %}<div class="pb-5"></div>{% endif %}
+  </section>
+</div>
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="history-h">
+  <h2 id="history-h" class="px-5 pt-5 font-h3 text-h3">Service history</h2>
+  {% if view.services %}
+  <div class="kx-scroll-x mt-3">
+    <table class="w-full min-w-[720px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Date</th><th class="px-3 py-3 text-left font-semibold">Work</th><th class="px-3 py-3 text-left font-semibold">Workshop</th><th class="px-3 py-3 text-right font-semibold">Odometer</th><th class="px-5 py-3 text-right font-semibold">Cost</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for s in view.services %}
+        <tr><td class="px-5 py-3 tnum">{{ s.day | date }}</td><td class="px-3 py-3">{{ s.description }}{% if s.reference %}<span class="block text-xs text-ink-3">{{ s.reference }}</span>{% endif %}</td><td class="px-3 py-3">{{ s.vendor or "—" }}</td><td class="px-3 py-3 text-right tnum">{% if s.odometer %}{{ "{:,}".format(s.odometer) }} km{% else %}—{% endif %}</td><td class="px-5 py-3 text-right tnum">{% if s.cost is not none %}{{ s.cost | money }}{% else %}—{% endif %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="px-5 pb-5 pt-2 text-body-sm text-ink-3">No services recorded.</p>
+  {% endif %}
+</section>
+
+<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+  <section class="kx-card overflow-hidden" aria-labelledby="fuel-h">
+    <h2 id="fuel-h" class="px-5 pt-5 font-h3 text-h3">{{ ui.icon("fuel", "sm") }} Fuel</h2>
+    {% if view.fuel %}
+    <ul class="mt-3 divide-y divide-line text-body-sm">
+      {% for l in view.fuel %}
+      <li class="flex items-start justify-between gap-3 px-5 py-2.5">
+        <span class="tnum">{{ l.day | date }} · {{ l.litres | plain }} L<span class="block text-xs text-ink-3">{{ "{:,}".format(l.odometer) }} km{% if l.station %} · {{ l.station }}{% endif %}</span></span>
+        <span class="text-right tnum">{{ l.amount | money }}<span class="block text-xs text-ink-3">{% if l.km_per_litre %}{{ l.km_per_litre | plain }} km/L{% endif %}</span>{% if l.flagged %}{{ ui.badge("warning", "Flagged") }}{% endif %}{% if l.receipt_file_id %}<a href="/files/{{ l.receipt_file_id }}" target="_blank" rel="noopener" class="block text-xs text-iris">Receipt</a>{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="px-5 pb-5 pt-2 text-body-sm text-ink-3">No fuel logged.</p>
+    {% endif %}
+  </section>
+
+  <div class="space-y-6">
+    <section class="kx-card overflow-hidden" aria-labelledby="incidents-h">
+      <h2 id="incidents-h" class="px-5 pt-5 font-h3 text-h3">{{ ui.icon("triangle-alert", "sm") }} Incidents</h2>
+      {% if view.incidents %}
+      <ul class="mt-3 divide-y divide-line text-body-sm">
+        {% for i in view.incidents %}
+        <li class="flex items-start justify-between gap-3 px-5 py-2.5"><span><a href="/fleet/incidents/{{ i.id }}" class="font-semibold text-iris">{{ i.number }}</a> · {{ i.occurred_at | datetime }}<span class="block text-xs text-ink-3">{{ i.place }}</span></span>{{ ui.badge(incident_tones[i.status], incident_labels[i.status]) }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="px-5 pb-5 pt-2 text-body-sm text-ink-3">No incidents.</p>
+      {% endif %}
+    </section>
+
+    {% if view.can_costs %}
+    <section class="kx-card overflow-hidden" aria-labelledby="costs-h">
+      <h2 id="costs-h" class="px-5 pt-5 font-h3 text-h3">Costs this year</h2>
+      {% if view.costs %}
+      <ul class="mt-3 divide-y divide-line text-body-sm">
+        {% for c in view.costs %}<li class="flex justify-between gap-3 px-5 py-2.5"><span>{{ c.account }}</span><span class="tnum">{{ c.net | money }}</span></li>{% endfor %}
+      </ul>
+      {% else %}
+      <p class="px-5 pb-5 pt-2 text-body-sm text-ink-3">Nothing posted yet. Costs appear when a bill, expense or journal line names this vehicle.</p>
+      {% endif %}
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{# Inventory → one item (ADR 0028): what is on hand and where, its value, serial numbers,
+   the stock ledger, and the item's details.
+   Design: design/stitch/exports/inventory.item.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set it = v.item if v else none %}
+{% set val = values %}
+{% if it %}
+{% call ui.page_header(it.code ~ " · " ~ it.name, v.category.name ~ " · " ~ v.unit, "info" if it.tracking != "none" else none, trackings[it.tracking] ~ " tracked" if it.tracking != "none" else none) %}
+  <a href="/inventory/items" class="kx-btn-ghost">Items</a>
+  {% if can_manage and not editing %}<a href="/inventory/items/{{ it.id }}?edit=1#item-form" class="kx-btn-ghost">{{ ui.icon("pencil", "sm") }} Edit</a>{% endif %}
+{% endcall %}
+{% else %}
+{% call ui.page_header("Add item", "Its stock comes in by adjustment (or, from 11b, by goods received).") %}
+  <a href="/inventory/items" class="kx-btn-ghost">Items</a>
+{% endcall %}
+{% endif %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if it and not it.is_active %}<div class="mt-5">{{ ui.alert("info", "This item is inactive: it can't be moved or requested.") }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 {{ 'xl:grid-cols-[minmax(0,1fr)_400px]' if editing }}">
+  {% if it %}
+  <div class="space-y-6">
+    <section class="kx-card p-5" aria-label="Summary">
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div><p class="text-xs text-ink-3">On hand</p><p class="font-stat text-h1 tnum">{{ v.on_hand | plain }} <span class="text-body-sm font-normal text-ink-3">{{ v.unit }}</span></p></div>
+        <div><p class="text-xs text-ink-3">Stock value</p><p class="font-stat text-h1 tnum">{{ v.value | money }}</p></div>
+        <div><p class="text-xs text-ink-3">Average cost</p><p class="font-stat text-h1 tnum">{{ (v.value / v.on_hand) | money if v.on_hand else "—" }}</p></div>
+      </div>
+      <dl class="mt-4 grid gap-x-6 gap-y-2 border-t border-line pt-4 text-body-sm sm:grid-cols-2">
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Valuation</dt><dd>{{ valuations[it.valuation] }}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Reorder level</dt><dd class="tnum">{{ it.reorder_level | plain if it.reorder_level else "—" }}{% if it.reorder_quantity %} · order {{ it.reorder_quantity | plain }}{% endif %}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Accounts</dt><dd class="font-mono text-xs">{{ v.accounts }}</dd></div>
+        <div class="flex justify-between gap-3"><dt class="text-ink-3">Category</dt><dd>{{ v.category.name }}</dd></div>
+      </dl>
+      {% if it.description %}<p class="mt-3 text-body-sm text-ink-2">{{ it.description }}</p>{% endif %}
+    </section>
+
+    <section class="kx-card overflow-hidden" aria-labelledby="places-title">
+      <h2 id="places-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Stock by location</h2>
+      {% if v.places %}
+      <div class="kx-scroll-x">
+        <table class="w-full min-w-[520px] text-body-sm">
+          <thead class="bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Warehouse</th><th class="px-3 py-2.5 text-left font-semibold">Bin</th>{% if it.tracking == "lot" %}<th class="px-3 py-2.5 text-left font-semibold">Lot</th><th class="px-3 py-2.5 text-left font-semibold">Expiry</th>{% endif %}<th class="px-5 py-2.5 text-right font-semibold">Quantity</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            {% for p in v.places %}<tr><td class="px-5 py-2.5">{{ p.warehouse }}</td><td class="px-3 py-2.5">{{ p.bin or "—" }}</td>{% if it.tracking == "lot" %}<td class="px-3 py-2.5 font-mono text-xs">{{ p.lot or "—" }}</td><td class="px-3 py-2.5">{{ p.expiry | date if p.expiry else "—" }}</td>{% endif %}<td class="px-5 py-2.5 text-right tnum">{{ p.quantity | plain }}</td></tr>{% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if v.values | length > 1 %}<p class="border-t border-line px-5 py-3 text-xs text-ink-3">{% for w, q, val in v.values %}{{ w }}: {{ q | plain }} at {{ val | money }}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+      {% else %}<p class="px-5 py-4 text-body-sm text-ink-3">None in stock.</p>{% endif %}
+    </section>
+
+    {% if v.serials %}
+    <section class="kx-card p-5" aria-labelledby="serials-title">
+      <h2 id="serials-title" class="font-h3 text-h3">Serial numbers in stock</h2>
+      <ul class="mt-3 flex flex-wrap gap-2 text-xs">{% for n, w, b in v.serials %}<li class="rounded-lg bg-surface-sunken px-2.5 py-1"><span class="font-mono font-semibold">{{ n }}</span> · {{ w }}{% if b %} / {{ b }}{% endif %}</li>{% endfor %}</ul>
+    </section>
+    {% endif %}
+
+    <section class="kx-card overflow-hidden" aria-labelledby="ledger-title">
+      <h2 id="ledger-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Stock ledger</h2>
+      {% if v.ledger %}
+      <div class="kx-scroll-x">
+        <table class="w-full min-w-[720px] text-body-sm">
+          <thead class="bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Date</th><th class="px-3 py-2.5 text-left font-semibold">Document</th><th class="px-3 py-2.5 text-left font-semibold">Warehouse</th><th class="px-3 py-2.5 text-right font-semibold">In</th><th class="px-3 py-2.5 text-right font-semibold">Out</th><th class="px-3 py-2.5 text-right font-semibold">Balance</th><th class="px-5 py-2.5 text-right font-semibold">Value</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            {% for m in v.ledger %}
+            <tr><td class="whitespace-nowrap px-5 py-2.5">{{ m.move_date | date }}</td><td class="px-3 py-2.5"><span class="font-mono text-xs font-semibold">{{ m.number }}</span> <span class="text-xs text-ink-3">{{ kinds[m.kind] }}</span>{% if m.serials %}<span class="block text-xs text-ink-3">{{ m.serials }}</span>{% endif %}</td><td class="px-3 py-2.5">{{ m.warehouse }}</td><td class="px-3 py-2.5 text-right tnum">{{ m.quantity | plain if m.quantity > 0 else "" }}</td><td class="px-3 py-2.5 text-right tnum">{{ (-m.quantity) | plain if m.quantity < 0 else "" }}</td><td class="px-3 py-2.5 text-right tnum">{{ m.balance | plain }}</td><td class="px-5 py-2.5 text-right tnum">{{ m.value | money }}{% if m.journal_id %} <a href="/finance/journals/{{ m.journal_id }}" class="text-xs text-iris">journal</a>{% endif %}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}<p class="px-5 py-4 text-body-sm text-ink-3">No movements yet.</p>{% endif %}
+    </section>
+  </div>
+  {% endif %}
+
+  {% if editing and can_manage %}
+  <aside id="item-form" class="kx-card h-fit p-5" aria-labelledby="item-form-title">
+    <h2 id="item-form-title" class="font-h3 text-h3">{{ "Edit item" if it else "New item" }}</h2>
+    <form method="post" action="{{ '/inventory/items/' ~ it.id if it else '/inventory/items/new' }}" class="mt-4 space-y-4" novalidate>
+      {{ ui.csrf_field() }}
+      {{ ui.text_field("code", "Code", value=val.get("code") or (it.code if it else ""), errors=errors, hint="Leave blank for the next ITM- number") }}
+      {{ ui.text_field("name", "Name", value=val.get("name") or (it.name if it else ""), errors=errors) }}
+      {% set cat = val.get("category_id") or (it.category_id|string if it else "") %}
+      <div><label class="kx-label" for="category_id">Category</label><select id="category_id" name="category_id" class="kx-input"><option value="">Choose</option>{% for c in categories %}<option value="{{ c.id }}" {% if cat == c.id|string %}selected{% endif %}>{{ c.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "category_id") }}</div>
+      {% set un = val.get("unit_id") or (it.unit_id|string if it else "") %}
+      <div><label class="kx-label" for="unit_id">Unit of measure</label><select id="unit_id" name="unit_id" class="kx-input"><option value="">Choose</option>{% for u in units %}<option value="{{ u.id }}" {% if un == u.id|string %}selected{% endif %}>{{ u.code }} · {{ u.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "unit_id") }}</div>
+      <div class="grid grid-cols-2 gap-3">
+        {% set vv = val.get("valuation") or (it.valuation if it else "average") %}
+        <div><label class="kx-label" for="valuation">Valuation</label><select id="valuation" name="valuation" class="kx-input">{% for key, label in valuations.items() %}<option value="{{ key }}" {% if vv == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errors, "valuation") }}</div>
+        {% set tt = val.get("tracking") or (it.tracking if it else "none") %}
+        <div><label class="kx-label" for="tracking">Tracking</label><select id="tracking" name="tracking" class="kx-input">{% for key, label in trackings.items() %}<option value="{{ key }}" {% if tt == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errors, "tracking") }}</div>
+      </div>
+      <p class="text-xs text-ink-3">Valuation and tracking can't change once stock has moved.</p>
+      <div class="grid grid-cols-2 gap-3">
+        {{ ui.text_field("reorder_level", "Reorder level", value=val.get("reorder_level") or (it.reorder_level | plain if it and it.reorder_level else ""), inputmode="decimal", errors=errors) }}
+        {{ ui.text_field("reorder_quantity", "Reorder quantity", value=val.get("reorder_quantity") or (it.reorder_quantity | plain if it and it.reorder_quantity else ""), inputmode="decimal", errors=errors) }}
+      </div>
+      <div><label class="kx-label" for="description">Description</label><textarea id="description" name="description" rows="2" class="kx-input">{{ val.get("description") or (it.description or "" if it else "") }}</textarea></div>
+      {% if it %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="is_active" value="1" class="kx-check" {% if it.is_active %}checked{% endif %}> Active</label>{% endif %}
+      <div class="flex justify-end gap-3 pt-2"><a href="{{ '/inventory/items/' ~ it.id if it else '/inventory/items' }}" class="kx-btn-ghost">Cancel</a><button type="submit" class="kx-btn-primary">Save</button></div>
+    </form>
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

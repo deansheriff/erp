@@ -1,0 +1,8 @@
+Hello {{ name }},
+
+{{ count }} item{{ "s are" if count != 1 else " is" }} at or below the reorder level at {{ organisation }}, as at {{ today }}:
+
+{% for r in rows %}- {{ r.code }} {{ r.name }}, {{ r.warehouse }}: {{ r.on_hand }} {{ r.unit }} on hand (reorder at {{ r.level }}{% if r.reorder != "0" %}, usually {{ r.reorder }}{% endif %})
+{% endfor %}
+
+You get this because you manage items in Kxmeleon. Each item and warehouse is listed at most once a day.

@@ -162,13 +162,123 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Tax settings", "/finance/tax", permission="finance.tax.read"),
         ),
     ),
-    NavModule("inventory", "Inventory", "package", "/inventory"),
-    NavModule("procurement", "Procurement", "shopping-cart", "/procurement"),
-    NavModule("projects", "Projects", "briefcase", "/projects"),
-    NavModule("support", "Support", "headset", "/support"),
-    NavModule("fleet", "Fleet", "truck", "/fleet"),
-    NavModule("collaboration", "Chat", "messages-square", "/chat"),
-    NavModule("ai", "Assistant", "sparkles", "/assistant"),
+    NavModule(
+        "inventory",
+        "Inventory",
+        "package",
+        "/inventory/items",
+        (
+            NavSection("Items", "/inventory/items", permission="inventory.item.read"),
+            NavSection("Movements", "/inventory/movements", permission="inventory.item.read"),
+            NavSection("Counts", "/inventory/counts", permission="inventory.item.read"),
+            NavSection(
+                "Material requests", "/inventory/requests", permission="inventory.request.read"
+            ),
+            NavSection("Setup", "/inventory/setup", permission="inventory.item.read"),
+        ),
+    ),
+    NavModule(
+        "procurement",
+        "Procurement",
+        "shopping-cart",
+        "/procurement/requisitions",
+        (
+            NavSection(
+                "Requisitions",
+                "/procurement/requisitions",
+                permission="procurement.requisition.read",
+            ),
+            NavSection("RFQs", "/procurement/rfqs", permission="procurement.rfq.read"),
+            NavSection(
+                "Supplier performance", "/procurement/suppliers", permission="procurement.rfq.read"
+            ),
+            NavSection(
+                "Settings", "/procurement/settings", permission="procurement.settings.manage"
+            ),
+        ),
+    ),
+    NavModule(
+        "projects",
+        "Projects",
+        "briefcase",
+        "/projects",
+        (
+            NavSection(
+                "Projects",
+                "/projects",
+                permission=("projects.time.log", "projects.project.read"),
+            ),
+            NavSection("My timesheet", "/projects/timesheet", permission="projects.time.log"),
+            NavSection("Time approvals", "/projects/approvals", permission="projects.time.approve"),
+            NavSection(
+                "Profitability", "/projects/profitability", permission="projects.project.read"
+            ),
+            NavSection(
+                "Settings",
+                "/projects/settings",
+                permission=("projects.rate.manage", "projects.settings.manage"),
+            ),
+        ),
+    ),
+    NavModule(
+        "support",
+        "Support",
+        "headset",
+        "/support",
+        (
+            NavSection(
+                "Tickets", "/support", permission=("support.ticket.create", "support.ticket.work")
+            ),
+            NavSection("SLA report", "/support/report", permission="support.report.read"),
+            NavSection("Settings", "/support/settings", permission="support.settings.manage"),
+        ),
+    ),
+    NavModule(
+        "fleet",
+        "Fleet",
+        "truck",
+        "/fleet",
+        (
+            NavSection("My fleet", "/fleet", permission="fleet.vehicle.use"),
+            NavSection("Vehicles", "/fleet/vehicles", permission="fleet.vehicle.read"),
+            NavSection("Bookings", "/fleet/bookings", permission="fleet.vehicle.manage"),
+            NavSection("Incidents", "/fleet/incidents", permission="fleet.vehicle.use"),
+            NavSection("Drivers", "/fleet/drivers", permission="fleet.vehicle.read"),
+            NavSection("Cost per vehicle", "/fleet/costs", permission="fleet.cost.read"),
+            NavSection("Settings", "/fleet/settings", permission="fleet.vehicle.manage"),
+        ),
+    ),
+    NavModule(
+        "chat",
+        "Chat",
+        "messages-square",
+        "/chat",
+        (
+            NavSection("Chat", "/chat", permission="chat.conversation.use"),
+            NavSection("New conversation", "/chat/new", permission="chat.conversation.use"),
+            NavSection("Settings", "/chat/settings", permission="chat.settings.manage"),
+        ),
+    ),
+    NavModule(
+        "assistant",
+        "Assistant",
+        "sparkles",
+        "/assistant",
+        (
+            NavSection("Ask about policies", "/assistant", permission="assistant.policy.ask"),
+            NavSection(
+                "Job descriptions", "/assistant/hiring", permission="assistant.hiring.draft"
+            ),
+            NavSection(
+                "Appraisal evidence",
+                "/assistant/evidence",
+                permission="assistant.evidence.summarise",
+            ),
+            NavSection("Policy library", "/assistant/policies", permission="assistant.policy.ask"),
+            NavSection("History", "/assistant/history", permission="assistant.policy.ask"),
+            NavSection("Settings", "/assistant/settings", permission="system.ai.manage"),
+        ),
+    ),
 )
 
 ADMIN_MODULE = NavModule(

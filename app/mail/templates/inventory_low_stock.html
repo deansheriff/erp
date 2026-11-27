@@ -1,0 +1,10 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ name }},</p>
+<p style="margin:0 0 16px;">{{ count }} item{{ "s are" if count != 1 else " is" }} at or below the reorder level at {{ organisation }}, as at {{ today }}.</p>
+<table role="presentation" style="margin:0 0 16px;border-collapse:collapse;width:100%;">
+<tr><th align="left" style="padding:6px 12px 6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Item</th><th align="left" style="padding:6px 12px 6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Warehouse</th><th align="right" style="padding:6px 12px 6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">On hand</th><th align="right" style="padding:6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Reorder at</th></tr>
+{% for r in rows %}<tr><td style="padding:6px 12px 6px 0;"><strong>{{ r.code }}</strong> {{ r.name }}</td><td style="padding:6px 12px 6px 0;">{{ r.warehouse }}</td><td align="right" style="padding:6px 12px 6px 0;color:#8A4B00;font-weight:600;">{{ r.on_hand }} {{ r.unit }}</td><td align="right" style="padding:6px 0;">{{ r.level }}</td></tr>
+{% endfor %}</table>
+<p style="margin:0;color:#4B4B66;">You get this because you manage items in Kxmeleon. Each item and warehouse is listed at most once a day.</p>
+{% endblock %}

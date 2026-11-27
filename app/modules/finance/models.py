@@ -37,6 +37,7 @@ SOURCES = (
     "bank",
     "tax",
     "asset",
+    "stock",
 )
 
 Money = Numeric(16, 2)
@@ -189,6 +190,12 @@ class JournalLine(IdMixin, Base):
         ForeignKey("finance_accounts.id"), index=True
     )
     cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
+    project_id: Mapped[uuid.UUID | None] = mapped_column(  # ADR 0031
+        ForeignKey("projects.id"), index=True
+    )
+    vehicle_id: Mapped[uuid.UUID | None] = mapped_column(  # ADR 0033
+        ForeignKey("vehicles.id"), index=True
+    )
     description: Mapped[str | None] = mapped_column(String(200))
     debit: Mapped[Decimal] = mapped_column(Money, server_default="0")
     credit: Mapped[Decimal] = mapped_column(Money, server_default="0")
@@ -225,6 +232,8 @@ class FinanceSettings(Base):
     revaluation_reserve_code: Mapped[str] = mapped_column(String(20), server_default="3300")
     disposal_code: Mapped[str] = mapped_column(String(20), server_default="4910")
     revaluation_loss_code: Mapped[str] = mapped_column(String(20), server_default="6910")
+    # Stock in purchasing (ADR 0029), to confirm.
+    grni_code: Mapped[str] = mapped_column(String(20), server_default="2030")
 
 
 # ------------------------------------------------------------------ receivables and tax (ADR 0024)
@@ -335,6 +344,11 @@ class SalesLine(IdMixin, Base):
     vat_code: Mapped[str] = mapped_column(String(8))
     vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
     vat: Mapped[Decimal] = mapped_column(Money)
+    # A stock item (ADR 0029): inventory's items and warehouses.
+    item_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("items.id"))
+    warehouse_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("warehouses.id"))
+    serials: Mapped[str | None] = mapped_column(Text)
+    project_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("projects.id"))  # ADR 0031
 
 
 class Receipt(IdMixin, Base):
@@ -512,6 +526,10 @@ class PurchaseLine(IdMixin, Base):
     vat_code: Mapped[str] = mapped_column(String(8))
     vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
     vat: Mapped[Decimal] = mapped_column(Money)
+    # A stock item (ADR 0029): inventory's items and warehouses.
+    item_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("items.id"))
+    warehouse_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("warehouses.id"))
+    project_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("projects.id"))  # ADR 0031
 
 
 class GoodsReceipt(IdMixin, Base):
@@ -526,6 +544,7 @@ class GoodsReceipt(IdMixin, Base):
     note: Mapped[str | None] = mapped_column(Text)
     created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    journal_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("journals.id"))  # stock
 
 
 class GoodsReceiptLine(IdMixin, Base):
@@ -606,6 +625,10 @@ class BillLine(IdMixin, Base):
     vat_code: Mapped[str] = mapped_column(String(8))
     vat_rate: Mapped[Decimal] = mapped_column(Numeric(5, 2))
     vat: Mapped[Decimal] = mapped_column(Money)
+    item_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("items.id"))  # from its order
+    serials: Mapped[str | None] = mapped_column(Text)  # a debit note returning serial items
+    project_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("projects.id"))  # ADR 0031
+    vehicle_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("vehicles.id"))  # ADR 0033
 
 
 class SupplierPayment(IdMixin, Base):

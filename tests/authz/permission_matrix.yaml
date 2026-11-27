@@ -15,6 +15,8 @@ auditor:
   finance.sales.read: organization
   finance.supplier.read: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
+  fleet.vehicle.read: organization
   hr.employee.banking.read: organization
   hr.employee.compensation.read: organization
   hr.employee.personal.read: organization
@@ -22,6 +24,8 @@ auditor:
   hr.employee.sensitive.read: organization
   hr.employee.statutory.read: organization
   identity.user.read: organization
+  inventory.item.read: organization
+  inventory.request.read: organization
   leave.balance.read: organization
   leave.request.read: organization
   org.structure.read: organization
@@ -30,13 +34,31 @@ auditor:
   payroll.pay.read: organization
   payroll.payslip.read: organization
   payroll.run.read: organization
+  procurement.requisition.read: organization
+  procurement.rfq.read: organization
+  projects.project.read: organization
+  support.report.read: organization
+  support.ticket.read: organization
+director:
+  fleet.cost.read: organization
+  procurement.requisition.approve_any: organization
+  procurement.requisition.approve_director: organization
+  procurement.requisition.read: organization
+  procurement.rfq.read: organization
+  procurement.settings.manage: organization
+  projects.project.read: organization
+  projects.settings.manage: organization
+  projects.time.approve_any: organization
 employee:
+  assistant.policy.ask: self
   attendance.clock.use: self
   attendance.correction.request: self
   attendance.photo.view: self
   attendance.record.read: self
+  chat.conversation.use: self
   expenses.claim.create: self
   expenses.claim.read: self
+  fleet.vehicle.use: self
   hr.employee.banking.read: self
   hr.employee.compensation.read: self
   hr.employee.personal.read: self
@@ -45,6 +67,8 @@ employee:
   hr.employee.sensitive.read: self
   hr.employee.statutory.read: self
   hr.profile.request_change: self
+  inventory.request.create: self
+  inventory.request.read: self
   leave.balance.read: self
   leave.request.create: self
   leave.request.read: self
@@ -53,6 +77,11 @@ employee:
   payroll.pay.read: self
   payroll.payslip.read: self
   payroll.relief.declare: self
+  procurement.requisition.create: self
+  procurement.requisition.read: self
+  projects.time.log: self
+  support.ticket.create: self
+  support.ticket.read: self
 expense_approver:
   expenses.claim.approve: team
   expenses.claim.read: team
@@ -92,6 +121,8 @@ finance_manager:
   finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
+  inventory.item.read: organization
   payroll.certificate.read: organization
   payroll.loan.approve: organization
   payroll.loan.read: organization
@@ -101,6 +132,13 @@ finance_manager:
   payroll.run.read: organization
   payroll.run.review: organization
   payroll.settings.manage: organization
+  procurement.requisition.approve_finance: organization
+  procurement.requisition.read: organization
+  procurement.rfq.read: organization
+  procurement.settings.manage: organization
+  projects.project.read: organization
+  projects.rate.manage: organization
+  projects.settings.manage: organization
 finance_officer:
   expenses.claim.read: organization
   finance.account.read: organization
@@ -122,12 +160,20 @@ finance_officer:
   finance.supplier.manage: organization
   finance.supplier.read: organization
   finance.tax.read: organization
+  inventory.item.read: organization
   payroll.loan.read: organization
   payroll.remittance.export: organization
   payroll.run.pay: organization
   payroll.run.read: organization
-fleet_manager: {}
+fleet_manager:
+  fleet.cost.read: organization
+  fleet.vehicle.manage: organization
+  fleet.vehicle.read: organization
+  fleet.vehicle.use: organization
 hr_manager:
+  assistant.evidence.summarise: organization
+  assistant.hiring.draft: organization
+  assistant.policy.manage: organization
   attendance.correction.request: organization
   attendance.photo.view: organization
   attendance.record.approve: organization
@@ -162,6 +208,8 @@ hr_manager:
   leave.settings.manage: organization
   org.structure.read: organization
 hr_officer:
+  assistant.hiring.draft: organization
+  assistant.policy.manage: organization
   attendance.correction.request: organization
   attendance.photo.view: organization
   attendance.record.approve: organization
@@ -185,20 +233,41 @@ hr_officer:
   leave.request.read: organization
   org.structure.read: organization
   payroll.relief.verify: organization
-inventory_clerk: {}
+inventory_clerk:
+  inventory.item.read: organization
+  inventory.request.read: organization
+  inventory.stock.move: organization
+inventory_manager:
+  inventory.item.manage: organization
+  inventory.item.read: organization
+  inventory.request.approve_any: organization
+  inventory.request.read: organization
+  inventory.stock.approve: organization
+  inventory.stock.move: organization
 it_support:
   hr.checklist.it: organization
   hr.employee.read: organization
 line_manager:
+  assistant.evidence.summarise: team
   attendance.record.approve: team
   attendance.record.read: team
   expenses.claim.approve: team
   expenses.claim.read: team
   hr.employee.personal.read: team
+  inventory.request.approve: team
+  inventory.request.read: team
   leave.balance.read: team
   leave.request.approve: team
   leave.request.read: team
+  procurement.requisition.approve: team
+  procurement.requisition.read: team
+  projects.time.approve: organization
 organization_administrator:
+  assistant.evidence.summarise: organization
+  assistant.hiring.draft: organization
+  assistant.policy.ask: organization
+  assistant.policy.manage: organization
+  assistant.ticket.suggest: organization
   attendance.clock.use: self
   attendance.correction.request: organization
   attendance.photo.view: organization
@@ -211,6 +280,9 @@ organization_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  chat.channel.moderate: organization
+  chat.conversation.use: organization
+  chat.settings.manage: organization
   expenses.claim.approve: organization
   expenses.claim.approve_any: organization
   expenses.claim.approve_finance: organization
@@ -251,6 +323,10 @@ organization_administrator:
   finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
+  fleet.vehicle.manage: organization
+  fleet.vehicle.read: organization
+  fleet.vehicle.use: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization
@@ -272,6 +348,14 @@ organization_administrator:
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization
+  inventory.item.manage: organization
+  inventory.item.read: organization
+  inventory.request.approve: organization
+  inventory.request.approve_any: organization
+  inventory.request.create: organization
+  inventory.request.read: organization
+  inventory.stock.approve: organization
+  inventory.stock.move: organization
   leave.balance.adjust: organization
   leave.balance.read: organization
   leave.request.approve: organization
@@ -301,6 +385,28 @@ organization_administrator:
   payroll.run.review: organization
   payroll.settings.manage: organization
   payroll.structure.manage: organization
+  procurement.requisition.approve: organization
+  procurement.requisition.approve_any: organization
+  procurement.requisition.approve_director: organization
+  procurement.requisition.approve_finance: organization
+  procurement.requisition.create: organization
+  procurement.requisition.read: organization
+  procurement.rfq.manage: organization
+  procurement.rfq.read: organization
+  procurement.settings.manage: organization
+  procurement.supplier.rate: organization
+  projects.project.create: organization
+  projects.project.read: organization
+  projects.rate.manage: organization
+  projects.settings.manage: organization
+  projects.time.approve: organization
+  projects.time.approve_any: organization
+  projects.time.log: organization
+  support.report.read: organization
+  support.settings.manage: organization
+  support.ticket.create: organization
+  support.ticket.read: organization
+  support.ticket.work: organization
 payroll_officer:
   payroll.certificate.read: organization
   payroll.loan.manage: organization
@@ -314,11 +420,28 @@ payroll_officer:
   payroll.run.read: organization
   payroll.run.review: organization
   payroll.structure.manage: organization
-procurement_officer: {}
+procurement_officer:
+  finance.purchase.create: organization
+  finance.purchase.read: organization
+  finance.supplier.read: organization
+  inventory.item.read: organization
+  procurement.requisition.read: organization
+  procurement.rfq.manage: organization
+  procurement.rfq.read: organization
+  procurement.supplier.rate: organization
+project_manager:
+  finance.customer.read: organization
+  projects.project.create: organization
+  projects.time.approve: organization
 reimburser:
   expenses.claim.read: organization
   expenses.claim.reimburse: organization
 super_administrator:
+  assistant.evidence.summarise: organization
+  assistant.hiring.draft: organization
+  assistant.policy.ask: organization
+  assistant.policy.manage: organization
+  assistant.ticket.suggest: organization
   attendance.clock.use: organization
   attendance.correction.request: organization
   attendance.photo.view: organization
@@ -331,6 +454,9 @@ super_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  chat.channel.moderate: organization
+  chat.conversation.use: organization
+  chat.settings.manage: organization
   expenses.claim.approve: organization
   expenses.claim.approve_any: organization
   expenses.claim.approve_finance: organization
@@ -371,6 +497,10 @@ super_administrator:
   finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
+  fleet.vehicle.manage: organization
+  fleet.vehicle.read: organization
+  fleet.vehicle.use: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization
@@ -392,6 +522,14 @@ super_administrator:
   identity.user.invite: organization
   identity.user.manage: organization
   identity.user.read: organization
+  inventory.item.manage: organization
+  inventory.item.read: organization
+  inventory.request.approve: organization
+  inventory.request.approve_any: organization
+  inventory.request.create: organization
+  inventory.request.read: organization
+  inventory.stock.approve: organization
+  inventory.stock.move: organization
   leave.balance.adjust: organization
   leave.balance.read: organization
   leave.request.approve: organization
@@ -421,8 +559,36 @@ super_administrator:
   payroll.run.review: organization
   payroll.settings.manage: organization
   payroll.structure.manage: organization
+  procurement.requisition.approve: organization
+  procurement.requisition.approve_any: organization
+  procurement.requisition.approve_director: organization
+  procurement.requisition.approve_finance: organization
+  procurement.requisition.create: organization
+  procurement.requisition.read: organization
+  procurement.rfq.manage: organization
+  procurement.rfq.read: organization
+  procurement.settings.manage: organization
+  procurement.supplier.rate: organization
+  projects.project.create: organization
+  projects.project.read: organization
+  projects.rate.manage: organization
+  projects.settings.manage: organization
+  projects.time.approve: organization
+  projects.time.approve_any: organization
+  projects.time.log: organization
+  support.report.read: organization
+  support.settings.manage: organization
+  support.ticket.create: organization
+  support.ticket.read: organization
+  support.ticket.work: organization
+  system.ai.manage: organization
   system.branding.manage: organization
   system.mail.manage: organization
   system.security.manage: organization
   system.storage.manage: organization
-support_agent: {}
+support_agent:
+  assistant.ticket.suggest: organization
+  finance.customer.read: organization
+  support.report.read: organization
+  support.ticket.read: organization
+  support.ticket.work: organization

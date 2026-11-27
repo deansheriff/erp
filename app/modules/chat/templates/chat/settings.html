@@ -1,0 +1,18 @@
+{# Chat → settings (ADR 0034): the edit window, the unread email delay and retention.
+   Design: design/stitch/exports/chat.settings.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Chat settings", "Editing, email reminders and how long messages are kept.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+
+<form method="post" action="/chat/settings" class="kx-card mt-6 max-w-2xl space-y-5 p-6" novalidate>
+  {{ ui.csrf_field() }}
+  {{ ui.text_field("edit_minutes", "Senders can edit messages for (minutes)", v.get("edit_minutes", ""), errors=errors, inputmode="numeric", hint="0 turns editing off.") }}
+  {{ ui.text_field("email_after_minutes", "Email someone about an unread mention or direct message after (minutes)", v.get("email_after_minutes", ""), errors=errors, inputmode="numeric", hint="At most one email per conversation per day. The email never includes the message.") }}
+  {{ ui.text_field("retention_days", "Delete messages older than (days)", v.get("retention_days", ""), errors=errors, inputmode="numeric", hint="Leave blank to keep messages indefinitely. At least 30 days.") }}
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save settings</button></div>
+</form>
+{% endblock %}

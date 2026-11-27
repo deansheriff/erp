@@ -1,0 +1,31 @@
+{# The assistant's panel on a support ticket, for agents (ADR 0035). The suggested reply
+   fills a reply form the agent edits and sends; the category is advice only. #}
+{% import "components/ui.html" as ui with context %}
+<section id="assistant-panel" class="kx-card space-y-3 p-5 text-body-sm" aria-labelledby="assistant-h">
+  <h2 id="assistant-h" class="flex items-center gap-2 font-semibold">{{ ui.icon("sparkles", "sm") }} Assistant</h2>
+  {% if unavailable %}
+  <p class="text-xs text-ink-3">{{ unavailable }}</p>
+  {% else %}
+  {% if error %}{{ ui.alert("danger", error) }}{% endif %}
+  {% if result %}
+  {% set reply = result.reply %}
+  {% if result.status == "refused" %}
+  {{ ui.alert("warning", reply.get("message", "The assistant couldn't suggest anything.")) }}
+  {% else %}
+  <div><p class="text-xs text-ink-3">Suggested category</p><p class="font-semibold">{{ reply.get("category", "") }}</p><p class="text-xs text-ink-3">{{ reply.get("reason", "") }}</p></div>
+  <form method="post" action="/support/{{ ticket_id }}/reply" hx-boost="true" class="space-y-2" novalidate>
+    {{ ui.csrf_field() }}
+    <input type="hidden" name="kind" value="reply">
+    <label class="kx-label" for="assistant-reply">Draft reply</label>
+    <textarea id="assistant-reply" name="body" rows="8" class="kx-input">{{ reply.get("reply", "") }}</textarea>
+    <p class="text-xs text-ink-3">A draft: edit it, then send it yourself.</p>
+    <div class="flex justify-end"><button type="submit" class="kx-btn-secondary">{{ ui.icon("send", "sm") }} Send this reply</button></div>
+  </form>
+  {% endif %}
+  {% endif %}
+  <form method="post" action="/assistant/tickets/{{ ticket_id }}/suggest" hx-post="/assistant/tickets/{{ ticket_id }}/suggest" hx-target="#assistant-panel" hx-swap="outerHTML">
+    {{ ui.csrf_field() }}
+    <button type="submit" class="kx-btn-ghost w-full">{{ ui.icon("sparkles", "sm") }} {{ "Suggest again" if result else "Suggest a category and reply" }}</button>
+  </form>
+  {% endif %}
+</section>

@@ -1,0 +1,61 @@
+{# Support → tickets (ADR 0032): your own, your team's queue, those assigned to you, and
+   all of your teams'. Design: design/stitch/exports/support.tickets.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro sla_chip(clock) -%}
+{%- if clock.state == "met" %}{{ ui.badge("success", "Met") }}
+{%- elif clock.state == "breached" and clock.left >= 0 %}{{ ui.badge("danger", "Breached") }}
+{%- elif clock.state == "breached" %}{{ ui.badge("danger", "Breached " ~ sla_left(-clock.left) ~ " ago") }}
+{%- elif clock.state == "paused" %}{{ ui.badge("neutral", "Paused") }}
+{%- elif clock.state == "warning" %}{{ ui.badge("warning", sla_left(clock.left) ~ " left") }}
+{%- else %}{{ ui.badge("success", sla_left(clock.left) ~ " left") }}{% endif -%}
+{%- endmacro %}
+{% macro sla_left(minutes) -%}{% set h = (minutes // 60) %}{% set m = minutes % 60 %}{% if h %}{{ h }}h{% if m %} {{ m }}m{% endif %}{% else %}{{ m }}m{% endif %}{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Support tickets", "Ask a team for help, and follow what's happening.") %}
+  {% if can_raise %}<a href="/support/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New ticket</a>{% endif %}
+{% endcall %}
+
+<div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+  <nav class="kx-segment" aria-label="Tickets">
+    {% for key, label in tabs %}
+    <a href="/support?tab={{ key }}" class="flex min-h-[32px] items-center rounded-lg px-3 text-xs font-medium {{ 'bg-iris font-semibold text-on-iris shadow-card' if tab == key else 'text-ink-2 hover:text-ink' }}" {% if tab == key %}aria-current="page"{% endif %}>{{ label }}{% if counts.get(key) %} ({{ counts[key] }}){% endif %}</a>
+    {% endfor %}
+  </nav>
+  {% if teams %}
+  <form method="get" class="flex flex-wrap items-center gap-2">
+    <input type="hidden" name="tab" value="{{ tab }}">
+    <label class="sr-only" for="team">Team</label><select id="team" name="team" class="kx-input h-10 w-auto"><option value="">All my teams</option>{% for t in teams %}<option value="{{ t.id }}" {% if team == t.id|string %}selected{% endif %}>{{ t.name }}</option>{% endfor %}</select>
+    <label class="sr-only" for="status">Status</label><select id="status" name="status" class="kx-input h-10 w-auto"><option value="">Any open status</option>{% for key, label in status_labels.items() %}<option value="{{ key }}" {% if status == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+    <button type="submit" class="kx-btn-secondary">Filter</button>
+  </form>
+  {% endif %}
+</div>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="Tickets">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[980px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Ticket</th><th class="px-3 py-3 text-left font-semibold">Category</th><th class="px-3 py-3 text-left font-semibold">Priority</th><th class="px-3 py-3 text-left font-semibold">Assignee</th><th class="px-3 py-3 text-left font-semibold">SLA</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        {% set t = r.ticket %}
+        <tr>
+          <td class="px-5 py-3"><a href="/support/{{ t.id }}" class="font-semibold text-iris">{{ t.subject }}</a><span class="block text-xs text-ink-3"><span class="font-mono">{{ t.number }}</span> · {{ r.who }}{% if t.customer_id %} (customer){% endif %} · {{ t.updated_at | datetime }}</span></td>
+          <td class="px-3 py-3 text-ink-2">{{ r.team }} · {{ r.category }}</td>
+          <td class="px-3 py-3">{{ ui.badge(priority_tones[t.priority], priority_labels[t.priority]) }}</td>
+          <td class="px-3 py-3">{% if r.assignee %}{{ r.assignee }}{% elif tab in ("queue", "all") and t.status in ("open", "in_progress") %}<form method="post" action="/support/{{ t.id }}/take">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-secondary text-xs">Take</button></form>{% else %}<span class="text-ink-3">Unassigned</span>{% endif %}</td>
+          <td class="px-3 py-3">{{ sla_chip(r.clock) }}</td>
+          <td class="px-5 py-3">{{ ui.badge(status_tones[t.status], status_labels[t.status]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("headset", "Nothing here", "Tickets appear here once they're raised.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

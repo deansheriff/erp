@@ -1,0 +1,9 @@
+Hello {{ name }},
+
+{% if kind == "resolved" %}Your request {{ number }} ({{ title }}) has been resolved at {{ organisation }}:
+
+{{ body }}
+
+If it isn't fixed, reply to the team before it closes.{% else %}There's a reply on your request {{ number }} ({{ title }}) at {{ organisation }}:
+
+{{ body }}{% endif %}

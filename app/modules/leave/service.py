@@ -19,7 +19,7 @@ from app.files import service as files
 from app.identity.models import User
 from app.identity.schemas import Actor
 from app.modules.hr import service as people
-from app.modules.leave import balances, days
+from app.modules.leave import balances, days, evidence
 from app.modules.leave.files import LEAVE_CERTIFICATE
 from app.modules.leave.models import LeaveDecision, LeaveRequest, LeaveType
 from app.modules.leave.schemas import CalendarRow, DecisionView, RequestView
@@ -553,3 +553,10 @@ def approved_days(
             found[(r.employee_id, day)] = (names.get(r.leave_type_id, ""), part)
             day = date.fromordinal(day.toordinal() + 1)
     return found
+
+
+def evidence_facts(
+    db: Session, employee_id: uuid.UUID, start: date, end: date
+) -> list[tuple[str, str]]:
+    """Plain facts for the assistant's appraisal evidence (ADR 0035)."""
+    return evidence.facts(db, employee_id, start, end)

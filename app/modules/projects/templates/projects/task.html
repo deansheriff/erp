@@ -1,0 +1,28 @@
+{# Projects → a task (ADR 0031): its milestone, assignee, due date and status.
+   Design: design/stitch/exports/projects.task.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set p = view.project %}
+{% set v = values %}
+{% call ui.page_header(task.title if task else "New task", p.code ~ " " ~ p.name) %}
+  <a href="/projects/{{ p.id }}#plan" class="kx-btn-ghost">Back to {{ p.code }}</a>
+  {% if task %}<form method="post" action="/projects/tasks/{{ task.id }}/delete">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-danger-text">{{ ui.icon("trash-2", "sm") }} Delete task</button></form>{% endif %}
+{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<form method="post" action="/projects/{{ p.id }}/tasks" class="kx-card mt-6 max-w-3xl p-5" novalidate>
+  {{ ui.csrf_field() }}
+  {% if task %}<input type="hidden" name="task_id" value="{{ task.id }}">{% endif %}
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div class="sm:col-span-2">{{ ui.text_field("title", "Title", value=v.get("title") or (task.title if task else ""), errors=errors) }}</div>
+    <div><label class="kx-label" for="milestone_id">Milestone</label><select id="milestone_id" name="milestone_id" class="kx-input"><option value="">None</option>{% for m in view.milestones %}<option value="{{ m.milestone.id }}" {% if (v.get("milestone_id") or (task.milestone_id|string if task and task.milestone_id else "")) == m.milestone.id|string %}selected{% endif %}>{{ m.milestone.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "milestone_id") }}</div>
+    <div><label class="kx-label" for="assignee_id">Assignee</label><select id="assignee_id" name="assignee_id" class="kx-input"><option value="">Unassigned</option>{% for eid, name in view.members %}<option value="{{ eid }}" {% if (v.get("assignee_id") or (task.assignee_employee_id|string if task and task.assignee_employee_id else "")) == eid|string %}selected{% endif %}>{{ name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "assignee_id") }}</div>
+    {{ ui.text_field("due_date", "Due date", value=v.get("due_date") or (task.due_date.isoformat() if task and task.due_date else ""), type="date", errors=errors) }}
+    <div><label class="kx-label" for="status">Status</label><select id="status" name="status" class="kx-input">{% for key, label in task_labels.items() %}<option value="{{ key }}" {% if (v.get("status") or (task.status if task else "todo")) == key %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div class="sm:col-span-2"><label class="kx-label" for="description">Description</label><textarea id="description" name="description" rows="3" class="kx-input">{{ v.get("description") or (task.description or "" if task else "") }}</textarea></div>
+  </div>
+  <div class="mt-5 flex justify-end"><button type="submit" class="kx-btn-primary">Save task</button></div>
+</form>
+{% endblock %}

@@ -4,6 +4,7 @@ journal in the same transaction; a credit note is issued by someone other than i
 drafter. Issued documents are never edited."""
 
 import uuid
+from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date, datetime, timedelta
 from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
@@ -17,7 +18,16 @@ from app.core import clock, numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
 from app.mail import service as mail
-from app.modules.finance import accounts, journals, pdf, periods, receivables, tax
+from app.modules.finance import (
+    accounts,
+    journals,
+    pdf,
+    periods,
+    project_link,
+    receivables,
+    stock_link,
+    tax,
+)
 from app.modules.finance.models import (
     DOCUMENT_KINDS,
     VAT_CODES,
@@ -121,6 +131,10 @@ class LineInput:
     quantity: str
     unit_price: str
     vat_code: str
+    item_id: str = ""  # a stock item (ADR 0029)
+    warehouse_id: str = ""
+    serials: str = ""
+    project_id: str = ""  # ADR 0031
 
 
 @dataclass(frozen=True, slots=True)
@@ -144,6 +158,10 @@ class ParsedLine:
     quantity: Decimal
     unit_price: Decimal
     vat_code: str
+    item_id: uuid.UUID | None = None
+    warehouse_id: uuid.UUID | None = None
+    serials: str = ""
+    project_id: uuid.UUID | None = None
 
     @property
     def net(self) -> Decimal:
@@ -165,27 +183,57 @@ def _quantity(value: str, key: str, errors: dict[str, str]) -> Decimal:
     return amount
 
 
+def _stock_fields(
+    db: Session, line: LineInput, key: str, errors: dict[str, str]
+) -> tuple[stock_link.StockItem | None, uuid.UUID | None]:
+    """A line's stock item and warehouse, if it names one (ADR 0029)."""
+    item_id = _uuid(line.item_id)
+    if item_id is None:
+        return None, None
+    link = stock_link.link()
+    item = link.item(db, item_id)
+    warehouse = _uuid(line.warehouse_id)
+    if item is None or not item.is_active:
+        errors[key] = "Choose an active stock item."
+    elif warehouse not in {w for w, _ in link.warehouses(db)}:
+        errors[key] = "Choose the warehouse for the stock item."
+    return item, warehouse
+
+
 def parse_lines(
-    db: Session, lines: list[LineInput], *, allowed: list[Account] | None = None
+    db: Session,
+    lines: list[LineInput],
+    *,
+    allowed: list[Account] | None = None,
+    stock_account: bool = False,
 ) -> tuple[list[ParsedLine], dict[str, str]]:
     """Form lines, skipping empty rows. Errors are keyed `line_<n>` by the row's place.
-    Accounts are income ones unless `allowed` says otherwise (purchases use expenses)."""
+    Accounts are income ones unless `allowed` says otherwise (purchases use expenses).
+    With `stock_account`, a stock line is charged to its item's inventory account."""
     errors: dict[str, str] = {}
     known = {a.id: a for a in (allowed if allowed is not None else income_accounts(db))}
+    everything = {a.id: a for a in accounts.postable(db)}
     wrong_account = "Choose an income account." if allowed is None else "Choose an account."
     centres = {cid for cid, _ in org.cost_centre_choices(db)}
     parsed = []
     for i, line in enumerate(lines):
-        if not (line.description.strip() or line.account_id or line.unit_price.strip()):
+        if not (
+            line.description.strip() or line.account_id or line.unit_price.strip() or line.item_id
+        ):
             continue
         key = f"line_{i}"
         quantity = _quantity(line.quantity, key, errors)
         price = journals.parse_amount(line.unit_price, key, errors)
+        item, warehouse = _stock_fields(db, line, key, errors)
+        project = project_link.check(db, line.project_id, key, errors)
         if key in errors:
             continue
         account = known.get(_uuid(line.account_id))  # type: ignore[arg-type]
+        if item is not None and stock_account:
+            account = everything.get(item.inventory_account_id)
+        description = line.description.strip() or (item.name if item else "")
         centre = _uuid(line.cost_centre_id)
-        if not line.description.strip():
+        if not description:
             errors[key] = "Describe the line."
         elif account is None:
             errors[key] = wrong_account
@@ -196,7 +244,16 @@ def parse_lines(
         else:
             parsed.append(
                 ParsedLine(
-                    line.description.strip()[:300], account, centre, quantity, price, line.vat_code
+                    description[:300],
+                    account,
+                    centre,
+                    quantity,
+                    price,
+                    line.vat_code,
+                    item.id if item else None,
+                    warehouse if item else None,
+                    line.serials.strip() if item else "",
+                    project,
                 )
             )
     return parsed, errors
@@ -342,6 +399,10 @@ def _replace_lines(db: Session, doc: SalesDocument, parsed: list[ParsedLine]) ->
                 vat_code=line.vat_code,
                 vat_rate=ZERO,
                 vat=ZERO,
+                item_id=line.item_id,
+                warehouse_id=line.warehouse_id,
+                serials=line.serials or None,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -383,23 +444,90 @@ def _journal_lines(db: Session, doc: SalesDocument) -> list[journals.SystemLine]
     same the other way round."""
     settings = periods.settings(db)
     codes = {a.id: a.code for a in accounts.all_accounts(db)}
-    sides: list[tuple[str, uuid.UUID | None, Decimal]] = [
-        (codes[line.account_id], line.cost_centre_id, line.net) for line in _lines(db, doc.id)
+    sides: list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None]] = [
+        (codes[line.account_id], line.cost_centre_id, line.net, line.project_id)
+        for line in _lines(db, doc.id)
     ]
-    sides.append((settings.vat_output_code, None, doc.vat))
-    sides.append((settings.stamp_duty_code, None, doc.stamp_duty))
+    sides.append((settings.vat_output_code, None, doc.vat, None))
+    sides.append((settings.stamp_duty_code, None, doc.stamp_duty, None))
     credit_note = doc.kind == "credit_note"
     out: list[journals.SystemLine] = [
         (settings.receivables_code, None, ZERO, doc.total)
         if credit_note
         else (settings.receivables_code, None, doc.total, ZERO)
     ]
-    for code, centre, amount in sides:
+    for code, centre, amount, project in sides:
         if amount:
             out.append(
-                (code, centre, amount, ZERO) if credit_note else (code, centre, ZERO, amount)
+                (code, centre, amount, ZERO, project)
+                if credit_note
+                else (code, centre, ZERO, amount, project)
             )
     return out
+
+
+def _stock_cost(db: Session, doc: SalesDocument, line: SalesLine) -> Decimal:
+    """The unit cost a credit note puts stock back at: what its invoice took it out at,
+    else the item's current cost."""
+    link = stock_link.link()
+    if doc.invoice_id:
+        quantity, value = link.taken_out(db, "sales_document", doc.invoice_id, line.item_id)  # type: ignore[arg-type]
+        if quantity:
+            return value / quantity
+    assert line.item_id is not None and line.warehouse_id is not None  # noqa: S101
+    cost = link.unit_cost(db, line.item_id, line.warehouse_id)
+    if cost is None:
+        raise Conflict(f"{line.description} has no cost yet, so it can't be returned to stock.")
+    return cost
+
+
+def _move_stock(db: Session, actor: Actor, doc: SalesDocument) -> list[journals.SystemLine]:
+    """Take an invoice's stock lines out at cost, or put a credit note's back (ADR 0029).
+    Returns the cost of sales and inventory journal lines."""
+    lines = [x for x in _lines(db, doc.id) if x.item_id and x.warehouse_id]
+    if not lines:
+        return []
+    link = stock_link.link()
+    src = stock_link.Source(
+        "sale" if doc.kind == "invoice" else "sale_return",
+        "sales_document",
+        doc.id,
+        doc.number or "",
+        doc.doc_date,
+        actor.user_id,
+    )
+    codes = {a.id: a.code for a in accounts.all_accounts(db)}
+    amounts: dict[tuple[str, uuid.UUID | None], Decimal] = defaultdict(lambda: ZERO)
+    for line in lines:
+        assert line.item_id is not None and line.warehouse_id is not None  # noqa: S101
+        item = link.item(db, line.item_id)
+        assert item is not None  # noqa: S101
+        moving = stock_link.StockLine(
+            f"line_{line.position - 1}",
+            line.item_id,
+            line.warehouse_id,
+            line.quantity,
+            serials=line.serials or "",
+        )
+        try:
+            if doc.kind == "invoice":
+                value = link.move_out(db, src, moving)
+            else:
+                value = (line.quantity * _stock_cost(db, doc, line)).quantize(
+                    CENT, rounding=ROUND_HALF_UP
+                )
+                link.move_in(db, src, moving, value)
+        except ValidationFailed as exc:
+            message = next(iter((exc.field_errors or {}).values()), "Check the stock lines.")
+            raise Conflict(f"{line.description}: {message}") from exc
+        sign = 1 if doc.kind == "invoice" else -1
+        amounts[(codes[item.cogs_account_id], line.project_id)] += sign * value  # debit +
+        amounts[(codes[item.inventory_account_id], None)] -= sign * value
+    return [
+        (code, None, amount, ZERO, project) if amount > 0 else (code, None, ZERO, -amount, project)
+        for (code, project), amount in amounts.items()
+        if amount
+    ]
 
 
 def issue(db: Session, actor: Actor, document_id: uuid.UUID) -> str:
@@ -431,15 +559,17 @@ def issue(db: Session, actor: Actor, document_id: uuid.UUID) -> str:
     db.flush()
     if doc.kind in ("invoice", "credit_note"):
         memo = f"{KIND_LABELS[doc.kind]} {doc.number} · {customer.name}"
+        stock_lines = _move_stock(db, actor, doc)
         journal = journals.post_document_journal(
             db,
             source_id=doc.id,
             journal_date=doc.doc_date,
             memo=memo,
-            lines=_journal_lines(db, doc),
+            lines=_journal_lines(db, doc) + stock_lines,
             poster=actor.user_id,
         )
         doc.journal_id = journal.id
+        stock_link.link().set_journal(db, "sales_document", doc.id, journal.id)
         db.flush()
     if doc.kind == "credit_note" and doc.invoice_id:
         left = _invoice_balance(db, doc.invoice_id)
@@ -545,6 +675,10 @@ def _copy(
                 vat_code=line.vat_code,
                 vat_rate=ZERO,
                 vat=ZERO,
+                item_id=line.item_id,
+                warehouse_id=line.warehouse_id,
+                serials=line.serials,
+                project_id=line.project_id,
             )
         )
     db.flush()
@@ -663,6 +797,13 @@ class LineView:
     vat_code: str
     vat_rate: Decimal
     vat: Decimal
+    item_id: uuid.UUID | None = None  # a stock line (ADR 0029)
+    item: str | None = None
+    warehouse_id: uuid.UUID | None = None
+    warehouse: str | None = None
+    serials: str | None = None
+    project_id: uuid.UUID | None = None  # ADR 0031
+    project: str | None = None
 
     @property
     def vat_label(self) -> str:
@@ -808,6 +949,16 @@ def get_document(db: Session, actor: Actor, document_id: uuid.UUID, *, today: da
     names = journals.user_names(db, {doc.created_by, doc.issued_by})
     codes = {a.id: f"{a.code} {a.name}" for a in accounts.all_accounts(db)}
     centres = dict(org.cost_centre_choices(db))
+    link = stock_link.link()
+    stores = dict(link.warehouses(db))
+    projects = project_link.link().labels(
+        db, {x.project_id for x in _lines(db, doc.id) if x.project_id}
+    )
+    items: dict[uuid.UUID, str] = {}
+    for line in _lines(db, doc.id):
+        if line.item_id and line.item_id not in items:
+            found = link.item(db, line.item_id)
+            items[line.item_id] = found.label if found else ""
     lines = [
         LineView(
             line.description,
@@ -821,6 +972,13 @@ def get_document(db: Session, actor: Actor, document_id: uuid.UUID, *, today: da
             line.vat_code,
             line.vat_rate,
             line.vat,
+            line.item_id,
+            items.get(line.item_id) if line.item_id else None,
+            line.warehouse_id,
+            stores.get(line.warehouse_id, "") if line.warehouse_id else None,
+            line.serials,
+            line.project_id,
+            projects.get(line.project_id) if line.project_id else None,
         )
         for line in _lines(db, doc.id)
     ]

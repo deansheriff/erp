@@ -1185,7 +1185,7 @@ screens:
       email: finance.sales.create
       download_pdf: finance.sales.read
     field_classes: []
-    approved_by: Dean Sheriff (2026-11-22)
+    approved_by: Dean Sheriff (2026-11-26)
 
   - id: finance.receipt
     phase: 10
@@ -1327,7 +1327,7 @@ screens:
       receive: finance.purchase.create
       make_bill: finance.purchase.create
     field_classes: []
-    approved_by: Dean Sheriff (2026-11-22)
+    approved_by: Dean Sheriff (2026-11-26)
 
   - id: finance.bill
     phase: 10
@@ -1347,7 +1347,7 @@ screens:
       post_held: finance.bill.override
       debit_note: finance.purchase.create
     field_classes: []
-    approved_by: Dean Sheriff (2026-11-22)
+    approved_by: Dean Sheriff (2026-11-26)
 
   - id: finance.payment
     phase: 10
@@ -1545,3 +1545,687 @@ screens:
       save: finance.asset.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.items
+    phase: 11
+    module: inventory
+    title: Inventory items (stock value, low stock, the item list)
+    route: GET /inventory/items
+    template: app/modules/inventory/templates/inventory/items.html
+    stitch_screens:
+      desktop: 53bf1e41d9be41bb8c1b2a5a3b05a37b
+    exports:
+      - design/stitch/exports/inventory.items.html
+    permission: inventory.item.read
+    actions:
+      add_item: inventory.item.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.item
+    phase: 11
+    module: inventory
+    title: One inventory item (stock by location, serials, stock ledger, details)
+    route: GET /inventory/items/{item_id}
+    template: app/modules/inventory/templates/inventory/item.html
+    stitch_screens:
+      desktop: 180b459bf97b47649962fbae445c2066
+    exports:
+      - design/stitch/exports/inventory.item.html
+    permission: inventory.item.read
+    actions:
+      save: inventory.item.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.setup
+    phase: 11
+    module: inventory
+    title: Inventory setup (warehouses and bins, item categories, units)
+    route: GET /inventory/setup
+    template: app/modules/inventory/templates/inventory/setup.html
+    stitch_screens:
+      desktop: d6cabcbaa8f34eabbb91fea6af4f33aa
+    exports:
+      - design/stitch/exports/inventory.setup.html
+    permission: inventory.item.read
+    actions:
+      save_warehouse: inventory.item.manage
+      add_bin: inventory.item.manage
+      save_category: inventory.item.manage
+      add_unit: inventory.item.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.movements
+    phase: 11
+    module: inventory
+    title: Stock movements and counts
+    route: GET /inventory/movements
+    template: app/modules/inventory/templates/inventory/movements.html
+    stitch_screens:
+      desktop: 622ebb7ae9ad48689b139be7b9e32a51
+    exports:
+      - design/stitch/exports/inventory.movements.html
+    permission: inventory.item.read
+    actions:
+      new_movement: inventory.stock.move
+      start_count: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.movement
+    phase: 11
+    module: inventory
+    title: One issue, transfer or adjustment
+    route: GET /inventory/movements/{document_id}
+    template: app/modules/inventory/templates/inventory/movement.html
+    stitch_screens:
+      desktop: c83bb6d9c54d4b0c8fe390fdbd93255f
+    exports:
+      - design/stitch/exports/inventory.movement.html
+    permission: inventory.item.read
+    actions:
+      save: inventory.stock.move
+      post_issue_or_transfer: inventory.stock.move
+      submit_adjustment: inventory.stock.move
+      post_adjustment: inventory.stock.approve
+      send_back: inventory.stock.approve
+      delete: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.count
+    phase: 11
+    module: inventory
+    title: A stock count sheet
+    route: GET /inventory/counts/{count_id}
+    template: app/modules/inventory/templates/inventory/count.html
+    stitch_screens:
+      desktop: 264469e43b1d40aca7a240147324ee2d
+    exports:
+      - design/stitch/exports/inventory.count.html
+    permission: inventory.item.read
+    actions:
+      save_counts: inventory.stock.move
+      add_line: inventory.stock.move
+      submit: inventory.stock.move
+      post: inventory.stock.approve
+      send_back: inventory.stock.approve
+      delete: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.requests
+    phase: 11
+    module: inventory
+    title: Material requests
+    route: GET /inventory/requests
+    template: app/modules/inventory/templates/inventory/requests.html
+    stitch_screens:
+      desktop: 577916a255cd4b1184d81c26c6ce0eff
+    exports:
+      - design/stitch/exports/inventory.requests.html
+    permission: inventory.request.read
+    actions:
+      new_request: inventory.request.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: inventory.request
+    phase: 11
+    module: inventory
+    title: One material request (draft, decision, issue)
+    route: GET /inventory/requests/{request_id}
+    template: app/modules/inventory/templates/inventory/request.html
+    stitch_screens:
+      desktop: 724fbb988bef4cdf9346a5cd80bfb4e3
+    exports:
+      - design/stitch/exports/inventory.request.html
+    permission: inventory.request.read
+    actions:
+      save: inventory.request.create
+      submit: inventory.request.create
+      cancel: inventory.request.create
+      approve: inventory.request.approve
+      reject: inventory.request.approve
+      issue: inventory.stock.move
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.requisitions
+    phase: 11
+    module: procurement
+    title: Purchase requisitions
+    route: GET /procurement/requisitions
+    template: app/modules/procurement/templates/procurement/requisitions.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.requisition.read
+    actions:
+      new_requisition: procurement.requisition.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.requisition
+    phase: 11
+    module: procurement
+    title: One purchase requisition (draft, approvals, starting the RFQ)
+    route: GET /procurement/requisitions/{requisition_id}
+    template: app/modules/procurement/templates/procurement/requisition.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.requisition.read
+    actions:
+      save_draft: procurement.requisition.create
+      submit: procurement.requisition.create
+      approve: procurement.requisition.approve
+      start_rfq: procurement.rfq.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.rfqs
+    phase: 11
+    module: procurement
+    title: Requests for quotation
+    route: GET /procurement/rfqs
+    template: app/modules/procurement/templates/procurement/rfqs.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.rfq
+    phase: 11
+    module: procurement
+    title: One RFQ (suppliers, quote comparison, award and order)
+    route: GET /procurement/rfqs/{rfq_id}
+    template: app/modules/procurement/templates/procurement/rfq.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions:
+      invite: procurement.rfq.manage
+      send: procurement.rfq.manage
+      award: procurement.rfq.manage
+      make_order: procurement.rfq.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.quote
+    phase: 11
+    module: procurement
+    title: Record a supplier quote
+    route: GET /procurement/rfqs/{rfq_id}/quotes/{supplier_id}
+    template: app/modules/procurement/templates/procurement/quote.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.suppliers
+    phase: 11
+    module: procurement
+    title: Supplier performance
+    route: GET /procurement/suppliers
+    template: app/modules/procurement/templates/procurement/suppliers.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.supplier
+    phase: 11
+    module: procurement
+    title: One supplier's performance and ratings
+    route: GET /procurement/suppliers/{supplier_id}
+    template: app/modules/procurement/templates/procurement/supplier.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.rfq.read
+    actions:
+      rate: procurement.supplier.rate
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: procurement.settings
+    phase: 11
+    module: procurement
+    title: Procurement settings (approval tiers and quotes)
+    route: GET /procurement/settings
+    template: app/modules/procurement/templates/procurement/settings.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: procurement.settings.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.list
+    phase: 11
+    module: projects
+    title: Projects
+    route: GET /projects
+    template: app/modules/projects/templates/projects/list.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.log
+    actions:
+      new_project: projects.project.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.project
+    phase: 11
+    module: projects
+    title: One project (figures, budget, plan, team, ledger lines)
+    route: GET /projects/{project_id}
+    template: app/modules/projects/templates/projects/project.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.log
+    actions:
+      edit: projects.project.create
+      status: projects.project.create
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.project_form
+    phase: 11
+    module: projects
+    title: Set up or change a project
+    route: GET /projects/new
+    template: app/modules/projects/templates/projects/project_form.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.project.create
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.task
+    phase: 11
+    module: projects
+    title: One project task
+    route: GET /projects/tasks/{task_id}
+    template: app/modules/projects/templates/projects/task.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.project.create
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.timesheet
+    phase: 11
+    module: projects
+    title: My weekly timesheet
+    route: GET /projects/timesheet
+    template: app/modules/projects/templates/projects/timesheet.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.log
+    actions:
+      submit: projects.time.log
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.approvals
+    phase: 11
+    module: projects
+    title: Time approvals
+    route: GET /projects/approvals
+    template: app/modules/projects/templates/projects/approvals.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.time.approve
+    actions:
+      approve: projects.time.approve
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.profitability
+    phase: 11
+    module: projects
+    title: Project profitability
+    route: GET /projects/profitability
+    template: app/modules/projects/templates/projects/profitability.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.project.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: projects.settings
+    phase: 11
+    module: projects
+    title: Project settings and hourly cost rates
+    route: GET /projects/settings
+    template: app/modules/projects/templates/projects/settings.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: projects.settings.manage
+    actions:
+      set_rate: projects.rate.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-26)
+
+  - id: support.tickets
+    phase: 11
+    module: support
+    title: Support tickets
+    route: GET /support
+    template: app/modules/support/templates/support/tickets.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.ticket.read
+    actions:
+      take: support.ticket.work
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.ticket
+    phase: 11
+    module: support
+    title: One support ticket (conversation, assignment, SLA)
+    route: GET /support/{ticket_id}
+    template: app/modules/support/templates/support/ticket.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.ticket.read
+    actions:
+      reply: support.ticket.read
+      resolve: support.ticket.work
+      assign: support.ticket.work
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.ticket_new
+    phase: 11
+    module: support
+    title: Raise a support ticket
+    route: GET /support/new
+    template: app/modules/support/templates/support/new.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.ticket.create
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.sla_report
+    phase: 11
+    module: support
+    title: SLA report
+    route: GET /support/report
+    template: app/modules/support/templates/support/report.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.report.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.settings
+    phase: 11
+    module: support
+    title: Support settings (teams, categories, SLA targets, hours)
+    route: GET /support/settings
+    template: app/modules/support/templates/support/settings.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.settings.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.my
+    phase: 11
+    module: fleet
+    title: My fleet (log fuel, book a pool vehicle, report an incident)
+    route: GET /fleet
+    template: app/modules/fleet/templates/fleet/my.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.use
+    actions:
+      log_fuel: fleet.vehicle.use
+      book: fleet.vehicle.use
+      report: fleet.vehicle.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.vehicles
+    phase: 11
+    module: fleet
+    title: Vehicles
+    route: GET /fleet/vehicles
+    template: app/modules/fleet/templates/fleet/vehicles.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.read
+    actions:
+      add: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.vehicle
+    phase: 11
+    module: fleet
+    title: One vehicle (papers, service plans, fuel, incidents, costs)
+    route: GET /fleet/vehicles/{vehicle_id}
+    template: app/modules/fleet/templates/fleet/vehicle.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.read
+    actions:
+      edit: fleet.vehicle.manage
+      add_document: fleet.vehicle.manage
+      record_service: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.vehicle_form
+    phase: 11
+    module: fleet
+    title: Add or edit a vehicle
+    route: GET /fleet/vehicles/new
+    template: app/modules/fleet/templates/fleet/vehicle_form.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.bookings
+    phase: 11
+    module: fleet
+    title: Vehicle bookings (approvals and what's booked)
+    route: GET /fleet/bookings
+    template: app/modules/fleet/templates/fleet/bookings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.manage
+    actions:
+      approve: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.incidents
+    phase: 11
+    module: fleet
+    title: Vehicle incidents
+    route: GET /fleet/incidents
+    template: app/modules/fleet/templates/fleet/incidents.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.use
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.incident
+    phase: 11
+    module: fleet
+    title: One vehicle incident (photos, review and claim)
+    route: GET /fleet/incidents/{incident_id}
+    template: app/modules/fleet/templates/fleet/incident.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.use
+    actions:
+      add_photo: fleet.vehicle.use
+      review: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.drivers
+    phase: 11
+    module: fleet
+    title: Drivers and their licences
+    route: GET /fleet/drivers
+    template: app/modules/fleet/templates/fleet/drivers.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.read
+    actions:
+      save: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.costs
+    phase: 11
+    module: fleet
+    title: Cost per vehicle
+    route: GET /fleet/costs
+    template: app/modules/fleet/templates/fleet/costs.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.cost.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.settings
+    phase: 11
+    module: fleet
+    title: Fleet settings (alert lead times, fuel efficiency check)
+    route: GET /fleet/settings
+    template: app/modules/fleet/templates/fleet/settings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.home
+    phase: 12
+    module: chat
+    title: Chat (conversation list and the open conversation)
+    route: GET /chat
+    template: app/modules/chat/templates/chat/home.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.conversation.use
+    actions:
+      send: chat.conversation.use
+      react: chat.conversation.use
+      pin: chat.conversation.use
+      edit: chat.conversation.use
+      delete: chat.conversation.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.new
+    phase: 12
+    module: chat
+    title: New conversation (direct message or group)
+    route: GET /chat/new
+    template: app/modules/chat/templates/chat/new.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.conversation.use
+    actions:
+      create_group: chat.conversation.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.details
+    phase: 12
+    module: chat
+    title: Conversation details (members, pins, files)
+    route: GET /chat/{conversation_id}/details
+    template: app/modules/chat/templates/chat/details.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.conversation.use
+    actions:
+      add: chat.conversation.use
+      remove: chat.conversation.use
+      leave: chat.conversation.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.settings
+    phase: 12
+    module: chat
+    title: Chat settings (edit window, unread emails, retention)
+    route: GET /chat/settings
+    template: app/modules/chat/templates/chat/settings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.settings.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.home
+    phase: 13
+    module: assistant
+    title: Ask about policies (checked quotes)
+    route: GET /assistant
+    template: app/modules/assistant/templates/assistant/ask.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.policy.ask
+    actions:
+      ask: assistant.policy.ask
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.hiring
+    phase: 13
+    module: assistant
+    title: Job description and interview question drafts
+    route: GET /assistant/hiring
+    template: app/modules/assistant/templates/assistant/hiring.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.hiring.draft
+    actions:
+      draft: assistant.hiring.draft
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.evidence
+    phase: 13
+    module: assistant
+    title: Appraisal evidence summary (never a rating)
+    route: GET /assistant/evidence
+    template: app/modules/assistant/templates/assistant/evidence.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.evidence.summarise
+    actions:
+      summarise: assistant.evidence.summarise
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.policies
+    phase: 13
+    module: assistant
+    title: Policy library
+    route: GET /assistant/policies
+    template: app/modules/assistant/templates/assistant/policies.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.policy.ask
+    actions:
+      add: assistant.policy.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.history
+    phase: 13
+    module: assistant
+    title: Your assistant history
+    route: GET /assistant/history
+    template: app/modules/assistant/templates/assistant/history.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.policy.ask
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.settings
+    phase: 13
+    module: assistant
+    title: AI assistant settings, opt-in and usage
+    route: GET /assistant/settings
+    template: app/modules/assistant/templates/assistant/settings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: system.ai.manage
+    actions:
+      turn_on: system.ai.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)

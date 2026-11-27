@@ -1,0 +1,9 @@
+{# Who has seen the latest message. Names show under your own latest message in direct
+   messages and groups; channels show only a count. Context: receipt (or none). #}
+{% if receipt and receipt.of %}
+{% if not receipt.show_names %}
+Seen by {{ receipt.count }} of {{ receipt.of }}
+{% elif receipt.mine %}
+{% if receipt.names %}Seen by {{ receipt.names | join(", ") }}{% else %}Not seen yet{% endif %}
+{% endif %}
+{% endif %}

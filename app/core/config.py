@@ -22,6 +22,11 @@ class Settings(BaseSettings):
     db_max_overflow: int = 10
 
     redis_url: str = "redis://localhost:6379/0"
+    # Real-time fan-out (ADR 0034). "memory" works within one process only, for tests
+    # and single-process development; the app refuses to start with it in production.
+    realtime_backend: Literal["redis", "memory"] = "redis"
+    # How often an open WebSocket re-validates its session.
+    ws_recheck_seconds: int = 60
     base_url: str = "http://localhost:8000"
     timezone: str = "Africa/Lagos"
     web_threads: int = 40

@@ -1,0 +1,7 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ name }},</p>
+<p style="margin:0 0 16px;">{{ sender }} sent you a message in <strong>{{ where }}</strong> at {{ organisation }}, and it's still unread.</p>
+<p style="margin:24px 0;"><a href="{{ link }}" style="display:inline-block;background:#5A4BDB;color:#FFFFFF;text-decoration:none;font-weight:600;padding:12px 20px;border-radius:10px;">Open chat</a></p>
+<p style="margin:0;color:#4B4B66;">You get this for mentions and direct messages left unread for a while, at most once a day for each conversation. The message itself stays in Kxmeleon.</p>
+{% endblock %}

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary":"#ffffff","ink-3":"#626280","on-background":"#1a1c1f","danger-bg":"#FFE4E6","surface-container":"#ededf1","lime":"#C5F04A","inverse-primary":"#c5c0ff","primary":"#412ec2","secondary-fixed":"#c7f24c","iris":"#5A4BDB","on-iris":"#FFFFFF","destructive":"#C42836","tertiary-fixed-dim":"#ffb68b","warning-text":"#8A4B00","error-container":"#ffdad6","on-tertiary-fixed-variant":"#743400","outline-variant":"#c8c4d7","tertiary-container":"#9f4a00","on-primary-fixed":"#140067","info-bg":"#DFEBFF","line-strong":"#8B8BA6","success-bg":"#DDF7E8","ink-2":"#4B4B66","line":"#E4E4EE","surface":"#FFFFFF","on-primary-fixed-variant":"#3d28be","iris-hover":"#4A3CC4","on-error-container":"#93000a","inverse-surface":"#2e3034","secondary-container":"#c4ef49","on-tertiary-fixed":"#321300","tertiary":"#7a3700","tertiary-fixed":"#ffdbc8","on-tertiary-container":"#ffd7c1","danger-text":"#B4232F","outline":"#787586","success-text":"#0F6B3E","secondary":"#4f6600","on-primary-container":"#e0dbff","background":"#f9f9fd","primary-container":"#5a4bdb","surface-raised":"#FFFFFF","primary-fixed-dim":"#c5c0ff","surface-container-highest":"#e2e2e6","surface-variant":"#e2e2e6","on-surface":"#1a1c1f","surface-bright":"#f9f9fd","primary-fixed":"#e4dfff","secondary-fixed-dim":"#acd530","surface-tint":"#5646d7","surface-sunken":"#EFEFF6","inverse-on-surface":"#f0f0f4","lime-ink":"#4D7A0A","warning-bg":"#FFF1D6","on-surface-variant":"#474554","surface-dim":"#d9dade","on-secondary-fixed":"#161f00","surface-container-high":"#e8e8ec","on-secondary-container":"#536b00","on-secondary-fixed-variant":"#3b4d00","on-secondary":"#ffffff","iris-tint":"#EEECFD","canvas":"#F6F6FA","info-text":"#1D55B8","on-primary":"#ffffff","ink":"#16162A","surface-container-lowest":"#ffffff","on-error":"#ffffff","surface-container-low":"#f3f3f7","error":"#ba1a1a"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin":"2rem","space-xl":"2rem","gutter":"1.5rem","space-sm":"0.5rem","space-3xl":"4rem","space-xs":"0.25rem","space-lg":"1.5rem","space-md":"1rem","space-2xl":"3rem"},fontFamily:{"h2":["Plus Jakarta Sans"],"body-sm":["Inter"],"label":["Inter"],"h1":["Plus Jakarta Sans"],"h3":["Plus Jakarta Sans"],"overline":["Inter"],"body":["Inter"],"display":["Plus Jakarta Sans"],"stat":["Plus Jakarta Sans"]},fontSize:{"h2":["18px",{lineHeight:"28px",letterSpacing:"-0.015em",fontWeight:"600"}],"body-sm":["14px",{lineHeight:"20px",fontWeight:"400"}],"label":["14px",{lineHeight:"20px",fontWeight:"500"}],"h1":["24px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"700"}],"h3":["16px",{lineHeight:"24px",letterSpacing:"-0.015em",fontWeight:"600"}],"overline":["12px",{lineHeight:"16px",letterSpacing:"0.06em",fontWeight:"600"}],"body":["16px",{lineHeight:"24px",fontWeight:"400"}],"display":["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"700"}],"stat":["30px",{lineHeight:"36px",fontWeight:"700"}]}}}}</script></head><body class="bg-background font-body text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col h-full"><div class="h-16 px-space-md flex items-center gap-space-sm bg-surface"><div class="w-9 h-9 rounded-lg bg-tertiary-container flex items-center justify-center text-on-tertiary shadow-sm"><span class="material-symbols-outlined text-[20px]">deployed_code</span></div><div class="flex flex-col min-w-0"><span class="font-h3 text-h3 leading-tight text-on-surface truncate">Kxmeleon ERP</span><span class="font-overline text-overline text-tertiary truncate uppercase tracking-wider">Adeyemi Holdings Ltd</span></div></div><div class="flex-1 overflow-y-auto px-space-sm py-space-sm space-y-space-md"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-overline text-overline text-ink-3 uppercase tracking-wider">Core Modules</div><nav class="space-y-space-xs" data-active-classes="bg-tertiary-container text-on-tertiary shadow-sm font-label"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard-home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="truncate">Dashboard / Home</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="hr-and-people" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="truncate">HR &amp; People</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="leave" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="truncate">Leave</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="attendance" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="truncate">Attendance</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="truncate">Expenses</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payroll" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="truncate">Payroll</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="finance" href="#"><span class="material-symbols-outlined text-[20px]">account_balance</span><span class="truncate">Finance</span></a><div class="pt-space-xs"><a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-label text-label bg-tertiary-fixed text-tertiary shadow-sm ring-1 ring-tertiary-fixed-dim" data-path="inventory" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] text-tertiary">inventory_2</span><span class="font-label font-bold text-tertiary truncate">Inventory</span></div><span class="w-2 h-2 rounded-full bg-tertiary"></span></a></div><div class="pl-space-md pr-space-xs py-space-xs space-y-space-xs"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="items" href="#"><span class="truncate">Items</span><span class="w-1.5 h-1.5 rounded-full bg-on-tertiary"></span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="movements-and-stock-transfers" href="#"><span class="truncate">Movements &amp; Transfers</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="stock-counts-and-audits" href="#"><span class="truncate">Stock counts &amp; Audits</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="material-requests" href="#"><span class="truncate">Material requests</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="warehouses-and-locations" href="#"><span class="truncate">Warehouses &amp; Locations</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="valuation-and-costing" href="#"><span class="truncate">Valuation &amp; Costing</span></a><a class="flex items-center px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inventory-settings" href="#"><span class="truncate">Settings</span></a></div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">rocket_launch</span><span class="truncate">Projects</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label text-label text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="administration" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span class="truncate">Administration</span></a></nav></div></div><div class="p-space-sm bg-surface-container-lowest m-space-sm rounded-xl shadow-[0_1px_2px_rgba(22,22,42,0.04)]"><div class="flex items-center justify-between"><div class="flex flex-col"><span class="font-label text-label text-ink">System Health</span><span class="font-overline text-overline text-success-text flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-success-text inline-block"></span>Operational</span></div><span class="font-overline text-overline px-space-xs py-0.5 rounded bg-surface-sunken text-ink-3">v4.18</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label text-label text-ink-3"><span class="text-tertiary font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Inventory</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-on-surface font-semibold">Items</span></div><div class="relative w-80"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span><input class="w-full h-10 pl-9 pr-14 rounded-lg bg-surface-sunken text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-tertiary-container transition-all" placeholder="Search inventory, SKU, or batch..." type="text"/><kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded text-[11px] font-label font-semibold bg-surface text-ink-3 shadow-sm border border-line">Ctrl K</kbd></div></div><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-full bg-warning-bg text-warning-text hover:opacity-90 transition-opacity" data-path="approvals" href="#"><span class="material-symbols-outlined text-[18px]">verified</span><span class="font-overline text-overline">Approvals</span><span class="w-5 h-5 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center font-label text-[11px]">3</span></a><button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-destructive"></span></button><button class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="h-6 w-px bg-line"></div><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label text-label leading-tight text-on-surface font-semibold">Fatima Bello</span><span class="font-overline text-[11px] text-ink-3 leading-none">Finance &amp; Ops Manager</span></div><span class="material-symbols-outlined text-[18px] text-outline-variant">unfold_more</span></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Action & Context Header -->
+<div class="px-gutter pt-space-lg pb-space-md">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- Title & Module Flag -->
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-tertiary/10 flex items-center justify-center text-tertiary shadow-sm">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">sync_alt</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs text-ink-3 font-overline text-overline uppercase tracking-wider">
+<span>Adeyemi Holdings Ltd</span>
+<span>•</span>
+<span class="text-tertiary font-bold">Ledger Sub-module 04</span>
+</div>
+<h1 class="font-h1 text-h1 text-ink tracking-tight flex items-center gap-space-xs">
+            Stock movements
+            <span class="font-overline text-overline px-2 py-0.5 rounded-full bg-tertiary-fixed text-tertiary font-bold tracking-normal">Nov 2026 Batch Active</span>
+</h1>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="h-10 px-space-md rounded-lg bg-surface hover:bg-surface-container text-ink font-label text-label flex items-center gap-space-xs shadow-sm transition-all" onclick="alert('Exporting movements CSV ledger (Q4 2026)...')" type="button">
+<span class="material-symbols-outlined text-[18px] text-ink-3">download</span>
+<span>Export CSV</span>
+</button>
+<button class="h-10 px-space-md rounded-lg bg-surface hover:bg-surface-container text-ink font-label text-label flex items-center gap-space-xs shadow-sm transition-all" onclick="toggleBatchModal()" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">fact_check</span>
+<span>Batch post (3)</span>
+</button>
+<!-- Split / Primary Action -->
+<div class="relative inline-flex items-center shadow-sm rounded-lg bg-tertiary text-on-tertiary">
+<button class="h-10 px-space-md flex items-center gap-space-xs font-label text-label hover:bg-tertiary-container rounded-l-lg transition-colors" onclick="openNewModal('Stock Issue')" type="button">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>New movement</span>
+</button>
+<div class="h-5 w-px bg-on-tertiary/20"></div>
+<button class="h-10 px-space-xs flex items-center justify-center hover:bg-tertiary-container rounded-r-lg transition-colors" id="movementDropdownBtn" onclick="toggleMovementMenu()" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_drop_down</span>
+</button>
+<!-- Dropdown Flyout -->
+<div class="hidden absolute right-0 top-12 w-56 bg-surface-raised rounded-xl shadow-xl z-50 p-space-xs space-y-0.5" id="movementFlyout">
+<button class="w-full text-left px-space-sm py-2 rounded-lg font-label text-label text-ink hover:bg-surface-sunken flex items-center gap-space-sm" onclick="openNewModal('Stock Issue')" type="button">
+<span class="w-2 h-2 rounded-full bg-info-text"></span>
+              Stock Issue (Disbursement)
+            </button>
+<button class="w-full text-left px-space-sm py-2 rounded-lg font-label text-label text-ink hover:bg-surface-sunken flex items-center gap-space-sm" onclick="openNewModal('Warehouse Transfer')" type="button">
+<span class="w-2 h-2 rounded-full bg-iris"></span>
+              Warehouse Transfer (Inter-hub)
+            </button>
+<button class="w-full text-left px-space-sm py-2 rounded-lg font-label text-label text-ink hover:bg-surface-sunken flex items-center gap-space-sm" onclick="openNewModal('Stock Adjustment')" type="button">
+<span class="w-2 h-2 rounded-full bg-warning-text"></span>
+              Stock Adjustment (Reconciliation)
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Metric / Executive KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md mt-space-lg">
+<!-- KPI 1 -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Total movements (Nov)</span>
+<span class="material-symbols-outlined text-ink-3 text-[20px]">swap_horiz</span>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-ink leading-tight">142 <span class="font-body-sm text-body-sm text-ink-3 font-normal">entries</span></div>
+<div class="flex items-center gap-1 font-label text-label text-success-text mt-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="font-bold">+12%</span>
+<span class="text-ink-3 font-normal">vs. October run-rate</span>
+</div>
+</div>
+<div class="absolute -right-3 -bottom-3 w-16 h-16 rounded-full bg-surface-sunken pointer-events-none opacity-60"></div>
+</div>
+<!-- KPI 2 -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Pending approval</span>
+<span class="w-2 h-2 rounded-full bg-warning-text animate-ping"></span>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-warning-text leading-tight">3 <span class="font-body-sm text-body-sm text-ink-3 font-normal">vouchers</span></div>
+<div class="flex items-center gap-1 font-label text-label text-warning-text mt-1">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>Dual-control verification required</span>
+</div>
+</div>
+<div class="w-full bg-surface-sunken h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-warning-text h-full rounded-full" style="width: 28%"></div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Dispatched Ledger Value</span>
+<span class="material-symbols-outlined text-ink-3 text-[20px]">payments</span>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-ink leading-tight">₦18,420,750.<span class="font-body text-body text-ink-3">00</span></div>
+<div class="flex items-center gap-1 font-label text-label text-ink-3 mt-1">
+<span class="text-tertiary font-medium">Gross de-capitalised</span>
+<span>•</span>
+<span>FIRS Stamp validated</span>
+</div>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-overline text-overline text-ink-3 uppercase">Active Operational Nodes</span>
+<span class="material-symbols-outlined text-success-text text-[20px]">warehouse</span>
+</div>
+<div class="mt-space-sm">
+<div class="font-stat text-stat text-ink leading-tight">3 <span class="font-body-sm text-body-sm text-ink-3 font-normal">warehouses</span></div>
+<div class="flex items-center gap-2 font-label text-label text-ink-2 mt-1 truncate">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-success-text"></span>Lagos Main
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-success-text"></span>Ikeja Transit
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-success-text"></span>Abuja Hub
+          </div>
+</div>
+</div>
+</div>
+<!-- Dual Control / Segregation of Duties Governance Banner -->
+<div class="mt-space-md p-space-md rounded-xl bg-surface-raised shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md">
+<div class="flex items-start sm:items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">shield_person</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs font-label text-label text-ink font-semibold">
+<span>Segregation of Duties (SoD) &amp; Four-Eyes Audit Rule Enforced</span>
+<span class="px-2 py-0.2 rounded bg-surface-sunken text-ink-3 font-overline text-overline">SEC 4.1-ISO/NGN</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-3 mt-0.5">
+            Adjustments and count variances must be authorised by someone other than the author. Mandatory dual-control approval triggers on all write-offs exceeding ₦50,000.00.
+          </p>
+</div>
+</div>
+<a class="shrink-0 font-label text-label text-tertiary hover:underline flex items-center gap-1" href="#">
+<span>Policy documentation</span>
+<span class="material-symbols-outlined text-[16px]">north_east</span>
+</a>
+</div>
+</div>
+<!-- Main View Area (Data Workspace) -->
+<div class="px-gutter pb-space-2xl space-y-space-md">
+<!-- Filter Ribbon & Nav Tabs -->
+<div class="p-space-md rounded-xl bg-surface shadow-sm space-y-space-md">
+<!-- Segmented Navigation Tabs -->
+<div class="flex flex-wrap items-center justify-between gap-space-md pb-space-sm">
+<div class="flex items-center p-1 bg-surface-sunken rounded-lg gap-1">
+<button class="tab-btn px-space-md py-1.5 rounded font-label text-label bg-surface text-ink shadow-sm transition-colors" data-filter="all" type="button">
+            All <span class="ml-1 text-ink-3 font-normal">142</span>
+</button>
+<button class="tab-btn px-space-md py-1.5 rounded font-label text-label text-ink-3 hover:text-ink transition-colors" data-filter="issue" type="button">
+            Issues <span class="ml-1 text-ink-3 font-normal">89</span>
+</button>
+<button class="tab-btn px-space-md py-1.5 rounded font-label text-label text-ink-3 hover:text-ink transition-colors" data-filter="transfer" type="button">
+            Transfers <span class="ml-1 text-ink-3 font-normal">41</span>
+</button>
+<button class="tab-btn px-space-md py-1.5 rounded font-label text-label text-ink-3 hover:text-ink transition-colors" data-filter="adjustment" type="button">
+            Adjustments <span class="ml-1 text-ink-3 font-normal">12</span>
+</button>
+<button class="tab-btn px-space-md py-1.5 rounded font-label text-label text-warning-text hover:bg-warning-bg/50 transition-colors flex items-center gap-1.5" data-filter="waiting" type="button">
+<span>Waiting to post</span>
+<span class="w-5 h-5 rounded-full bg-warning-bg text-warning-text font-bold text-[11px] flex items-center justify-center">3</span>
+</button>
+</div>
+<!-- Quick View Mode toggles -->
+<div class="flex items-center gap-space-xs text-ink-3">
+<button class="p-2 rounded hover:bg-surface-sunken text-ink" title="Compact density" type="button">
+<span class="material-symbols-outlined text-[20px]">density_small</span>
+</button>
+<button class="p-2 rounded hover:bg-surface-sunken" title="Configure columns" type="button">
+<span class="material-symbols-outlined text-[20px]">view_column</span>
+</button>
+<button class="p-2 rounded hover:bg-surface-sunken" title="Print ledger record" type="button">
+<span class="material-symbols-outlined text-[20px]">print</span>
+</button>
+</div>
+</div>
+<!-- Search & Attribute Filters -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-center">
+<!-- Search bar -->
+<div class="md:col-span-5 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-14 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink placeholder:text-ink-3 focus:outline-none focus:bg-surface transition-colors" id="tableSearchInput" placeholder="Search voucher code, item, warehouse, or batch..." type="text"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 font-overline text-[10px] text-ink-3 bg-surface px-1.5 py-0.5 rounded shadow-sm">CTRL K</span>
+</div>
+<!-- Node Selector -->
+<div class="md:col-span-3">
+<div class="relative">
+<select class="w-full h-10 px-space-sm pr-8 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink appearance-none focus:outline-none cursor-pointer">
+<option value="">Warehouse: All locations (3 nodes)</option>
+<option value="lagos">Lagos Main Depot (Apapa Industrial)</option>
+<option value="ikeja">Ikeja Transit Hub (Cargo Wing)</option>
+<option value="abuja">Abuja Central Facility (Idu Zone)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Reason / Cost Centre Filter -->
+<div class="md:col-span-2">
+<div class="relative">
+<select class="w-full h-10 px-space-sm pr-8 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink appearance-none focus:outline-none cursor-pointer">
+<option value="">Cost Centre: All</option>
+<option value="cc310">CC-310 (Tech &amp; Ops)</option>
+<option value="cc100">CC-100 (HQ General Admin)</option>
+<option value="cc400">CC-400 (Logistics &amp; Fleet)</option>
+<option value="cc620">CC-620 (Facilities Mgmt)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Date Range Filter -->
+<div class="md:col-span-2 flex items-center gap-space-xs">
+<div class="relative flex-1">
+<input class="w-full h-10 px-space-sm pr-8 rounded-lg bg-surface-sunken font-body-sm text-body-sm text-ink focus:outline-none cursor-pointer text-center" readonly="" type="text" value="01 Nov – 30 Nov 2026"/>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-3 pointer-events-none text-[18px]">calendar_today</span>
+</div>
+<button class="w-10 h-10 rounded-lg bg-surface-sunken hover:bg-surface-container flex items-center justify-center text-ink-3" title="Reset filters" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm border-collapse min-w-[1100px]">
+<thead>
+<tr class="bg-surface-sunken text-ink-3 font-overline text-overline uppercase tracking-wider">
+<th class="w-12 px-space-md py-space-sm text-center">
+<input class="w-4 h-4 rounded text-tertiary focus:ring-0 cursor-pointer" onclick="toggleAllCheckboxes(this)" type="checkbox"/>
+</th>
+<th class="px-space-md py-space-sm font-semibold">Voucher #</th>
+<th class="px-space-md py-space-sm font-semibold">Date &amp; Time</th>
+<th class="px-space-md py-space-sm font-semibold">Movement Kind</th>
+<th class="px-space-md py-space-sm font-semibold">Route / Facility Target</th>
+<th class="px-space-md py-space-sm font-semibold">Cost Centre / Justification</th>
+<th class="px-space-md py-space-sm text-center font-semibold">Lines</th>
+<th class="px-space-md py-space-sm text-right font-semibold">Total Value (NGN)</th>
+<th class="px-space-md py-space-sm font-semibold">Approval Status</th>
+<th class="px-space-md py-space-sm font-semibold">Initiator</th>
+<th class="w-16 px-space-md py-space-sm text-center">Action</th>
+</tr>
+</thead>
+<tbody class="text-ink" id="movementsTableBody">
+<!-- Row 1: SI-00012 (Waiting dual approval, interactive preview) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group cursor-pointer bg-warning-bg/15" onclick="showDrawerDetails('SI-00012')">
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<input class="row-checkbox w-4 h-4 rounded text-tertiary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex items-center gap-1.5">
+<span class="font-mono font-bold text-tertiary tracking-tight">SI-00012</span>
+<span class="material-symbols-outlined text-[14px] text-warning-text" title="Requires dual approval">info</span>
+</div>
+</td>
+<td class="px-space-md py-space-md text-ink-2 whitespace-nowrap">
+                19 Nov 2026 <span class="text-ink-3 text-xs">11:30 WAT</span>
+</td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-info-bg text-info-text font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+                  Stock Issue
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-semibold text-ink">Lagos Main Depot</div>
+<div class="text-xs text-ink-3">Dispatch Bay 04 → Operational consumption</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="text-ink font-medium">CC-310 • Tech &amp; Ops</div>
+<div class="text-xs text-ink-3 truncate max-w-xs">Data center UPS batteries &amp; cabling deployment</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="px-2 py-0.5 rounded-md bg-surface-sunken font-mono text-xs font-semibold">4 lines</span>
+</td>
+<td class="px-space-md py-space-md text-right font-mono font-bold text-ink">
+                ₦184,000.00
+              </td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text font-label text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-warning-text animate-pulse"></span>
+                  Waiting for approval
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-medium text-ink">Fatima Bello</div>
+<div class="text-xs text-ink-3">Store Keeper II</div>
+</td>
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: TR-00045 (Transfer - Posted) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group cursor-pointer" onclick="showDrawerDetails('TR-00045')">
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<input class="row-checkbox w-4 h-4 rounded text-tertiary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-space-md py-space-md font-mono font-bold text-ink tracking-tight">
+                TR-00045
+              </td>
+<td class="px-space-md py-space-md text-ink-2 whitespace-nowrap">
+                18 Nov 2026 <span class="text-ink-3 text-xs">16:45 WAT</span>
+</td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-iris-tint text-iris font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-iris"></span>
+                  Transfer
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="flex items-center gap-1 font-semibold text-ink">
+<span>Lagos Main Depot</span>
+<span class="material-symbols-outlined text-[14px] text-tertiary">arrow_forward</span>
+<span>Abuja Facility</span>
+</div>
+<div class="text-xs text-ink-3">Inter-hub haulage via Fleet #NL-409</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="text-ink font-medium">Inter-facility balancing</div>
+<div class="text-xs text-ink-3">Regional inventory rebalance (Quarterly quota)</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="px-2 py-0.5 rounded-md bg-surface-sunken font-mono text-xs font-semibold">12 lines</span>
+</td>
+<td class="px-space-md py-space-md text-right font-mono font-bold text-ink">
+                ₦1,420,500.00
+              </td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  Posted
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-medium text-ink">Chinedu Eze</div>
+<div class="text-xs text-ink-3">Logistics Lead</div>
+</td>
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: ADJ-00008 (Adjustment - Waiting approval, damaged goods) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group cursor-pointer bg-warning-bg/15" onclick="showDrawerDetails('ADJ-00008')">
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<input class="row-checkbox w-4 h-4 rounded text-tertiary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-space-md py-space-md font-mono font-bold text-tertiary tracking-tight">
+                ADJ-00008
+              </td>
+<td class="px-space-md py-space-md text-ink-2 whitespace-nowrap">
+                18 Nov 2026 <span class="text-ink-3 text-xs">09:15 WAT</span>
+</td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-tertiary font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                  Adjustment
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-semibold text-ink">Ikeja Transit Hub</div>
+<div class="text-xs text-ink-3">Aisle B3 • Damaged quarantine bay</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="text-danger-text font-medium flex items-center gap-1">
+<span>Damaged packaging in transit</span>
+</div>
+<div class="text-xs text-ink-3">Audit variance noted on manifest #MN-992</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="px-2 py-0.5 rounded-md bg-surface-sunken font-mono text-xs font-semibold">1 line</span>
+</td>
+<td class="px-space-md py-space-md text-right font-mono font-bold text-danger-text">
+                (₦42,000.00)
+              </td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warning-bg text-warning-text font-label text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-warning-text"></span>
+                  Waiting for approval
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-medium text-ink">Segun Afolabi</div>
+<div class="text-xs text-ink-3">Fleet &amp; Warehouse Mgr</div>
+</td>
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: SI-00011 (Stock Issue - Posted) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group cursor-pointer" onclick="showDrawerDetails('SI-00011')">
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<input class="row-checkbox w-4 h-4 rounded text-tertiary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-space-md py-space-md font-mono font-bold text-ink tracking-tight">
+                SI-00011
+              </td>
+<td class="px-space-md py-space-md text-ink-2 whitespace-nowrap">
+                17 Nov 2026 <span class="text-ink-3 text-xs">14:10 WAT</span>
+</td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-info-bg text-info-text font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-info-text"></span>
+                  Stock Issue
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-semibold text-ink">Lagos Main Depot</div>
+<div class="text-xs text-ink-3">Internal requisitions counter</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="text-ink font-medium">CC-100 • Lagos HQ</div>
+<div class="text-xs text-ink-3">Admin replenishment &amp; office consumables</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="px-2 py-0.5 rounded-md bg-surface-sunken font-mono text-xs font-semibold">8 lines</span>
+</td>
+<td class="px-space-md py-space-md text-right font-mono font-bold text-ink">
+                ₦65,200.00
+              </td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-success-bg text-success-text font-label text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  Posted
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-medium text-ink">Fatima Bello</div>
+<div class="text-xs text-ink-3">Store Keeper II</div>
+</td>
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: ADJ-00007 (Draft) -->
+<tr class="hover:bg-surface-sunken/60 transition-colors group cursor-pointer" onclick="showDrawerDetails('ADJ-00007')">
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<input class="row-checkbox w-4 h-4 rounded text-tertiary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="px-space-md py-space-md">
+<span class="font-mono font-semibold text-ink-3 bg-surface-sunken px-2 py-0.5 rounded">DRAFT-04</span>
+</td>
+<td class="px-space-md py-space-md text-ink-2 whitespace-nowrap">
+                17 Nov 2026 <span class="text-ink-3 text-xs">10:00 WAT</span>
+</td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-tertiary font-label text-xs font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                  Adjustment
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-semibold text-ink">Abuja Central Facility</div>
+<div class="text-xs text-ink-3">Rack E • Count discrepancy write-up</div>
+</td>
+<td class="px-space-md py-space-md">
+<div class="text-ink font-medium">Physical audit reconciliation</div>
+<div class="text-xs text-ink-3">Mid-month spot count reconciliation</div>
+</td>
+<td class="px-space-md py-space-md text-center">
+<span class="px-2 py-0.5 rounded-md bg-surface-sunken font-mono text-xs font-semibold">2 lines</span>
+</td>
+<td class="px-space-md py-space-md text-right font-mono font-bold text-ink">
+                ₦9,800.00
+              </td>
+<td class="px-space-md py-space-md">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-sunken text-ink-3 font-label text-xs font-semibold">
+<span class="w-2 h-2 rounded-full bg-line-strong"></span>
+                  Draft (Uncommitted)
+                </span>
+</td>
+<td class="px-space-md py-space-md">
+<div class="font-medium text-ink">Ibrahim Garba</div>
+<div class="text-xs text-ink-3">Abuja Ops Officer</div>
+</td>
+<td class="px-space-md py-space-md text-center" onclick="event.stopPropagation()">
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-ink-3 hover:text-ink" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Aggregate Table Bar -->
+<div class="p-space-md bg-surface-sunken flex flex-col sm:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-ink-3">
+<div class="flex items-center gap-space-md">
+<span>Showing <strong class="text-ink">1 – 5</strong> of <strong class="text-ink">142</strong> transactions</span>
+<span class="hidden sm:inline">•</span>
+<span class="hidden sm:inline">1 voucher selected</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-3 py-1.5 rounded-lg bg-surface text-ink hover:bg-surface-container disabled:opacity-50 text-label font-label shadow-sm" disabled="" type="button">
+            Previous
+          </button>
+<span class="px-3 py-1 rounded-lg bg-tertiary text-on-tertiary font-label text-label font-bold">1</span>
+<button class="px-3 py-1 rounded-lg hover:bg-surface text-ink font-label text-label" type="button">2</button>
+<button class="px-3 py-1 rounded-lg hover:bg-surface text-ink font-label text-label" type="button">3</button>
+<span class="px-1 text-ink-3">...</span>
+<button class="px-3 py-1 rounded-lg hover:bg-surface text-ink font-label text-label" type="button">29</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface text-ink hover:bg-surface-container text-label font-label shadow-sm" type="button">
+            Next
+          </button>
+</div>
+</div>
+</div>
+<!-- Nigerian Regulatory, Tax & Audit Metadata Footprint -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md text-ink-3">
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-success-bg text-success-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">FIRS Electronic Stamp Ready</div>
+<div class="font-overline text-[11px]">Tin #20394819-0001 • Capital allowances ledger</div>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-info-bg text-info-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">lock_clock</span>
+</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">7-Year Immutable Journaling</div>
+<div class="font-overline text-[11px]">ISO 27001 Cryptographic Hash Verification on Commit</div>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface shadow-sm flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-warning-bg text-warning-text flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">currency_exchange</span>
+</div>
+<div>
+<div class="font-label text-label font-semibold text-ink">FIFO Inventory Valuation</div>
+<div class="font-overline text-[11px]">Nigerian GAAP / IFRS Standard IAS 2 Alignment</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail Slide-Over / Dual Control Approval Drawer -->
+<div class="fixed inset-0 z-50 overflow-hidden pointer-events-none transition-opacity duration-300 opacity-0" id="detailDrawer">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-ink/40 backdrop-blur-sm pointer-events-auto" onclick="closeDrawer()"></div>
+<div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+<div class="w-screen max-w-xl bg-surface-raised shadow-2xl flex flex-col pointer-events-auto transform transition ease-in-out duration-300 translate-x-full" id="drawerPanel">
+<!-- Drawer Header -->
+<div class="p-space-lg bg-surface flex items-start justify-between shadow-sm">
+<div>
+<div class="flex items-center gap-space-xs font-overline text-overline uppercase tracking-wider text-ink-3">
+<span id="drawerKind">Stock Issue</span>
+<span>•</span>
+<span class="text-warning-text font-bold" id="drawerBadge">Pending Review</span>
+</div>
+<h2 class="font-h2 text-h2 text-ink mt-1 flex items-center gap-space-sm">
+<span id="drawerVoucherId">SI-00012</span>
+<span class="font-mono text-sm px-2 py-0.5 rounded bg-surface-sunken font-normal text-ink-3">NGN-LOC-01</span>
+</h2>
+</div>
+<button class="w-9 h-9 rounded-lg hover:bg-surface-sunken flex items-center justify-center text-ink-3 hover:text-ink" onclick="closeDrawer()" type="button">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<!-- Drawer Content Body -->
+<div class="flex-1 overflow-y-auto p-space-lg space-y-space-lg">
+<!-- Dual Control SoD Warning Card -->
+<div class="p-space-md rounded-xl bg-warning-bg/40 text-ink space-y-space-xs">
+<div class="flex items-center gap-space-xs font-label text-label text-warning-text font-bold">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>Secondary Controller Verification</span>
+</div>
+<p class="font-body-sm text-body-sm text-ink-2">
+              Recorded by <strong>Fatima Bello</strong> on 19 Nov 2026 at 11:30 WAT. Under Nigerian internal audit protocol, you are signing off as the independent authoriser.
+            </p>
+</div>
+<!-- Metadata Grid -->
+<div class="grid grid-cols-2 gap-space-md p-space-md rounded-xl bg-surface-sunken">
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase">Origin Warehouse</span>
+<p class="font-label text-label text-ink font-semibold mt-0.5">Lagos Main Depot</p>
+<p class="text-xs text-ink-3">Bay 04 (Disbursement)</p>
+</div>
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase">Target / Destination</span>
+<p class="font-label text-label text-ink font-semibold mt-0.5">Internal Consumption</p>
+<p class="text-xs text-ink-3">Tech Infrastructure Team</p>
+</div>
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase">Cost Centre Allocation</span>
+<p class="font-label text-label text-ink font-semibold mt-0.5">CC-310 (Tech &amp; Ops)</p>
+<p class="text-xs text-ink-3">GL 5020-Consumables</p>
+</div>
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase">Gross Valuation</span>
+<p class="font-mono text-base font-bold text-tertiary mt-0.5">₦184,000.00</p>
+<p class="text-xs text-ink-3">FIFO Cost Basis</p>
+</div>
+</div>
+<!-- Line Items Table breakdown -->
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider">Dispatched Line Items (4)</span>
+<span class="text-xs font-mono text-ink-3">SKU Count: 4 / Units: 26</span>
+</div>
+<div class="rounded-xl overflow-hidden shadow-sm bg-surface">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-sunken font-overline text-overline text-ink-3 uppercase">
+<th class="px-3 py-2">Item / SKU</th>
+<th class="px-3 py-2 text-center">Qty</th>
+<th class="px-3 py-2 text-right">Unit Rate</th>
+<th class="px-3 py-2 text-right">Total</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent text-ink">
+<tr class="hover:bg-surface-sunken/40">
+<td class="px-3 py-2.5">
+<div class="font-semibold text-ink">APC Replacement Battery Cartridge #24</div>
+<div class="text-xs font-mono text-ink-3">SKU-BAT-9021 • Bin B-12</div>
+</td>
+<td class="px-3 py-2.5 text-center font-mono font-medium">4 pcs</td>
+<td class="px-3 py-2.5 text-right font-mono text-ink-3">₦35,000</td>
+<td class="px-3 py-2.5 text-right font-mono font-bold text-ink">₦140,000.00</td>
+</tr>
+<tr class="hover:bg-surface-sunken/40">
+<td class="px-3 py-2.5">
+<div class="font-semibold text-ink">Cat6 STP Copper Patch Cable 3m</div>
+<div class="text-xs font-mono text-ink-3">SKU-CAB-0044 • Bin C-01</div>
+</td>
+<td class="px-3 py-2.5 text-center font-mono font-medium">15 pcs</td>
+<td class="px-3 py-2.5 text-right font-mono text-ink-3">₦1,600</td>
+<td class="px-3 py-2.5 text-right font-mono font-bold text-ink">₦24,000.00</td>
+</tr>
+<tr class="hover:bg-surface-sunken/40">
+<td class="px-3 py-2.5">
+<div class="font-semibold text-ink">Industrial Heavy Cable Ties (Pack 100)</div>
+<div class="text-xs font-mono text-ink-3">SKU-ACC-3310 • Bin C-09</div>
+</td>
+<td class="px-3 py-2.5 text-center font-mono font-medium">5 pk</td>
+<td class="px-3 py-2.5 text-right font-mono text-ink-3">₦2,400</td>
+<td class="px-3 py-2.5 text-right font-mono font-bold text-ink">₦12,000.00</td>
+</tr>
+<tr class="hover:bg-surface-sunken/40">
+<td class="px-3 py-2.5">
+<div class="font-semibold text-ink">Dual-port Keystone Jack Cat6</div>
+<div class="text-xs font-mono text-ink-3">SKU-NET-1102 • Bin B-04</div>
+</td>
+<td class="px-3 py-2.5 text-center font-mono font-medium">2 pcs</td>
+<td class="px-3 py-2.5 text-right font-mono text-ink-3">₦4,000</td>
+<td class="px-3 py-2.5 text-right font-mono font-bold text-ink">₦8,000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Audit Timeline -->
+<div>
+<span class="font-overline text-overline text-ink-3 uppercase tracking-wider block mb-space-sm">Audit Trail &amp; Chronology</span>
+<div class="space-y-space-sm pl-2">
+<div class="flex items-start gap-space-sm relative pb-4">
+<div class="w-6 h-6 rounded-full bg-success-bg text-success-text flex items-center justify-center shrink-0 z-10">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+</div>
+<div class="w-0.5 absolute left-3 top-6 bottom-0 bg-surface-sunken"></div>
+<div>
+<div class="font-label text-label font-semibold text-ink">Movement Drafted &amp; Physical Pick Verified</div>
+<div class="text-xs text-ink-3">Fatima Bello (Store Keeper II) • 19 Nov 2026, 11:15 WAT</div>
+</div>
+</div>
+<div class="flex items-start gap-space-sm relative pb-4">
+<div class="w-6 h-6 rounded-full bg-info-bg text-info-text flex items-center justify-center shrink-0 z-10">
+<span class="material-symbols-outlined text-[14px]">send</span>
+</div>
+<div class="w-0.5 absolute left-3 top-6 bottom-0 bg-surface-sunken"></div>
+<div>
+<div class="font-label text-label font-semibold text-ink">Voucher Committed to Approval Queue</div>
+<div class="text-xs text-ink-3">Automatic gate trigger via Rule ERP-STOCK-DECAP-50K</div>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-warning-bg text-warning-text flex items-center justify-center shrink-0 z-10 animate-pulse">
+<span class="material-symbols-outlined text-[14px]">hourglass_top</span>
+</div>
+<div>
+<div class="font-label text-label font-semibold text-warning-text">Awaiting Independent Verification</div>
+<div class="text-xs text-ink-3">Assigned to: Fatima Bello / Adeyemi Controllers Group</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Action Footer -->
+<div class="p-space-lg bg-surface shadow-md flex items-center justify-between gap-space-sm">
+<button class="px-space-md py-2.5 rounded-lg bg-danger-bg hover:bg-danger-bg/80 text-destructive font-label text-label font-semibold flex items-center gap-1.5 transition-colors" onclick="rejectMovement()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Reject / Request Recount</span>
+</button>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2.5 rounded-lg bg-surface-sunken hover:bg-surface-container text-ink font-label text-label font-semibold transition-colors" onclick="closeDrawer()" type="button">
+              Cancel
+            </button>
+<button class="px-space-lg py-2.5 rounded-lg bg-tertiary hover:bg-tertiary-container text-on-tertiary font-label text-label font-bold flex items-center gap-1.5 shadow-sm transition-colors" onclick="approveMovement()" type="button">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+<span>Post Movement to General Ledger</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive JavaScript -->
+<script>
+    // Flyout for "New Movement" split button
+    function toggleMovementMenu() {
+      const flyout = document.getElementById('movementFlyout');
+      flyout.classList.toggle('hidden');
+    }
+
+    // Close flyout when clicking outside
+    document.addEventListener('click', function(e) {
+      const btn = document.getElementById('movementDropdownBtn');
+      const flyout = document.getElementById('movementFlyout');
+      if (flyout && !flyout.contains(e.target) && btn && !btn.contains(e.target)) {
+        flyout.classList.add('hidden');
+      }
+    });
+
+    // Drawer preview interactions
+    function showDrawerDetails(voucherCode) {
+      const drawer = document.getElementById('detailDrawer');
+      const panel = document.getElementById('drawerPanel');
+      const voucherLabel = document.getElementById('drawerVoucherId');
+      
+      if (voucherLabel) voucherLabel.innerText = voucherCode;
+
+      drawer.classList.remove('pointer-events-none', 'opacity-0');
+      drawer.classList.add('pointer-events-auto', 'opacity-100');
+      panel.classList.remove('translate-x-full');
+      panel.classList.add('translate-x-0');
+    }
+
+    function closeDrawer() {
+      const drawer = document.getElementById('detailDrawer');
+      const panel = document.getElementById('drawerPanel');
+      
+      panel.classList.remove('translate-x-0');
+      panel.classList.add('translate-x-full');
+      setTimeout(() => {
+        drawer.classList.remove('pointer-events-auto', 'opacity-100');
+        drawer.classList.add('pointer-events-none', 'opacity-0');
+      }, 200);
+    }
+
+    function approveMovement() {
+      alert('Voucher authorised and posted to General Ledger (IFRS/FIFO basis). Audit log signed with your session credentials.');
+      closeDrawer();
+    }
+
+    function rejectMovement() {
+      const reason = prompt('Please specify reason for rejection / recount order:');
+      if (reason) {
+        alert('Movement marked as rejected and returned to originator for recount.');
+        closeDrawer();
+      }
+    }
+
+    function openNewModal(kind) {
+      const flyout = document.getElementById('movementFlyout');
+      if (flyout) flyout.classList.add('hidden');
+      alert('Opening voucher entry wizard: ' + kind + ' (Multi-currency NGN FIFO tracking enabled)');
+    }
+
+    function toggleBatchModal() {
+      alert('Preparing batch posting queue: 3 vouchers ready for dual-control execution.');
+    }
+
+    // Select all table checkboxes
+    function toggleAllCheckboxes(masterCheckbox) {
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      checkboxes.forEach(cb => {
+        cb.checked = masterCheckbox.checked;
+      });
+    }
+
+    // Segmented tab filtering
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => {
+          b.classList.remove('bg-surface', 'shadow-sm', 'text-ink');
+          b.classList.add('text-ink-3');
+        });
+        btn.classList.add('bg-surface', 'shadow-sm', 'text-ink');
+        btn.classList.remove('text-ink-3');
+      });
+    });
+
+    // Simple table search filter
+    const searchInput = document.getElementById('tableSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('keyup', function(e) {
+        const query = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('#movementsTableBody tr');
+        rows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(query) ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</div></main></div></body></html>

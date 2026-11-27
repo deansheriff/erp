@@ -1,0 +1,125 @@
+{# Procurement → a purchase requisition (ADR 0030): the draft editor, or the submitted
+   requisition with its approval steps, the decision form, and starting the RFQ.
+   Design: design/stitch/exports/procurement.requisition.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% set r = view.row if view else none %}
+{% set editing = not view or view.can_edit %}
+{% if view %}
+{% call ui.page_header(r.number or "Draft requisition", view.requester ~ (" · " ~ view.cost_centre if view.cost_centre else ""), tones[r.status], labels[r.status]) %}
+  {% if view.can_cancel %}<form method="post" action="/procurement/requisitions/{{ r.id }}/cancel">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">{{ "Delete draft" if r.status == "draft" else "Cancel requisition" }}</button></form>{% endif %}
+  {% if view.rfq %}<a href="/procurement/rfqs/{{ view.rfq[0] }}" class="kx-btn-secondary">{{ ui.icon("file-text", "sm") }} {{ view.rfq[1] }}</a>{% endif %}
+{% endcall %}
+{% else %}
+{% call ui.page_header("New requisition", "Estimate prices excluding VAT. Approval depends on the estimated total.") %}{% endcall %}
+{% endif %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+{% if editing %}
+<form method="post" action="/procurement/requisitions" class="kx-card mt-6 overflow-hidden" novalidate>
+  {{ ui.csrf_field() }}
+  {% if r %}<input type="hidden" name="requisition_id" value="{{ r.id }}">{% endif %}
+  <div class="grid gap-4 p-5 sm:grid-cols-3">
+    <div class="sm:col-span-2">{{ ui.text_field("purpose", "What it's for", value=v.get("purpose") or (r.purpose if r else ""), errors=errors) }}</div>
+    {{ ui.text_field("needed_by", "Needed by", value=v.get("needed_by") or (r.needed_by.isoformat() if r and r.needed_by else ""), type="date", errors=errors) }}
+  </div>
+  <div class="kx-scroll-x border-t border-line">
+    <table class="w-full min-w-[1100px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="w-60 px-3 py-2.5 text-left font-semibold">Stock item and warehouse</th><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="w-56 px-3 py-2.5 text-left font-semibold">Account (if known)</th><th class="w-24 px-3 py-2.5 text-right font-semibold">Qty</th><th class="w-36 px-3 py-2.5 text-right font-semibold">Estimated unit price</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for line in rows %}
+        {% set i = loop.index0 %}
+        <tr class="align-top">
+          <td class="px-3 py-2"><label class="sr-only" for="it-{{ i }}">Stock item, line {{ i + 1 }}</label><select id="it-{{ i }}" name="item_id" class="kx-input h-10"><option value="">Not stock</option>{% for it in stock_items %}<option value="{{ it.id }}" {% if line.item_id == it.id|string %}selected{% endif %}>{{ it.label }}</option>{% endfor %}</select><label class="sr-only" for="wh-{{ i }}">Warehouse, line {{ i + 1 }}</label><select id="wh-{{ i }}" name="warehouse_id" class="kx-input mt-1.5 h-9 text-xs"><option value="">Warehouse</option>{% for wid, wname in warehouses %}<option value="{{ wid }}" {% if line.warehouse_id == wid|string %}selected{% endif %}>{{ wname }}</option>{% endfor %}</select></td>
+          <td class="px-3 py-2"><label class="sr-only" for="ds-{{ i }}">Description, line {{ i + 1 }}</label><input id="ds-{{ i }}" name="description" value="{{ line.description }}" class="kx-input h-10" placeholder="What's needed">{% if errors.get("line_" ~ i) %}<p class="kx-field-error">{{ ui.icon("circle-alert", "sm") }} {{ errors["line_" ~ i] }}</p>{% endif %}</td>
+          <td class="px-3 py-2"><label class="sr-only" for="ac-{{ i }}">Account, line {{ i + 1 }}</label><select id="ac-{{ i }}" name="account_id" class="kx-input h-10"><option value="">Not sure</option>{% for a in accounts %}<option value="{{ a.id }}" {% if line.account_id == a.id|string %}selected{% endif %}>{{ a.code }} {{ a.name }}</option>{% endfor %}</select></td>
+          <td class="px-3 py-2"><label class="sr-only" for="qt-{{ i }}">Quantity, line {{ i + 1 }}</label><input id="qt-{{ i }}" name="quantity" value="{{ line.quantity }}" inputmode="decimal" placeholder="1" class="kx-input h-10 text-right tnum"></td>
+          <td class="px-3 py-2"><label class="sr-only" for="ep-{{ i }}">Estimated unit price, line {{ i + 1 }}</label><input id="ep-{{ i }}" name="estimated_price" value="{{ line.estimated_price }}" inputmode="decimal" placeholder="0.00" class="kx-input h-10 text-right tnum"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="flex flex-col gap-4 border-t border-line p-5 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-xs text-ink-3">A stock line goes into its warehouse when it's received. Need more lines? Save, and more empty rows appear.</p>
+    <div class="flex justify-end gap-3"><button type="submit" name="then" value="save" class="kx-btn-secondary">Save draft</button><button type="submit" name="then" value="submit" class="kx-btn-primary">{{ ui.icon("send", "sm") }} Submit for approval</button></div>
+  </div>
+</form>
+{% else %}
+<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+  <div class="space-y-6">
+    <dl class="kx-card grid gap-4 p-5 text-body-sm sm:grid-cols-3">
+      <div class="sm:col-span-3"><dt class="text-xs text-ink-3">What it's for</dt><dd>{{ r.purpose }}</dd></div>
+      <div><dt class="text-xs text-ink-3">Needed by</dt><dd>{{ r.needed_by | date if r.needed_by else "—" }}</dd></div>
+      <div><dt class="text-xs text-ink-3">Submitted</dt><dd>{{ r.submitted_at | datetime if r.submitted_at else "—" }}</dd></div>
+      <div><dt class="text-xs text-ink-3">Estimated total</dt><dd class="font-semibold tnum">{{ r.estimated_total | money }}</dd></div>
+    </dl>
+    <section class="kx-card overflow-hidden" aria-label="Lines">
+      <div class="kx-scroll-x">
+        <table class="w-full min-w-[640px] text-body-sm">
+          <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Item or description</th><th class="px-3 py-2.5 text-right font-semibold">Qty</th><th class="px-3 py-2.5 text-right font-semibold">Estimated unit price</th><th class="px-5 py-2.5 text-right font-semibold">Estimated total</th></tr></thead>
+          <tbody class="divide-y divide-line">
+            {% for line in view.lines %}
+            <tr><td class="px-5 py-2.5">{{ line.description }}{% if line.item %}<span class="mt-0.5 flex items-center gap-1 text-xs text-ink-3">{{ ui.icon("package", "sm") }} {{ line.item }} · {{ line.warehouse }}</span>{% elif line.account %}<span class="block text-xs text-ink-3">{{ line.account }}</span>{% endif %}</td><td class="px-3 py-2.5 text-right tnum">{{ line.quantity | plain }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.estimated_price | money }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.estimated_total | money }}</td></tr>
+            {% endfor %}
+          </tbody>
+          <tfoot class="border-t border-line bg-surface-sunken/60"><tr><td class="px-5 py-2.5 text-ink-3" colspan="3">Prices exclude VAT</td><td class="px-5 py-2.5 text-right font-semibold tnum">{{ r.estimated_total | money }}</td></tr></tfoot>
+        </table>
+      </div>
+    </section>
+
+    {% if view.can_start_rfq %}
+    <form method="post" action="/procurement/requisitions/{{ r.id }}/rfq" class="kx-card p-5" novalidate>
+      {{ ui.csrf_field() }}
+      <h2 class="font-h3 text-h3">Ask suppliers for quotes</h2>
+      <p class="mt-1 text-body-sm text-ink-3">Choose the suppliers to invite. You can add more on the RFQ.</p>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <fieldset class="sm:row-span-2"><legend class="kx-label">Suppliers</legend>
+          <div class="max-h-56 space-y-1.5 overflow-y-auto rounded-lg border border-line p-3">
+            {% for sid, label in suppliers %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="supplier_id" value="{{ sid }}" class="kx-check" {% if sid|string in v.get("suppliers", []) %}checked{% endif %}> {{ label }}</label>{% endfor %}
+          </div>
+          {{ ui.field_error(errors, "supplier_ids") }}
+        </fieldset>
+        {{ ui.text_field("respond_by", "Reply by", value=v.get("respond_by", ""), type="date", errors=errors) }}
+        {{ ui.text_field("note", "Note to suppliers", value=v.get("note", ""), errors=errors, hint="e.g. where to deliver") }}
+      </div>
+      <div class="mt-4 flex justify-end"><button type="submit" class="kx-btn-primary">{{ ui.icon("file-text", "sm") }} Start RFQ</button></div>
+    </form>
+    {% endif %}
+  </div>
+
+  <aside class="space-y-6">
+    <section class="kx-card p-5" aria-labelledby="steps-title">
+      <h2 id="steps-title" class="font-h3 text-h3">Approval</h2>
+      <p class="mt-1 text-xs text-ink-3">Decided in order, each by a different person.</p>
+      <ol class="mt-4 space-y-4">
+        {% for s in view.steps %}
+        <li class="flex gap-3">
+          <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold {{ 'bg-success-bg text-success-text' if s.status == 'approved' else ('bg-danger-bg text-danger-text' if s.status == 'rejected' else 'bg-surface-sunken text-ink-2') }}">{% if s.status == "approved" %}{{ ui.icon("check", "sm") }}{% elif s.status == "rejected" %}{{ ui.icon("x", "sm") }}{% else %}{{ s.position }}{% endif %}</span>
+          <div class="min-w-0 text-body-sm">
+            <p class="font-semibold">{{ s.label }}{% if s.above is not none %} <span class="font-normal text-ink-3">· over {{ s.above | money }}</span>{% endif %}</p>
+            {% if s.status == "pending" %}<p class="text-xs text-ink-3">Waiting for {{ s.waiting_for }}</p>
+            {% else %}<p class="text-xs text-ink-3">{{ "Approved" if s.status == "approved" else "Rejected" }} by {{ s.decided_by }}{% if s.decided_at %}, {{ s.decided_at | datetime }}{% endif %}</p>{% if s.note %}<p class="mt-1 text-xs">“{{ s.note }}”</p>{% endif %}{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+      {% if view.can_decide %}
+      <form method="post" class="mt-5 space-y-3 border-t border-line pt-4" novalidate>
+        {{ ui.csrf_field() }}
+        <div><label class="kx-label" for="note">Note</label><textarea id="note" name="note" rows="2" class="kx-input">{{ v.get("note", "") }}</textarea>{{ ui.field_error(errors, "note") }}</div>
+        <div class="flex gap-3"><button type="submit" formaction="/procurement/requisitions/{{ r.id }}/approve" class="kx-btn-primary">{{ ui.icon("check", "sm") }} Approve</button><button type="submit" formaction="/procurement/requisitions/{{ r.id }}/reject" class="kx-btn-ghost text-danger-text">Reject</button></div>
+      </form>
+      {% endif %}
+    </section>
+    {% if view.rfq %}
+    <section class="kx-card p-5 text-body-sm"><h2 class="font-h3 text-h3">Quotes</h2><p class="mt-2"><a href="/procurement/rfqs/{{ view.rfq[0] }}" class="font-mono text-xs font-semibold text-iris">{{ view.rfq[1] }}</a> · {{ rfq_labels[view.rfq[2]] }}</p></section>
+    {% endif %}
+  </aside>
+</div>
+{% endif %}
+{% endblock %}

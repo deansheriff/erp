@@ -21,6 +21,11 @@ PURPOSE_MODULES = (
     "app.modules.expenses.files",
     "app.modules.payroll.files",
     "app.modules.finance.files",
+    "app.modules.procurement.files",
+    "app.modules.support.files",
+    "app.modules.fleet.files",
+    "app.modules.chat.files",
+    "app.modules.assistant.files",
 )
 
 KB = 1024
@@ -28,6 +33,9 @@ MB = 1024 * KB
 
 # Resolves an entity ID to the facts authorisation needs, or None if it doesn't exist.
 EntityResolver = Callable[[Session, str], Resource | None]
+# An extra check beyond the permission: may this user reach this entity at all?
+# Chat uses it for conversation membership (ADR 0034).
+AccessCheck = Callable[[Session, uuid.UUID, str], bool]
 
 
 @dataclass(frozen=True, slots=True)
@@ -47,6 +55,8 @@ class FilePurpose:
     resolve: EntityResolver
     # Set for files that must not be kept: deleted this long after upload, live or not.
     expires_after: timedelta | None = None
+    # Run as well as the attach or view permission, when set.
+    allow: AccessCheck | None = None
 
     def entity_uuid(self, entity_id: str) -> uuid.UUID | None:
         try:

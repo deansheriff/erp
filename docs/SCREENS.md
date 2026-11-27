@@ -122,7 +122,7 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Customers** (`finance.customers`) | `GET /finance/customers` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
 | **One customer (balance, aging, statement, credit, reminders)** (`finance.customer`) | `GET /finance/customers/{customer_id}` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
 | **Sales (invoices, quotes, orders, credit notes, receipts)** (`finance.sales`) | `GET /finance/sales` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
-| **Quote, order, invoice or credit note** (`finance.sales_document`) | `GET /finance/sales/{document_id}` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
+| **Quote, order, invoice or credit note** (`finance.sales_document`) | `GET /finance/sales/{document_id}` | finance.sales.read | — | Dean Sheriff (2026-11-26) |
 | **Record or view a receipt** (`finance.receipt`) | `GET /finance/receipts/{receipt_id}` | finance.sales.read | — | Dean Sheriff (2026-11-22) |
 | **Receivables aging** (`finance.aging`) | `GET /finance/aging` | finance.customer.read | — | Dean Sheriff (2026-11-22) |
 | **Tax settings** (`finance.tax`) | `GET /finance/tax` | finance.tax.read | — | Dean Sheriff (2026-11-22) |
@@ -130,8 +130,8 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Suppliers** (`finance.suppliers`) | `GET /finance/suppliers` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
 | **One supplier (owed, aging, bills, orders, bank details)** (`finance.supplier`) | `GET /finance/suppliers/{supplier_id}` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
 | **Purchases (bills, purchase orders, debit notes, payments)** (`finance.purchases`) | `GET /finance/purchases` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
-| **Purchase order and goods received** (`finance.purchase_order`) | `GET /finance/purchase-orders/{order_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
-| **Supplier bill or debit note, with the three-way match** (`finance.bill`) | `GET /finance/bills/{bill_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
+| **Purchase order and goods received** (`finance.purchase_order`) | `GET /finance/purchase-orders/{order_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-26) |
+| **Supplier bill or debit note, with the three-way match** (`finance.bill`) | `GET /finance/bills/{bill_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-26) |
 | **Prepare or view a supplier payment** (`finance.payment`) | `GET /finance/payments/{payment_id}` | finance.purchase.read | — | Dean Sheriff (2026-11-22) |
 | **Payables aging** (`finance.payables_aging`) | `GET /finance/payables-aging` | finance.supplier.read | — | Dean Sheriff (2026-11-22) |
 | **Banking (bank accounts and matching rules)** (`finance.bank_accounts`) | `GET /finance/banking` | finance.bank.read | — | Dean Sheriff (2026-11-26) |
@@ -143,3 +143,67 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Depreciation runs** (`finance.depreciation`) | `GET /finance/depreciation` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
 | **Asset categories and fixed asset settings** (`finance.asset_categories`) | `GET /finance/assets/categories` | finance.asset.read | — | Dean Sheriff (2026-11-26) |
 | **Register or edit a fixed asset** (`finance.asset_form`) | `GET /finance/assets/new` | finance.asset.manage | — | Dean Sheriff (2026-11-26) |
+
+## Phase 11
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Inventory items (stock value, low stock, the item list)** (`inventory.items`) | `GET /inventory/items` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **One inventory item (stock by location, serials, stock ledger, details)** (`inventory.item`) | `GET /inventory/items/{item_id}` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **Inventory setup (warehouses and bins, item categories, units)** (`inventory.setup`) | `GET /inventory/setup` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **Stock movements and counts** (`inventory.movements`) | `GET /inventory/movements` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **One issue, transfer or adjustment** (`inventory.movement`) | `GET /inventory/movements/{document_id}` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **A stock count sheet** (`inventory.count`) | `GET /inventory/counts/{count_id}` | inventory.item.read | — | Dean Sheriff (2026-11-26) |
+| **Material requests** (`inventory.requests`) | `GET /inventory/requests` | inventory.request.read | — | Dean Sheriff (2026-11-26) |
+| **One material request (draft, decision, issue)** (`inventory.request`) | `GET /inventory/requests/{request_id}` | inventory.request.read | — | Dean Sheriff (2026-11-26) |
+| **Purchase requisitions** (`procurement.requisitions`) | `GET /procurement/requisitions` | procurement.requisition.read | — | Dean Sheriff (2026-11-26) |
+| **One purchase requisition (draft, approvals, starting the RFQ)** (`procurement.requisition`) | `GET /procurement/requisitions/{requisition_id}` | procurement.requisition.read | — | Dean Sheriff (2026-11-26) |
+| **Requests for quotation** (`procurement.rfqs`) | `GET /procurement/rfqs` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **One RFQ (suppliers, quote comparison, award and order)** (`procurement.rfq`) | `GET /procurement/rfqs/{rfq_id}` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **Record a supplier quote** (`procurement.quote`) | `GET /procurement/rfqs/{rfq_id}/quotes/{supplier_id}` | procurement.rfq.manage | — | Dean Sheriff (2026-11-26) |
+| **Supplier performance** (`procurement.suppliers`) | `GET /procurement/suppliers` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **One supplier's performance and ratings** (`procurement.supplier`) | `GET /procurement/suppliers/{supplier_id}` | procurement.rfq.read | — | Dean Sheriff (2026-11-26) |
+| **Procurement settings (approval tiers and quotes)** (`procurement.settings`) | `GET /procurement/settings` | procurement.settings.manage | — | Dean Sheriff (2026-11-26) |
+| **Projects** (`projects.list`) | `GET /projects` | projects.time.log | — | Dean Sheriff (2026-11-26) |
+| **One project (figures, budget, plan, team, ledger lines)** (`projects.project`) | `GET /projects/{project_id}` | projects.time.log | — | Dean Sheriff (2026-11-26) |
+| **Set up or change a project** (`projects.project_form`) | `GET /projects/new` | projects.project.create | — | Dean Sheriff (2026-11-26) |
+| **One project task** (`projects.task`) | `GET /projects/tasks/{task_id}` | projects.project.create | — | Dean Sheriff (2026-11-26) |
+| **My weekly timesheet** (`projects.timesheet`) | `GET /projects/timesheet` | projects.time.log | — | Dean Sheriff (2026-11-26) |
+| **Time approvals** (`projects.approvals`) | `GET /projects/approvals` | projects.time.approve | — | Dean Sheriff (2026-11-26) |
+| **Project profitability** (`projects.profitability`) | `GET /projects/profitability` | projects.project.read | — | Dean Sheriff (2026-11-26) |
+| **Project settings and hourly cost rates** (`projects.settings`) | `GET /projects/settings` | projects.settings.manage | — | Dean Sheriff (2026-11-26) |
+| **Support tickets** (`support.tickets`) | `GET /support` | support.ticket.read | — | Dean Sheriff (2026-11-27) |
+| **One support ticket (conversation, assignment, SLA)** (`support.ticket`) | `GET /support/{ticket_id}` | support.ticket.read | — | Dean Sheriff (2026-11-27) |
+| **Raise a support ticket** (`support.ticket_new`) | `GET /support/new` | support.ticket.create | — | Dean Sheriff (2026-11-27) |
+| **SLA report** (`support.sla_report`) | `GET /support/report` | support.report.read | — | Dean Sheriff (2026-11-27) |
+| **Support settings (teams, categories, SLA targets, hours)** (`support.settings`) | `GET /support/settings` | support.settings.manage | — | Dean Sheriff (2026-11-27) |
+| **My fleet (log fuel, book a pool vehicle, report an incident)** (`fleet.my`) | `GET /fleet` | fleet.vehicle.use | — | Dean Sheriff (2026-11-27) |
+| **Vehicles** (`fleet.vehicles`) | `GET /fleet/vehicles` | fleet.vehicle.read | — | Dean Sheriff (2026-11-27) |
+| **One vehicle (papers, service plans, fuel, incidents, costs)** (`fleet.vehicle`) | `GET /fleet/vehicles/{vehicle_id}` | fleet.vehicle.read | — | Dean Sheriff (2026-11-27) |
+| **Add or edit a vehicle** (`fleet.vehicle_form`) | `GET /fleet/vehicles/new` | fleet.vehicle.manage | — | Dean Sheriff (2026-11-27) |
+| **Vehicle bookings (approvals and what's booked)** (`fleet.bookings`) | `GET /fleet/bookings` | fleet.vehicle.manage | — | Dean Sheriff (2026-11-27) |
+| **Vehicle incidents** (`fleet.incidents`) | `GET /fleet/incidents` | fleet.vehicle.use | — | Dean Sheriff (2026-11-27) |
+| **One vehicle incident (photos, review and claim)** (`fleet.incident`) | `GET /fleet/incidents/{incident_id}` | fleet.vehicle.use | — | Dean Sheriff (2026-11-27) |
+| **Drivers and their licences** (`fleet.drivers`) | `GET /fleet/drivers` | fleet.vehicle.read | — | Dean Sheriff (2026-11-27) |
+| **Cost per vehicle** (`fleet.costs`) | `GET /fleet/costs` | fleet.cost.read | — | Dean Sheriff (2026-11-27) |
+| **Fleet settings (alert lead times, fuel efficiency check)** (`fleet.settings`) | `GET /fleet/settings` | fleet.vehicle.manage | — | Dean Sheriff (2026-11-27) |
+
+## Phase 12
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Chat (conversation list and the open conversation)** (`chat.home`) | `GET /chat` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
+| **New conversation (direct message or group)** (`chat.new`) | `GET /chat/new` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
+| **Conversation details (members, pins, files)** (`chat.details`) | `GET /chat/{conversation_id}/details` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
+| **Chat settings (edit window, unread emails, retention)** (`chat.settings`) | `GET /chat/settings` | chat.settings.manage | — | Dean Sheriff (2026-11-27) |
+
+## Phase 13
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Ask about policies (checked quotes)** (`assistant.home`) | `GET /assistant` | assistant.policy.ask | — | Dean Sheriff (2026-11-27) |
+| **Job description and interview question drafts** (`assistant.hiring`) | `GET /assistant/hiring` | assistant.hiring.draft | — | Dean Sheriff (2026-11-27) |
+| **Appraisal evidence summary (never a rating)** (`assistant.evidence`) | `GET /assistant/evidence` | assistant.evidence.summarise | — | Dean Sheriff (2026-11-27) |
+| **Policy library** (`assistant.policies`) | `GET /assistant/policies` | assistant.policy.ask | — | Dean Sheriff (2026-11-27) |
+| **Your assistant history** (`assistant.history`) | `GET /assistant/history` | assistant.policy.ask | — | Dean Sheriff (2026-11-27) |
+| **AI assistant settings, opt-in and usage** (`assistant.settings`) | `GET /assistant/settings` | system.ai.manage | — | Dean Sheriff (2026-11-27) |

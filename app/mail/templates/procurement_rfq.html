@@ -1,0 +1,11 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ supplier }},</p>
+<p style="margin:0 0 16px;">{{ organisation }} would like your quotation for the items below (request <strong>{{ number }}</strong>). Please quote unit prices excluding VAT, say which VAT applies, how many days delivery takes and how long your prices hold{% if respond_by %}, by <strong>{{ respond_by }}</strong>{% endif %}.</p>
+<table role="presentation" style="margin:0 0 16px;border-collapse:collapse;width:100%;">
+<tr><th align="left" style="padding:6px 12px 6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Item</th><th align="right" style="padding:6px 0;font-size:13px;color:#4B4B66;border-bottom:1px solid #E4E4EE;">Quantity</th></tr>
+{% for line in lines %}<tr><td style="padding:6px 12px 6px 0;">{{ line.description }}</td><td align="right" style="padding:6px 0;">{{ line.quantity }}{% if line.unit %} {{ line.unit }}{% endif %}</td></tr>
+{% endfor %}</table>
+{% if note %}<p style="margin:0 0 16px;">{{ note }}</p>{% endif %}
+<p style="margin:0;color:#4B4B66;">The request is attached as a PDF. Reply to this email with your quotation, quoting {{ number }}.</p>
+{% endblock %}

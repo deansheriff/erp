@@ -1,0 +1,10 @@
+{# The latest pins under the conversation header. Context: pins, conversation_id. #}
+{% import "components/ui.html" as ui with context %}
+{% if pins %}
+<div class="flex items-center gap-2 border-b border-line bg-surface-sunken px-4 py-2 text-xs">
+  {{ ui.icon("pin", "sm") }}
+  {% set pin, message = pins[0] %}
+  <a href="#msg-{{ message.id }}" class="min-w-0 flex-1 truncate">Pinned: {{ message.body or "an attachment" }}</a>
+  {% if pins | length > 1 %}<a href="/chat/{{ conversation_id }}/details" class="shrink-0 text-iris">{{ pins | length }} pinned</a>{% endif %}
+</div>
+{% endif %}

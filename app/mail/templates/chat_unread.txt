@@ -1,0 +1,7 @@
+Hello {{ name }},
+
+{{ sender }} sent you a message in {{ where }} at {{ organisation }}, and it's still unread.
+
+Open chat: {{ link }}
+
+You get this for mentions and direct messages left unread for a while, at most once a day for each conversation. The message itself stays in Kxmeleon.

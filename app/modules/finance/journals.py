@@ -4,6 +4,7 @@ year-end close. Numbers are gap-free and given at posting."""
 
 import uuid
 from collections import defaultdict
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
@@ -17,7 +18,7 @@ from app.core import clock, numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.models import User
 from app.identity.schemas import Actor
-from app.modules.finance import accounts, periods
+from app.modules.finance import accounts, periods, project_link, vehicle_link
 from app.modules.finance.models import (
     Account,
     FiscalPeriod,
@@ -46,13 +47,24 @@ SOURCE_LABELS = {
     "bank": "Banking",
     "tax": "Tax payment",
     "asset": "Fixed assets",
+    "stock": "Inventory",
 }
 # Journals of finance's own documents, reversed from the document, not the Journals screen.
-DOCUMENT_SOURCES = frozenset({"receivable", "payable", "bank", "tax", "asset"})
+DOCUMENT_SOURCES = frozenset({"receivable", "payable", "bank", "tax", "asset", "stock"})
 TABS = ("draft", "posted", "held")
 
 # (account code, cost centre, debit, credit) as other modules hand them over
-SystemLine = tuple[str, uuid.UUID | None, Decimal, Decimal]
+# (account code, cost centre, debit, credit[, project[, vehicle]]) for journals finance
+# builds; the project (ADR 0031) and vehicle (ADR 0033) are optional.
+SystemLine = (
+    tuple[str, uuid.UUID | None, Decimal, Decimal]
+    | tuple[str, uuid.UUID | None, Decimal, Decimal, uuid.UUID | None]
+    | tuple[str, uuid.UUID | None, Decimal, Decimal, uuid.UUID | None, uuid.UUID | None]
+)
+# (account, cost centre, description, debit, credit, project, vehicle)
+Parsed = tuple[
+    Account, uuid.UUID | None, str | None, Decimal, Decimal, uuid.UUID | None, uuid.UUID | None
+]
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,6 +74,8 @@ class LineInput:
     description: str
     debit: str
     credit: str
+    project_id: str = ""  # ADR 0031
+    vehicle_id: str = ""  # ADR 0033
 
 
 @dataclass(frozen=True, slots=True)
@@ -74,6 +88,10 @@ class LineView:
     credit: Decimal
     account_id: uuid.UUID | None = None
     cost_centre_id: uuid.UUID | None = None
+    project_id: uuid.UUID | None = None
+    project: str | None = None
+    vehicle_id: uuid.UUID | None = None
+    vehicle: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -142,11 +160,9 @@ def _uuid(value: str) -> uuid.UUID | None:
         return None
 
 
-def parse_lines(
-    db: Session, lines: list[LineInput]
-) -> tuple[list[tuple[Account, uuid.UUID | None, str | None, Decimal, Decimal]], dict[str, str]]:
-    """Form lines to (account, cost centre, description, debit, credit), skipping empty
-    rows. Errors are keyed `line_<n>` by the row's position on the form."""
+def parse_lines(db: Session, lines: list[LineInput]) -> tuple[list[Parsed], dict[str, str]]:
+    """Form lines to (account, cost centre, description, debit, credit, project), skipping
+    empty rows. Errors are keyed `line_<n>` by the row's position on the form."""
     errors: dict[str, str] = {}
     known = {a.id: a for a in accounts.postable(db)}
     centres = {cid for cid, _ in org.cost_centre_choices(db)}
@@ -159,6 +175,8 @@ def parse_lines(
         credit = parse_amount(line.credit, key, errors)
         account = known.get(_uuid(line.account_id))  # type: ignore[arg-type]
         centre = _uuid(line.cost_centre_id)
+        project = project_link.check(db, line.project_id, key, errors)
+        vehicle = vehicle_link.check(db, line.vehicle_id, key, errors)
         if key in errors:
             continue
         if account is None:
@@ -168,19 +186,27 @@ def parse_lines(
         elif centre is not None and centre not in centres:
             errors[key] = "Choose an active cost centre."
         else:
-            parsed.append((account, centre, line.description.strip() or None, debit, credit))
+            parsed.append(
+                (
+                    account,
+                    centre,
+                    line.description.strip() or None,
+                    debit,
+                    credit,
+                    project,
+                    vehicle,
+                )
+            )
     return parsed, errors
 
 
-def _replace_lines(
-    db: Session,
-    journal: Journal,
-    parsed: list[tuple[Account, uuid.UUID | None, str | None, Decimal, Decimal]],
-) -> None:
+def _replace_lines(db: Session, journal: Journal, parsed: list[Parsed]) -> None:
     for old in db.scalars(select(JournalLine).where(JournalLine.journal_id == journal.id)):
         db.delete(old)
     db.flush()
-    for position, (account, centre, description, debit, credit) in enumerate(parsed, start=1):
+    for position, (account, centre, description, debit, credit, project, vehicle) in enumerate(
+        parsed, start=1
+    ):
         db.add(
             JournalLine(
                 journal_id=journal.id,
@@ -188,6 +214,8 @@ def _replace_lines(
                 account_code=account.code,
                 account_id=account.id,
                 cost_centre_id=centre,
+                project_id=project,
+                vehicle_id=vehicle,
                 description=description,
                 debit=debit,
                 credit=credit,
@@ -416,6 +444,8 @@ def _reverse_now(db: Session, original: Journal, on: date, actor_id: uuid.UUID |
                 account_code=line.account_code,
                 account_id=line.account_id,
                 cost_centre_id=line.cost_centre_id,
+                project_id=line.project_id,
+                vehicle_id=line.vehicle_id,
                 description=line.description,
                 debit=line.credit,
                 credit=line.debit,
@@ -435,10 +465,10 @@ def _build(
     source_id: uuid.UUID,
     journal_date: date,
     memo: str,
-    lines: list[SystemLine],
+    lines: Sequence[SystemLine],
     created_by: uuid.UUID | None = None,
 ) -> Journal:
-    """A held journal with the lines merged by account and cost centre."""
+    """A held journal with the lines merged by account, cost centre and project."""
     journal = Journal(
         journal_date=journal_date,
         memo=memo[:200],
@@ -449,11 +479,15 @@ def _build(
     )
     db.add(journal)
     db.flush()
-    merged: dict[tuple[str, uuid.UUID | None], Decimal] = defaultdict(lambda: ZERO)
-    for code, centre, debit, credit in lines:
-        merged[(code, centre)] += debit - credit
+    merged: dict[tuple[str, uuid.UUID | None, uuid.UUID | None, uuid.UUID | None], Decimal] = (
+        defaultdict(lambda: ZERO)
+    )
+    for line in lines:
+        project = line[4] if len(line) >= 5 else None
+        vehicle = line[5] if len(line) >= 6 else None
+        merged[(line[0], line[1], project, vehicle)] += line[2] - line[3]
     position = 0
-    for (code, centre), net in merged.items():
+    for (code, centre, project, vehicle), net in merged.items():
         if net:
             position += 1
             db.add(
@@ -462,6 +496,8 @@ def _build(
                     position=position,
                     account_code=code,
                     cost_centre_id=centre,
+                    project_id=project,
+                    vehicle_id=vehicle,
                     debit=net if net > 0 else ZERO,
                     credit=-net if net < 0 else ZERO,
                 )
@@ -476,7 +512,7 @@ def post_document_journal(
     source_id: uuid.UUID,
     journal_date: date,
     memo: str,
-    lines: list[SystemLine],
+    lines: Sequence[SystemLine],
     poster: uuid.UUID | None,
     source: str = "receivable",
 ) -> Journal:
@@ -516,7 +552,7 @@ def post_system_journal(
     source_id: uuid.UUID,
     journal_date: date,
     memo: str,
-    lines: list[SystemLine],
+    lines: Sequence[SystemLine],
 ) -> tuple[uuid.UUID, bool]:
     """Take a balanced journal from another module, in its transaction. It posts at once,
     or is held with the reason. Returns (journal id, posted)."""
@@ -726,6 +762,8 @@ def get_journal(db: Session, actor: Actor, journal_id: uuid.UUID) -> JournalView
     lines = _lines(db, r.id)
     found = accounts.by_codes(db, {line.account_code for line in lines})
     centres = dict(org.cost_centre_choices(db))
+    projects = project_link.link().labels(db, {x.project_id for x in lines if x.project_id})
+    vehicles = vehicle_link.link().labels(db, {x.vehicle_id for x in lines if x.vehicle_id})
     who = user_names(db, {r.created_by, r.posted_by})
     numbers = (
         dict(
@@ -773,6 +811,10 @@ def get_journal(db: Session, actor: Actor, journal_id: uuid.UUID) -> JournalView
                 credit=line.credit,
                 account_id=found[line.account_code].id if line.account_code in found else None,
                 cost_centre_id=line.cost_centre_id,
+                project_id=line.project_id,
+                project=projects.get(line.project_id) if line.project_id else None,
+                vehicle_id=line.vehicle_id,
+                vehicle=vehicles.get(line.vehicle_id) if line.vehicle_id else None,
             )
             for line in lines
         ],

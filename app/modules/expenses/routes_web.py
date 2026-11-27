@@ -20,6 +20,7 @@ from app.files.web import ReceivedUpload, upload_body
 from app.identity.schemas import Actor
 from app.modules.expenses import service, settings
 from app.modules.expenses.files import EXPENSE_RECEIPT
+from app.modules.finance import service as finance
 from app.modules.hr import service as people
 from app.org import service as org
 from app.web.access import require_actor
@@ -196,6 +197,8 @@ def _document_context(
         "mine": mine,
         "categories": settings.list_categories(db, active_only=True),
         "cost_centres": org.cost_centre_choices(db),
+        "projects": finance.project_link().choices(db),
+        "vehicles": finance.vehicle_link().choices(db),
         "default_cost_centre": org.cost_centre_of(db, doc.employee_id) if doc.can_edit else None,
         "advances": service.open_advances(db, doc.employee_id) if doc.can_edit else [],
         "config": settings.get_settings(db),
@@ -284,6 +287,8 @@ def save_line(
     cost_centre_id: FormStr = "",
     amount: FormStr = "",
     no_receipt_reason: FormStr = "",
+    project_id: FormStr = "",
+    vehicle_id: FormStr = "",
 ) -> Response:
     try:
         with db.begin_nested():
@@ -298,6 +303,8 @@ def save_line(
                 cost_centre_id=_uuid(cost_centre_id),
                 amount=amount,
                 no_receipt_reason=no_receipt_reason,
+                project_id=project_id,
+                vehicle_id=vehicle_id,
             )
     except (ValidationFailed, Conflict, PermissionDenied) as exc:
         values = {
@@ -307,6 +314,8 @@ def save_line(
             "cost_centre_id": cost_centre_id,
             "amount": amount,
             "no_receipt_reason": no_receipt_reason,
+            "project_id": project_id,
+            "vehicle_id": vehicle_id,
         }
         return _document_problem(
             request, db, actor, document_id, exc, values=values, editing_line=line_id or "new"

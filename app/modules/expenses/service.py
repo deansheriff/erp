@@ -225,6 +225,8 @@ def save_line(
     cost_centre_id: uuid.UUID | None,
     amount: str,
     no_receipt_reason: str = "",
+    project_id: str = "",
+    vehicle_id: str = "",
 ) -> uuid.UUID:
     doc = _editable(db, actor, document_id)
     if doc.kind != "claim":
@@ -241,6 +243,8 @@ def save_line(
         errors["description"] = "Say what it was."
     if cost_centre_id is not None and cost_centre_id not in dict(org.cost_centre_choices(db)):
         errors["cost_centre_id"] = "Choose a cost centre."
+    project = finance.check_project(db, project_id, "project_id", errors)
+    vehicle = finance.check_vehicle(db, vehicle_id, "vehicle_id", errors)
     if errors:
         raise ValidationFailed(field_errors=errors)
     value = parse_money(amount, "amount") or ZERO
@@ -274,6 +278,7 @@ def save_line(
         line.day, line.category_id, line.cost_centre_id = day, category.id, cost_centre_id
         line.description, line.amount = description.strip()[:200], value
     line.no_receipt_reason = no_receipt_reason.strip()[:200] or None
+    line.project_id, line.vehicle_id = project, vehicle
     _recount(db, doc)
     db.flush()
     record_by(
@@ -627,26 +632,28 @@ def _journal(
     *,
     when: date,
     memo: str,
-    lines: list[tuple[str, uuid.UUID | None, Decimal, Decimal]],
+    lines: list[finance.SystemLine],
     repayment_id: uuid.UUID | None = None,
 ) -> None:
-    debit = sum((d for _, _, d, _ in lines), ZERO)
-    credit = sum((c for _, _, _, c in lines), ZERO)
+    debit = sum((line[2] for line in lines), ZERO)
+    credit = sum((line[3] for line in lines), ZERO)
     assert debit == credit, "unbalanced journal"  # noqa: S101
     journal = ExpenseJournal(
         document_id=doc.id, repayment_id=repayment_id, journal_date=when, memo=memo[:200]
     )
     db.add(journal)
     db.flush()
-    for account, cost_centre, d, c in lines:
-        if d or c:
+    for line in lines:
+        if line[2] or line[3]:
             db.add(
                 ExpenseJournalLine(
                     journal_id=journal.id,
-                    account=account,
-                    cost_centre_id=cost_centre,
-                    debit=d,
-                    credit=c,
+                    account=line[0],
+                    cost_centre_id=line[1],
+                    project_id=line[4] if len(line) >= 5 else None,
+                    vehicle_id=line[5] if len(line) >= 6 else None,
+                    debit=line[2],
+                    credit=line[3],
                 )
             )
     db.flush()
@@ -656,7 +663,7 @@ def _journal(
         source_id=journal.id,
         journal_date=when,
         memo=journal.memo,
-        lines=[(account, centre, d, c) for account, centre, d, c in lines if d or c],
+        lines=[line for line in lines if line[2] or line[3]],
     )
     journal.status = "posted" if posted else "queued"
     db.flush()
@@ -664,7 +671,7 @@ def _journal(
 
 def _payment_lines(
     db: Session, doc: ExpenseDocument, applied: Decimal, paid: Decimal
-) -> list[tuple[str, uuid.UUID | None, Decimal, Decimal]]:
+) -> list[finance.SystemLine]:
     settings = config.get_settings(db)
     if doc.kind == "advance":
         return [
@@ -672,10 +679,21 @@ def _payment_lines(
             (settings.bank_account, None, ZERO, paid),
         ]
     categories = {c.id: c for c in db.scalars(select(ExpenseCategory))}
-    by_account: dict[tuple[str, uuid.UUID | None], Decimal] = defaultdict(lambda: ZERO)
+    by_account: dict[tuple[str, uuid.UUID | None, uuid.UUID | None, uuid.UUID | None], Decimal] = (
+        defaultdict(lambda: ZERO)
+    )
     for line in db.scalars(select(ExpenseLine).where(ExpenseLine.document_id == doc.id)):
-        by_account[(categories[line.category_id].gl_account, line.cost_centre_id)] += line.amount
-    result = [(account, cc, amount, ZERO) for (account, cc), amount in by_account.items()]
+        key = (
+            categories[line.category_id].gl_account,
+            line.cost_centre_id,
+            line.project_id,
+            line.vehicle_id,
+        )
+        by_account[key] += line.amount
+    result: list[finance.SystemLine] = [
+        (account, cc, amount, ZERO, project, vehicle)
+        for (account, cc, project, vehicle), amount in by_account.items()
+    ]
     result.append((settings.advances_account, None, ZERO, applied))
     result.append((settings.bank_account, None, ZERO, paid))
     return result
@@ -954,6 +972,10 @@ def _views(
         else {}
     )
     receipt_names = {v.id: v.original_filename for v in receipts.values()}
+    tagged = {x.project_id for ls in lines.values() for x in ls if x.project_id}
+    projects = finance.project_link().labels(db, tagged) if tagged else {}
+    cars = {x.vehicle_id for ls in lines.values() for x in ls if x.vehicle_id}
+    vehicles = finance.vehicle_link().labels(db, cars) if cars else {}
     approvers = people.names(
         db, {s.approver_employee_id for ss in steps.values() for s in ss if s.approver_employee_id}
     )
@@ -1008,6 +1030,10 @@ def _views(
                         else None,
                         no_receipt_reason=line.no_receipt_reason,
                         receipt_needed=_receipt_needed(line, categories[line.category_id]),
+                        project_id=line.project_id,
+                        project=projects.get(line.project_id) if line.project_id else None,
+                        vehicle_id=line.vehicle_id,
+                        vehicle=vehicles.get(line.vehicle_id) if line.vehicle_id else None,
                     )
                     for line in own_lines
                 ],
