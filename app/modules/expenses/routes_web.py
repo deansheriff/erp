@@ -198,6 +198,7 @@ def _document_context(
         "categories": settings.list_categories(db, active_only=True),
         "cost_centres": org.cost_centre_choices(db),
         "projects": finance.project_link().choices(db),
+        "vehicles": finance.vehicle_link().choices(db),
         "default_cost_centre": org.cost_centre_of(db, doc.employee_id) if doc.can_edit else None,
         "advances": service.open_advances(db, doc.employee_id) if doc.can_edit else [],
         "config": settings.get_settings(db),
@@ -287,6 +288,7 @@ def save_line(
     amount: FormStr = "",
     no_receipt_reason: FormStr = "",
     project_id: FormStr = "",
+    vehicle_id: FormStr = "",
 ) -> Response:
     try:
         with db.begin_nested():
@@ -302,6 +304,7 @@ def save_line(
                 amount=amount,
                 no_receipt_reason=no_receipt_reason,
                 project_id=project_id,
+                vehicle_id=vehicle_id,
             )
     except (ValidationFailed, Conflict, PermissionDenied) as exc:
         values = {
@@ -312,6 +315,7 @@ def save_line(
             "amount": amount,
             "no_receipt_reason": no_receipt_reason,
             "project_id": project_id,
+            "vehicle_id": vehicle_id,
         }
         return _document_problem(
             request, db, actor, document_id, exc, values=values, editing_line=line_id or "new"

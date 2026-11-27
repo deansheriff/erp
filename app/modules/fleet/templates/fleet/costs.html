@@ -1,0 +1,62 @@
+{# Fleet → cost per vehicle (ADR 0033): posted expense lines naming each vehicle, by
+   account, with distance and litres from fuel logs, cost per km and km per litre.
+   Design: design/stitch/exports/fleet.costs.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% call ui.page_header("Cost per vehicle", "From the ledger: bills, expenses and journals that name a vehicle.") %}
+  <form method="get" class="flex flex-wrap items-end gap-2">
+    <div><label class="kx-label" for="start">From</label><input id="start" name="start" type="date" class="kx-input h-10" value="{{ start.isoformat() }}"></div>
+    <div><label class="kx-label" for="end">To</label><input id="end" name="end" type="date" class="kx-input h-10" value="{{ end.isoformat() }}"></div>
+    <button type="submit" class="kx-btn-secondary">Show</button>
+  </form>
+{% endcall %}
+
+<section class="kx-card mt-6 overflow-hidden" aria-label="Cost per vehicle">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full text-body-sm {{ 'min-w-[1080px]' if accounts | length > 2 else 'min-w-[860px]' }}">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3">
+        <tr>
+          <th class="px-5 py-3 text-left font-semibold">Vehicle</th>
+          <th class="px-3 py-3 text-right font-semibold">Distance</th>
+          <th class="px-3 py-3 text-right font-semibold">Fuel</th>
+          {% for a in accounts %}<th class="px-3 py-3 text-right font-semibold">{{ a }}</th>{% endfor %}
+          <th class="px-3 py-3 text-right font-semibold">Total</th>
+          <th class="px-3 py-3 text-right font-semibold">Per km</th>
+          <th class="px-5 py-3 text-right font-semibold">km/L</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        {% set v = r.vehicle %}
+        <tr>
+          <td class="px-5 py-3"><a href="/fleet/vehicles/{{ v.id }}" class="font-semibold text-iris">{{ v.registration }}</a><span class="block text-xs text-ink-3"><span class="font-mono">{{ v.code }}</span> · {{ v.make }} {{ v.model }}</span></td>
+          <td class="px-3 py-3 text-right tnum">{% if r.distance %}{{ "{:,}".format(r.distance) }} km{% else %}—{% endif %}</td>
+          <td class="px-3 py-3 text-right tnum">{% if r.litres %}{{ r.litres | plain }} L{% else %}—{% endif %}</td>
+          {% for a in accounts %}<td class="px-3 py-3 text-right tnum">{% if a in r.accounts %}{{ r.accounts[a] | money }}{% else %}—{% endif %}</td>{% endfor %}
+          <td class="px-3 py-3 text-right font-semibold tnum">{{ r.total | money }}</td>
+          <td class="px-3 py-3 text-right tnum">{% if r.per_km is not none %}{{ r.per_km | money }}{% else %}—{% endif %}</td>
+          <td class="px-5 py-3 text-right tnum">{% if r.km_per_litre is not none %}{{ r.km_per_litre | plain }}{% else %}—{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot class="border-t border-line bg-surface-sunken font-semibold">
+        <tr>
+          <td class="px-5 py-3">Total</td>
+          <td class="px-3 py-3 text-right tnum">{{ "{:,}".format(rows | sum(attribute="distance")) }} km</td>
+          <td class="px-3 py-3"></td>
+          {% for a in accounts %}<td class="px-3 py-3 text-right tnum">{{ totals[a] | money }}</td>{% endfor %}
+          <td class="px-3 py-3 text-right tnum">{{ grand | money }}</td>
+          <td class="px-3 py-3" colspan="2"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("chart-column", "No vehicles", "Add vehicles, then name them on bills, expenses and journal lines.") %}{% endcall %}
+  {% endif %}
+</section>
+<p class="mt-3 text-xs text-ink-3">Distance is the spread of odometer readings on fuel logs in the period. Fuel bought on a company card or an expense claim reaches the ledger through that document, with the vehicle on its line.</p>
+{% endblock %}

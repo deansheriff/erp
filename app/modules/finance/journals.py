@@ -18,7 +18,7 @@ from app.core import clock, numbering
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.models import User
 from app.identity.schemas import Actor
-from app.modules.finance import accounts, periods, project_link
+from app.modules.finance import accounts, periods, project_link, vehicle_link
 from app.modules.finance.models import (
     Account,
     FiscalPeriod,
@@ -54,13 +54,17 @@ DOCUMENT_SOURCES = frozenset({"receivable", "payable", "bank", "tax", "asset", "
 TABS = ("draft", "posted", "held")
 
 # (account code, cost centre, debit, credit) as other modules hand them over
-# (account code, cost centre, debit, credit[, project]) for journals finance builds; the
-# project is optional (ADR 0031).
+# (account code, cost centre, debit, credit[, project[, vehicle]]) for journals finance
+# builds; the project (ADR 0031) and vehicle (ADR 0033) are optional.
 SystemLine = (
     tuple[str, uuid.UUID | None, Decimal, Decimal]
     | tuple[str, uuid.UUID | None, Decimal, Decimal, uuid.UUID | None]
+    | tuple[str, uuid.UUID | None, Decimal, Decimal, uuid.UUID | None, uuid.UUID | None]
 )
-Parsed = tuple[Account, uuid.UUID | None, str | None, Decimal, Decimal, uuid.UUID | None]
+# (account, cost centre, description, debit, credit, project, vehicle)
+Parsed = tuple[
+    Account, uuid.UUID | None, str | None, Decimal, Decimal, uuid.UUID | None, uuid.UUID | None
+]
 
 
 @dataclass(frozen=True, slots=True)
@@ -71,6 +75,7 @@ class LineInput:
     debit: str
     credit: str
     project_id: str = ""  # ADR 0031
+    vehicle_id: str = ""  # ADR 0033
 
 
 @dataclass(frozen=True, slots=True)
@@ -85,6 +90,8 @@ class LineView:
     cost_centre_id: uuid.UUID | None = None
     project_id: uuid.UUID | None = None
     project: str | None = None
+    vehicle_id: uuid.UUID | None = None
+    vehicle: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -169,6 +176,7 @@ def parse_lines(db: Session, lines: list[LineInput]) -> tuple[list[Parsed], dict
         account = known.get(_uuid(line.account_id))  # type: ignore[arg-type]
         centre = _uuid(line.cost_centre_id)
         project = project_link.check(db, line.project_id, key, errors)
+        vehicle = vehicle_link.check(db, line.vehicle_id, key, errors)
         if key in errors:
             continue
         if account is None:
@@ -179,7 +187,15 @@ def parse_lines(db: Session, lines: list[LineInput]) -> tuple[list[Parsed], dict
             errors[key] = "Choose an active cost centre."
         else:
             parsed.append(
-                (account, centre, line.description.strip() or None, debit, credit, project)
+                (
+                    account,
+                    centre,
+                    line.description.strip() or None,
+                    debit,
+                    credit,
+                    project,
+                    vehicle,
+                )
             )
     return parsed, errors
 
@@ -188,7 +204,7 @@ def _replace_lines(db: Session, journal: Journal, parsed: list[Parsed]) -> None:
     for old in db.scalars(select(JournalLine).where(JournalLine.journal_id == journal.id)):
         db.delete(old)
     db.flush()
-    for position, (account, centre, description, debit, credit, project) in enumerate(
+    for position, (account, centre, description, debit, credit, project, vehicle) in enumerate(
         parsed, start=1
     ):
         db.add(
@@ -199,6 +215,7 @@ def _replace_lines(db: Session, journal: Journal, parsed: list[Parsed]) -> None:
                 account_id=account.id,
                 cost_centre_id=centre,
                 project_id=project,
+                vehicle_id=vehicle,
                 description=description,
                 debit=debit,
                 credit=credit,
@@ -428,6 +445,7 @@ def _reverse_now(db: Session, original: Journal, on: date, actor_id: uuid.UUID |
                 account_id=line.account_id,
                 cost_centre_id=line.cost_centre_id,
                 project_id=line.project_id,
+                vehicle_id=line.vehicle_id,
                 description=line.description,
                 debit=line.credit,
                 credit=line.debit,
@@ -461,14 +479,15 @@ def _build(
     )
     db.add(journal)
     db.flush()
-    merged: dict[tuple[str, uuid.UUID | None, uuid.UUID | None], Decimal] = defaultdict(
-        lambda: ZERO
+    merged: dict[tuple[str, uuid.UUID | None, uuid.UUID | None, uuid.UUID | None], Decimal] = (
+        defaultdict(lambda: ZERO)
     )
     for line in lines:
-        project = line[4] if len(line) == 5 else None
-        merged[(line[0], line[1], project)] += line[2] - line[3]
+        project = line[4] if len(line) >= 5 else None
+        vehicle = line[5] if len(line) >= 6 else None
+        merged[(line[0], line[1], project, vehicle)] += line[2] - line[3]
     position = 0
-    for (code, centre, project), net in merged.items():
+    for (code, centre, project, vehicle), net in merged.items():
         if net:
             position += 1
             db.add(
@@ -478,6 +497,7 @@ def _build(
                     account_code=code,
                     cost_centre_id=centre,
                     project_id=project,
+                    vehicle_id=vehicle,
                     debit=net if net > 0 else ZERO,
                     credit=-net if net < 0 else ZERO,
                 )
@@ -743,6 +763,7 @@ def get_journal(db: Session, actor: Actor, journal_id: uuid.UUID) -> JournalView
     found = accounts.by_codes(db, {line.account_code for line in lines})
     centres = dict(org.cost_centre_choices(db))
     projects = project_link.link().labels(db, {x.project_id for x in lines if x.project_id})
+    vehicles = vehicle_link.link().labels(db, {x.vehicle_id for x in lines if x.vehicle_id})
     who = user_names(db, {r.created_by, r.posted_by})
     numbers = (
         dict(
@@ -792,6 +813,8 @@ def get_journal(db: Session, actor: Actor, journal_id: uuid.UUID) -> JournalView
                 cost_centre_id=line.cost_centre_id,
                 project_id=line.project_id,
                 project=projects.get(line.project_id) if line.project_id else None,
+                vehicle_id=line.vehicle_id,
+                vehicle=vehicles.get(line.vehicle_id) if line.vehicle_id else None,
             )
             for line in lines
         ],

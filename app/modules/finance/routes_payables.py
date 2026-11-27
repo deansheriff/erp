@@ -31,6 +31,7 @@ from app.modules.finance import (
     stock_link,
     suppliers,
     tax,
+    vehicle_link,
 )
 from app.modules.finance.bills import BillInput, BillLineInput
 from app.modules.finance.models import SUPPLIER_KINDS, VAT_CODES, Supplier, WhtType
@@ -347,6 +348,7 @@ def _pickers(db: Session) -> dict[str, Any]:
     return {
         "stock_items": link.items(db),
         "projects": project_link.link().choices(db),
+        "vehicles": vehicle_link.link().choices(db),
         "warehouses": link.warehouses(db),
         "bins": link.bins(db),
         "cost_accounts": purchasing.cost_accounts(db),
@@ -598,6 +600,7 @@ def _bill_context(
                 line.vat_code,
                 line.serials or "",
                 str(line.project_id or ""),
+                str(line.vehicle_id or ""),
             )
             for line in (view.lines if view else [])
         ]
@@ -678,6 +681,7 @@ def save_bill(
     vat_code: FormList = [],  # noqa: B006
     serials: FormList = [],  # noqa: B006
     project_id: FormList = [],  # noqa: B006
+    vehicle_id: FormList = [],  # noqa: B006
 ) -> Response:
     rows = max(len(description), len(account_id), len(unit_price))
     lines = [
@@ -691,6 +695,7 @@ def save_bill(
             _at(vat_code, i) or "standard",
             _at(serials, i),
             _at(project_id, i),
+            _at(vehicle_id, i),
         )
         for i in range(rows)
     ]

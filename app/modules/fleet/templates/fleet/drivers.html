@@ -1,0 +1,55 @@
+{# Fleet → drivers (ADR 0033): employees allowed to drive, with licence number, class and
+   expiry, and the vehicles assigned to them. Design: design/stitch/exports/fleet.drivers.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Drivers", "Who may drive company vehicles. A licence out of date stops assignments and bookings.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 {{ 'lg:grid-cols-[minmax(0,1fr)_360px]' if can_manage }}">
+  <section class="kx-card overflow-hidden" aria-label="Drivers">
+    {% if rows %}
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[720px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Driver</th><th class="px-3 py-3 text-left font-semibold">Licence</th><th class="px-3 py-3 text-left font-semibold">Expires</th><th class="px-3 py-3 text-left font-semibold">Vehicles</th><th class="px-5 py-3"><span class="sr-only">Actions</span></th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for r in rows %}
+          {% set d = r.driver %}
+          <tr class="{{ 'text-ink-3' if not d.is_active }}">
+            <td class="px-5 py-3 font-semibold">{{ r.name }}{% if not d.is_active %}<span class="block text-xs font-normal">Not driving</span>{% endif %}</td>
+            <td class="px-3 py-3"><span class="font-mono">{{ d.licence_number }}</span>{% if d.licence_class %}<span class="block text-xs text-ink-3">Class {{ d.licence_class }}</span>{% endif %}</td>
+            <td class="px-3 py-3 tnum">{{ d.licence_expiry | date }} {% if r.state == "expired" %}{{ ui.badge("danger", "Expired") }}{% elif r.state == "soon" %}{{ ui.badge("warning", "Renew soon") }}{% endif %}</td>
+            <td class="px-3 py-3">{{ r.vehicles | join(", ") or "—" }}</td>
+            <td class="px-5 py-3 text-right">{% if can_manage %}<a href="/fleet/drivers?edit={{ d.employee_id }}" class="kx-btn-ghost text-xs">Edit</a>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    {% call ui.empty_state("id-card", "No drivers yet", "Add the people allowed to drive, with their licence details.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if can_manage %}
+  {% set edit_row = namespace(d=none) %}
+  {% for r in rows if r.driver.employee_id | string == editing %}{% set edit_row.d = r.driver %}{% endfor %}
+  {% set d = edit_row.d %}
+  <form method="post" action="/fleet/drivers" class="kx-card h-fit space-y-3 p-5" novalidate>
+    {{ ui.csrf_field() }}
+    <h2 class="font-h3 text-h3">{{ "Edit driver" if d else "Add a driver" }}</h2>
+    <div><label class="kx-label" for="employee_id">Employee</label><select id="employee_id" name="employee_id" class="kx-input"><option value="">Choose a person</option>{% for id, name in staff %}<option value="{{ id }}" {% if v.get("employee_id", editing) == id|string %}selected{% endif %}>{{ name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "employee_id") }}</div>
+    <div><label class="kx-label" for="licence_number">Licence number</label><input id="licence_number" name="licence_number" class="kx-input" value="{{ v.get('licence_number', d.licence_number if d else '') }}">{{ ui.field_error(errors, "licence_number") }}</div>
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div><label class="kx-label" for="licence_class">Class</label><input id="licence_class" name="licence_class" class="kx-input" value="{{ v.get('licence_class', (d.licence_class or '') if d else '') }}" placeholder="B, C, E"></div>
+      <div><label class="kx-label" for="licence_expiry">Expires on</label><input id="licence_expiry" name="licence_expiry" type="date" class="kx-input" value="{{ v.get('licence_expiry', d.licence_expiry.isoformat() if d else '') }}">{{ ui.field_error(errors, "licence_expiry") }}</div>
+    </div>
+    <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="active" value="1" {% if (v.get("active") if v else (d.is_active if d else true)) %}checked{% endif %}> Allowed to drive</label>
+    <div class="flex justify-end gap-2">{% if d %}<a href="/fleet/drivers" class="kx-btn-ghost">Cancel</a>{% endif %}<button type="submit" class="kx-btn-primary">Save driver</button></div>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{# Fleet → vehicles (ADR 0033): the register with driver, odometer, document state and the
+   next service, filtered by status and pool, and documents coming up for renewal.
+   Design: design/stitch/exports/fleet.vehicles.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro doc_chip(state, note) -%}
+{%- if state == "expired" %}{{ ui.badge("danger", "Expired") }}
+{%- elif state == "soon" %}{{ ui.badge("warning", "Renew soon") }}
+{%- elif state == "missing" %}{{ ui.badge("neutral", "Missing") }}
+{%- else %}{{ ui.badge("success", "In date") }}{% endif %}
+{%- if note %}<span class="mt-1 block text-xs text-ink-3">{{ note }}</span>{% endif -%}
+{%- endmacro %}
+
+{% block content %}
+{% call ui.page_header("Vehicles", "Every vehicle, who drives it, its papers and its next service.") %}
+  {% if can_manage %}<a href="/fleet/vehicles/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} Add vehicle</a>{% endif %}
+{% endcall %}
+
+{% if due %}
+<section class="kx-card mt-6 p-5" aria-labelledby="due-h">
+  <h2 id="due-h" class="font-semibold">{{ ui.icon("file-text", "sm") }} Papers to renew</h2>
+  <ul class="mt-2 flex flex-wrap gap-2 text-body-sm">
+    {% for v, d in due %}
+    <li><a href="/fleet/vehicles/{{ v.id }}" class="inline-flex items-center gap-2 rounded-lg border border-line px-2.5 py-1">{{ v.registration }} · {{ document_labels[d.kind] }} {{ ui.badge("danger" if d.expires_on < today else "warning", d.expires_on | date) }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<form method="get" class="mt-6 flex flex-wrap items-center gap-2">
+  <label class="sr-only" for="status">Status</label>
+  <select id="status" name="status" class="kx-input h-10 w-auto"><option value="">In use</option>{% for s in statuses %}<option value="{{ s }}" {% if status == s %}selected{% endif %}>{{ status_labels[s] }}</option>{% endfor %}</select>
+  <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="pool" value="1" {% if pool %}checked{% endif %}> Pool vehicles only</label>
+  <button type="submit" class="kx-btn-secondary">Filter</button>
+</form>
+
+<section class="kx-card mt-4 overflow-hidden" aria-label="Vehicles">
+  {% if rows %}
+  <div class="kx-scroll-x">
+    <table class="w-full min-w-[980px] text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Vehicle</th><th class="px-3 py-3 text-left font-semibold">Type</th><th class="px-3 py-3 text-left font-semibold">Driver</th><th class="px-3 py-3 text-right font-semibold">Odometer</th><th class="px-3 py-3 text-left font-semibold">Papers</th><th class="px-3 py-3 text-left font-semibold">Next service</th><th class="px-5 py-3 text-left font-semibold">Status</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for r in rows %}
+        {% set v = r.vehicle %}
+        {% set n = r.next_service %}
+        <tr>
+          <td class="px-5 py-3"><a href="/fleet/vehicles/{{ v.id }}" class="font-semibold text-iris">{{ v.registration }}</a><span class="block text-xs text-ink-3"><span class="font-mono">{{ v.code }}</span> · {{ v.make }} {{ v.model }}{% if v.year %} ({{ v.year }}){% endif %}</span></td>
+          <td class="px-3 py-3 text-ink-2">{{ type_labels[v.type] }} · {{ fuel_labels[v.fuel] }}{% if v.is_pool %}<span class="block text-xs text-ink-3">Pool</span>{% endif %}</td>
+          <td class="px-3 py-3">{{ r.driver or "—" }}</td>
+          <td class="px-3 py-3 text-right tnum">{{ "{:,}".format(r.odometer) }} km</td>
+          <td class="px-3 py-3">{{ doc_chip(r.documents, r.document_note) }}</td>
+          <td class="px-3 py-3">{% if n %}{{ n.plan.name }}<span class="block text-xs {{ 'font-semibold text-danger-text' if n.overdue else 'text-ink-3' }}">{% if n.overdue %}Overdue · {% endif %}{% if n.due_km %}at {{ "{:,}".format(n.due_km) }} km{% endif %}{% if n.due_km and n.due_on %} or {% endif %}{% if n.due_on %}by {{ n.due_on | date }}{% endif %}</span>{% else %}<span class="text-ink-3">No plan</span>{% endif %}</td>
+          <td class="px-5 py-3">{{ ui.badge(status_tones[v.status], status_labels[v.status]) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  {% call ui.empty_state("truck", "No vehicles", "Vehicles appear here once a Fleet Manager adds them.") %}{% endcall %}
+  {% endif %}
+</section>
+{% endblock %}

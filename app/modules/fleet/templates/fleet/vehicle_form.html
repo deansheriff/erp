@@ -1,0 +1,35 @@
+{# Fleet → add or edit a vehicle (ADR 0033). Design: design/stitch/exports/fleet.vehicle_form.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header(page_title, "Registration, make and model, and who drives it.") %}
+  <a href="{{ '/fleet/vehicles/' ~ vehicle.id if vehicle else '/fleet/vehicles' }}" class="kx-btn-ghost">Cancel</a>
+{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<form method="post" action="{{ '/fleet/vehicles/' ~ vehicle.id ~ '/edit' if vehicle else '/fleet/vehicles/new' }}" class="kx-card mt-6 max-w-4xl space-y-5 p-6" novalidate>
+  {{ ui.csrf_field() }}
+  <fieldset class="grid gap-4 sm:grid-cols-3">
+    <legend class="mb-2 font-semibold">The vehicle</legend>
+    {{ ui.text_field("registration", "Registration number", v.get("registration", ""), errors=errors, required=true) }}
+    {{ ui.text_field("make", "Make", v.get("make", ""), errors=errors, required=true) }}
+    {{ ui.text_field("model", "Model", v.get("model", ""), errors=errors, required=true) }}
+    {{ ui.text_field("year", "Year", v.get("year", ""), errors=errors, inputmode="numeric") }}
+    <div><label class="kx-label" for="f-type">Type</label><select id="f-type" name="type" class="kx-input">{% for t in types %}<option value="{{ t }}" {% if v.get("type") == t %}selected{% endif %}>{{ type_labels[t] }}</option>{% endfor %}</select>{{ ui.field_error(errors, "type") }}</div>
+    <div><label class="kx-label" for="f-fuel">Fuel</label><select id="f-fuel" name="fuel" class="kx-input">{% for x in fuels %}<option value="{{ x }}" {% if v.get("fuel") == x %}selected{% endif %}>{{ fuel_labels[x] }}</option>{% endfor %}</select>{{ ui.field_error(errors, "fuel") }}</div>
+    {{ ui.text_field("colour", "Colour", v.get("colour", ""), errors=errors) }}
+    {{ ui.text_field("vin", "Chassis number (VIN)", v.get("vin", ""), errors=errors) }}
+  </fieldset>
+  <fieldset class="grid gap-4 border-t border-line pt-5 sm:grid-cols-3">
+    <legend class="mb-2 pt-5 font-semibold">In service</legend>
+    {{ ui.text_field("purchase_date", "Bought on", v.get("purchase_date", ""), type="date", errors=errors) }}
+    {{ ui.text_field("start_odometer", "Odometer when added (km)", v.get("start_odometer", ""), errors=errors, inputmode="numeric") }}
+    <div><label class="kx-label" for="f-driver_id">Assigned driver</label><select id="f-driver_id" name="driver_id" class="kx-input"><option value="">No assigned driver</option>{% for id, name in drivers %}<option value="{{ id }}" {% if v.get("driver_id") == id|string %}selected{% endif %}>{{ name }}</option>{% endfor %}</select><span class="kx-hint">Only people with a licence in date.</span>{{ ui.field_error(errors, "driver_id") }}</div>
+    <label class="flex items-center gap-2 text-body-sm sm:col-span-3"><input type="checkbox" name="is_pool" value="1" {% if v.get("is_pool") %}checked{% endif %}> A pool vehicle anyone can book</label>
+  </fieldset>
+  <div><label class="kx-label" for="f-notes">Notes</label><textarea id="f-notes" name="notes" rows="3" class="kx-input">{{ v.get("notes", "") }}</textarea></div>
+  <div class="flex justify-end gap-3"><button type="submit" class="kx-btn-primary">{{ "Save changes" if vehicle else "Add vehicle" }}</button></div>
+</form>
+{% endblock %}

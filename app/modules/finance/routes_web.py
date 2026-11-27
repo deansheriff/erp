@@ -18,7 +18,15 @@ from app.core import clock
 from app.core.db import get_db
 from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFailed
 from app.identity.schemas import Actor
-from app.modules.finance import accounts, journals, periods, project_link, recurring, reports
+from app.modules.finance import (
+    accounts,
+    journals,
+    periods,
+    project_link,
+    recurring,
+    reports,
+    vehicle_link,
+)
 from app.modules.finance.accounts import CASH_FLOW_LABELS, TYPE_LABELS, AccountInput
 from app.modules.finance.models import ACCOUNT_TYPES
 from app.org import service as org
@@ -89,9 +97,11 @@ def _line_inputs(
     debit: list[str],
     credit: list[str],
     project_id: list[str] | None = None,
+    vehicle_id: list[str] | None = None,
 ) -> list[journals.LineInput]:
     rows = max(len(account_id), len(debit), len(credit))
     projects = project_id or []
+    vehicles = vehicle_id or []
 
     def at(values: list[str], i: int) -> str:
         return values[i] if i < len(values) else ""
@@ -104,6 +114,7 @@ def _line_inputs(
             at(debit, i),
             at(credit, i),
             at(projects, i),
+            at(vehicles, i),
         )
         for i in range(rows)
     ]
@@ -254,6 +265,7 @@ def _journal_context(
                     f"{line.debit:.2f}" if line.debit else "",
                     f"{line.credit:.2f}" if line.credit else "",
                     str(line.project_id or ""),
+                    str(line.vehicle_id or ""),
                 )
                 for line in view.lines
             ]
@@ -275,6 +287,7 @@ def _journal_context(
         if view
         else "New journal",
         "projects": project_link.link().choices(db),
+        "vehicles": vehicle_link.link().choices(db),
         **_pickers(db),
         **extra,
     }
@@ -318,8 +331,11 @@ def save_journal(
     debit: FormList = [],  # noqa: B006
     credit: FormList = [],  # noqa: B006
     project_id: FormList = [],  # noqa: B006
+    vehicle_id: FormList = [],  # noqa: B006
 ) -> Response:
-    lines = _line_inputs(account_id, cost_centre_id, description, debit, credit, project_id)
+    lines = _line_inputs(
+        account_id, cost_centre_id, description, debit, credit, project_id, vehicle_id
+    )
     try:
         with db.begin_nested():
             saved = journals.save_draft(

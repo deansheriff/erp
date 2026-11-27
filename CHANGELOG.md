@@ -5,6 +5,24 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 11f: Fleet
+- A vehicle register (`VEH-`) with papers (insurance, vehicle licence, roadworthiness),
+  an assigned driver, pool vehicles and a status (ADR 0033).
+- Drivers: employees with a licence number, class and expiry. An expired licence blocks
+  assignments and bookings.
+- Service plans by distance, time or both, and a service history.
+- Fuel logs by the driver, with a receipt photo, an odometer that can't go back, km/L,
+  and a flag below 70% of the vehicle's average (to confirm).
+- Pool vehicle bookings, approved by a Fleet Manager with an optional driver, refused when
+  they overlap or the vehicle's papers have expired.
+- Incidents (`INC-`): reported with photos, reviewed with the repair cost and insurance
+  claim, then closed.
+- Daily alerts 30 and 7 days before papers and licences expire and on the day, and when a
+  service falls due. Each goes once.
+- Cost per vehicle from the ledger: journal, bill and expense lines can name a vehicle.
+- Permissions `fleet.vehicle.read`, `.manage`, `.use` and `fleet.cost.read`; the Fleet
+  Manager role.
+
 ### Added — Phase 11e: Support
 - Support teams, with a lead and agents, and categories routed to a team (ADR 0032).
 - Tickets (`TKT-`):

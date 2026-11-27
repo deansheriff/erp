@@ -177,3 +177,13 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Raise a support ticket** (`support.ticket_new`) | `GET /support/new` | support.ticket.create | — | Dean Sheriff (2026-11-27) |
 | **SLA report** (`support.sla_report`) | `GET /support/report` | support.report.read | — | Dean Sheriff (2026-11-27) |
 | **Support settings (teams, categories, SLA targets, hours)** (`support.settings`) | `GET /support/settings` | support.settings.manage | — | Dean Sheriff (2026-11-27) |
+| **My fleet (log fuel, book a pool vehicle, report an incident)** (`fleet.my`) | `GET /fleet` | fleet.vehicle.use | — | Dean Sheriff (2026-11-27) |
+| **Vehicles** (`fleet.vehicles`) | `GET /fleet/vehicles` | fleet.vehicle.read | — | Dean Sheriff (2026-11-27) |
+| **One vehicle (papers, service plans, fuel, incidents, costs)** (`fleet.vehicle`) | `GET /fleet/vehicles/{vehicle_id}` | fleet.vehicle.read | — | Dean Sheriff (2026-11-27) |
+| **Add or edit a vehicle** (`fleet.vehicle_form`) | `GET /fleet/vehicles/new` | fleet.vehicle.manage | — | Dean Sheriff (2026-11-27) |
+| **Vehicle bookings (approvals and what's booked)** (`fleet.bookings`) | `GET /fleet/bookings` | fleet.vehicle.manage | — | Dean Sheriff (2026-11-27) |
+| **Vehicle incidents** (`fleet.incidents`) | `GET /fleet/incidents` | fleet.vehicle.use | — | Dean Sheriff (2026-11-27) |
+| **One vehicle incident (photos, review and claim)** (`fleet.incident`) | `GET /fleet/incidents/{incident_id}` | fleet.vehicle.use | — | Dean Sheriff (2026-11-27) |
+| **Drivers and their licences** (`fleet.drivers`) | `GET /fleet/drivers` | fleet.vehicle.read | — | Dean Sheriff (2026-11-27) |
+| **Cost per vehicle** (`fleet.costs`) | `GET /fleet/costs` | fleet.cost.read | — | Dean Sheriff (2026-11-27) |
+| **Fleet settings (alert lead times, fuel efficiency check)** (`fleet.settings`) | `GET /fleet/settings` | fleet.vehicle.manage | — | Dean Sheriff (2026-11-27) |

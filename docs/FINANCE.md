@@ -123,6 +123,17 @@ Journal lines can name an active project (ADR 0031), like a cost centre.
 
 Project profitability is read from these lines (`docs/PROJECTS.md`).
 
+## Vehicles on the ledger
+
+Journal lines can also name a vehicle that isn't retired (ADR 0033).
+
+- **Where:** manual journals, direct bill lines (and the debit notes made from them) and
+  expense claims.
+- **Merging:** lines are merged by account, cost centre, project and vehicle.
+- **Recurring templates:** they don't name vehicles.
+
+Cost per vehicle is read from these lines (`docs/FLEET.md`).
+
 ## Payables
 
 - **Purchase orders** (`PO-`) are drafted by one person and approved by another. Goods

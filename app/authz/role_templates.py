@@ -118,6 +118,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "projects.time.log": SELF,
             "support.ticket.create": SELF,
             "support.ticket.read": SELF,
+            "fleet.vehicle.use": SELF,
         },
     ),
     RoleTemplate(
@@ -294,6 +295,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "projects.project.read": ORG,
             "projects.rate.manage": ORG,
             "projects.settings.manage": ORG,
+            "fleet.cost.read": ORG,
         },
     ),
     RoleTemplate(
@@ -359,6 +361,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "projects.project.read": ORG,
             "projects.time.approve_any": ORG,
             "projects.settings.manage": ORG,
+            "fleet.cost.read": ORG,
         },
     ),
     RoleTemplate(
@@ -382,7 +385,17 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.customer.read": ORG,  # to record customers' tickets
         },
     ),
-    RoleTemplate("fleet_manager", "Fleet Manager", "Vehicles, drivers, fuel and maintenance."),
+    RoleTemplate(
+        "fleet_manager",
+        "Fleet Manager",
+        "Vehicles, drivers, fuel and maintenance.",
+        grants={
+            "fleet.vehicle.read": ORG,
+            "fleet.vehicle.manage": ORG,
+            "fleet.cost.read": ORG,
+            "fleet.vehicle.use": ORG,
+        },
+    ),
 )
 
 

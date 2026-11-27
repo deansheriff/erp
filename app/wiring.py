@@ -3,6 +3,7 @@ entry point (app/main.py, app/worker.py) and by the test suite."""
 
 from app.authz import engine
 from app.modules.finance import service as finance
+from app.modules.fleet import service as fleet
 from app.modules.hr.org_access import PositionTreeResolver
 from app.modules.inventory import service as inventory
 from app.modules.projects import service as projects
@@ -15,3 +16,4 @@ def configure_runtime() -> None:
     finance.set_link(inventory.LINK)
     # Finance and the modules posting through it name projects the same way (ADR 0031).
     finance.set_project_link(projects.LINK)
+    finance.set_vehicle_link(fleet.LINK)  # and vehicles (ADR 0033)

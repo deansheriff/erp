@@ -32,6 +32,7 @@ from app.modules.finance import (
     sales,
     stock_link,
     tax,
+    vehicle_link,
 )
 from app.modules.finance.models import (
     Bill,
@@ -101,6 +102,7 @@ class BillLineInput:
     vat_code: str
     serials: str = ""  # a debit note returning serial items
     project_id: str = ""  # a direct line's project (ADR 0031)
+    vehicle_id: str = ""  # ADR 0033
 
 
 @dataclass(frozen=True, slots=True)
@@ -128,14 +130,14 @@ def bill_lines(db: Session, bill_id: uuid.UUID) -> list[BillLine]:
     )
 
 
-Parsed = list[tuple[sales.ParsedLine, uuid.UUID | None, str]]
+Parsed = list[tuple[sales.ParsedLine, uuid.UUID | None, str, uuid.UUID | None]]
 
 
 def _parse(
     db: Session, row: Bill | None, lines: list[BillLineInput]
 ) -> tuple[Parsed, dict[str, str]]:
-    """Lines as (parsed, PO line, serials). On a bill from a PO, each line keeps its PO
-    line's account; the PO line must belong to that order."""
+    """Lines as (parsed, PO line, serials, vehicle). On a bill from a PO, each line keeps
+    its PO line's account; the PO line must belong to that order."""
     allowed = cost_accounts(db)
     order_lines = (
         {line.id: line for line in purchasing.order_lines(db, row.order_id)}
@@ -159,20 +161,25 @@ def _parse(
             )
         )
     parsed, errors = sales.parse_lines(db, parsed_input, allowed=allowed)
+    vehicles = {
+        n: vehicle_link.check(db, line.vehicle_id, f"line_{n}", errors)
+        for n, line in enumerate(lines)
+        if line.vehicle_id
+    }
     if errors:
         return [], errors
     # With no errors, the parsed lines are the non-blank rows, in order.
     kept = [
-        line
-        for line in lines
+        (n, line)
+        for n, line in enumerate(lines)
         if line.description.strip() or line.account_id or line.unit_price.strip()
     ]
     out = []
-    for found, line in zip(parsed, kept, strict=True):
+    for found, (n, line) in zip(parsed, kept, strict=True):
         po_id = _uuid(line.order_line_id)
         po = order_lines.get(po_id) if po_id else None
         kept_line = replace(found, project_id=po.project_id) if po is not None else found
-        out.append((kept_line, po.id if po else None, line.serials.strip()))
+        out.append((kept_line, po.id if po else None, line.serials.strip(), vehicles.get(n)))
     return out, errors
 
 
@@ -251,7 +258,7 @@ def _reference_taken(
 
 
 def _replace_lines(db: Session, row: Bill, parsed: Parsed) -> None:
-    po_ids = [po for _, po, _ in parsed if po]
+    po_ids = [po for _, po, _, _ in parsed if po]
     items = {
         po.id: po.item_id
         for po in db.scalars(select(PurchaseLine).where(PurchaseLine.id.in_(po_ids)))
@@ -259,7 +266,7 @@ def _replace_lines(db: Session, row: Bill, parsed: Parsed) -> None:
     for old in bill_lines(db, row.id):
         db.delete(old)
     db.flush()
-    for position, (line, po_line, serials) in enumerate(parsed, start=1):
+    for position, (line, po_line, serials, vehicle) in enumerate(parsed, start=1):
         item_id = items.get(po_line) if po_line else None
         db.add(
             BillLine(
@@ -278,6 +285,7 @@ def _replace_lines(db: Session, row: Bill, parsed: Parsed) -> None:
                 item_id=item_id,
                 serials=(serials or None) if item_id else None,
                 project_id=line.project_id,
+                vehicle_id=None if item_id else vehicle,
             )
         )
     db.flush()
@@ -400,6 +408,7 @@ def debit_note_for(db: Session, actor: Actor, bill_id: uuid.UUID, *, today: date
                 vat=ZERO,
                 item_id=line.item_id,
                 project_id=line.project_id,
+                vehicle_id=line.vehicle_id,
             )
         )
     db.flush()
@@ -473,7 +482,7 @@ def _stock_sides(
     line: BillLine,
     costs: dict[uuid.UUID, Decimal],
     codes: dict[uuid.UUID, str],
-) -> list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None]]:
+) -> list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None, uuid.UUID | None]]:
     """A stock line's sides (ADR 0029). A bill: GRNI at the order price, the rest to the
     variance account. A debit note: inventory at the returned stock's cost, the rest to
     the variance account."""
@@ -488,8 +497,8 @@ def _stock_sides(
         value = (line.quantity * po.unit_price).quantize(purchasing.CENT, rounding=ROUND_HALF_UP)
         main = periods.settings(db).grni_code
     return [
-        (main, line.cost_centre_id, value, None),
-        (codes[item.adjustment_account_id], line.cost_centre_id, line.net - value, None),
+        (main, line.cost_centre_id, value, None, None),
+        (codes[item.adjustment_account_id], line.cost_centre_id, line.net - value, None, None),
     ]
 
 
@@ -501,24 +510,32 @@ def _journal_lines(
     settings = periods.settings(db)
     codes = {a.id: a.code for a in accounts.all_accounts(db)}
     note = row.kind == "debit_note"
-    sides: list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None]] = []
+    sides: list[tuple[str, uuid.UUID | None, Decimal, uuid.UUID | None, uuid.UUID | None]] = []
     for line in bill_lines(db, row.id):
         if line.item_id and line.order_line_id:
             sides += _stock_sides(db, row, line, costs or {}, codes)
         else:
-            sides.append((codes[line.account_id], line.cost_centre_id, line.net, line.project_id))
-    sides.append((settings.vat_input_code, None, row.vat, None))
+            sides.append(
+                (
+                    codes[line.account_id],
+                    line.cost_centre_id,
+                    line.net,
+                    line.project_id,
+                    line.vehicle_id,
+                )
+            )
+    sides.append((settings.vat_input_code, None, row.vat, None, None))
     out: list[journals.SystemLine] = [
         (settings.payables_code, None, row.total, ZERO)
         if note
         else (settings.payables_code, None, ZERO, row.total)
     ]
-    for code, centre, amount, project in sides:
+    for code, centre, amount, project, vehicle in sides:
         debit = -amount if note else amount  # a debit note's sides are credits
         if debit > 0:
-            out.append((code, centre, debit, ZERO, project))
+            out.append((code, centre, debit, ZERO, project, vehicle))
         elif debit < 0:
-            out.append((code, centre, ZERO, -debit, project))
+            out.append((code, centre, ZERO, -debit, project, vehicle))
     return out
 
 
@@ -669,6 +686,8 @@ class BillLineView:
     serials: str | None = None
     project_id: uuid.UUID | None = None  # ADR 0031
     project: str | None = None
+    vehicle_id: uuid.UUID | None = None  # ADR 0033
+    vehicle: str | None = None
 
     @property
     def vat_label(self) -> str:
@@ -795,6 +814,9 @@ def get_bill(db: Session, actor: Actor, bill_id: uuid.UUID, *, today: date) -> B
     projects = project_link.link().labels(
         db, {x.project_id for x in bill_lines(db, row.id) if x.project_id}
     )
+    vehicles = vehicle_link.link().labels(
+        db, {x.vehicle_id for x in bill_lines(db, row.id) if x.vehicle_id}
+    )
     item_labels: dict[uuid.UUID, str] = {}
     for line in bill_lines(db, row.id):
         if line.item_id and line.item_id not in item_labels:
@@ -820,6 +842,8 @@ def get_bill(db: Session, actor: Actor, bill_id: uuid.UUID, *, today: date) -> B
             line.serials,
             line.project_id,
             projects.get(line.project_id) if line.project_id else None,
+            line.vehicle_id,
+            vehicles.get(line.vehicle_id) if line.vehicle_id else None,
         )
         for line in bill_lines(db, row.id)
     ]

@@ -193,6 +193,9 @@ class JournalLine(IdMixin, Base):
     project_id: Mapped[uuid.UUID | None] = mapped_column(  # ADR 0031
         ForeignKey("projects.id"), index=True
     )
+    vehicle_id: Mapped[uuid.UUID | None] = mapped_column(  # ADR 0033
+        ForeignKey("vehicles.id"), index=True
+    )
     description: Mapped[str | None] = mapped_column(String(200))
     debit: Mapped[Decimal] = mapped_column(Money, server_default="0")
     credit: Mapped[Decimal] = mapped_column(Money, server_default="0")
@@ -625,6 +628,7 @@ class BillLine(IdMixin, Base):
     item_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("items.id"))  # from its order
     serials: Mapped[str | None] = mapped_column(Text)  # a debit note returning serial items
     project_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("projects.id"))  # ADR 0031
+    vehicle_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("vehicles.id"))  # ADR 0033
 
 
 class SupplierPayment(IdMixin, Base):

@@ -233,7 +233,21 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Settings", "/support/settings", permission="support.settings.manage"),
         ),
     ),
-    NavModule("fleet", "Fleet", "truck", "/fleet"),
+    NavModule(
+        "fleet",
+        "Fleet",
+        "truck",
+        "/fleet",
+        (
+            NavSection("My fleet", "/fleet", permission="fleet.vehicle.use"),
+            NavSection("Vehicles", "/fleet/vehicles", permission="fleet.vehicle.read"),
+            NavSection("Bookings", "/fleet/bookings", permission="fleet.vehicle.manage"),
+            NavSection("Incidents", "/fleet/incidents", permission="fleet.vehicle.use"),
+            NavSection("Drivers", "/fleet/drivers", permission="fleet.vehicle.read"),
+            NavSection("Cost per vehicle", "/fleet/costs", permission="fleet.cost.read"),
+            NavSection("Settings", "/fleet/settings", permission="fleet.vehicle.manage"),
+        ),
+    ),
     NavModule("collaboration", "Chat", "messages-square", "/chat"),
     NavModule("ai", "Assistant", "sparkles", "/assistant"),
 )

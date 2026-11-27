@@ -15,6 +15,8 @@ auditor:
   finance.sales.read: organization
   finance.supplier.read: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
+  fleet.vehicle.read: organization
   hr.employee.banking.read: organization
   hr.employee.compensation.read: organization
   hr.employee.personal.read: organization
@@ -38,6 +40,7 @@ auditor:
   support.report.read: organization
   support.ticket.read: organization
 director:
+  fleet.cost.read: organization
   procurement.requisition.approve_any: organization
   procurement.requisition.approve_director: organization
   procurement.requisition.read: organization
@@ -53,6 +56,7 @@ employee:
   attendance.record.read: self
   expenses.claim.create: self
   expenses.claim.read: self
+  fleet.vehicle.use: self
   hr.employee.banking.read: self
   hr.employee.compensation.read: self
   hr.employee.personal.read: self
@@ -115,6 +119,7 @@ finance_manager:
   finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
   inventory.item.read: organization
   payroll.certificate.read: organization
   payroll.loan.approve: organization
@@ -158,7 +163,11 @@ finance_officer:
   payroll.remittance.export: organization
   payroll.run.pay: organization
   payroll.run.read: organization
-fleet_manager: {}
+fleet_manager:
+  fleet.cost.read: organization
+  fleet.vehicle.manage: organization
+  fleet.vehicle.read: organization
+  fleet.vehicle.use: organization
 hr_manager:
   attendance.correction.request: organization
   attendance.photo.view: organization
@@ -298,6 +307,10 @@ organization_administrator:
   finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
+  fleet.vehicle.manage: organization
+  fleet.vehicle.read: organization
+  fleet.vehicle.use: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization
@@ -460,6 +473,10 @@ super_administrator:
   finance.supplier.read: organization
   finance.tax.manage: organization
   finance.tax.read: organization
+  fleet.cost.read: organization
+  fleet.vehicle.manage: organization
+  fleet.vehicle.read: organization
+  fleet.vehicle.use: organization
   hr.checklist.it: organization
   hr.checklist.manage: organization
   hr.employee.banking.read: organization

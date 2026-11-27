@@ -1964,3 +1964,134 @@ screens:
     actions: {}
     field_classes: []
     approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.my
+    phase: 11
+    module: fleet
+    title: My fleet (log fuel, book a pool vehicle, report an incident)
+    route: GET /fleet
+    template: app/modules/fleet/templates/fleet/my.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.use
+    actions:
+      log_fuel: fleet.vehicle.use
+      book: fleet.vehicle.use
+      report: fleet.vehicle.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.vehicles
+    phase: 11
+    module: fleet
+    title: Vehicles
+    route: GET /fleet/vehicles
+    template: app/modules/fleet/templates/fleet/vehicles.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.read
+    actions:
+      add: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.vehicle
+    phase: 11
+    module: fleet
+    title: One vehicle (papers, service plans, fuel, incidents, costs)
+    route: GET /fleet/vehicles/{vehicle_id}
+    template: app/modules/fleet/templates/fleet/vehicle.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.read
+    actions:
+      edit: fleet.vehicle.manage
+      add_document: fleet.vehicle.manage
+      record_service: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.vehicle_form
+    phase: 11
+    module: fleet
+    title: Add or edit a vehicle
+    route: GET /fleet/vehicles/new
+    template: app/modules/fleet/templates/fleet/vehicle_form.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.bookings
+    phase: 11
+    module: fleet
+    title: Vehicle bookings (approvals and what's booked)
+    route: GET /fleet/bookings
+    template: app/modules/fleet/templates/fleet/bookings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.manage
+    actions:
+      approve: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.incidents
+    phase: 11
+    module: fleet
+    title: Vehicle incidents
+    route: GET /fleet/incidents
+    template: app/modules/fleet/templates/fleet/incidents.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.use
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.incident
+    phase: 11
+    module: fleet
+    title: One vehicle incident (photos, review and claim)
+    route: GET /fleet/incidents/{incident_id}
+    template: app/modules/fleet/templates/fleet/incident.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.use
+    actions:
+      add_photo: fleet.vehicle.use
+      review: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.drivers
+    phase: 11
+    module: fleet
+    title: Drivers and their licences
+    route: GET /fleet/drivers
+    template: app/modules/fleet/templates/fleet/drivers.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.read
+    actions:
+      save: fleet.vehicle.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.costs
+    phase: 11
+    module: fleet
+    title: Cost per vehicle
+    route: GET /fleet/costs
+    template: app/modules/fleet/templates/fleet/costs.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.cost.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: fleet.settings
+    phase: 11
+    module: fleet
+    title: Fleet settings (alert lead times, fuel efficiency check)
+    route: GET /fleet/settings
+    template: app/modules/fleet/templates/fleet/settings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: fleet.vehicle.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)

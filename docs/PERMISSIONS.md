@@ -88,6 +88,15 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `finance.tax.manage` | Manage tax | Organisation |  | Change tax rates, types and receivables settings, and file returns. |
 | `finance.tax.read` | View tax returns | Organisation |  | See VAT, withholding tax and stamp duty returns and the tax settings. |
 
+### fleet
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `fleet.cost.read` | View cost per vehicle | Organisation |  | See each vehicle's costs from the ledger, distance, fuel and cost per kilometre. |
+| `fleet.vehicle.manage` | Manage the fleet | Organisation |  | Add and change vehicles, documents, drivers and service plans; record services; approve bookings; review and close incidents; change the fleet settings. |
+| `fleet.vehicle.read` | View the fleet | Organisation |  | See every vehicle with its documents, services, fuel, incidents and bookings. |
+| `fleet.vehicle.use` | Use fleet vehicles | Self, Team, Department, Organisation |  | Log fuel on the vehicles you drive, report incidents and request pool vehicles. |
+
 ### hr
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -284,6 +293,10 @@ Everything, including technical settings. Can't be edited or removed.
 | `finance.supplier.read` | O |
 | `finance.tax.manage` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
+| `fleet.vehicle.manage` | O |
+| `fleet.vehicle.read` | O |
+| `fleet.vehicle.use` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -427,6 +440,10 @@ Everything except technical settings such as mail, branding and security.
 | `finance.supplier.read` | O |
 | `finance.tax.manage` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
+| `fleet.vehicle.manage` | O |
+| `fleet.vehicle.read` | O |
+| `fleet.vehicle.use` | O |
 | `hr.checklist.it` | O |
 | `hr.checklist.manage` | O |
 | `hr.employee.banking.read` | O |
@@ -528,6 +545,8 @@ Reads everything, including the audit log. Changes nothing.
 | `finance.sales.read` | O |
 | `finance.supplier.read` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
+| `fleet.vehicle.read` | O |
 | `hr.employee.banking.read` | O |
 | `hr.employee.compensation.read` | O |
 | `hr.employee.personal.read` | O |
@@ -563,6 +582,7 @@ Self-service: their own profile, requests and payslips.
 | `attendance.record.read` | S |
 | `expenses.claim.create` | S |
 | `expenses.claim.read` | S |
+| `fleet.vehicle.use` | S |
 | `hr.employee.banking.read` | S |
 | `hr.employee.compensation.read` | S |
 | `hr.employee.personal.read` | S |
@@ -778,6 +798,7 @@ Approves and posts finance documents.
 | `finance.supplier.read` | O |
 | `finance.tax.manage` | O |
 | `finance.tax.read` | O |
+| `fleet.cost.read` | O |
 | `inventory.item.read` | O |
 | `payroll.certificate.read` | O |
 | `payroll.loan.approve` | O |
@@ -858,6 +879,7 @@ Approves the largest requisitions and steps in when there's no line manager.
 
 | Permission | Scope |
 |---|---|
+| `fleet.cost.read` | O |
 | `procurement.requisition.approve_any` | O |
 | `procurement.requisition.approve_director` | O |
 | `procurement.requisition.read` | O |
@@ -892,7 +914,12 @@ Works the support ticket queue.
 
 Vehicles, drivers, fuel and maintenance.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `fleet.cost.read` | O |
+| `fleet.vehicle.manage` | O |
+| `fleet.vehicle.read` | O |
+| `fleet.vehicle.use` | O |
 
 ## Separation of duties
 

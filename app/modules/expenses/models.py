@@ -142,6 +142,7 @@ class ExpenseLine(IdMixin, Base):
     description: Mapped[str] = mapped_column(String(200))
     cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
     project_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("projects.id"))  # ADR 0031
+    vehicle_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("vehicles.id"))  # ADR 0033
     amount: Mapped[Decimal] = mapped_column(Money)
     # Set when an approver changed the amount: what the employee claimed.
     original_amount: Mapped[Decimal | None] = mapped_column(Money)
@@ -219,5 +220,6 @@ class ExpenseJournalLine(IdMixin, Base):
     account: Mapped[str] = mapped_column(String(20))
     cost_centre_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("cost_centres.id"))
     project_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("projects.id"))  # ADR 0031
+    vehicle_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("vehicles.id"))  # ADR 0033
     debit: Mapped[Decimal] = mapped_column(Money, server_default="0")
     credit: Mapped[Decimal] = mapped_column(Money, server_default="0")

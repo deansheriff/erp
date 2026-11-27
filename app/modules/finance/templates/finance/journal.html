@@ -44,7 +44,7 @@
     {{ ui.text_field("journal_date", "Date", value=values.get("journal_date") or (j.journal_date.isoformat() if j else today.isoformat()), type="date", errors=errors) }}
     {{ ui.text_field("memo", "Memo", value=values.get("memo") or (j.memo if j else ""), errors=errors) }}
   </div>
-  {{ line_editor(rows, postable, cost_centres, errors, projects) }}
+  {{ line_editor(rows, postable, cost_centres, errors, projects, vehicles) }}
   <div class="flex justify-end gap-3 border-t border-line p-5"><button type="submit" class="kx-btn-primary">Save draft</button></div>
 </form>
 {% else %}
@@ -54,7 +54,7 @@
       <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Account</th><th class="px-3 py-2.5 text-left font-semibold">Cost centre</th><th class="px-3 py-2.5 text-left font-semibold">Description</th><th class="px-3 py-2.5 text-right font-semibold">Debit</th><th class="px-5 py-2.5 text-right font-semibold">Credit</th></tr></thead>
       <tbody class="divide-y divide-line">
         {% for line in j.lines %}
-        <tr><td class="px-5 py-2.5"><span class="font-mono text-xs">{{ line.account_code }}</span> {% if line.account_name %}{{ line.account_name }}{% else %}<span class="text-warning-text">not in the chart</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.cost_centre or "" }}{% if line.project %}<span class="block text-xs text-ink-3">{{ line.project }}</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.description or "" }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.debit | money if line.debit else "" }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.credit | money if line.credit else "" }}</td></tr>
+        <tr><td class="px-5 py-2.5"><span class="font-mono text-xs">{{ line.account_code }}</span> {% if line.account_name %}{{ line.account_name }}{% else %}<span class="text-warning-text">not in the chart</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.cost_centre or "" }}{% if line.project %}<span class="block text-xs text-ink-3">{{ line.project }}</span>{% endif %}{% if line.vehicle %}<span class="block text-xs text-ink-3">{{ line.vehicle }}</span>{% endif %}</td><td class="px-3 py-2.5 text-ink-2">{{ line.description or "" }}</td><td class="px-3 py-2.5 text-right tnum">{{ line.debit | money if line.debit else "" }}</td><td class="px-5 py-2.5 text-right tnum">{{ line.credit | money if line.credit else "" }}</td></tr>
         {% endfor %}
       </tbody>
       <tfoot class="border-t border-line bg-surface-sunken/60 font-semibold"><tr><td class="px-5 py-3" colspan="3">Total</td><td class="px-3 py-3 text-right tnum">{{ j.debit | money }}</td><td class="px-5 py-3 text-right tnum">{{ j.credit | money }}</td></tr></tfoot>

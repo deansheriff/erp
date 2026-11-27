@@ -21,6 +21,11 @@ A claim line can name an active project (ADR 0031). When the claim is reimbursed
 project goes with the line into the journal, and the project's Expenses figure picks it
 up.
 
+## Vehicles
+
+A claim line can name a vehicle (ADR 0033), for fuel or repairs paid personally. The
+vehicle goes with the line into the reimbursement journal, and shows in cost per vehicle.
+
 ## Defaults (confirm before go-live)
 
 - Second-level approval above ₦100,000; Finance approval above ₦500,000.

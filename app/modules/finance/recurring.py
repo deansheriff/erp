@@ -132,7 +132,7 @@ def save_template(
         db.delete(old)
     db.flush()
     # Recurring templates don't name projects (ADR 0031).
-    for position, (account, centre, description, d, c, _) in enumerate(parsed, start=1):
+    for position, (account, centre, description, d, c, *_) in enumerate(parsed, start=1):
         db.add(
             RecurringLine(
                 recurring_id=row.id,

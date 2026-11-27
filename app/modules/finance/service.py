@@ -42,6 +42,10 @@ from app.modules.finance.sales import VAT_LABELS, organisation_name
 from app.modules.finance.stock_link import Source as StockSource
 from app.modules.finance.stock_link import StockItem, StockLine, link, set_link
 from app.modules.finance.tax import vat_amount, vat_rate_on
+from app.modules.finance.vehicle_link import VehicleCost, VehicleLink, vehicle_costs
+from app.modules.finance.vehicle_link import check as check_vehicle
+from app.modules.finance.vehicle_link import link as vehicle_link
+from app.modules.finance.vehicle_link import set_link as set_vehicle_link
 
 __all__ = [
     "VAT_CODES",
@@ -56,9 +60,12 @@ __all__ = [
     "StockSource",
     "SupplierInfo",
     "SystemLine",
+    "VehicleCost",
+    "VehicleLink",
     "all_accounts",
     "all_suppliers",
     "check_project",
+    "check_vehicle",
     "customer_choices",
     "customer_email",
     "customer_names",
@@ -76,10 +83,13 @@ __all__ = [
     "purchase_accounts",
     "set_link",
     "set_project_link",
+    "set_vehicle_link",
     "statuses",
     "supplier_choices",
     "supplier_history",
     "suppliers_by_id",
     "vat_amount",
     "vat_rate_on",
+    "vehicle_costs",
+    "vehicle_link",
 ]

@@ -27,6 +27,7 @@ from app.modules.finance import routes_payables as finance_payables
 from app.modules.finance import routes_sales as finance_sales
 from app.modules.finance import routes_tax as finance_tax
 from app.modules.finance import routes_web as finance_web
+from app.modules.fleet import routes_web as fleet_web
 from app.modules.hr import routes_people as hr_people_web
 from app.modules.hr import routes_process as hr_process_web
 from app.modules.hr import routes_self as hr_self_web
@@ -113,6 +114,7 @@ def routers(settings: Settings) -> list[APIRouter]:
         procurement_web.router,
         projects_web.router,
         support_web.router,
+        fleet_web.router,
         payroll_self_web.router,
         files_web.router,
     ]
