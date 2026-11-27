@@ -6,6 +6,16 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 
 ## Catalogue
 
+### assistant
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `assistant.evidence.summarise` | Summarise appraisal evidence | Team, Department, Organisation |  | Have the assistant summarise what's recorded for a person over a period. It never rates. |
+| `assistant.hiring.draft` | Draft job descriptions | Organisation |  | Have the assistant draft a job description and interview questions for a position. |
+| `assistant.policy.ask` | Ask about policies | Self, Team, Department, Organisation |  | Ask the assistant questions answered from the policy library, with checked quotes. |
+| `assistant.policy.manage` | Manage the policy library | Organisation |  | Add policies and new versions of them for the assistant to answer from. |
+| `assistant.ticket.suggest` | Suggest ticket categories and replies | Organisation |  | Have the assistant suggest a support ticket's category and draft a reply. |
+
 ### attendance
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -234,6 +244,7 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 
 | Key | Permission | Scopes | Sensitive | Description |
 |---|---|---|---|---|
+| `system.ai.manage` | Manage the AI assistant | Organisation | yes | Turn the assistant on or off, choose the provider and model, and accept which data may be sent to it. |
 | `system.branding.manage` | Manage organisation details and branding | Organisation |  | Legal details, logo and document colours. |
 | `system.mail.manage` | Manage mail settings | Organisation | yes | Change the SMTP server and send test emails. |
 | `system.security.manage` | Manage security settings | Organisation | yes | Session, password and lockout rules, and who is a super admin. |
@@ -249,6 +260,11 @@ Everything, including technical settings. Can't be edited or removed.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | O |
+| `assistant.hiring.draft` | O |
+| `assistant.policy.ask` | O |
+| `assistant.policy.manage` | O |
+| `assistant.ticket.suggest` | O |
 | `attendance.clock.use` | O |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
@@ -388,6 +404,7 @@ Everything, including technical settings. Can't be edited or removed.
 | `support.ticket.create` | O |
 | `support.ticket.read` | O |
 | `support.ticket.work` | O |
+| `system.ai.manage` | O |
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
@@ -399,6 +416,11 @@ Everything except technical settings such as mail, branding and security.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | O |
+| `assistant.hiring.draft` | O |
+| `assistant.policy.ask` | O |
+| `assistant.policy.manage` | O |
+| `assistant.ticket.suggest` | O |
 | `attendance.clock.use` | S |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
@@ -590,6 +612,7 @@ Self-service: their own profile, requests and payslips.
 
 | Permission | Scope |
 |---|---|
+| `assistant.policy.ask` | S |
 | `attendance.clock.use` | S |
 | `attendance.correction.request` | S |
 | `attendance.photo.view` | S |
@@ -628,6 +651,7 @@ Approves their team's requests and sees their team.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | T |
 | `attendance.record.approve` | T |
 | `attendance.record.read` | T |
 | `expenses.claim.approve` | T |
@@ -648,6 +672,8 @@ Day-to-day HR records and requests.
 
 | Permission | Scope |
 |---|---|
+| `assistant.hiring.draft` | O |
+| `assistant.policy.manage` | O |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
 | `attendance.record.approve` | O |
@@ -678,6 +704,9 @@ All HR records, including sensitive ones.
 
 | Permission | Scope |
 |---|---|
+| `assistant.evidence.summarise` | O |
+| `assistant.hiring.draft` | O |
+| `assistant.policy.manage` | O |
 | `attendance.correction.request` | O |
 | `attendance.photo.view` | O |
 | `attendance.record.approve` | O |
@@ -920,6 +949,7 @@ Works the support ticket queue.
 
 | Permission | Scope |
 |---|---|
+| `assistant.ticket.suggest` | O |
 | `finance.customer.read` | O |
 | `support.report.read` | O |
 | `support.ticket.read` | O |

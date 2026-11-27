@@ -5,6 +5,29 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 13: AI assistant
+- A read-only assistant (ADR 0035), off until a Super Administrator opts in.
+- **Opt-in:** choose Anthropic, OpenAI or Gemini, save an encrypted API key, and accept
+  which kinds of data may leave (policies, directory, work records, support tickets).
+  Changing either withdraws the acceptance.
+- **Features:**
+  - policy questions answered from a new policy library;
+  - job descriptions and interview questions drafted from a position;
+  - neutral appraisal evidence that never rates, within the reader's scope;
+  - ticket category and reply suggestions for agents.
+- **Checked quotes:** every answer cites exact quotes, each one checked against its
+  source; quotes that don't match are removed.
+- **Limits and audit:** 200 requests per person a month, history kept 90 days for its
+  owner only, and every request audited without its text (both limits to confirm).
+- **Providers:** Claude through the official `anthropic` SDK (structured output and the
+  refusal fallback); OpenAI and Gemini over their REST APIs. Tests use a fake provider.
+- Permissions `assistant.policy.ask`, `.policy.manage`, `.hiring.draft`,
+  `.evidence.summarise`, `.ticket.suggest` and `system.ai.manage`.
+
+### Changed — Phase 13
+- **Evidence facts:** projects, support, attendance and leave each provide facts for
+  appraisal evidence through their `service.py`. Support gains a `service.py`.
+
 ### Added — Phase 12: Chat
 - Direct messages, group chats and department channels (ADR 0034). Channel membership
   comes from the org chart, including sub-departments, and is synced every 10 minutes.

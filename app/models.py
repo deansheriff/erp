@@ -25,6 +25,15 @@ from app.identity.models import (
     UserToken,
 )
 from app.mail.models import MailOutbox, MailSettings
+from app.modules.assistant.models import (
+    AssistantRequest,
+    AssistantSettings,
+    Policy,
+    PolicyVersion,
+)
+from app.modules.assistant.models import (
+    Passage as PolicyPassage,
+)
 from app.modules.attendance.models import (
     AttendanceCorrection,
     AttendanceLocation,
@@ -234,6 +243,8 @@ __all__ = [
     "ApprovalTier",
     "AssetCategory",
     "AssetChange",
+    "AssistantRequest",
+    "AssistantSettings",
     "AttendanceCorrection",
     "AttendanceLocation",
     "AttendanceRecord",
@@ -338,6 +349,9 @@ __all__ = [
     "PayslipLine",
     "PermissionRow",
     "PersonLimit",
+    "Policy",
+    "PolicyPassage",
+    "PolicyVersion",
     "Position",
     "PositionAssignment",
     "ProcurementSettings",

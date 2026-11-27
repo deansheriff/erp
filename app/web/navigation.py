@@ -259,7 +259,26 @@ MODULES: tuple[NavModule, ...] = (
             NavSection("Settings", "/chat/settings", permission="chat.settings.manage"),
         ),
     ),
-    NavModule("ai", "Assistant", "sparkles", "/assistant"),
+    NavModule(
+        "assistant",
+        "Assistant",
+        "sparkles",
+        "/assistant",
+        (
+            NavSection("Ask about policies", "/assistant", permission="assistant.policy.ask"),
+            NavSection(
+                "Job descriptions", "/assistant/hiring", permission="assistant.hiring.draft"
+            ),
+            NavSection(
+                "Appraisal evidence",
+                "/assistant/evidence",
+                permission="assistant.evidence.summarise",
+            ),
+            NavSection("Policy library", "/assistant/policies", permission="assistant.policy.ask"),
+            NavSection("History", "/assistant/history", permission="assistant.policy.ask"),
+            NavSection("Settings", "/assistant/settings", permission="system.ai.manage"),
+        ),
+    ),
 )
 
 ADMIN_MODULE = NavModule(

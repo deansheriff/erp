@@ -196,3 +196,14 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **New conversation (direct message or group)** (`chat.new`) | `GET /chat/new` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
 | **Conversation details (members, pins, files)** (`chat.details`) | `GET /chat/{conversation_id}/details` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
 | **Chat settings (edit window, unread emails, retention)** (`chat.settings`) | `GET /chat/settings` | chat.settings.manage | — | Dean Sheriff (2026-11-27) |
+
+## Phase 13
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Ask about policies (checked quotes)** (`assistant.home`) | `GET /assistant` | assistant.policy.ask | — | Dean Sheriff (2026-11-27) |
+| **Job description and interview question drafts** (`assistant.hiring`) | `GET /assistant/hiring` | assistant.hiring.draft | — | Dean Sheriff (2026-11-27) |
+| **Appraisal evidence summary (never a rating)** (`assistant.evidence`) | `GET /assistant/evidence` | assistant.evidence.summarise | — | Dean Sheriff (2026-11-27) |
+| **Policy library** (`assistant.policies`) | `GET /assistant/policies` | assistant.policy.ask | — | Dean Sheriff (2026-11-27) |
+| **Your assistant history** (`assistant.history`) | `GET /assistant/history` | assistant.policy.ask | — | Dean Sheriff (2026-11-27) |
+| **AI assistant settings, opt-in and usage** (`assistant.settings`) | `GET /assistant/settings` | system.ai.manage | — | Dean Sheriff (2026-11-27) |

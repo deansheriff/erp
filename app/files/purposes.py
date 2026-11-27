@@ -25,6 +25,7 @@ PURPOSE_MODULES = (
     "app.modules.support.files",
     "app.modules.fleet.files",
     "app.modules.chat.files",
+    "app.modules.assistant.files",
 )
 
 KB = 1024

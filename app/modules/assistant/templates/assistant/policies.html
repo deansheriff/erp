@@ -1,0 +1,53 @@
+{# Assistant → policy library (ADR 0035): every policy with its current version; HR adds
+   policies and new versions. Design: design/stitch/exports/assistant.policies.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Policy library", "The policies the assistant answers from. Only each policy's current version is used.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 {{ 'lg:grid-cols-[minmax(0,1fr)_360px]' if can_manage }}">
+  <section class="kx-card overflow-hidden" aria-label="Policies">
+    {% if rows %}
+    <div class="kx-scroll-x">
+      <table class="w-full min-w-[640px] text-body-sm">
+        <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-3 text-left font-semibold">Policy</th><th class="px-3 py-3 text-left font-semibold">Version</th><th class="px-3 py-3 text-left font-semibold">Effective</th><th class="px-3 py-3 text-right font-semibold">Passages</th><th class="px-5 py-3 text-left font-semibold">Added by</th></tr></thead>
+        <tbody class="divide-y divide-line">
+          {% for r in rows %}
+          {% set c = r.current %}
+          <tr>
+            <td class="px-5 py-3">{% if c %}<a href="/files/{{ c.file_id }}" target="_blank" rel="noopener" class="font-semibold text-iris">{{ r.policy.title }}</a>{% else %}<span class="font-semibold">{{ r.policy.title }}</span>{% endif %}
+              {% if r.older %}<span class="block text-xs text-ink-3">Earlier: {% for o in r.older %}<a href="/files/{{ o.file_id }}" target="_blank" rel="noopener" class="text-iris">v{{ o.version }}</a>{{ ", " if not loop.last }}{% endfor %}</span>{% endif %}</td>
+            <td class="px-3 py-3">{% if c %}v{{ c.version }} {{ ui.badge("success", "Current") }}{% else %}—{% endif %}</td>
+            <td class="px-3 py-3 tnum">{{ c.effective_on | date if c else "—" }}</td>
+            <td class="px-3 py-3 text-right tnum">{{ c.passages if c else 0 }}</td>
+            <td class="px-5 py-3">{{ r.updated_by or "—" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    {% call ui.empty_state("book-open", "No policies yet", "HR adds policies here for the assistant to answer from.") %}{% endcall %}
+    {% endif %}
+  </section>
+
+  {% if can_manage %}
+  <form method="post" action="/assistant/policies" enctype="multipart/form-data" class="kx-card h-fit space-y-4 p-5" novalidate>
+    {{ ui.csrf_field() }}
+    <h2 class="font-h3 text-h3">Add a policy or version</h2>
+    <div><label class="kx-label" for="policy_id">Policy</label><select id="policy_id" name="policy_id" class="kx-input"><option value="">A new policy</option>{% for r in rows %}<option value="{{ r.policy.id }}" {% if v.get("policy_id") == r.policy.id|string %}selected{% endif %}>New version of {{ r.policy.title }}</option>{% endfor %}</select></div>
+    {{ ui.text_field("title", "Title (for a new policy)", v.get("title", ""), errors=errors) }}
+    <div class="grid grid-cols-2 gap-3">
+      {{ ui.text_field("version", "Version", v.get("version", ""), errors=errors) }}
+      {{ ui.text_field("effective_on", "Effective from", v.get("effective_on", ""), type="date", errors=errors) }}
+    </div>
+    <div><label class="kx-label" for="file">File</label><input id="file" name="file" type="file" accept=".pdf,.docx,.txt,application/pdf,text/plain" class="kx-input">{{ ui.field_error(errors, "file") }}<span class="kx-hint">PDF, Word or text, up to 10 MB. Scanned PDFs without text can't be read.</span></div>
+    <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Add</button></div>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

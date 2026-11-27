@@ -19,6 +19,7 @@ from app.files import scanner
 from app.identity import routes_api as identity_api
 from app.identity import routes_web as identity_web
 from app.identity import service as identity
+from app.modules.assistant import routes_web as assistant_web
 from app.modules.attendance import routes_web as attendance_web
 from app.modules.chat import routes_socket as chat_socket
 from app.modules.chat import routes_web as chat_web
@@ -121,6 +122,7 @@ def routers(settings: Settings) -> list[APIRouter]:
         fleet_web.router,
         chat_web.router,
         chat_socket.router,
+        assistant_web.router,
         payroll_self_web.router,
         files_web.router,
     ]

@@ -87,6 +87,8 @@
   </div>
 
   <aside class="space-y-4">
+    {# The assistant's suggestions for agents (ADR 0035); empty for anyone it isn't for. #}
+    {% if view.is_agent and open %}<div hx-get="/assistant/tickets/{{ t.id }}/panel" hx-trigger="load" hx-swap="outerHTML"></div>{% endif %}
     <section class="kx-card space-y-3 p-5 text-body-sm" aria-label="Details">
       <div><p class="text-xs text-ink-3">{{ "Customer" if t.customer_id else "Requester" }}</p><p class="font-semibold">{{ r.who }}</p>{% if t.customer_id and view.customer_email %}<p class="text-xs text-ink-3">{{ view.customer_email }}</p>{% endif %}</div>
       <div><p class="text-xs text-ink-3">Team and category</p><p>{{ r.team }} · {{ r.category }}</p></div>

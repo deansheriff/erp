@@ -1,0 +1,20 @@
+{# Checked quotes under a reply. Context: result (AssistantRequest). #}
+{% import "components/ui.html" as ui with context %}
+{% set reply = result.reply %}
+{% if reply.get("dropped") %}
+<div class="mt-4">{{ ui.alert("warning", (reply["dropped"] ~ " quote" ~ ("s" if reply["dropped"] > 1 else "") ~ " couldn't be matched to " ~ ("their sources" if reply["dropped"] > 1 else "its source") ~ " and " ~ ("were" if reply["dropped"] > 1 else "was") ~ " removed.")) }}</div>
+{% endif %}
+{% if reply.get("citations") %}
+<section class="mt-4" aria-label="Sources">
+  <h3 class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-ink-3">Sources {{ ui.badge("success", "Quotes checked") }}</h3>
+  <ul class="mt-2 space-y-2">
+    {% for c in reply["citations"] %}
+    <li class="rounded-xl border border-line bg-surface-sunken p-3 text-body-sm">
+      <p class="text-xs font-semibold text-ink-2">{{ c.label }}</p>
+      <blockquote class="mt-1 border-l-2 border-iris pl-3 italic">“{{ c.quote }}”</blockquote>
+      {% if c.link %}<a href="{{ c.link }}" target="_blank" rel="noopener" class="mt-1 inline-block text-xs font-semibold text-iris">Open the document</a>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}

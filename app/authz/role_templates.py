@@ -120,6 +120,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "support.ticket.read": SELF,
             "fleet.vehicle.use": SELF,
             "chat.conversation.use": SELF,
+            "assistant.policy.ask": SELF,
         },
     ),
     RoleTemplate(
@@ -140,6 +141,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "procurement.requisition.read": Scope.TEAM,
             "procurement.requisition.approve": Scope.TEAM,
             "projects.time.approve": ORG,  # their reports' time on projects they manage
+            "assistant.evidence.summarise": Scope.TEAM,
         },
     ),
     RoleTemplate(
@@ -170,6 +172,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "attendance.photo.view": ORG,
             "attendance.schedule.manage": ORG,
             "payroll.relief.verify": ORG,
+            "assistant.policy.manage": ORG,
+            "assistant.hiring.draft": ORG,
         },
     ),
     RoleTemplate(
@@ -177,7 +181,13 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
         "HR Manager",
         "All HR records, including sensitive ones.",
         rule=_hr_everything,
-        grants={"identity.user.invite": ORG, "org.structure.read": ORG},
+        grants={
+            "identity.user.invite": ORG,
+            "org.structure.read": ORG,
+            "assistant.policy.manage": ORG,
+            "assistant.hiring.draft": ORG,
+            "assistant.evidence.summarise": ORG,
+        },
     ),
     RoleTemplate(
         "it_support",
@@ -384,6 +394,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "support.ticket.work": ORG,
             "support.report.read": ORG,
             "finance.customer.read": ORG,  # to record customers' tickets
+            "assistant.ticket.suggest": ORG,
         },
     ),
     RoleTemplate(

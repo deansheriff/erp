@@ -50,6 +50,7 @@ director:
   projects.settings.manage: organization
   projects.time.approve_any: organization
 employee:
+  assistant.policy.ask: self
   attendance.clock.use: self
   attendance.correction.request: self
   attendance.photo.view: self
@@ -170,6 +171,9 @@ fleet_manager:
   fleet.vehicle.read: organization
   fleet.vehicle.use: organization
 hr_manager:
+  assistant.evidence.summarise: organization
+  assistant.hiring.draft: organization
+  assistant.policy.manage: organization
   attendance.correction.request: organization
   attendance.photo.view: organization
   attendance.record.approve: organization
@@ -204,6 +208,8 @@ hr_manager:
   leave.settings.manage: organization
   org.structure.read: organization
 hr_officer:
+  assistant.hiring.draft: organization
+  assistant.policy.manage: organization
   attendance.correction.request: organization
   attendance.photo.view: organization
   attendance.record.approve: organization
@@ -242,6 +248,7 @@ it_support:
   hr.checklist.it: organization
   hr.employee.read: organization
 line_manager:
+  assistant.evidence.summarise: team
   attendance.record.approve: team
   attendance.record.read: team
   expenses.claim.approve: team
@@ -256,6 +263,11 @@ line_manager:
   procurement.requisition.read: team
   projects.time.approve: organization
 organization_administrator:
+  assistant.evidence.summarise: organization
+  assistant.hiring.draft: organization
+  assistant.policy.ask: organization
+  assistant.policy.manage: organization
+  assistant.ticket.suggest: organization
   attendance.clock.use: self
   attendance.correction.request: organization
   attendance.photo.view: organization
@@ -425,6 +437,11 @@ reimburser:
   expenses.claim.read: organization
   expenses.claim.reimburse: organization
 super_administrator:
+  assistant.evidence.summarise: organization
+  assistant.hiring.draft: organization
+  assistant.policy.ask: organization
+  assistant.policy.manage: organization
+  assistant.ticket.suggest: organization
   attendance.clock.use: organization
   attendance.correction.request: organization
   attendance.photo.view: organization
@@ -564,11 +581,13 @@ super_administrator:
   support.ticket.create: organization
   support.ticket.read: organization
   support.ticket.work: organization
+  system.ai.manage: organization
   system.branding.manage: organization
   system.mail.manage: organization
   system.security.manage: organization
   system.storage.manage: organization
 support_agent:
+  assistant.ticket.suggest: organization
   finance.customer.read: organization
   support.report.read: organization
   support.ticket.read: organization

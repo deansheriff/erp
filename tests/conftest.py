@@ -178,7 +178,8 @@ def clean_db(migrated_db: None) -> Iterator[None]:
                 "purchase_requisitions, rfqs, supplier_ratings, projects, project_cost_rates, "
                 "project_settings, support_settings, support_sla_targets, support_teams, "
                 "support_tickets, vehicles, fleet_drivers, fleet_settings, fleet_expiry_alerts, "
-                "chat_conversations, chat_settings "
+                "chat_conversations, chat_settings, assistant_settings, assistant_policies, "
+                "assistant_requests "
                 "CASCADE"
             )
         )
@@ -195,6 +196,7 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         _migration("0021_support.py").seed_defaults(conn)
         _migration("0022_fleet.py").seed_defaults(conn)
         _migration("0023_chat.py").seed_defaults(conn)
+        _migration("0024_ai_assistant.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

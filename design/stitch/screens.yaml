@@ -2152,3 +2152,80 @@ screens:
     actions: {}
     field_classes: []
     approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.home
+    phase: 13
+    module: assistant
+    title: Ask about policies (checked quotes)
+    route: GET /assistant
+    template: app/modules/assistant/templates/assistant/ask.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.policy.ask
+    actions:
+      ask: assistant.policy.ask
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.hiring
+    phase: 13
+    module: assistant
+    title: Job description and interview question drafts
+    route: GET /assistant/hiring
+    template: app/modules/assistant/templates/assistant/hiring.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.hiring.draft
+    actions:
+      draft: assistant.hiring.draft
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.evidence
+    phase: 13
+    module: assistant
+    title: Appraisal evidence summary (never a rating)
+    route: GET /assistant/evidence
+    template: app/modules/assistant/templates/assistant/evidence.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.evidence.summarise
+    actions:
+      summarise: assistant.evidence.summarise
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.policies
+    phase: 13
+    module: assistant
+    title: Policy library
+    route: GET /assistant/policies
+    template: app/modules/assistant/templates/assistant/policies.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.policy.ask
+    actions:
+      add: assistant.policy.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.history
+    phase: 13
+    module: assistant
+    title: Your assistant history
+    route: GET /assistant/history
+    template: app/modules/assistant/templates/assistant/history.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: assistant.policy.ask
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: assistant.settings
+    phase: 13
+    module: assistant
+    title: AI assistant settings, opt-in and usage
+    route: GET /assistant/settings
+    template: app/modules/assistant/templates/assistant/settings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: system.ai.manage
+    actions:
+      turn_on: system.ai.manage
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)

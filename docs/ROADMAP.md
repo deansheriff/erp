@@ -5,6 +5,10 @@ gets its own design (ADR) and screens when it's scheduled.
 
 ## AI features (agreed 2026-11-26)
 
+Phase 13 built the brief's read-only assistant (`docs/ASSISTANT.md`, ADR 0035). Its
+provider settings, the data-kind opt-in, checked quotes and the per-person cap are the
+base the items below build on.
+
 These rules apply to every AI feature:
 
 - **Access:** agents act through the same services and permissions as people, with their

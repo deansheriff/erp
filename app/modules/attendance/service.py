@@ -18,7 +18,7 @@ from app.core.errors import Conflict, NotFound, PermissionDenied, ValidationFail
 from app.files import service as files
 from app.identity.models import User
 from app.identity.schemas import Actor
-from app.modules.attendance import schedule
+from app.modules.attendance import evidence, schedule
 from app.modules.attendance.files import ATTENDANCE_PHOTO
 from app.modules.attendance.models import (
     AttendanceCorrection,
@@ -932,3 +932,10 @@ def approved_overtime_minutes(
         .group_by(OvertimeEntry.employee_id)
     ).all()
     return {employee_id: int(minutes or 0) for employee_id, minutes in rows}
+
+
+def evidence_facts(
+    db: Session, employee_id: uuid.UUID, start: date, end: date
+) -> list[tuple[str, str]]:
+    """Plain facts for the assistant's appraisal evidence (ADR 0035)."""
+    return evidence.facts(db, employee_id, start, end)

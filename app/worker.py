@@ -5,6 +5,7 @@ from app.core.worker import celery_app
 # Task modules register their tasks and beat schedules when imported. Celery's
 # autodiscovery only looks for app.tasks, so each package's tasks are listed here.
 from app.files import tasks as files_tasks  # noqa: F401
+from app.modules.assistant import tasks as assistant_tasks  # noqa: F401
 from app.modules.chat import tasks as chat_tasks  # noqa: F401
 from app.modules.finance import tasks as finance_tasks  # noqa: F401
 from app.modules.fleet import tasks as fleet_tasks  # noqa: F401
