@@ -23,6 +23,8 @@ SUBJECTS = {
     "inventory_low_stock": "Low stock at {organisation}: {count} to reorder",
     "procurement_rfq": "Request for quotation {number} from {organisation}",
     "projects_budget_alert": "{code} has used {used}% of its budget",
+    "support_sla_alert": "SLA {kind}: {number} {title}",
+    "support_ticket_update": "{number}: {title}",
 }
 
 

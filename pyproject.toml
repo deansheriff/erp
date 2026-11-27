@@ -155,6 +155,8 @@ ignore_imports = [
   "app.modules.procurement.routes_web -> app.web.*",
   "app.modules.projects.routes_web -> fastapi",
   "app.modules.projects.routes_web -> app.web.*",
+  "app.modules.support.routes_web -> fastapi",
+  "app.modules.support.routes_web -> app.web.*",
   "app.modules.inventory.routes_web -> app.web.*",
   "app.modules.payroll.routes_outputs -> fastapi",
   "app.modules.payroll.routes_outputs -> app.web.*",

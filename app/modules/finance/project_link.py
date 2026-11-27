@@ -139,3 +139,8 @@ def customer_names(db: Session, ids: set[uuid.UUID]) -> dict[uuid.UUID, str]:
     if not ids:
         return {}
     return dict(db.execute(select(Customer.id, Customer.name).where(Customer.id.in_(ids))).all())
+
+
+def customer_email(db: Session, customer_id: uuid.UUID) -> str | None:
+    """A customer's email address, for support updates (ADR 0032)."""
+    return db.scalar(select(Customer.email).where(Customer.id == customer_id))

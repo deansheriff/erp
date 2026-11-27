@@ -1,0 +1,12 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p style="margin:0 0 16px;">Hello {{ name }},</p>
+{% if kind == "resolved" %}
+<p style="margin:0 0 16px;">Your request <strong>{{ number }}</strong> ({{ title }}) has been resolved at {{ organisation }}:</p>
+<p style="margin:0 0 16px;white-space:pre-line;">{{ body }}</p>
+<p style="margin:0;color:#4B4B66;">If it isn't fixed, reply to the team before it closes.</p>
+{% else %}
+<p style="margin:0 0 16px;">There's a reply on your request <strong>{{ number }}</strong> ({{ title }}) at {{ organisation }}:</p>
+<p style="margin:0;white-space:pre-line;">{{ body }}</p>
+{% endif %}
+{% endblock %}

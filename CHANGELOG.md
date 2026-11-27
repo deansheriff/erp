@@ -5,6 +5,23 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 11e: Support
+- Support teams, with a lead and agents, and categories routed to a team (ADR 0032).
+- Tickets (`TKT-`):
+  - raised by employees for themselves, or recorded by agents for a finance customer;
+  - landing in the team's queue, where agents take them or the lead assigns them;
+  - public replies (emailed to the requester or the customer's contact) and internal
+    notes, plus file attachments;
+  - waiting on the requester, resolution, a 1–5 rating, reopening, and closing
+    automatically after 3 business days.
+- SLA targets by priority in business hours (Mon–Fri 08:00–17:00 Lagos, skipping public
+  holidays), all to confirm. Waiting time pauses the resolution clock.
+- Every 15 minutes, breaches are marked, the assignee is warned at 75% and the team lead
+  is emailed on a breach.
+- An SLA report by team, priority and agent.
+- Permissions `support.ticket.create`, `.read`, `.work`, `support.report.read` and
+  `support.settings.manage`; grants for the Support Agent and employees.
+
 ### Added — Phase 11d: Projects
 - Projects (`PRJ-`) with a client, manager, dates, budget by category (labour,
   materials, expenses, other), members, milestones and tasks; planned → active → on

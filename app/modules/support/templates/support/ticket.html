@@ -1,0 +1,116 @@
+{# Support → a ticket (ADR 0032): the conversation (public replies, internal notes for
+   agents, system lines), attachments, replying and resolving, and the panel with the
+   requester, assignment, priority and SLA timers. Design: design/stitch/exports/support.ticket.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% macro span(minutes) -%}{% set h = (minutes // 60) %}{% set m = minutes % 60 %}{% if h %}{{ h }}h{% if m %} {{ m }}m{% endif %}{% else %}{{ m }}m{% endif %}{%- endmacro %}
+
+{% block content %}
+{% set r = view.row %}
+{% set c = r.clock %}
+{% set v = values %}
+{% set open = t.status not in ("resolved", "closed") %}
+{% call ui.page_header(t.subject, t.number ~ " · " ~ r.team ~ " · " ~ r.category, status_tones[t.status], status_labels[t.status]) %}
+  {{ ui.badge(priority_tones[t.priority], priority_labels[t.priority]) }}
+  {% if view.is_agent and open and not t.assignee_employee_id %}<form method="post" action="/support/{{ t.id }}/take">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-primary">Take it</button></form>{% endif %}
+  {% if view.is_agent and t.status == "waiting" %}<form method="post" action="/support/{{ t.id }}/resume">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-secondary">Back in progress</button></form>{% endif %}
+  {% if t.status == "resolved" and (view.is_requester or view.is_agent) %}<form method="post" action="/support/{{ t.id }}/reopen">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost">Reopen</button></form>{% endif %}
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+  <div class="space-y-4">
+    <article class="kx-card p-5">
+      <p class="text-xs text-ink-3">{{ r.who }} · {{ t.created_at | datetime }}</p>
+      <p class="mt-2 whitespace-pre-line text-body-sm">{{ t.description }}</p>
+    </article>
+    {% for e in view.entries %}
+    {% set cm = e.comment %}
+    {% if cm.system %}
+    <p class="px-2 text-xs text-ink-3">{{ ui.icon("clock", "sm") }} {{ e.author or "System" }}: {{ cm.body }} · {{ cm.created_at | datetime }}</p>
+    {% else %}
+    <article class="kx-card p-5 {{ 'border-warning-text/40 bg-warning-bg/30' if cm.internal }}">
+      <p class="text-xs text-ink-3"><span class="font-semibold text-ink">{{ e.author or "—" }}</span> · {{ cm.created_at | datetime }}{% if cm.internal %} · <span class="font-semibold text-warning-text">Internal note — not visible to the requester</span>{% endif %}</p>
+      <p class="mt-2 whitespace-pre-line text-body-sm">{{ cm.body }}</p>
+    </article>
+    {% endif %}
+    {% endfor %}
+    {% if t.status in ("resolved", "closed") and t.resolution %}
+    <article class="kx-card border-success-text/40 p-5"><p class="text-xs font-semibold text-success-text">Resolution</p><p class="mt-2 whitespace-pre-line text-body-sm">{{ t.resolution }}</p></article>
+    {% endif %}
+
+    {% if view.attachments %}
+    <section class="kx-card p-5" aria-label="Attachments"><ul class="flex flex-wrap gap-2 text-body-sm">{% for a in view.attachments %}<li><a href="/files/{{ a.file_id }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 rounded-lg border border-line px-2.5 py-1 text-iris">{{ ui.icon("paperclip", "sm") }} {{ a.name }}</a></li>{% endfor %}</ul></section>
+    {% endif %}
+
+    {% if t.status != "closed" and (view.is_agent or view.is_requester) %}
+    <form method="post" action="/support/{{ t.id }}/reply" class="kx-card space-y-3 p-5" novalidate>
+      {{ ui.csrf_field() }}
+      {% if view.is_agent %}
+      <fieldset class="flex flex-wrap gap-4 text-body-sm"><legend class="sr-only">Kind</legend>
+        <label class="flex items-center gap-2"><input type="radio" name="kind" value="reply" {% if v.get("kind", "reply") == "reply" %}checked{% endif %}> Reply to the requester</label>
+        <label class="flex items-center gap-2"><input type="radio" name="kind" value="note" {% if v.get("kind") == "note" %}checked{% endif %}> Internal note</label>
+      </fieldset>
+      {% endif %}
+      <div><label class="kx-label" for="body">{{ "Message" if view.is_agent else "Reply" }}</label><textarea id="body" name="body" rows="4" class="kx-input">{{ v.get("body", "") }}</textarea>{{ ui.field_error(errors, "body") }}</div>
+      <div class="flex flex-wrap justify-end gap-3">
+        {% if view.is_agent and open %}<button type="submit" name="then" value="waiting" class="kx-btn-ghost">Send and wait on requester</button>{% endif %}
+        <button type="submit" class="kx-btn-primary">{{ ui.icon("send", "sm") }} Send</button>
+      </div>
+    </form>
+    <form method="post" action="/support/{{ t.id }}/attach" enctype="multipart/form-data" class="flex items-center gap-3 px-1" x-data="autoSubmit">
+      {{ ui.csrf_field() }}
+      <label class="kx-btn-ghost cursor-pointer text-xs">{{ ui.icon("paperclip", "sm") }} Attach a file<input name="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp" class="sr-only" x-on:change="send" aria-label="Attach a file"></label>
+      <span class="text-xs text-ink-3">PDF or image, up to 10 MB</span>{{ ui.field_error(errors, "file") }}
+    </form>
+    {% endif %}
+
+    {% if view.is_agent and open %}
+    <form method="post" action="/support/{{ t.id }}/resolve" class="kx-card space-y-3 p-5" novalidate>
+      {{ ui.csrf_field() }}
+      <div><label class="kx-label" for="resolution">How was it resolved?</label><textarea id="resolution" name="resolution" rows="3" class="kx-input">{{ v.get("resolution", "") }}</textarea>{{ ui.field_error(errors, "resolution") }}</div>
+      <div class="flex justify-end"><button type="submit" class="kx-btn-primary">{{ ui.icon("circle-check", "sm") }} Resolve</button></div>
+    </form>
+    {% endif %}
+
+    {% if view.is_requester and t.status in ("resolved", "closed") %}
+    <form method="post" action="/support/{{ t.id }}/rate" class="kx-card flex flex-wrap items-end gap-3 p-5" novalidate>
+      {{ ui.csrf_field() }}
+      <h2 class="w-full font-h3 text-h3">How did we do?</h2>
+      <div><label class="kx-label" for="score">Rating</label><select id="score" name="score" class="kx-input h-10">{% for n in (5, 4, 3, 2, 1) %}<option value="{{ n }}" {% if t.rating == n %}selected{% endif %}>{{ n }} star{{ "s" if n != 1 }}</option>{% endfor %}</select>{{ ui.field_error(errors, "score") }}</div>
+      <div class="min-w-[240px] flex-1"><label class="kx-label" for="comment">Comment</label><input id="comment" name="comment" value="{{ t.rating_comment or '' }}" class="kx-input h-10"></div>
+      <button type="submit" class="kx-btn-secondary">{{ "Update rating" if t.rating else "Rate" }}</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <aside class="space-y-4">
+    <section class="kx-card space-y-3 p-5 text-body-sm" aria-label="Details">
+      <div><p class="text-xs text-ink-3">{{ "Customer" if t.customer_id else "Requester" }}</p><p class="font-semibold">{{ r.who }}</p>{% if t.customer_id and view.customer_email %}<p class="text-xs text-ink-3">{{ view.customer_email }}</p>{% endif %}</div>
+      <div><p class="text-xs text-ink-3">Team and category</p><p>{{ r.team }} · {{ r.category }}</p></div>
+      <div><p class="text-xs text-ink-3">Assignee</p>
+        {% if view.is_lead and open %}
+        <form method="post" action="/support/{{ t.id }}/assign" class="mt-1 flex gap-2">{{ ui.csrf_field() }}<label class="sr-only" for="assignee_id">Assignee</label><select id="assignee_id" name="assignee_id" class="kx-input h-9 text-xs"><option value="">Choose an agent</option>{% for eid, name in view.agents %}<option value="{{ eid }}" {% if t.assignee_employee_id == eid %}selected{% endif %}>{{ name }}</option>{% endfor %}</select><button type="submit" class="kx-btn-secondary text-xs">Assign</button></form>{{ ui.field_error(errors, "assignee_id") }}
+        {% else %}<p>{{ r.assignee or "Unassigned" }}</p>{% endif %}
+      </div>
+      {% if view.is_agent and open %}
+      <form method="post" action="/support/{{ t.id }}/priority" class="flex items-end gap-2" x-data="autoSubmit">{{ ui.csrf_field() }}<div><label class="text-xs text-ink-3" for="priority">Priority</label><select id="priority" name="priority" class="kx-input h-9 text-xs" x-on:change="send">{% for p in priorities | reverse %}<option value="{{ p }}" {% if t.priority == p %}selected{% endif %}>{{ priority_labels[p] }}</option>{% endfor %}</select></div></form>
+      {% endif %}
+    </section>
+    <section class="kx-card space-y-4 p-5 text-body-sm" aria-labelledby="sla-title">
+      <h2 id="sla-title" class="font-h3 text-h3">SLA</h2>
+      <div><p class="text-xs text-ink-3">First response (target {{ span(view.target_response) }})</p>
+        <p class="font-semibold {{ 'text-success-text' if view.response == 'met' else ('text-danger-text' if view.response == 'breached' else '') }}">{% if view.response == "met" %}Met{% elif view.response == "breached" %}Breached{% else %}Due {{ t.response_due_at | datetime }}{% endif %}</p></div>
+      <div><p class="text-xs text-ink-3">Resolution (target {{ span(view.target_resolve) }})</p>
+        {% if c.state in ("met", "breached") and not open %}<p class="font-semibold {{ 'text-success-text' if c.state == 'met' else 'text-danger-text' }}">{{ "Met" if c.state == "met" else "Breached" }}</p>
+        {% else %}
+        <progress class="kx-meter mt-1" value="{{ [c.used_pct, 100] | min }}" max="100" aria-label="{{ c.used_pct }}% of the target used"></progress>
+        <p class="mt-1 font-semibold {{ 'text-danger-text' if c.state == 'breached' else ('text-warning-text' if c.state == 'warning' else '') }}">{% if c.state == "paused" %}Paused while waiting on the requester · {{ span([c.left, 0] | max) }} left{% elif c.state == "breached" %}Breached {{ span(-c.left) }} ago{% else %}{{ span(c.left) }} left · due {{ t.resolve_due_at | datetime }}{% endif %}</p>
+        {% endif %}</div>
+      <p class="text-xs text-ink-3">Business hours only; time waiting on the requester doesn't count.</p>
+    </section>
+  </aside>
+</div>
+{% endblock %}

@@ -35,6 +35,8 @@ auditor:
   procurement.requisition.read: organization
   procurement.rfq.read: organization
   projects.project.read: organization
+  support.report.read: organization
+  support.ticket.read: organization
 director:
   procurement.requisition.approve_any: organization
   procurement.requisition.approve_director: organization
@@ -72,6 +74,8 @@ employee:
   procurement.requisition.create: self
   procurement.requisition.read: self
   projects.time.log: self
+  support.ticket.create: self
+  support.ticket.read: self
 expense_approver:
   expenses.claim.approve: team
   expenses.claim.read: team
@@ -369,6 +373,11 @@ organization_administrator:
   projects.time.approve: organization
   projects.time.approve_any: organization
   projects.time.log: organization
+  support.report.read: organization
+  support.settings.manage: organization
+  support.ticket.create: organization
+  support.ticket.read: organization
+  support.ticket.work: organization
 payroll_officer:
   payroll.certificate.read: organization
   payroll.loan.manage: organization
@@ -526,8 +535,17 @@ super_administrator:
   projects.time.approve: organization
   projects.time.approve_any: organization
   projects.time.log: organization
+  support.report.read: organization
+  support.settings.manage: organization
+  support.ticket.create: organization
+  support.ticket.read: organization
+  support.ticket.work: organization
   system.branding.manage: organization
   system.mail.manage: organization
   system.security.manage: organization
   system.storage.manage: organization
-support_agent: {}
+support_agent:
+  finance.customer.read: organization
+  support.report.read: organization
+  support.ticket.read: organization
+  support.ticket.work: organization

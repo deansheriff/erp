@@ -203,6 +203,16 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `projects.time.approve_any` | Step in on project time | Organisation |  | Decide any timesheet when neither the project manager nor a line manager can. |
 | `projects.time.log` | Log project time | Self, Team, Department, Organisation |  | Record hours on projects you're a member of and submit them weekly. |
 
+### support
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `support.report.read` | View the SLA report | Organisation |  | See response and resolution targets met and breached, and ratings, by team and agent. |
+| `support.settings.manage` | Manage support settings | Organisation |  | Set up teams, categories, SLA targets, business hours and when resolved tickets close. |
+| `support.ticket.create` | Raise support tickets | Self, Team, Department, Organisation |  | Ask for help from a support team, and follow your own tickets. |
+| `support.ticket.read` | View support tickets | Self, Team, Department, Organisation |  | See support tickets within scope, with their public replies. |
+| `support.ticket.work` | Work support tickets | Organisation |  | Take and work tickets in your teams' queues, record customers' tickets, reply, add internal notes and resolve. Team leads also assign. |
+
 ### system
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -349,6 +359,11 @@ Everything, including technical settings. Can't be edited or removed.
 | `projects.time.approve` | O |
 | `projects.time.approve_any` | O |
 | `projects.time.log` | O |
+| `support.report.read` | O |
+| `support.settings.manage` | O |
+| `support.ticket.create` | O |
+| `support.ticket.read` | O |
+| `support.ticket.work` | O |
 | `system.branding.manage` | O |
 | `system.mail.manage` | O |
 | `system.security.manage` | O |
@@ -487,6 +502,11 @@ Everything except technical settings such as mail, branding and security.
 | `projects.time.approve` | O |
 | `projects.time.approve_any` | O |
 | `projects.time.log` | O |
+| `support.report.read` | O |
+| `support.settings.manage` | O |
+| `support.ticket.create` | O |
+| `support.ticket.read` | O |
+| `support.ticket.work` | O |
 
 ### Auditor
 
@@ -528,6 +548,8 @@ Reads everything, including the audit log. Changes nothing.
 | `procurement.requisition.read` | O |
 | `procurement.rfq.read` | O |
 | `projects.project.read` | O |
+| `support.report.read` | O |
+| `support.ticket.read` | O |
 
 ### Employee
 
@@ -562,6 +584,8 @@ Self-service: their own profile, requests and payslips.
 | `procurement.requisition.create` | S |
 | `procurement.requisition.read` | S |
 | `projects.time.log` | S |
+| `support.ticket.create` | S |
+| `support.ticket.read` | S |
 
 ### Line Manager
 
@@ -857,7 +881,12 @@ Sets up projects, manages the ones they lead and approves their team's time.
 
 Works the support ticket queue.
 
-_No grants yet: added by the phase that delivers its module._
+| Permission | Scope |
+|---|---|
+| `finance.customer.read` | O |
+| `support.report.read` | O |
+| `support.ticket.read` | O |
+| `support.ticket.work` | O |
 
 ### Fleet Manager
 

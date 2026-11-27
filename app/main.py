@@ -38,6 +38,7 @@ from app.modules.payroll import routes_self as payroll_self_web
 from app.modules.payroll import routes_web as payroll_web
 from app.modules.procurement import routes_web as procurement_web
 from app.modules.projects import routes_web as projects_web
+from app.modules.support import routes_web as support_web
 from app.org import routes_web as org_web
 from app.web import routes_dev, routes_health, routes_home
 from app.web.access import access_guard, csrf_guard
@@ -111,6 +112,7 @@ def routers(settings: Settings) -> list[APIRouter]:
         inventory_web.router,
         procurement_web.router,
         projects_web.router,
+        support_web.router,
         payroll_self_web.router,
         files_web.router,
     ]

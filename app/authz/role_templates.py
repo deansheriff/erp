@@ -116,6 +116,8 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "procurement.requisition.create": SELF,
             "procurement.requisition.read": SELF,
             "projects.time.log": SELF,
+            "support.ticket.create": SELF,
+            "support.ticket.read": SELF,
         },
     ),
     RoleTemplate(
@@ -369,7 +371,17 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "finance.customer.read": ORG,
         },
     ),
-    RoleTemplate("support_agent", "Support Agent", "Works the support ticket queue."),
+    RoleTemplate(
+        "support_agent",
+        "Support Agent",
+        "Works the support ticket queue.",
+        grants={
+            "support.ticket.read": ORG,  # their teams' tickets, as the service filters
+            "support.ticket.work": ORG,
+            "support.report.read": ORG,
+            "finance.customer.read": ORG,  # to record customers' tickets
+        },
+    ),
     RoleTemplate("fleet_manager", "Fleet Manager", "Vehicles, drivers, fuel and maintenance."),
 )
 

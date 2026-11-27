@@ -1,0 +1,30 @@
+{# Support → raise a ticket (ADR 0032): for yourself, or (agents) for a customer.
+   Design: design/stitch/exports/support.ticket_new.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("New ticket", "Pick what it's about, and the right team picks it up.") %}{% endcall %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+{% if not on_staff and not is_agent %}
+<div class="mt-6">{% call ui.empty_state("headset", "No HR record yet", "Tickets are for people on the staff list.") %}{% endcall %}</div>
+{% else %}
+<form method="post" action="/support/new" class="kx-card mt-6 max-w-3xl space-y-4 p-5" novalidate>
+  {{ ui.csrf_field() }}
+  {% if is_agent %}
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div><label class="kx-label" for="customer_id">Who is it for?</label><select id="customer_id" name="customer_id" class="kx-input">{% if on_staff %}<option value="">Me</option>{% else %}<option value="">Choose a customer</option>{% endif %}{% for cid, label in customers %}<option value="{{ cid }}" {% if v.get("customer_id") == cid|string %}selected{% endif %}>{{ label }} (customer)</option>{% endfor %}</select>{{ ui.field_error(errors, "customer_id") }}</div>
+    {{ ui.text_field("contact_email", "Customer's contact email", value=v.get("contact_email", ""), errors=errors, hint="For a customer: leave blank to use their email on file") }}
+  </div>
+  {% endif %}
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div><label class="kx-label" for="category_id">What's it about?</label><select id="category_id" name="category_id" class="kx-input"><option value="">Choose a category</option>{% for cid, label in categories %}<option value="{{ cid }}" {% if v.get("category_id") == cid|string %}selected{% endif %}>{{ label }}</option>{% endfor %}</select>{{ ui.field_error(errors, "category_id") }}</div>
+    <div><label class="kx-label" for="priority">Priority</label><select id="priority" name="priority" class="kx-input">{% for p in priorities | reverse %}<option value="{{ p }}" {% if v.get("priority") == p %}selected{% endif %}>{{ priority_labels[p] }}</option>{% endfor %}</select><p class="kx-hint">{% for p in priorities | reverse %}{{ priority_labels[p] }}: reply within {{ '%g' % (targets[p].response_minutes / 60) }}h, resolved within {{ '%g' % (targets[p].resolve_minutes / 60) }}h{{ "; " if not loop.last }}{% endfor %}. Business hours, Monday to Friday.</p>{{ ui.field_error(errors, "priority") }}</div>
+  </div>
+  {{ ui.text_field("subject", "Subject", value=v.get("subject", ""), errors=errors) }}
+  <div><label class="kx-label" for="description">Description</label><textarea id="description" name="description" rows="6" class="kx-input">{{ v.get("description", "") }}</textarea>{{ ui.field_error(errors, "description") }}<p class="kx-hint">You can attach files once the ticket is raised.</p></div>
+  <div class="flex justify-end gap-3"><a href="/support" class="kx-btn-ghost">Cancel</a><button type="submit" class="kx-btn-primary">Raise ticket</button></div>
+</form>
+{% endif %}
+{% endblock %}

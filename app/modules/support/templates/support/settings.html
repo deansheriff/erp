@@ -1,0 +1,90 @@
+{# Support → settings (ADR 0032): teams with a lead and agents, categories routed to a
+   team, SLA targets by priority, business hours and closing.
+   Design: design/stitch/exports/support.settings.html #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header("Support settings", "Teams, categories, SLA targets and business hours. The seeded values are defaults to confirm.") %}{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="teams-title">
+  <h2 id="teams-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Teams</h2>
+  {% if teams %}
+  <ul class="divide-y divide-line text-body-sm">
+    {% for t, agent_names, agent_ids in teams %}
+    <li class="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+      <div><p class="font-semibold">{{ t.name }}{% if not t.is_active %} <span class="text-xs font-normal text-ink-3">(not in use)</span>{% endif %}</p><p class="text-xs text-ink-3">Lead: {{ names.get(t.lead_employee_id, "none") if t.lead_employee_id else "none" }} · Agents: {{ agent_names | join(", ") or "none" }}</p></div>
+      <a href="/support/settings?team={{ t.id }}#team-form" class="kx-btn-ghost text-xs">Edit</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% set et = namespace(row=none, ids=[]) %}
+  {% for t, agent_names, agent_ids in teams %}{% if t.id|string == editing %}{% set et.row = t %}{% set et.ids = agent_ids | map("string") | list %}{% endif %}{% endfor %}
+  {% set picked = v.get("agent") if v.get("agent") is not none else et.ids %}
+  <form id="team-form" method="post" action="/support/settings/team" class="grid gap-4 border-t border-line p-5 sm:grid-cols-2" novalidate>
+    {{ ui.csrf_field() }}
+    {% if et.row %}<input type="hidden" name="team_id" value="{{ et.row.id }}">{% endif %}
+    <h3 class="font-semibold sm:col-span-2">{{ "Edit " ~ et.row.name if et.row else "Add a team" }}</h3>
+    {{ ui.text_field("team_name", "Name", value=v.get("team_name") or (et.row.name if et.row else ""), errors=errors) }}
+    <div><label class="kx-label" for="lead_id">Lead</label><select id="lead_id" name="lead_id" class="kx-input"><option value="">No lead</option>{% for eid, name in staff %}<option value="{{ eid }}" {% if (v.get("lead_id") or (et.row.lead_employee_id|string if et.row and et.row.lead_employee_id else "")) == eid|string %}selected{% endif %}>{{ name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "lead_id") }}</div>
+    <fieldset class="sm:col-span-2"><legend class="kx-label">Agents</legend>
+      <div class="grid max-h-56 gap-1.5 overflow-y-auto rounded-lg border border-line p-3 sm:grid-cols-2 lg:grid-cols-3">
+        {% for eid, name in staff %}<label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="agent" value="{{ eid }}" class="kx-check" {% if eid|string in picked %}checked{% endif %}> {{ name }}</label>{% endfor %}
+      </div>
+      <p class="kx-hint">Agents also need the Support Agent role to work tickets.</p>
+      {{ ui.field_error(errors, "agents") }}
+    </fieldset>
+    <label class="flex items-center gap-2 text-body-sm"><input type="checkbox" name="active" value="1" class="kx-check" {% if not et.row or et.row.is_active %}checked{% endif %}> In use</label>
+    <div class="flex justify-end gap-3 sm:col-span-2">{% if et.row %}<a href="/support/settings" class="kx-btn-ghost">Cancel</a>{% endif %}<button type="submit" class="kx-btn-primary">{{ "Save team" if et.row else "Add team" }}</button></div>
+  </form>
+</section>
+
+<section class="kx-card mt-6 overflow-hidden" aria-labelledby="categories-title">
+  <h2 id="categories-title" class="border-b border-line px-5 py-4 font-h3 text-h3">Categories</h2>
+  {% if categories %}
+  <table class="w-full text-body-sm">
+    <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Category</th><th class="px-3 py-2.5 text-left font-semibold">Team</th><th class="px-5 py-2.5 text-left font-semibold">In use</th></tr></thead>
+    <tbody class="divide-y divide-line">{% for c in categories %}<tr><td class="px-5 py-2.5">{{ c.name }}</td><td class="px-3 py-2.5">{{ team_names.get(c.team_id, "") }}</td><td class="px-5 py-2.5">{{ "Yes" if c.is_active else "No" }}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% endif %}
+  <form method="post" action="/support/settings/category" class="flex flex-wrap items-end gap-3 border-t border-line p-5" novalidate>
+    {{ ui.csrf_field() }}
+    <div class="min-w-[220px] flex-1"><label class="kx-label" for="category_name">New category</label><input id="category_name" name="category_name" value="{{ v.get('category_name', '') }}" class="kx-input">{{ ui.field_error(errors, "category_name") }}</div>
+    <div><label class="kx-label" for="team_id">Team</label><select id="team_id" name="team_id" class="kx-input"><option value="">Choose a team</option>{% for t, n, i in teams %}<option value="{{ t.id }}" {% if v.get("team_id") == t.id|string %}selected{% endif %}>{{ t.name }}</option>{% endfor %}</select>{{ ui.field_error(errors, "team_id") }}</div>
+    <button type="submit" class="kx-btn-secondary">{{ ui.icon("plus", "sm") }} Add</button>
+  </form>
+</section>
+
+<form method="post" action="/support/settings/hours" class="mt-6 space-y-6" novalidate>
+  {{ ui.csrf_field() }}
+  <section class="kx-card overflow-hidden" aria-labelledby="targets-title">
+    <div class="border-b border-line px-5 py-4"><h2 id="targets-title" class="font-h3 text-h3">SLA targets</h2><p class="mt-1 text-body-sm text-ink-3">In business hours. A business day is {{ (per_day / 60) | int }} hours.</p></div>
+    <table class="w-full text-body-sm">
+      <thead class="border-b border-line bg-surface-sunken text-xs text-ink-3"><tr><th class="px-5 py-2.5 text-left font-semibold">Priority</th><th class="px-3 py-2.5 text-left font-semibold">First response (hours)</th><th class="px-5 py-2.5 text-left font-semibold">Resolution (hours)</th></tr></thead>
+      <tbody class="divide-y divide-line">
+        {% for p in priorities | reverse %}
+        {% set tg = targets.get(p) %}
+        <tr><td class="px-5 py-2.5">{{ ui.badge(priority_tones[p], priority_labels[p]) }}</td>
+          <td class="px-3 py-2"><label class="sr-only" for="response-{{ p }}">{{ priority_labels[p] }} first response</label><input id="response-{{ p }}" name="response_{{ p }}" value="{{ v.get('response_' ~ p) or ('%g' % (tg.response_minutes / 60) if tg else '') }}" inputmode="decimal" class="kx-input h-10 max-w-[140px] text-right tnum">{{ ui.field_error(errors, "response_" ~ p) }}</td>
+          <td class="px-5 py-2"><label class="sr-only" for="resolve-{{ p }}">{{ priority_labels[p] }} resolution</label><input id="resolve-{{ p }}" name="resolve_{{ p }}" value="{{ v.get('resolve_' ~ p) or ('%g' % (tg.resolve_minutes / 60) if tg else '') }}" inputmode="decimal" class="kx-input h-10 max-w-[140px] text-right tnum">{{ ui.field_error(errors, "resolve_" ~ p) }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <section class="kx-card p-5" aria-labelledby="hours-title">
+    <h2 id="hours-title" class="font-h3 text-h3">Business hours and closing</h2>
+    <p class="mt-1 text-body-sm text-ink-3">Monday to Friday; public holidays come from Leave.</p>
+    <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {{ ui.text_field("day_start", "Day starts", value=v.get("day_start") or settings.day_start.strftime("%H:%M"), type="time", errors=errors) }}
+      {{ ui.text_field("day_end", "Day ends", value=v.get("day_end") or settings.day_end.strftime("%H:%M"), type="time", errors=errors) }}
+      {{ ui.text_field("warn_pct", "Warn the assignee at (%)", value=v.get("warn_pct") or settings.warn_pct, inputmode="numeric", errors=errors) }}
+      {{ ui.text_field("close_after_days", "Close resolved after (business days)", value=v.get("close_after_days") or settings.close_after_days, inputmode="numeric", errors=errors) }}
+    </div>
+  </section>
+  <div class="flex justify-end"><button type="submit" class="kx-btn-primary">Save targets and hours</button></div>
+</form>
+{% endblock %}

@@ -1900,3 +1900,67 @@ screens:
       set_rate: projects.rate.manage
     field_classes: []
     approved_by: Dean Sheriff (2026-11-26)
+
+  - id: support.tickets
+    phase: 11
+    module: support
+    title: Support tickets
+    route: GET /support
+    template: app/modules/support/templates/support/tickets.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.ticket.read
+    actions:
+      take: support.ticket.work
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.ticket
+    phase: 11
+    module: support
+    title: One support ticket (conversation, assignment, SLA)
+    route: GET /support/{ticket_id}
+    template: app/modules/support/templates/support/ticket.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.ticket.read
+    actions:
+      reply: support.ticket.read
+      resolve: support.ticket.work
+      assign: support.ticket.work
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.ticket_new
+    phase: 11
+    module: support
+    title: Raise a support ticket
+    route: GET /support/new
+    template: app/modules/support/templates/support/new.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.ticket.create
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.sla_report
+    phase: 11
+    module: support
+    title: SLA report
+    route: GET /support/report
+    template: app/modules/support/templates/support/report.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.report.read
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: support.settings
+    phase: 11
+    module: support
+    title: Support settings (teams, categories, SLA targets, hours)
+    route: GET /support/settings
+    template: app/modules/support/templates/support/settings.html
+    stitch_pending: true  # requested 2026-11-26; add ids and exports on arrival
+    permission: support.settings.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)

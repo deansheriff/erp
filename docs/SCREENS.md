@@ -172,3 +172,8 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Time approvals** (`projects.approvals`) | `GET /projects/approvals` | projects.time.approve | — | Dean Sheriff (2026-11-26) |
 | **Project profitability** (`projects.profitability`) | `GET /projects/profitability` | projects.project.read | — | Dean Sheriff (2026-11-26) |
 | **Project settings and hourly cost rates** (`projects.settings`) | `GET /projects/settings` | projects.settings.manage | — | Dean Sheriff (2026-11-26) |
+| **Support tickets** (`support.tickets`) | `GET /support` | support.ticket.read | — | Dean Sheriff (2026-11-27) |
+| **One support ticket (conversation, assignment, SLA)** (`support.ticket`) | `GET /support/{ticket_id}` | support.ticket.read | — | Dean Sheriff (2026-11-27) |
+| **Raise a support ticket** (`support.ticket_new`) | `GET /support/new` | support.ticket.create | — | Dean Sheriff (2026-11-27) |
+| **SLA report** (`support.sla_report`) | `GET /support/report` | support.report.read | — | Dean Sheriff (2026-11-27) |
+| **Support settings (teams, categories, SLA targets, hours)** (`support.settings`) | `GET /support/settings` | support.settings.manage | — | Dean Sheriff (2026-11-27) |
