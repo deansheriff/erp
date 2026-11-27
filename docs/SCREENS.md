@@ -187,3 +187,12 @@ Stitch project `2736752339961073788`, design system `assets/5eab0debd3b04eb5ac88
 | **Drivers and their licences** (`fleet.drivers`) | `GET /fleet/drivers` | fleet.vehicle.read | — | Dean Sheriff (2026-11-27) |
 | **Cost per vehicle** (`fleet.costs`) | `GET /fleet/costs` | fleet.cost.read | — | Dean Sheriff (2026-11-27) |
 | **Fleet settings (alert lead times, fuel efficiency check)** (`fleet.settings`) | `GET /fleet/settings` | fleet.vehicle.manage | — | Dean Sheriff (2026-11-27) |
+
+## Phase 12
+
+| Screen | Route | Permission | Field classes | Approved by |
+|---|---|---|---|---|
+| **Chat (conversation list and the open conversation)** (`chat.home`) | `GET /chat` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
+| **New conversation (direct message or group)** (`chat.new`) | `GET /chat/new` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
+| **Conversation details (members, pins, files)** (`chat.details`) | `GET /chat/{conversation_id}/details` | chat.conversation.use | — | Dean Sheriff (2026-11-27) |
+| **Chat settings (edit window, unread emails, retention)** (`chat.settings`) | `GET /chat/settings` | chat.settings.manage | — | Dean Sheriff (2026-11-27) |

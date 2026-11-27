@@ -5,6 +5,39 @@ All notable changes are recorded here. The project follows
 
 ## [Unreleased]
 
+### Added — Phase 12: Chat
+- Direct messages, group chats and department channels (ADR 0034). Channel membership
+  comes from the org chart, including sub-departments, and is synced every 10 minutes.
+- **Membership checks:** every action checks the actor is a current member, and anyone
+  else gets "not found". Members see the whole history, and leaving loses it.
+- **Groups:** started by any employee. Admins add, remove and promote members and
+  rename the group. When the last admin leaves, the longest-standing member takes over.
+- **Messages:**
+  - mentions by full or first name;
+  - edits within 15 minutes (to confirm);
+  - deletes by the sender, or by group admins and channel moderators (the department's
+    head, and administrators);
+  - reactions and pins by any member.
+- **Reading:** unread counts and a "New" line; "Seen by" names in direct messages and
+  groups, and a count in channels.
+- **Attachments:** up to 25 MB, members only (file purpose `chat_attachment`).
+- **Real time:** `/ws/chat` sends small notices through Redis (or an in-process broker
+  for tests and single-process development). It checks the origin and the session
+  cookie, re-checks the session every minute, and closes at once when sessions are
+  revoked.
+- **Email:** a mention or direct message still unread after 30 minutes gets one email per
+  conversation per day (to confirm). It never includes the message.
+- **Settings:** the edit window, the email delay and retention. Messages are kept
+  indefinitely unless retention is set (to confirm).
+- Permissions `chat.conversation.use` (Employee, for themselves), `chat.channel.moderate`
+  and `chat.settings.manage`.
+
+### Changed — Phase 12
+- **Files:** a purpose may add an access check (`FilePurpose.allow`), and modules can
+  delete files as the system (`delete_by_system`).
+- **Sessions:** revoking sessions tells that user's open sockets to re-check. A session
+  can also be checked without counting as activity.
+
 ### Added — Phase 11f: Fleet
 - A vehicle register (`VEH-`) with papers (insurance, vehicle licence, roadworthiness),
   an assigned driver, pool vehicles and a status (ADR 0033).

@@ -1,0 +1,11 @@
+{# A run of messages, oldest first. Context: page, current, older; unread_after when the
+   page first opens (draws the "New" line). #}
+{% set conversation_id = current.id %}
+{% set marker = namespace(done=false) %}
+{% for m in page.messages %}
+  {% if unread_after is defined and not marker.done and not m.mine and (unread_after is none or m.message.id > unread_after) %}
+  {% set marker.done = true %}
+  <div class="my-3 flex items-center gap-3 text-xs font-semibold text-iris" data-chat-marker><span class="h-px flex-1 bg-iris/40"></span>New<span class="h-px flex-1 bg-iris/40"></span></div>
+  {% endif %}
+  {% include "chat/_message.html" %}
+{% endfor %}

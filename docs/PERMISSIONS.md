@@ -33,6 +33,14 @@ Keys are `module.resource[.sub].action`. A grant has a scope: **Self** (records 
 | `authz.role.manage` | Manage roles | Organisation | yes | Create, edit and delete roles. |
 | `authz.role.read` | View roles | Organisation |  | See roles and their permissions. |
 
+### chat
+
+| Key | Permission | Scopes | Sensitive | Description |
+|---|---|---|---|---|
+| `chat.channel.moderate` | Moderate department channels | Organisation |  | Delete any message in a department channel. |
+| `chat.conversation.use` | Use chat | Self, Team, Department, Organisation |  | Send direct messages, start groups and take part in the conversations you belong to. |
+| `chat.settings.manage` | Manage chat settings | Organisation |  | Change the edit window, the unread email delay and how long messages are kept. |
+
 ### expenses
 
 | Key | Permission | Scopes | Sensitive | Description |
@@ -253,6 +261,9 @@ Everything, including technical settings. Can't be edited or removed.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `chat.channel.moderate` | O |
+| `chat.conversation.use` | O |
+| `chat.settings.manage` | O |
 | `expenses.claim.approve` | O |
 | `expenses.claim.approve_any` | O |
 | `expenses.claim.approve_finance` | O |
@@ -400,6 +411,9 @@ Everything except technical settings such as mail, branding and security.
 | `authz.delegation.manage` | O |
 | `authz.role.manage` | O |
 | `authz.role.read` | O |
+| `chat.channel.moderate` | O |
+| `chat.conversation.use` | O |
+| `chat.settings.manage` | O |
 | `expenses.claim.approve` | O |
 | `expenses.claim.approve_any` | O |
 | `expenses.claim.approve_finance` | O |
@@ -580,6 +594,7 @@ Self-service: their own profile, requests and payslips.
 | `attendance.correction.request` | S |
 | `attendance.photo.view` | S |
 | `attendance.record.read` | S |
+| `chat.conversation.use` | S |
 | `expenses.claim.create` | S |
 | `expenses.claim.read` | S |
 | `fleet.vehicle.use` | S |

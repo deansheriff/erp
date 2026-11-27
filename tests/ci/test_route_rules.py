@@ -84,3 +84,17 @@ def test_every_screen_entry_has_its_template_and_stitch_exports() -> None:
         if not s.get("stitch_screens"):
             missing.append(f"{screen_id}: no Stitch screen IDs")
     assert missing == []
+
+
+def test_the_only_websocket_is_the_chat_socket() -> None:
+    """WebSocket routes skip the HTTP access guard and do their own origin and session
+    checks (ADR 0034), so each one has to be known and tested. Only /ws/chat exists."""
+    from starlette.routing import WebSocketRoute
+
+    sockets = [
+        r.path
+        for router in routers(get_settings())
+        for r in router.routes
+        if isinstance(r, WebSocketRoute) or "websocket" in type(r).__name__.lower()
+    ]
+    assert sockets == ["/ws/chat"]

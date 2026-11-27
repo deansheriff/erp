@@ -2095,3 +2095,60 @@ screens:
     actions: {}
     field_classes: []
     approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.home
+    phase: 12
+    module: chat
+    title: Chat (conversation list and the open conversation)
+    route: GET /chat
+    template: app/modules/chat/templates/chat/home.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.conversation.use
+    actions:
+      send: chat.conversation.use
+      react: chat.conversation.use
+      pin: chat.conversation.use
+      edit: chat.conversation.use
+      delete: chat.conversation.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.new
+    phase: 12
+    module: chat
+    title: New conversation (direct message or group)
+    route: GET /chat/new
+    template: app/modules/chat/templates/chat/new.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.conversation.use
+    actions:
+      create_group: chat.conversation.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.details
+    phase: 12
+    module: chat
+    title: Conversation details (members, pins, files)
+    route: GET /chat/{conversation_id}/details
+    template: app/modules/chat/templates/chat/details.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.conversation.use
+    actions:
+      add: chat.conversation.use
+      remove: chat.conversation.use
+      leave: chat.conversation.use
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)
+
+  - id: chat.settings
+    phase: 12
+    module: chat
+    title: Chat settings (edit window, unread emails, retention)
+    route: GET /chat/settings
+    template: app/modules/chat/templates/chat/settings.html
+    stitch_pending: true  # requested 2026-11-27; add ids and exports on arrival
+    permission: chat.settings.manage
+    actions: {}
+    field_classes: []
+    approved_by: Dean Sheriff (2026-11-27)

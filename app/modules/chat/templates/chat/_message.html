@@ -1,0 +1,62 @@
+{# One message. Context: m (MessageView), conversation_id, reactions; error after a
+   failed action. The actions post with htmx and swap this element. #}
+{% import "components/ui.html" as ui with context %}
+{% set msg = m.message %}
+{% set base = "/chat/" ~ conversation_id ~ "/messages/" ~ msg.id %}
+<div id="msg-{{ msg.id }}" data-message-id="{{ msg.id }}" class="group relative">
+  {% if m.new_day and m.day %}
+  <div class="my-3 flex items-center gap-3 text-xs text-ink-3"><span class="h-px flex-1 bg-line"></span>{{ m.day | date }}<span class="h-px flex-1 bg-line"></span></div>
+  {% endif %}
+  <div class="flex gap-3 rounded-lg px-2 {{ 'pt-2' if m.starts_group else '' }} pb-0.5 {{ 'bg-warning-bg/40' if m.mentions_me else 'hover:bg-surface-sunken' }}">
+    <div class="w-8 shrink-0">
+      {% if m.starts_group %}<span class="flex h-8 w-8 items-center justify-center rounded-full border border-line bg-iris-tint text-xs font-semibold text-iris-hover">{{ (m.sender or "?")[:1] | upper }}</span>{% endif %}
+    </div>
+    <div class="min-w-0 flex-1">
+      {% if m.starts_group %}<p class="text-xs"><span class="font-semibold text-ink">{{ m.sender or "Former colleague" }}</span> <span class="text-ink-3">{{ msg.created_at | clock }}</span></p>{% endif %}
+      {% if msg.deleted_at %}
+      <p class="text-body-sm italic text-ink-3">Message deleted</p>
+      {% else %}
+      {% if m.segments %}<p class="whitespace-pre-line break-words text-body-sm">{% for s in m.segments %}{% if s.mention %}<span class="rounded px-0.5 font-semibold {{ 'bg-warning-bg text-warning-text' if s.me else 'bg-iris-tint text-iris-hover' }}">{{ s.text }}</span>{% else %}{{ s.text }}{% endif %}{% endfor %}{% if msg.edited_at %} <span class="text-xs text-ink-3">(edited)</span>{% endif %}</p>{% endif %}
+      {% for a in m.attachments %}
+      <a href="/files/{{ a.file_id }}" target="_blank" rel="noopener" class="mt-1 inline-flex max-w-full items-center gap-2 rounded-lg border border-line px-2.5 py-1.5 text-xs text-iris">{{ ui.icon("paperclip", "sm") }}<span class="truncate">{{ a.name }}</span><span class="text-ink-3">{{ a.size_bytes | filesize }}</span></a>
+      {% endfor %}
+      {% if m.pinned_by is not none %}<p class="mt-0.5 text-xs text-ink-3">{{ ui.icon("pin", "sm") }} Pinned{% if m.pinned_by %} by {{ m.pinned_by }}{% endif %}</p>{% endif %}
+      {% if m.reactions %}
+      <div class="mt-1 flex flex-wrap gap-1">
+        {% for r in m.reactions %}
+        <form method="post" action="{{ base }}/react" hx-post="{{ base }}/react" hx-target="#msg-{{ msg.id }}" hx-swap="outerHTML">{{ ui.csrf_field() }}<input type="hidden" name="emoji" value="{{ r.emoji }}"><button type="submit" title="{{ r.names | join(', ') }}" class="rounded-full border px-2 py-0.5 text-xs {{ 'border-iris bg-iris-tint text-iris-hover' if r.mine else 'border-line text-ink-2' }}" aria-pressed="{{ 'true' if r.mine else 'false' }}">{{ r.emoji }} {{ r.count }}</button></form>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if error is defined and error %}<p class="mt-1 text-xs text-danger-text" role="alert">{{ error }}</p>{% endif %}
+      {% if m.can_edit %}
+      <details class="mt-1">
+        <summary class="cursor-pointer text-xs text-ink-3">Edit</summary>
+        <form method="post" action="{{ base }}/edit" hx-post="{{ base }}/edit" hx-target="#msg-{{ msg.id }}" hx-swap="outerHTML" class="mt-1 flex gap-2">
+          {{ ui.csrf_field() }}
+          <label class="sr-only" for="edit-{{ msg.id }}">Edit message</label>
+          <textarea id="edit-{{ msg.id }}" name="body" rows="2" maxlength="{{ body_limit }}" class="kx-input">{{ msg.body }}</textarea>
+          <button type="submit" class="kx-btn-secondary self-end">Save</button>
+        </form>
+      </details>
+      {% endif %}
+      {% endif %}
+    </div>
+    {% if not msg.deleted_at %}
+    <div class="absolute -top-2 right-2 hidden items-center gap-0.5 rounded-lg border border-line bg-surface px-1 shadow-card group-hover:flex group-focus-within:flex">
+      <details class="relative">
+        <summary class="kx-btn-icon h-7 w-7 cursor-pointer list-none" aria-label="React">{{ ui.icon("smile-plus", "sm") }}</summary>
+        <div class="absolute right-0 z-10 mt-1 flex gap-0.5 rounded-lg border border-line bg-surface p-1 shadow-raised">
+          {% for emoji in reactions %}
+          <form method="post" action="{{ base }}/react" hx-post="{{ base }}/react" hx-target="#msg-{{ msg.id }}" hx-swap="outerHTML">{{ ui.csrf_field() }}<input type="hidden" name="emoji" value="{{ emoji }}"><button type="submit" class="h-7 w-7 rounded hover:bg-surface-sunken" aria-label="React {{ emoji }}">{{ emoji }}</button></form>
+          {% endfor %}
+        </div>
+      </details>
+      <form method="post" action="{{ base }}/pin" hx-post="{{ base }}/pin" hx-target="#msg-{{ msg.id }}" hx-swap="outerHTML">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-icon h-7 w-7" aria-label="{{ 'Unpin' if m.pinned_by is not none else 'Pin' }}">{{ ui.icon("pin-off" if m.pinned_by is not none else "pin", "sm") }}</button></form>
+      {% if m.can_delete %}
+      <form method="post" action="{{ base }}/delete" hx-post="{{ base }}/delete" hx-target="#msg-{{ msg.id }}" hx-swap="outerHTML" hx-confirm="Delete this message? It can't be brought back.">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-icon h-7 w-7 text-danger-text" aria-label="Delete">{{ ui.icon("trash", "sm") }}</button></form>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>

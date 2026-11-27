@@ -54,6 +54,7 @@ employee:
   attendance.correction.request: self
   attendance.photo.view: self
   attendance.record.read: self
+  chat.conversation.use: self
   expenses.claim.create: self
   expenses.claim.read: self
   fleet.vehicle.use: self
@@ -267,6 +268,9 @@ organization_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  chat.channel.moderate: organization
+  chat.conversation.use: organization
+  chat.settings.manage: organization
   expenses.claim.approve: organization
   expenses.claim.approve_any: organization
   expenses.claim.approve_finance: organization
@@ -433,6 +437,9 @@ super_administrator:
   authz.delegation.manage: organization
   authz.role.manage: organization
   authz.role.read: organization
+  chat.channel.moderate: organization
+  chat.conversation.use: organization
+  chat.settings.manage: organization
   expenses.claim.approve: organization
   expenses.claim.approve_any: organization
   expenses.claim.approve_finance: organization

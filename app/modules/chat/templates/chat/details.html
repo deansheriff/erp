@@ -1,0 +1,92 @@
+{# Chat → conversation details (ADR 0034): members (and, for group admins, adding,
+   removing and promoting them, and renaming), leaving a group, pinned messages and shared
+   files. Design: design/stitch/exports/chat.details.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% set v = values %}
+{% call ui.page_header(("# " if c.kind == "channel" else "") ~ d.title, kind_labels[c.kind] ~ " · " ~ (d.members | length) ~ " members") %}
+  <a href="/chat/{{ c.id }}" class="kx-btn-secondary">{{ ui.icon("arrow-left", "sm") }} Back to chat</a>
+{% endcall %}
+{% if notice %}<div class="mt-5">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mt-5">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+
+<div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+  <div class="space-y-6">
+    <section class="kx-card overflow-hidden" aria-labelledby="members-h">
+      <h2 id="members-h" class="px-5 pt-5 font-h3 text-h3">Members ({{ d.members | length }})</h2>
+      {% if c.kind == "channel" %}
+      <p class="px-5 pt-1 text-xs text-ink-3">Members come from the org chart.{% if d.moderators %} Moderators: {{ d.moderators | join(", ") }}.{% endif %}</p>
+      {% endif %}
+      <ul class="mt-3 divide-y divide-line text-body-sm">
+        {% for m in d.members %}
+        <li class="flex items-center justify-between gap-3 px-5 py-2.5">
+          <span class="flex items-center gap-3"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-iris-tint text-xs font-semibold text-iris-hover">{{ m.name[:1] | upper }}</span>{{ m.name }}{% if m.user_id == me %} <span class="text-ink-3">(you)</span>{% endif %}{% if m.role == "admin" and c.kind == "group" %} {{ ui.badge("info", "Admin") }}{% endif %}</span>
+          {% if d.is_admin and m.user_id != me %}
+          <span class="flex gap-1">
+            {% if m.role != "admin" %}<form method="post" action="/chat/{{ c.id }}/details/admin">{{ ui.csrf_field() }}<input type="hidden" name="user_id" value="{{ m.user_id }}"><button type="submit" class="kx-btn-ghost text-xs">Make admin</button></form>{% endif %}
+            <form method="post" action="/chat/{{ c.id }}/details/remove" hx-confirm="Remove {{ m.name }} from the group? They'll lose access to its history.">{{ ui.csrf_field() }}<input type="hidden" name="user_id" value="{{ m.user_id }}"><button type="submit" class="kx-btn-ghost text-xs text-danger-text">Remove</button></form>
+          </span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% if d.is_admin %}
+      <form method="post" action="/chat/{{ c.id }}/details/add" class="flex flex-wrap items-end gap-2 border-t border-line px-5 py-4" novalidate>
+        {{ ui.csrf_field() }}
+        <div class="min-w-[220px] flex-1"><label class="kx-label" for="user_id">Add someone</label><select id="user_id" name="user_id" class="kx-input"><option value="">Choose a person</option>{% for id, name, email in addable %}<option value="{{ id }}">{{ name }} · {{ email }}</option>{% endfor %}</select>{{ ui.field_error(errors, "members") }}</div>
+        <button type="submit" class="kx-btn-secondary">Add</button>
+      </form>
+      {% else %}<div class="pb-5"></div>{% endif %}
+    </section>
+
+    {% if d.is_admin %}
+    <form method="post" action="/chat/{{ c.id }}/details/rename" class="kx-card flex flex-wrap items-end gap-2 p-5" novalidate>
+      {{ ui.csrf_field() }}
+      <div class="min-w-[220px] flex-1">{{ ui.text_field("title", "Group name", v.get("title", c.title or ""), errors=errors) }}</div>
+      <button type="submit" class="kx-btn-secondary">Rename</button>
+    </form>
+    {% endif %}
+
+    {% if c.kind == "group" %}
+    <form method="post" action="/chat/{{ c.id }}/details/leave" hx-confirm="Leave this group? You'll lose access to its history." class="kx-card flex items-center justify-between gap-3 p-5">
+      {{ ui.csrf_field() }}
+      <p class="text-body-sm text-ink-2">Leaving takes away your access to the whole conversation.</p>
+      <button type="submit" class="kx-btn-ghost text-danger-text">{{ ui.icon("log-out", "sm") }} Leave group</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <div class="space-y-6">
+    <section class="kx-card overflow-hidden" aria-labelledby="pins-h">
+      <h2 id="pins-h" class="px-5 pt-5 font-h3 text-h3">{{ ui.icon("pin", "sm") }} Pinned messages</h2>
+      {% if d.pins %}
+      <ul class="mt-3 divide-y divide-line text-body-sm">
+        {% for p, msg, sender in d.pins %}
+        <li class="flex items-start justify-between gap-3 px-5 py-2.5">
+          <span class="min-w-0"><span class="block text-xs text-ink-3">{{ sender }} · {{ msg.created_at | datetime }}</span><span class="line-clamp-2">{{ msg.body or "An attachment" }}</span></span>
+          <form method="post" action="/chat/{{ c.id }}/messages/{{ msg.id }}/pin">{{ ui.csrf_field() }}<button type="submit" class="kx-btn-ghost text-xs">Unpin</button></form>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="px-5 pb-5 pt-2 text-body-sm text-ink-3">Nothing pinned. Any member can pin a message from its menu.</p>
+      {% endif %}
+    </section>
+
+    <section class="kx-card overflow-hidden" aria-labelledby="files-h">
+      <h2 id="files-h" class="px-5 pt-5 font-h3 text-h3">{{ ui.icon("paperclip", "sm") }} Files</h2>
+      {% if d.files %}
+      <ul class="mt-3 divide-y divide-line text-body-sm">
+        {% for a, msg, sender in d.files %}
+        <li class="flex items-center justify-between gap-3 px-5 py-2.5"><a href="/files/{{ a.file_id }}" target="_blank" rel="noopener" class="min-w-0 truncate text-iris">{{ a.name }}</a><span class="shrink-0 text-xs text-ink-3">{{ a.size_bytes | filesize }} · {{ sender }} · {{ msg.created_at | datetime }}</span></li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="px-5 pb-5 pt-2 text-body-sm text-ink-3">No files shared yet.</p>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

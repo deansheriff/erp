@@ -1,0 +1,80 @@
+{# Chat (ADR 0034): the conversation list and the open conversation, kept current by the
+   chatRoom component over /ws/chat. The socket only says what changed; this page fetches
+   the fragments through ordinary routes. Without a socket the page still works.
+   Design: design/stitch/exports/chat.home.html (pending) #}
+{% extends "layout/app.html" %}
+{% import "components/ui.html" as ui with context %}
+
+{% block content %}
+{% if notice is defined and notice %}<div class="mb-4">{{ ui.alert("success", notice) }}</div>{% endif %}
+{% if errors.get("form") %}<div class="mb-4">{{ ui.alert("danger", errors["form"]) }}</div>{% endif %}
+<div x-data="chatRoom" data-conversation="{{ current.id if current else '' }}"
+     class="grid h-[calc(100vh-11rem)] min-h-[480px] gap-4 lg:h-[calc(100vh-8rem)] lg:grid-cols-[320px_minmax(0,1fr)]">
+
+  <aside class="kx-card flex min-h-0 flex-col overflow-hidden {{ 'hidden lg:flex' if current }}" aria-label="Conversations">
+    <div class="flex items-center justify-between gap-2 border-b border-line px-4 py-3">
+      <h1 class="font-h3 text-h3">Chat</h1>
+      <a href="/chat/new" class="kx-btn-primary h-9 px-3 text-xs">{{ ui.icon("plus", "sm") }} New</a>
+    </div>
+    <div id="chat-list" class="min-h-0 flex-1 overflow-y-auto">
+      {% set current_id = current.id if current else none %}
+      {% include "chat/_list.html" %}
+    </div>
+  </aside>
+
+  {% if current %}
+  <section class="kx-card flex min-h-0 flex-col overflow-hidden" aria-label="{{ title }}">
+    <header class="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+      <div class="flex min-w-0 items-center gap-2">
+        <a href="/chat" class="kx-btn-icon -ml-2 lg:hidden" aria-label="All conversations">{{ ui.icon("arrow-left") }}</a>
+        <div class="min-w-0">
+          <h2 class="truncate font-h3 text-h3">{% if current.kind == "channel" %}# {% endif %}{{ title }}</h2>
+          <p class="text-xs text-ink-3">{{ kind_labels[current.kind] }}{% if current.kind != "direct" %} · {{ members }} members{% endif %}{% if current.read_only %} · read-only{% endif %}</p>
+        </div>
+      </div>
+      <a href="/chat/{{ current.id }}/details" class="kx-btn-ghost">{{ ui.icon("info", "sm") }} Details</a>
+    </header>
+
+    <div id="chat-pins">{% set conversation_id = current.id %}{% include "chat/_pins.html" %}</div>
+
+    <div x-ref="stream" id="chat-stream" class="min-h-0 flex-1 overflow-y-auto px-4 py-3" aria-live="polite">
+      {% if page.more_before and page.messages %}
+      <p class="mb-3 text-center"><a href="/chat/{{ current.id }}/messages?before={{ page.messages[0].message.id }}" class="text-xs font-semibold text-iris" data-chat-older>Load earlier messages</a></p>
+      {% endif %}
+      {% if page.messages %}
+        {% set older = false %}
+        {% include "chat/_messages.html" %}
+      {% else %}
+      <div data-chat-empty class="flex h-full flex-col items-center justify-center text-center text-body-sm text-ink-3">{{ ui.icon("messages-square", "lg") }}<p class="mt-2">No messages yet. Say hello.</p></div>
+      {% endif %}
+    </div>
+
+    <div id="chat-receipt" class="px-4 pb-1 text-right text-xs text-ink-3">{% include "chat/_receipt.html" %}</div>
+
+    {% if current.read_only %}
+    <p class="border-t border-line px-4 py-3 text-body-sm text-ink-3">This channel is read-only: its department has closed.</p>
+    {% else %}
+    <form id="chat-composer" method="post" action="/chat/{{ current.id }}/messages" enctype="multipart/form-data"
+          hx-post="/chat/{{ current.id }}/messages" hx-encoding="multipart/form-data" hx-swap="none"
+          class="border-t border-line px-4 py-3" novalidate>
+      {{ ui.csrf_field() }}
+      <label class="sr-only" for="body">Message</label>
+      <textarea id="body" name="body" rows="2" maxlength="{{ body_limit }}" class="kx-input resize-none" placeholder="Message {{ title }} — type @ and a name to mention someone" x-on:keydown.enter="sendOnEnter">{{ values.get("body", "") }}</textarea>
+      <div id="chat-composer-error" class="mt-1">{{ ui.field_error(errors, "body") }}</div>
+      <div class="mt-2 flex items-center justify-between gap-3">
+        <label class="flex cursor-pointer items-center gap-2 text-xs text-ink-2">{{ ui.icon("paperclip", "sm") }}<span>Attach a file</span><input type="file" name="file" class="sr-only" x-on:change="fileChosen"></label>
+        <span class="min-w-0 flex-1 truncate text-xs text-ink-3" x-text="fileName"></span>
+        <button type="submit" class="kx-btn-primary">{{ ui.icon("send", "sm") }} Send</button>
+      </div>
+    </form>
+    {% endif %}
+  </section>
+  {% else %}
+  <section class="kx-card hidden min-h-0 flex-col items-center justify-center text-center lg:flex" aria-label="No conversation open">
+    {% call ui.empty_state("messages-square", "Choose a conversation", "Pick one from the list, or start a new one with a colleague or a group.") %}
+      <a href="/chat/new" class="kx-btn-primary">{{ ui.icon("plus", "sm") }} New conversation</a>
+    {% endcall %}
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

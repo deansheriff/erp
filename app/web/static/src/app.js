@@ -312,6 +312,151 @@
       };
     });
 
+    // Chat (ADR 0034). The socket only says what changed; content comes from ordinary
+    // routes, which check membership. One fetch of new messages at a time, and messages
+    // already on the page are never added twice.
+    Alpine.data("chatRoom", function () {
+      return {
+        socket: null,
+        closing: false,
+        retry: 1000,
+        busy: false,
+        again: false,
+        fileName: "",
+        conversation: "",
+        init: function () {
+          var self = this;
+          this.conversation = this.$el.getAttribute("data-conversation") || "";
+          this.scrollDown();
+          this.connect();
+          this.onSent = function () { self.resetComposer(); self.fetchNew(); };
+          document.body.addEventListener("chat-sent", this.onSent);
+        },
+        destroy: function () {
+          this.closing = true;
+          document.body.removeEventListener("chat-sent", this.onSent);
+          if (this.socket) this.socket.close();
+        },
+        connect: function () {
+          var self = this;
+          if (!("WebSocket" in window)) return;
+          var scheme = window.location.protocol === "https:" ? "wss:" : "ws:";
+          var ws = new WebSocket(scheme + "//" + window.location.host + "/ws/chat");
+          this.socket = ws;
+          ws.onopen = function () { self.retry = 1000; };
+          ws.onmessage = function (e) {
+            try { self.handle(JSON.parse(e.data)); } catch (err) { /* ignore a bad notice */ }
+          };
+          ws.onclose = function (e) {
+            if (self.closing) return;
+            if (e.code === 4401) { window.location.reload(); return; }  // signed out
+            if (e.code === 4403) return;
+            setTimeout(function () { if (!self.closing) self.connect(); }, self.retry);
+            self.retry = Math.min(self.retry * 2, 30000);
+          };
+        },
+        handle: function (ev) {
+          var here = ev.conversation === this.conversation;
+          if (ev.type === "message") {
+            if (here) this.fetchNew(); else this.refreshList();
+          } else if (ev.type === "changed" && here) {
+            this.refreshMessage(ev.message);
+            this.refresh("/chat/" + this.conversation + "/pins", "chat-pins");
+          } else if (ev.type === "read" && here) {
+            this.refresh("/chat/" + this.conversation + "/receipt", "chat-receipt");
+          } else if (ev.type === "members") {
+            if (here) window.location.reload(); else this.refreshList();
+          }
+        },
+        get: function (url) {
+          return fetch(url, { headers: { "HX-Request": "true" }, credentials: "same-origin" })
+            .then(function (r) { return r.ok ? r.text() : ""; });
+        },
+        lastId: function () {
+          var items = this.$refs.stream ? this.$refs.stream.querySelectorAll("[data-message-id]") : [];
+          return items.length ? items[items.length - 1].getAttribute("data-message-id") : "";
+        },
+        nearBottom: function () {
+          var s = this.$refs.stream;
+          return !s || s.scrollHeight - s.scrollTop - s.clientHeight < 120;
+        },
+        scrollDown: function () {
+          var s = this.$refs.stream;
+          if (s) s.scrollTop = s.scrollHeight;
+        },
+        fetchNew: function () {
+          var self = this;
+          if (!this.conversation || !this.$refs.stream) return;
+          if (this.busy) { this.again = true; return; }
+          this.busy = true;
+          var stick = this.nearBottom();
+          this.get("/chat/" + this.conversation + "/messages?after=" + this.lastId())
+            .then(function (html) { self.append(html, stick); })
+            .finally(function () {
+              self.busy = false;
+              if (self.again) { self.again = false; self.fetchNew(); return; }
+              self.refreshList();
+              self.refresh("/chat/" + self.conversation + "/receipt", "chat-receipt");
+            });
+        },
+        append: function (html, stick) {
+          var stream = this.$refs.stream;
+          var tpl = document.createElement("template");
+          tpl.innerHTML = html;
+          var empty = stream.querySelector("[data-chat-empty]");
+          if (empty && tpl.content.querySelector("[data-message-id]")) empty.remove();
+          Array.prototype.slice.call(tpl.content.children).forEach(function (node) {
+            var id = node.getAttribute("data-message-id");
+            if (!id || document.getElementById("msg-" + id)) return;
+            stream.appendChild(node);
+            if (window.htmx) window.htmx.process(node);
+          });
+          if (stick) this.scrollDown();
+        },
+        refreshMessage: function (id) {
+          this.get("/chat/" + this.conversation + "/messages/" + id).then(function (html) {
+            var old = document.getElementById("msg-" + id);
+            if (!old || !html) return;
+            var tpl = document.createElement("template");
+            tpl.innerHTML = html.trim();
+            var node = tpl.content.firstElementChild;
+            if (!node) return;
+            old.replaceWith(node);
+            if (window.htmx) window.htmx.process(node);
+          });
+        },
+        refresh: function (url, targetId) {
+          this.get(url).then(function (html) {
+            var target = document.getElementById(targetId);
+            if (target) {
+              target.innerHTML = html;
+              if (window.htmx) window.htmx.process(target);
+            }
+          });
+        },
+        refreshList: function () {
+          this.refresh("/chat/list?current=" + this.conversation, "chat-list");
+        },
+        resetComposer: function () {
+          var form = document.getElementById("chat-composer");
+          if (form) form.reset();
+          var error = document.getElementById("chat-composer-error");
+          if (error) error.innerHTML = "";
+          this.fileName = "";
+        },
+        fileChosen: function (e) {
+          var file = e.target.files && e.target.files[0];
+          this.fileName = file ? file.name : "";
+        },
+        sendOnEnter: function (e) {
+          if (e.shiftKey || e.isComposing) return;  // Shift+Enter makes a new line
+          e.preventDefault();
+          var form = document.getElementById("chat-composer");
+          if (form && form.requestSubmit) form.requestSubmit();
+        },
+      };
+    });
+
     Alpine.data("copyText", function () {
       return {
         copied: false,

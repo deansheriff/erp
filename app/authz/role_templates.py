@@ -119,6 +119,7 @@ TEMPLATES: tuple[RoleTemplate, ...] = (
             "support.ticket.create": SELF,
             "support.ticket.read": SELF,
             "fleet.vehicle.use": SELF,
+            "chat.conversation.use": SELF,
         },
     ),
     RoleTemplate(

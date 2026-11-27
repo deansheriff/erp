@@ -40,6 +40,7 @@ from app.identity.schemas import (
 )
 from app.mail import service as mail
 from app.org import service as org
+from app.realtime import broker as realtime
 
 SETUP_TOKEN_MINUTES = 60
 BAD_TOTP = "That code didn't work. Check the time on your phone and try the newest code."
@@ -161,7 +162,13 @@ def _revoke_sessions(
     if keep is not None:
         stmt = stmt.where(UserSession.id != keep)
     result = db.execute(stmt.values(revoked_at=clock.now(), revoked_reason=reason))
+    _sessions_revoked(db, user_id)
     return int(result.rowcount or 0)  # type: ignore[attr-defined]
+
+
+def _sessions_revoked(db: Session, user_id: uuid.UUID) -> None:
+    """Open WebSockets of this user re-check their session and close (ADR 0034)."""
+    realtime.notify_after_commit(db, [user_id], {"type": "sessions_revoked"})
 
 
 def _set_password(user: User, password: str) -> None:
@@ -411,7 +418,9 @@ def session_needs_mfa(db: Session, user_id: uuid.UUID) -> bool:
     return bool(user and (user.mfa_enabled or authz.requires_mfa(db, user.id)))
 
 
-def resolve_session(db: Session, raw: str | None) -> Actor | None:
+def resolve_session(db: Session, raw: str | None, *, touch: bool = True) -> Actor | None:
+    """The signed-in actor for a session cookie. `touch=False` checks it without
+    counting as activity (an open WebSocket re-validating, ADR 0034)."""
     if not raw:
         return None
     session = db.scalars(
@@ -428,7 +437,7 @@ def resolve_session(db: Session, raw: str | None) -> Actor | None:
     user = db.get(User, session.user_id)
     if user is None or user.status != "active":
         return None
-    if (now - session.last_seen_at).total_seconds() >= SESSION_TOUCH_SECONDS:
+    if touch and (now - session.last_seen_at).total_seconds() >= SESSION_TOUCH_SECONDS:
         session.last_seen_at = now
     return _actor_for(db, user, via="session", session=session)
 
@@ -439,6 +448,7 @@ def logout(db: Session, actor: Actor) -> None:
         if session and session.revoked_at is None:
             session.revoked_at = clock.now()
             session.revoked_reason = "signed_out"
+            _sessions_revoked(db, actor.user_id)
     _audit(db, "identity.logout", actor)
 
 
@@ -651,6 +661,7 @@ def revoke_my_session(db: Session, actor: Actor, session_id: uuid.UUID) -> None:
     if session.revoked_at is None:
         session.revoked_at = clock.now()
         session.revoked_reason = "revoked_by_user"
+        _sessions_revoked(db, actor.user_id)
         _audit(
             db, "identity.session.revoke", actor, entity_type="session", entity_id=str(session_id)
         )

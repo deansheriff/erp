@@ -70,6 +70,8 @@ def _authorise(
     resource = purpose.resolve(db, entity_id)
     if resource is None:
         return False
+    if purpose.allow is not None and not purpose.allow(db, actor.user_id, entity_id):
+        return False
     return permission is None or bool(engine.check(db, actor.user_id, permission, resource))
 
 
@@ -513,6 +515,29 @@ def delete(db: Session, actor: Actor, file_id: uuid.UUID) -> None:
     if purpose is not None:
         row.retention_until = now + purpose.retention
     record_by(db, actor, "files.file.delete", entity_type="file", entity_id=str(row.id))
+
+
+def delete_by_system(db: Session, file_id: uuid.UUID, reason: str) -> None:
+    """Soft delete by a scheduled job (a module's retention rule). Files on legal hold
+    are left alone."""
+    row = db.get(StoredFile, file_id)
+    if row is None or row.status == "deleted" or row.legal_hold:
+        return
+    now = clock.now()
+    row.status, row.deleted_at = "deleted", now
+    purpose = get_purpose(row.purpose)
+    if purpose is not None:
+        row.retention_until = now + purpose.retention
+    record(
+        db,
+        AuditEvent(
+            action="files.file.delete",
+            actor_type="system",
+            entity_type="file",
+            entity_id=str(row.id),
+            reason=reason,
+        ),
+    )
 
 
 def set_legal_hold(db: Session, actor: Actor, file_id: uuid.UUID, *, on: bool, reason: str) -> None:

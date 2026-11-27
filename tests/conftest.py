@@ -22,6 +22,7 @@ os.environ["KX_S3_ENDPOINT_URL"] = ""
 os.environ["KX_S3_ACCESS_KEY"] = "test-access-key"
 os.environ["KX_S3_SECRET_KEY"] = "test-secret-key"
 os.environ["KX_SCANNER"] = "accept_all"
+os.environ["KX_REALTIME_BACKEND"] = "memory"
 os.environ["KX_DATABASE_URL"] = os.environ.get(
     "KX_TEST_DATABASE_URL", "postgresql+psycopg://kx_app:unset@127.0.0.1:1/unset"
 )
@@ -176,7 +177,8 @@ def clean_db(migrated_db: None) -> Iterator[None]:
                 "material_requests, low_stock_alerts, procurement_settings, procurement_tiers, "
                 "purchase_requisitions, rfqs, supplier_ratings, projects, project_cost_rates, "
                 "project_settings, support_settings, support_sla_targets, support_teams, "
-                "support_tickets, vehicles, fleet_drivers, fleet_settings, fleet_expiry_alerts "
+                "support_tickets, vehicles, fleet_drivers, fleet_settings, fleet_expiry_alerts, "
+                "chat_conversations, chat_settings "
                 "CASCADE"
             )
         )
@@ -192,6 +194,7 @@ def clean_db(migrated_db: None) -> Iterator[None]:
         _migration("0020_projects.py").seed_defaults(conn)
         _migration("0021_support.py").seed_defaults(conn)
         _migration("0022_fleet.py").seed_defaults(conn)
+        _migration("0023_chat.py").seed_defaults(conn)
         conn.execute(
             text(
                 "UPDATE installation SET installed_at = NULL, setup_token_hash = NULL, "

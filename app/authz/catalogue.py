@@ -28,6 +28,7 @@ POLICY_MODULES = (
     "app.modules.projects.policies",
     "app.modules.support.policies",
     "app.modules.fleet.policies",
+    "app.modules.chat.policies",
 )
 
 

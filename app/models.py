@@ -34,6 +34,31 @@ from app.modules.attendance.models import (
     ShiftAssignment,
     ShiftPattern,
 )
+from app.modules.chat.models import (
+    Attachment as ChatAttachment,
+)
+from app.modules.chat.models import (
+    ChatMember,
+    ChatSettings,
+)
+from app.modules.chat.models import (
+    Conversation as ChatConversation,
+)
+from app.modules.chat.models import (
+    EmailNotice as ChatEmailNotice,
+)
+from app.modules.chat.models import (
+    Mention as ChatMention,
+)
+from app.modules.chat.models import (
+    Message as ChatMessage,
+)
+from app.modules.chat.models import (
+    Pin as ChatPin,
+)
+from app.modules.chat.models import (
+    Reaction as ChatReaction,
+)
 from app.modules.expenses.models import (
     AdvanceRepayment,
     ExpenseCategory,
@@ -227,6 +252,15 @@ __all__ = [
     "BudgetAlert",
     "BudgetLine",
     "ChangeRequest",
+    "ChatAttachment",
+    "ChatConversation",
+    "ChatEmailNotice",
+    "ChatMember",
+    "ChatMention",
+    "ChatMessage",
+    "ChatPin",
+    "ChatReaction",
+    "ChatSettings",
     "Checklist",
     "ChecklistTask",
     "ChecklistTemplate",
